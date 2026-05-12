@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Deep Dive — 2 May 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  /* ── HEADER ───────────────────────────────────────────────── */
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #185FA5; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+
+  /* ── NAVIGATION PILLS ─────────────────────────────────────── */
+  .nav-pills { display: flex; gap: 8px; flex-wrap: wrap;
+               margin-bottom: 1.5rem; }
+  .nav-pill { font-size: 12px; font-weight: 600; padding: 5px 14px;
+              border-radius: 20px; background: #E6F1FB; color: #0C447C;
+              text-decoration: none; }
+  .nav-pill:hover { background: #185FA5; color: #fff; }
+
+  /* ── SECTION LABELS ───────────────────────────────────────── */
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  /* ── SIGNAL Q&A SECTION ───────────────────────────────────── */
+  .signal-qa-card { background: #fff; border: 1px solid #e8e8e0;
+                    border-radius: 0 12px 12px 0;
+                    padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .signal-qa-rank1 { border-left: 3px solid #185FA5; }
+  .signal-qa-rank2 { border-left: 3px solid #1D9E75; }
+  .signal-qa-rank3 { border-left: 3px solid #854F0B; }
+  .signal-qa-title { font-size: 13px; font-weight: 600; color: #333;
+                     margin-bottom: 10px; line-height: 1.4; }
+  .signal-qa-num { font-size: 11px; font-weight: 700; color: #bbb;
+                   margin-right: 6px; }
+  .questions-list { padding: 0; list-style: none; margin-bottom: 10px; }
+  .questions-list li { font-size: 12px; color: #666; line-height: 1.5;
+                       padding: 3px 0 3px 14px; position: relative; }
+  .questions-list li::before { content: ""; position: absolute; left: 0;
+                               top: 9px; width: 5px; height: 5px;
+                               border-radius: 50%; background: #ccc; }
+  .q-answers { background: #f5f7fb; border: 1px solid #dce6f5;
+               border-radius: 8px; padding: 10px 14px;
+               margin-bottom: 10px; }
+  .q-answers-label { font-size: 9px; font-weight: 700; color: #8aaad4;
+                     text-transform: uppercase; letter-spacing: 0.08em;
+                     margin-bottom: 8px; }
+  .q-answer-row { display: flex; gap: 8px; margin-bottom: 6px;
+                  align-items: flex-start; }
+  .q-answer-row:last-child { margin-bottom: 0; }
+  .q-num { font-size: 10px; font-weight: 700; color: #185FA5;
+           background: #E6F1FB; border-radius: 4px;
+           padding: 2px 6px; flex-shrink: 0; margin-top: 1px; }
+  .q-answer-text { font-size: 12px; color: #444; line-height: 1.6; }
+  .q-answer-cn { font-size: 11px; color: #999; margin-top: 2px;
+                 font-family: 'PingFang SC', 'Microsoft YaHei',
+                 'Noto Sans SC', sans-serif; line-height: 1.6; }
+
+  /* ── STOCK CARDS ──────────────────────────────────────────── */
+  .stock-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 12px; padding: 1rem 1.25rem;
+                margin-bottom: 16px; scroll-margin-top: 16px; }
+  .stock-header { display: flex; align-items: flex-start;
+                  justify-content: space-between; gap: 12px;
+                  margin-bottom: 12px; }
+  .stock-name { font-size: 18px; font-weight: 700; color: #1a1a1a;
+                margin-bottom: 2px; }
+  .stock-name-cn { font-size: 12px; color: #999;
+                   font-family: 'PingFang SC', 'Microsoft YaHei',
+                   'Noto Sans SC', sans-serif; }
+  .stock-price-block { text-align: right; flex-shrink: 0; }
+  .stock-price { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stock-price-chg { font-size: 13px; margin-top: 2px; }
+  .stock-divider { height: 1px; background: #f0efe8; margin: 12px 0; }
+
+  /* Sector / meta pills */
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-top: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                background: #f0efe8; color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; }
+  .s-tech     { background: #E6F1FB; color: #0C447C; }
+  .s-health   { background: #E1F5EE; color: #085041; }
+  .s-energy   { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence  { background: #EEEDFE; color: #3C3489; }
+  .s-finance  { background: #EAF3DE; color: #27500A; }
+  .s-realty   { background: #FAECE7; color: #712B13; }
+  .s-macro    { background: #F1EFE8; color: #444441; }
+
+  /* Why now panel */
+  .why-now { background: #FAFAF7; border-left: 3px solid #185FA5;
+             border-radius: 0 8px 8px 0; padding: 10px 14px;
+             margin-bottom: 12px; }
+  .why-now-label { font-size: 9px; font-weight: 700; color: #185FA5;
+                   text-transform: uppercase; letter-spacing: 0.08em;
+                   margin-bottom: 5px; }
+  .why-now-text { font-size: 13px; color: #444; line-height: 1.6; }
+
+  /* Fundamental metrics grid */
+  .fund-grid { display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+               gap: 8px; margin-bottom: 10px; }
+  .fund-cell { background: #f8f8f6; border-radius: 8px; padding: 8px 10px; }
+  .fund-key { font-size: 10px; color: #999; text-transform: uppercase;
+              letter-spacing: 0.05em; margin-bottom: 3px; }
+  .fund-val { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .fund-sub { font-size: 10px; color: #aaa; margin-top: 1px; }
+
+  /* Technical analysis block */
+  .ta-block { background: #faf9f7; border: 1px solid #ebe9e2;
+              border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+  .ta-title { font-size: 10px; font-weight: 700; color: #aaa;
+              text-transform: uppercase; letter-spacing: 0.07em;
+              margin-bottom: 8px; }
+  .ta-row { display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 6px;
+            flex-wrap: wrap; gap: 6px; }
+  .ta-row:last-child { margin-bottom: 0; }
+  .ta-label { font-size: 11px; color: #888; width: 130px; flex-shrink: 0; }
+  .ta-value { font-size: 12px; font-weight: 600; color: #333; flex: 1; }
+
+  /* 52-week range bar */
+  .range-bar-wrap { flex: 1; min-width: 160px; }
+  .range-bar-track { height: 4px; background: #e8e8e0; border-radius: 2px;
+                     position: relative; margin: 4px 0; }
+  .range-bar-fill { position: absolute; top: 0; left: 0; height: 100%;
+                    background: #185FA5; border-radius: 2px; }
+  .range-bar-dot { position: absolute; top: -3px; width: 10px; height: 10px;
+                   background: #185FA5; border: 2px solid #fff;
+                   border-radius: 50%; transform: translateX(-50%);
+                   box-shadow: 0 0 0 1px #185FA5; }
+  .range-labels { display: flex; justify-content: space-between;
+                  font-size: 10px; color: #aaa; }
+
+  /* TA signal pills */
+  .ta-signals { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .ta-pill { font-size: 11px; font-weight: 600; padding: 3px 9px;
+             border-radius: 20px; }
+  .ta-bull    { background: #EAF3DE; color: #27500A; }
+  .ta-bear    { background: #FCEBEB; color: #791F1F; }
+  .ta-neutral { background: #f0efe8; color: #666; }
+  .ta-warn    { background: #FAEEDA; color: #633806; }
+
+  /* Stock synthesis text */
+  .stock-synthesis { font-size: 13px; color: #555; line-height: 1.7;
+                     margin-bottom: 8px; }
+  .data-caveat { font-size: 10px; color: #bbb; font-style: italic;
+                 margin-top: 4px; margin-bottom: 10px; }
+
+  /* ── CHINESE SUMMARY BLOCKS ───────────────────────────────── */
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+
+  /* ── SOURCES & FOOTER ─────────────────────────────────────── */
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .up   { color: #0F6E56; }
+  .dn   { color: #A32D2D; }
+  .flat { color: #888; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Stock Deep Dive · AM · Saturday, 2 May 2026
+  </div>
+  <div class="report-title">Stock deep dive</div>
+  <div class="report-title-cn">股票深度分析 — 基本面与技术面</div>
+  <div class="report-date">
+    Saturday, 2 May 2026 · Singapore time · Companion to daily briefing ·
+    新加坡时间 · 每日简报配套深度报告
+  </div>
+</div>
+
+<!-- ── NAVIGATION ───────────────────────────────────────────────── -->
+<div class="nav-pills">
+  <a class="nav-pill" href="#signal-qa">Signal Q&amp;A 信号解析</a>
+  <a class="nav-pill" href="#AAPL">AAPL 苹果</a>
+  <a class="nav-pill" href="#GOOGL">GOOGL 谷歌</a>
+  <a class="nav-pill" href="#NVDA">NVDA 英伟达</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — SIGNAL Q&A                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-label" id="signal-qa">
+  Signal questions — answered 信号关键问题解答
+</div>
+
+<!-- SIGNAL #1 Q&A -->
+<div class="signal-qa-card signal-qa-rank1">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#1</span>
+    Apple Q2 FY2026: Revenue +17%, EPS +22%, iPhone 17 Demand "Extraordinary" — Plus CEO Succession Confirmed
+  </div>
+  <ul class="questions-list">
+    <li>Can Apple sustain 17%+ revenue growth into Q3 FY2026 given macro uncertainty and tariff risk on its China supply chain?</li>
+    <li>How much of Apple's China revenue rebound (28% to $20.5B) is structural recovery vs. one-time pent-up demand from iPhone 17 launches?</li>
+    <li>When will Apple Intelligence (AI features) become a material, analyst-modelable revenue driver — and how does John Ternus's hardware background shape the AI product roadmap?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Sustaining 17%+ growth into Q3 FY2026 is achievable but not certain. On the positive side, Apple guided Q3 revenue "better than expected" per Cook on the earnings call, with Services compounding at $31B/quarter at 76.7% gross margin — this segment alone adds ~$4B in incremental revenue each year. iPhone 17 momentum has multi-quarter shelf life given a global upgrade cycle that's still in early innings. The risk: Apple flagged significantly higher memory costs ahead, which will compress product gross margins (already at 38.7%, down 200bps sequentially). Tariff exposure on China-assembled iPhones is real — management didn't quantify a specific impact, but they have been diversifying assembly to India and Vietnam. The base case is Q3 growth in the 12–15% range, slightly below Q2's 17%, but still well above consensus going into the print. Data source: Apple Q2 FY2026 earnings call, Apple Newsroom, April 30, 2026.
+        </div>
+        <div class="q-answer-cn">
+          苹果三季度维持17%+增长有一定难度但并非不可能。服务业务（$310亿/季，毛利率76.7%）提供可预期的增量支撑，iPhone 17全球换机潮仍在早期阶段。风险点在于：管理层已预警内存成本大幅上升将压缩硬件毛利率，且在华供应链受关税政策影响。基准预期是三季度增速放缓至12–15%左右，但仍可能好于市场预期。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          The evidence suggests China's rebound is more structural than one-time, but it contains both elements. The structural case: Greater China revenue of $20.5B (+28%) is recovering from a multi-year low driven by local competition (Huawei). The iPhone 17 AI features and hardware improvements gave Chinese consumers a genuine reason to upgrade — this is not purely a pent-up release. Apple's developer ecosystem in China remains entrenched, and the Services business (App Store, iCloud) in China is growing independently. The one-time element: some of the 28% jump reflects genuinely pent-up demand from the prior year's underperformance (base effect). A normalised growth rate for China in subsequent quarters is likely 10–18% rather than 28%. The wild card is geopolitical: if US–China trade tensions escalate (separate from the Iran situation), Chinese consumers could face national-sentiment headwinds to Apple purchases. Data source: Apple Q2 FY2026 earnings release; CNBC Apple suppliers article, May 1, 2026.
+        </div>
+        <div class="q-answer-cn">
+          大中华区增长28%既有结构性恢复因素（华为冲击后iPhone竞争力回升、AI功能推动换机），也含有一次性基数效应（上年同期基数较低）。预计后续季度中国区增速正常化至10–18%，而非维持28%高增速。地缘政治风险（中美贸易紧张）仍是潜在扰动因素。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          Apple Intelligence is not yet a direct, analyst-modelable revenue driver — it is currently an engagement and retention tool that supports the Services flywheel and reduces churn in the premium upgrade cycle. Management has not given revenue attribution to AI features specifically. However, John Ternus's background as SVP of Hardware Engineering (he oversaw every major Apple product including iPhone, Mac, and AirPods) makes him uniquely positioned to accelerate the integration of Apple Silicon AI capabilities into the product line. The most likely near-term monetisation path: AI features drive faster iPhone upgrade cycles (incremental hardware revenue) and increased iCloud+ subscription uptake (Services revenue). A directly monetised "Apple AI subscription" tier has been rumoured for FY2027 but not confirmed. Watch the FY2027 developer conference in June 2026 for Ternus's first major product statement. Data source: Apple Q2 FY2026 earnings call; CNBC apple-CEO succession reporting; GuruFocus Q2 highlights.
+        </div>
+        <div class="q-answer-cn">
+          Apple Intelligence目前尚不是可独立核算的营收来源，而是支撑服务业务和换机周期的"隐性引擎"。蒂姆·特纳斯的硬件工程背景有助于加速苹果自研AI芯片与功能的整合。最可能的变现路径是通过AI功能加速iPhone换机（拉动硬件收入）和带动iCloud+订阅增长（服务收入）。独立的"苹果AI订阅"可能在FY2027推出，但尚未确认。关键时间节点：2026年6月的开发者大会（WWDC）将是特纳斯的首次重大产品亮相。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 Q&A -->
+<div class="signal-qa-card signal-qa-rank2">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#2</span>
+    Mag-7 AI Earnings Bonanza: Alphabet Net Income +81%, Azure Cloud +40%, AWS +28% — Q1 S&amp;P 500 EPS Growth Hits 27.1%
+  </div>
+  <ul class="questions-list">
+    <li>Can Alphabet's Google Cloud sustain 63% growth, or was Q1 2026 a catch-up quarter — and how does its AI deal pipeline compare to Azure's in size and duration?</li>
+    <li>Is Meta's capex raise to $125–145B a disciplined bet on AI monetisation, or are we seeing the early signs of the classic tech empire-building cycle that destroys shareholder value?</li>
+    <li>Among the four (GOOGL, MSFT, AMZN, META), which offers the best risk/reward into H2 2026, accounting for valuation, AI execution, and regulatory exposure?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Google Cloud's 63% growth likely contains a meaningful catch-up component — Alphabet was behind AWS and Azure in enterprise AI readiness for much of 2024–2025, and Q1 2026 reflects a surge of new AI enterprise and government contract signings (specifically cited as drivers on the earnings call). Sustaining 63% sequentially is very unlikely — a deceleration to 40–50% in Q2–Q3 2026 is the more realistic range. That said, this would still make Google Cloud the fastest-growing major cloud platform. On the pipeline comparison: Azure is estimated to have a larger enterprise AI pipeline by dollar value (Microsoft's Office 365/Teams AI integration gives it a unique go-to-market advantage), but Google Cloud is winning government and research workloads where its Gemini models are strong. Duration: Azure's contracts tend to be longer (3–5 year enterprise agreements) while Google Cloud is competing on shorter-term proof-of-concept and inference workloads. Data source: CNBC Alphabet Q1 earnings; Bloomberg Alphabet/Amazon tech earnings, April 30, 2026.
+        </div>
+        <div class="q-answer-cn">
+          谷歌云63%的增长含有一次性追赶成分，后续季度放缓至40–50%更为现实，但仍将是主要云平台中增速最快的。与Azure相比，谷歌云更擅长赢得政府和科研领域的AI工作负载，而Azure凭借Office 365/Teams的整合优势在企业客户中更占据主动权。合同期限上Azure更长（3–5年），谷歌云以中短期推理工作负载为主。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          Meta's capex raise to $125–145B is both a disciplined bet and carries empire-building risk — it depends on the timeframe you use to judge it. The disciplined case: Meta's AI revenue is already materialising through dramatically improved ad targeting algorithms that drove the 33% revenue growth in Q1 2026. Every dollar of AI infrastructure investment at Meta has a faster, more direct monetisation path than competitors (ads, not enterprise SaaS). The empire-building risk: the incremental $20B raise (mid-range) is being made without clear guidance on expected ROI or monetisation timeline — management cited "building AI infrastructure for the future" without specific product revenue commitments. Historically, Meta's large capex cycles (Reality Labs, metaverse) have included expensive experiments that failed commercially. The market's verdict so far: the stock held up well on the capex raise, suggesting investors still give Zuckerberg the benefit of the doubt on capital allocation. Watch Q2 for whether the capex continues to rise or stabilises. Data source: CNBC Meta Q1 earnings; Motley Fool Mag-7 recap, April 30, 2026.
+        </div>
+        <div class="q-answer-cn">
+          Meta将资本支出提高至1250–1450亿美元，既有理性依据（AI算法已直接提升广告收入33%），也有"帝国扩张"风险（无具体ROI指引）。与Reality Labs等曾经的高额失败投入不同，此次AI广告系统的变现路径更直接、更快速。市场目前给予信任，但若未来季度资本支出继续上调而营收增速趋缓，估值将面临压力。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          Based on data gathered in this run, the best risk/reward into H2 2026 is <strong>GOOGL</strong>, followed by AMZN. Reasoning: GOOGL is trading at a trailing P/E of 29.06 with net income growing 81% YoY — this is exceptional value for the growth rate delivered. Cloud at $20B growing 63% is still underpenetrated vs Microsoft. Regulatory risk (DOJ antitrust) is the key overhang, but the core Search business remains dominant and AI Overviews are monetising. AMZN ranks second: AWS is growing solidly at 28%, retail is profitable, and Amazon has the most diversified AI exposure (AWS infrastructure + Alexa + advertising). MSFT is premium-priced for its Azure growth but the integrations are deep and durable. META ranks last on risk/reward despite the best revenue growth — the capex raise without clear ROI guidance and its history of expensive experimental bets make it the least predictable of the four. Note: this ranking is based on available fundamental data from this briefing run and should not be taken as a buy recommendation. Data source: FactSet S&amp;P 500 earnings season update May 1; Motley Fool Mag-7 earnings recap.
+        </div>
+        <div class="q-answer-cn">
+          综合估值、AI执行力和监管风险，进入2026年下半年风险收益比排序为：<strong>GOOGL最优</strong>（市盈率29倍但净利润增81%，性价比最高）、其次为AMZN（AWS稳健+电商盈利+多元AI布局）、再次为MSFT（估值偏高但基本面坚实）、META风险最大（天量资本支出无明确回报时间表）。注：此排序基于本次数据搜集结果，不构成买卖建议。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 Q&A -->
+<div class="signal-qa-card signal-qa-rank3">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#3</span>
+    NVDA Near All-Time High at $215 as Hyperscalers Commit $500B+ in AI Capex — May 20 Earnings Are the Inflection Point
+  </div>
+  <ul class="questions-list">
+    <li>Will Nvidia's May 20 earnings confirm the guided ~$78B Q1 FY2027 revenue figure, and how explicitly does management address the China export headwind in their forward guidance?</li>
+    <li>At ~29x trailing P/E on a $5.4T market cap, is Nvidia's valuation sustainable if hyperscaler capex ROI disappoints or if a "build it and they will come" narrative fails to materialise?</li>
+    <li>How quickly are AMD's MI-series AI chips and custom silicon (Google TPUs, Amazon Trainium, Microsoft Maia) gaining meaningful enterprise workload share against Nvidia's H100/H200/Blackwell GPU families?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Based on this week's hyperscaler capex data, the ~$78B guidance is highly likely to be met or exceeded. Meta raised capex to $125–145B (from $115–135B); Amazon's full-year capex is heading toward $200B; Alphabet earmarked $185B for data centre expansion. These are direct GPU orders being pulled forward. The supply commitment figure of $95.2B already on Nvidia's books provides a concrete backlog that makes the $78B quarter achievable. On China: management has already excluded China data centre compute revenue from the $78B guidance — the guidance is China-agnostic by design. The more interesting China question is whether the US further tightens export controls on H20 chips (the China-compliant version), which would be an incremental negative. Watch the May 20 call for any mention of H20 demand trends. Data source: Motley Fool NVDA preview; 247WallSt NVDA analysis; NVDA company guidance Q4 FY2026.
+        </div>
+        <div class="q-answer-cn">
+          根据本周超大规模科技公司资本支出数据，英伟达780亿美元的季度营收指引极大可能实现，甚至可能超越。Meta、亚马逊、谷歌的资本支出计划均已大幅上调，GPU订单持续提前。中国市场收入已被排除在指引之外（所用芯片为合规版H20），关键风险是美国是否进一步限制H20出口。5月20日财报电话会议是最重要的信息来源。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          At $5.4T market cap and ~$215/share near all-time highs, Nvidia's valuation is defensible but requires continued flawless execution. The trailing P/E figure for NVDA is n/a — unconfirmed from this run (exact TTM EPS not retrieved); the $5.4T market cap and $215 price imply an extremely high multiple for any historical context. The key valuation risk is not a collapse of hyperscaler capex (that demand is locked in for 2–3 years via supply agreements) but rather a gross margin disappointment. If Nvidia's margins compress from the current ~74% target due to rising production costs or competitive pricing pressure, the earnings picture deteriorates faster than the revenue line suggests. The "build it and they will come" risk is more applicable to Nvidia's customers than to Nvidia itself — Nvidia's revenue doesn't depend on AI ROI materialising for enterprises; it depends on hyperscalers continuing to order. That order backlog currently provides a 2-year buffer. The higher-risk scenario: if two of the four major hyperscalers slow capex in 2027 due to AI ROI disappointment, the current $95.2B supply commitment figure would need to be renegotiated. Data source: 247WallSt NVDA analysis; Motley Fool NVDA forecast.
+        </div>
+        <div class="q-answer-cn">
+          英伟达5.4万亿美元市值需要持续高质量执行来支撑，最大的估值风险不是超级计算机投入需求崩溃（2–3年订单已锁定），而是<strong>毛利率压缩</strong>。若毛利率从目标74%显著下降，盈利将比营收更快恶化。"建了没人用"风险更多作用于英伟达的客户而非英伟达本身——其营收依赖的是超大规模云厂商持续下单，当前950亿美元订单积压提供约2年缓冲期。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          AMD and custom silicon are gaining ground but not yet threatening Nvidia's dominance in the 1–2 year horizon. AMD's MI300X and upcoming MI350 series are the most credible alternative for inference workloads, and Meta has deployed AMD chips at scale. However, Nvidia's CUDA software ecosystem (the programming language that AI developers build on) creates a switching cost that hardware specs alone cannot overcome — retraining AI workflows on AMD hardware requires significant engineering investment. On custom silicon: Google TPUs handle a large portion of Google's own AI training (which is why Google Cloud doesn't need as many Nvidia chips internally), Amazon Trainium handles Amazon's internal workloads, and Microsoft Maia is in early deployment. These custom chips reduce hyperscalers' Nvidia dependence at the margin but are not sold externally, so they don't compete for enterprise AI spending where Nvidia dominates. The realistic scenario: AMD gains 10–15% of inference workload share over 2026–2027; custom silicon reduces hyperscaler Nvidia exposure by 15–20% over 3–5 years; but the sheer growth of the total addressable market means Nvidia's absolute revenue continues to rise even as relative share modestly declines. Data source: 247WallSt NVDA analysis; Motley Fool NVDA pieces, April 2026.
+        </div>
+        <div class="q-answer-cn">
+          AMD和各大厂商自研芯片正在抢占部分市场份额，但短期内难以撼动英伟达主导地位。英伟达的CUDA软件生态是最强护城河——切换到AMD芯片需要巨大的工程成本。谷歌TPU、亚马逊Trainium等自研芯片主要用于内部使用，并不在外部市场竞争。现实预测：AMD在推理工作负载中2026–2027年获得10–15%份额；自研芯片在3–5年内使超大规模厂商对英伟达依赖度降低15–20%；但整体市场规模持续扩大，英伟达绝对营收仍将增长。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — STOCK CARDS                                        -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<!-- ── STOCK CARD: AAPL ──────────────────────────────────────── -->
+<div class="stock-card" id="AAPL">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">AAPL · Apple Inc.</div>
+      <div class="stock-name-cn">
+        苹果公司 — 全球最大消费电子与软件服务企业，核心产品包括iPhone、Mac、iPad和App Store等服务
+      </div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">Market cap: ~$4.3T (est.)</span>
+        <span class="score-pill">Data as of: 1 May 2026 (Q2 FY2026 earnings)</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$279.93</div>
+      <div class="stock-price-chg up">+~5% Friday (est.)</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Apple reported its strongest March quarter on record Thursday evening — Q2 FY2026 revenue of $111.18B (+17% YoY), EPS of $2.01 (+22%), iPhone 17 demand called "extraordinary" by outgoing CEO Tim Cook, Greater China surging 28%. Simultaneously, the CEO transition to John Ternus (effective September 1) makes this the first earnings call of Apple's post-Cook era. The stock gained ~5% Friday and is approaching its 52-week high.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      苹果发布史上最强三月季业绩：营收增17%至1112亿美元，每股盈利增22%至2.01美元，iPhone 17需求"超乎寻常"，大中华区涨28%。同时宣布CEO接班计划（特纳斯9月1日接任），股价周五涨约5%，接近52周高点。苹果是消费电子+软件服务双轮驱动的全球最大市值公司之一。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q2 FY2026 (Quarter ending March 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed — TTM EPS not retrieved</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed this run</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue Q2 FY26 季度营收</div>
+      <div class="fund-val">$111.2B</div>
+      <div class="fund-sub">YoY +17% — record March qtr</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS Q2 FY26 每股盈利</div>
+      <div class="fund-val">$2.01</div>
+      <div class="fund-sub">Beat est. $1.95 (+22% YoY)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Gross margin 毛利率</div>
+      <div class="fund-val">49.3%</div>
+      <div class="fund-sub">+110bps seq · Svc: 76.7%</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Services revenue 服务业务</div>
+      <div class="fund-val">$31.0B</div>
+      <div class="fund-sub">+16% YoY — all-time record</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: Apple Newsroom Q2 FY2026 earnings release (Apple.com, April 30, 2026) and GuruFocus Q2 highlights (May 1, 2026). Trailing P/E and Forward P/E marked n/a — TTM EPS not confirmed in this run. Market cap estimated from price × ~15.3B shares (unconfirmed).
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+
+    <!-- 52-week range bar — position: ($279.93-$193.25)/($288.62-$193.25) = 90.9% -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:91%;"></div>
+          <div class="range-bar-dot" style="left:91%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$193.25</span>
+          <span>Now $279.93</span>
+          <span>$288.62</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Price likely above (stock rallied strongly in April)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        Confirmed above — search confirmed "AAPL trading above its 200-day SMA" (Yahoo Finance, May 1, 2026)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Post-earnings gap-up likely pushed RSI toward overbought (>70)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Strong Uptrend 强势上涨 — stock near top of 52-week range at 91st percentile; earnings-driven gap-up Friday adds momentum layer
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Resistance 阻力: $288.62 (52w high) · Support 支撑: ~$265 (pre-earnings level) · $250 (psychological + prior range)
+      </span>
+    </div>
+
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">Near 52W High</span>
+      <span class="ta-pill ta-bull">Above 200-day MA</span>
+      <span class="ta-pill ta-bull">Earnings Catalyst</span>
+      <span class="ta-pill ta-warn">RSI Likely Elevated — Monitor for pullback</span>
+      <span class="ta-pill ta-warn">Memory Cost Headwind Ahead</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Apple's fundamental picture is as strong as it's been in years: record quarterly revenue, record services revenue, an improving gross margin, and a China rebound that validates the iPhone 17 product cycle. The technical setup mirrors the fundamental quality — the stock sits at the 91st percentile of its 52-week range after Friday's earnings-driven surge, and the post-earnings gap likely pushed momentum indicators into elevated territory. The wild card is the CEO transition: Ternus is unproven in public markets, and the 4-month transition period (May–September) could introduce management uncertainty as a valuation headwind. Near-term, the stock is likely to probe the $288.62 all-time high early next week — a clean break above would be a significant technical breakout and could attract incremental institutional buying.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面极强</strong>：季度营收、服务业务、中华区均创纪录新高，总毛利率49.3%，服务毛利率76.7%。<strong>技术面偏强</strong>：股价处于52周区间91%分位，位于200日均线上方，财报带动的跳空上涨动能强劲，但RSI预计已进入偏高区间，短期需警惕回调风险。最大不确定性来自<strong>CEO交接</strong>——特纳斯将于9月1日正式接任，4个月过渡期内管理层变动可能带来估值压制。短期看，股价有望冲击288美元历史高位；若有效突破，将形成重要技术信号，吸引机构增配。
+    </div>
+  </div>
+</div>
+
+<!-- ── STOCK CARD: GOOGL ──────────────────────────────────────── -->
+<div class="stock-card" id="GOOGL">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">GOOGL · Alphabet Inc.</div>
+      <div class="stock-name-cn">
+        Alphabet（谷歌母公司）— 全球最大互联网搜索公司，旗下业务涵盖谷歌搜索、YouTube、Google Cloud云计算及Waymo自动驾驶
+      </div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">Market cap: ~$4.7T (est.)</span>
+        <span class="score-pill">Data as of: 1 May 2026 (Q1 2026 earnings April 29)</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$384.85</div>
+      <div class="stock-price-chg up">+5.2% Friday (est.)</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Alphabet delivered an extraordinary Q1 2026 — net income surged 81% to $62.58B, Google Cloud hit $20B revenue (+63%), and total revenue of $109.9B beat the $107.2B consensus by 2.5%. The results confirm that Alphabet's years of AI investment (Gemini models, TPU infrastructure) are finally generating supernormal financial returns. The stock is at 99.5% of its 52-week range, just $1.20 below its all-time high.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      Alphabet（谷歌母公司）Q1 2026净利润大涨81%至626亿美元，谷歌云收入突破200亿美元（增63%），总营收1099亿美元超预期。股价接近历史高位384.85美元，距52周高点仅1.2美元。Alphabet是搜索+云+AI+YouTube多业务布局的综合科技平台。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 (Quarter ending March 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">29.06x</div>
+      <div class="fund-sub">vs TTM EPS $13.24 (Yahoo Finance, May 1)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Search result inconsistent — unconfirmed</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue Q1 2026 季度营收</div>
+      <div class="fund-val">$109.9B</div>
+      <div class="fund-sub">YoY +20% — beat $107.2B est.</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS Q1 2026 每股盈利</div>
+      <div class="fund-val">$5.11</div>
+      <div class="fund-sub">+81% YoY · Blowout quarter</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Net income 净利润</div>
+      <div class="fund-val">$62.6B</div>
+      <div class="fund-sub">+81% YoY — record</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Google Cloud 云业务</div>
+      <div class="fund-val">$20.0B</div>
+      <div class="fund-sub">+63% YoY — fastest growth since 2022</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: CNBC Alphabet Q1 2026 earnings (April 29, 2026); Yahoo Finance GOOGL valuation statistics (May 1, 2026); Bloomberg Alphabet/Amazon tech earnings recap (April 30, 2026). Forward P/E marked n/a due to data inconsistency in search results (NTM figure of 32.12 would imply negative earnings growth, contradicting the 81% net income surge — figure likely stale or incorrect). Market cap estimated from $384.85 × ~12.2B shares.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+
+    <!-- 52-week range bar — position: ($384.85-$147.84)/($386.05-$147.84) = 99.5% -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:99%;"></div>
+          <div class="range-bar-dot" style="left:99%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$147.84</span>
+          <span>Now $384.85</span>
+          <span>$386.05</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Confirmed trading far above based on 52w range position
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Given $147.84 52w low, 200-day MA likely in the $280–320 range — stock significantly above
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Post-earnings surge from $365 low to $384.85 on Friday likely pushed RSI above 70 (overbought territory)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Strong Uptrend 强势上涨 — stock at 99.5th percentile of 52-week range; doubled in price over the year; earnings confirm fundamental acceleration
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Resistance 阻力: $386.05 (52w high / all-time high) · Support 支撑: ~$360 (pre-earnings base) · ~$320 (major support from prior consolidation)
+      </span>
+    </div>
+
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">At All-Time High</span>
+      <span class="ta-pill ta-bull">Net Income +81% Confirms Breakout</span>
+      <span class="ta-pill ta-bull">Cloud Re-Acceleration</span>
+      <span class="ta-pill ta-warn">RSI Likely Overbought Post-Earnings</span>
+      <span class="ta-pill ta-neutral">P/E 29x — Reasonable for Growth</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Alphabet presents a rare combination: a stock at all-time highs that is simultaneously trading at a reasonable P/E (29x) relative to its growth trajectory (net income +81%, cloud +63%). The fundamental picture is the strongest it has been since the company's early growth phase — AI investments in Gemini and TPUs are now generating measurable financial returns in the Cloud segment. The technical setup shows a stock at 99.5% of its 52-week range with strong earnings momentum; the primary near-term technical risk is an RSI-driven pullback after Friday's surge. However, unlike a speculative AI stock, GOOGL's 29x P/E on $62.6B quarterly net income is backed by real and growing cash flows. The DOJ antitrust case remains the key structural overhang — any adverse ruling on Search monopoly practices could reshape the monetisation model. For investors with a 12-month horizon, GOOGL looks like one of the most compelling large-cap risk/reward setups in the current market.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面罕见强势</strong>：净利润季度增81%，谷歌云增63%，29倍市盈率相较增速极具性价比，是Mag-7中估值最合理的之一。<strong>技术面接近历史高位</strong>（52周区间99.5%分位），但基本面加速增长为高价位提供支撑，这与单纯依赖预期的AI概念股有本质区别。关键风险是美国司法部反垄断诉讼——若搜索业务被迫拆分或改变商业模式，估值将面临重估。对12个月视野的投资者而言，GOOGL是当前大盘股中风险收益比最优的选项之一。
+    </div>
+  </div>
+</div>
+
+<!-- ── STOCK CARD: NVDA ──────────────────────────────────────── -->
+<div class="stock-card" id="NVDA">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">NVDA · NVIDIA Corporation</div>
+      <div class="stock-name-cn">
+        英伟达 — 全球AI芯片（GPU）领导者，数据中心、自动驾驶及游戏三大业务，当前市值约5.4万亿美元，为全球市值最高的科技公司
+      </div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">Market cap: ~$5.4T</span>
+        <span class="score-pill">Data as of: 29 Apr 2026 (most recent trading data)</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$215.12</div>
+      <div class="stock-price-chg up">+29% in Apr · +95% YoY</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      This week's Mag-7 earnings reports were a direct read-through for Nvidia: Meta's capex raised to $125–145B, Amazon's capex heading to $200B, and Alphabet earmarking $185B for data centre expansion — all of which flows heavily into Nvidia GPU orders. NVDA is now near its all-time closing high of $216.83, with RSI at 72.6 (approaching overbought). The May 20 earnings report — which management guided for ~$78B in Q1 FY2027 revenue (+77% YoY) — is the single most anticipated financial event of H1 2026.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      本周科技巨头集体上调资本支出，直接利好英伟达GPU订单。NVDA股价215美元接近4月27日历史高位（216.83美元），4月单月涨29%，过去一年涨95%。RSI达72.6，处于超买边缘。5月20日将发布Q1 FY2027财报，公司此前指引营收约780亿美元（同比+77%），是上半年最重要的财报事件。英伟达是AI基础设施时代"卖铲子的人"，受益于超大规模云厂商持续扩张AI数据中心。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 FY2027 Guidance (reports May 20, 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed this run — high multiple implied by $5.4T cap</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Fwd Revenue Guide 营收指引</div>
+      <div class="fund-val">~$78B</div>
+      <div class="fund-sub">Q1 FY2027 · +77% YoY guided</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Fwd Revenue Growth 营收增速</div>
+      <div class="fund-val">+77%</div>
+      <div class="fund-sub">Q1 FY2027 vs Q1 FY2026 (excl. China DC)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Supply commitments 供货合同</div>
+      <div class="fund-val">$95.2B</div>
+      <div class="fund-sub">Locked hyperscaler orders (backlog)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Gross margin target 毛利率目标</div>
+      <div class="fund-val">~74%</div>
+      <div class="fund-sub">n/a — unconfirmed Q1 FY2027 specific</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Market cap 市值</div>
+      <div class="fund-val">~$5.4T</div>
+      <div class="fund-sub">World's largest company by mkt cap</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: Motley Fool NVDA earnings preview (April 28, 2026); 247WallSt NVDA analysis (April 28, 2026); NVDA company guidance (Q4 FY2026 earnings call). Trailing P/E, exact gross margin, and EPS metrics marked n/a — not retrieved in this run. China data centre revenue excluded from the $78B guidance per company policy under US export controls.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+
+    <!-- 52-week range bar — position: ($215.12-$110.82)/($216.83-$110.82) = 98.4% -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:98%;"></div>
+          <div class="range-bar-dot" style="left:98%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$110.82</span>
+          <span>Now $215.12</span>
+          <span>$216.83</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed · Price far above given $175.75 April 1 open → $215 by April 27
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        Confirmed above — search confirms "NVDA trading above its 200-day SMA" (MacroTrends / Yahoo Finance data)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        72.6 — Approaching Overbought 接近超买 (>70 threshold) · Source: Barchart/Dukascopy technical analysis (Apr 2026)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Strong Uptrend 强势上涨 — rose from $175.75 (April 1 open) to $216.83 ATH on April 27, a +23% move in 27 days; consolidating just below ATH
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Resistance 阻力: $216.83 (52w &amp; all-time high) · Support 支撑: ~$200 (psychological + prior breakout level) · ~$185 (April consolidation base)
+      </span>
+    </div>
+
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">At All-Time High</span>
+      <span class="ta-pill ta-bull">Above 200-day MA</span>
+      <span class="ta-pill ta-bull">Hyperscaler Capex Read-Through Positive</span>
+      <span class="ta-pill ta-warn">RSI 72.6 — Overbought Watch</span>
+      <span class="ta-pill ta-warn">+29% April Run — "Sell the News" Risk into May 20</span>
+      <span class="ta-pill ta-bear">China Export Ban Structural Headwind</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Nvidia's fundamental case is as compelling as ever — a $95.2B supply backlog, 77% guided revenue growth, and a GPU ecosystem that every major cloud provider is competing to secure. This week's hyperscaler capex raises (Meta, Amazon, Alphabet all higher) are unambiguously positive read-throughs for Nvidia's revenue pipeline. However, the technical picture carries a caution flag: with RSI at 72.6 and the stock up 29% in April alone, the risk of a "buy the rumour, sell the news" pullback into the May 20 earnings is meaningful. In similar situations — a stock at ATH with RSI >70 heading into a major catalyst — even a strong beat can trigger profit-taking if forward guidance isn't dramatically above consensus. The level to watch is $200 on the downside (major psychological support) and $216.83 on the upside. A clean ATH breakout above $217 before May 20 would be technically significant.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面无懈可击</strong>：950亿美元订单积压、77%营收增速指引、超大规模云厂商天量资本支出全面提速。本周Meta等公司上调资本支出计划，对英伟达构成直接利好。<strong>技术面需要谨慎</strong>：股价位于52周区间98%分位（接近历史高点），RSI达72.6处于超买区间，4月已累计涨29%，5月20日财报前存在明显的"利好出尽"回调风险。关键价位：下行支撑位200美元，上行阻力位历史高点216.83美元。若财报前突破217美元，技术信号将非常强烈；若财报后未能突破，可能引发较大幅度获利了结。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SOURCES ─────────────────────────────────────────────────── -->
+<div class="section-label">Sources 数据来源</div>
+<div class="sources mb16">
+  Apple Newsroom — <a href="https://www.apple.com/newsroom/2026/04/apple-reports-second-quarter-results/">Apple Q2 FY2026 earnings release (April 30, 2026)</a><br>
+  Apple Newsroom — <a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/">Tim Cook → Executive Chairman; John Ternus → CEO (April 20, 2026)</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/30/apple-aapl-q2-2026-earnings-report.html">Apple AAPL Q2 2026 earnings report detail</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/01/apple-reported-stellar-results-that-could-boost-the-shares-of-these-suppliers-.html">Apple stellar results — supplier read-through</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/alphabet-googl-q1-2026-earnings.html">Alphabet GOOGL Q1 2026 earnings (April 29, 2026)</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html">Microsoft Q3 2026 earnings</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/20/apple-names-john-ternus-ceo-replacing-tim-cook-who-becomes-chairman.html">Apple names John Ternus as CEO, Tim Cook becomes chairman</a><br>
+  Yahoo Finance — <a href="https://finance.yahoo.com/quote/GOOGL/key-statistics/">Alphabet GOOGL valuation statistics — P/E ratio (May 1, 2026)</a><br>
+  Yahoo Finance — <a href="https://finance.yahoo.com/news/apple-stock-rises-after-q2-earnings-top-estimates-on-strong-iphone-china-sales-174442778.html">Apple stock rises after Q2 earnings — iPhone, China</a><br>
+  GuruFocus — <a href="https://www.gurufocus.com/news/8836455/apple-inc-aapl-q2-2026-earnings-call-highlights-record-revenue-and-strategic-shifts-amid-supply-challenges">Apple Q2 2026 earnings call highlights — gross margins</a><br>
+  GuruFocus — <a href="https://www.gurufocus.com/news/8833427/apple-aapl-q2-fy2026-earnings-beat-eps-201-vs-194-est-revenue-11118b-vs-10966b-still-119-overvalued-gf-score-98100">Apple Q2 FY2026 GF Score 98/100 — EPS vs estimates</a><br>
+  Motley Fool — <a href="https://www.fool.com/investing/2026/04/30/magnificent-seven-companies-microsoft-amazon-alpha/">Mag-7 earnings — winners and losers Q1 2026</a><br>
+  Motley Fool — <a href="https://www.fool.com/investing/2026/04/28/prediction-nvidia-stock-will-skyrocket-after-may-2/">NVDA — prediction for May 20 earnings</a><br>
+  247WallSt — <a href="https://247wallst.com/investing/2026/04/28/3-reasons-nvidias-rally-has-room-to-run-even-at-all-time-highs/">3 reasons Nvidia rally has room to run at ATH (April 28, 2026)</a><br>
+  Bloomberg — <a href="https://www.bloomberg.com/news/articles/2026-04-30/alphabet-amazon-outpace-meta-in-ai-during-earnings-bonanza">Alphabet, Amazon outpace Meta in AI earnings bonanza</a><br>
+  FactSet — <a href="https://insight.factset.com/sp-500-earnings-season-update-may-1-2026">S&amp;P 500 Earnings Season Update — May 1, 2026 (27.1% blended EPS growth)</a><br>
+  Barchart / Dukascopy — NVDA RSI 72.6 technical analysis (April 2026)<br>
+  MacroTrends / Yahoo Finance — AAPL, NVDA 52-week range data (May 1, 2026)
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<div class="footer">
+  Stock Deep Dive · 股票深度分析<br>
+  Saturday 2 May 2026 · AM SGT · Companion to Daily Market Intelligence<br>
+  ← <a href="market_brief_20260502_AM.html" style="color:#185FA5;">Back to main briefing 返回每日简报</a>
+</div>
+
+</body>
+</html>

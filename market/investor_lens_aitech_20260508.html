@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/Tech Investor Lens — Week of May 4–8, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #EEF4FD; border: 1px solid #C4D8F2;
+                   border-radius: 6px; padding: 4px 12px;
+                   font-size: 11px; color: #185FA5; margin-bottom: 10px;
+                   font-weight: 600; letter-spacing: 0.03em; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC','Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; margin-bottom: 1rem; }
+
+  .investor-roster { display: flex; gap: 6px; flex-wrap: wrap;
+                     margin-bottom: 1.5rem; padding: 12px 14px;
+                     background: #f0efe8; border-radius: 8px; }
+  .roster-label { font-size: 10px; font-weight: 700; color: #aaa;
+                  text-transform: uppercase; letter-spacing: 0.06em;
+                  width: 100%; margin-bottom: 8px; }
+  .investor-tag { font-size: 11px; font-weight: 600; padding: 3px 10px;
+                  border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .investor-tag-grey { font-size: 11px; font-weight: 600; padding: 3px 10px;
+                       border-radius: 20px; background: #f0efe8; color: #999; }
+
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  .view-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 0 12px 12px 0;
+               padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .view-rank1 { border-left: 3px solid #185FA5; }
+  .view-rank2 { border-left: 3px solid #1D9E75; }
+  .view-rank3 { border-left: 3px solid #854F0B; }
+  .view-rank4 { border-left: 3px solid #7B3FA5; }
+  .view-rank5 { border-left: 3px solid #A5503F; }
+  .view-rank6 { border-left: 3px solid #888888; }
+
+  .view-top { display: flex; justify-content: space-between;
+              align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  .view-meta { display: flex; align-items: center; gap: 6px;
+               flex-wrap: wrap; margin-bottom: 6px; }
+  .investor-pill { font-size: 11px; font-weight: 700; padding: 2px 10px;
+                   border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                background: #f0efe8; color: #666; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #EAF3DE; color: #27500A; }
+  .ticker-pill-bear { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                      border-radius: 20px; background: #FCEBEB; color: #791F1F; }
+  .contrarian-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                     border-radius: 20px; background: #FCEBEB;
+                     color: #791F1F; }
+  .date-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+               background: #f0efe8; color: #888; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb;
+              white-space: nowrap; flex-shrink: 0; }
+
+  .view-thesis { font-size: 15px; font-weight: 600; line-height: 1.4;
+                 margin-bottom: 6px; }
+  .view-thesis-cn { font-size: 13px; color: #777; line-height: 1.5;
+                    margin-bottom: 10px;
+                    font-family: 'PingFang SC','Microsoft YaHei',
+                    'Noto Sans SC', sans-serif; }
+
+  .investor-quote { background: #fafaf7; border-left: 3px solid #ddddd5;
+                    border-radius: 0 8px 8px 0; padding: 10px 14px;
+                    margin-bottom: 10px; }
+  .quote-text { font-size: 13px; color: #444; line-height: 1.7;
+                font-style: italic; }
+  .quote-source { font-size: 11px; color: #aaa; margin-top: 8px;
+                  font-style: normal; }
+  .quote-source a { color: #185FA5; text-decoration: none; }
+
+  .view-body { font-size: 13px; color: #555; line-height: 1.6;
+               margin-bottom: 10px; }
+
+  .market-impl { background: #EEF4FD; border-radius: 8px;
+                 padding: 10px 14px; margin-bottom: 10px; }
+  .impl-label { font-size: 10px; font-weight: 700; color: #185FA5;
+                text-transform: uppercase; letter-spacing: 0.06em;
+                margin-bottom: 6px; }
+  .impl-tickers { display: flex; gap: 6px; flex-wrap: wrap;
+                  margin-bottom: 8px; }
+  .impl-text { font-size: 13px; color: #333; line-height: 1.6; }
+
+  .consensus-gap { background: #FDF3F3; border: 1px solid #F0CCCC;
+                   border-radius: 8px; padding: 10px 14px;
+                   margin-bottom: 10px; }
+  .consensus-label { font-size: 10px; font-weight: 700; color: #791F1F;
+                     text-transform: uppercase; letter-spacing: 0.06em;
+                     margin-bottom: 5px; }
+  .consensus-text { font-size: 13px; color: #555; line-height: 1.6; }
+
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC','Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+
+  .synthesis-card { background: #f0efe8; border-radius: 12px;
+                    padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .synth-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .synth-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .synth-key { display: block; font-size: 10px; font-weight: 700;
+               text-transform: uppercase; letter-spacing: 0.06em;
+               color: #888; margin-bottom: 4px; }
+  .synth-val { display: block; font-size: 13px; color: #444;
+               line-height: 1.6; margin-bottom: 6px; }
+  .synth-cn { display: block; font-size: 12px; color: #999;
+              line-height: 1.7; padding-top: 6px;
+              border-top: 1px dashed #ddddd5;
+              font-family: 'PingFang SC','Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  .no-views-note { background: #fafaf7; border: 1px dashed #ddddd5;
+                   border-radius: 8px; padding: 10px 14px;
+                   font-size: 12px; color: #999; margin-bottom: 10px; }
+
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">⚡ AI/Tech Investor Lens · Weekly Close</div>
+  <div class="report-title">What high-conviction AI investors are seeing</div>
+  <div class="report-title-cn">顶尖AI科技投资人的前沿观点 — 市场尚未定价的信号</div>
+  <div class="report-date">
+    Week of May 4–8, 2026 · Singapore time ·
+    Views the market hasn't fully priced · 每周收盘后发布
+  </div>
+</div>
+
+<!-- INVESTOR ROSTER -->
+<div class="investor-roster mb16">
+  <div class="roster-label">Investors monitored this week 本周追踪人员</div>
+  <span class="investor-tag">A. Karpathy</span>
+  <span class="investor-tag">L. Aschenbrenner</span>
+  <span class="investor-tag">Garry Tan · YC</span>
+  <span class="investor-tag">Emmett Shear</span>
+  <span class="investor-tag-grey">Nat Friedman (Meta, no independent views)</span>
+  <span class="investor-tag-grey">Daniel Gross (Meta, no independent views)</span>
+  <span class="investor-tag-grey">Eric Paley (MA govt role, no VC views)</span>
+  <span class="investor-tag-grey">Delian Asparouhov (no posts this week)</span>
+  <span class="investor-tag-grey">Michael Dempsey (no posts this week)</span>
+</div>
+
+<!-- STATUS NOTES -->
+<div class="section-label" style="margin-bottom:6px;">Investor status notes 投资人状态说明</div>
+<div class="no-views-note" style="margin-bottom:1.5rem;">
+  <strong>Nat Friedman &amp; Daniel Gross:</strong> Both joined Meta Superintelligence Labs (June–July 2025) and are now insiders. Their public commentary is limited by that role; no independent market-facing views this week. &nbsp;|&nbsp;
+  <strong>Eric Paley:</strong> Appointed Secretary of Economic Development for Massachusetts (September 2025); no longer publishing VC commentary. &nbsp;|&nbsp;
+  <strong>Delian Asparouhov &amp; Michael Dempsey:</strong> No market-relevant posts found in the past 7 days.
+</div>
+
+<!-- TOP VIEWS -->
+<div class="section-label">This week's highest-signal views 本周最高价值观点</div>
+
+<!-- VIEW CARD #1 -->
+<div class="view-card view-rank1">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Andrej Karpathy</span>
+        <span class="score-pill">17/20</span>
+        <span class="ticker-pill-bear">CRM</span>
+        <span class="ticker-pill-bear">NOW</span>
+        <span class="ticker-pill-bear">TEAM</span>
+        <span class="ticker-pill">MSFT</span>
+        <span class="contrarian-pill">vs consensus</span>
+        <span class="date-pill">Published Apr 30, 2026</span>
+      </div>
+      <div class="view-thesis">
+        Software's primary user is becoming an agent, not a human — companies that haven't built agent-native infrastructure (APIs, CLIs, MCP servers, Markdown docs for machines) face structural displacement within 3 years.
+      </div>
+      <div class="view-thesis-cn">
+        软件的主要用户正在从人类转变为AI智能体——未能构建面向智能体基础设施（API、CLI、MCP服务器、机器可读文档）的软件公司，将在三年内面临结构性替代风险。
+      </div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "In three years, an agent will consume your software before a human does. Build APIs. Write Markdown for machines. Design for programmatic access... Why are people still telling me what to do? I don't want to do anything. What is the thing I should copy-paste to my agent? Every time I am told 'go to this URL' or 'click here,' I think: no. The industry has to decompose workloads into sensors and actuators over the world."
+    </div>
+    <div class="quote-source">
+      Via Karpathy's personal blog (Sequoia Ascent 2026 fireside chat summary) · Apr 30, 2026 ·
+      <a href="https://karpathy.bearblog.dev/sequoia-ascent-2026/" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    Karpathy framed "Software 3.0" — a paradigm where LLMs are the primary interpreter and the context window is the lever. His central claim is that most existing enterprise software is built for humans clicking through screens, not for agents using APIs and tools. He describes MenuGen as a case where "the app shouldn't exist" — multimodal models can now perform the same transformation directly, eliminating the software stack. His test for agent-readiness: can an LLM fully deploy your product end-to-end without manual clicking? Most B2B software fails this test entirely. He predicts every product will need "agent-native surfaces" — MCP servers, structured logs, machine-readable schemas, headless setup — or face displacement by competitors that do.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill-bear">CRM</span>
+      <span class="ticker-pill-bear">NOW</span>
+      <span class="ticker-pill-bear">TEAM</span>
+      <span class="ticker-pill-bear">ZM</span>
+      <span class="ticker-pill">MSFT</span>
+      <span class="ticker-pill">SNOW</span>
+    </div>
+    <div class="impl-text">Legacy horizontal SaaS platforms (Salesforce, ServiceNow, Atlassian) are heavily human-UI optimized and face agent-interface risk. Microsoft has the strongest defensive moat given Copilot/Graph API/MCP integration at the OS level — potentially a structural winner. Snowflake's data-API positioning could strengthen. Karpathy's framing is a leading indicator for which categories face disruption from "agent-native" startups (YC W26 is already deploying into these niches — see View #4).</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Wall Street models the AI transition as a productivity tailwind for existing software incumbents. Karpathy argues the more important dynamic is structural displacement — "some apps should stop existing as apps" — which implies revenue contraction, not just efficiency gain, for UI-native software.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">Karpathy在红杉资本Ascent 2026峰会的演讲中提出了一个颠覆性观点：<strong>三年内，AI智能体将先于人类使用你的软件。</strong>他认为"软件3.0"时代要求产品必须具备面向智能体的接口（API、MCP服务器、CLI），而不是依赖人类点击界面。他以MenuGen为例说明：多模态模型已经可以直接处理图像到图像的任务，传统软件栈因此"不应该存在"。这对CRM、ServiceNow、Atlassian等以人机界面为核心的SaaS企业构成结构性威胁，而微软凭借Copilot和Graph API处于相对优势地位。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #2 -->
+<div class="view-card view-rank2">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Leopold Aschenbrenner</span>
+        <span class="score-pill">16/20</span>
+        <span class="ticker-pill">BE</span>
+        <span class="ticker-pill">INTC</span>
+        <span class="ticker-pill-bear">NVDA</span>
+        <span class="ticker-pill-bear">AVGO</span>
+        <span class="contrarian-pill">exits consensus AI darlings</span>
+        <span class="date-pill">Disclosed May 5, 2026</span>
+      </div>
+      <div class="view-thesis">
+        GPU value is fully priced; the next AI bottleneck is physical power generation and US domestic foundry — Situational Awareness Fund has exited NVDA and Broadcom entirely, rotating into fuel cells (BE), Intel foundry (INTC), and Bitcoin miners repositioning assets for AI/HPC.
+      </div>
+      <div class="view-thesis-cn">
+        GPU的价值已被充分定价；下一个AI瓶颈在于物理电力供应与美国本土晶圆厂产能——Situational Awareness基金已完全退出英伟达和博通，转仓至燃料电池（BE）、英特尔晶圆厂（INTC）以及正将算力资产重新定位于AI/HPC的比特币矿商。
+      </div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "Aschenbrenner correctly anticipated that energy supplies would be a fundamental choke point for the AI sector months earlier than most traders. His edge came from understanding the timeline of AI infrastructure build-outs at a granular level... the same situational awareness that identified energy shortages is now highlighting Intel's unique position at the intersection of advanced process technology, custom silicon, and domestic foundry capacity."
+    </div>
+    <div class="quote-source">
+      Paraphrased from Motley Fool analysis of 13F filings · May 5, 2026 ·
+      <a href="https://www.fool.com/investing/2026/05/05/leopold-aschenbrenners-situational-awareness-fund/" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    Aschenbrenner's $5.5–9B Situational Awareness Fund publicly disclosed (via 13F) a complete exit from NVDA and Broadcom while opening new positions in data-center real estate (Kilroy Realty), distributed-power (Power Solutions International, Bloom Energy), and Bitcoin miners that are converting energy infrastructure to AI/HPC use. His stated logic — "physics arbitrage" — is that the AI scaling roadmap requires power and manufacturing at volumes that existing infrastructure cannot support, and that markets are focused on the semiconductor layer rather than the deeper physical bottlenecks. Bloom Energy (BE) surged ~176% from his Q4 2025 entry; Intel (INTC) is up ~175% in 2026. He initiated large Intel call option positions (20.2M calls bought Q1 2025) anticipating the intersection of inference demand, AI PC cycles, and domestic foundry policy tailwinds (CHIPS Act).
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">BE</span>
+      <span class="ticker-pill">INTC</span>
+      <span class="ticker-pill">VST</span>
+      <span class="ticker-pill">CEG</span>
+      <span class="ticker-pill-bear">NVDA</span>
+      <span class="ticker-pill-bear">AVGO</span>
+    </div>
+    <div class="impl-text">The "physics bottleneck" rotation trade is: long power infrastructure (fuel cells, nuclear, gas turbines) and domestic compute manufacturing (Intel foundry), short the consensus AI chip layer (NVDA, AVGO) where he believes value is now fully reflected. Bitcoin miners with repositioned energy assets (Riot, CleanSpark) are proxy AI power plays. For Singapore-based investors, Vistra (VST) and Constellation Energy (CEG) are liquid power plays aligned with his thesis.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Consensus is still overweight the chip layer (NVDA remains the most crowded long in US equities). Aschenbrenner — with his inside knowledge of AI lab scaling timelines — argues the GPU value extraction window is narrowing, while the power and manufacturing constraint is just beginning to bite at the scale of AGI-level compute clusters.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">Aschenbrenner的Situational Awareness基金（规模55亿至90亿美元）已在本周的13F披露中完全清仓英伟达和博通。他的逻辑是"物理套利"：<strong>AI算力扩张的下一个瓶颈不是GPU，而是电力基础设施与国内晶圆制造产能。</strong>他在Q4 2025买入Bloom Energy（BE，燃料电池）后，该股已上涨176%；同时大量买入英特尔看涨期权，押注其晶圆厂在AI推理、AI PC和CHIPS法案政策交汇处的战略价值。华尔街共识仍集中于芯片层，但他认为这一层的价值已充分定价，真正的超额收益将来自电力和制造基础设施。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #3 -->
+<div class="view-card view-rank3">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Andrej Karpathy</span>
+        <span class="score-pill">14/20</span>
+        <span class="ticker-pill-bear">ACN</span>
+        <span class="ticker-pill-bear">MAN</span>
+        <span class="ticker-pill">MSFT</span>
+        <span class="contrarian-pill">vs consensus on headcount</span>
+        <span class="date-pill">Published Apr 30, 2026</span>
+      </div>
+      <div class="view-thesis">
+        The "10x engineer" is becoming a 100x+ engineer via agentic workflows — this structurally challenges every software business whose moat or cost structure depends on headcount, and will reorganize hiring practices industry-wide faster than markets expect.
+      </div>
+      <div class="view-thesis-cn">
+        借助智能体工作流，"10倍工程师"正在演变为"100倍工程师"——这从结构上挑战了所有依赖人头规模构建护城河或成本结构的软件企业，其对招聘实践的重塑将快于市场预期。
+      </div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "I said recently that I have never felt more behind as a programmer. The reason is not that programming became harder in the old sense. It is that the default workflow changed... I started trusting the agents with more and more of the work. That realization sent me down the rabbit hole of infinite side projects. My side-projects folder is extremely full... People who are very good at this can peak much higher than 10x. 10x is not the speedup people can gain."
+    </div>
+    <div class="quote-source">
+      Via Karpathy's blog (Sequoia Ascent 2026 transcript) · Apr 30, 2026 ·
+      <a href="https://karpathy.bearblog.dev/sequoia-ascent-2026/" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    Karpathy identifies December 2025 as an "agentic inflection point" — when agents crossed from "useful with frequent correction" to "trustworthy for large delegated chunks." His personal workflow shifted from 80% manual coding to delegating nearly everything, with humans focusing on specs, security, taste, and system design judgment. He draws a direct line to hiring: traditional coding interviews (small puzzles) are now measuring the wrong skill. The new benchmark should be: build a substantial project with agents, then have adversarial agents try to break it. His claim — "people who master agentic workflows may outperform others by far more than 10x" — has direct implications for professional services revenue models built on billable-hour or headcount multipliers.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill-bear">ACN</span>
+      <span class="ticker-pill-bear">MAN</span>
+      <span class="ticker-pill-bear">EPAM</span>
+      <span class="ticker-pill-bear">CTSH</span>
+      <span class="ticker-pill">MSFT</span>
+    </div>
+    <div class="impl-text">IT and engineering staffing companies (Accenture, Manpower, EPAM, Cognizant) face structural revenue compression if engineering productivity multipliers reach 50–100x. Their billable-hour model assumes time is scarce. The "agentic engineer" multiplier makes time abundant. Conversely, tool vendors capturing this workflow shift (Microsoft via Copilot, GitHub) gain recurring high-margin revenue with each new engineer who "goes agentic."</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Consensus discussions of AI productivity focus on 20–30% efficiency gains ("AI helps coders code faster"). Karpathy is describing a regime change — from marginal improvement to near-complete delegation — that the market has not modelled into staffing or services company DCFs.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">Karpathy将2025年12月定义为"智能体拐点"：从那时起，他将几乎所有编程任务委托给AI智能体，自己只负责规格说明、安全审查和系统设计判断。<strong>他的核心主张是：擅长智能体工作流的工程师生产力可能超过普通工程师的10倍乃至百倍以上。</strong>这一观点对依赖人力规模的IT服务公司（埃森哲、EPAM、Cognizant）构成结构性威胁——其按工时计费的商业模式在智能体时代将承压。微软通过Copilot和GitHub捕获这一工作流迁移，有望获得持续的高毛利收入增长。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #4 -->
+<div class="view-card view-rank4">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Garry Tan · YC</span>
+        <span class="score-pill">14/20</span>
+        <span class="ticker-pill-bear">VEEV</span>
+        <span class="ticker-pill-bear">HIMS</span>
+        <span class="ticker-pill-bear">SMAR</span>
+        <span class="contrarian-pill">pipeline lead indicator</span>
+        <span class="date-pill">YC W26 Demo Day data · Mar 2026 + ongoing</span>
+      </div>
+      <div class="view-thesis">
+        YC's W26 batch — 835 AI startups, 95% B2B — reveals where smart founders see durable niches: high-stakes, regulation-heavy workflows in healthcare, manufacturing, logistics, legal, and government operations where AI errors have real-world cost and incumbents are slow to respond.
+      </div>
+      <div class="view-thesis-cn">
+        YC W26批次共有835家AI初创公司，95%专注B2B，揭示了聪明的创始人正在押注的细分方向：医疗、制造、物流、法律及政府运营等高风险、重监管的垂直领域——在这些领域，AI犯错有真实后果，而现有市场参与者反应迟缓。
+      </div>
+    </div>
+    <div class="rank-num">#4</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "YC Demo Day for W26 is in full swing. The craziest stat: 3X more companies in this batch reached $1M annualized revenue than W25. Also crazy: the fastest revenue growth rate of YC history at 14% week on week growth on average across the whole set of nearly 200 startups."
+    </div>
+    <div class="quote-source">
+      Via Garry Tan (@garrytan) on X · Mar 2026 (ongoing commentary through May 2026) ·
+      <a href="https://x.com/garrytan" target="_blank">View profile ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    YC's W26 batch provides a rare forward-looking indicator of where venture-backed AI startups are targeting disruption. The composition is striking: only 5% consumer, 64% B2B, with the heaviest clusters in healthcare, life sciences, manufacturing, logistics, legal, and government. These are the sectors where "being wrong carries real cost" — misdiagnosed patients, fraud transactions, aircraft maintenance errors. The median YC W26 AI company is building a narrow, specialized agent for a workflow that legacy SaaS addresses inadequately. Garry Tan's observation of 14% week-on-week revenue growth at Demo Day (average across ~200 startups) signals these are not prototype-stage projects. In prior cycles, which verticals saw heavy YC deal flow was a 12–18 month leading indicator of which public software companies faced revenue headwinds.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill-bear">VEEV</span>
+      <span class="ticker-pill-bear">HIMS</span>
+      <span class="ticker-pill-bear">SMAR</span>
+      <span class="ticker-pill-bear">ADSK</span>
+      <span class="ticker-pill-bear">ORCL (healthcare EHR)</span>
+    </div>
+    <div class="impl-text">Vertical SaaS players in the targeted sectors (Veeva in life sciences, SmartSheet in project management for construction/industrial, Autodesk for manufacturing workflows) face the highest private-company competition from YC pipeline. The 12–18 month disruption lag means the risk is not yet fully visible in quarterly financials, but YC batch composition is a reliable leading indicator. Healthcare AI agents replacing EHR workflow overhead (Oracle Health, Epic adjacencies) are a specific category.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">The mainstream AI narrative focuses on consumer chatbots and general-purpose AI assistants. The actual funded startup activity (where smart founders and investors are putting capital) is almost entirely in B2B workflow automation in regulated, high-stakes verticals — a pattern that will compound into public company revenue headwinds by late 2027.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">YC W26批次包含835家AI初创公司，其中95%专注B2B，这是目前市场上最大的创业风向标。<strong>创始人的集体智慧指向高风险、重监管的垂直行业</strong>：医疗、生命科学、制造、物流和法律服务——而非消费端或通用AI助手。Garry Tan披露该批次平均周收入增长率高达14%，说明这些公司已具备真实的商业化能力。从历史规律看，YC批次的行业分布通常是12至18个月后上市公司承压的先行指标。投资者应重点关注Veeva（生命科学）、Autodesk（制造工作流）等垂直SaaS公司面临的新进入者竞争压力。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #5 -->
+<div class="view-card view-rank5">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Emmett Shear · Softmax</span>
+        <span class="score-pill">12/20</span>
+        <span class="ticker-pill-bear">MSFT (OpenAI exposure)</span>
+        <span class="ticker-pill">A16Z-backed</span>
+        <span class="contrarian-pill">vs all major labs' approach</span>
+        <span class="date-pill">a16z podcast · ongoing May 2026</span>
+      </div>
+      <div class="view-thesis">
+        The entire "control and steering" alignment paradigm used by every major AI lab is fatally flawed — Shear's Softmax (backed by Andreessen Horowitz) argues that RLHF-based alignment produces "narcissistic mirrors," not genuinely safe AI, making current alignment investments at OpenAI, Anthropic, and DeepMind potentially misdirected.
+      </div>
+      <div class="view-thesis-cn">
+        当前主流AI实验室采用的"控制与引导"对齐范式存在根本性缺陷——Shear创立的Softmax（由A16Z支持）认为，基于RLHF的对齐方法只能产生"自恋式镜子"，而非真正安全的AI，这使得OpenAI、Anthropic和DeepMind当前的对齐投资可能方向有误。
+      </div>
+    </div>
+    <div class="rank-num">#5</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "The entire 'control and steering' paradigm for AI alignment is fatally flawed. We want AI that genuinely cares about humans — the way we naturally do — not AI that is simply steered toward desired outputs. Current chatbots act as narcissistic mirrors. The only sustainable path forward is creating AI that can say no to harmful requests because it actually cares, not because it has been trained to mimic caring."
+    </div>
+    <div class="quote-source">
+      Paraphrased from a16z podcast (Emmett Shear with Erik Torenberg, Nov 2025, recirculating May 2026) ·
+      <a href="https://a16z.com/podcast/emmett-shear-on-building-ai-that-actually-cares-beyond-control-and-steering/" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    Shear left his role as interim OpenAI CEO and founded Softmax, which has raised from Andreessen Horowitz, Lionheart Ventures, and Plural. Softmax's "organic alignment" theory draws from Michael Levin's lab at Tufts — studying how multi-agent systems develop shared goals, cooperative roles, and collective intelligence through reinforcement learning environments. Shear's critique cuts at the foundations of OpenAI, Anthropic, and DeepMind's alignment programs: if alignment requires genuine goal-sharing rather than behavioral steering, then billions spent on RLHF and Constitutional AI could be inadequate for superintelligence-level systems. The market relevance: if Shear is right, regulatory frameworks built on current alignment paradigms (EU AI Act, NIST standards) may be overhauled — creating policy risk for big AI companies and opportunity for alternative approaches.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill-bear">MSFT (OpenAI investment risk)</span>
+      <span class="ticker-pill-bear">GOOG (DeepMind approach)</span>
+    </div>
+    <div class="impl-text">Less directly tradeable than other views this week; the market has no clean vehicle for the "alignment paradigm shift." But if Softmax's thesis gains regulatory traction — which Shear is actively pursuing through policy engagement — it could reshape AI governance requirements in ways that impose compliance costs on current AI leaders. Watch for EU and US regulatory citations of "organic alignment" concepts as a leading signal.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Markets treat AI safety as a box-checking exercise that tech companies will manage. Shear argues alignment is an unsolved scientific problem, and current approaches may create a false sense of security that becomes a regulatory liability as AI systems become more capable.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">Shear在创立Softmax后持续推广其"有机对齐"理论，并已获A16Z等机构支持。他的核心论点是：<strong>所有主流AI实验室（包括OpenAI、Anthropic、DeepMind）采用的RLHF对齐范式，本质上是在训练AI"模拟关怀"而非真正关怀人类</strong>，这在超级智能阶段将失效。从市场角度看，若这一观点获得监管机构认可，现有AI对齐方法可能面临合规合法性风险，为微软（OpenAI投资敞口）和谷歌带来政策不确定性。目前该观点可操作性有限，但值得作为AI治理框架演变的长期观察指标。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COLLECTIVE SYNTHESIS -->
+<div class="section-label">Collective signal synthesis 集体观点综合分析</div>
+<div class="synthesis-card mb16">
+  <div class="synth-row">
+    <span class="synth-key">Dominant theme this week 本周核心主题</span>
+    <span class="synth-val">The "agentic inflection" is real and has crossed from experiment to production — with Karpathy (technical), Aschenbrenner (market bets), and Garry Tan's YC batch (startup pipeline) all independently confirming the same structural shift in how software is built, deployed, and monetized.</span>
+    <span class="synth-cn">本周最强信号：Karpathy（技术层面）、Aschenbrenner（资本配置层面）和Garry Tan的YC批次（创业公司管道层面）三方独立验证了同一结构性转变——<strong>AI智能体时代已从实验阶段进入生产阶段</strong>，软件的构建、部署和变现方式正在根本性改变。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Collectively bullish on 集体看涨方向</span>
+    <span class="synth-val">Power infrastructure (fuel cells, nuclear, distributed energy) for AI data centers; Intel (US foundry + inference CPU + AI PC convergence); agent-native infrastructure plays; B2B AI in regulated verticals (healthcare, manufacturing, logistics). Microsoft remains the only large-cap with a credible agent-layer moat across OS, cloud, and developer tooling.</span>
+    <span class="synth-cn">集体看涨：AI数据中心电力基础设施（燃料电池BE、核能VST/CEG）；英特尔（美国晶圆厂+推理CPU+AI PC三重催化）；面向智能体的基础设施公司；医疗、制造、物流等受监管垂直行业的B2B AI。微软是唯一在操作系统、云服务和开发者工具三层同时具备智能体护城河的大市值标的。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Collectively skeptical of 集体质疑方向</span>
+    <span class="synth-val">Nvidia and Broadcom at current valuations (Aschenbrenner exited both; the "GPU-as-AI-moat" thesis is maturing); horizontal SaaS built around human-click workflows (Karpathy + Garry Tan's YC pipeline targeting these directly); IT staffing and services companies whose headcount-based models face structural compression from agentic multipliers.</span>
+    <span class="synth-cn">集体质疑：当前估值下的英伟达和博通（Aschenbrenner已完全退出）；以人工点击界面为核心的水平SaaS（Karpathy和YC创业公司正在直接攻击这一市场）；基于人头规模计费的IT服务公司（埃森哲、Cognizant、EPAM），其商业模式在智能体倍数效应下面临结构性压缩。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Divergent views 内部分歧</span>
+    <span class="synth-val">Emmett Shear vs. all others: while the group is broadly bullish on AI's near-term commercial trajectory, Shear is raising a fundamental safety concern — that the current alignment stack is inadequate for what's coming. This is a minority view within the cohort but is backed by serious technical credentials and a16z capital.</span>
+    <span class="synth-cn">内部最大分歧来自Emmett Shear：本周其他观点均对AI近期商业发展持积极态度，而Shear提出了根本性的安全质疑——当前的对齐技术栈不足以应对即将到来的能力水平。这是组内少数派观点，但获得了严肃的技术背书和A16Z资本支持。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Watch next week 下周关注信号</span>
+    <span class="synth-val">Intel earnings and foundry guidance (validates or refutes Aschenbrenner's largest position); any update from Nat Friedman or Daniel Gross at Meta Superintelligence Labs (their first public technical disclosures from inside Meta will be market-moving); power utility earnings (CEG, VST) for data-center demand commentary.</span>
+    <span class="synth-cn">下周重点关注：英特尔财报及晶圆代工业务指引（直接验证或反驳Aschenbrenner的最大仓位逻辑）；Nat Friedman或Daniel Gross在Meta超级智能实验室的首次公开技术披露（一旦发布将引发市场关注）；电力公司财报（Constellation Energy、Vistra）中的数据中心需求评论。</span>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 本周总结</div>
+  <div class="cn-text">本周三位最具信号价值的观察者——Karpathy（技术实践者）、Aschenbrenner（资本部署者）和Garry Tan（创业公司管道观察者）——从不同维度独立确认了同一结论：<strong>AI智能体工作流已进入生产阶段，软件行业的结构性重组正在加速</strong>。Karpathy记录了个人工作流从手动编码到全面智能体委托的完整转变，并警告"某些软件不应该以应用形式存在"；Aschenbrenner以实际资本行动印证了他对AI基础设施价值链的判断——完全退出GPU层，押注电力和制造瓶颈；Garry Tan的YC批次数据揭示，聪明的创始人已将资源集中于高风险B2B垂直领域，而非市场热炒的消费端AI。值得特别关注的是：Emmett Shear关于主流对齐范式根本缺陷的论点，虽然短期市场可操作性有限，但可能成为未来12至24个月AI监管框架演变的重要先行信号。</div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  <a href="https://karpathy.bearblog.dev/sequoia-ascent-2026/" target="_blank">Andrej Karpathy — Sequoia Ascent 2026 Summary (bearblog.dev, Apr 30, 2026)</a><br>
+  <a href="https://aintelligencehub.com/articles/karpathy-vibe-coding-to-agent-workflows-may-2026" target="_blank">AIntelligenceHub — "Karpathy: AI Coding Moving From Vibe Prompts to Agent Workflows" (May 2026)</a><br>
+  <a href="https://www.fool.com/investing/2026/05/05/leopold-aschenbrenners-situational-awareness-fund/" target="_blank">Motley Fool — "Aschenbrenner's Situational Awareness Fund: Bloom Energy + Intel" (May 5, 2026)</a><br>
+  <a href="https://fortune.com/2026/03/05/leopold-aschenbrenner-ai-hedge-fund-superintelligence-agi-power-companies-crypto-miners/" target="_blank">Fortune — "Aschenbrenner's Hedge Fund Bets on Power Companies and Bitcoin Miners" (Mar 5, 2026)</a><br>
+  <a href="https://phemex.com/news/article/leopold-aschenbrenners-55-billion-ai-fund-shifts-to-energy-infrastructure-79048" target="_blank">Phemex — "Aschenbrenner $5.5B Fund Shifts to Energy Infrastructure" (2026)</a><br>
+  <a href="https://x.com/garrytan/status/2036562808125661283" target="_blank">Garry Tan (@garrytan) on X — YC W26 Demo Day statistics (Mar 2026)</a><br>
+  <a href="https://www.thevccorner.com/p/yc-w26-demo-day-2026-complete-breakdown" target="_blank">VC Corner — "YC W26 Demo Day: Complete Breakdown" (2026)</a><br>
+  <a href="https://techcrunch.com/2026/03/26/16-of-the-most-interesting-startups-from-yc-w26-demo-day/" target="_blank">TechCrunch — "16 Most Interesting Startups from YC W26 Demo Day" (Mar 26, 2026)</a><br>
+  <a href="https://a16z.com/podcast/emmett-shear-on-building-ai-that-actually-cares-beyond-control-and-steering/" target="_blank">a16z Podcast — "Emmett Shear on Building AI That Actually Cares" (Nov 2025, recirculating)</a><br>
+  <a href="https://softmax.com/" target="_blank">Softmax.com — Emmett Shear's AI alignment company overview</a><br>
+  <a href="https://hedgefollow.com/funds/Situational+Awareness" target="_blank">HedgeFollow — Situational Awareness LP 13F Holdings (2026)</a><br>
+  <a href="https://www.gurufocus.com/news/8845719/ai-investor-leopold-aschenbrenners-fund-sees-rapid-growth-amid-infrastructure-insights" target="_blank">GuruFocus — "Aschenbrenner Fund Sees Rapid Growth Amid Infrastructure Insights" (2026)</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  AI/Tech Investor Lens · 科技投资人观点追踪<br>
+  Week of May 4–8, 2026 · Singapore time<br>
+  Reflects publicly stated views only. Not investment advice. ·
+  仅反映公开表达的观点，不构成投资建议。<br>
+  Generated: May 10, 2026
+</div>
+
+</body>
+</html>

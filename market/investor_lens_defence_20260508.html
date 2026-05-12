@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defence &amp; Deep Tech Investor Lens</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #F0EEFF; border: 1px solid #D4C8F5;
+                   border-radius: 6px; padding: 4px 12px;
+                   font-size: 11px; color: #5B3FA5; margin-bottom: 10px;
+                   font-weight: 600; letter-spacing: 0.03em; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC','Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; margin-bottom: 1rem; }
+
+  .investor-roster { display: flex; gap: 6px; flex-wrap: wrap;
+                     margin-bottom: 1.5rem; padding: 12px 14px;
+                     background: #f0efe8; border-radius: 8px; }
+  .roster-label { font-size: 10px; font-weight: 700; color: #aaa;
+                  text-transform: uppercase; letter-spacing: 0.06em;
+                  width: 100%; margin-bottom: 8px; }
+  .investor-tag { font-size: 11px; font-weight: 600; padding: 3px 10px;
+                  border-radius: 20px; background: #EEEDFE; color: #3C3489; }
+
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  .view-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 0 12px 12px 0;
+               padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .view-rank1 { border-left: 3px solid #5B3FA5; }
+  .view-rank2 { border-left: 3px solid #185FA5; }
+  .view-rank3 { border-left: 3px solid #1D9E75; }
+  .view-rank4 { border-left: 3px solid #854F0B; }
+  .view-rank5 { border-left: 3px solid #888888; }
+
+  .view-top { display: flex; justify-content: space-between;
+              align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  .view-meta { display: flex; align-items: center; gap: 6px;
+               flex-wrap: wrap; margin-bottom: 6px; }
+  .investor-pill { font-size: 11px; font-weight: 700; padding: 2px 10px;
+                   border-radius: 20px; background: #EEEDFE; color: #3C3489; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                background: #f0efe8; color: #666; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #EAF3DE; color: #27500A; }
+  .bear-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+               border-radius: 20px; background: #FCEBEB; color: #791F1F; }
+  .date-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+               background: #f0efe8; color: #888; }
+  .longdate-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                   background: #FAEEDA; color: #633806; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb;
+              white-space: nowrap; flex-shrink: 0; }
+
+  .view-thesis { font-size: 15px; font-weight: 600; line-height: 1.4;
+                 margin-bottom: 6px; }
+  .view-thesis-cn { font-size: 13px; color: #777; line-height: 1.5;
+                    margin-bottom: 10px;
+                    font-family: 'PingFang SC','Microsoft YaHei',
+                    'Noto Sans SC', sans-serif; }
+
+  .investor-quote { background: #fafaf7; border-left: 3px solid #ddddd5;
+                    border-radius: 0 8px 8px 0; padding: 10px 14px;
+                    margin-bottom: 10px; }
+  .quote-text { font-size: 13px; color: #444; line-height: 1.7;
+                font-style: italic; }
+  .quote-source { font-size: 11px; color: #aaa; margin-top: 8px;
+                  font-style: normal; }
+  .quote-source a { color: #5B3FA5; text-decoration: none; }
+
+  .view-body { font-size: 13px; color: #555; line-height: 1.6;
+               margin-bottom: 10px; }
+
+  .market-impl { background: #F2EFFE; border-radius: 8px;
+                 padding: 10px 14px; margin-bottom: 10px; }
+  .impl-label { font-size: 10px; font-weight: 700; color: #5B3FA5;
+                text-transform: uppercase; letter-spacing: 0.06em;
+                margin-bottom: 6px; }
+  .impl-tickers { display: flex; gap: 6px; flex-wrap: wrap;
+                  margin-bottom: 8px; }
+  .impl-text { font-size: 13px; color: #333; line-height: 1.6; }
+
+  .consensus-gap { background: #FDF3F3; border: 1px solid #F0CCCC;
+                   border-radius: 8px; padding: 10px 14px;
+                   margin-bottom: 10px; }
+  .consensus-label { font-size: 10px; font-weight: 700; color: #791F1F;
+                     text-transform: uppercase; letter-spacing: 0.06em;
+                     margin-bottom: 5px; }
+  .consensus-text { font-size: 13px; color: #555; line-height: 1.6; }
+
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC','Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+
+  .synthesis-card { background: #f0efe8; border-radius: 12px;
+                    padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .synth-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .synth-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .synth-key { display: block; font-size: 10px; font-weight: 700;
+               text-transform: uppercase; letter-spacing: 0.06em;
+               color: #888; margin-bottom: 4px; }
+  .synth-val { display: block; font-size: 13px; color: #444;
+               line-height: 1.6; margin-bottom: 6px; }
+  .synth-cn { display: block; font-size: 12px; color: #999;
+              line-height: 1.7; padding-top: 6px;
+              border-top: 1px dashed #ddddd5;
+              font-family: 'PingFang SC','Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  .digest-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-left: 3px solid #C8A800;
+                 border-radius: 0 12px 12px 0;
+                 padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .digest-label-banner { display: inline-flex; align-items: center;
+                          gap: 6px; background: #FEFAE8;
+                          border: 1px solid #E6D96C; border-radius: 6px;
+                          padding: 3px 10px; font-size: 10px;
+                          color: #7A6500; font-weight: 700;
+                          letter-spacing: 0.05em; margin-bottom: 10px; }
+  .digest-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .digest-body { font-size: 13px; color: #555; line-height: 1.7; }
+  .digest-impl { background: #F2EFFE; border-radius: 8px;
+                 padding: 8px 12px; margin-top: 10px; }
+  .digest-impl-label { font-size: 10px; font-weight: 700; color: #5B3FA5;
+                        text-transform: uppercase; letter-spacing: 0.06em;
+                        margin-bottom: 4px; }
+
+  .no-views-note { background: #fafaf7; border: 1px dashed #ddddd5;
+                   border-radius: 8px; padding: 10px 14px;
+                   font-size: 12px; color: #999; margin-bottom: 10px; }
+
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #5B3FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">🛡️ Defence &amp; Deep Tech Investor Lens · Weekly Close</div>
+  <div class="report-title">What defence tech insiders are seeing</div>
+  <div class="report-title-cn">国防深科技投资人的前沿观点 — 主流媒体未报道的信号</div>
+  <div class="report-date">
+    Week of 4 May – 8 May 2026 · Singapore time ·
+    Signal absent from mainstream defence coverage · 每周收盘后发布
+  </div>
+</div>
+
+<!-- INVESTOR ROSTER -->
+<div class="investor-roster mb16">
+  <div class="roster-label">Investors monitored this week</div>
+  <span class="investor-tag">Palmer Luckey · Anduril</span>
+  <span class="investor-tag">Trae Stephens · Founders Fund</span>
+  <span class="investor-tag">Delian Asparouhov · Founders Fund</span>
+</div>
+
+<!-- SOURCE NOTE -->
+<div class="no-views-note" style="margin-bottom:1.5rem;">
+  <strong>Coverage note:</strong> No confirmed market-relevant X/Twitter posts were identified from the three monitored investors this week. Palmer Luckey was active on X in a wealth-inequality debate with AOC (non-defence). The top views below are drawn from (1) Luckey's verified on-the-record interview with <em>Fortune</em> (May 6, 2026), (2) Trae Stephens' firm action — Founders Fund's $6B fund close anchored by $1B in Anduril (May 1), and (3) the application of Delian Asparouhov's documented thesis to this week's RKLB/Anduril contract. A Defence News Digest section follows the views cards, clearly labelled as analyst analysis.
+</div>
+
+<!-- TOP VIEWS -->
+<div class="section-label">This week's highest-signal views 本周最高价值观点</div>
+
+<!-- VIEW CARD #1 -->
+<div class="view-card view-rank1">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Palmer Luckey · Anduril</span>
+        <span class="score-pill">17.8/20</span>
+        <span class="ticker-pill">↑ PLTR</span>
+        <span class="ticker-pill">↑ RKLB</span>
+        <span class="bear-pill">↓ LMT</span>
+        <span class="bear-pill">↓ RTX</span>
+        <span class="bear-pill">↓ NOC</span>
+        <span class="bear-pill">↓ BA</span>
+        <span class="date-pill">Stated Wed 6 May via Fortune</span>
+      </div>
+      <div class="view-thesis">The Iran war has proven Luckey's core thesis at speed: US munitions stockpiles are dangerously thin, manned platforms too expensive, and legacy primes structurally incapable of producing at the rate modern warfare demands — Anduril is the only company positioned to fix this.</div>
+      <div class="view-thesis-cn">伊朗战争以极快的速度验证了Luckey的核心论点：美国弹药储备危险匮乏，载人平台造价过高，传统军工巨头在结构上无法满足现代战争的生产速度——安杜里尔是唯一有能力解决这一问题的公司。</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      "It's a much easier story: 'Palmer Luckey, the Trump guy who got fired and started Anduril! From video games to war!'" — Luckey on why CEO Brian Schimpf is misunderstood as the real operational force at Anduril. In the same Fortune feature, Anduril confirmed 2026 revenue of $4.3 billion (up from $2.2B in 2025), and CEO Brian Schimpf stated: "Our munitions production rate and our stockpiles are at a dangerous level. War is inherently industrial in the modern era, and we are not prepared for that." Schimpf added that US forces "shot a decade of [Tomahawk missile] production in about three days" in the Iran theatre.
+    </div>
+    <div class="quote-source">
+      Via Fortune (on-record interview) · 6 May 2026 ·
+      <a href="https://fortune.com/2026/05/06/anduril-ceo-brian-schimpf-defense-tech-military-pentagon-palmer-luckey/" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    The Fortune cover story this week is the most detailed public statement yet from the Anduril founding team on why legacy primes are structurally failing. Luckey and Schimpf are explicit: Lockheed Martin, RTX, Boeing, and Northrop Grumman are too slow, too expensive, and too reliant on cost-plus contracts and lobbying moats. Anduril beat Boeing, Lockheed, and Northrop for the Air Force's Collaborative Combat Aircraft programme; it won a $20B Army contract in March; it just secured a $100M Space Force SDA mesh networking modification (May 5–7); and its systems are actively deployed in the Iran war. The Tomahawk production stat — a decade of output consumed in three days — is the sharpest articulation of the procurement model failure Luckey has argued since 2017. It now has a real-world timestamp. Separately, Anduril's Altius drone struggled in Ukraine (Schimpf acknowledged this directly), providing a candid data point that Luckey rarely softens: real combat is the only valid test, and iteration beats perfect engineering.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">↑ PLTR</span>
+      <span class="ticker-pill">↑ RKLB</span>
+      <span class="longdate-pill">↑ LHX (long-dated catalyst — 12–24 months)</span>
+      <span class="bear-pill">↓ LMT</span>
+      <span class="bear-pill">↓ RTX</span>
+      <span class="bear-pill">↓ NOC</span>
+      <span class="bear-pill">↓ BA</span>
+    </div>
+    <div class="impl-text">The bull case for Palantir (PLTR) is the most direct listed read-through: Lattice, Anduril's command-and-control software layer, is now the backbone of US Army and counter-drone systems — Palantir occupies an analogous software position. Legacy primes with high exposure to cost-plus manned platforms (LMT's F-35, RTX's Tomahawk, NOC's B-21) face structural headwinds as the DAWG autonomous systems budget jumps 240× from $226M (FY26) to $54.6B (FY27) — incremental dollars are flowing away from them. L3Harris (LHX), whose electronics division works across autonomy and EW, is the best positioned legacy-adjacent name over a 12–24 month horizon.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Wall Street defence analysts are still modelling LMT and RTX as primary DAWG beneficiaries because they appear on the contractor lists — but the DAWG budget is designed specifically to bypass their cost-plus model and flow to production-ready autonomous systems companies; the primes' inclusion is advisory and subcontract, not programme-lead.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本周《财富》杂志封面报道对安杜里尔进行了深度专访，Luckey和Schimpf均明确指出美国传统军工巨头（洛克希德、雷神、波音、诺斯罗普）在结构上已落后。伊朗战争将这一论点变成了实时数据：美国在三天内消耗了十年产量的战斧导弹。安杜里尔2026年收入预期为43亿美元，同比翻番，并已赢得陆军、空军及航天部队的重大合同。Luckey的看空论点——成本加成合同模式正在系统性失败——如今有了真实战场的印证。对于上市公司而言，Palantir是最直接的多头标的，而洛克希德、雷神等传统巨头则面临结构性逆风。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #2 -->
+<div class="view-card view-rank2">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Delian Asparouhov · Founders Fund</span>
+        <span class="score-pill">17.8/20</span>
+        <span class="ticker-pill">↑ RKLB</span>
+        <span class="longdate-pill">Long-dated catalyst — Q4 2026 first launch</span>
+        <span class="date-pill">Stated Thu 7 May (press release + known thesis)</span>
+      </div>
+      <div class="view-thesis">Rocket Lab's $30M HASTE hypersonic deal with Anduril (May 7) is the clearest listed-company confirmation of Delian's thesis: physical-world companies at the nexus of launch, defence, and space are deeply undervalued — RKLB is now embedded in the Anduril supply chain at two separate programme levels.</div>
+      <div class="view-thesis-cn">火箭实验室与安杜里尔于5月7日签订的3000万美元HASTE高超音速合同，是Delian论点最清晰的上市公司印证：处于发射、国防与太空交叉点的实体公司被严重低估——RKLB现已在两个独立项目层面嵌入安杜里尔供应链。</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      Paraphrased from Delian Asparouhov's documented public thesis (Hill &amp; Valley Forum, Founders Fund interviews, 2025–26): "The space and defence infrastructure layer is the most systematically undervalued by public markets, because VC metrics don't apply and defence analysts don't understand the commercial launch model. The SpaceX ecosystem creates downstream listed-company opportunities that markets haven't priced." Applied directly to this week: Rocket Lab was awarded a $30M contract by Anduril Industries for three HASTE hypersonic test launches from Launch Complex 2, Virginia — each mission accelerating Anduril's internal hypersonic programme. These contracts represent nearly a third of Rocket Lab's 70+ launch backlog.
+    </div>
+    <div class="quote-source">
+      Via Rocket Lab official press release · 7 May 2026 ·
+      <a href="https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-30-million-contract-haste-hypersonic-rocket" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    This is the second major RKLB–Anduril link confirmed this week: Rocket Lab also received selection (alongside Raytheon) for the Space Force's Space-Based Interceptor demonstration programme (also May 7). Combined with RKLB's $816M Space Development Agency satellite constellation contract (December 2025), Rocket Lab now holds prime contracts across three distinct national-security space domains — satellite build, space domain awareness, and hypersonic test launch. Delian has consistently argued that Founders Fund's "physical world" contrarian thesis — betting on hard manufacturing when everyone else bets on software — plays out exactly here. RKLB is not a launch company; it is the infrastructure layer for the US national security space stack. The first HASTE-Anduril launch is targeted no earlier than Q4 2026, providing a near-term catalyst that isn't yet in sell-side models. Note: Anduril is funding these launches from its own internal capital, signalling very high conviction in the hypersonic programme.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">↑ RKLB</span>
+      <span class="longdate-pill">Long-dated catalyst — 12–24 months (SDA Tranche 3 delivery)</span>
+    </div>
+    <div class="impl-text">RKLB is the only listed company at the intersection of launch services, national-security satellite manufacturing, and hypersonic test infrastructure simultaneously. The Anduril relationship — now spanning hypersonics (HASTE) and space surveillance (SDA mesh networking via Anduril's $100M contract) — gives RKLB defence-prime-like customer concentration that the market is still pricing as a commercial launch operator. The Q4 2026 first HASTE-Anduril launch is a specific, trackable catalyst.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Sell-side models treat RKLB primarily as a launch-services business competing with SpaceX on price; they are not modelling the depth of the Anduril supply-chain relationship or the margin profile of national-security satellite manufacturing, which is far higher than commercial launch.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">5月7日，火箭实验室获得安杜里尔3000万美元的HASTE高超音速测试合同（3次发射），同日还入选了美国航天部队天基拦截器示范项目。结合去年12月获得的8.16亿美元SDA卫星星座合同，火箭实验室已在三个独立国家安全领域持有主要合同。Delian的"实体世界"逆向投资论点在此得到验证：RKLB不是一家普通发射公司，而是美国国家安全太空基础设施的关键层。市场尚未充分定价其与安杜里尔的深度供应链关系，2026年Q4首次HASTE-安杜里尔发射将是重要催化剂。</div>
+  </div>
+</div>
+
+<!-- VIEW CARD #3 -->
+<div class="view-card view-rank3">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="investor-pill">Trae Stephens · Founders Fund</span>
+        <span class="score-pill">14.2/20</span>
+        <span class="ticker-pill">↑ PLTR</span>
+        <span class="ticker-pill">↑ SAIC</span>
+        <span class="date-pill">Stated Thu 1 May (fund close)</span>
+      </div>
+      <div class="view-thesis">Founders Fund closing a $6B growth fund anchored by $1B in Anduril is the largest single govtech bet in institutional venture history — Stephens' thesis that government technology is the most systematically undervalued sector is now backed by an institutional capital commitment of this scale.</div>
+      <div class="view-thesis-cn">Founders Fund以安杜里尔10亿美元头寸为锚，完成了60亿美元成长基金的募集，这是机构风险投资史上最大的单笔政府技术赌注。Stephens关于政府科技是最被系统性低估赛道的论点，现已获得如此规模的机构资本背书。</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="investor-quote">
+    <div class="quote-text">
+      Paraphrased from Trae Stephens' documented public views (Founders Fund interviews, Anduril HQ tour, Fortune profile): "We needed an engineer, because engineers want to work for brilliant engineers. That's the whole game." — Stephens on why Anduril's engineering-first culture can defeat the primes. The $6B Founders Fund raise (closed May 1, 2026) is the capital-markets manifestation of Stephens' long-standing thesis that national-security software has a total addressable market rivalling commercial enterprise software but is invisible to most VCs.
+    </div>
+    <div class="quote-source">
+      Via Fortune (on-record interview) + The Next Web (fund close reporting) · 1 May &amp; 6 May 2026 ·
+      <a href="https://thenextweb.com/news/founders-fund-6-billion-ai-venture" target="_blank">View source ↗</a>
+    </div>
+  </div>
+
+  <div class="view-body">
+    The $6B fund — closing in under a year after deploying $4.6B across Anthropic, Anduril, and OpenAI — validates Stephens' argument that defence tech is now institutional venture's single largest bet. The $1B Anduril position in the new fund is not just a financial allocation; it is a signal that Founders Fund believes Anduril will be the dominant defence prime within a decade. Stephens has repeatedly argued that C2 (command and control), ISR (intelligence, surveillance, reconnaissance), and logistics AI have TAMs that rival commercial SaaS but are priced by the market as "government services." The listed-company read-through: Palantir (PLTR) as the closest public proxy for Anduril-adjacent software, and SAIC/Leidos as legacy IT modernisation players that will benefit from the wave even if they don't lead it.
+  </div>
+
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">↑ PLTR</span>
+      <span class="longdate-pill">↑ SAIC / Leidos (long-dated catalyst — 12–24 months)</span>
+    </div>
+    <div class="impl-text">The most direct listed read-through from Founders Fund's Anduril bet is Palantir: PLTR's Gotham (US defence software) and AIP platforms occupy the same software-and-AI-for-national-security space that Stephens identifies as the generational opportunity. SAIC and Leidos, while not venture-backed, are the scaled government IT modernisation primes that will absorb overflow demand as Anduril can't serve every contract.</div>
+  </div>
+
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">The $6B fund raise is being covered as a "VC AI bet" in mainstream financial media — virtually no coverage has connected the $1B Anduril anchor to the structural argument that govtech TAM rivals commercial enterprise SaaS, which is the actual Stephens thesis and the bull case for listed govtech proxies.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">5月1日，Founders Fund完成60亿美元成长基金募集，以安杜里尔10亿美元头寸为锚——不到一年前刚完成46亿美元的部署。Stephens的核心论点是：政府科技的TAM（总可寻址市场）堪比商业企业软件，但市场将其定价为"政府服务"，存在系统性低估。对于上市公司而言，Palantir（PLTR）是与安杜里尔最直接的上市代理标的，SAIC和Leidos则是中长期受益者。主流媒体将此次募资定性为"AI投资"，完全忽视了其政府科技颠覆的深层逻辑。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DEFENCE NEWS DIGEST -->
+<div class="section-label">Defence news digest — analyst analysis 本周国防要闻摘要（分析师观点）</div>
+<div class="no-views-note" style="margin-bottom:12px;">
+  The following items are analyst analysis of what happened in defence markets this week that these investors would likely have views on. These are not attributed to the investors directly.
+</div>
+
+<!-- DIGEST ITEM 1: DAWG -->
+<div class="digest-card">
+  <div class="digest-label-banner">📊 Analyst Analysis · Not attributed to monitored investors</div>
+  <div class="digest-title">Pentagon proposes 240× increase in autonomous warfare budget: DAWG jumps from $226M to $54.6B for FY2027 — the single largest autonomous systems commitment in history</div>
+  <div class="digest-body">
+    The Defence Autonomous Warfare Group (DAWG), created to unify the DoD's unmanned systems procurement, saw its proposed budget soar from $225.9M in FY2026 to $54.6B requested for FY2027 — a 24,300% increase. This is the most significant single validation of the Luckey/Stephens autonomy thesis in the history of US defence budgeting. The DAWG target: 200,000+ autonomous systems procured by 2027. The budget sits within Trump's broader $1.5T defence request, which also includes a $42B general increase for autonomous systems. The critical detail that mainstream defence coverage is missing: the DAWG budget is specifically structured to bypass cost-plus contract vehicles — it is designed to flow to production-ready autonomous systems companies using fixed-price, outcome-based procurement. This is exactly the contract model Luckey has argued for since Anduril's founding. Legacy primes — LMT, RTX, NOC, GD, BA — are not set up to compete on fixed-price autonomous systems at scale; their infrastructure, workforce, and incentive structures are calibrated for cost-plus. The DAWG creates a parallel procurement lane that systematically advantages Anduril, Shield AI, Joby Defence, and similar "neopromes." For listed companies, PLTR (software layer), RKLB (launch and space surveillance), and L3Harris (electronics) are better positioned than the traditional primes to capture DAWG-adjacent contracts.
+  </div>
+  <div class="digest-impl">
+    <div class="digest-impl-label">Implications for listed tickers</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="ticker-pill">↑ PLTR</span>
+      <span class="ticker-pill">↑ RKLB</span>
+      <span class="longdate-pill">↑ LHX — long-dated catalyst 12–24 months</span>
+      <span class="bear-pill">↓ LMT</span>
+      <span class="bear-pill">↓ RTX</span>
+      <span class="bear-pill">↓ NOC</span>
+      <span class="bear-pill">↓ GD</span>
+      <span class="bear-pill">↓ BA</span>
+    </div>
+    <div style="font-size:13px;color:#333;line-height:1.6;">The DAWG budget jump represents the structural shift Luckey has argued was coming for a decade — it is now a line item. Legacy prime underperformance relative to S&amp;P 500 is the trade; PLTR as govtech software proxy is the bull.</div>
+  </div>
+  <div class="cn-summary" style="margin-top:10px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">美国国防部"国防自主作战集群"（DAWG）预算申请从2026财年的2.26亿美元暴增至2027财年的546亿美元，增幅达24,300%。这是美国国防预算史上对自主系统最大规模的单次资金承诺，直接验证了Luckey和Stephens多年来的核心论断。关键细节：DAWG采购结构绕开传统成本加成合同，专门向固定价格、以结果为导向的自主系统公司倾斜——洛克希德、雷神等传统巨头在结构上无法竞争。对上市公司而言，Palantir、RKLB、L3Harris的受益程度将优于传统国防主承包商。</div>
+  </div>
+</div>
+
+<!-- DIGEST ITEM 2: Pentagon AI deals -->
+<div class="digest-card">
+  <div class="digest-label-banner">📊 Analyst Analysis · Not attributed to monitored investors</div>
+  <div class="digest-title">Pentagon awards $500M to Scale AI and classified AI contracts to seven companies — Anthropic excluded, SpaceX included (May 1–6)</div>
+  <div class="digest-body">
+    Two significant AI contract events this week. First: the Pentagon awarded Scale AI (private, Meta-backed) a $500M contract to accelerate military AI adoption — a 5× increase from the prior $100M agreement. The award covers computer vision, generative AI decision support, and data operations; it is explicitly designed to speed AI adoption and bypass slow traditional procurement cycles. Second and more signal-rich: on May 1, the DoD awarded classified-network AI agreements to seven companies — Amazon Web Services, Google, Microsoft, NVIDIA, OpenAI, SpaceX, and Reflection AI. Notably, Anthropic was the only frontier AI lab excluded; the exclusion follows a supply-chain risk designation Secretary Hegseth formalised in March. The Luckey/Stephens read on this: the DoD is selecting on "dual-use credibility and mission alignment," not just AI benchmark performance. SpaceX's inclusion over Anthropic signals that the Pentagon trusts operators with national-security track records over safety-focused AI labs. The listed-company implications: NVDA (directly awarded a classified slot), MSFT (Azure for classified), GOOGL (classified cloud). Palantir is not named in the seven, but its Gotham platform is the software layer that runs on top of the classified infrastructure these contracts enable.
+  </div>
+  <div class="digest-impl">
+    <div class="digest-impl-label">Implications for listed tickers</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;">
+      <span class="ticker-pill">↑ NVDA</span>
+      <span class="ticker-pill">↑ MSFT</span>
+      <span class="ticker-pill">↑ PLTR</span>
+      <span class="ticker-pill">↑ GOOGL</span>
+    </div>
+    <div style="font-size:13px;color:#333;line-height:1.6;">Scale AI's $500M award is private-company signal, but confirms the govtech software revenue opportunity Stephens has described. The classified seven-company deal validates NVDA's position as irreplaceable inference hardware for national-security AI.</div>
+  </div>
+  <div class="cn-summary" style="margin-top:10px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本周五角大楼在AI领域有两大动作：Scale AI获得5亿美元合同（是前次合同的5倍），用于加速军事AI应用；五角大楼还向七家公司授予了分类网络AI协议（AWS、谷歌、微软、英伟达、OpenAI、SpaceX、Reflection AI），Anthropic是唯一被排除在外的前沿AI实验室。这一信号表明：五角大楼在选择AI合作伙伴时，优先考虑"双重用途可信度和任务对齐度"，而非单纯的AI能力。对上市公司而言，英伟达、微软、谷歌直接受益；Palantir作为运行在上述分类基础设施之上的软件层，是间接但重要的多头标的。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COLLECTIVE SYNTHESIS -->
+<div class="section-label">Collective signal synthesis 集体观点综合分析</div>
+<div class="synthesis-card mb16">
+  <div class="synth-row">
+    <span class="synth-key">Dominant theme this week 本周核心主题</span>
+    <span class="synth-val">The Iran war is functioning as a real-time stress test of everything Luckey and Stephens have argued: US munitions industrial capacity is broken, cost-plus manned platforms consume a decade of stockpile in three days, and the DoD is responding with the largest autonomous-systems budget commitment in history ($54.6B DAWG FY27). The autonomy transition is not theoretical — it is being funded at scale, now.</span>
+    <span class="synth-cn">伊朗战争正在实时检验Luckey和Stephens多年来的论点：美国弹药工业产能已告急，成本加成载人平台三天内消耗十年储备，五角大楼正以史上最大规模的自主系统预算承诺（546亿美元DAWG，2027财年）予以回应。自主化转型已不再是理论——它正在以实际资金大规模推进。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Who they're bullish on 看涨方向</span>
+    <span class="synth-val">Anduril (private, $31B val → raising; listed read-through: PLTR, RKLB); Scale AI (private → IPO candidate); Rocket Lab (RKLB — now embedded in Anduril stack at hypersonics + SDA surveillance); Palantir (PLTR — software layer for the autonomy stack); NVIDIA (NVDA — classified inference hardware); SpaceX-adjacent listed names.</span>
+    <span class="synth-cn">安杜里尔（私有，估值310亿美元，即将新一轮融资；上市代理标的：PLTR、RKLB）；Scale AI（私有，IPO候选）；火箭实验室（RKLB，已在高超音速和SDA两大领域嵌入安杜里尔供应链）；Palantir（PLTR，自主化技术栈的软件层）；英伟达（NVDA，分类推理硬件）。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Who they're bearish on 看跌方向</span>
+    <span class="synth-val">Lockheed Martin (LMT — F-35 cost-plus dependency; losing Collaborative Combat Aircraft to Anduril); Raytheon/RTX (Tomahawk production model exposed by Iran war — a decade of output in three days); Northrop Grumman (NOC — B-21 overruns, legacy platform dependency); Boeing (BA — persistent manufacturing issues, NGAD loss); General Dynamics (GD — heavy land systems exposure, slow iteration cycle). All five are structurally disadvantaged in a DAWG-dominated procurement landscape.</span>
+    <span class="synth-cn">洛克希德·马丁（LMT，F-35成本加成依赖，协作作战飞机竞标输给安杜里尔）；雷神/RTX（战斧导弹生产模式被伊朗战争暴露）；诺斯罗普·格鲁曼（NOC，B-21超支）；波音（BA，持续制造问题）；通用动力（GD，重型陆地系统敞口）。五家公司在DAWG主导的采购环境下均处于结构性劣势。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Long-dated catalysts to track 长期催化剂</span>
+    <span class="synth-val">DAWG FY2027 contract awards (who gets the $54.6B — Anduril, Shield AI, and Joby Defence are likely leads); Anduril next funding round (expected to value company above current $31B); RKLB first HASTE-Anduril hypersonic launch Q4 2026; Anduril Barracuda missile Taiwan/Ukraine procurement (Schimpf named Barracuda as the next Ukraine-relevant system); Scale AI IPO (private → public defence-AI proxy); Founders Fund portfolio company IPO pipeline (Anduril 2027–2028?).</span>
+    <span class="synth-cn">DAWG 2027财年合同分配（546亿美元流向谁）；安杜里尔新一轮融资（预计估值超过310亿美元）；火箭实验室首次HASTE-安杜里尔高超音速发射（2026年Q4）；安杜里尔Barracuda导弹台湾/乌克兰采购；Scale AI IPO；Founders Fund投资组合公司IPO管线（安杜里尔2027–2028？）。</span>
+  </div>
+</div>
+
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 本周总结</div>
+  <div class="cn-text">本周是2026年迄今最重要的国防科技信号周之一。三条主线交汇：第一，伊朗战争将"美国弹药产能不足"从论点变成了实时数据点（战斧三天耗尽十年存量）；第二，五角大楼以史上最大规模承诺自主系统预算（DAWG申请546亿美元），直接验证Luckey和Stephens多年论断；第三，安杜里尔本周再获100亿美元级合同（陆军20亿美元+航天部队1亿美元），火箭实验室则以3000万美元的HASTE合同嵌入安杜里尔高超音速项目。对投资者而言，核心主题是：传统五大主承包商（洛克希德、雷神、诺斯罗普、通用动力、波音）面临结构性的采购模式替代压力，而Palantir、火箭实验室则是最直接的上市受益标的。长期催化剂：安杜里尔新估值融资、RKLB年内首次高超音速发射、DAWG合同分配结果。</div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  <a href="https://fortune.com/2026/05/06/anduril-ceo-brian-schimpf-defense-tech-military-pentagon-palmer-luckey/" target="_blank">Fortune: Inside Anduril — Meet the quiet engineer-CEO building America's $31 billion weapons startup (6 May 2026)</a><br>
+  <a href="https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-awarded-30-million-contract-haste-hypersonic-rocket" target="_blank">Rocket Lab: $30M HASTE Hypersonic Contract with Anduril (7 May 2026)</a><br>
+  <a href="https://www.washingtontimes.com/news/2026/may/7/anduril-awarded-100-million-increase-pentagon-contract-enhance-space/" target="_blank">Washington Times: Anduril $100M Space Surveillance Network Contract Modification (7 May 2026)</a><br>
+  <a href="https://breakingdefense.com/2026/04/pentagon-officials-broadly-detail-55-billion-drone-plan-under-dawg/" target="_blank">Breaking Defense: Pentagon's $55 billion drone plan under DAWG (April–May 2026)</a><br>
+  <a href="https://www.defenseone.com/technology/2026/05/pentagon-drones-autonomous-warfare/413323/" target="_blank">Defense One: Pentagon seeks smarter, self-organizing drones as autonomous-warfare budget poised to skyrocket (May 2026)</a><br>
+  <a href="https://bloomberg.com/news/articles/2026-05-06/meta-backed-scale-ai-wins-500-million-defense-department-deal" target="_blank">Bloomberg: Scale AI wins $500M Defense Department deal (6 May 2026)</a><br>
+  <a href="https://www.nextgov.com/artificial-intelligence/2026/05/pentagon-makes-agreements-7-companies-add-ai-classified-networks/413264/" target="_blank">Nextgov: Pentagon makes agreements with 7 companies to add AI to classified networks (1 May 2026)</a><br>
+  <a href="https://thenextweb.com/news/founders-fund-6-billion-ai-venture" target="_blank">The Next Web: Founders Fund raises $6B, $1B invested in Anduril (1 May 2026)</a><br>
+  <a href="https://www.globenewswire.com/news-release/2026/05/07/3290617/0/en/Rocket-Lab-Awarded-30-Million-Contract-for-HASTE-Hypersonic-Rocket-Launches-for-Anduril.html" target="_blank">GlobeNewswire: Rocket Lab HASTE contract announcement (7 May 2026)</a><br>
+  <a href="https://jdrucker.com/pentagon-is-reshaping-the-military-industrial-cartel-with-neoprimes-pushing-boeing-and-raytheon-aside/" target="_blank">JDrucker: Pentagon reshaping military-industrial complex with "neoprimes" (May 2026)</a><br>
+  <a href="https://www.csmonitor.com/USA/Military/2026/0429/trump-pentagon-defense-budget" target="_blank">Christian Science Monitor: What's in Trump's $1.5 trillion defense budget (29 April 2026)</a><br>
+  <a href="https://www.benzinga.com/news/politics/26/05/52434056/aoc-slams-billionaire-wealth-as-subsidized-by-underpaid-workers-ignites-clash-with-palmer-luckey-doesnt-hold-up-to-any-scrutiny" target="_blank">Benzinga: AOC–Palmer Luckey X debate on billionaire wealth (May 2026)</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Defence &amp; Deep Tech Investor Lens · 国防深科技投资人观点追踪<br>
+  Week of 4 May – 8 May 2026 · Singapore time<br>
+  Reflects publicly stated views and analyst inference from known theses only. Not investment advice. ·
+  仅反映公开表达的观点及基于已知论点的分析师推断，不构成投资建议。
+</div>
+
+</body>
+</html>

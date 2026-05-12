@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Market Intelligence — 2 May 2026 AM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  /* ── HEADER ───────────────────────────────────────────────── */
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600;
+                  margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+
+  /* ── MOOD BAR ─────────────────────────────────────────────── */
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px;
+              padding: 12px 16px; margin-bottom: 8px; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish { background: #EAF3DE; color: #27500A; }
+  .mood-bearish { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed   { background: #FAEEDA; color: #633806; }
+  .mood-neutral { background: #f0efe8; color: #555; }
+
+  /* ── SECTION LABELS ───────────────────────────────────────── */
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  /* ── INDICES ──────────────────────────────────────────────── */
+  .indices { display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+             gap: 8px; margin-bottom: 8px; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up   { color: #0F6E56; }
+  .dn   { color: #A32D2D; }
+  .flat { color: #888; }
+
+  /* ── COMMENTARY ───────────────────────────────────────────── */
+  .commentary { font-size: 13px; color: #555; line-height: 1.7;
+                margin-bottom: 8px; }
+
+  /* ── SIGNAL CARDS ─────────────────────────────────────────── */
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0;
+                 padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px;
+             margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB;
+                 color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px;
+                border-radius: 20px; background: #f0efe8;
+                color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; }
+  .s-tech     { background: #E6F1FB; color: #0C447C; }
+  .s-health   { background: #E1F5EE; color: #085041; }
+  .s-energy   { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence  { background: #EEEDFE; color: #3C3489; }
+  .s-finance  { background: #EAF3DE; color: #27500A; }
+  .s-realty   { background: #FAECE7; color: #712B13; }
+  .s-macro    { background: #F1EFE8; color: #444441; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb;
+              white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 6px; }
+  .sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5;
+                     margin-bottom: 8px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6;
+              margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.05em;
+                margin-bottom: 3px; }
+  .bull-label { color: #27500A; }
+  .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px;
+          flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8;
+               border-radius: 6px; padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; margin-bottom: 8px; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0;
+                          top: 9px; width: 5px; height: 5px;
+                          border-radius: 50%; background: #ccc; }
+
+  /* ── ALSO TRACKING ────────────────────────────────────────── */
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 8px; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; gap: 6px;
+              flex-wrap: wrap; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5;
+               margin-bottom: 6px; }
+  .also-cn { font-size: 11px; color: #999; line-height: 1.7;
+             margin-top: 6px; padding-top: 6px;
+             border-top: 1px dashed #e8e8e0;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+
+  /* ── DEEP DIVE CTA ────────────────────────────────────────── */
+  .deepdive-cta { background: #EEF4FD; border: 1px solid #C4D8F2;
+                  border-left: 3px solid #185FA5;
+                  border-radius: 0 10px 10px 0;
+                  padding: 14px 18px; margin-bottom: 8px; }
+  .deepdive-cta-label { font-size: 11px; font-weight: 700;
+                        color: #185FA5; text-transform: uppercase;
+                        letter-spacing: 0.06em; margin-bottom: 6px; }
+  .deepdive-cta-text { font-size: 13px; color: #333; line-height: 1.6;
+                       margin-bottom: 4px; }
+  .deepdive-cta-cn { font-size: 12px; color: #888; margin-bottom: 8px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; }
+  .deepdive-cta-link { font-size: 13px; }
+  .deepdive-cta-link a { color: #185FA5; font-weight: 600;
+                         text-decoration: none; }
+
+  /* ── MACRO GRID ───────────────────────────────────────────── */
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 8px; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5;
+                margin-bottom: 6px; }
+  .macro-cn { font-size: 11px; color: #999; line-height: 1.7;
+              padding-top: 6px; border-top: 1px dashed #e8e8e0;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── WATCH LIST ───────────────────────────────────────────── */
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8;
+                   line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px;
+                display: flex; align-items: center;
+                justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 2px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-purple { background: #EEEDFE; color: #3C3489; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .watch-content { display: block; flex: 1; }
+  .watch-en { display: block; font-size: 13px; color: #333; }
+  .watch-cn { display: block; font-size: 11px; color: #999;
+              margin-top: 3px; line-height: 1.6;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── NOTABLE NEWS ─────────────────────────────────────────── */
+  .notable-grid { display: grid; grid-template-columns: 1fr 1fr;
+                  gap: 8px; margin-bottom: 8px; }
+  .notable-card { background: #fff; border: 1px solid #e8e8e0;
+                  border-radius: 8px; padding: 10px 12px; }
+  .notable-topic { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; margin-bottom: 4px; }
+  .notable-text { font-size: 12px; color: #444; line-height: 1.5;
+                  margin-bottom: 6px; }
+  .notable-cn { font-size: 11px; color: #999; line-height: 1.7;
+                padding-top: 6px; border-top: 1px dashed #e8e8e0;
+                font-family: 'PingFang SC', 'Microsoft YaHei',
+                'Noto Sans SC', sans-serif; }
+
+  /* ── MARKET PULSE ─────────────────────────────────────────── */
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 8px; }
+  .pulse-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { display: block; font-size: 10px; font-weight: 700;
+               text-transform: uppercase; letter-spacing: 0.06em;
+               color: #888; margin-bottom: 4px; }
+  .pulse-val { display: block; font-size: 13px; color: #444;
+               line-height: 1.6; margin-bottom: 6px; }
+  .pulse-cn { display: block; font-size: 12px; color: #999;
+              line-height: 1.7; padding-top: 6px;
+              border-top: 1px dashed #ddddd5;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── CHINESE SUMMARY BLOCKS ───────────────────────────────── */
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+
+  /* ── SOURCES ──────────────────────────────────────────────── */
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+
+  /* ── LAYOUT UTILS ─────────────────────────────────────────── */
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+
+  /* ── CLOSED MARKETS BANNER ────────────────────────────────── */
+  .closed-banner { background: #FAEEDA; border: 1px solid #e0c89a;
+                   border-radius: 8px; padding: 10px 14px;
+                   margin-bottom: 16px; font-size: 12px;
+                   color: #633806; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    AM Morning Session · Prior Session Recap · Markets Closed Saturday
+  </div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-title-cn">每日市场情报简报</div>
+  <div class="report-date">
+    Saturday, 2 May 2026 · Singapore time (SGT, UTC+8) · Full US market coverage ·
+    新加坡时间 · 美国全市场覆盖
+  </div>
+</div>
+
+<!-- ── CLOSED MARKETS NOTICE ────────────────────────────────────── -->
+<div class="closed-banner">
+  <strong>⚠ Markets closed today (Saturday).</strong> This briefing recaps Friday 1 May 2026 — a banner session with S&amp;P 500 and Nasdaq hitting fresh all-time highs. US markets reopen Monday 4 May. Notable live event today: <strong>Berkshire Hathaway annual meeting</strong>, Greg Abel's first as CEO, underway in Omaha with Q1 earnings release.
+  <br><br>
+  <strong>⚠ 市场今日（周六）休市。</strong> 本简报回顾5月1日（周五）的交易情况——标普500和纳斯达克创历史新高。美国市场周一（5月4日）重新开盘。今日重大活动：<strong>伯克希尔·哈撒韦年会</strong>，格雷格·阿贝尔首次以CEO身份主持，同步发布一季度业绩。
+</div>
+
+<!-- ── MOOD BAR ─────────────────────────────────────────────────── -->
+<div class="mood-bar">
+  <span class="mood-label">Market mood 市场情绪</span>
+  <span class="mood-text">
+    Decisively bullish — a once-in-a-generation tech earnings week sent S&amp;P 500 and Nasdaq to fresh records, with Apple's blowout quarter and Iran peace hopes amplifying the AI-driven euphoria.
+  </span>
+  <span class="mood-pill mood-bullish">Bullish 看涨</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    周五（5月1日）美股大幅上涨，<strong>标普500和纳斯达克双双创下历史新高</strong>，核心驱动力是苹果公司（Apple）季度业绩超预期，以及伊朗和平谈判带动油价下跌。科技巨头AI云计算业务的强劲增长令市场情绪极为乐观，本周科技股的集体爆发是近年来最强的一次盈利周。
+  </div>
+</div>
+
+<!-- ── INDEX SNAPSHOT ───────────────────────────────────────────── -->
+<div class="section-label">Index snapshot 指数概览 — Friday 1 May 2026 close</div>
+<div class="indices mb16">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,230</div>
+    <div class="idx-chg up">+0.29% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">纳斯达克 Nasdaq</div>
+    <div class="idx-val">25,114</div>
+    <div class="idx-chg up">+0.89% ▲ ATH</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">道琼斯 Dow</div>
+    <div class="idx-val">49,499</div>
+    <div class="idx-chg dn">−0.31% ▼</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">n/a</div>
+    <div class="idx-chg flat">Unconfirmed</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">VIX 恐慌指数</div>
+    <div class="idx-val">16.89</div>
+    <div class="idx-chg up">Falling 情绪稳定</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI 原油</div>
+    <div class="idx-val">$101.94</div>
+    <div class="idx-chg dn">−2.98% ▼</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">黄金 Gold</div>
+    <div class="idx-val">$4,571</div>
+    <div class="idx-chg dn">−1.12% ▼</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10年期美债</div>
+    <div class="idx-val">~4.42%</div>
+    <div class="idx-chg flat">Flat 持平 (Apr 29)</div>
+  </div>
+</div>
+
+<!-- ── MARKET COMMENTARY ─────────────────────────────────────────── -->
+<div class="section-label">Market commentary 市场综述</div>
+<p class="commentary">
+  Friday's session capped the most consequential earnings week of 2026. The S&amp;P 500 gained 0.29% to close at 7,230, while the Nasdaq surged 0.89% to 25,114 — both marking fresh all-time highs. The Dow lagged, falling 0.31% to 49,499, as Apple's weight in tech indices dragged the growth-skewed Nasdaq higher while value and industrial names in the Dow gave ground. April ended as the market's best month in five years, with the S&amp;P 500 gaining roughly 10% — an extraordinary run driven by AI earnings beats, Iran ceasefire relief, and receding tariff anxiety. The VIX (a fear gauge — lower means calmer markets) closed at 16.89, its lowest since the Iran conflict began in early 2026, signalling that investors feel the acute risk period may be passing. Crude oil fell sharply (WTI −3% to $101.94) on fresh Iran peace-talk progress, while gold slipped 1.12% to $4,571 as safe-haven demand eased. The blended Q1 2026 earnings growth rate for the S&amp;P 500 now stands at 27.1% — the highest since Q4 2021.
+</p>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    周五美股强势收盘，标普500（+0.29%）和纳斯达克（+0.89%）双双创历史新高，<strong>4月全月涨幅约10%，是近五年最佳月份表现</strong>。道琼斯工业指数小跌0.31%，科技股领跑而传统价值股相对落后。VIX恐慌指数降至16.89，为伊朗战争以来最低，显示市场对风险的担忧明显消退。油价大跌3%至每桶101.94美元，因伊朗和平谈判进展令市场情绪乐观。标普500一季度整体每股盈利增速达27.1%，为2021年四季度以来最高。
+  </div>
+</div>
+
+<!-- ── TOP 3 SIGNALS ─────────────────────────────────────────────── -->
+<div class="section-label">Top 3 signals 三大重点信号</div>
+
+<!-- SIGNAL #1 -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">AAPL</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">19/20</span>
+        <span class="score-pill">Earnings release (primary source)</span>
+      </div>
+      <div class="sig-headline">Apple Q2 FY2026: Revenue +17%, EPS +22%, iPhone 17 Demand "Extraordinary" — Plus CEO Succession Confirmed</div>
+      <div class="sig-headline-cn">
+        苹果Q2财季营收创纪录增长17%，每股盈利增22%，iPhone 17需求"超乎寻常"，同步确认CEO交接计划
+      </div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="sig-body">
+    Apple reported its fiscal Q2 2026 results Thursday evening, smashing expectations on every major line. Revenue hit $111.18 billion (vs $109.66B consensus), up 17% year-over-year — a March quarter record. EPS of $2.01 beat the $1.95 estimate, up 22% year-over-year. CEO Tim Cook called iPhone 17 demand "extraordinary," and Greater China revenue surged 28% to $20.5 billion — a remarkable reversal that validates Apple's China strategy. Services revenue reached an all-time record of $31 billion, up 16% YoY, with a gross margin of 76.7%. Total gross margin was 49.3%. The stock rose approximately 5% Friday, closing around $279.93, within touching distance of its 52-week high of $288.62. <em>Ongoing: announced April 20 —</em> Tim Cook will become executive chairman on September 1, 2026, handing the CEO role to John Ternus (currently SVP of Hardware Engineering), who has overseen every major Apple product line. Friday's earnings call was Ternus's public debut alongside Cook, and he held his own — reinforcing that this transition is orderly, not a shock.
+  </div>
+
+  <div class="src-line">
+    Apple Newsroom · Apple.com/newsroom — Earnings release · 30 Apr 2026 · Still active: market pricing in new CEO era ·
+    <a href="https://www.apple.com/newsroom/2026/04/apple-reports-second-quarter-results/">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">Services flywheel compounding at $31B/quarter at 77% gross margin; China rebound + iPhone upgrade cycle powered by AI features creates a durable multi-year growth engine; Ternus transition is smooth and markets like orderly succession.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">Tariff risk on China-assembled supply chain remains a live threat; Apple Intelligence AI features have yet to become material revenue contributors; memory cost headwinds flagged for upcoming quarters could compress margins; leadership transition always carries execution risk.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Stock likely probes $288 52-week high early next week; watch for analyst price target upgrades
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> CEO succession creates a 4-month transition window (May–Sep); execution quality of Ternus's first solo cycle in FY2027 will define the stock's next chapter
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Can Apple sustain 17%+ revenue growth into Q3 FY2026 given macro uncertainty and tariff risk on its China supply chain?</li>
+    <li>How much of Apple's China revenue rebound (28% to $20.5B) is structural recovery vs. one-time pent-up demand from iPhone 17 launches?</li>
+    <li>When will Apple Intelligence (AI features) become a material, analyst-modelable revenue driver — and how does John Ternus's hardware background shape the AI product roadmap?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      苹果公司4月30日发布Q2财季业绩，营收1112亿美元（同比增17%），每股盈利2.01美元（同比增22%），均超市场预期。<strong>iPhone 17需求"超乎寻常"</strong>，大中华区营收大涨28%至205亿美元。服务业务（包括App Store、订阅等）营收创纪录达310亿美元，毛利率高达76.7%。苹果股价周五上涨约5%，收于279美元附近。另外，4月20日宣布的CEO交接计划也为市场关注：现任CEO蒂姆·库克将于9月1日转任执行董事长，硬件工程高级副总裁<strong>约翰·特纳斯接任CEO</strong>。看涨理由：服务业务高利润复利增长+中华区复苏+AI功能驱动换机潮。看跌理由：供应链关税风险+内存成本上升+新CEO执行力待验证。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">GOOGL</span>
+        <span class="ticker-pill">MSFT</span>
+        <span class="ticker-pill">AMZN</span>
+        <span class="ticker-pill">META</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Earnings releases (primary source)</span>
+      </div>
+      <div class="sig-headline">Mag-7 AI Earnings Bonanza: Alphabet Net Income +81%, Azure Cloud +40%, AWS +28% — Q1 S&amp;P 500 EPS Growth Hits 27.1%</div>
+      <div class="sig-headline-cn">
+        科技七巨头AI季报大爆发：谷歌净利润增81%、Azure增40%、AWS增28%，标普500一季度整体盈利增速达27.1%
+      </div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="sig-body">
+    All four reported on April 29. <strong>Alphabet</strong> delivered a stunning quarter: net income surged 81% to $62.58 billion, revenue reached $109.9B (+20%, beating $107.2B estimate), and Google Cloud hit $20B (+63%) — its fastest growth in years, driven by AI enterprise deals and government contracts. <strong>Microsoft</strong> posted EPS of $4.27 (beat $4.06), revenue of $82.89B (+18%), with Azure cloud services up 40% — ahead of the 38.8% consensus. <strong>Amazon</strong> grew revenue 17% to $181.5B, nearly doubled net income to $30.3B, and saw AWS (Amazon Web Services) surge 28% to $37.6B. <strong>Meta</strong> reported EPS of $7.31 (beat $6.79), revenue $56.31B (+33%), but raised its capital expenditure (capex — the money it spends building data centres and AI infrastructure) to $125–145B for 2026, up from a prior range of $115–135B. The combined picture is a clean AI cloud re-acceleration: hyperscalers (the few companies that run the world's biggest cloud and AI infrastructure) are pulling spending forward, and it's flowing straight to GPU and infrastructure suppliers. The S&amp;P 500's Q1 2026 blended EPS growth rate is now 27.1%, with 84% of reporters beating estimates — the best beat rate in a decade.
+  </div>
+
+  <div class="src-line">
+    CNBC · Alphabet/GOOGL Q1 2026 earnings · 29 Apr 2026 · Still active: AI capex narrative driving sector ·
+    <a href="https://www.cnbc.com/2026/04/29/alphabet-googl-q1-2026-earnings.html">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">AI investment is directly translating into accelerating cloud revenue across all four companies; cloud re-acceleration after a digestion period confirms the multi-year structural tailwind; 27.1% earnings growth signals the AI productivity premium is real and expanding.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">Meta's capex raise to $145B is a massive, open-ended spend with uncertain ROI horizon; regulatory antitrust actions against big tech remain live in the US and EU; markets may already have priced in perfection — 84% beat rate leaves little room for positive surprises next quarter.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Sector rotation into tech continues Monday; semiconductor/infrastructure names (NVDA, AVGO) get a capex read-through bid
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> Azure and Google Cloud competing fiercely for the same enterprise AI workloads — watch which platform gains share over H2 2026
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Can Alphabet's Google Cloud sustain 63% growth, or was Q1 2026 a catch-up quarter — and how does its AI deal pipeline compare to Azure's in size and duration?</li>
+    <li>Is Meta's capex raise to $125–145B a disciplined bet on AI monetisation, or are we seeing the early signs of the classic tech empire-building cycle that destroys shareholder value?</li>
+    <li>Among the four (GOOGL, MSFT, AMZN, META), which offers the best risk/reward into H2 2026, accounting for valuation, AI execution, and regulatory exposure?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      谷歌母公司Alphabet、微软、亚马逊、Meta四家科技巨头于4月29日集中发布一季度业绩，全部超出预期。<strong>谷歌净利润大涨81%</strong>，云计算业务收入增长63%；微软Azure云服务增长40%；亚马逊AWS增长28%；Meta营收增长33%，同时大幅提高2026年AI基础设施资本支出至1250亿–1450亿美元。这些数字表明，AI技术投入正在切实转化为云收入高速增长。标普500一季度整体盈利增速已达27.1%，为近五年最高，84%的公司业绩超预期。看涨理由：AI云业务全面提速，超级周期确立。看跌理由：Meta天量资本支出回报时间线不确定，监管压力始终存在。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">NVDA</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">16/20</span>
+        <span class="score-pill">Analyst guidance + earnings</span>
+      </div>
+      <div class="sig-headline">NVDA Near All-Time High at $215 as Hyperscalers Commit $500B+ in AI Capex — May 20 Earnings Are the Inflection Point</div>
+      <div class="sig-headline-cn">
+        英伟达逼近历史高位215美元，超大规模云厂商累计承诺AI资本支出超5000亿，5月20日财报成关键检验时刻
+      </div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="sig-body">
+    Nvidia (NVDA) closed Friday around $215.12 — just below its all-time closing high of $216.83 set April 27 — and has risen 29% in April alone, and 95% over the past year, making it the best-performing major-cap stock in that window. The company's market cap stands at approximately $5.4 trillion, making it the world's most valuable company. The AI capex announcements from Meta ($125–145B), Amazon ($200B full-year), and Alphabet ($185B) this week are directly positive for Nvidia: these data centres run on Nvidia GPUs (chips designed for AI processing). Nvidia's own guidance calls for revenue of approximately $78B in Q1 FY2027, representing 77% year-over-year growth — and that guidance explicitly excludes any China data centre revenue (Nvidia cannot sell its most advanced chips to China under US export controls). Total supply commitments from hyperscalers now stand at $95.2B. The RSI (Relative Strength Index — a momentum indicator, where readings above 70 suggest the stock may be overbought and due for a pause) stands at 72.6. May 20 earnings are the first real-world test of whether the narrative can meet the numbers.
+  </div>
+
+  <div class="src-line">
+    Motley Fool · NVDA earnings preview · 28 Apr 2026 · Still active: earnings May 20, 2026 ·
+    <a href="https://www.fool.com/investing/2026/04/28/prediction-nvidia-stock-will-skyrocket-after-may-2/">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">Global data centre capex to reach $3–4 trillion by 2030; Nvidia's GPU dominance is locked in through multi-year hyperscaler supply agreements totalling $95.2B; 38 analysts rate it Strong Buy with a $266 average target — 24% upside from current levels.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">RSI at 72.6 signals overbought conditions into the May 20 earnings — any miss or cautious guidance could trigger a sharp pullback; China export ban removes a major market permanently; AMD and custom AI chips (Google TPUs, Amazon Trainium) are gaining traction and could erode Nvidia's near-monopoly over time.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Stock likely consolidates near all-time highs ahead of May 20 earnings — a classic "sell the news" risk after 29% April run
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> If Nvidia confirms 77% revenue growth on May 20, it would validate the AI infrastructure supercycle thesis and likely push the stock toward analyst targets of $266+
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Will Nvidia's May 20 earnings confirm the guided ~$78B Q1 FY2027 revenue figure, and how explicitly does management address the China export headwind in their forward guidance?</li>
+    <li>At ~29x trailing P/E on a $5.4T market cap, is Nvidia's valuation sustainable if hyperscaler capex ROI (return on investment) disappoints or if a "build it and they will come" narrative fails to materialise?</li>
+    <li>How quickly are AMD's MI-series AI chips and custom silicon (Google TPUs, Amazon Trainium, Microsoft Maia) gaining meaningful enterprise workload share against Nvidia's H100/H200/Blackwell GPU families?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      英伟达（NVDA）股价在215美元附近，接近4月27日创下的历史高位216.83美元，4月单月涨幅高达29%，过去一年涨幅达95%。市值约5.4万亿美元，是全球最高价值的上市公司。本周Meta、亚马逊、谷歌等超大规模科技公司大幅上调AI基础设施资本支出计划，直接利好英伟达的GPU芯片销售。英伟达5月20日将发布Q1财报，指引营收约780亿美元（同比增77%），但<strong>不含中国数据中心收入</strong>（受美国出口管制限制）。看涨理由：全球数据中心建设巨额投入支撑长期需求。看跌理由：相对强弱指数（RSI）达72.6处于超买区间，大幅上涨后财报前存在"高位回调"风险。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── ALSO TRACKING ──────────────────────────────────────────────── -->
+<div class="section-label">Also tracking 其他关注信号</div>
+<div class="also-grid mb16">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">XOM CVX OXY</span>
+      <span class="sector-pill s-macro">MACRO / ENERGY</span>
+      <span class="score-pill">15/20</span>
+    </div>
+    <div class="also-text">
+      Iran sent an updated peace proposal to US mediators via Pakistan on Friday, confirming the April 7 ceasefire is holding even as the Strait of Hormuz remains closed. WTI crude fell 3% to $101.94 and Brent lost 2% to $108.17 — still far above the pre-war ~$70/bbl level. The White House says the 60-day war powers clock is paused under the ceasefire terms, reducing the pressure for immediate Congressional authorisation. Oil's direction this weekend hinges entirely on whether the nuclear and shipping-lane terms can be agreed.
+    </div>
+    <div class="also-cn">伊朗通过巴基斯坦斡旋向美国提交最新和平方案，4月7日停火协议仍有效，但霍尔木兹海峡尚未重开。WTI油价下跌3%至每桶101.94美元，仍远高于战前约70美元的水平；关键谈判焦点是核问题和航运通道重开时间表。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://www.cnbc.com/2026/05/01/oil-prices-today-brent-wti-us-iran-war-trump-war-powers-deadline.html">CNBC — Oil &amp; Iran ceasefire update</a>
+    </div>
+  </div>
+
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">BRK.B</span>
+      <span class="sector-pill s-finance">FINANCIAL / MACRO</span>
+      <span class="score-pill">11/20</span>
+    </div>
+    <div class="also-text">
+      Berkshire Hathaway's annual meeting is underway in Omaha today (May 2), Greg Abel's first as CEO after succeeding Warren Buffett — markets watching his capital allocation comments and tone closely, as Berkshire holds a record cash pile. Separately, the first IEEPA tariff refunds (Trump's import taxes that courts ruled had to be returned) are expected May 11, with approximately $166 billion in duties owed back to importers who filed via the CAPE portal launched April 20.
+    </div>
+    <div class="also-cn">伯克希尔·哈撒韦年会今日在奥马哈举行，格雷格·阿贝尔首次以CEO身份主持，市场关注其对庞大现金储备的资本配置策略。另外，特朗普政府的IEEPA关税退款预计5月11日起落地，首批退款约1660亿美元将返还给进口商。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://www.cnbc.com/2026/05/01/berkshire-hathaway-annual-meeting-new-era-warren-buffett-off-center-stage.html">CNBC — Berkshire AGM 2026</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── STOCK DEEP DIVE CALLOUT ────────────────────────────────────── -->
+<div class="section-label">Stock deep dive 股票深度分析</div>
+<div class="deepdive-cta mb16">
+  <div class="deepdive-cta-label">📊 Today's stock deep dive — separate file</div>
+  <div class="deepdive-cta-text">
+    Today's deep dive covers <strong>AAPL, GOOGL, NVDA</strong>
+    — fundamentals (P/E, revenue, EPS, margins), technical analysis
+    (52-week range, moving averages, RSI, key levels), today's
+    specific news catalyst for each stock, and full answers to the
+    key questions from each signal card.
+  </div>
+  <div class="deepdive-cta-cn">
+    今日深度分析股票：<strong>苹果（AAPL）、谷歌母公司（GOOGL）、英伟达（NVDA）</strong>。
+    包含基本面数据（市盈率、营收、每股盈利、利润率）、技术面分析（52周价格区间、
+    均线、相对强弱指数、关键价位）、今日催化剂，以及三大信号关键问题的完整解答。
+  </div>
+  <div class="deepdive-cta-link">
+    → <a href="market_deepdive_20260502.html">
+        Open Stock Deep Dive 打开深度分析报告 ↗
+      </a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── GLOBAL MACRO CONTEXT ───────────────────────────────────────── -->
+<div class="section-label">Global macro context 全球宏观背景</div>
+<div class="macro-grid">
+  <div class="macro-card">
+    <div class="macro-topic">Geopolitics 地缘政治</div>
+    <div class="macro-text">
+      US–Iran ceasefire has held since April 7. Iran sent an updated peace proposal through Pakistani mediators on Friday May 1. Key outstanding issues: reopening the Strait of Hormuz (a critical oil shipping lane — roughly 20% of global oil flows through it), Iran's nuclear programme, and US sanctions. Trump vowed to maintain the blockade until a nuclear deal is signed; Tehran refuses to reopen the strait without US sanctions relief. No timeline for resolution.
+    </div>
+    <div class="macro-cn">美伊停火自4月7日起维持，伊朗通过巴基斯坦向美方递交最新方案。关键分歧：霍尔木兹海峡重开（全球约20%原油经此运输）、伊朗核项目及制裁解除。谈判无明确时间表。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Oil &amp; commodities 原油与大宗商品</div>
+    <div class="macro-text">
+      WTI crude: $101.94/bbl (−2.98%). Brent crude: $108.17/bbl (−2.02%). Both fell sharply on Iran peace-talk progress. Oil remains ~45% above pre-war levels (~$70/bbl), meaning energy-price inflation is still embedded in the economy even after Friday's drop. A full ceasefire and Hormuz reopening could push WTI back toward $80–85.
+    </div>
+    <div class="macro-cn">WTI原油每桶101.94美元（跌2.98%），布伦特原油每桶108.17美元（跌2%），因伊朗和平谈判进展而下滑。但油价仍比战前（约70美元/桶）高出约45%，能源通胀压力尚未消除。若霍尔木兹海峡完全重开，油价可能回落至80–85美元区间。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Fed &amp; rates 美联储与利率</div>
+    <div class="macro-text">
+      The Federal Reserve kept interest rates at 3.5%–3.75% for a third consecutive meeting in April 2026 — an unusually contentious 8-4 vote (the closest split since 1992). J.P. Morgan and most forecasters see rates on hold through all of 2026, with the next move likely a hike in Q3 2027 if energy-driven inflation persists. The April jobs report (released May 1) showed mixed sector data: federal government payrolls fell 18K (DOGE cuts), financial activities −15K, but construction, manufacturing, and services added jobs. Headline NFP figure unconfirmed.
+    </div>
+    <div class="macro-cn">美联储4月连续第三次维持利率在3.5%–3.75%不变，但内部分歧加大（8比4投票）。摩根大通等机构预测2026年全年不降息，若能源通胀持续甚至可能于2027年加息。5月1日发布的4月就业报告显示：联邦政府(-18K)和金融业(-15K)就业下滑，但建筑、制造业等有所增加，总体数据尚待确认。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Trump &amp; policy 特朗普与政策</div>
+    <div class="macro-text">
+      The CAPE portal for IEEPA tariff refunds went live April 20 — briefly crashed due to demand — and first refund payments are expected May 11. The US government owes approximately $166 billion back to importers who paid Trump's emergency tariffs that courts ruled exceeded executive authority. Separately, DOGE federal workforce reductions continue: federal payrolls fell 18K in April, consistent with ongoing agency downsizing.
+    </div>
+    <div class="macro-cn">特朗普政府IEEPA关税退款门户（CAPE）已于4月20日上线，首批约1660亿美元退款预计5月11日到位。法院裁定该关税超出总统授权。与此同时，DOGE裁员行动持续推进，4月联邦政府雇员减少1.8万人。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Currency &amp; gold 货币与黄金</div>
+    <div class="macro-text">
+      Gold fell 1.12% to $4,571/oz — still historically elevated, but pulling back as Iran peace-talk optimism reduced safe-haven demand. Gold's long-term driver remains central bank buying and geopolitical risk premium from the US–Iran war. USD direction: n/a — unconfirmed from today's data, but generally steady given Fed's "hold" stance.
+    </div>
+    <div class="macro-cn">黄金下跌1.12%至4571美元/盎司，因伊朗和平预期改善，避险需求有所退潮。黄金历史高位背后是各国央行持续增持和地缘政治溢价。美元走势：今日数据暂未确认。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Asia &amp; global 亚洲与全球市场</div>
+    <div class="macro-text">
+      Asia-Pacific markets are closed Saturday. As of late April, the Nikkei 225 traded around 59,900, the Hang Seng around multi-month highs tracking US tech momentum, and the CSI 300 (China's broad market index) near 4,758. Asian markets have broadly rallied on US tech earnings beats and Iran ceasefire relief — Monday's open across Asia will likely be positive given Friday's US record close.
+    </div>
+    <div class="macro-cn">亚太市场周六休市。4月下旬日经225指数约59,900点，香港恒生指数随美股科技板块上涨，CSI300约4,758点。若美国科技股创新高的消息持续发酵，预计周一亚洲市场将跟随高开。</div>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    本周最重要的宏观背景有三点：一是<strong>伊朗停火协议维持</strong>，和谈推进令油价周五大跌3%，但霍尔木兹海峡尚未重开，能源通胀并未消散；二是<strong>美联储按兵不动</strong>，利率维持3.5%–3.75%，且内部分歧创1992年以来最大，全年降息预期已基本消失；三是<strong>特朗普关税退款</strong>首批约1660亿美元将于5月11日到位，短期内对部分行业具有正面提振效果。对美股投资者而言，最需关注的是油价走势能否进一步改善，以及美联储面对能源通胀是否会在2027年转向加息。
+  </div>
+</div>
+
+<!-- ── WHAT TO WATCH ───────────────────────────────────────────────── -->
+<div class="section-label">What to watch — next 24–48 hours 未来24–48小时重点关注</div>
+<ul class="watch-list mb16">
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Berkshire Hathaway AGM (today, May 2, Omaha) + Q1 earnings release:</strong> Greg Abel's first AGM as CEO. Markets will parse his comments on capital allocation (Berkshire's record cash pile — does he deploy it?), succession planning beyond Abel, energy cost pressures from the Iran war on Berkshire's chemical businesses, and the Apple holding. Any signal on large acquisitions could move BRK.B and the broader market Monday.
+      </span>
+      <span class="watch-cn">伯克希尔年会今日举行，格雷格·阿贝尔首次以CEO身份主持。市场关注：创纪录现金储备如何部署？是否有大型并购信号？伊朗战争对旗下化工业务成本的影响？任何明确信号都可能在周一推动伯克希尔股价及大盘。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-blue">$</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>NVDA earnings — May 20:</strong> Nvidia's Q1 FY2027 results are the single most anticipated earnings event of H1 2026. Guided for ~$78B revenue (+77% YoY). Key metrics to watch: data centre revenue, gross margins (targets ~74%), any change to the China revenue exclusion, and forward guidance for Q2. Options markets will start pricing the event seriously this week.
+      </span>
+      <span class="watch-cn">英伟达Q1财报将于5月20日发布，是上半年最受瞩目的财报事件。指引营收约780亿美元（同比+77%）。关注重点：数据中心营收、毛利率（目标约74%）、中国市场政策变化及二季度展望。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-amber">~</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>April 2026 jobs report interpretation + Fed speakers this week:</strong> The April NFP released Friday showed mixed sector data — federal payrolls −18K (DOGE), financial −15K, but manufacturing and construction positive. Headline number unconfirmed. Several Fed officials scheduled to speak this week; any hawkish signal on inflation (energy-driven PCE) could reset rate-cut (or hike) expectations. Watch for commentary on the tariff-refund's disinflationary effect.
+      </span>
+      <span class="watch-cn">4月非农就业报告已于周五发布，整体数据喜忧参半。本周多位美联储官员将发表讲话，若能源通胀信号偏强，市场可能重新定价加息预期。关税退款对通胀的缓解效果也将受到关注。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-purple">+</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Iran–US peace talks — next negotiation round:</strong> Weekend diplomatic activity in Islamabad between Pakistani, Iranian, and US envoys. Key unresolved issues: Strait of Hormuz reopening timeline, Iran's nuclear enrichment pause, and US sanctions relief. Any positive leak from talks could send WTI below $100/bbl for the first time since the war began — a major deflationary catalyst for the broad market.
+      </span>
+      <span class="watch-cn">伊斯兰堡本周末外交斡旋持续进行，核心问题包括霍尔木兹海峡重开、伊朗核协议及制裁解除。若谈判传出积极信号，WTI油价可能跌破100美元/桶，这将是战争以来首次，对整体市场具有重大通缩性利好。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-green">A</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Apple's John Ternus — first AI product strategy signal:</strong> Following Friday's earnings call, Ternus's comments on Apple Intelligence roadmap and the hardware vision for FY2027 will be dissected by analysts. Any clarity on when AI features become a monetisable, trackable revenue line (not just a marketing narrative) would be a positive re-rating catalyst for AAPL.
+      </span>
+      <span class="watch-cn">苹果新任CEO特纳斯在财报会上首次展示AI产品战略，分析师将密切研判其对Apple Intelligence商业化路径的表态。若AI功能能被纳入可量化的营收指引，将成为苹果股票估值提升的催化剂。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-gray">$</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>IEEPA tariff refunds — May 11 first disbursement:</strong> The US government owes ~$166B back to importers. First payments expected May 11 via the CAPE portal. This is a large transfer to the private sector with potential short-term positive impact on companies with high import costs (retailers, consumer staples). Watch TGT, WMT, and consumer names for positive guidance revisions.
+      </span>
+      <span class="watch-cn">IEEPA关税退款首批约1660亿美元预计于5月11日到账。这是政府向私营企业的大规模资金转移，可能令高进口成本行业（零售、消费品等）受益，关注沃尔玛、塔吉特等公司的业绩指引调整。</span>
+    </span>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<!-- ── OTHER NOTABLE NEWS ─────────────────────────────────────────── -->
+<div class="section-label">Other notable news 其他值得关注的新闻</div>
+<div class="notable-grid mb16">
+  <div class="notable-card">
+    <div class="notable-topic">AAPL — CEO Succession</div>
+    <div class="notable-text">
+      Tim Cook will become Apple's Executive Chairman on September 1, 2026, with John Ternus (SVP Hardware Engineering, age 51) becoming CEO — the first product-engineering leader to run Apple since Steve Jobs. Ternus's hardware-first background may accelerate the integration of AI chips (Apple Silicon) into the AI features roadmap.
+    </div>
+    <div class="notable-cn">蒂姆·库克将于9月1日转任苹果执行董事长，约翰·特纳斯（51岁，现任硬件工程高级副总裁）接任CEO，是继乔布斯后首位"产品工程师出身"的苹果CEO，有望加速AI芯片与功能的融合。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">META — Capex Raise</div>
+    <div class="notable-text">
+      Meta raised its 2026 capex guidance to $125–145B (from $115–135B), signalling an accelerating commitment to AI infrastructure. The incremental $20B raise in the mid-range is equivalent to the entire annual revenue of many S&amp;P 500 companies — and it flows largely to NVDA and infrastructure suppliers.
+    </div>
+    <div class="notable-cn">Meta将2026年资本支出指引上调至1250亿–1450亿美元，新增投入主要用于AI数据中心建设，直接利好英伟达等GPU供应商，增量资本支出相当于众多标普500公司的全年营收。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">S&amp;P 500 Earnings Season</div>
+    <div class="notable-text">
+      Q1 2026 blended EPS growth for the S&amp;P 500 now stands at 27.1% — the highest since Q4 2021 — with 84% of reporters beating estimates, well above the 5-year average of 78%. Communication Services, IT, and Consumer Discretionary are leading; Healthcare and Energy are the only sectors with negative earnings growth.
+    </div>
+    <div class="notable-cn">标普500一季度整体每股盈利增速达27.1%，为近五年最高，84%的公司超预期，高于五年均值78%。通信服务、IT和可选消费领跑；医疗保健和能源是仅有的两个盈利负增长板块。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">BRK.B — New CEO Era</div>
+    <div class="notable-text">
+      Berkshire's Q1 earnings release alongside today's AGM will reveal how Greg Abel has begun deploying the record cash pile — and whether Iran-war energy cost pressures are materially squeezing margins at BNSF Railway and Berkshire Hathaway Energy, two of its largest operating subsidiaries.
+    </div>
+    <div class="notable-cn">伯克希尔Q1业绩将与年会同步发布，市场将观察阿贝尔是否开始动用庞大现金储备，以及伊朗战争导致的能源成本上升是否对BNSF铁路和伯克希尔能源等子公司利润产生实质影响。</div>
+  </div>
+</div>
+
+<!-- ── MARKET PULSE ────────────────────────────────────────────────── -->
+<div class="section-label">Market pulse 市场脉搏</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <span class="pulse-key">Theme 主题</span>
+    <span class="pulse-val">
+      The AI earnings supercycle is real and accelerating — five of the world's largest companies reported simultaneously this week and all beat expectations by wide margins, validating years of infrastructure investment and driving S&amp;P 500 earnings growth to the highest level since 2021.
+    </span>
+    <span class="pulse-cn">
+      AI盈利超级周期已被本周大型科技巨头集体超预期业绩所证实，基础设施投入正在加速转化为实际营收，标普500盈利增速创2021年以来新高。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Dominant trade 主要交易方向</span>
+    <span class="pulse-val">
+      Buy mega-cap tech and AI infrastructure (NVDA, AVGO, CRWD); rotate out of energy (oil falling on peace talks) and value names (Dow lagged Friday); sell safe-haven assets (gold −1.1%, bonds flat) as geopolitical risk premium compresses.
+    </span>
+    <span class="pulse-cn">
+      买入大市值科技及AI基础设施（英伟达、博通等），卖出能源股（油价下跌）和价值股（道指落后），降低黄金等避险资产配置（地缘政治风险溢价收缩）。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Watch next 12h 未来12小时关注</span>
+    <span class="pulse-val">
+      Berkshire Hathaway AGM — Greg Abel's capital allocation comments and any signal on large acquisitions or BRK's Apple stake strategy could set the tone for financial sector sentiment into Monday's open.
+    </span>
+    <span class="pulse-cn">
+      重点关注伯克希尔年会——阿贝尔对现金储备部署的表态及苹果持仓策略，将直接影响周一金融板块开盘情绪。
+    </span>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 今日总结</div>
+  <div class="cn-text">
+    本周是近年来最强的一次科技季报周：苹果、谷歌、微软、亚马逊、Meta五家巨头全部大幅超预期，<strong>AI云计算业务集体提速，标普500一季度盈利增速冲至五年新高</strong>。市场核心逻辑正在从"期待AI"转向"验证AI"——实实在在的业绩在证明这一轮投入是值得的。未来12小时最重要的观察点是伯克希尔年会，阿贝尔作为新CEO如何阐述资本配置策略，将为周一大盘走向定下基调。中期最关键的催化剂则是英伟达5月20日财报，以及伊朗和平谈判能否推动油价跌破每桶100美元的关键心理关口。
+  </div>
+</div>
+
+<!-- ── SOURCES ─────────────────────────────────────────────────────── -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  Apple Newsroom — <a href="https://www.apple.com/newsroom/2026/04/apple-reports-second-quarter-results/">Apple Q2 2026 earnings release</a><br>
+  Apple Newsroom — <a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/">Tim Cook to become Executive Chairman, John Ternus CEO</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/30/apple-aapl-q2-2026-earnings-report.html">Apple AAPL Q2 2026 earnings report</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/alphabet-googl-q1-2026-earnings.html">Alphabet GOOGL Q1 2026 earnings</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html">Microsoft MSFT Q3 2026 earnings</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/30/apple-proves-once-again-it-is-the-ultimate-cash-machine-how-to-trade-the-stock-from-here.html">Apple proves it is the ultimate cash machine</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/01/oil-prices-today-brent-wti-us-iran-war-trump-war-powers-deadline.html">Oil prices, Iran ceasefire, war powers deadline</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/01/berkshire-hathaway-annual-meeting-new-era-warren-buffett-off-center-stage.html">Berkshire Hathaway AGM 2026 — Abel takes stage</a><br>
+  Yahoo Finance — <a href="https://finance.yahoo.com/markets/stocks/live/stock-market-today-friday-may-1-records-apple-iran-231056146.html">S&amp;P 500, Nasdaq jump to records — May 1, 2026</a><br>
+  TheStreet — <a href="https://www.thestreet.com/latest-news/stock-market-today-may-1-2026-updates">Stock Market Today May 1, 2026</a><br>
+  Motley Fool — <a href="https://www.fool.com/investing/2026/04/30/magnificent-seven-companies-microsoft-amazon-alpha/">Magnificent Seven Q1 2026 earnings recap</a><br>
+  Motley Fool — <a href="https://www.fool.com/investing/2026/04/28/prediction-nvidia-stock-will-skyrocket-after-may-2/">NVDA May 20 earnings prediction</a><br>
+  FactSet — <a href="https://insight.factset.com/sp-500-earnings-season-update-may-1-2026">S&amp;P 500 Earnings Season Update: May 1, 2026</a><br>
+  GuruFocus — <a href="https://www.gurufocus.com/news/8836455/apple-inc-aapl-q2-2026-earnings-call-highlights-record-revenue-and-strategic-shifts-amid-supply-challenges">Apple Q2 2026 earnings call highlights</a><br>
+  CBS News — <a href="https://www.cbsnews.com/news/trump-tariff-refunds-ieepa-timeline-may-2026/">IEEPA tariff refund timeline May 2026</a><br>
+  Benzinga — <a href="https://www.benzinga.com/trading-ideas/previews/26/05/52215985/warren-buffett-wont-be-the-central-figure-at-saturdays-berkshire-hathaway-annual-meeting-will-investors-warm-up-to-greg-abel">Berkshire AGM Greg Abel preview</a><br>
+  Yahoo Finance — <a href="https://finance.yahoo.com/economy/policy/live/fed-meeting-live-updates-federal-reserve-holds-interest-rates-steady-in-powells-final-meeting-as-chair-111906007.html">Fed holds rates steady — April 2026</a>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<div class="footer">
+  Market Intelligence Agent · 市场情报助手<br>
+  Saturday 2 May 2026 · AM SGT · Prior Session Recap · Full US market coverage · 美国全市场覆盖<br>
+  Deep dive: <a href="market_deepdive_20260502.html" style="color:#185FA5;">market_deepdive_20260502.html</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Market Intelligence — AM Brief, Wednesday April 22 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 860px;
+         margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem;
+                   margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px; font-size: 11px;
+                   color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-date { font-size: 13px; color: #777; }
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px; padding: 12px 16px;
+              margin-bottom: 1.5rem; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish  { background: #EAF3DE; color: #27500A; }
+  .mood-bearish  { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed    { background: #FAEEDA; color: #633806; }
+  .mood-neutral  { background: #f0efe8; color: #555; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+  .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+             gap: 8px; margin-bottom: 1.5rem; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0; padding: 1rem 1.25rem;
+                 margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill  { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                 background: #f0efe8; color: #666; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 8px; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.05em; margin-bottom: 3px; }
+  .bull-label { color: #27500A; } .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8; border-radius: 6px;
+               padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0; top: 9px;
+                          width: 5px; height: 5px; border-radius: 50%;
+                          background: #ccc; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 1.5rem; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 1.5rem; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8; font-size: 13px;
+                   color: #333; line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex;
+                align-items: center; justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 1px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .pulse-row { display: flex; gap: 10px; padding: 7px 0;
+               border-bottom: 1px solid #e0dfd8; font-size: 13px;
+               line-height: 1.5; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { font-weight: 600; white-space: nowrap; min-width: 130px;
+               color: #333; }
+  .pulse-val { color: #555; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0; }
+  .score-table { width: 100%; border-collapse: collapse; font-size: 11px;
+                 margin-bottom: 1.5rem; }
+  .score-table th { background: #f0efe8; padding: 6px 8px; text-align: left;
+                    font-weight: 600; color: #666; border: 1px solid #e8e8e0; }
+  .score-table td { padding: 5px 8px; border: 1px solid #e8e8e0; color: #444; }
+  .score-table tr:nth-child(even) td { background: #fafafa; }
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    AM Morning Briefing
+  </div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-date">Wednesday, 22 April 2026 · Singapore Time (SGT / UTC+8) · US Large-Cap &amp; Tech/AI</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Market mood</span>
+  <span class="mood-text">Mixed — large-cap tech slipped Tuesday on US–Iran peace-deal uncertainty while small caps hit record highs; two high-stakes earnings releases (TSLA, NOW) and ongoing tariff pressure keep sentiment cautious going into Wednesday's US session.</span>
+  <span class="mood-pill mood-mixed">Mixed</span>
+</div>
+
+<div class="section-label">Index snapshot — Tuesday 21 Apr close (US markets pre-open Wed 22 Apr)</div>
+<div class="indices">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,064</div>
+    <div class="idx-chg dn">−0.63%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Nasdaq</div>
+    <div class="idx-val">24,260</div>
+    <div class="idx-chg dn">−0.59%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Dow</div>
+    <div class="idx-val">49,149</div>
+    <div class="idx-chg dn">−0.59%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">2,795</div>
+    <div class="idx-chg up">ATH</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI Oil</div>
+    <div class="idx-val">$89.33</div>
+    <div class="idx-chg dn">−0.38%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10-yr yield</div>
+    <div class="idx-val">4.30%</div>
+    <div class="idx-chg flat">Flat</div>
+  </div>
+</div>
+
+<div class="section-label">Market commentary</div>
+<p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:1.5rem;">
+  US equities closed lower Tuesday as investors grew concerned about stalling US–Iran ceasefire negotiations, with uncertainty around the Strait of Hormuz continuing to exert upward pressure on crude oil. The S&amp;P 500 lost 0.63% to 7,064 and the Nasdaq fell 0.59% to 24,260, with large-cap tech names leading the decline — a notable reversal given the strong software-led rally of the prior week. The one major bright spot was the Russell 2000, which touched an all-time high of 2,795, reflecting a rotation out of tariff-exposed multinationals into domestically-oriented small caps that stand to benefit from the reshoring theme. Wednesday's session is headlined by two after-hours earnings releases — Tesla and ServiceNow — and pre-market mood will be shaped heavily by what those numbers show about EV margins and enterprise AI software spending.
+</p>
+
+<div class="section-label">Top 3 signals</div>
+
+<!-- Signal #1: TSLA Q1 2026 Earnings -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">TSLA</span>
+        <span class="score-pill">17.2 / 20</span>
+        <span class="score-pill">Earnings Release</span>
+      </div>
+      <div class="sig-headline">Tesla Reports Q1 2026 After Close Today — Missed Deliveries, Margin Scrutiny Front and Centre</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+  <div class="sig-body">
+    Tesla is scheduled to release Q1 2026 results after the US market close on Wednesday April 22. The company delivered 358,023 vehicles in Q1, missing the Wall Street consensus of 365,645 units by roughly 2.1% and undershooting its own internal estimate of 365,645 — a clear demand signal that analysts are treating as a negative leading indicator. The stock was trading down approximately 2% heading into the announcement, with sell-side expectations centred on non-GAAP EPS of $0.37 on revenue of $22.7 billion. The critical watch metric is automotive gross margin: if it prints below 17%, the profitability narrative deteriorates materially. Energy storage deployment also came in at 8.8 GWh in Q1 — a 38% sequential drop from Q4 2025's record 14.2 GWh — adding another headwind. Tesla has faced increasing competition from BYD and legacy OEMs in China and Europe, and Elon Musk's political activities have weighed on brand sentiment in key markets.
+  </div>
+  <div class="src-line">
+    Electrek / CoinDCX · Published 21 Apr 2026 · Still active: stock is trading lower pre-earnings and delivery miss is the lead topic on sell-side desks today ·
+    <a href="https://electrek.co/2026/04/21/tesla-tsla-q1-2026-earnings-preview-wall-street-expects-growth/" target="_blank">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">A beat on automotive gross margin above 18% combined with forward guidance citing Cybercab ramp and Full Self-Driving monetisation could re-rate the stock 10%+ as it would confirm the AI/robotics premium is justified.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Margin compression below 17%, a revenue miss, and cautious guidance on tariff costs (25% levy on advanced semiconductors affects FSD chips) would confirm Tesla is no longer a growth story at current valuations.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> Binary event tonight — expect ±8–12% move at open Thursday</div>
+    <div class="impl-item"><span>Long term:</span> Margin trajectory sets the tone for the full 2026 EV investment thesis</div>
+  </div>
+  <ul class="questions">
+    <li>Did automotive gross margin hold above 17%, and what does management say about the trajectory under ongoing pricing pressure?</li>
+    <li>What is the updated timeline and production ramp guidance for the Cybercab and the refreshed Model Y — can either offset near-term volume weakness?</li>
+    <li>How much of Q1's energy storage drop was seasonal vs. structural, and is the Megapack order pipeline intact?</li>
+  </ul>
+</div>
+
+<!-- Signal #2: US Tariffs -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AAPL</span>
+        <span class="ticker-pill">NVDA</span>
+        <span class="ticker-pill">AMD</span>
+        <span class="ticker-pill">MACRO</span>
+        <span class="score-pill">17.0 / 20</span>
+        <span class="score-pill">Regulatory / Policy</span>
+      </div>
+      <div class="sig-headline">Global 10% Tariff in Force Until July 24 — 25% Semiconductor Levy and Apple's $1.1B Quarterly Cost Hit Now Priced In</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+  <div class="sig-body">
+    The US baseline tariff of 10% on all imports, introduced under Section 122 of the Trade Act of 1974, remains in effect and is set to expire on July 24, 2026 — 150 days after implementation — with a threatened increase to 15% thereafter. For tech, the headline risk is the January 2026 executive order imposing 25% tariffs specifically on advanced computing semiconductors, covering Nvidia's H200 and AMD's MI325X. Apple confirmed it is absorbing between $800 million and $1.1 billion in tariff costs per quarter; CEO Tim Cook guided that tariffs could add a further $1.1 billion in Q4 costs. The market rotation visible in Tuesday's session — Russell 2000 at ATH while Nasdaq fell — reflects capital moving away from tariff-exposed large-cap multinationals toward domestically oriented small caps. The July 24 expiry date is the single most important policy catalyst on the horizon: any signal from the White House about extension, escalation, or resolution will trigger an outsized market reaction.
+  </div>
+  <div class="src-line">
+    Tax Foundation / Yahoo Finance / CNBC · Ongoing (originally intensified Jan 2026) · Still active: driving sector rotation and earnings guidance across every Mag7 name ·
+    <a href="https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/" target="_blank">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">If the July 24 expiry results in a negotiated reduction or freeze at 10%, supply chains stabilise and tech margins recover, potentially triggering a Nasdaq re-rating toward JPMorgan's revised 7,600 S&amp;P 500 target.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Escalation to 15% or extension of the 25% semiconductor levy post-July 24 would compress margins across NVDA, AMD, and AAPL further and could shave 5–8% off Nasdaq in a single session.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> Tariff cost disclosures in each Q1 earnings call are the key data points for the next two weeks</div>
+    <div class="impl-item"><span>Long term:</span> Structural reshoring of semiconductor manufacturing (TSMC Arizona, Intel fabs) accelerates if tariffs extend beyond 2026</div>
+  </div>
+  <ul class="questions">
+    <li>Will Apple and other Mag7 names provide updated tariff cost guidance in Q1 calls, and will they signal supply chain shifts to India or Vietnam?</li>
+    <li>Is there any behind-the-scenes signal from the White House or trade representative about the July 24 disposition — pause, escalate, or negotiate?</li>
+    <li>How are NVDA's H200 export controls interacting with the 25% semiconductor tariff to determine the total cost burden on hyperscaler capex plans?</li>
+  </ul>
+</div>
+
+<!-- Signal #3: ServiceNow Q1 2026 + Armis Acquisition -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">NOW</span>
+        <span class="score-pill">15.2 / 20</span>
+        <span class="score-pill">Earnings Release + M&amp;A</span>
+      </div>
+      <div class="sig-headline">ServiceNow Reports Q1 2026 After Close Today; $7.75B Armis Cybersecurity Acquisition Completed</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+  <div class="sig-body">
+    ServiceNow releases Q1 2026 results Wednesday after the close (conference call at 2 PM PT / 9 PM EDT / Thursday 5 AM SGT). The street consensus sits at $0.97 GAAP EPS on $3.75 billion in revenue, implying 21.4% year-over-year growth. Management guided subscription revenues between $3.65 billion and $3.67 billion, representing 21.5% growth on a GAAP basis. Separately, ServiceNow confirmed it has completed its $7.75 billion all-cash acquisition of Armis, an OT/IoT cybersecurity platform — the largest deal in the company's history and a strategic bet on converging IT workflow automation with security. NOW has beaten EPS estimates in 100% of quarters over the past two years, and revenue estimates in 88% of those quarters, making tonight a high-bar event. Investors will be scrutinising whether enterprise customers are still expanding software budgets amid macro uncertainty, and whether the Armis acquisition dilutes near-term profitability.
+  </div>
+  <div class="src-line">
+    ServiceNow IR / BusinessWire / Intellectia.ai · Published 1 Apr – 22 Apr 2026 · Still active: earnings tonight, Armis close announced this week ·
+    <a href="https://investor.servicenow.com/news/news-details/2026/ServiceNow-to-Announce-First-Quarter-2026-Financial-Results-on-April-22/default.aspx" target="_blank">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">A beat on subscription revenue above $3.68B with raised full-year guidance would confirm enterprise AI software spend is resilient, lifting the broader SaaS sector and validating NOW's premium valuation heading into the Armis integration.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Any softness in net new annual contract value (ACV) growth combined with Armis acquisition costs compressing operating margins could trigger a 10–15% selloff, sending a negative signal for the broader enterprise software cohort (CRM, SNOW, DDOG).</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> Results set the tone for CRM, SNOW, and DDOG in the coming earnings weeks</div>
+    <div class="impl-item"><span>Long term:</span> Armis integration will determine whether NOW can own the IT+OT security workflow market, a $50B+ TAM</div>
+  </div>
+  <ul class="questions">
+    <li>What is the impact of the Armis $7.75B acquisition on operating margins and free cash flow guidance for the rest of 2026?</li>
+    <li>Is net new ACV growth accelerating or decelerating — and is the federal government vertical (a large NOW segment) showing macro-related caution?</li>
+    <li>How is ServiceNow positioning its AI agents (Now Assist) relative to Microsoft Copilot and Salesforce Agentforce in customer conversations?</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Also tracking</div>
+<div class="also-grid">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">MRVL · GOOGL</span>
+      <span class="score-pill">15.0 / 20</span>
+    </div>
+    <div class="also-text">
+      <strong>Marvell surges 5.8% on Google AI chip partnership:</strong> Reports from The Information (April 20) indicate Marvell is in talks with Alphabet to co-develop two new AI chips — a memory processing unit paired with Google's TPU, and a new TPU for running AI models — making Marvell Google's third custom silicon partner alongside Broadcom and MediaTek. This accelerates the hyperscaler shift away from off-the-shelf NVIDIA GPUs toward custom ASICs, a structural trend that represents a long-term revenue ceiling risk for NVDA and a tailwind for chip designers. Wells Fargo called the deal "a significant positive" for Marvell's customer diversification story.
+    </div>
+    <div style="margin-top:8px; font-size:11px; color:#aaa;">
+      <a href="https://sherwood.news/markets/marvell-and-google-reportedly-in-talks-to-develop-new-ai-chips/" style="color:#185FA5;text-decoration:none;">Sherwood News — Marvell &amp; Google AI Chip Talks</a>
+    </div>
+  </div>
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">SPX · AI BROAD</span>
+      <span class="score-pill">15.2 / 20</span>
+    </div>
+    <div class="also-text">
+      <strong>JPMorgan raises S&amp;P 500 year-end target to 7,600 on AI rally momentum:</strong> Strategist Dubravko Lakos-Bujas lifted the bank's S&amp;P 500 target to 7,600 — up from a 7,200 forecast issued just last month — citing renewed AI investor enthusiasm and improving earnings growth visibility. With the index currently at 7,064, this implies roughly 7.6% upside from Tuesday's close. The revision is notable because JPMorgan had previously cut its target amid tariff fears; the reversal signals the desk believes the AI capex cycle is durable enough to absorb trade-war costs. Still, the 7,600 target hinges on Mag7 earnings delivering top-line growth — TSLA and NOW tonight are the first significant tests.
+    </div>
+    <div style="margin-top:8px; font-size:11px; color:#aaa;">
+      <a href="https://www.bloomberg.com/news/articles/2026-04-21/jpmorgan-lifts-s-p-500-target-as-ai-rally-regains-momentum" style="color:#185FA5;text-decoration:none;">Bloomberg — JPMorgan S&amp;P 500 Target Raise</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">What to watch — next 24–48 hours</div>
+<ul class="watch-list">
+  <li>
+    <div class="watch-icon w-red">ER</div>
+    <div><strong>Tesla (TSLA) Q1 2026 earnings</strong> — After close Wednesday April 22. Consensus: EPS $0.37, revenue $22.7B. Key watch: automotive gross margin (floor is ~17%) and any Cybercab/FSD guidance. Expect ±8–12% at Thursday open.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-red">ER</div>
+    <div><strong>ServiceNow (NOW) Q1 2026 earnings</strong> — After close Wednesday April 22 (call 2 PM PT / Thu 5 AM SGT). Consensus: EPS $0.97, revenue $3.75B. First major SaaS earnings read of the season; Armis integration cost disclosure is the new wildcard.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-blue">ER</div>
+    <div><strong>Texas Instruments (TXN) Q1 2026 earnings</strong> — Wednesday April 22. Industrial and automotive semiconductor demand signal; a weak TXN outlook would heighten concerns about chip demand outside of AI data centre.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-blue">ER</div>
+    <div><strong>Intel (INTC) Q1 2026 earnings</strong> — Thursday April 23. Key read on x86 data centre demand, foundry ramp progress, and how tariffs are affecting server procurement cycles globally.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-amber">FED</div>
+    <div><strong>FOMC meeting April 28–29</strong> — Fed funds rate hold at 3.50–3.75% is priced at 99.4% probability (Polymarket). March CPI accelerated to 3.3% YoY; the key question is whether Chair Powell's post-meeting statement signals a more hawkish tilt given sticky inflation and tariff-driven price pressures.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-amber">GEO</div>
+    <div><strong>US–Iran ceasefire and Strait of Hormuz</strong> — A two-week ceasefire remains in place but is temporary and tied to the Strait's reopening. Any breakdown in talks would push WTI crude above $95 and revive stagflation fears that directly pressure growth stocks.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-green">POLICY</div>
+    <div><strong>Tariff July 24 countdown — 93 days remaining</strong> — Monitor any White House signals about post-expiry policy. A 15% escalation announcement ahead of the deadline would be a major negative catalyst across the Mag7; a freeze or reduction would be an immediate relief rally trigger.</div>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<div class="section-label">Market pulse</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <div class="pulse-key">Theme</div>
+    <div class="pulse-val">The AI earnings litmus test has arrived — tonight's TSLA and NOW results will determine whether the JPMorgan 7,600 target narrative holds or the tariff/margin bear case takes control of the tape for the next four weeks of Mag7 reporting season.</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Dominant trade</div>
+    <div class="pulse-val">Rotating out of tariff-exposed large-cap tech (Nasdaq down) into domestically-oriented small caps (Russell 2000 at ATH) while adding selective exposure to AI infrastructure plays with US-based revenue streams — custom chip designers (MRVL) and cloud infrastructure (AMZN, MSFT).</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Watch next 12 hrs</div>
+    <div class="pulse-val">Tesla Q1 automotive gross margin number — it is the single most important data point for the session. A print below 17% confirms the "growth story is over" bear case; a print above 18% reopens the bull thesis and lifts the entire EV and energy storage sector.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Scoring methodology (candidate pool)</div>
+<table class="score-table">
+  <tr>
+    <th>Story</th>
+    <th>Ticker(s)</th>
+    <th>Price Impact (25%)</th>
+    <th>Portfolio Rel. (30%)</th>
+    <th>Source Quality (25%)</th>
+    <th>Trend Sig. (20%)</th>
+    <th>Total /20</th>
+  </tr>
+  <tr>
+    <td>TSLA Q1 Earnings (tonight)</td>
+    <td>TSLA</td>
+    <td>4</td><td>5</td><td>4</td><td>4</td><td><strong>17.2</strong></td>
+  </tr>
+  <tr>
+    <td>US Tariffs — July 24 deadline</td>
+    <td>AAPL NVDA AMD MACRO</td>
+    <td>4</td><td>5</td><td>3</td><td>5</td><td><strong>17.0</strong></td>
+  </tr>
+  <tr>
+    <td>ServiceNow Q1 + Armis Deal</td>
+    <td>NOW</td>
+    <td>4</td><td>4</td><td>4</td><td>3</td><td><strong>15.2</strong></td>
+  </tr>
+  <tr>
+    <td>JPMorgan S&amp;P 500 target raise to 7,600</td>
+    <td>SPX broad</td>
+    <td>3</td><td>5</td><td>3</td><td>4</td><td><strong>15.2</strong></td>
+  </tr>
+  <tr>
+    <td>Marvell-Google custom AI chip deal</td>
+    <td>MRVL GOOGL</td>
+    <td>4</td><td>4</td><td>3</td><td>4</td><td><strong>15.0</strong></td>
+  </tr>
+</table>
+<p style="font-size:11px;color:#aaa;margin-bottom:1.5rem;">Note: TSMC Q1 results (April 16, +58% profit) excluded from Top 5 as the story is 6 days old and no longer the primary daily catalyst, though it continues to underpin the semiconductor bull case. JPMorgan target raise (#4) demoted to "Also Tracking" to give deep treatment to two active earnings events (TSLA #1, NOW #3) with direct binary price impact tonight.</p>
+
+<div class="divider"></div>
+
+<div class="section-label">Sources</div>
+<div class="sources">
+  <a href="https://electrek.co/2026/04/21/tesla-tsla-q1-2026-earnings-preview-wall-street-expects-growth/">Electrek — Tesla Q1 2026 Earnings Preview</a><br>
+  <a href="https://coindcx.com/blog/us-stock/tesla-earnings-q1-2026-preview/">CoinDCX — Tesla Q1 2026 Preview</a><br>
+  <a href="https://investor.servicenow.com/news/news-details/2026/ServiceNow-to-Announce-First-Quarter-2026-Financial-Results-on-April-22/default.aspx">ServiceNow IR — Q1 2026 Earnings Announcement</a><br>
+  <a href="https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/">Tax Foundation — Trump Tariff Tracker 2026</a><br>
+  <a href="https://sherwood.news/markets/marvell-and-google-reportedly-in-talks-to-develop-new-ai-chips/">Sherwood News — Marvell &amp; Google AI Chip Talks</a><br>
+  <a href="https://www.gurufocus.com/news/8803163/marvell-technology-mrvl-surges-on-potential-google-ai-chip-collaboration">GuruFocus — MRVL Surges on Google Collaboration</a><br>
+  <a href="https://www.bloomberg.com/news/articles/2026-04-21/jpmorgan-lifts-s-p-500-target-as-ai-rally-regains-momentum">Bloomberg — JPMorgan S&amp;P 500 Target Raise</a><br>
+  <a href="https://www.cnbc.com/2026/04/16/tsmc-q1-profit-58-percent-ai-chip-demand-record.html">CNBC — TSMC Q1 2026: 58% Profit Rise</a><br>
+  <a href="https://polymarket.com/event/fed-decision-in-april">Polymarket — Fed April Decision Odds</a><br>
+  <a href="https://247wallst.com/investing/2026/04/21/russell-2000s-gains-fueled-by-risk-on-trade-as-small-caps-extend-run/">247 Wall St — Russell 2000 Risk-On Trade</a><br>
+  <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm">Federal Reserve — March 2026 FOMC Statement</a>
+</div>
+
+<div class="footer" style="margin-top:1.5rem;">
+  Generated automatically · Wednesday 22 Apr 2026 12:05 SGT · For informational purposes only — not investment advice · Ting / gladys.ht.lee@gmail.com
+</div>
+
+</body>
+</html>

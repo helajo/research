@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Deep Dive — 10 May 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  /* ── HEADER ───────────────────────────────────────────────── */
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #185FA5; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+
+  /* ── NAVIGATION PILLS ─────────────────────────────────────── */
+  .nav-pills { display: flex; gap: 8px; flex-wrap: wrap;
+               margin-bottom: 1.5rem; }
+  .nav-pill { font-size: 12px; font-weight: 600; padding: 5px 14px;
+              border-radius: 20px; background: #E6F1FB; color: #0C447C;
+              text-decoration: none; }
+  .nav-pill:hover { background: #185FA5; color: #fff; }
+
+  /* ── SECTION LABELS ───────────────────────────────────────── */
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  /* ── SIGNAL Q&A SECTION ───────────────────────────────────── */
+  .signal-qa-card { background: #fff; border: 1px solid #e8e8e0;
+                    border-radius: 0 12px 12px 0;
+                    padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .signal-qa-rank1 { border-left: 3px solid #185FA5; }
+  .signal-qa-rank2 { border-left: 3px solid #1D9E75; }
+  .signal-qa-rank3 { border-left: 3px solid #854F0B; }
+  .signal-qa-title { font-size: 13px; font-weight: 600; color: #333;
+                     margin-bottom: 10px; line-height: 1.4; }
+  .signal-qa-num { font-size: 11px; font-weight: 700; color: #bbb;
+                   margin-right: 6px; }
+  .questions-list { padding: 0; list-style: none; margin-bottom: 10px; }
+  .questions-list li { font-size: 12px; color: #666; line-height: 1.5;
+                       padding: 3px 0 3px 14px; position: relative; }
+  .questions-list li::before { content: ""; position: absolute; left: 0;
+                               top: 9px; width: 5px; height: 5px;
+                               border-radius: 50%; background: #ccc; }
+  .q-answers { background: #f5f7fb; border: 1px solid #dce6f5;
+               border-radius: 8px; padding: 10px 14px;
+               margin-bottom: 10px; }
+  .q-answers-label { font-size: 9px; font-weight: 700; color: #8aaad4;
+                     text-transform: uppercase; letter-spacing: 0.08em;
+                     margin-bottom: 8px; }
+  .q-answer-row { display: flex; gap: 8px; margin-bottom: 10px;
+                  align-items: flex-start; }
+  .q-answer-row:last-child { margin-bottom: 0; }
+  .q-num { font-size: 10px; font-weight: 700; color: #185FA5;
+           background: #E6F1FB; border-radius: 4px;
+           padding: 2px 6px; flex-shrink: 0; margin-top: 1px; }
+  .q-answer-text { font-size: 12px; color: #444; line-height: 1.6; }
+  .q-answer-cn { font-size: 11px; color: #999; margin-top: 4px;
+                 font-family: 'PingFang SC', 'Microsoft YaHei',
+                 'Noto Sans SC', sans-serif; line-height: 1.6; }
+
+  /* ── STOCK CARDS ──────────────────────────────────────────── */
+  .stock-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 12px; padding: 1rem 1.25rem;
+                margin-bottom: 16px; scroll-margin-top: 16px; }
+  .stock-header { display: flex; align-items: flex-start;
+                  justify-content: space-between; gap: 12px;
+                  margin-bottom: 12px; }
+  .stock-name { font-size: 18px; font-weight: 700; color: #1a1a1a;
+                margin-bottom: 2px; }
+  .stock-name-cn { font-size: 12px; color: #999;
+                   font-family: 'PingFang SC', 'Microsoft YaHei',
+                   'Noto Sans SC', sans-serif; }
+  .stock-price-block { text-align: right; flex-shrink: 0; }
+  .stock-price { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stock-price-chg { font-size: 13px; margin-top: 2px; }
+  .stock-divider { height: 1px; background: #f0efe8; margin: 12px 0; }
+
+  /* Sector / meta pills */
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-top: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                background: #f0efe8; color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; }
+  .s-tech     { background: #E6F1FB; color: #0C447C; }
+  .s-health   { background: #E1F5EE; color: #085041; }
+  .s-energy   { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence  { background: #EEEDFE; color: #3C3489; }
+  .s-finance  { background: #EAF3DE; color: #27500A; }
+  .s-realty   { background: #FAECE7; color: #712B13; }
+  .s-macro    { background: #F1EFE8; color: #444441; }
+
+  /* Why now panel */
+  .why-now { background: #FAFAF7; border-left: 3px solid #185FA5;
+             border-radius: 0 8px 8px 0; padding: 10px 14px;
+             margin-bottom: 12px; }
+  .why-now-label { font-size: 9px; font-weight: 700; color: #185FA5;
+                   text-transform: uppercase; letter-spacing: 0.08em;
+                   margin-bottom: 5px; }
+  .why-now-text { font-size: 13px; color: #444; line-height: 1.6; }
+
+  /* Fundamental metrics grid */
+  .fund-grid { display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+               gap: 8px; margin-bottom: 10px; }
+  .fund-cell { background: #f8f8f6; border-radius: 8px; padding: 8px 10px; }
+  .fund-key { font-size: 10px; color: #999; text-transform: uppercase;
+              letter-spacing: 0.05em; margin-bottom: 3px; }
+  .fund-val { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .fund-sub { font-size: 10px; color: #aaa; margin-top: 1px; }
+
+  /* Technical analysis block */
+  .ta-block { background: #faf9f7; border: 1px solid #ebe9e2;
+              border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+  .ta-title { font-size: 10px; font-weight: 700; color: #aaa;
+              text-transform: uppercase; letter-spacing: 0.07em;
+              margin-bottom: 8px; }
+  .ta-row { display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 6px;
+            flex-wrap: wrap; gap: 6px; }
+  .ta-row:last-child { margin-bottom: 0; }
+  .ta-label { font-size: 11px; color: #888; width: 130px; flex-shrink: 0; }
+  .ta-value { font-size: 12px; font-weight: 600; color: #333; flex: 1; }
+
+  /* 52-week range bar */
+  .range-bar-wrap { flex: 1; min-width: 160px; }
+  .range-bar-track { height: 4px; background: #e8e8e0; border-radius: 2px;
+                     position: relative; margin: 4px 0; }
+  .range-bar-fill { position: absolute; top: 0; left: 0; height: 100%;
+                    background: #185FA5; border-radius: 2px; }
+  .range-bar-dot { position: absolute; top: -3px; width: 10px; height: 10px;
+                   background: #185FA5; border: 2px solid #fff;
+                   border-radius: 50%; transform: translateX(-50%);
+                   box-shadow: 0 0 0 1px #185FA5; }
+  .range-labels { display: flex; justify-content: space-between;
+                  font-size: 10px; color: #aaa; }
+
+  /* TA signal pills */
+  .ta-signals { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .ta-pill { font-size: 11px; font-weight: 600; padding: 3px 9px;
+             border-radius: 20px; }
+  .ta-bull    { background: #EAF3DE; color: #27500A; }
+  .ta-bear    { background: #FCEBEB; color: #791F1F; }
+  .ta-neutral { background: #f0efe8; color: #666; }
+  .ta-warn    { background: #FAEEDA; color: #633806; }
+
+  /* Stock synthesis text */
+  .stock-synthesis { font-size: 13px; color: #555; line-height: 1.7;
+                     margin-bottom: 8px; }
+  .data-caveat { font-size: 10px; color: #bbb; font-style: italic;
+                 margin-top: 4px; margin-bottom: 10px; }
+
+  /* ── CHINESE SUMMARY BLOCKS ───────────────────────────────── */
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+
+  /* ── SOURCES & FOOTER ─────────────────────────────────────── */
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .up   { color: #0F6E56; }
+  .dn   { color: #A32D2D; }
+  .flat { color: #888; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Stock Deep Dive · PM Sunday, 10 May 2026
+  </div>
+  <div class="report-title">Stock deep dive</div>
+  <div class="report-title-cn">股票深度分析 — 基本面与技术面</div>
+  <div class="report-date">
+    Sunday, 10 May 2026 · 23:41 SGT · Singapore time · Companion to daily briefing ·
+    新加坡时间 · 每日简报配套深度报告
+  </div>
+</div>
+
+<!-- ── NAVIGATION ───────────────────────────────────────────────── -->
+<div class="nav-pills">
+  <a class="nav-pill" href="#signal-qa">Signal Q&amp;A 信号解析</a>
+  <a class="nav-pill" href="#AMD">AMD</a>
+  <a class="nav-pill" href="#INTC">INTC</a>
+  <a class="nav-pill" href="#PLTR">PLTR</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 1 — SIGNAL Q&A                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="section-label" id="signal-qa">
+  Signal questions — answered 信号关键问题解答
+</div>
+
+<!-- SIGNAL #1 Q&A — AMD -->
+<div class="signal-qa-card signal-qa-rank1">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#1</span>
+    AMD Crosses $700B Market Cap as AI Chip Demand Drives Blockbuster Q1 — Data Center Revenue Surges 57%, Stock Rallies 20% on the Week
+  </div>
+  <ul class="questions-list">
+    <li>How are AMD's Instinct AI GPU shipments tracking versus Nvidia's Blackwell in actual data centre deployments — are the OpenAI and Meta Helios orders firm or still conditional?</li>
+    <li>Can AMD sustain its non-GAAP gross margin above 55% as it ramps more complex rack-scale systems — historically, system-level products have thinner margins than chips alone?</li>
+    <li>What is AMD's exposure to US export restrictions on advanced AI chips to China, and how much of its Q1 data centre growth came from non-restricted markets?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          AMD's Q1 2026 data center revenue of $5.8 billion (+57% YoY) confirms that Instinct GPU and EPYC CPU shipments are accelerating strongly, with CEO Lisa Su stating "accelerating demand for AI infrastructure" on the May 5 earnings call. Regarding Helios — AMD's upcoming full rack-scale AI system that competes with Nvidia's Blackwell Vera Rubin racks — both OpenAI and Meta have publicly been cited as early customers, but AMD has not disclosed whether these constitute firm purchase orders, letters of intent, or beta sampling agreements. Helios is expected to begin shipping in H2 2026. The firm-vs-conditional distinction is material: a firm purchase order would be bookable revenue, whereas a letter of intent carries no revenue guarantee. Watch for Q2 earnings guidance (due ~August 2026) for any upgrade to H2 Helios shipment visibility. Sources: AMD IR press release, May 5, 2026; TradingKey analysis.
+        </div>
+        <div class="q-answer-cn">
+          AMD Q1数据中心营收58亿美元（同比增57%），证实Instinct AI GPU出货强劲。AMD已确认OpenAI和Meta是Helios机架系统的早期客户，但尚未披露订单是否为具有法律约束力的采购订单（硬订单），还是仅为意向书。Helios预计下半年开始交付——具体订单性质将决定其对AMD营收的实际贡献。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          AMD guided Q2 2026 non-GAAP gross margin to approximately 56% — actually up 1 percentage point from Q1's 55% — suggesting management is confident margins can hold or modestly expand even as the product mix shifts. Q1 GAAP gross margin was 53% and non-GAAP was 55%. This is a positive signal: AMD is not sacrificing margin to win data center revenue. The key margin risk emerges in H2 2026 when full Helios rack-scale systems ship: these include third-party components (networking, memory, power infrastructure) that AMD does not fully control, and system-level bills of material are typically less margin-accretive than chip-only sales. AMD has not yet provided gross margin guidance beyond Q2 — watch for specific Helios system margin commentary on Q2 results. Source: AMD Q1 2026 earnings release, May 5, 2026 (ir.amd.com).
+        </div>
+        <div class="q-answer-cn">
+          AMD指引Q2非通用会计准则（non-GAAP）毛利率约56%，较Q1的55%小幅提升，显示管理层对盈利质量有信心。风险在于下半年Helios机架系统出货后，因需纳入第三方组件（网络、内存、电源等），整体毛利率可能承压。AMD尚未给出下半年毛利率指引——需关注Q2业绩发布时的具体说明。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          AMD has not disclosed a China-specific revenue breakdown for its data center AI chip segment in Q1 2026 earnings materials. Current US export regulations restrict the export of AMD's highest-performance Instinct AI accelerators (including the MI300X series and successors) to China and certain other countries without an export licence — these restrictions have been progressively tightened since 2022. Historically, AMD's total China revenue was roughly 25-27% of company revenue, but the restricted AI chip sales represent a subset of that. A key positive for AMD: the scale of the Q1 beat ($5.8B data center revenue) and the strong Q2 guidance ($11.2B total) suggest the non-China AI buildout — primarily hyperscalers in the US, Europe, and Middle East — is generating more than sufficient demand to offset the China restriction. Not yet confirmed (no China-specific breakdown in AMD's Q1 filings) — watch for regulatory updates and any AMD investor day disclosures. Source: AMD Q1 2026 earnings release; Intellectia.ai AMD analysis, May 2026.
+        </div>
+        <div class="q-answer-cn">
+          AMD未单独披露中国市场AI芯片营收数据。美国出口管制限制AMD高端Instinct GPU向中国出口（需特别许可）。但从AMD整体Q1营收表现（数据中心58亿美元，超预期）来看，美国、欧洲、中东等非受限市场的AI基础设施需求已足以弥补中国市场的损失。具体数字待进一步确认——关注监管动态及AMD投资者日信息披露。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 Q&A — AAPL/INTC -->
+<div class="signal-qa-card signal-qa-rank2">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#2</span>
+    Apple and Intel Reach Preliminary Chipmaking Deal — Intel Foundry Wins Its Most Prestigious Customer, INTC Surges 14% to a 52-Week High
+  </div>
+  <ul class="questions-list">
+    <li>Which specific chip nodes or products is Apple planning to have Intel manufacture — A-series or M-series Apple Silicon, or lower-complexity chips like Wi-Fi and Bluetooth controllers?</li>
+    <li>Can Intel's 18A process node — which has had historical yield and reliability problems — meet Apple's notoriously strict quality and volume requirements for consumer devices?</li>
+    <li>How does this deal affect TSMC (TSM) — does Apple reducing TSMC dependence meaningfully impact TSMC's revenue outlook, given Apple represents roughly 25% of TSMC's revenue?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Not yet confirmed — the WSJ report (May 8, 2026) describes a "preliminary chip-making agreement" without specifying which products or which Intel process node would be used, and both companies declined to comment. Industry analysts have widely speculated the initial agreement likely covers lower-complexity, less leading-edge chips — such as Wi-Fi, Bluetooth, or cellular modem components — rather than the most advanced A-series (iPhone) or M-series (Mac) Apple Silicon, which require TSMC's 3nm or 2nm nodes. Apple has historically been extremely conservative about qualifying new foundry partners for its flagship chips, typically running 2-3 year qualification timelines before volume production. Watch for any follow-up reporting from Bloomberg or WSJ with specifics on the product scope. Source: WSJ / TheStreet, May 8, 2026; CNBC analysis, May 8, 2026.
+        </div>
+        <div class="q-answer-cn">
+          目前尚未确认具体产品。《华尔街日报》的报道仅称"初步芯片制造协议"，未披露涉及哪些产品或制程节点，双方公司均未置评。业内普遍猜测，初期合作可能涵盖技术复杂度较低的芯片（如Wi-Fi、蓝牙模块），而非需要台积电3nm/2nm先进工艺的旗舰A系列或M系列芯片。具体信息有待彭博社或《华尔街日报》进一步报道。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          Intel's 18A process node has faced publicly reported yield and reliability challenges over the past two years, though Intel's current CEO has cited improving yield metrics heading into 2026. Broadcom (AVGO) and Microsoft (MSFT) have been reported to be running test chips on 18A, providing some third-party validation. However, Apple's manufacturing requirements are uniquely demanding: iPhone chip volumes run in the hundreds of millions of units annually, requiring sustained high yields at a scale that would stress even TSMC. Intel's Ohio and Arizona fab capacity is being expanded under CHIPS Act funding but has not yet reached Apple-scale volume. The deal being explicitly "preliminary" is entirely consistent with Apple running its standard multi-year foundry qualification process — Apple would test wafer lots, validate yields, and require sustained manufacturing consistency before committing to any volume. Near-term risk: if Intel 18A yield data disappoints in qualification testing, this deal could quietly stall without becoming public. Sources: CNBC Intel analysis, May 8, 2026; Tom's Hardware, May 8, 2026.
+        </div>
+        <div class="q-answer-cn">
+          英特尔18A制程节点过去两年存在良率问题，但其CEO表示2026年良率正在改善。博通和微软已在试产测试。关键在于苹果对良率和产能的要求极为严苛——iPhone芯片年产量数以亿计，这对英特尔的产能扩张是巨大挑战。协议标注为"初步"，完全符合苹果一贯的多年认证流程：若英特尔18A良率未能达标，该合作可能悄然搁浅。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          The near-term impact on TSMC is likely minimal. TSMC reported April 2026 consolidated net revenue of NT$410.73 billion (~$13.08 billion), up 17.5% year-over-year — indicating demand remains robust with or without the Apple-Intel news. Apple represents approximately 25% of TSMC's total revenue (per industry estimates), making it TSMC's largest single customer. Any meaningful shift of Apple chip volumes to Intel would take 2-4 years from a preliminary agreement to volume ramp, given the qualification timelines involved. TSMC is simultaneously winning new customers in AI accelerators (Google TPUs, AMD chips, custom ASIC designs) that partially offset any future Apple shift. The structural risk to TSMC is real over a 5-year horizon if Intel's foundry delivers on its technology roadmap — but TSMC's competitive moat in advanced packaging (CoWoS for AI chips) and process leadership at 2nm and below remains intact for now. Source: TSM April 2026 revenue report (StockTitan); Apple-Intel coverage (TechPortal, May 9, 2026).
+        </div>
+        <div class="q-answer-cn">
+          近期对台积电影响有限。台积电4月营收同比增17.5%，AI需求强劲。苹果约占台积电总营收25%，是其最大单一客户，但任何规模转移至英特尔至少需要2-4年的认证和产能爬坡时间。台积电同时在AI加速芯片（谷歌TPU、AMD芯片等）方向开拓新客户。长期（5年+）而言，若英特尔制程追上，台积电的垄断地位将受到更大挑战，但短期其护城河仍稳固。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 Q&A — Jobs Report / Macro -->
+<div class="signal-qa-card signal-qa-rank3">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#3</span>
+    April Jobs Report Smashes Expectations — 115,000 Payrolls Added vs. 65,000 Forecast, Unemployment Steady at 4.3%, Proving Economy Far More Resilient Than Bears Expected
+  </div>
+  <ul class="questions-list">
+    <li>Does Tuesday's April CPI (expected +3.7% year-over-year) confirm that inflation remains stubbornly above the Fed's 2% target — and if so, how does the market reprice rate cut expectations?</li>
+    <li>How much of April's job gains came from private sector hiring versus government reclassification effects — and does the DOGE-driven decline in federal employment signal more structural public sector contraction ahead?</li>
+    <li>Will Fed Chair nominee Kevin Warsh — whose Senate confirmation vote is expected this week — signal a more hawkish (inflation-fighting, higher-rate) or dovish (growth-supporting, rate-cutting) policy stance than outgoing Chair Jerome Powell?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          April CPI data has not yet been released — it is due Tuesday, May 12, 2026. The consensus forecast is +3.7% year-over-year for headline CPI and +2.7% for core CPI (ex-food and energy). If these consensus estimates prove accurate, inflation would remain significantly above the Fed's 2% target for the fourth consecutive month above 3.5%. This would further reduce the probability of any 2026 rate cuts, as the Fed has consistently stated it needs "sustained" progress toward 2% before cutting. Current Fed Funds futures (as of May 8) are pricing very few cuts for 2026. A surprise upside print (above 4%) would likely trigger an immediate sell-off in long-duration growth stocks and push the 10-year Treasury yield above 4.5%. A downside surprise (below 3.4%) could spark a renewed rally. The exact number will be the single most important data release of the week. Source: CNBC week-ahead outlook, May 8, 2026; Kiplinger economic calendar.
+        </div>
+        <div class="q-answer-cn">
+          4月CPI数据将于周二（5月12日）公布，市场预期同比涨3.7%（核心CPI+2.7%）。若数据符合预期，通胀将连续第四个月维持在3.5%以上，远高于美联储2%的目标，进一步压缩2026年降息空间。若数据高于预期（超4%），科技成长股将面临抛售压力，10年期国债收益率可能升破4.5%。这是本周最关键的经济数据。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          Per the BLS April 2026 employment report, job gains were concentrated in health care, transportation and warehousing, and retail trade — all private sector categories. Federal government employment declined in April, explicitly noted in the BLS release, consistent with ongoing DOGE (Department of Government Efficiency) workforce reduction initiatives. This breakdown is constructive for the economic outlook: private sector hiring is organically strong and broad-based, not artificially inflated by government spending. The federal employment decline signals that DOGE restructuring is proceeding — this is a structural reduction rather than a cyclical one. Future impact: if federal employment continues declining by 20,000-30,000 workers per month, this could eventually become a modest drag on the unemployment rate, but the current 4.3% suggests the private sector is absorbing displaced workers. Source: BLS employment report, May 8, 2026; TheStreet morning coverage.
+        </div>
+        <div class="q-answer-cn">
+          BLS数据显示，4月就业增长主要来自医疗、运输仓储和零售等私营部门，而联邦政府就业人数下降（与DOGE削减政府规模一致）。这一结构对经济前景是利好信号：私营部门的就业增长是有机的、自发的，不依赖政府财政刺激。联邦雇员持续减少是结构性而非周期性的变化——目前4.3%的失业率表明私营部门正在吸收这部分劳动力。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          Kevin Warsh is historically considered more hawkish than Jerome Powell. During his 2006-2011 tenure on the Fed Board of Governors, Warsh dissented against certain quantitative easing (QE — money-printing to stimulate the economy) measures and has publicly emphasised the risks of prolonged easy monetary policy. His nomination by the Trump administration is interpreted by markets as a signal that the administration may favour a Fed Chair who is less inclined to cut rates quickly — particularly important given that inflation is running above 3% and the economy is adding 115,000 jobs per month. However, Warsh has also shown pragmatic streaks, and his actual policy stance in the current environment — where oil prices are elevated due to Iran conflict and inflation is structurally complex — may be more nuanced than a simple "more hawkish" label suggests. His Senate confirmation vote is expected the week of May 11. If confirmed, watch for any market commentary he makes in the weeks after confirmation for signals on his 2026 rate path view. Source: CNBC week-ahead outlook, May 8, 2026; Kiplinger economic calendar.
+        </div>
+        <div class="q-answer-cn">
+          凯文·沃什历史上比鲍威尔更倾向于紧缩（鹰派）货币政策：他曾在联储任期内反对部分量化宽松措施（即印钱刺激经济的政策）。参议院本周预计对其主席提名进行投票。若确认，他更可能维持高利率而非急于降息——这对高估值科技成长股是潜在压力。但其实际政策立场仍需从其就任后首次公开表态中判断。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SECTION 2 — STOCK CARDS                                        -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<!-- ── STOCK 1: AMD ─────────────────────────────────────────────── -->
+<div class="stock-card" id="AMD">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">AMD · Advanced Micro Devices</div>
+      <div class="stock-name-cn">超威半导体 — 全球第二大CPU/GPU芯片设计公司，AI数据中心芯片核心玩家</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH · Semiconductors</span>
+        <span class="score-pill">Market cap: ~$713B</span>
+        <span class="score-pill">Data as of: 10 May 2026</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$455.19</div>
+      <div class="stock-price-chg up">Near 52-week high</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      AMD is the week's defining story: its Q1 2026 earnings beat (data center revenue +57% YoY to $5.8B, total revenue $10.3B) triggered a 16%+ single-day surge and a ~20% weekly gain, crossing the $700B market cap threshold. The stock closed the week near its all-time high as the market prices in AMD's emergence as the credible #2 in AI accelerator chips — with Helios rack systems for OpenAI and Meta on the horizon.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      AMD是本周市场最大焦点：Q1业绩大爆发（数据中心营收58亿美元，同比增57%；总营收103亿美元），股价单周大涨约20%，市值突破7000亿美元。AMD是英伟达（Nvidia）在AI芯片领域最有力的挑战者，其Helios机架系统已获OpenAI和Meta预订，下半年开始出货。对于不熟悉AMD的读者：这家公司主要设计电脑和服务器用的处理器（CPU）和图形芯片（GPU），是全球最重要的芯片公司之一。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 Earnings (Released 5 May 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">GAAP EPS $0.84 Q1; unconfirmed TTM</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">~62x</div>
+      <div class="fund-sub">GuruFocus, 7 May 2026</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue (Q1 2026) 季度营收</div>
+      <div class="fund-val">$10.3B</div>
+      <div class="fund-sub">YoY +38%; Q2 guided ~$11.2B</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS (Q1 2026) 每股盈利</div>
+      <div class="fund-val">$1.37</div>
+      <div class="fund-sub">Beat est. $1.25 (non-GAAP adj.)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Gross margin 毛利率</div>
+      <div class="fund-val">55%</div>
+      <div class="fund-sub">Non-GAAP; Q2 guided ~56%</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Data Center 数据中心</div>
+      <div class="fund-val">$5.8B</div>
+      <div class="fund-sub">+57% YoY — largest segment</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: AMD Q1 2026 earnings release (ir.amd.com, 5 May 2026); TradingKey analysis; Intellectia.ai. Trailing P/E unconfirmed — marked n/a. All figures non-GAAP adjusted unless noted.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析 — sourced 10 May 2026</div>
+
+    <!-- 52-week range bar: (455.19 - 106.98) / (456.29 - 106.98) = 348.21/349.31 = 99.7% -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:99%;"></div>
+          <div class="range-bar-dot" style="left:99%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$106.98</span>
+          <span>Now $455.19</span>
+          <span>$456.29</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        $365.07 — price is 24.7% above 上方 (strong momentum)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        $284.27 — price is 60.1% above 上方 (exceptional multi-month trend)
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        67.8 — Approaching Overbought 接近超买区 (&gt;70 = overbought). Technically still in Buy territory but stretched.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Strong Uptrend 强势上升趋势 — AMD has rallied ~90% in the past month, accelerating sharply after the April earnings beat. Stock is trading at the very top of its 52-week range, consolidating near all-time highs.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Support 支撑: ~$420 (prior week's intra-week low, round number) · Resistance 阻力: $456.29 (52-week high / all-time high zone)
+      </span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">Strong Uptrend 强势上行</span>
+      <span class="ta-pill ta-bull">Above All MAs 全线站上均线</span>
+      <span class="ta-pill ta-warn">RSI Near Overbought 接近超买</span>
+      <span class="ta-pill ta-warn">At 52-Week High 处于年内高点</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    AMD presents a rare combination of fundamental acceleration and technically stretched momentum. The fundamental picture is about as strong as it gets: 38% revenue growth, 57% data center growth, margin expansion, and guidance that exceeded already-elevated expectations — all from a company that has compounded earnings at 122%+ in Q1 2026. Technically, the stock sits at the very top of its 52-week range with RSI approaching overbought territory, meaning every new dollar of upside requires fresh buyers to pay a new all-time high. The near-term risk/reward is asymmetric in the short term: any macro shock (a hot CPI print Tuesday, a Strait of Hormuz escalation that rattles risk appetite) could produce a rapid 10-15% correction from overbought conditions, even if the underlying story remains intact. The structural AI infrastructure thesis is compelling; the entry timing after a 90% monthly rally requires patience.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      AMD基本面极为强劲：营收增38%、数据中心增57%、盈利大超预期，业绩质量是近年来最好之一。但技术面来看，股价已处于52周极高位（接近历史最高点），RSI接近超买区间（即上涨过猛可能需要短暂休整的信号），本月累涨约90%。<strong>短期风险</strong>：若周二CPI数据超预期或中东局势升级，可能引发10-15%的快速回调，即使长期逻辑完好。<strong>长期逻辑</strong>：AI算力基础设施建设是多年结构性趋势，AMD是最大受益者之一，但目前约62倍的预期市盈率已包含极高预期，容错空间较小。
+    </div>
+  </div>
+</div>
+
+<!-- ── STOCK 2: INTC ────────────────────────────────────────────── -->
+<div class="stock-card" id="INTC">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">INTC · Intel Corporation</div>
+      <div class="stock-name-cn">英特尔 — 全球最大集成电路制造商之一，正推进代工（晶圆厂）业务转型</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH · Semiconductors</span>
+        <span class="score-pill">Market cap: n/a — unconfirmed</span>
+        <span class="score-pill">Data as of: 8 May 2026</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$130.57</div>
+      <div class="stock-price-chg up">+$15.30 (+13.96%) Fri 8 May</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Intel surged 14% to a 52-week high of $130.57 Friday after the Wall Street Journal reported Apple and Intel have reached a preliminary chipmaking agreement — potentially the biggest single customer win in Intel Foundry's history, validating the company's multi-billion-dollar bet on re-establishing competitive semiconductor manufacturing in the United States. This follows Intel's own Q1 2026 earnings beat (revenue $13.6B, +7% YoY; EPS $0.29 beat).
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      英特尔因苹果-英特尔代工协议消息周五大涨14%，创52周新高（$130.57）。这可能是英特尔代工业务（Intel Foundry）有史以来最重要的客户胜利，印证了其耗资数百亿美元重建先进芯片制造能力的战略方向正确。英特尔自身Q1业绩也超预期（营收136亿美元，同比增7%）。对于不熟悉英特尔的读者：这家公司最初以自己设计并生产电脑处理器（CPU）著称，近年转型为也帮其他公司生产芯片的代工厂，与台积电（TSMC）竞争。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 Earnings (Most Recent Available)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed — GAAP profitability irregular during turnaround</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed from current searches</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue (Q1 2026) 季度营收</div>
+      <div class="fund-val">$13.6B</div>
+      <div class="fund-sub">YoY +7%; beat expectations</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS (Q1 2026) 每股盈利</div>
+      <div class="fund-val">$0.29</div>
+      <div class="fund-sub">Beat Wall St. expectations</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Gross margin 毛利率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed — not in search results</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Analyst upgrade</div>
+      <div class="fund-val">Buy</div>
+      <div class="fund-sub">Tigress: PT raised $66→$118</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: stocktwits.com Intel coverage; CNBC Intel analysis, May 8, 2026; Tigress Financial analyst note. Trailing P/E, forward P/E, gross margin unconfirmed — marked n/a. Intel is in an active financial turnaround; GAAP profitability has been irregular due to restructuring charges.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析 — sourced 8–10 May 2026</div>
+
+    <!-- For INTC: 52w high is $130.57 (just hit Friday). 52w low is unconfirmed. Set bar to 99% with n/a note. -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:99%;"></div>
+          <div class="range-bar-dot" style="left:99%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>52W low: n/a — unconfirmed</span>
+          <span>Now $130.57</span>
+          <span>$130.57 (52W high, hit 8 May)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed from current search results
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed from current search results
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        n/a — unconfirmed. Given 14% single-day surge to 52-week high, RSI is likely elevated (&gt;70 overbought zone), but exact figure unconfirmed.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Strong Uptrend 强势上升趋势 — INTC hit a 52-week high Friday on massive volume following the Apple deal news. The stock has been in a prolonged recovery from multi-year lows driven by the foundry turnaround narrative and winning major hyperscaler customers.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Support 支撑: ~$115 (pre-Apple-deal price, now first support) · Resistance 阻力: $130.57 (52-week high / new all-time resistance zone)
+      </span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">At 52-Week High 处于年内新高</span>
+      <span class="ta-pill ta-bull">Catalyst-Driven Surge 事件驱动暴涨</span>
+      <span class="ta-pill ta-warn">Likely Overbought Short-Term 短期可能超买</span>
+      <span class="ta-pill ta-neutral">Fundamentals Still Turnaround 基本面仍处转型期</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Intel's story is a classic "turnaround meets catalyst" setup. The fundamental picture is still messy — Intel is in the middle of a multi-year, multi-billion-dollar foundry turnaround, Q1 EPS of $0.29 is thin, and GAAP profitability has been inconsistent due to restructuring charges. But the Apple-Intel deal is a structural narrative catalyst that markets are pricing as a long-duration positive: if Intel can prove its foundry credentials to Apple, the world's most demanding chip customer, the customer acquisition flywheel accelerates. The 14% single-day move on Friday takes the stock to its 52-week high with likely overbought technicals — a post-event consolidation or pullback to the $115 zone would not be surprising before the next leg higher. The medium-term thesis depends entirely on whether the "preliminary agreement" converts to an actual chip production contract — watch for any subsequent reporting on product scope and Intel 18A yield progression.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      英特尔是典型的"转型遇催化剂"故事。基本面仍处于转型期，盈利能力不稳定（Q1每股仅赚0.29美元），但苹果代工协议是一个重大的长期战略信号：若英特尔能满足苹果的严苛要求，将大大加速其代工客户积累。技术面：周五14%的单日暴涨使股价直达52周高点，短期可能超买，回调至$115区间并不意外。中期逻辑关键在于：初步协议能否转化为实际量产合同——这需要数月至数年才能确认。
+    </div>
+  </div>
+</div>
+
+<!-- ── STOCK 3: PLTR ────────────────────────────────────────────── -->
+<div class="stock-card" id="PLTR">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">PLTR · Palantir Technologies</div>
+      <div class="stock-name-cn">Palantir — 美国数据分析与AI平台公司，为政府和企业提供决策智能软件</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH · AI / Software</span>
+        <span class="score-pill">Market cap: ~$290B (est.)</span>
+        <span class="score-pill">Data as of: 10 May 2026</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$137.80</div>
+      <div class="stock-price-chg flat">+$0.75 from prev. close (weekend)</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Palantir reported one of its best-ever quarterly results on May 4: Q1 revenue surged 85% year-over-year to $1.63 billion (vs. $1.54B estimate), US commercial revenue — the highest-growth segment — accelerated to +133% YoY, and the company raised its full-year 2026 revenue guidance to $7.65–7.66B (implying 71% annual growth). Despite spectacular numbers, the stock remains in the lower quartile of its 52-week range — a disconnect between extraordinary business performance and a stock that is still recovering from a major drawdown from its highs, creating a structurally interesting situation.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      Palantir是一家为美国政府和大型企业提供AI数据分析软件的公司（可以理解为"AI大脑"平台）。Q1营收同比暴增85%至16.3亿美元，美国商业客户营收增幅更高达133%，全年业绩指引大幅上调（预计增长71%）。但尽管业绩如此亮眼，当前股价（约138美元）仍处于其52周区间（115-207美元）的低位段——这一"业绩与股价背离"的现象值得关注：说明市场对其高估值（市盈率极高）仍有疑虑，或此前已有资金获利了结。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 Earnings (Released 4 May 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">&gt;100x</div>
+      <div class="fund-sub">Extreme valuation; GAAP earnings thin</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">Unconfirmed from current searches</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue (Q1 2026) 季度营收</div>
+      <div class="fund-val">$1.63B</div>
+      <div class="fund-sub">YoY +85%; vs est. $1.54B</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS (Q1 2026) 每股盈利</div>
+      <div class="fund-val">$0.33</div>
+      <div class="fund-sub">Adj. beat est. $0.28</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Adj. FCF margin 自由现金流利润率</div>
+      <div class="fund-val">57%</div>
+      <div class="fund-sub">$925M adj. FCF (Q1 2026)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">FY2026 Guidance 全年指引</div>
+      <div class="fund-val">$7.65B</div>
+      <div class="fund-sub">+71% YoY; vs $7.27B consensus</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: Palantir Technologies Q1 2026 earnings release (investors.palantir.com, 4 May 2026); BusinessWire; Futurum Group analysis. Trailing P/E based on reported GAAP earnings being significantly below adjusted figures; exact trailing P/E unconfirmed — labelled &gt;100x per public analyst commentary. Forward P/E unconfirmed.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析 — sourced 10 May 2026</div>
+
+    <!-- PLTR: 52w low $115.01, 52w high $207.52, current $137.80
+         position% = (137.80 - 115.01) / (207.52 - 115.01) * 100 = 22.79/92.51 = 24.6% -->
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:24.6%;"></div>
+          <div class="range-bar-dot" style="left:24.6%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$115.01</span>
+          <span>Now $137.80</span>
+          <span>$207.52</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">
+        n/a — unconfirmed. Price is likely above 50 DMA given recent Q1 earnings catalyst.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">
+        Above current price — PLTR confirmed trading below its 200-day SMA (source: investing.com / Perplexity Finance, May 10, 2026). 52-week avg price: $158.27 (proxy for 200 DMA zone).
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">
+        n/a — unconfirmed from current searches.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">
+        Recovery Attempt 反弹尝试 — PLTR is recovering from a sharp drawdown from its $207.52 52-week high; currently sitting in the lower quartile of its range, below the 200-day moving average, with Q1 earnings providing a potential new floor above $115.
+      </span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">
+        Support 支撑: ~$115 (52-week low) · Resistance 阻力: ~$158 (52-week avg / approx. 200 DMA zone) · Further resistance: $180–$207 (prior peak zone)
+      </span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">Earnings Acceleration 业绩超高速增长</span>
+      <span class="ta-pill ta-bear">Below 200-day MA 低于200日均线</span>
+      <span class="ta-pill ta-bear">Lower Quartile of 52W Range 处于年内低位段</span>
+      <span class="ta-pill ta-warn">Valuation Extreme 估值极高</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Palantir is the most paradoxical stock in today's briefing: the fundamental growth numbers are extraordinary by any measure — 85% revenue growth, 57% adjusted free cash flow margin, and guidance raised to $7.65B for 2026 (+71% YoY) — yet the stock sits 34% below its 52-week high and below its 200-day moving average, a technically bearish configuration. The explanation is valuation: Palantir's trailing P/E is well above 100x, and even on a forward basis, the market is pricing in years of hyper-growth before the stock can be considered "fair value." The technical setup suggests the stock is still working through a prior over-valuation correction, even as the business accelerates. The constructive interpretation: if growth rates sustain near 80-85% for another 1-2 quarters, the stock's P/E compresses rapidly (called "growing into valuation"), which could create upward re-rating momentum. The risk: any growth deceleration or guidance cut at Q2 earnings would flush the stock toward its $115 support.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      Palantir是本期简报中最矛盾的股票：业绩以任何标准衡量都极为亮眼（营收增85%、现金流利润率57%、全年指引增71%），但股价却仍处于52周区间的低位段、低于200日均线——这是技术面偏弱的信号。原因在于估值：PLTR的市盈率超过100倍，市场已将多年高增长"预支"在股价里。<strong>乐观解读</strong>：若增长维持80%+，估值将随业绩快速"消化"（即市盈率因盈利增长而自然下降），可能触发重新估值上涨。<strong>风险</strong>：若下季度增速放缓或调低指引，股价可能跌向$115支撑位。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── SOURCES ─────────────────────────────────────────────────── -->
+<div class="section-label">Sources 数据来源</div>
+<div class="sources mb16">
+  AMD IR — <a href="https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results">AMD Reports First Quarter 2026 Financial Results (5 May 2026)</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/05/amd-q1-2026-earnings-report.html">AMD's stock soars 16% as data center growth pushes revenue past estimates</a><br>
+  TradingKey — <a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261863081-amd-earnings-beat-data-center-ai-gpu-guidance-technical-tradingkey">AMD Beats Q1 2026 With $5.8B Data Center Revenue and Guides $11.2B for Q2</a><br>
+  Intellectia.ai — <a href="https://intellectia.ai/blog/amd-stock-analysis-may-2026">AMD Stock Analysis May 2026: Record Earnings &amp; AI Growth Rally</a><br>
+  GuruFocus — <a href="https://www.gurufocus.com/term/forward-pe-ratio/AMD">AMD Forward PE Ratio: 62.12 (7 May 2026)</a><br>
+  TechTimes — <a href="https://www.techtimes.com/articles/316377/20260506/amd-stock-explodes-15-ai-chip-demand-fuels-blockbuster-q1-earnings-bullish-outlook.htm">AMD Stock Explodes 15%+: AI Chip Demand Fuels Blockbuster Q1 Earnings</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/08/intel-stock-apple-chip-deal.html">Intel shares soar on Apple chip deal report (8 May 2026)</a><br>
+  TheStreet — <a href="https://www.thestreet.com/latest-news/apple-signs-chipmaking-deal-with-intel-joining-microsoft-amazon-and-tesla">Apple reaches chipmaking deal with Intel, pushing its stock to new record</a><br>
+  Tom's Hardware — <a href="https://www.tomshardware.com/tech-industry/semiconductors/apple-reportedly-strikes-deal-for-intel-to-make-some-of-its-chips-two-tech-giants-reached-a-preliminary-agreement-for-intel-to-make-processors-for-cupertino">Apple reportedly strikes deal for Intel to make some of its chips</a><br>
+  TechPortal — <a href="https://thetechportal.com/2026/05/09/apple-enters-preliminary-chipmaking-agreement-with-intel-to-reduce-reliance-on-tsmc-report/">Apple enters preliminary chipmaking agreement with Intel (9 May 2026)</a><br>
+  Palantir IR — <a href="https://investors.palantir.com/news-details/2026/Palantir-Reports-Q1-2026-U-S--Revenue-Growth-of-104-YY-and-Revenue-Growth-of-85-YY-Raises-FY-2026-Revenue-Guidance-to-71-YY-Growth-and-U-S--Comm-Revenue-Guidance-to-120-YY-Crushing-Consensus-Expectations/">Palantir Reports Q1 2026 U.S. Revenue Growth of 104% Y/Y (4 May 2026)</a><br>
+  BusinessWire — <a href="https://www.businesswire.com/news/home/20260503338048/en/Palantir-Reports-Q1-2026-U.S.-Revenue-Growth-of-104-YY-and-Revenue-Growth-of-85-YY-Raises-FY-2026-Revenue-Guidance-to-71-YY-Growth-and-U.S.-Comm-Revenue-Guidance-to-120-YY-Crushing-Consensus-Expectations">Palantir Q1 2026 Earnings Release (BusinessWire)</a><br>
+  Perplexity Finance — <a href="https://www.perplexity.ai/finance/AMD">AMD stock data, 52-week range, moving averages (10 May 2026)</a><br>
+  StockTwits — <a href="https://stocktwits.com/news-articles/markets/equity/intc-mu-sndk-stocks-jumped-to-52-week-highs-last-week/cZQMg6PRe7m">INTC, MU, SNDK Stocks Jumped To 52-Week Highs Last Week</a><br>
+  Schwab — <a href="https://www.schwab.com/learn/story/stock-market-update-open">Stocks Climb as April Jobs Growth Tops Estimates</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/08/stock-market-next-week-outlook-for-may-11-15-2026-.html">Stock market next week: Outlook for May 11–15, 2026</a>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────── -->
+<div class="footer">
+  Stock Deep Dive · 股票深度分析<br>
+  Sunday, 10 May 2026 · PM SGT · Companion to Daily Market Intelligence · AMD · INTC · PLTR<br>
+  ← <a href="market_brief_20260510_PM.html" style="color:#185FA5;">Back to main briefing 返回每日简报</a>
+</div>
+
+</body>
+</html>

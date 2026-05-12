@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+
+  /* ── HEADER ───────────────────────────────────────────────── */
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600;
+                  margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+
+  /* ── MOOD BAR ─────────────────────────────────────────────── */
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px;
+              padding: 12px 16px; margin-bottom: 8px; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish { background: #EAF3DE; color: #27500A; }
+  .mood-bearish { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed   { background: #FAEEDA; color: #633806; }
+  .mood-neutral { background: #f0efe8; color: #555; }
+
+  /* ── SECTION LABELS ───────────────────────────────────────── */
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+
+  /* ── INDICES ──────────────────────────────────────────────── */
+  .indices { display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
+             gap: 8px; margin-bottom: 8px; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up   { color: #0F6E56; }
+  .dn   { color: #A32D2D; }
+  .flat { color: #888; }
+
+  /* ── COMMENTARY ───────────────────────────────────────────── */
+  .commentary { font-size: 13px; color: #555; line-height: 1.7;
+                margin-bottom: 8px; }
+
+  /* ── SIGNAL CARDS ─────────────────────────────────────────── */
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0;
+                 padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px;
+             margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB;
+                 color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px;
+                border-radius: 20px; background: #f0efe8;
+                color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; }
+  .s-tech     { background: #E6F1FB; color: #0C447C; }
+  .s-health   { background: #E1F5EE; color: #085041; }
+  .s-energy   { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence  { background: #EEEDFE; color: #3C3489; }
+  .s-finance  { background: #EAF3DE; color: #27500A; }
+  .s-realty   { background: #FAECE7; color: #712B13; }
+  .s-macro    { background: #F1EFE8; color: #444441; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb;
+              white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 6px; }
+  .sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5;
+                     margin-bottom: 8px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6;
+              margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.05em;
+                margin-bottom: 3px; }
+  .bull-label { color: #27500A; }
+  .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px;
+          flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8;
+               border-radius: 6px; padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; margin-bottom: 8px; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0;
+                          top: 9px; width: 5px; height: 5px;
+                          border-radius: 50%; background: #ccc; }
+
+  /* ── ALSO TRACKING ────────────────────────────────────────── */
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 8px; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; gap: 6px;
+              flex-wrap: wrap; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5;
+               margin-bottom: 6px; }
+  .also-cn { font-size: 11px; color: #999; line-height: 1.7;
+             margin-top: 6px; padding-top: 6px;
+             border-top: 1px dashed #e8e8e0;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+
+  /* ── DEEP DIVE CTA ────────────────────────────────────────── */
+  .deepdive-cta { background: #EEF4FD; border: 1px solid #C4D8F2;
+                  border-left: 3px solid #185FA5;
+                  border-radius: 0 10px 10px 0;
+                  padding: 14px 18px; margin-bottom: 8px; }
+  .deepdive-cta-label { font-size: 11px; font-weight: 700;
+                        color: #185FA5; text-transform: uppercase;
+                        letter-spacing: 0.06em; margin-bottom: 6px; }
+  .deepdive-cta-text { font-size: 13px; color: #333; line-height: 1.6;
+                       margin-bottom: 4px; }
+  .deepdive-cta-cn { font-size: 12px; color: #888; margin-bottom: 8px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei',
+                     'Noto Sans SC', sans-serif; }
+  .deepdive-cta-link { font-size: 13px; }
+  .deepdive-cta-link a { color: #185FA5; font-weight: 600;
+                         text-decoration: none; }
+
+  /* ── MACRO GRID ───────────────────────────────────────────── */
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 8px; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5;
+                margin-bottom: 6px; }
+  .macro-cn { font-size: 11px; color: #999; line-height: 1.7;
+              padding-top: 6px; border-top: 1px dashed #e8e8e0;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── WATCH LIST ───────────────────────────────────────────── */
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8;
+                   line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px;
+                display: flex; align-items: center;
+                justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 2px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-purple { background: #EEEDFE; color: #3C3489; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .watch-content { display: block; flex: 1; }
+  .watch-en { display: block; font-size: 13px; color: #333; }
+  .watch-cn { display: block; font-size: 11px; color: #999;
+              margin-top: 3px; line-height: 1.6;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── NOTABLE NEWS ─────────────────────────────────────────── */
+  .notable-grid { display: grid; grid-template-columns: 1fr 1fr;
+                  gap: 8px; margin-bottom: 8px; }
+  .notable-card { background: #fff; border: 1px solid #e8e8e0;
+                  border-radius: 8px; padding: 10px 12px; }
+  .notable-topic { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; margin-bottom: 4px; }
+  .notable-text { font-size: 12px; color: #444; line-height: 1.5;
+                  margin-bottom: 6px; }
+  .notable-cn { font-size: 11px; color: #999; line-height: 1.7;
+                padding-top: 6px; border-top: 1px dashed #e8e8e0;
+                font-family: 'PingFang SC', 'Microsoft YaHei',
+                'Noto Sans SC', sans-serif; }
+
+  /* ── MARKET PULSE ─────────────────────────────────────────── */
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 8px; }
+  .pulse-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { display: block; font-size: 10px; font-weight: 700;
+               text-transform: uppercase; letter-spacing: 0.06em;
+               color: #888; margin-bottom: 4px; }
+  .pulse-val { display: block; font-size: 13px; color: #444;
+               line-height: 1.6; margin-bottom: 6px; }
+  .pulse-cn { display: block; font-size: 12px; color: #999;
+              line-height: 1.7; padding-top: 6px;
+              border-top: 1px dashed #ddddd5;
+              font-family: 'PingFang SC', 'Microsoft YaHei',
+              'Noto Sans SC', sans-serif; }
+
+  /* ── CHINESE SUMMARY BLOCKS ───────────────────────────────── */
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px;
+                margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em;
+              margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei',
+             'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+
+  /* ── SOURCES ──────────────────────────────────────────────── */
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+
+  /* ── LAYOUT UTILS ─────────────────────────────────────────── */
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+
+  /* ── PRIOR SESSION BANNER ─────────────────────────────────── */
+  .prior-session-banner { background: #FAEEDA; border: 1px solid #e8d8b0;
+    border-left: 3px solid #854F0B; border-radius: 0 8px 8px 0;
+    padding: 10px 14px; margin-bottom: 16px; font-size: 12px;
+    color: #633806; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    PM Evening Briefing · Prior Session Recap
+  </div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-title-cn">每日市场情报简报</div>
+  <div class="report-date">
+    Sunday, 10 May 2026 · 23:41 SGT · Singapore time · Full US market coverage ·
+    新加坡时间 · 美国全市场覆盖
+  </div>
+</div>
+
+<div class="prior-session-banner">
+  <strong>Prior Session Recap 上周末收盘回顾:</strong> US equity markets are closed today (Sunday). This briefing covers Friday 8 May 2026's record-setting close and sets up the week ahead (May 11–15). Markets resume Monday 9:30 AM ET.
+  <br><strong>说明：</strong>本周日美股休市。本期简报回顾周五（5月8日）创历史新高的收盘行情，并展望下周（5月11–15日）重要事件。美股将于周一东部时间9:30开市。
+</div>
+
+<!-- ── MOOD BAR ─────────────────────────────────────────────────── -->
+<div class="mood-bar">
+  <span class="mood-label">Market mood 市场情绪</span>
+  <span class="mood-text">
+    Strongly bullish — AI chip earnings euphoria and a blockbuster jobs surprise drove the S&amp;P 500 and Nasdaq to fresh all-time highs for the sixth consecutive weekly gain, with tech's 35% surge since April 27 putting the broader market on an extraordinary run.
+  </span>
+  <span class="mood-pill mood-bullish">Bullish 看涨</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    市场情绪强烈看涨。AMD等半导体公司交出亮眼的季报业绩、同时强劲的就业数据令投资者信心大增，标普500和纳斯达克指数双双创历史新高，实现六周连涨——这是自2024年以来最长的连涨纪录。科技板块自4月27日以来累计涨幅已近35%，是本轮行情的核心驱动力。
+  </div>
+</div>
+
+<!-- ── INDEX SNAPSHOT ───────────────────────────────────────────── -->
+<div class="section-label">Index snapshot — Friday 8 May 2026 close 指数概览（5月8日收盘）</div>
+<div class="indices mb16">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,398.93</div>
+    <div class="idx-chg up">+0.84% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">纳斯达克 Nasdaq</div>
+    <div class="idx-val">26,247.08</div>
+    <div class="idx-chg up">+1.71% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">道琼斯 Dow</div>
+    <div class="idx-val">49,609.16</div>
+    <div class="idx-chg flat">+0.02% —</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">2,861.19</div>
+    <div class="idx-chg up">+0.76% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">VIX 恐慌指数</div>
+    <div class="idx-val">17.19</div>
+    <div class="idx-chg flat">+0.64% — 情绪平稳</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI 原油</div>
+    <div class="idx-val">$95.42</div>
+    <div class="idx-chg up">+0.64% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">黄金 Gold</div>
+    <div class="idx-val">$4,730.70</div>
+    <div class="idx-chg up">+0.42% ▲</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10年期美债</div>
+    <div class="idx-val">4.364%</div>
+    <div class="idx-chg up">-3bp 下降</div>
+  </div>
+</div>
+
+<!-- ── MARKET COMMENTARY ─────────────────────────────────────────── -->
+<div class="section-label">Market commentary 市场综述</div>
+<p class="commentary">
+  Friday, May 8 was another day for the record books. The Nasdaq surged 1.71% to close at 26,247 — its first close above 26,000 — while the S&amp;P 500 gained 0.84% to 7,398.93, just shy of the 7,400 milestone, with both indices posting their sixth consecutive weekly gain. The S&amp;P 500 tech sector soared 3.27% on the day alone, with standout moves from Micron (+13.7%), Oracle (+13.6%), and SanDisk (+14.3%) alongside AMD's extended rally after its earnings blowout earlier in the week. The Dow, the odd one out, barely scraped positive at +0.02%, weighed down by Microsoft (-1.41%) and IBM (-1.06%), while the Russell 2000 small-cap index rose 0.76%, recording an intraday record. The 10-year Treasury yield dipped 3 basis points (a basis point is 1/100th of a percent) to 4.364%, a helpful tailwind for rate-sensitive growth stocks. VIX — the "fear gauge" for options markets — remained subdued at 17.19, suggesting investors are calm despite ongoing US-Iran tensions in the Strait of Hormuz.
+</p>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    周五再创历史。纳斯达克大涨1.71%至26,247点，首次收于26,000点上方；标普500上涨0.84%至7,398.93点，双双实现六周连涨。科技板块独领风骚，单日涨幅3.27%，美光（Micron）、甲骨文（Oracle）等内存与AI相关个股均涨逾13%。道琼斯几乎持平（仅涨0.02%），受微软和IBM拖累。10年期国债收益率小幅下行3个基点至4.364%，有利于成长型股票估值。VIX恐慌指数维持在17.19的温和水平，显示投资者对中东局势保持冷静。
+  </div>
+</div>
+
+<!-- ── TOP 3 SIGNALS ─────────────────────────────────────────────── -->
+<div class="section-label">Top 3 signals 三大重点信号</div>
+
+<!-- SIGNAL #1 — AMD -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">AMD</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">19/20</span>
+        <span class="score-pill">Earnings release</span>
+      </div>
+      <div class="sig-headline">AMD Crosses $700B Market Cap as AI Chip Demand Drives Blockbuster Q1 — Data Center Revenue Surges 57%, Stock Rallies 20% on the Week</div>
+      <div class="sig-headline-cn">
+        AMD市值突破7000亿美元，AI芯片需求推动Q1业绩大爆发——数据中心营收暴增57%，本周股价涨逾20%
+      </div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="sig-body">
+    Advanced Micro Devices (AMD) reported Q1 2026 revenue of $10.3 billion (up 38% year-over-year), with its Data Center segment — the part of the business selling AI accelerator GPUs and server CPUs — generating $5.8 billion, a 57% jump from a year ago. Adjusted earnings per share (EPS, the profit per share) came in at $1.37 versus the $1.25 Wall Street expected. The company guided Q2 revenue to ~$11.2 billion, well above consensus of ~$10.5 billion. AMD's market cap — the total value the stock market assigns to the company — crossed $700 billion following the earnings release, with the stock up roughly 20% on the week and nearly 90% over the past month. The backdrop: AMD is riding the same AI infrastructure boom as Nvidia, but with some key advantages — its EPYC server CPUs dominate cloud data centres, and its Instinct AI accelerator GPUs are the only credible challenger to Nvidia's H100/H200 chips. Both OpenAI and Meta have already signed up for AMD's upcoming Helios full-rack AI system, which competes directly with Nvidia's multi-million-dollar Blackwell and Vera Rubin racks.
+  </div>
+
+  <div class="src-line">
+    AMD Investor Relations · 5 May 2026 · Still active: stock extended gains through end of week ·
+    <a href="https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results">Read more</a>
+    · <a href="https://www.cnbc.com/2026/05/05/amd-q1-2026-earnings-report.html">CNBC</a>
+    · <a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261863081-amd-earnings-beat-data-center-ai-gpu-guidance-technical-tradingkey">TradingKey analysis</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">AI data centre buildout is a multi-year structural wave; AMD's Helios rack and EPYC CPU leadership give it a growing slice of a rapidly expanding pie, with Q2 guidance implying continued acceleration.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">The stock now trades at ~62x forward earnings — extremely expensive — and Nvidia's CUDA software moat and customer lock-in make it difficult for AMD to convert GPU trial wins into durable market share.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Momentum likely carries into next week; watch whether the stock can hold above $450 as an institutional support level.
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> If Helios shipments ramp in H2 2026 as guided, AMD's data centre revenue trajectory could approach Nvidia's current run rate within 18 months.
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>How are AMD's Instinct AI GPU shipments tracking versus Nvidia's Blackwell in actual data centre deployments — are the OpenAI and Meta Helios orders firm or still conditional?</li>
+    <li>Can AMD sustain its non-GAAP gross margin above 55% as it ramps more complex rack-scale systems — historically, system-level products have thinner margins than chips alone?</li>
+    <li>What is AMD's exposure to US export restrictions on advanced AI chips to China, and how much of its Q1 data centre growth came from non-restricted markets?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      AMD（超威半导体）交出近年来最亮眼的季报：Q1营收103亿美元（同比增38%），数据中心业务（主要是AI芯片）营收58亿美元（同比增57%）。公司股价本周大涨20%，市值突破7000亿美元。看涨理由：AI基础设施投资浪潮持续，AMD的芯片产品是英伟达（Nvidia）的最大竞争对手，已获OpenAI和Meta大单。看跌理由：股价已反映极高预期（预期市盈率约62倍），且英伟达在AI芯片软件生态上的护城河非常深厚。关注点：Helios机架系统的实际出货进度和毛利率走势。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 — AAPL / INTC -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">AAPL</span>
+        <span class="ticker-pill">INTC</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">WSJ / Management</span>
+      </div>
+      <div class="sig-headline">Apple and Intel Reach Preliminary Chipmaking Deal — Intel Foundry Wins Its Most Prestigious Customer, INTC Surges 14% to a 52-Week High</div>
+      <div class="sig-headline-cn">
+        苹果与英特尔达成初步芯片代工协议——英特尔代工厂赢得最重量级客户，英特尔股价单日暴涨14%创52周新高
+      </div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="sig-body">
+    The Wall Street Journal reported Friday that Apple and Intel have reached a "preliminary chip-making agreement" that would see Intel manufacture chips for Apple devices — the first time Apple would use an American foundry (a chip fab — a factory that manufactures semiconductor chips) rather than Taiwan's TSMC (Taiwan Semiconductor Manufacturing Co.) for advanced chips. Intel surged 14% ($15.30) to a new 52-week high of $130.57; Apple added 2%. The deal is significant for several reasons: Apple is by far the world's most demanding chip customer (its Apple Silicon chips pushed TSMC to its limits), and winning it would be the biggest commercial validation of Intel's beleaguered Foundry division — which has burned billions of dollars trying to catch TSMC's manufacturing technology. The deal was reportedly facilitated by the Trump administration, with President Trump personally participating in talks as part of his push to reshore semiconductor manufacturing to the United States under CHIPS Act-aligned industrial policy. Microsoft, Amazon, and Tesla had previously already committed to using Intel Foundry, making Apple the fourth tech giant to back Intel's domestic manufacturing push.
+  </div>
+
+  <div class="src-line">
+    Wall Street Journal / TheStreet · 8 May 2026 · Still active: both stocks remain elevated ·
+    <a href="https://www.thestreet.com/latest-news/apple-signs-chipmaking-deal-with-intel-joining-microsoft-amazon-and-tesla">Read more (TheStreet)</a>
+    · <a href="https://www.cnbc.com/2026/05/08/intel-stock-apple-chip-deal.html">CNBC</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">If Apple manufacturing wins real volume at Intel Foundry, it validates Intel's $30B+ process technology investment, attracts more customers, and represents a structural turning point for the company's multi-year turnaround story.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">The agreement is explicitly "preliminary" — Apple's chip volumes are enormous and Intel's 18A manufacturing process must perform flawlessly at scale before the deal becomes binding, which is far from guaranteed.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Positive sentiment for Intel and broader US semiconductor supply chain stocks; watch for follow-on analyst upgrades.
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> If confirmed and executed, this could add $10B+ in annual foundry revenue to Intel within 3–5 years — a transformational shift from TSMC reliance.
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Which specific chip nodes or products is Apple planning to have Intel manufacture — A-series or M-series Apple Silicon, or lower-complexity chips like Wi-Fi and Bluetooth controllers?</li>
+    <li>Can Intel's 18A process node — which has had historical yield and reliability problems — meet Apple's notoriously strict quality and volume requirements for consumer devices?</li>
+    <li>How does this deal affect TSMC (TSM) — does Apple reducing TSMC dependence meaningfully impact TSMC's revenue outlook, given Apple represents roughly 25% of TSMC's revenue?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      苹果公司与英特尔达成初步芯片代工合作协议。这意味着苹果未来部分芯片可能由英特尔在美国本土制造，而非全部交由台积电（TSMC）生产。英特尔股价当日大涨14%，创52周新高。看涨理由：苹果是全球最大的芯片客户之一，此单若落实，将极大提振英特尔代工业务的信心，吸引更多客户。看跌理由：协议仍属"初步"阶段，英特尔的先进制程能否满足苹果严苛要求仍有待验证。这一消息也是特朗普政府推动美国半导体制造业回流政策的一部分。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 — Jobs Report -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">MACRO</span>
+        <span class="sector-pill s-macro">MACRO</span>
+        <span class="score-pill">17/20</span>
+        <span class="score-pill">BLS Primary Data</span>
+      </div>
+      <div class="sig-headline">April Jobs Report Smashes Expectations — 115,000 Payrolls Added vs. 65,000 Forecast, Unemployment Steady at 4.3%, Proving Economy Far More Resilient Than Bears Expected</div>
+      <div class="sig-headline-cn">
+        4月非农就业数据大幅超预期——新增就业11.5万人，预期仅6.5万人，失业率稳定在4.3%，经济韧性令空头大跌眼镜
+      </div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="sig-body">
+    The US Bureau of Labor Statistics (BLS) reported Friday morning that the economy added 115,000 non-farm payroll jobs in April 2026, nearly double the Wall Street consensus forecast of 65,000. The unemployment rate held steady at 4.3%. Job gains were concentrated in health care, transportation and warehousing, and retail trade, while federal government employment declined — consistent with ongoing DOGE (Department of Government Efficiency) workforce reductions. The report directly challenged the bear narrative that the US-Iran war and oil price shock (WTI is at ~$95/barrel) were derailing the economy. As Chris Zaccarelli, CIO of Northlight Asset Management, put it: "The economy is so much better than what the doom crew has been saying. There are a lot of headwinds… and yet the labor market is adding jobs." The report is critical context for the Federal Reserve's next rate decision — a resilient labor market reduces the urgency for the Fed to cut rates (lowering borrowing costs), which means rates may stay "higher for longer," a scenario that can be a mixed signal for stocks.
+  </div>
+
+  <div class="src-line">
+    Bureau of Labor Statistics · 8 May 2026 · Still active: shapes Fed expectations heading into CPI week ·
+    <a href="https://www.thestreet.com/latest-news/stock-market-today-may-8-2026-updates">Read more (TheStreet)</a>
+    · <a href="https://www.schwab.com/learn/story/stock-market-update-open">Schwab</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">A resilient labour market means consumer spending stays strong, corporate earnings growth continues, and there is no recession — the ideal "soft landing" scenario that supports all-time highs in equities.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">A surprisingly hot labour market reduces the Federal Reserve's motivation to cut interest rates, keeping borrowing costs elevated — a headwind for highly-valued growth stocks trading at 60x+ earnings.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term 短期:</span> Tuesday's April CPI inflation report is now the critical data point — if inflation is also hot, the Fed may signal no rate cuts for the rest of 2026.
+    </div>
+    <div class="impl-item">
+      <span>Long term 长期:</span> Sustained employment strength supports corporate profit growth and justifies elevated equity valuations over a multi-quarter horizon.
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Does Tuesday's April CPI (expected +3.7% year-over-year) confirm that inflation remains stubbornly above the Fed's 2% target — and if so, how does the market reprice rate cut expectations?</li>
+    <li>How much of April's job gains came from private sector hiring versus government reclassification effects — and does the DOGE-driven decline in federal employment signal more structural public sector contraction ahead?</li>
+    <li>Will Fed Chair nominee Kevin Warsh — whose Senate confirmation vote is expected this week — signal a more hawkish (inflation-fighting, higher-rate) or dovish (growth-supporting, rate-cutting) policy stance than outgoing Chair Jerome Powell?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      美国劳工局公布的4月非农就业数据远超预期：新增就业11.5万人，是市场预测（6.5万人）的近两倍，失业率维持在4.3%。这说明美国经济在中东战争和高油价的压力下仍保持强韧。看涨理由：就业旺盛意味着消费者有钱花、企业盈利有支撑，不衰退。看跌理由：就业太强可能让美联储推迟降息，高利率对高估值科技股不友好。下周重点：周二4月CPI通胀数据是市场最关心的关键指标。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── ALSO TRACKING ──────────────────────────────────────────────── -->
+<div class="section-label">Also tracking 其他关注信号</div>
+<div class="also-grid mb16">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">NET</span>
+      <span class="sector-pill s-tech">TECH</span>
+      <span class="score-pill">15/20</span>
+    </div>
+    <div class="also-text">
+      Cloudflare (NET) plunged 23% on Thursday after the cloud security and networking company announced it was cutting 1,100 workers — roughly 20% of its workforce — citing AI tools making those roles redundant, even as revenue hit a record $639.8M in Q1. Its Q2 guidance of $664–665M just barely missed the $665.3M consensus, triggering a sharp sell-off. This is a cautionary tale: AI is not just driving winners (like AMD) — it is also reshaping corporate headcount across the tech sector, creating visible social costs alongside the productivity gains.
+    </div>
+    <div class="also-cn">Cloudflare因裁员20%（约1100人）并发布略低预期的Q2业绩指引，股价单日暴跌23%。公司称AI工具已令这些岗位不再必要——印证了AI既是"增值工具"也是"就业杀手"的双面性。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/">TechCrunch</a>
+      · <a href="https://www.cnbc.com/2026/05/07/cloudflare-net-q1-2026-stock-earnings-layoffs.html">CNBC</a>
+    </div>
+  </div>
+
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">PLTR</span>
+      <span class="sector-pill s-tech">TECH</span>
+      <span class="score-pill">15/20</span>
+    </div>
+    <div class="also-text">
+      Palantir (PLTR) reported extraordinary Q1 2026 results: revenue surged 85% year-over-year to $1.63 billion, smashing the $1.54B consensus estimate. US commercial revenue — sales to private businesses, the most watched growth indicator — soared 133% year-over-year. The company raised full-year 2026 guidance to $7.65–7.66B (implying 71% growth). Despite the spectacular numbers, the stock was roughly flat on the day, as investors had already priced in high expectations and flagged concerns about the stock's extreme valuation (it trades well above 100x trailing earnings).
+    </div>
+    <div class="also-cn">Palantir（数据分析与AI平台公司）Q1营收大增85%至16.3亿美元，美国商业客户收入更暴增133%，全年业绩指引大幅上调。但因市场预期已高、估值极贵，股价当日涨幅有限。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://investors.palantir.com/news-details/2026/Palantir-Reports-Q1-2026-U-S--Revenue-Growth-of-104-YY-and-Revenue-Growth-of-85-YY-Raises-FY-2026-Revenue-Guidance-to-71-YY-Growth-and-U-S--Comm-Revenue-Guidance-to-120-YY-Crushing-Consensus-Expectations/">Palantir IR</a>
+      · <a href="https://www.cnbc.com/2026/05/04/palantir-pltr-q1-earnings-report-2026.html">CNBC</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── STOCK DEEP DIVE CALLOUT ────────────────────────────────────── -->
+<div class="section-label">Stock deep dive 股票深度分析</div>
+<div class="deepdive-cta mb16">
+  <div class="deepdive-cta-label">📊 Today's stock deep dive — separate file</div>
+  <div class="deepdive-cta-text">
+    Today's deep dive covers <strong>AMD, INTC, PLTR</strong>
+    — fundamentals (P/E, revenue, EPS, margins), technical analysis
+    (52-week range, moving averages, RSI, key levels), today's
+    specific news catalyst for each stock, and full answers to the
+    key questions from each signal above.
+  </div>
+  <div class="deepdive-cta-cn">
+    今日深度分析股票：<strong>AMD（超威半导体）、INTC（英特尔）、PLTR（Palantir）</strong>。
+    包含基本面数据（市盈率、营收、每股盈利、利润率）、技术面分析（52周价格区间、
+    均线、相对强弱指数、关键价位）、今日催化剂，以及三大信号关键问题的完整解答。
+  </div>
+  <div class="deepdive-cta-link">
+    → <a href="market_deepdive_20260510.html">
+        Open Stock Deep Dive 打开深度分析报告 ↗
+      </a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── GLOBAL MACRO CONTEXT ───────────────────────────────────────── -->
+<div class="section-label">Global macro context 全球宏观背景</div>
+<div class="macro-grid">
+  <div class="macro-card">
+    <div class="macro-topic">Geopolitics 地缘政治</div>
+    <div class="macro-text">
+      The US-Iran conflict in the Strait of Hormuz escalated again Friday: the US military fired on and disabled two Iran-flagged oil tankers attempting to break the US naval blockade, hours after Iran accused the US of violating the existing ceasefire. President Trump said the ceasefire is "still in effect" but warned of harder strikes if Iran does not accept a peace deal. Trump is now preparing for a summit with Chinese President Xi Jinping at which Iran peace talks are expected to be a key agenda item.
+    </div>
+    <div class="macro-cn">美伊霍尔木兹海峡紧张局势再度升温：美军周五对两艘试图突破封锁的伊朗油轮开火。特朗普称停火协议"仍有效"，但警告将采取更强硬措施。特朗普与习近平峰会预计将讨论伊朗和平谈判。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Oil &amp; commodities 原油与大宗商品</div>
+    <div class="macro-text">
+      WTI crude closed at $95.42/barrel (+0.64%), Brent crude at approximately $100.20/barrel. Oil remains elevated due to Strait of Hormuz tensions — the Strait is the chokepoint through which roughly 20% of globally traded oil passes. Gold reached $4,730.70 (+0.42%), continuing its safe-haven run as geopolitical risk keeps demand for the metal elevated.
+    </div>
+    <div class="macro-cn">WTI原油收于每桶95.42美元，布伦特原油约100美元，因霍尔木兹海峡（全球约20%石油贸易的咽喉要道）局势紧张而保持高位。黄金升至4730美元，地缘风险持续支撑避险需求。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Fed &amp; rates 美联储与利率</div>
+    <div class="macro-text">
+      The 10-year Treasury yield fell 3bp to 4.364% on Friday, offering relief to rate-sensitive growth stocks. The critical event this coming week: April CPI (Consumer Price Index — the main inflation gauge) is due Tuesday, with the consensus expecting headline inflation of +3.7% year-over-year. Critically, the full Senate is expected to vote on Kevin Warsh's nomination to replace Jerome Powell as Fed Chair — with Powell's term ending Friday May 15. Warsh is considered more hawkish (inflation-fighting) than Powell.
+    </div>
+    <div class="macro-cn">10年期国债收益率小幅下行至4.364%。下周重磅：周二公布4月CPI通胀数据（市场预期同比+3.7%）；同时参议院预计本周对凯文·沃什（Kevin Warsh）接任美联储主席进行确认投票——沃什被认为比现任主席鲍威尔更倾向紧缩政策。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Trump &amp; policy 特朗普与政策</div>
+    <div class="macro-text">
+      Beyond the Iran conflict and Intel foundry deal, Trump's administration facilitated the Apple-Intel chipmaking discussions as part of its broader CHIPS Act semiconductor reshoring strategy. Federal government employment declined in April, consistent with ongoing DOGE-led workforce reductions. The Trump-Xi summit later this week could be a significant market catalyst depending on outcomes for trade and the Iran conflict.
+    </div>
+    <div class="macro-cn">特朗普政府积极推动美国半导体制造业回流，直接促成苹果-英特尔芯片代工谈判。联邦政府就业人数4月继续下降，与DOGE（政府效率部）裁员推进一致。本周稍晚的特朗普-习近平峰会是下周市场的重要风险事件。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Currency &amp; gold 货币与黄金</div>
+    <div class="macro-text">
+      Gold climbed to $4,730.70 (+0.42%), near multi-year highs, supported by geopolitical risk (Iran conflict), dollar uncertainty ahead of the Fed Chair transition, and structural central bank buying. Bitcoin pulled back from a mid-week high above $81,000 to around $79,865 (-1.1%) as US-Iran tensions briefly rattled crypto risk appetite.
+    </div>
+    <div class="macro-cn">黄金涨至4730美元，因地缘风险和美联储主席易人前景提振避险需求。比特币因美伊紧张局势从81,000美元高点回落至约79,865美元（周跌约1.1%）。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Asia &amp; global 亚洲与全球市场</div>
+    <div class="macro-text">
+      TSMC (TSM) reported April consolidated net revenue of NT$410.73 billion (~$13.08 billion), down 1.1% from March but up 17.5% year-over-year — confirming sustained AI chip demand even as the Apple-Intel deal introduces a future competitive threat to TSMC's foundry monopoly. Asian markets will open Monday reacting to the Apple-Intel deal, the strong US jobs report, and ongoing Strait of Hormuz news.
+    </div>
+    <div class="macro-cn">台积电4月营收约130.8亿美元（同比增17.5%），AI芯片需求依然旺盛，但苹果-英特尔协议为其代工垄断地位带来长期潜在威胁。亚洲市场周一开盘将消化上述多项重磅消息。</div>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    本周最重要的宏观背景：<strong>美伊冲突持续升温</strong>，霍尔木兹海峡局势让油价维持高位（WTI近96美元）；<strong>联储政策面临重大变局</strong>——美联储主席即将易人，下周CPI数据将决定市场对降息时机的预期；<strong>特朗普政府积极推动半导体回流</strong>，苹果-英特尔协议是其政策成果之一；黄金走强反映市场的避险情绪依然较重。对美股投资者而言，下周CPI和特朗普-习近平峰会是最关键的两个观察点。
+  </div>
+</div>
+
+<!-- ── WHAT TO WATCH ───────────────────────────────────────────────── -->
+<div class="section-label">What to watch — next 24–48 hours 未来24–48小时重点关注</div>
+<ul class="watch-list mb16">
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Tuesday, May 12 — April CPI (Consumer Price Index):</strong> The most critical economic release of the week. Headline CPI expected at +3.7% year-over-year, core (excluding food and energy) at +2.7% YoY. A hotter-than-expected print could trigger a tech sell-off as markets price out any remaining 2026 rate cut hopes. A cooler print could extend the rally.
+      </span>
+      <span class="watch-cn">周二（5月12日）公布4月CPI通胀数据，是本周最重磅的经济指标。预期同比增3.7%。若数据超预期，可能引发科技股回调，因为高通胀意味着美联储更难降息。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-amber">~</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Senate vote on Kevin Warsh as Fed Chair (this week):</strong> Powell's term expires May 15. If Warsh — considered more hawkish and focused on inflation — is confirmed, markets will assess whether this signals a tighter monetary policy stance for H2 2026, potentially a headwind for growth stocks at elevated valuations. Fed speakers John Williams (NY Fed) and Susan Collins are also scheduled.
+      </span>
+      <span class="watch-cn">参议院本周预计对沃什接任美联储主席进行投票。沃什被认为比鲍威尔更倾向于紧缩货币政策（不急于降息），其确认将对高估值成长股形成压力。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Trump-Xi summit (Thursday/Friday):</strong> The two leaders are expected to discuss the Iran peace deal, trade relations, and tariffs. Any positive signal on de-escalation in the Strait of Hormuz could send oil prices sharply lower (bullish for the broad market). A breakdown could spike energy prices and risk-off sentiment. This is the highest geopolitical risk event of the coming week.
+      </span>
+      <span class="watch-cn">特朗普-习近平峰会（周四/五）：伊朗和平谈判、贸易关系是核心议题。若峰会释放积极信号，油价可能大跌，带动大盘走强；若谈判破裂，油价可能急涨，市场情绪转向避险。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-blue">$</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Earnings: Cisco Systems (CSCO) Wednesday; Simon Property Group (SPG), Constellation Energy (CEG), Mosaic (MOS) Monday.</strong> Cisco results will be closely watched for commentary on AI networking infrastructure demand — the company sells the switches and routers that connect AI clusters in data centres. Constellation Energy provides power to AI data centres.
+      </span>
+      <span class="watch-cn">思科（Cisco）周三公布业绩，重点关注AI数据中心网络设备需求。Simon Property（购物中心REIT）、Constellation Energy（电力，数据中心供电关键）周一报告。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-amber">~</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Thursday PPI + Friday Retail Sales and UMich Consumer Sentiment:</strong> Producer Price Index (PPI — measures inflation at the factory/wholesale level) on Thursday and US Retail Sales on Friday complete the inflation/consumer picture for the week. A strong retail sales print would reinforce the "resilient consumer" narrative.
+      </span>
+      <span class="watch-cn">周四PPI（生产者价格指数，衡量批发端通胀）、周五零售销售及密歇根大学消费者信心指数，共同构成本周通胀与消费全景图。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-green">A</span>
+    <span class="watch-content">
+      <span class="watch-en">
+        <strong>Intel Foundry 18A process node updates:</strong> Following the Apple-Intel deal announcement, analyst community will be digging into Intel's 18A manufacturing yield and timeline disclosures. Any update on whether Apple has committed to first-generation 18A chips or a later node will clarify the deal's near-term revenue impact on INTC.
+      </span>
+      <span class="watch-cn">英特尔18A制程节点最新进展：苹果-英特尔协议公布后，分析师将深挖英特尔制造工艺的良率和时间表，这将决定这笔合作的实际落地时间和对英特尔收入的影响。</span>
+    </span>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<!-- ── OTHER NOTABLE NEWS ─────────────────────────────────────────── -->
+<div class="section-label">Other notable news 其他值得关注的新闻</div>
+<div class="notable-grid mb16">
+  <div class="notable-card">
+    <div class="notable-topic">Micron Technology (MU)</div>
+    <div class="notable-text">
+      Micron shares rose 13.7% Friday, hitting a new all-time high of $683.09 (up 25% on the week), after the company announced it started shipping its largest-ever commercially available solid-state drive (SSD) — reinforcing the AI-driven data storage demand narrative.
+    </div>
+    <div class="notable-cn">美光科技周五大涨13.7%，创历史新高，本周累涨25%，受益于AI存储需求爆发和新SSD产品发布。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Oracle (ORCL) &amp; SanDisk (SNDK)</div>
+    <div class="notable-text">
+      Oracle surged 13.56% and SanDisk jumped 14.27% on Friday — CNBC's Jim Cramer had flagged these two as "the tells of this market," meaning their price action reveals the strength of the AI infrastructure trade. Both stocks are hitting 52-week highs on AI data demand.
+    </div>
+    <div class="notable-cn">甲骨文和闪迪周五均大涨13–14%，均创52周新高。这两只股票被市场视为AI基础设施需求的"温度计"。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Tesla (TSLA) Recall + Model Y</div>
+    <div class="notable-text">
+      Tesla gained 2% to $420.17 despite recalling 218,868 US vehicles for a software glitch that can delay the rearview camera by up to 11 seconds — a fixable issue via over-the-air software update. Separately, the 2026 Tesla Model Y was the first vehicle to meet NHTSA's new advanced driver-assistance benchmark.
+    </div>
+    <div class="notable-cn">特斯拉股价上涨2%，尽管召回约21.9万辆汽车修复倒车摄像头软件故障（可远程更新修复）。2026款Model Y是首款达到美国NHTSA新版辅助驾驶标准的车型。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Rocket Lab (RKLB) &amp; IREN</div>
+    <div class="notable-text">
+      Rocket Lab USA soared 24.4% after beating Q1 revenue estimates; IREN Ltd. gained 8.54% after announcing a partnership with Nvidia for AI data centre operations. Both signal broadening of the AI infrastructure trade beyond traditional semiconductors into adjacent sectors.
+    </div>
+    <div class="notable-cn">火箭实验室（Rocket Lab）因Q1营收超预期大涨24.4%；IREN Ltd.因与英伟达合作建设AI数据中心涨8.5%。AI基础设施投资主题正从芯片向更广泛领域延伸。</div>
+  </div>
+</div>
+
+<!-- ── MARKET PULSE ────────────────────────────────────────────────── -->
+<div class="section-label">Market pulse 市场脉搏</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <span class="pulse-key">Theme 主题</span>
+    <span class="pulse-val">
+      AI infrastructure euphoria meets geopolitical resilience — the market is rewarding companies exposed to the AI buildout while largely shrugging off Iran-related oil risk, powered by an unexpectedly strong labour market as a macroeconomic backstop.
+    </span>
+    <span class="pulse-cn">
+      AI基础设施投资热情高涨，叠加经济韧性：市场在持续奖励AI产业链受益股，同时对伊朗地缘风险表现出异乎寻常的淡然，强劲就业数据成为宏观经济的有力支撑。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Dominant trade 主要交易方向</span>
+    <span class="pulse-val">
+      Rotating strongly into AI semiconductors (AMD, Micron, Oracle, SanDisk, INTC) and away from cloud software names that missed guidance (Cloudflare -23%). The "memory supercycle" narrative is gathering speed — every AI model needs vast amounts of fast memory, and Micron and SanDisk are the key beneficiaries alongside AMD.
+    </span>
+    <span class="pulse-cn">
+      资金大规模流入AI芯片和存储股（AMD、美光、甲骨文、闪迪、英特尔），同时撤离业绩指引令市场失望的云软件股（Cloudflare暴跌23%）。"内存超级周期"叙事正在成型——每个大型AI模型都需要海量高速内存。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Watch next 12h 未来12小时关注</span>
+    <span class="pulse-val">
+      Monday Asia open reaction to the Apple-Intel deal and US jobs data — particularly TSMC and Asian semiconductor names. Any escalation or de-escalation commentary from the White House or Iran on the Strait of Hormuz situation over the weekend could move oil and risk sentiment sharply at the Monday open.
+    </span>
+    <span class="pulse-cn">
+      关注周一亚洲市场（特别是台积电和亚洲半导体股）对苹果-英特尔协议及美国就业数据的反应；同时密切监控周末霍尔木兹海峡最新动态——任何升级或缓和的信号都可能在周一开盘时显著影响油价和市场风险情绪。
+    </span>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 今日总结</div>
+  <div class="cn-text">
+    本周的核心主题是<strong>AI芯片超级周期</strong>——AMD、美光、甲骨文等AI基础设施相关股全面爆发，市场正在奖励能够直接受益于AI算力需求的公司。苹果-英特尔代工协议是美国半导体制造业回流的重要里程碑。接下来最关键的风险点是：<strong>周二CPI通胀数据</strong>（若超预期将打压高估值成长股）和<strong>特朗普-习近平峰会</strong>（影响中东和平前景和油价走势）。投资者在享受AI牛市红利的同时，需对宏观政策转向和地缘风险保持高度警惕。
+  </div>
+</div>
+
+<!-- ── SOURCES ─────────────────────────────────────────────────────── -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  TheStreet — <a href="https://www.thestreet.com/latest-news/stock-market-today-may-8-2026-updates">Stock Market Today (May 8, 2026): Nasdaq, S&amp;P 500 jump as strong April jobs report overshadows fresh military exchange in Middle East</a><br>
+  AMD Investor Relations — <a href="https://ir.amd.com/news-events/press-releases/detail/1284/amd-reports-first-quarter-2026-financial-results">AMD Reports First Quarter 2026 Financial Results</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/05/amd-q1-2026-earnings-report.html">AMD's stock soars 16% as data center growth pushes revenue and guidance past estimates</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/08/intel-stock-apple-chip-deal.html">Intel shares soar on Apple chip deal report. Here's why it signals a total pivot for chipmaking</a><br>
+  TheStreet — <a href="https://www.thestreet.com/latest-news/apple-signs-chipmaking-deal-with-intel-joining-microsoft-amazon-and-tesla">Apple reaches chipmaking deal with Intel, pushing its stock to new record</a><br>
+  Palantir Technologies IR — <a href="https://investors.palantir.com/news-details/2026/Palantir-Reports-Q1-2026-U-S--Revenue-Growth-of-104-YY-and-Revenue-Growth-of-85-YY-Raises-FY-2026-Revenue-Guidance-to-71-YY-Growth-and-U-S--Comm-Revenue-Guidance-to-120-YY-Crushing-Consensus-Expectations/">Palantir Reports Q1 2026 U.S. Revenue Growth of 104% Y/Y</a><br>
+  TechCrunch — <a href="https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/">Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/08/stock-market-next-week-outlook-for-may-11-15-2026-.html">Stock market next week: Outlook for May 11-15, 2026</a><br>
+  TradingKey — <a href="https://www.tradingkey.com/analysis/stocks/us-stocks/261863081-amd-earnings-beat-data-center-ai-gpu-guidance-technical-tradingkey">AMD Beats Q1 2026 With $5.8B Data Center Revenue and Guides $11.2B for Q2</a><br>
+  Schwab — <a href="https://www.schwab.com/learn/story/stock-market-update-open">Stocks Climb as April Jobs Growth Tops Estimates</a><br>
+  Yahoo Finance / Index data — S&amp;P 500, Nasdaq, Dow, Russell 2000, VIX closing prices, 8 May 2026<br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/08/wall-street-ai-chip-love-moves-from-nvidia-to-intel-amd-and-micron.html">Wall Street sees 'changing of the guard in AI' as Intel, AMD shares soar while Nvidia lags</a>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<div class="footer">
+  Market Intelligence Agent · 市场情报助手<br>
+  Sunday, 10 May 2026 · PM SGT · Prior Session Recap — Friday 8 May 2026 · 美国全市场覆盖<br>
+  Deep dive: <a href="market_deepdive_20260510.html" style="color:#185FA5;">market_deepdive_20260510.html</a>
+</div>
+
+</body>
+</html>
