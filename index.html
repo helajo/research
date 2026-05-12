@@ -21,6 +21,8 @@
       --stocks-fg:    #0d4a8a;
       --dives-bg:     #ede8fb;
       --dives-fg:     #4a2d8a;
+      --market-bg:    #e6f7f1;
+      --market-fg:    #085041;
       --radius:       12px;
       --radius-sm:    7px;
       --shadow:       0 1px 2px rgba(0,0,0,.04), 0 3px 10px rgba(0,0,0,.06);
@@ -214,6 +216,7 @@
     }
     .cat-stocks    { background: var(--stocks-bg); color: var(--stocks-fg); }
     .cat-deep-dives { background: var(--dives-bg);  color: var(--dives-fg); }
+    .cat-market    { background: var(--market-bg); color: var(--market-fg); }
 
     .card-date {
       font-size: 11px;
@@ -287,26 +290,90 @@
     <div class="header-tagline"><strong>H.E.L.A.J.O.</strong> — Holding Equities, Long-term Assets, Joyous Outcomes</div>
     <div class="header-stats">
       <div class="stat">
-        <div class="stat-num">8</div>
+        <div class="stat-num">29</div>
         <div class="stat-label">Total Reports</div>
       </div>
       <div class="stat-divider"></div>
-      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Stock Reports</div></div><div class="stat"><div class="stat-num">1</div><div class="stat-label">Deep Dives</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">Stock Reports</div></div><div class="stat"><div class="stat-num">1</div><div class="stat-label">Deep Dives</div></div><div class="stat"><div class="stat-num">21</div><div class="stat-label">Market Reports</div></div>
     </div>
   </div>
 </header>
 
 <nav class="filter-bar">
   <div class="filter-inner">
-    <button class="pill pill-all active" data-filter="all">All · 全部 <span class="pill-count">8</span></button>
+    <button class="pill pill-all active" data-filter="all">All · 全部 <span class="pill-count">29</span></button>
     <button class="pill" data-filter="stocks">📈 Stock Reports · 个股分析 <span class="pill-count">7</span></button>
     <button class="pill" data-filter="deep-dives">🔍 Deep Dives · 专题深度 <span class="pill-count">1</span></button>
-    <span class="filter-right" id="visible-count">8 reports</span>
+    <button class="pill" data-filter="market">📊 Market Reports · 市场报告 <span class="pill-count">21</span></button>
+    <span class="filter-right" id="visible-count">29 reports</span>
   </div>
 </nav>
 
 <main class="main">
   <div class="grid" id="card-grid">
+        <a class="card" href="market/market_deepdive_20260510.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-11</span>
+          </div>
+          <div class="card-title">Stock Deep Dive — 10 May 2026</div>
+          <div class="card-summary">技术面 Sunday, 10 May 2026 · 23:41 SGT · Singapore time · Companion to daily briefing · 新加坡时间 · 每日简报配套深度报告 Signal Q&amp;A 信号解析 AMD INTC PLTR Signal questions — answered 信号关键问题解答 #1 AMD Crosses $700B Market Cap as AI Chip Demand Drives Blockbuster Q1 — Data Center</div>
+          <div class="card-file">📄 market_deepdive_20260510.html</div>
+        </a>
+        <a class="card" href="market/investor_signals_20260511.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-11</span>
+          </div>
+          <div class="card-title">Investor Signals — May 11, 2026</div>
+          <div class="card-summary">ignals 知名投资人信号追踪 Sunday, May 11, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号 ⏳ Key catalyst this week 本周重要催化剂 May 15 (Thursday) — Q1 2026 13F filing deadline. Druckenmiller (Duquesne), Tepper (Appaloosa), and Aschenbrenner (Situational Awareness</div>
+          <div class="card-file">📄 investor_signals_20260511.html</div>
+        </a>
+        <a class="card" href="market/investor_lens_sectors_20260508.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-11</span>
+          </div>
+          <div class="card-title">Non-Consensus Specialist Lens</div>
+          <div class="card-summary">the market hasn't priced 非共识专家信号 — 能源 · 医疗 · 消费 · 金融 Week of May 4 – May 8, 2026 · Singapore time · Primary data + specialist sources only · 每周收盘后发布 Sources monitored this week Lyn Alden · Macro/Energy EIA Weekly Petroleum · Baker Hughes Rig Count OPEC+ Press</div>
+          <div class="card-file">📄 investor_lens_sectors_20260508.html</div>
+        </a>
+        <a class="card" href="market/investor_signals_20260510.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-10</span>
+          </div>
+          <div class="card-title">Investor Signals — May 10, 2026</div>
+          <div class="card-summary">踪 Sunday, May 10, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号 Filing window note 申报窗口提示 Q1 2026 13F filings are due May 15, 2026 . No filings from Druckenmiller, Tepper, or Situational Awareness LP have been submitted yet this cycle. Expect a wav</div>
+          <div class="card-file">📄 investor_signals_20260510.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260510_PM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-10</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence</div>
+          <div class="card-summary">简报 Sunday, 10 May 2026 · 23:41 SGT · Singapore time · Full US market coverage · 新加坡时间 · 美国全市场覆盖 Prior Session Recap 上周末收盘回顾: US equity markets are closed today (Sunday). This briefing covers Friday 8 May 2026's record-setting close and sets up the week ahead (</div>
+          <div class="card-file">📄 market_brief_20260510_PM.html</div>
+        </a>
+        <a class="card" href="market/investor_lens_defence_20260508.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-10</span>
+          </div>
+          <div class="card-title">Defence &amp; Deep Tech Investor Lens</div>
+          <div class="card-summary">efence tech insiders are seeing 国防深科技投资人的前沿观点 — 主流媒体未报道的信号 Week of 4 May – 8 May 2026 · Singapore time · Signal absent from mainstream defence coverage · 每周收盘后发布 Investors monitored this week Palmer Luckey · Anduril Trae Stephens · Founders Fund Delian Asparou</div>
+          <div class="card-file">📄 investor_lens_defence_20260508.html</div>
+        </a>
+        <a class="card" href="market/investor_lens_aitech_20260508.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-10</span>
+          </div>
+          <div class="card-title">AI/Tech Investor Lens — Week of May 4–8, 2026</div>
+          <div class="card-summary">ction AI investors are seeing 顶尖AI科技投资人的前沿观点 — 市场尚未定价的信号 Week of May 4–8, 2026 · Singapore time · Views the market hasn't fully priced · 每周收盘后发布 Investors monitored this week 本周追踪人员 A. Karpathy L. Aschenbrenner Garry Tan · YC Emmett Shear Nat Friedman (Meta, n</div>
+          <div class="card-file">📄 investor_lens_aitech_20260508.html</div>
+        </a>
         <a class="card" href="stocks/EWTX_2026-05-07.html" data-cat="stocks">
           <div class="card-header">
             <span class="cat-pill cat-stocks">📈 Stock Reports · 个股分析</span>
@@ -361,6 +428,132 @@
           <div class="card-summary">ckgrounds, Achievements &amp; Theses 人工智能投资人全景报告：背景、成就与投资逻辑 17 Investors Profiled · Sources: Wikipedia, Fortune, Bloomberg, TechCrunch, Britannica · Compiled May 2026 Contents · 目录 OpenAI / AI Lab Alumni Leopold Aschenbrenner Andrej Karpathy Nat Friedman Danie</div>
           <div class="card-file">📄 AI_Investor_Profiles.html</div>
         </a>
+        <a class="card" href="market/investor_signals_20260505.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-05</span>
+          </div>
+          <div class="card-title">Investor Signals — 5 May 2026</div>
+          <div class="card-summary">追踪 Tuesday, 5 May 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号 Signals this run 本次信号 (3 found) David Sacks @DavidSacks Founder-Investor PCAST co-chair (former US AI Czar) · Craft Ventures · Former Trump AI &amp; Crypto policy lead On May 4, 2026,</div>
+          <div class="card-file">📄 investor_signals_20260505.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260505_AM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-05</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence – 5 May 2026 AM</div>
+          <div class="card-summary">up Daily market intelligence 每日市场情报简报 Tuesday, 5 May 2026 · 09:03 SGT · Full US market coverage · 新加坡时间 · 美国全市场覆盖 Market mood 市场情绪 Iran fires 19 missiles at UAE — ceasefire fracturing, oil surging — but Palantir's blowout AI earnings hold a floor under tech. M</div>
+          <div class="card-file">📄 market_brief_20260505_AM.html</div>
+        </a>
+        <a class="card" href="market/market_deepdive_20260505.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-05</span>
+          </div>
+          <div class="card-title">Stock Deep Dive – 5 May 2026</div>
+          <div class="card-summary">day, 5 May 2026 · 09:03 SGT · Companion to daily briefing · 新加坡时间 · 每日简报配套深度报告 Signal Q&amp;A 信号解析 PLTR — Palantir XOM — Exxon AMD — Advanced Micro Signal questions — answered 信号关键问题解答 #1 UAE Intercepts 19 Iranian Missiles and Drones — Ceasefire Fractures, WTI</div>
+          <div class="card-file">📄 market_deepdive_20260505.html</div>
+        </a>
+        <a class="card" href="market/market_deepdive_20260503.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-03</span>
+          </div>
+          <div class="card-title">Stock Deep Dive — 3 May 2026</div>
+          <div class="card-summary">术面 Sunday, 3 May 2026 · Singapore time · Companion to daily briefing · 新加坡时间 · 每日简报配套深度报告 · 数据截至2026年5月1日（周五）收盘 Signal Q&amp;A 信号解析 AAPL — Apple GOOGL — Alphabet NVDA — Nvidia Signal questions — answered 信号关键问题解答 #1 Apple Q2 FY2026: Revenue $111.2B (+17%), EPS</div>
+          <div class="card-file">📄 market_deepdive_20260503.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260503_AM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-03</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence — 3 May 2026 AM</div>
+          <div class="card-summary">p Daily market intelligence 每日市场情报简报 Sunday, 3 May 2026 · 08:00 SGT · Singapore time · Full US market coverage · 新加坡时间周日 · 美国全市场覆盖 · 上周五收盘回顾及本周展望 Market mood 市场情绪 Broadly bullish — Apple's blockbuster Q2 earnings and record Nasdaq and S&amp;P 500 closes on Fri</div>
+          <div class="card-file">📄 market_brief_20260503_AM.html</div>
+        </a>
+        <a class="card" href="market/market_deepdive_20260502.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-02</span>
+          </div>
+          <div class="card-title">Stock Deep Dive — 2 May 2026</div>
+          <div class="card-summary">面与技术面 Saturday, 2 May 2026 · Singapore time · Companion to daily briefing · 新加坡时间 · 每日简报配套深度报告 Signal Q&amp;A 信号解析 AAPL 苹果 GOOGL 谷歌 NVDA 英伟达 Signal questions — answered 信号关键问题解答 #1 Apple Q2 FY2026: Revenue +17%, EPS +22%, iPhone 17 Demand "Extraordinary" — Plu</div>
+          <div class="card-file">📄 market_deepdive_20260502.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260502_AM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-02</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence — 2 May 2026 AM</div>
+          <div class="card-summary">Saturday Daily market intelligence 每日市场情报简报 Saturday, 2 May 2026 · Singapore time (SGT, UTC+8) · Full US market coverage · 新加坡时间 · 美国全市场覆盖 ⚠ Markets closed today (Saturday). This briefing recaps Friday 1 May 2026 — a banner session with S&amp;P 500 and Nasdaq</div>
+          <div class="card-file">📄 market_brief_20260502_AM.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260501_AM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-05-01</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence — 1 May 2026 AM</div>
+          <div class="card-summary">报简报 Friday, 1 May 2026 · 8:00 AM Singapore Time · Full US market coverage · 新加坡时间 · 美国全市场覆盖 Market mood 市场情绪 Bullish momentum from the Magnificent Seven earnings wave — Apple after-hours blowout is the latest catalyst — but surging oil (Iran war) and hot PCE i</div>
+          <div class="card-file">📄 market_brief_20260501_AM.html</div>
+        </a>
+        <a class="card" href="market/deep_dive_20260427.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-27</span>
+          </div>
+          <div class="card-title">INTC · MXL — Intel & MaxLinear Deep Dive · 2026-04-27</div>
+          <div class="card-summary">Intel, MaxLinear and the Big Rally — deep dive into Intel Q1 2026 beat drivers, MaxLinear</div>
+          <div class="card-file">📄 deep_dive_20260427.html</div>
+        </a>
+        <a class="card" href="market/market_brief_20260423_PM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-23</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence</div>
+          <div class="card-summary">me (~11:05 AM EDT). Index figures are mid-session snapshots, not closing prices. Daily market intelligence Thursday, 23 April 2026 · Singapore time (SGT) · Full US market coverage Market mood Record highs fade fast — IBM and ServiceNow earnings disappoint, oil</div>
+          <div class="card-file">📄 market_brief_20260423_PM.html</div>
+        </a>
+        <a class="card" href="market/market-brief-2026-04-22-AM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-22</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence — AM Brief, Wednesday April 22 2026</div>
+          <div class="card-summary">ligence Wednesday, 22 April 2026 · Singapore Time (SGT / UTC+8) · US Large-Cap &amp; Tech/AI Market mood Mixed — large-cap tech slipped Tuesday on US–Iran peace-deal uncertainty while small caps hit record highs; two high-stakes earnings releases (TSLA, NOW) a</div>
+          <div class="card-file">📄 market-brief-2026-04-22-AM.html</div>
+        </a>
+        <a class="card" href="market/market-brief-AM-2026-04-22.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-22</span>
+          </div>
+          <div class="card-title">Daily Market Intelligence — AM Brief 22 Apr 2026</div>
+          <div class="card-summary">sday, 22 April 2026 · Singapore Time (SGT / UTC+8) · US Large-Cap &amp; Tech/AI Market Mood Markets closed Tuesday down ~0.6% on US-Iran ceasefire anxiety, but pre-market futures are nudging higher Wednesday as blockbuster AI deal flow — led by Amazon's $5B An</div>
+          <div class="card-file">📄 market-brief-AM-2026-04-22.html</div>
+        </a>
+        <a class="card" href="market/market-brief-pm-april-21-2026.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-22</span>
+          </div>
+          <div class="card-title">PM Market Brief — Tuesday, April 21, 2026</div>
+          <div class="card-summary">ly Market Intelligence Tuesday, April 21, 2026 · 10:34 PM SGT · US Large-Cap &amp; Tech/AI Market Mood Equities slid ~0.6% across all major indices as Iran ceasefire hopes faded ahead of Wednesday's deadline, overshadowing record AI infrastructure commitments</div>
+          <div class="card-file">📄 market-brief-pm-april-21-2026.html</div>
+        </a>
+        <a class="card" href="market/market-brief-2026-04-21-PM.html" data-cat="market">
+          <div class="card-header">
+            <span class="cat-pill cat-market">📊 Market Reports · 市场报告</span>
+            <span class="card-date">2026-04-21</span>
+          </div>
+          <div class="card-title">PM Market Brief — Tuesday, 21 April 2026 SGT</div>
+          <div class="card-summary">t intelligence Tuesday, 22 April 2026 · 8:00 PM SGT · US Large-Cap &amp; Tech/AI Index snapshot: 20 Apr close (last full US session). US pre-market opens as you read this. Market mood Markets are cautiously mixed as geopolitical relief from Iran's Strait of Ho</div>
+          <div class="card-file">📄 market-brief-2026-04-21-PM.html</div>
+        </a>
         <a class="card" href="stocks/MXL_Gemini_2026-04-13.html" data-cat="stocks">
           <div class="card-header">
             <span class="cat-pill cat-stocks">📈 Stock Reports · 个股分析</span>
@@ -383,7 +576,7 @@
 </main>
 
 <footer class="footer">
-  Last updated: 2026-05-12 23:13 · Auto-generated by build_index.py
+  Last updated: 2026-05-12 23:22 · Auto-generated by build_index.py
 </footer>
 
 <script>

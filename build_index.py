@@ -33,6 +33,11 @@ CATEGORIES = {
         "label_cn": "专题深度",
         "emoji":    "🔍",
     },
+    "market": {
+        "label_en": "Market Reports",
+        "label_cn": "市场报告",
+        "emoji":    "📊",
+    },
 }
 
 
@@ -176,6 +181,8 @@ def build_html(reports: list, counts: dict) -> str:
       --stocks-fg:    #0d4a8a;
       --dives-bg:     #ede8fb;
       --dives-fg:     #4a2d8a;
+      --market-bg:    #e6f7f1;
+      --market-fg:    #085041;
       --radius:       12px;
       --radius-sm:    7px;
       --shadow:       0 1px 2px rgba(0,0,0,.04), 0 3px 10px rgba(0,0,0,.06);
@@ -369,6 +376,7 @@ def build_html(reports: list, counts: dict) -> str:
     }}
     .cat-stocks    {{ background: var(--stocks-bg); color: var(--stocks-fg); }}
     .cat-deep-dives {{ background: var(--dives-bg);  color: var(--dives-fg); }}
+    .cat-market    {{ background: var(--market-bg); color: var(--market-fg); }}
 
     .card-date {{
       font-size: 11px;
