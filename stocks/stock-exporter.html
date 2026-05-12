@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SQLite Stock Exporter (Final Layout Edition)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body{font-family:system-ui,sans-serif;background:#f7f9fb;margin:0;padding:20px;color:#333}
+h1{text-align:center;margin-bottom:10px}
+.container{max-width:980px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,.1)}
+button{background:#007bff;color:white;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:15px;margin:5px}
+button:hover{background:#0056b3}
+.collapsible{cursor:pointer;background:#f0f3f8;padding:6px 10px;border-radius:6px;margin-top:5px}
+.collapsible:hover{background:#e5e9f2}
+.collapsible.active{background:#dbe6ff}
+.hidden{display:none}
+table.field-table{width:100%;border-collapse:collapse;margin:5px 0 10px 0}
+table.field-table td{border-bottom:1px solid #eee;padding:4px 6px;vertical-align:top;word-break:break-word;font-size:13px}
+table.field-table td:nth-child(1){width:30px;text-align:center}
+textarea{width:100%;height:120px;padding:8px;font-family:monospace;font-size:14px;border:1px solid #ccc;border-radius:8px;resize:vertical}
+#log{background:#f1f3f5;padding:10px;border-radius:8px;margin-top:10px;height:120px;overflow:auto;font-family:monospace;font-size:13px;white-space:pre-wrap}
+#firstRow{background:#fff7e6;border:1px solid #ffd591;border-radius:8px;padding:10px;margin:15px 0;font-size:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>SQLite Stock Exporter (Final Layout Edition)</h1>
+<p>Upload your <b>jsonstocks_agri.db</b>, then input ticker list below (comma, space, or new line separated).</p>
+
+<label><b>1️⃣ Upload SQLite DB:</b></label><br/>
+<input type="file" id="dbFile" accept=".db"/><br/>
+<div id="firstRow" style="display:none;"></div>
+
+<label><b>2️⃣ Enter Tickers:</b></label><br/>
+<textarea id="tickerInput" placeholder="Example: AAPL, MSFT, GOOGL\nAMD\nINTC"></textarea><br/>
+<button id="loadTickerBtn">Load Tickers</button>
+<div id="tickerPreview" style="display:none;margin-top:8px;font-family:monospace;background:#eef9ff;border:1px solid #bde0ff;padding:10px;border-radius:8px;"></div>
+
+<label><b>3️⃣ Select Fields to Export:</b></label>
+<div id="fieldGroups"></div>
+
+<div style="margin-top:15px;">
+  <button id="previewBtn">Preview 10 Rows</button>
+</div>
+
+<div id="log"></div>
+
+<!-- Preview Area -->
+<div class="preview-container" id="previewArea" style="display:none;">
+  <h3>📊 Preview (First 10 Rows)</h3>
+  <div id="previewTable"></div>
+  <div style="text-align:center;margin-top:15px;">
+    <button id="exportBtn">Export to Excel</button>
+  </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+(async function(){
+const log=m=>{const el=document.getElementById('log');el.textContent+=m+"\\n";el.scrollTop=el.scrollHeight;}
+let db=null,tickers=[];
+let allFields=new Set(["ticker","shortName","longName","marketCap","sector","industry","country","longBusinessSummary"]);
+const defaultFields=new Set(["shortName","marketCap","sector","industry","country"]);
+const SQL=await initSqlJs({locateFile:f=>`https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/${f}`});
+
+// === Upload DB ===
+document.getElementById('dbFile').addEventListener('change',async e=>{
+const f=e.target.files[0];if(!f)return;
+log("📥 Reading SQLite DB...");
+const buf=await f.arrayBuffer();db=new SQL.Database(new Uint8Array(buf));
+const count=db.exec("SELECT COUNT(*) FROM stocks");
+log("📊 Total records in DB: "+count[0].values[0][0]);
+log("✅ Database loaded.");
+try{
+const res=db.exec("SELECT * FROM stocks LIMIT 1");
+if(res.length&&res[0].values.length){
+const row=res[0].values[0],cols=res[0].columns,obj={};
+cols.forEach((c,i)=>obj[c]=row[i]);
+const firstRowBox=document.getElementById('firstRow');
+firstRowBox.style.display="block";
+firstRowBox.innerHTML=`<b>🧩 First Row Preview:</b><br>${Object.entries(obj).map(([k,v])=>`<b>${k}</b>: ${typeof v==="string"?v.slice(0,200):v}`).join("<br>")}<br><i>... (truncated)</i>`;
+}}catch(err){firstRowBox.innerHTML="<b>⚠️ Cannot read first row:</b> "+err;}
+updateFields();
+});
+
+// === Load ticker list ===
+document.getElementById('loadTickerBtn').addEventListener('click',()=>{
+const raw=document.getElementById('tickerInput').value;
+if(!raw.trim()){alert("Please enter at least one ticker.");return;}
+tickers = raw
+  .replace(/\r/g, "\n")
+  .split(/\n|,|\s+/)
+  .map(s => s.replace(/[^A-Za-z0-9._:-]/g, "").trim().toUpperCase())
+  .filter(Boolean);
+const preview=document.getElementById('tickerPreview');
+preview.style.display='block';
+preview.innerHTML=`✅ Loaded ${tickers.length} tickers:<br>${tickers.join(", ")}`;
+log(`✅ Loaded ${tickers.length} tickers: ${tickers.slice(0,10).join(", ")}${tickers.length>10?"...":""}`);
+});
+
+function updateFields(){
+if(!db)return;
+log("🧠 Analyzing fields from info_json...");
+try{
+const res=db.exec("SELECT info_json FROM stocks LIMIT 50");
+if(res.length&&res[0].values.length)for(const [j] of res[0].values){try{extractKeys(JSON.parse(j),"");}catch{}}
+}catch(e){log("⚠️ "+e);}
+renderGroupedFields(Array.from(allFields).sort());
+log(`✅ ${allFields.size} fields available.`);
+}
+
+function extractKeys(o,p){for(const k in o){const key=p?p+"."+k:k;
+if(typeof o[k]==="object"&&o[k]&&!Array.isArray(o[k]))extractKeys(o[k],key);
+else if(Array.isArray(o[k])&&k==="companyOfficers")allFields.add("CEO_name");
+else allFields.add(key);
+}}
+
+// === 字段分组（隐藏 ticker） ===
+function renderGroupedFields(fields){
+const container=document.getElementById('fieldGroups');
+container.innerHTML="";
+const groups={
+"🏷️ Basic Info":[],"🏢 Company Info":[],"👔 Management":[],"💰 Financials":[],"📈 Market Data":[],"📅 Dates & IPO":[],"🌍 Exchange Info":[],"🧠 Misc":[]
+};
+for(const f of fields){
+const name=f.toLowerCase();
+if(["ticker","shortname","longname","marketcap","sector","industry","country","longbusinesssummary"].some(k=>name.includes(k)))groups["🏷️ Basic Info"].push(f);
+else if(["address","city","state","zip","website","phone"].some(k=>name.includes(k)))groups["🏢 Company Info"].push(f);
+else if(["ceo","officer","executive","director"].some(k=>name.includes(k)))groups["👔 Management"].push(f);
+else if(["cash","debt","value","margin","income","revenue","asset","liability","return","ratio"].some(k=>name.includes(k)))groups["💰 Financials"].push(f);
+else if(["price","volume","market","beta","range","high","low","yield"].some(k=>name.includes(k)))groups["📈 Market Data"].push(f);
+else if(["date","ipo","year","quarter"].some(k=>name.includes(k)))groups["📅 Dates & IPO"].push(f);
+else if(["exchange","region","language","timezone"].some(k=>name.includes(k)))groups["🌍 Exchange Info"].push(f);
+else groups["🧠 Misc"].push(f);
+}
+let groupIndex=0;
+for(const [title,fields] of Object.entries(groups)){
+if(!fields.length)continue;
+const wrap=document.createElement('div');
+const head=document.createElement('div');
+head.className='collapsible'+(groupIndex<2?' active':'');
+head.textContent=title+` (${fields.length})`;
+const table=document.createElement('table');
+table.className='field-table'+(groupIndex<2?'':' hidden');
+for(const f of fields){
+if(f==="ticker") continue;
+const checked = defaultFields.has(f) ? "checked" : "";
+table.insertAdjacentHTML('beforeend',`
+<tr><td><input type='checkbox' value='${f}' ${checked}/></td><td>${f}</td></tr>`);
+}
+wrap.appendChild(head);wrap.appendChild(table);
+head.addEventListener('click',()=>{head.classList.toggle('active');table.classList.toggle('hidden');});
+container.appendChild(wrap);
+groupIndex++;
+}
+}
+
+// === 查询与导出 ===
+async function queryData(preview=false){
+if(!db||!tickers.length){alert("Please upload DB and enter tickers first.");return[];}
+const sel=Array.from(document.querySelectorAll('#fieldGroups input:checked')).map(i=>i.value);
+sel.unshift("ticker"); // 永远包含 ticker
+log("🚀 Querying data...");
+const sql="SELECT * FROM stocks WHERE UPPER(REPLACE(REPLACE(REPLACE(TRIM(ticker), CHAR(10), ''), CHAR(13), ''), CHAR(9), '')) = ?";
+const stmt=db.prepare(sql);
+const rows=[];
+for(const t of tickers){
+stmt.bind([t.toUpperCase().trim()]);
+while(stmt.step()){
+const r=stmt.getAsObject();let info={};
+try{info=JSON.parse(r.info_json);}catch{}
+const comb={...r,...flat(info)};
+if(info.companyOfficers&&Array.isArray(info.companyOfficers)){
+const ceo=info.companyOfficers.find(o=>/CEO/i.test(o.title||""));
+if(ceo)comb["CEO_name"]=ceo.name;}
+const filtered={};for(const f of sel)filtered[f]=comb[f]??"";
+rows.push(filtered);
+}
+stmt.reset();if(preview&&rows.length>=10)break;
+}
+stmt.free();
+log(`✅ Retrieved ${rows.length} records${preview?" (preview)":""}.`);
+return rows;
+}
+
+function flat(o,p=""){let r={};for(const k in o){const key=p?p+"."+k:k;
+if(typeof o[k]==="object"&&o[k]&&!Array.isArray(o[k]))Object.assign(r,flat(o[k],key));
+else if(!Array.isArray(o[k]))r[key]=o[k];}return r;}
+
+function reorderColumns(headers){
+let order=["ticker","shortName"];
+let rest=headers.filter(h=>!order.includes(h));
+return [...order.filter(h=>headers.includes(h)),...rest];
+}
+
+document.getElementById('previewBtn').addEventListener('click',async()=>{
+const rows=await queryData(true);
+if(!rows.length){log("⚠️ No records found.");return;}
+document.getElementById('previewArea').style.display='block';
+render(rows);
+});
+document.getElementById('exportBtn').addEventListener('click',async()=>{
+const rows=await queryData(false);
+if(!rows.length){log("⚠️ No records found.");return;}
+exportExcel(rows);
+});
+
+function render(rows){
+const t=document.getElementById('previewTable');
+let headers=reorderColumns(Object.keys(rows[0]));
+let html="<table><thead><tr>"+headers.map(x=>`<th>${x}</th>`).join("")+"</tr></thead><tbody>";
+for(const r of rows)html+="<tr>"+headers.map(x=>`<td>${String(r[x]??"").replace(/\\n/g,"<br>")}</td>`).join("")+"</tr>";
+t.innerHTML=html+"</tbody></table>";
+}
+
+function exportExcel(rows){
+let headers=reorderColumns(Object.keys(rows[0]));
+const wsData=[headers];
+for(const r of rows)wsData.push(headers.map(x=>r[x]));
+const ws=XLSX.utils.aoa_to_sheet(wsData);
+for(const c in ws){if(ws[c]&&typeof ws[c]==="object"&&c[0]!=="!")ws[c].s={alignment:{wrapText:true,vertical:"top"}};}
+const wb=XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,ws,"Stocks");
+XLSX.writeFile(wb,"stock_export.xlsx");
+log("✅ Excel exported successfully.");
+}
+})();
+</script>
+</body>
+</html>

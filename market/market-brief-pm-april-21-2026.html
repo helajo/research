@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Market Brief — Tuesday, April 21, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 860px;
+         margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem;
+                   margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px; font-size: 11px;
+                   color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-date { font-size: 13px; color: #777; }
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px; padding: 12px 16px;
+              margin-bottom: 1.5rem; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish  { background: #EAF3DE; color: #27500A; }
+  .mood-bearish  { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed    { background: #FAEEDA; color: #633806; }
+  .mood-neutral  { background: #f0efe8; color: #555; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+  .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+             gap: 8px; margin-bottom: 1.5rem; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0; padding: 1rem 1.25rem;
+                 margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill  { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                 background: #f0efe8; color: #666; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 8px; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.05em; margin-bottom: 3px; }
+  .bull-label { color: #27500A; } .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8; border-radius: 6px;
+               padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0; top: 9px;
+                          width: 5px; height: 5px; border-radius: 50%;
+                          background: #ccc; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 1.5rem; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 1.5rem; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8; font-size: 13px;
+                   color: #333; line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex;
+                align-items: center; justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 1px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .pulse-row { display: flex; gap: 10px; padding: 7px 0;
+               border-bottom: 1px solid #e0dfd8; font-size: 13px;
+               line-height: 1.5; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { font-weight: 600; white-space: nowrap; min-width: 130px;
+               color: #333; }
+  .pulse-val { color: #555; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0; }
+  .scoring-note { font-size: 11px; color: #bbb; font-style: italic; margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    PM Evening Briefing — Market Close Recap + After-Hours
+  </div>
+  <div class="report-title">Daily Market Intelligence</div>
+  <div class="report-date">Tuesday, April 21, 2026 · 10:34 PM SGT · US Large-Cap &amp; Tech/AI</div>
+</div>
+
+<!-- MARKET MOOD -->
+<div class="mood-bar">
+  <span class="mood-label">Market Mood</span>
+  <span class="mood-text">Equities slid ~0.6% across all major indices as Iran ceasefire hopes faded ahead of Wednesday's deadline, overshadowing record AI infrastructure commitments from Amazon and a landmark Apple CEO transition.</span>
+  <span class="mood-pill mood-mixed">Mixed</span>
+</div>
+
+<!-- INDEX SNAPSHOT -->
+<div class="section-label">Index Snapshot — US Close, April 21</div>
+<div class="indices">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,064</div>
+    <div class="idx-chg dn">−0.63%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Nasdaq</div>
+    <div class="idx-val">24,260</div>
+    <div class="idx-chg dn">−0.59%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Dow Jones</div>
+    <div class="idx-val">49,149</div>
+    <div class="idx-chg dn">−0.59%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">~2,771</div>
+    <div class="idx-chg dn">−1.00%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI Oil</div>
+    <div class="idx-val">$92.13</div>
+    <div class="idx-chg up">+2.80%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10-yr Yield</div>
+    <div class="idx-val">~4.24%</div>
+    <div class="idx-chg dn">Falling</div>
+  </div>
+</div>
+
+<!-- MARKET COMMENTARY -->
+<div class="section-label">Market Commentary</div>
+<p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:1.5rem;">
+  US equities fell broadly on Tuesday as investors grew increasingly nervous that an Iran–US ceasefire — set to expire Wednesday — would not produce a peace deal, driving WTI crude up 2.8% to $92.13 and pushing stocks lower across every index. Small caps led declines (Russell 2000 −1.00%), reflecting elevated sensitivity to the macro risk-off tone. The Dow shed 293 points while the S&amp;P 500 broke back below 7,100, reversing the prior week's recovery that had brought the index back to breakeven for 2026. The 10-year Treasury yield edged down to ~4.24% as some flight-to-safety buying emerged. Notably, positive AI signals — Amazon's $5 billion Anthropic investment, JPMorgan's S&amp;P 500 target upgrade to 7,600, and Apple's CEO succession announcement — provided a narrative tailwind that prevented a deeper selloff, but could not overcome the geopolitical oil premium and uncertainty around Kevin Warsh's Federal Reserve confirmation hearing.
+</p>
+
+<!-- SCORING NOTE -->
+<div class="scoring-note">
+  Stories scored by: Price Impact (25%) + Portfolio Relevance (30%) + Source Quality (25%) + Trend Significance (20%) = out of 20. Ties broken by Portfolio Relevance.
+</div>
+
+<!-- TOP 3 SIGNALS -->
+<div class="section-label">Top 3 Signals</div>
+
+<!-- SIGNAL #1: AAPL CEO TRANSITION -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AAPL</span>
+        <span class="score-pill">19 / 20</span>
+        <span class="score-pill">Primary — Official Press Release</span>
+      </div>
+      <div class="sig-headline">Tim Cook to Step Down as Apple CEO; Hardware Chief John Ternus Named Successor, Effective September 1, 2026</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+  <div class="sig-body">
+    Apple announced Monday that Tim Cook — CEO since succeeding Steve Jobs in 2011 — will transition to executive chairman of the board, with John Ternus (SVP Hardware Engineering, Apple since 2001) becoming CEO on September 1, 2026. The board approved the transition unanimously, and Cook will remain in the CEO role through summer to ensure continuity. AAPL slipped less than 1% initially before recovering most of the move; Wedbush analyst Daniel Ives reiterated a Buy rating with a $350 price target while flagging "mixed" investor reactions given the abruptness relative to prior signals.
+    <br><br>
+    The context is important: Apple is a ~$4 trillion company currently absorbing $1.1 billion per quarter in tariff costs, and Cook's deep relationships with Chinese manufacturing partners — built over two decades — are considered irreplaceable during ongoing trade-war disruption. Ternus is an Apple product architect known for driving the M-series silicon transition and the AirPods lineup, suggesting a more hardware-and-AI-device-focused strategic direction.
+  </div>
+  <div class="src-line">
+    Apple Newsroom · April 20, 2026 · Still active: AAPL being actively traded on succession uncertainty one week before earnings ·
+    <a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/" target="_blank">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull Case</div>
+      <div class="bull-text">Ternus's hardware and silicon expertise could sharpen Apple's AI device roadmap (Apple Intelligence, custom chips) precisely as the AI-driven smartphone and wearable upgrade cycle accelerates.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear Case</div>
+      <div class="bear-text">Cook's irreplaceable China supply-chain relationships and operational playbook are being handed off at the worst possible moment — during peak tariff pressure and US–China trade uncertainty.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> Uncertainty premium caps AAPL upside; watch earnings in ~2 weeks for Ternus commentary on tariff strategy.</div>
+    <div class="impl-item"><span>Long term:</span> Could re-rate AAPL higher if Ternus articulates a credible AI hardware roadmap and stabilises China relationships.</div>
+  </div>
+  <ul class="questions">
+    <li>Does this succession signal Apple has positive earnings news to share — and is the timing deliberate?</li>
+    <li>Will Ternus reshape Apple's AI strategy toward on-device inference, moving away from Cook's services-revenue model?</li>
+    <li>How will key China government and manufacturing partners (TSMC, Foxconn) respond to the leadership change during trade-war stress?</li>
+  </ul>
+</div>
+
+<!-- SIGNAL #2: AMZN / ANTHROPIC DEAL -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AMZN</span>
+        <span class="score-pill">18 / 20</span>
+        <span class="score-pill">Primary — Official Press Release</span>
+      </div>
+      <div class="sig-headline">Amazon Invests Additional $5 Billion in Anthropic; AI Startup Pledges $100 Billion in AWS Spending Over 10 Years</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+  <div class="sig-body">
+    Amazon announced Monday a new $5 billion investment in Anthropic at the AI startup's current $380 billion valuation, lifting Amazon's total stake to $13 billion with the potential to grow to $25 billion if Anthropic hits certain commercial milestones. In exchange, Anthropic committed to spending at least $100 billion on AWS technologies — including Trainium2 and Trainium3 custom AI chips — over the next 10 years. The agreement also secures Anthropic access to up to 5 gigawatts of compute capacity for training and deploying Claude models, including a near-1 gigawatt Trainium2/3 cluster coming online by end of 2026.
+    <br><br>
+    The deal materially strengthens AWS's competitive position against Microsoft Azure (OpenAI's home) and Google Cloud (Gemini). Anthropic already uses Project Rainier — nearly half a million Trainium2 chips — for Claude model training. The $100 billion 10-year commitment represents approximately $10 billion per year in cloud spend, providing AWS with a highly visible recurring revenue anchor in the AI infrastructure race.
+  </div>
+  <div class="src-line">
+    TechCrunch / About Amazon · April 20, 2026 · Still active: AI cloud infrastructure trade ongoing; deal terms being analysed by AWS competitor teams ·
+    <a href="https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai" target="_blank">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull Case</div>
+      <div class="bull-text">The $100B AWS commitment locks in a decade of high-margin cloud revenue, validates Amazon's Trainium chip bet, and positions Claude as the enterprise AI model of choice — a direct threat to Azure/OpenAI's current enterprise lead.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear Case</div>
+      <div class="bear-text">At a $380B valuation, Anthropic's revenue multiple is extreme; the additional $20B tranche is milestone-contingent and years away, and Anthropic's cash burn at scale could require further rounds that dilute Amazon's position.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> AMZN earnings (~May 1) will give first forward commentary on AWS AI revenue impact; expect management to highlight this deal prominently.</div>
+    <div class="impl-item"><span>Long term:</span> If Anthropic achieves frontier-model dominance (Mythos-class), AMZN's AI infrastructure moat compounds significantly against MSFT and GOOGL.</div>
+  </div>
+  <ul class="questions">
+    <li>Does Anthropic's $100B AWS commitment effectively lock it out of Azure and GCP, and how does Microsoft respond to protect OpenAI's enterprise relationships?</li>
+    <li>When do commercial milestones trigger the remaining $12B tranche (up to $25B total) — and what are those milestones?</li>
+    <li>Does the 5-gigawatt compute access signal an imminent broad deployment of the Mythos model that has so far been withheld?</li>
+  </ul>
+</div>
+
+<!-- SIGNAL #3: ANTHROPIC CLAUDE MYTHOS -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AMZN</span>
+        <span class="ticker-pill">MSFT</span>
+        <span class="ticker-pill">NVDA</span>
+        <span class="score-pill">17 / 20</span>
+        <span class="score-pill">Ongoing: originally broke ~26 days ago</span>
+      </div>
+      <div class="sig-headline">Anthropic Claude Mythos Preview — First AI Model Withheld Over Safety Concerns in 7 Years — Cited by JPMorgan as Key AI Rally Catalyst</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+  <div class="sig-body">
+    Anthropic officially released Claude Mythos Preview on April 8 after the model's existence was exposed via a CMS misconfiguration on March 26. Rather than a public launch, Anthropic distributed Mythos Preview exclusively to over 50 enterprise technology organisations — including Microsoft, Nvidia, and Cisco — through Project Glasswing, a new AI-assisted cybersecurity initiative backed by $100+ million in usage credits. The model, internally codenamed "Capybara," represents a new capability tier above the Opus series: it identified thousands of zero-day vulnerabilities across every major operating system and browser, and is the first AI model to complete a 32-step corporate network attack simulation autonomously (3/10 attempts). It is the first time in approximately seven years that a leading AI lab has withheld a frontier model from public release due to safety concerns — specifically its cyber-offensive capabilities.
+    <br><br>
+    JPMorgan strategists Dubravko Lakos-Bujas and team cited Mythos as a key catalyst in today's S&amp;P 500 target upgrade to 7,600 (from 7,200), upgrading 2026 EPS estimates to $330 from $315. Mythos is being actively traded on today via AI infrastructure names and drove the sector's relative outperformance versus the broader index.
+  </div>
+  <div class="src-line">
+    Anthropic red-team blog / CNBC / Fortune · Ongoing: originally broke March 26; still driving AI sentiment and institutional reallocation ·
+    <a href="https://red.anthropic.com/2026/mythos-preview/" target="_blank">Read more (Anthropic)</a> ·
+    <a href="https://www.cnbc.com/2026/04/21/jpmorgan-raises-sp-500-target-as-mythos-model-bolsters-ai-trade.html" target="_blank">JPMorgan angle (CNBC)</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull Case</div>
+      <div class="bull-text">Mythos-class cyber capabilities arriving during peak enterprise security spending creates an immediate monetisable moat for Anthropic and its infrastructure backers (AMZN, MSFT, NVDA) as every Fortune 500 company races to deploy AI for defensive cyber operations.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear Case</div>
+      <div class="bear-text">Safety-limited deployment delays commercial revenue and could trigger congressional or EU regulatory action specifically targeting AI with demonstrated offensive cyber capabilities, creating an overhang on the entire sector.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> AI cybersecurity names (CRWD, PANW, S) and AI infrastructure (NVDA, AMZN) are the direct beneficiaries of enterprise Mythos adoption.</div>
+    <div class="impl-item"><span>Long term:</span> If Mythos rolls out broadly and sets a new capability benchmark, it accelerates the timeline for enterprise AI platform lock-in — a structural re-rating event for the sector.</div>
+  </div>
+  <ul class="questions">
+    <li>When does Anthropic expand Mythos Preview beyond the initial 50 organisations — and what safety thresholds must be cleared first?</li>
+    <li>How do GPT-5 (OpenAI) and Gemini Ultra 2 (Google) compare on the same 32-step attack simulation benchmark?</li>
+    <li>Does Project Glasswing create an Anthropic-led de facto standard for AI-assisted enterprise security, disadvantaging independent cybersecurity vendors?</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALSO TRACKING -->
+<div class="section-label">Also Tracking</div>
+<div class="also-grid">
+
+  <!-- #4: WARSH FED HEARING -->
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">MACRO · FED</span>
+      <span class="score-pill">17 / 20</span>
+    </div>
+    <div style="margin-bottom:6px;">
+      <span style="font-size:13px;font-weight:600;line-height:1.4;">#4 | Kevin Warsh Senate Confirmation Hearing</span>
+    </div>
+    <div class="also-text">
+      Trump's Fed chair nominee Kevin Warsh (net worth $135M–$226M) faced the Senate Banking Committee on April 21, stating "the Fed must stay in its lane" on inflation and independence — markets parsed the testimony for signals on rate cut timing, with the April 28–29 FOMC meeting showing a 99% probability of a hold at 3.50%–3.75%; a Warsh confirmation would signal a structural pivot toward rate cuts in H2 2026 if inflation cooperates.
+    </div>
+    <div style="margin-top:8px;font-size:11px;">
+      <a href="https://www.cnbc.com/2026/04/21/kevin-warsh-fed-confirmation-hearing-trump-live-updates.html" style="color:#185FA5;text-decoration:none;">CNBC live coverage →</a>
+    </div>
+  </div>
+
+  <!-- #5: JPMORGAN TARGET UPGRADE -->
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">SPX · BROAD</span>
+      <span class="score-pill">16 / 20</span>
+    </div>
+    <div style="margin-bottom:6px;">
+      <span style="font-size:13px;font-weight:600;line-height:1.4;">#5 | JPMorgan Raises S&amp;P 500 Target to 7,600</span>
+    </div>
+    <div class="also-text">
+      JPMorgan strategist Dubravko Lakos-Bujas raised the firm's year-end S&amp;P 500 target to 7,600 (from 7,200 set last month), upgrading 2026 EPS estimates to $330 from $315 and 2027 estimates to $385 from $355, citing AI-led earnings strength and the Mythos catalyst — with a bull-case scenario of ~8,000 if geopolitical tensions resolve quickly (23× earnings multiple); the current S&amp;P 500 close at 7,064 implies ~7.6% upside to the new base-case target.
+    </div>
+    <div style="margin-top:8px;font-size:11px;">
+      <a href="https://www.bloomberg.com/news/articles/2026-04-21/jpmorgan-lifts-s-p-500-target-as-ai-rally-regains-momentum" style="color:#185FA5;text-decoration:none;">Bloomberg →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- WHAT TO WATCH -->
+<div class="section-label">What to Watch — Next 24–48 Hours</div>
+<div style="background:#fff;border:1px solid #e8e8e0;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <ul class="watch-list">
+    <li>
+      <div class="watch-icon w-green">$</div>
+      <div><strong>ServiceNow (NOW) Q1 2026 earnings</strong> — Wednesday April 22 after close. Consensus: revenue $3.75B, EPS $0.95. NOW has beaten estimates 3 of last 4 quarters (+6.2% avg EPS beat). Key bellwether for enterprise AI software demand and agentic workflow adoption.</div>
+    </li>
+    <li>
+      <div class="watch-icon w-red">!</div>
+      <div><strong>Iran ceasefire — Trump extension, talks uncertain</strong> — Trump extended the deadline until Iran submits a "unified proposal," but Pakistan's Islamabad talks remain unconfirmed as of 10 PM SGT. Strait of Hormuz still mostly blocked (3 ships in 24 hours). A confirmed Iranian delegation = WTI risk-off; a no-show risks oil re-testing $100.</div>
+    </li>
+    <li>
+      <div class="watch-icon w-blue">F</div>
+      <div><strong>Fed meeting April 28–29</strong> — 99% market probability of hold at 3.50%–3.75%. Kevin Warsh confirmation hearing completed; Senate floor vote timeline TBD. Jerome Powell press conference April 29, 2:30 PM ET — watch for language on tariff inflation and the path for H2 rate cuts.</div>
+    </li>
+    <li>
+      <div class="watch-icon w-amber">E</div>
+      <div><strong>Apple Q1 2026 earnings (expected ~early May)</strong> — First public event where incoming CEO John Ternus will speak; watch for tariff cost guidance revision, China supply-chain update, and any signal on AI hardware roadmap under new leadership.</div>
+    </li>
+    <li>
+      <div class="watch-icon w-amber">E</div>
+      <div><strong>Mag7 earnings week starting ~April 28</strong> — META, MSFT, GOOGL, AMZN all expected to report in the week of April 28. Focus: tariff cost absorption, AI capex guidance, and AWS/Azure/GCP AI revenue breakout. TSMC's 30%+ full-year guidance (reported April 16) sets a bullish backdrop.</div>
+    </li>
+  </ul>
+</div>
+
+<!-- MARKET PULSE -->
+<div class="section-label">Market Pulse</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <div class="pulse-key">Theme</div>
+    <div class="pulse-val">Record AI infrastructure capital commitments (AMZN–Anthropic $100B, Mythos capability breakthrough) are structural tailwinds battling near-term geopolitical drag from the Iran–Hormuz risk premium and leadership uncertainty at the Fed and Apple.</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Dominant Trade</div>
+    <div class="pulse-val">Selling broad index beta (S&amp;P and Nasdaq lower across the board) while selectively staying long AI infrastructure names — the market is rotating from undifferentiated risk-on into AI-specific positioning ahead of Mag7 earnings season.</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Watch Next</div>
+    <div class="pulse-val">Iran's decision on attending the Islamabad peace talks in the next 12 hours is the single most binary catalyst: a confirmed Iranian delegation would likely send WTI below $85 and trigger a 1–2% equity rally; a no-show risks oil re-testing $100 and pushes equities to test the 7,000 S&amp;P level.</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources</div>
+<div class="sources">
+  <a href="https://www.apple.com/newsroom/2026/04/tim-cook-to-become-apple-executive-chairman-john-ternus-to-become-apple-ceo/">Apple Newsroom — Tim Cook / John Ternus transition</a><br>
+  <a href="https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai">About Amazon — $5B Anthropic investment</a><br>
+  <a href="https://red.anthropic.com/2026/mythos-preview/">Anthropic — Claude Mythos Preview</a><br>
+  <a href="https://www.cnbc.com/2026/04/21/jpmorgan-raises-sp-500-target-as-mythos-model-bolsters-ai-trade.html">CNBC — JPMorgan S&amp;P 500 target / Mythos</a><br>
+  <a href="https://www.cnbc.com/2026/04/21/kevin-warsh-fed-confirmation-hearing-trump-live-updates.html">CNBC — Kevin Warsh confirmation hearing</a><br>
+  <a href="https://www.bloomberg.com/news/articles/2026-04-21/jpmorgan-lifts-s-p-500-target-as-ai-rally-regains-momentum">Bloomberg — JPMorgan S&amp;P 500 upgrade</a><br>
+  <a href="https://www.cnbc.com/2026/04/21/global-stocks-iran-conflict-ai-rally.html">CNBC — Global stocks, Iran conflict, AI rally</a><br>
+  <a href="https://investor.servicenow.com/news/news-details/2026/ServiceNow-to-Announce-First-Quarter-2026-Financial-Results-on-April-22/default.aspx">ServiceNow IR — Q1 2026 earnings date</a><br>
+  <a href="https://www.cnbc.com/2026/04/20/amazon-invest-up-to-25-billion-in-anthropic-part-of-ai-infrastructure.html">CNBC — Amazon up to $25B Anthropic deal</a><br>
+  <a href="https://www.nbcnews.com/world/iran/live-blog/live-updates-iran-war-trump-peace-talks-vance-ceasefire-ship-hormuz-rcna341149">NBC News — Iran ceasefire live updates</a>
+</div>
+
+<div class="footer">
+  Market Intelligence Agent · PM Briefing · Generated 22 April 2026, 00:34 SGT · Auto-run via scheduled task<br>
+  Not financial advice. Verified sources only — no fabricated URLs.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Deep Dive – 5 May 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #185FA5; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+  .nav-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .nav-pill { font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; background: #E6F1FB; color: #0C447C; text-decoration: none; }
+  .nav-pill:hover { background: #185FA5; color: #fff; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .signal-qa-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .signal-qa-rank1 { border-left: 3px solid #185FA5; }
+  .signal-qa-rank2 { border-left: 3px solid #1D9E75; }
+  .signal-qa-rank3 { border-left: 3px solid #854F0B; }
+  .signal-qa-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px; line-height: 1.4; }
+  .signal-qa-num { font-size: 11px; font-weight: 700; color: #bbb; margin-right: 6px; }
+  .questions-list { padding: 0; list-style: none; margin-bottom: 10px; }
+  .questions-list li { font-size: 12px; color: #666; line-height: 1.5; padding: 3px 0 3px 14px; position: relative; }
+  .questions-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: #ccc; }
+  .q-answers { background: #f5f7fb; border: 1px solid #dce6f5; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; }
+  .q-answers-label { font-size: 9px; font-weight: 700; color: #8aaad4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .q-answer-row { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+  .q-answer-row:last-child { margin-bottom: 0; }
+  .q-num { font-size: 10px; font-weight: 700; color: #185FA5; background: #E6F1FB; border-radius: 4px; padding: 2px 6px; flex-shrink: 0; margin-top: 1px; }
+  .q-answer-text { font-size: 12px; color: #444; line-height: 1.6; }
+  .q-answer-cn { font-size: 11px; color: #999; margin-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; line-height: 1.6; }
+  .stock-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 16px; scroll-margin-top: 16px; }
+  .stock-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .stock-name { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+  .stock-name-cn { font-size: 12px; color: #999; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .stock-price-block { text-align: right; flex-shrink: 0; }
+  .stock-price { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stock-price-chg { font-size: 13px; margin-top: 2px; }
+  .stock-divider { height: 1px; background: #f0efe8; margin: 12px 0; }
+  .sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .s-tech { background: #E6F1FB; color: #0C447C; }
+  .s-energy { background: #FAEEDA; color: #633806; }
+  .s-macro { background: #F1EFE8; color: #444441; }
+  .why-now { background: #FAFAF7; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 12px; }
+  .why-now-label { font-size: 9px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .why-now-text { font-size: 13px; color: #444; line-height: 1.6; }
+  .fund-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 8px; margin-bottom: 10px; }
+  .fund-cell { background: #f8f8f6; border-radius: 8px; padding: 8px 10px; }
+  .fund-key { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .fund-val { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+  .fund-sub { font-size: 10px; color: #aaa; margin-top: 1px; }
+  .ta-block { background: #faf9f7; border: 1px solid #ebe9e2; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+  .ta-title { font-size: 10px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+  .ta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px; }
+  .ta-row:last-child { margin-bottom: 0; }
+  .ta-label { font-size: 11px; color: #888; width: 140px; flex-shrink: 0; }
+  .ta-value { font-size: 12px; font-weight: 600; color: #333; flex: 1; }
+  .range-bar-wrap { flex: 1; min-width: 160px; }
+  .range-bar-track { height: 4px; background: #e8e8e0; border-radius: 2px; position: relative; margin: 4px 0; }
+  .range-bar-fill { position: absolute; top: 0; left: 0; height: 100%; background: #185FA5; border-radius: 2px; }
+  .range-bar-dot { position: absolute; top: -3px; width: 10px; height: 10px; background: #185FA5; border: 2px solid #fff; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 0 1px #185FA5; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 10px; color: #aaa; }
+  .ta-signals { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .ta-pill { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .ta-bull { background: #EAF3DE; color: #27500A; }
+  .ta-bear { background: #FCEBEB; color: #791F1F; }
+  .ta-neutral { background: #f0efe8; color: #666; }
+  .ta-warn { background: #FAEEDA; color: #633806; }
+  .stock-synthesis { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+  .data-caveat { font-size: 10px; color: #bbb; font-style: italic; margin-top: 4px; margin-bottom: 10px; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Stock Deep Dive · AM · 5 May 2026
+  </div>
+  <div class="report-title">Stock deep dive</div>
+  <div class="report-title-cn">股票深度分析 — 基本面与技术面</div>
+  <div class="report-date">
+    Tuesday, 5 May 2026 · 09:03 SGT · Companion to daily briefing · 新加坡时间 · 每日简报配套深度报告
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-pills">
+  <a class="nav-pill" href="#signal-qa">Signal Q&amp;A 信号解析</a>
+  <a class="nav-pill" href="#PLTR">PLTR — Palantir</a>
+  <a class="nav-pill" href="#XOM">XOM — Exxon</a>
+  <a class="nav-pill" href="#AMD">AMD — Advanced Micro</a>
+</div>
+
+<!-- ══ SECTION 1: SIGNAL Q&A ══ -->
+<div class="section-label" id="signal-qa">Signal questions — answered 信号关键问题解答</div>
+
+<!-- SIGNAL #1 Q&A: Iran/UAE/Hormuz -->
+<div class="signal-qa-card signal-qa-rank1">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#1</span>
+    UAE Intercepts 19 Iranian Missiles and Drones — Ceasefire Fractures, WTI Surges 4.4%, Dow Drops 557 Points
+  </div>
+  <ul class="questions-list">
+    <li>Is the ceasefire effectively over — and what is Trump's formal military response within the next 24 hours?</li>
+    <li>How long can Exxon sustain its 750,000 bpd Middle East production loss before Q2 guidance is revised downward?</li>
+    <li>At what WTI oil price does the market begin pricing a US recession more seriously — and are we near that threshold now?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          The ceasefire struck approximately one month ago appears to be fragmenting in practice, though neither side has formally declared it ended. Iran's interception of 19 missiles and drones on May 4 — and the fire at Fujairah's oil port — marks the first direct Iranian strike on UAE soil in this conflict. Tehran's Foreign Ministry called US Hormuz operations a "ceasefire violation," framing the US as the aggressor. CNN's live feed as of morning SGT shows continued military activity. The White House had not issued a formal statement on ceasefire status as of 09:00 SGT, but Trump's prior Truth Social pattern suggests a statement is imminent. The most likely outcomes in the next 24 hours are: (a) Trump declares the ceasefire void and authorises expanded US military action near Hormuz, (b) back-channel diplomacy leads to a new framework, or (c) a pause as both sides assess. Watch US carrier group movements in the Gulf of Oman as the leading indicator of option (a).
+        </div>
+        <div class="q-answer-cn">
+          停火协议实际上正在瓦解，但双方尚未正式宣布终止。伊朗将美国行动定性为"违反停火"，双方各执一词。特朗普截至早9点新加坡时间未发表正式声明，但根据其惯例，声明应在24小时内出现。关键信号：美国航母战斗群在阿曼湾的动向将决定美方是否启动更大规模军事行动。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          Exxon disclosed in its Q1 2026 earnings call (May 1) that Middle East production would fall by approximately 750,000 barrels per day if the Strait of Hormuz remains fully closed for the entire second quarter. At current WTI of ~$106/bbl, that represents roughly $80 million per day in forgone gross revenue. Exxon's Q1 net income already declined 45% year-over-year despite a revenue and EPS beat — suggesting margins were already compressed by previous Hormuz disruption. A full Q2 closure scenario would likely force a Q2 guidance revision. However, Exxon's $20 billion annual buyback programme provides financial flexibility, and sustained high prices above $100/bbl partially offset volume losses. The critical threshold for a guidance revision would likely be a confirmed Hormuz closure lasting beyond June 15 (midpoint of Q2), at which point Exxon's downstream and chemical margins would also come under further pressure.
+        </div>
+        <div class="q-answer-cn">
+          埃克森美孚Q1财报中披露：若霍尔木兹全季关闭，中东产量日减75万桶，相当于每日损失约8000万美元营收。Q1净利润已同比降45%，压力已现。若Q2关闭持续至6月15日后，埃克森可能被迫修订Q2指引。高油价（每桶100美元以上）部分抵消减产损失。公司200亿美元年度回购计划提供一定财务缓冲。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          Based on CNBC analysis published May 4, the key threshold is sustained WTI above $110–$115/barrel, at which point US national average gasoline prices push toward $5.00–$5.50/gallon — historically correlated with consumer spending contraction of 0.3–0.5% of GDP. Goldman Sachs has estimated each sustained $10/bbl oil increase removes approximately 0.2–0.3 percentage points from US GDP growth. WTI is currently at $106.42, placing it $3–9 from that threshold. The VIX rising 7.65% to 18.29 on May 4 shows elevated but not yet panic-level anxiety. The Dow transportation index declined (exact % n/a — unconfirmed) suggesting early demand-destruction pricing is beginning. If WTI clears $110 at today's open and holds there, watch for bond markets to begin pricing 2–3 Fed rate cuts in H2 as recession risk overtakes inflation concern — the key turning point for equity sector rotation.
+        </div>
+        <div class="q-answer-cn">
+          据CNBC 5月4日分析，WTI持续超过每桶110-115美元是衰退定价的关键门槛，届时全美平均油价将突破每加仑5美元，历史上与消费支出萎缩强相关。目前WTI在106.42美元，距门槛仅3-9美元。VIX升至18.29（+7.65%）显示焦虑上升但未到恐慌级别。若今日开盘WTI突破110美元，可观察债券市场是否开始定价年内2-3次降息——这将是股市板块轮动的关键转折点。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 Q&A: PLTR -->
+<div class="signal-qa-card signal-qa-rank2">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#2</span>
+    Palantir Q1 2026: 85% Revenue Growth, U.S. Revenue +104%, Raises Full-Year Guidance to $7.65B — AI Platform Enters Hyper-Growth Phase
+  </div>
+  <ul class="questions-list">
+    <li>Can PLTR sustain over 80% US commercial revenue growth through H2 2026, or is Q1's pace a pull-forward effect?</li>
+    <li>What is the realistic risk-to-valuation scenario if one major US government contract lapses or is reduced by DOGE budget cuts?</li>
+    <li>Is the $137.7M insider selling a material concern, or is it standard executive compensation liquidation under a 10b5-1 plan?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Management's Q2 revenue guidance of $1.8B (above the $1.68B consensus) and the raised full-year 2026 US commercial revenue guidance to at least $3.224B (implying ~120% growth for the full year) suggests management expects deceleration from Q1's 104% pace, but not a collapse. The AIP platform — which enables enterprises to rapidly deploy AI into operations without replacing existing systems — is still at an early adoption stage across the US commercial and government market. Palantir's "bootcamp" model (rapid 4-5 day enterprise AI pilots) has been converting prospects to multi-year contracts at scale. Recent deals (USDA $300M, Cleveland-Cliffs multi-year) confirm pipeline conversion. Risk factors for pull-forward: enterprise budget freezes if oil shock triggers broader economic slowdown, and potential DOGE-driven government AI spending rationalisation. Net assessment: H1 likely sustains 80%+ growth; H2 faces tougher comps as Q3 and Q4 2025 were already strong.
+        </div>
+        <div class="q-answer-cn">
+          管理层Q2指引18亿美元超预期，全年美国商业营收指引暗示增速约120%。AIP平台仍处于企业采用早期，"训练营"模式（4-5天快速AI部署试点）持续将客户转化为长期合同（如美国农业部3亿美元合同）。H1维持80%以上增速概率大；H2面临去年同期高基数压力。主要风险：油价冲击引发企业预算收缩，或DOGE削减政府AI支出。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          Palantir does not publicly disclose exact revenue concentration by customer, but government contracts historically account for approximately 40–50% of total revenue. At a ~$145 stock price and forward earnings guidance implying roughly $1.60–1.80 in annual adjusted EPS (based on guided revenue and consistent 53%+ GAAP margins), the forward P/E is in the 80–90x range. A major government contract loss (defined as a $200M+ annual value contract) could reduce forward revenue guidance by 3–5%, which at 80-90x P/E would translate to a 15–25% stock price de-rating. The current geopolitical context (Iran war, US military AI spend rising) actually reduces — not increases — the near-term risk of major US defence contract losses. The greater DOGE risk is rationalisation of smaller civilian agency contracts (non-DoD), which could compress the commercial government revenue line without affecting the defence AI pipeline.
+        </div>
+        <div class="q-answer-cn">
+          政府合同约占帕兰提尔总营收40-50%。以当前股价约145美元、预期调整后年EPS约1.6-1.8美元计，预期市盈率约80-90倍。若单一重大合同（年值2亿美元以上）丢失，将导致前瞻营收指引下降3-5%，在高倍数估值下可能引发15-25%股价回调。好消息：中东战争背景下，美国军事AI支出上升，国防合同丢失风险实际降低。DOGE的实际威胁更多来自小型民政机构合同的削减，而非核心国防AI项目。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          The $137.7M in insider selling over 90 days with zero insider purchases is notable, but context matters. Co-founders Alex Karp and Peter Thiel have historically sold shares aggressively near peak prices — the stock reached a 52-week high of $207.52, roughly 43% above the current ~$145 price, suggesting the bulk of selling occurred closer to the highs. Rule 10b5-1 pre-scheduled selling plans (which executives file months in advance) likely explain the programmatic nature of the sales. Critically, the absence of any insider purchases is more meaningful than the selling itself — at $145, insiders are choosing not to add. However, Q1's blowout GAAP results (53% net margin, $871M GAAP net income) directly contradict any operational concern. The insider selling pattern is consistent with executives managing personal wealth concentration — not a signal of deteriorating business fundamentals. Conclusion: monitor, but not a primary investment thesis driver at this time.
+        </div>
+        <div class="q-answer-cn">
+          90天内套现1.377亿美元、零增持的内部人行为值得关注，但需结合背景理解：历史高点207美元附近的套现更多是财富集中度管理（10b5-1预定计划），而非对业务的悲观判断。Q1 GAAP净利润率53%、净利润8.71亿美元等超强基本面直接否定了业务恶化的担忧。零增持更能说明问题：高管们认为当前145美元的价格不值得加仓，对估值有所顾虑。结论：持续监控，但目前不是主要风险因素。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 Q&A: Fed / Warsh -->
+<div class="signal-qa-card signal-qa-rank3">
+  <div class="signal-qa-title">
+    <span class="signal-qa-num">#3</span>
+    Fed Holds at 3.5–3.75% for Third Straight Meeting, Adds Easing Bias; Kevin Warsh Replaces Powell as Chair on May 15 with "Regime Change" Pledge
+  </div>
+  <ul class="questions-list">
+    <li>What is Kevin Warsh's actual near-term policy stance — will he lean more hawkish or dovish than Powell given the current oil shock?</li>
+    <li>At what oil price level does the Fed's inflation concern override recession risk, and is the June decision still effectively locked at "hold"?</li>
+    <li>Will the three dissenting governors (Hammack, Kashkari, Logan) maintain their anti-easing-bias stance at the June meeting, given oil has since risen further?</li>
+  </ul>
+  <div class="q-answers">
+    <div class="q-answers-label">Deep dive — questions answered 深度解析</div>
+    <div class="q-answer-row">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-answer-text">
+          Warsh's background is hawkish — as a Fed Governor from 2006 to 2011, he consistently prioritised inflation control. However, his Senate confirmation testimony revealed a more nuanced posture for 2026: he has argued that AI-driven productivity gains create room for rate cuts without reigniting inflation ("AI-driven disinflation"), and explicitly declined to pre-commit to specific cut timing or magnitude. His stated "regime change" — ending forward guidance and the dot plot — is more about communication style than underlying policy stance. Former Fed economist Claudia Sahm and critics have flagged concerns about the partisan nature of his confirmation. The most likely near-term scenario: Warsh is marginally more hawkish than Powell in a stable environment, but will be pragmatic if the oil shock produces clear evidence of economic damage. His first public speech as Chair (expected within 2 weeks of taking office May 15) will be critical for market calibration.
+        </div>
+        <div class="q-answer-cn">
+          沃什历史上偏鹰派，任联储理事期间（2006-2011）始终优先控制通胀。但近期确认听证中态度有所软化，认为AI驱动的生产率提升为降息创造空间，且拒绝预先承诺具体降息时间表。其"制度变革"更多是沟通风格的改变（废除前瞻指引和点阵图），而非根本政策转向。净评估：平稳环境下略偏鹰，但油价冲击导致明确衰退信号时可能务实转鸽。5月15日接任后首次公开讲话将是市场定标关键节点。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-answer-text">
+          The FOMC's April 29 statement specifically cited Middle East energy prices as a driver of elevated inflation, while simultaneously adding an easing bias — demonstrating the Fed's awareness of the dual mandate conflict. Current market pricing: 94.9% probability of unchanged rates at the June 2026 meeting. The Fed's historical pattern (post-2021) is to hold through short oil shocks (1–2 months) but pivot if disruption persists beyond 3 months and unemployment begins rising. Key trigger levels: WTI above $115 for 30+ days would likely prompt June discussions; unemployment rising above 4.5% within the next 4–6 weeks would accelerate the cut timeline regardless of oil. The May CPI print (expected in mid-June, before the FOMC meeting) is the most important single data point for the June decision — if headline CPI rises to 4%+ driven by energy, holding is almost certain; if core CPI ex-energy stays below 3%, the path to a cut opens.
+        </div>
+        <div class="q-answer-cn">
+          联储4月29日声明明确点名中东能源价格推升通胀，同时加入宽松偏向——体现其双重使命的两难处境。目前市场定价6月不降息概率94.9%。历史规律：短期油价冲击（1-2个月）通常不改变政策；若WTI超过每桶115美元持续30天以上，6月降息讨论将启动；若失业率升至4.5%以上，降息时间线将加速。最关键数据点：6月中旬公布的5月CPI——若能源推高整体CPI至4%以上，6月几乎确定不降息；若核心CPI（剔除能源）维持3%以下，降息窗口打开。
+        </div>
+      </div>
+    </div>
+    <div class="q-answer-row">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-answer-text">
+          The three dissenting governors at the April 29 meeting — Beth Hammack, Neel Kashkari, and Lorie Logan — opposed inclusion of an easing bias while voting to hold rates unchanged. Their dissent reflects a view that current inflation risks are more serious than growth risks. Since that meeting, WTI has risen an additional 4.4% to $106.42, which likely strengthens their anti-easing-bias position for the June meeting. However, Kevin Warsh takes over as Chair on May 15 — he controls the meeting agenda, statement language, and the framing of dissent. If Warsh pursues his stated goal of eliminating forward guidance entirely, the concept of an "easing bias" in the statement becomes moot — the dissent debate disappears with the language it was about. Conclusion: the three governors likely maintain opposition to formal easing language at the June meeting, but Warsh's structural reforms may reframe the entire debate around how the Fed communicates rather than what it does.
+        </div>
+        <div class="q-answer-cn">
+          4月29日三位反对宽松偏向的理事（Hammack、Kashkari、Logan）认为通胀风险大于增长风险，而WTI此后又进一步上涨4.4%，理论上强化了其鹰派立场。但关键变量是：沃什5月15日接任后，若他推进废除前瞻指引，"宽松偏向"的措辞本身将不复存在，三位理事的反对对象也随之消失。结论：三人可能在6月维持反对正式宽松措辞的立场，但沃什的制度改革可能从根本上重塑联储沟通框架，使这场争论失去意义。
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION 2: STOCK CARDS ══ -->
+<div class="section-label">Stock analysis — fundamentals &amp; technicals 股票基本面与技术面分析</div>
+
+<!-- PLTR CARD -->
+<div class="stock-card" id="PLTR">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">PLTR · Palantir Technologies Inc.</div>
+      <div class="stock-name-cn">帕兰提尔科技 — AI数据分析平台，为美国政府、军事和全球企业提供决策情报解决方案</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH · AI</span>
+        <span class="score-pill">Market cap: ~$316B</span>
+        <span class="score-pill">Data as of: May 4, 2026 close + Q1 2026 earnings</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$145.50</div>
+      <div class="stock-price-chg up">+$1.43 (+0.99%) May 4 · +0.4% post-hours</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Palantir reported Q1 2026 earnings on May 4 that beat all major estimates: revenue +85% YoY, US revenue +104%, GAAP net income margin 53%, and a raised full-year guidance to $7.65B. This is Signal #2 in today's briefing. The stock is expected to gap up further at today's open. Additionally, the Iran-Hormuz crisis directly benefits Palantir's defence AI contracts — the company works extensively with the US military and intelligence community.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      帕兰提尔是今日最强催化剂股票。Q1营收增长85%，美国业务翻倍增长，GAAP利润率达53%，并大幅上调全年指引。公司为美国政府和军队提供AI数据分析平台，中东战争背景下军事AI需求上升直接利好其核心业务。估值约80-90倍预期市盈率，高增长与高估值并存，波动性较大。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 (reported May 4, 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">unconfirmed — high</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Forward P/E 预期市盈率</div>
+      <div class="fund-val">~80–90x</div>
+      <div class="fund-sub">2026 est. (approx.)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue Q1 2026</div>
+      <div class="fund-val">$1.63B</div>
+      <div class="fund-sub">YoY +85% · beat $1.54B est.</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Adj. EPS Q1 2026</div>
+      <div class="fund-val">$0.33</div>
+      <div class="fund-sub">beat est. $0.28 · GAAP ~$0.40</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">GAAP Net Margin</div>
+      <div class="fund-val">53%</div>
+      <div class="fund-sub">$871M GAAP net income Q1</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">FY2026 Guidance</div>
+      <div class="fund-val">$7.65B</div>
+      <div class="fund-sub">~71% growth · raised from prior</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: Palantir SEC 8-K filing (May 4, 2026) via CNBC, StockTitan, Shacknews, Investing.com. Forward P/E is approximate based on guided revenue and Q1 margin profile. Trailing P/E n/a — unconfirmed (full-year GAAP EPS not yet calculable).
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:39.3%;"></div>
+          <div class="range-bar-dot" style="left:39.3%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$105.32 (52W low)</span>
+          <span>Now $145.50</span>
+          <span>$207.52 (52W high)</span>
+        </div>
+      </div>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">n/a — unconfirmed · stock recovering from 52W low toward mid-range</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">n/a — unconfirmed · estimated in $140–160 range</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">n/a — unconfirmed · earnings catalyst likely pushing toward overbought</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">Recovery uptrend 修复性上升趋势 — stock at 39.3% of 52-week range; earnings beat could break resistance toward $160–180 zone</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">Support 支撑: ~$120–125 · Resistance 阻力: ~$160, then $180, then $207 (52W high)</span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">Earnings Breakout 财报突破</span>
+      <span class="ta-pill ta-bull">Defence AI Tailwind 军事AI利好</span>
+      <span class="ta-pill ta-warn">High Valuation ~80x Fwd P/E 高估值</span>
+      <span class="ta-pill ta-bear">Insider Selling 内部人减持</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Palantir's Q1 2026 results are structurally bullish: 85% revenue growth, 53% GAAP net margins, and a dramatically raised full-year guidance represent a genuine inflection in the company's commercial trajectory — not a one-quarter anomaly. The AIP platform is demonstrating that enterprise AI deployment at scale is a real, repeatable business. Technically, the stock sits at 39% of its 52-week range, well below the $207 high, suggesting meaningful upside potential if the earnings momentum sustains into Q2. The primary risk is twofold: valuation (80–90x forward P/E leaves no room for error) and the structural uncertainty introduced by DOGE's potential rationalisation of civilian US government AI contracts. The Iran escalation is a net positive for Palantir's defence business, partially mitigating the DOGE risk. Today's likely gap-up open will test resistance around $155–160; a sustained break above that level would signal market conviction in the revised guidance.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面：</strong>Q1财报全面超预期，85%营收增速、53%净利润率、全年指引上调，标志着业务真正进入高速增长轨道，不是一次性脉冲。<strong>技术面：</strong>股价处于52周区间39%分位（远低于高点207美元），财报催化剂有望推动股价测试155-160美元阻力位，若突破则可能冲向180美元甚至52周高点。<strong>核心风险：</strong>80-90倍预期市盈率估值偏高，一旦增长低于预期将面临较大回调；DOGE削减民政AI支出是中期隐患。中东局势对其军事AI合同反而利好。
+    </div>
+  </div>
+</div>
+
+<!-- XOM CARD -->
+<div class="stock-card" id="XOM">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">XOM · Exxon Mobil Corporation</div>
+      <div class="stock-name-cn">埃克森美孚 — 全球最大综合石油天然气公司之一，上游勘探开采与下游炼化、化工一体化经营</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-energy">ENERGY · OIL &amp; GAS</span>
+        <span class="score-pill">Market cap: ~$650B</span>
+        <span class="score-pill">Data as of: May 1, 2026 (Q1 earnings) + May 4 market close</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$154.33</div>
+      <div class="stock-price-chg dn">May 1 close (May 4 exact move n/a)</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      Exxon is the primary direct-play on the Hormuz/Iran crisis — the single biggest story driving markets today. WTI surging to $106.42 and Brent to $114.44 is a direct revenue tailwind, even as Exxon faces 750,000 bpd of Middle East production risk. The Iran missile strike on UAE on May 4 — with fire at the Fujairah oil port — is the core catalyst for Exxon's re-rating today. Exxon also reported Q1 2026 earnings on May 1, with a revenue and EPS beat despite net income falling 45% YoY.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      埃克森美孚是中东能源危机的直接受益者与风险承担者：WTI油价超过每桶106美元直接拉升营收，但霍尔木兹关闭威胁其中东每日75万桶产量。Q1财报营收超预期，净利润却同比降45%，显示高油价环境下利润质量的复杂性。今日油价走势将直接决定XOM的开盘走向。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q1 2026 (reported May 1, 2026)</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">NTM EV/EBITDA</div>
+      <div class="fund-val">7.74x</div>
+      <div class="fund-sub">vs CVX 7.09x · modest premium</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Analyst Avg Target</div>
+      <div class="fund-val">$166.14</div>
+      <div class="fund-sub">vs current ~$154.33</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue Q1 2026</div>
+      <div class="fund-val">$85.14B</div>
+      <div class="fund-sub">beat est. $82.18B · strong</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS Q1 2026</div>
+      <div class="fund-val">$1.16</div>
+      <div class="fund-sub">beat est. $1.02 · +13.7%</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Net Income YoY</div>
+      <div class="fund-val">−45%</div>
+      <div class="fund-sub">Q1 2026 vs Q1 2025 prior high</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Buyback / Dividend</div>
+      <div class="fund-val">$20B/yr</div>
+      <div class="fund-sub">43 consecutive dividend raises</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: CNBC (May 1, 2026), TIKR blog, TipRanks. Q1 2026 earnings. Net income decline YoY reflects comparison to elevated Q1 2025 when oil prices were high pre-ceasefire. 52-week range n/a — unconfirmed.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:50%;"></div>
+          <div class="range-bar-dot" style="left:50%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>52W low: n/a — unconfirmed</span>
+          <span>Now $154.33</span>
+          <span>52W high: n/a</span>
+        </div>
+      </div>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">n/a — unconfirmed</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">n/a — unconfirmed</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">n/a — unconfirmed · oil surge likely pushing XOM toward overbought on short timeframe</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">Uptrend 上升趋势 — Re-rating as Hormuz crisis deepens; analyst mean target $166.14 is ~8% above current price</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">Analyst target 分析师目标: $166.14 · Support 支撑: ~$145–148 (pre-Hormuz escalation levels)</span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">Oil Price Tailwind +4.4% 油价利好</span>
+      <span class="ta-pill ta-bull">Dividend King 43yr Raise 股息之王</span>
+      <span class="ta-pill ta-warn">Hormuz Production Risk 霍尔木兹产量风险</span>
+      <span class="ta-pill ta-neutral">Q1 Net Income −45% YoY 净利润同比降</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    Exxon is the most direct equity expression of the Hormuz/Iran crisis — higher oil prices mechanically expand upstream margins, while the 750,000 bpd Middle East production risk is offset (partially) by above-$100 pricing. The Q1 results (revenue beat, EPS beat, but net income −45% YoY) reveal an important nuance: Exxon's profitability was still compressed compared to the previous peak oil-price environment, suggesting the company needs sustained prices above $90–95/bbl to fully recover earnings power. At WTI $106+ and trending toward possible $110+, Q2 earnings could inflect sharply upward — particularly if production losses are contained. The analyst consensus target of $166.14 implies ~8% upside from current levels, making XOM a moderately attractive energy play in a high-oil environment. The key downside risk is a rapid diplomatic resolution to the Iran conflict that sends WTI back toward $80–85, which would compress margins and trigger a selloff across the energy sector.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面：</strong>Q1营收和EPS均超预期，但净利润同比降45%，说明在100美元以上油价环境下盈利才能真正恢复。若WTI在Q2维持在100美元以上，埃克森Q2盈利有望大幅改善。43年连续增加股息、200亿美元年度回购提供下行保护。<strong>技术面：</strong>分析师平均目标价166美元，较当前154美元高约8%。<strong>核心风险：</strong>若伊朗局势外交解决，油价回落至85美元以下，能源股将面临大幅回调。霍尔木兹产量风险（每日75万桶）是Q2最大不确定因素。
+    </div>
+  </div>
+</div>
+
+<!-- AMD CARD -->
+<div class="stock-card" id="AMD">
+  <div class="stock-header">
+    <div>
+      <div class="stock-name">AMD · Advanced Micro Devices, Inc.</div>
+      <div class="stock-name-cn">超微半导体 — 全球领先AI芯片与处理器设计公司，英伟达在AI GPU领域的主要竞争对手</div>
+      <div class="sig-meta">
+        <span class="sector-pill s-tech">TECH · AI SEMICONDUCTORS</span>
+        <span class="score-pill">Market cap: ~$552B</span>
+        <span class="score-pill">Data as of: May 4, 2026 close; Q4 2025 earnings (most recent reported)</span>
+      </div>
+    </div>
+    <div class="stock-price-block">
+      <div class="stock-price">$341.54</div>
+      <div class="stock-price-chg dn">−$19.00 (−5.27%) May 4</div>
+    </div>
+  </div>
+
+  <div class="why-now">
+    <div class="why-now-label">Why in focus today 今日关注原因</div>
+    <div class="why-now-text">
+      AMD reports Q1 2026 earnings after the US market close today (May 5). This is the most anticipated earnings event of the week — AMD's AI GPU (MI300 series) performance will confirm or challenge the AI infrastructure spending cycle thesis. The stock fell 5.27% on May 4 in the broader market selloff, creating a potential setup for a sharp post-earnings move. Analysts expect $9.84B in revenue (+33% YoY) and EPS of $1.29–$1.30. AMD's results will also directly benchmark against Palantir's blowout — both are AI infrastructure plays, but AMD is the hardware layer.
+    </div>
+  </div>
+  <div class="cn-summary" style="margin-bottom:14px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      超微半导体今晚发布Q1财报，是本周最重要的科技数据点。公司AI芯片（MI300系列）销售情况将验证AI基础设施支出周期是否依然强劲。昨日股价随大盘下跌5.27%，为财报后的反弹或下跌提供了动力。预期营收98.4亿美元（增33%），EPS约1.29美元。这也是英伟达重要竞争对手的关键业绩检验。
+    </div>
+  </div>
+
+  <div class="stock-divider"></div>
+
+  <div class="ta-title">Fundamentals 基本面指标 — Q4 2025 (most recent reported, Feb 2026) · Q1 2026 reports today</div>
+  <div class="fund-grid">
+    <div class="fund-cell">
+      <div class="fund-key">Trailing P/E 市盈率</div>
+      <div class="fund-val">n/a</div>
+      <div class="fund-sub">unconfirmed · high (~60-70x est.)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Fwd P/E (Q1 ann.)</div>
+      <div class="fund-val">~66x</div>
+      <div class="fund-sub">approx. ($341 / ~$5.20 ann. EPS)</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Revenue Q4 2025</div>
+      <div class="fund-val">$10.27B</div>
+      <div class="fund-sub">beat consensus · prior quarter</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">EPS Q4 2025</div>
+      <div class="fund-val">$1.53</div>
+      <div class="fund-sub">beat consensus · prior quarter</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Q1 2026 Guidance</div>
+      <div class="fund-val">~$9.8B</div>
+      <div class="fund-sub">+/− $300M · consensus $9.84B</div>
+    </div>
+    <div class="fund-cell">
+      <div class="fund-key">Gross Margin Guided</div>
+      <div class="fund-val">~54–55%</div>
+      <div class="fund-sub">Q1 2026 non-GAAP guided</div>
+    </div>
+  </div>
+  <p class="data-caveat">
+    Fundamental data sourced from: MarketBeat, TipRanks, Computing.net, Alphastreet (preview data May 4, 2026). Q4 2025 = most recently reported quarter. Q1 2026 results not yet published — reporting tonight after US close. Forward P/E is approximate.
+  </p>
+
+  <div class="ta-block">
+    <div class="ta-title">Technical analysis 技术面分析</div>
+    <div class="ta-row">
+      <span class="ta-label">52-week range 年价格区间</span>
+      <div class="range-bar-wrap">
+        <div class="range-bar-track">
+          <div class="range-bar-fill" style="width:92%;"></div>
+          <div class="range-bar-dot" style="left:92%;"></div>
+        </div>
+        <div class="range-labels">
+          <span>$96.88 (52W low)</span>
+          <span>Now $341.54</span>
+          <span>$362.79 (52W high)</span>
+        </div>
+      </div>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">50-day MA 50日均线</span>
+      <span class="ta-value">n/a — unconfirmed · stock near 52-week high, likely above 50-day MA</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">200-day MA 200日均线</span>
+      <span class="ta-value">Above — confirmed (search results note stock trading above 200-day SMA)</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">RSI (14-day) 相对强弱指数</span>
+      <span class="ta-value">n/a — unconfirmed · near 52-week high suggests elevated RSI; −5.27% on May 4 may have eased overbought conditions</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Trend 近期趋势</span>
+      <span class="ta-value">Strong uptrend 强劲上升趋势 — stock near 52-week high ($362.79); pulled back 5.3% on May 4 with broader market; earnings tonight could re-accelerate or reverse</span>
+    </div>
+    <div class="ta-row">
+      <span class="ta-label">Key levels 关键价位</span>
+      <span class="ta-value">Support 支撑: ~$320–325 (prior consolidation) · Resistance 阻力: $362.79 (52W high) · Above: new all-time high territory</span>
+    </div>
+    <div class="ta-signals">
+      <span class="ta-pill ta-bull">At 92% of 52W Range 近52周高点</span>
+      <span class="ta-pill ta-bull">Above 200-Day MA 站上200日均线</span>
+      <span class="ta-pill ta-warn">Earnings Binary Event 财报二元事件</span>
+      <span class="ta-pill ta-warn">China Export Controls Risk 出口管制风险</span>
+    </div>
+  </div>
+
+  <p class="stock-synthesis">
+    AMD enters tonight's earnings at 92% of its 52-week range, trading near all-time highs — a position that historically amplifies both post-earnings gains and losses. The pullback to $341.54 (−5.3%) on May 4 partially reset overbought conditions and may represent an attractive entry for those expecting a beat, or a leading indicator of distribution for those expecting a miss. The prior quarter (Q4 2025: $10.27B revenue, $1.53 EPS, both beats) and the guidance of ~$9.8B for Q1 (which the consensus of $9.84B essentially confirms) suggest the base case is another solid quarter. The critical variable is not just whether AMD meets revenue estimates, but whether management articulates a clear trajectory for MI300-series AI GPU revenue into H2 2026 — particularly given China export control headwinds that could reduce the addressable market. The Palantir earnings (AI software) already confirmed AI demand is real; AMD (AI hardware) results tonight will test whether that demand is translating to silicon at the pace markets expect.
+  </p>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合分析</div>
+    <div class="cn-text">
+      <strong>基本面：</strong>上一季（2025 Q4）营收103亿美元超预期，今晚Q1指引约98亿美元（增33%），市场共识认为大概率达标。关键看点是MI300系列AI GPU的具体销售额和H2展望，以及对华出口管制的量化影响。<strong>技术面：</strong>股价处于52周区间92%高位，昨日随大盘跌5.3%，为超跌后反弹提供空间。站于200日均线之上，趋势依然强劲。<strong>关键风险：</strong>估值约66倍前瞻市盈率，财报若低于预期或给出谨慎指引，可能引发10-15%以上的急跌。帕兰提尔（AI软件）已验证需求侧；AMD（AI硬件）今晚验证供给侧——两者共同构成AI基础设施投资逻辑的完整拼图。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 数据来源</div>
+<div class="sources mb16">
+  CNBC — <a href="https://www.cnbc.com/2026/05/04/palantir-pltr-q1-earnings-report-2026.html">Palantir Q1 2026 earnings report</a><br>
+  StockTitan / SEC 8-K — <a href="https://www.stocktitan.net/sec-filings/PLTR/8-k-palantir-technologies-inc-reports-material-event-e4ff3e917756.html">Palantir 8-K: 85% revenue growth</a><br>
+  Shacknews — <a href="https://www.shacknews.com/article/148990/palantir-pltr-q1-2026-earnings-report">Palantir Q1 2026 beat EPS and revenue</a><br>
+  247 Wall St. — <a href="https://247wallst.com/investing/2026/05/04/stock-market-live-may-4-2026-sp-500-spy-sinks-on-iran-uncertainty-again/">Stock Market Live May 4, 2026 (index data)</a><br>
+  Al Jazeera — <a href="https://www.aljazeera.com/news/liveblog/2026/5/4/iran-war-live-tehran-says-trumps-hormuz-mission-violates-ceasefire">Iran war live: UAE intercepts missiles (May 4)</a><br>
+  CNBC — <a href="https://www.cnbc.com/amp/2026/05/04/strait-hormuz-gas-price-oil-shock-recession-risk-economy-iran-us-war.html">Recession risk from Hormuz oil shock</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/01/exxon-xom-chevron-cvx-q1-2026-earnings.html">Exxon and Chevron Q1 2026 earnings (May 1)</a><br>
+  TIKR Blog — <a href="https://www.tikr.com/blog/exxonmobil-reports-q1-2026-earnings-amid-hormuz-crisis-heres-what-the-numbers-mean-for-investors">ExxonMobil Q1 2026 — Hormuz crisis context</a><br>
+  Federal Reserve — <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a.htm">FOMC statement April 29, 2026</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/trump-fed-nominee-kevin-warsh-senate-approval.html">Kevin Warsh Senate Banking Committee approval</a><br>
+  Al Jazeera — <a href="https://www.aljazeera.com/economy/2026/4/29/senate-panel-advances-kevin-warshs-nomination-for-us-fed-chair">Kevin Warsh Senate panel vote</a><br>
+  Computing.net — <a href="https://computing.net/news/stocks/amd-q1-2026-earnings-preview-analysts-forecast-33-revenue-jump-as-ai-momentum-builds/">AMD Q1 2026 earnings preview</a><br>
+  Alphastreet — <a href="https://news.alphastreet.com/amd-amd-enters-q1-2026-earnings-with-data-center-momentum-facing-a-higher-bar/">AMD data center momentum preview</a><br>
+  CapitalStreetFX — Gold trade setup May 4, 2026 (gold price data)<br>
+  Yahoo Finance / 247 Wall St. — VIX ~18.29 (+7.65%), Russell 2000 2,796 (−0.60%) May 4 close data
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Stock Deep Dive · 股票深度分析<br>
+  Tuesday 5 May 2026 · AM SGT (09:03) · Companion to Daily Market Intelligence<br>
+  ← <a href="market_brief_20260505_AM.html" style="color:#185FA5;">Back to main briefing 返回每日简报</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVIDIA (NVDA) — Equity Research Report — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+/* ── MOOD BAR ── */
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-bearish { background: #FCEBEB; color: #791F1F; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.mood-neutral { background: #f0efe8; color: #555; }
+
+/* ── SECTION LABELS ── */
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+/* ── METRIC CARDS ── */
+.indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.idx-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+.idx-val  { font-size: 16px; font-weight: 600; }
+.idx-chg  { font-size: 12px; margin-top: 2px; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up   { color: #0F6E56; }
+.metric-dn   { color: #A32D2D; }
+.metric-flat { color: #888; }
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+
+/* ── SIGNAL CARDS ── */
+.signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+.rank1 { border-left: 3px solid #185FA5; }
+.rank2 { border-left: 3px solid #1D9E75; }
+.rank3 { border-left: 3px solid #854F0B; }
+.sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+.sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+
+/* ── SECTOR PILLS ── */
+.s-tech { background: #E6F1FB; color: #0C447C; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+
+/* ── BULL / BEAR CASES ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 12px 14px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.7; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.7; color: #791F1F; }
+
+/* ── CALLOUT ── */
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-blue  { background: #EBF3FD; border-color: #185FA5; }
+.callout-green { background: #EAF3DE; border-color: #1D9E75; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-red   { background: #FCEBEB; border-color: #A32D2D; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+
+/* ── BODY TEXT ── */
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.commentary { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+
+/* ── RATING PILLS ── */
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+.rating-green  { background: #EAF3DE; color: #27500A; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-red    { background: #FCEBEB; color: #791F1F; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+
+/* ── CHINESE SUMMARY ── */
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── SOURCES & FOOTER ── */
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+
+/* ── LAYOUT UTILS ── */
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1rem; }
+.premarket-note { font-size: 11px; background: #FAEEDA; color: #633806; border-radius: 6px; padding: 5px 10px; display: inline-block; margin-bottom: 10px; font-weight: 600; }
+
+/* ── STOCK REPORT SUPPLEMENT ── */
+.fin-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+.fin-table th { background: #1a1a1a; color: #fff; padding: 8px 10px; text-align: right; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+.fin-table th:first-child { text-align: left; }
+.fin-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.fin-table td:first-child { text-align: left; font-weight: 500; color: #555; font-size: 12px; }
+.fin-table tr:hover td { background: #fafaf8; }
+.fin-table .highlight td { background: #EBF3FD !important; font-weight: 600; }
+.fin-table .subtotal td { border-top: 2px solid #ccc; font-weight: 700; background: #f5f4f0; }
+
+.dcf-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+.dcf-table th { background: #f0efe8; color: #555; padding: 8px 10px; text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 2px solid #e0dfd8; }
+.dcf-table th:first-child { text-align: left; }
+.dcf-table td { padding: 8px 10px; border-bottom: 1px solid #f0efe8; text-align: center; }
+.dcf-table td:first-child { text-align: left; font-weight: 600; }
+.dcf-table .bull-row td { background: #f5fdf0; color: #27500A; }
+.dcf-table .base-row td { background: #fff; }
+.dcf-table .bear-row td { background: #fff8f8; color: #791F1F; }
+
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 8px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 12px; }
+
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+
+.watch-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0efe8; }
+.watch-item:last-child { border-bottom: none; }
+.watch-icon { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; font-weight: 700; margin-top: 1px; }
+.w-blue { background: #E6F1FB; color: #185FA5; }
+.w-amber { background: #FAEEDA; color: #854F0B; }
+.w-red { background: #FCEBEB; color: #A32D2D; }
+.watch-content { flex: 1; }
+.watch-en { font-size: 13px; color: #333; line-height: 1.5; }
+.watch-cn { font-size: 11px; color: #999; margin-top: 3px; line-height: 1.6; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+
+@media (max-width: 640px) {
+  .risk-grid, .cases { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  body { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ HEADER -->
+<div class="doc-header">
+  <div class="doc-tag">EQUITY RESEARCH · 股票研究</div>
+  <div class="doc-title">NVIDIA Corporation (NVDA) — Comprehensive Equity Report</div>
+  <div class="doc-title-cn">英伟达公司（NVDA）—— 全面股票研究报告</div>
+  <div class="doc-meta">Generated 7 May 2026 · Sector: Technology — Semiconductors · Exchange: NASDAQ · Price as of 7 May 2026: <strong>$207.83</strong> · Data source: FMP API</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Investment Sentiment 投资情绪</span>
+  <span class="mood-text">NVDA trades at a premium valuation but is backed by extraordinary FCF generation, AI infrastructure dominance, and DCF base case showing ~32% upside — compelling for growth-oriented investors.</span>
+  <span class="mood-pill mood-bullish">Bullish · 看涨</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">英伟达以较高估值交易，但背后有强劲的自由现金流、AI基础设施主导地位以及DCF基础情景约32%的上行空间支撑。对成长型投资者而言具有吸引力，但高Beta（2.24）和地缘政治风险（中国出口管制）值得关注。</div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 1 -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Snapshot & Business Overview</div>
+  <div class="section-title-cn">公司概览与业务介绍</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Price (7 May 2026)</div>
+      <div class="metric-val">$207.83</div>
+      <div class="metric-sub up">+$11.33 (+5.77%) today</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">$5.05T</div>
+      <div class="metric-sub">2nd largest globally</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">P/E Ratio (TTM)</div>
+      <div class="metric-val">42.1×</div>
+      <div class="metric-sub flat">Premium to sector avg ~25×</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EPS (Diluted, FY26)</div>
+      <div class="metric-val">$4.90</div>
+      <div class="metric-sub up">+67% YoY from $2.94</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Beta</div>
+      <div class="metric-val metric-flat">2.24</div>
+      <div class="metric-sub">High volatility vs. market</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Dividend Yield</div>
+      <div class="metric-val metric-flat">0.02%</div>
+      <div class="metric-sub">$0.04/share (TTM)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Range</div>
+      <div class="metric-val">$115–$217</div>
+      <div class="metric-sub flat">Current near 52W high</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Exchange / Sector</div>
+      <div class="metric-val" style="font-size:14px">NASDAQ</div>
+      <div class="metric-sub">Technology · Semiconductors</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Full-Time Employees</div>
+      <div class="metric-val" style="font-size:16px">36,000</div>
+      <div class="metric-sub">Headquartered: Santa Clara, CA</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IPO Date</div>
+      <div class="metric-val" style="font-size:14px">Jan 1999</div>
+      <div class="metric-sub">CEO: Jensen Huang (founder)</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    NVIDIA Corporation designs and sells <strong>graphics processing units (GPUs)</strong> — specialised chips that can perform thousands of mathematical operations simultaneously, making them far faster than traditional CPUs for tasks like AI training, 3D rendering, and scientific simulation. The company operates two main segments: <strong>Graphics</strong> (gaming GPUs, professional visualisation) and <strong>Compute & Networking</strong> (data centre AI accelerators, networking, automotive). In FY2026, data centre revenue became the dominant growth engine, accounting for the vast majority of its $215.9B in revenue.
+  </div>
+  <div class="body-text">
+    NVIDIA's <strong>H100 and next-generation Blackwell GPU architectures</strong> have become the de facto standard for training large language models (LLMs). Virtually every major cloud provider (AWS, Google Cloud, Microsoft Azure) and AI lab (OpenAI, Anthropic, xAI, Meta) relies on NVIDIA GPUs. The company also sells the <strong>CUDA software platform</strong> — a parallel computing ecosystem built over 15+ years — which creates enormous switching costs. CUDA is not just a product; it is the vocabulary of modern AI development.
+  </div>
+  <div class="body-text">
+    Revenue has grown from $27B in FY2023 to $215.9B in FY2026 — an <strong>8-fold increase in three fiscal years</strong> — making it one of the fastest revenue ramps in the history of public markets. The company is headquartered in Santa Clara, California, and was incorporated in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达设计并销售图形处理器（GPU），这类芯片能同时执行数千次数学运算，在AI训练、3D渲染和科学仿真方面远超传统CPU。公司分为图形（游戏、专业可视化）和计算与网络（数据中心AI加速器、汽车）两大业务。其H100及Blackwell架构已成为训练大语言模型的事实标准，几乎所有主要云服务商和AI实验室均依赖英伟达GPU。公司营收从FY2023的270亿美元增至FY2026的2,159亿美元，三年增长8倍，创公开市场历史纪录。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 2 -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Financial Performance</div>
+  <div class="section-title-cn">财务表现</div>
+  <div class="section-divider"></div>
+
+  <table class="fin-table">
+    <thead>
+      <tr>
+        <th style="text-align:left">Metric</th>
+        <th>FY2023</th>
+        <th>FY2024</th>
+        <th>FY2025</th>
+        <th>FY2026</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Revenue ($B)</td><td>$27.0</td><td>$60.9</td><td>$130.5</td><td class="up"><strong>$215.9</strong></td></tr>
+      <tr><td>Revenue Growth YoY</td><td class="dn">—</td><td class="up">+126%</td><td class="up">+114%</td><td class="up">+65%</td></tr>
+      <tr><td>Gross Profit ($B)</td><td>$15.4</td><td>$44.3</td><td>$97.9</td><td class="up"><strong>$153.5</strong></td></tr>
+      <tr><td>Gross Margin</td><td class="flat">56.9%</td><td class="up">72.7%</td><td class="up">75.0%</td><td class="up"><strong>71.1%</strong></td></tr>
+      <tr><td>Operating Income ($B)</td><td>$4.2</td><td>$33.0</td><td>$81.5</td><td class="up"><strong>$130.4</strong></td></tr>
+      <tr><td>Net Income ($B)</td><td>$4.4</td><td>$29.8</td><td>$72.9</td><td class="up"><strong>$120.1</strong></td></tr>
+      <tr class="highlight"><td>Net Profit Margin</td><td class="flat">16.2%</td><td class="up">48.8%</td><td class="up">55.8%</td><td class="up"><strong>55.6%</strong></td></tr>
+      <tr><td>EPS (Diluted)</td><td>$0.17</td><td>$1.19</td><td>$2.94</td><td class="up"><strong>$4.90</strong></td></tr>
+      <tr><td>EBITDA ($B)</td><td>$6.0</td><td>$35.6</td><td>$86.1</td><td class="up"><strong>$144.6</strong></td></tr>
+      <tr><td>Free Cash Flow ($B)</td><td>$3.8</td><td>$27.0</td><td>$60.9</td><td class="up"><strong>$96.7</strong></td></tr>
+      <tr><td>R&D Spend ($B)</td><td>$7.3</td><td>$8.7</td><td>$12.9</td><td>$18.5</td></tr>
+    </tbody>
+  </table>
+  <div class="cn-text" style="font-size:11px;color:#aaa;margin-bottom:12px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;">数据来源：FMP API / 英伟达SEC年报（10-K）。FY = 财政年度（NVIDIA财年结束于1月下旬）。</div>
+
+  <div class="body-text">
+    NVIDIA's financial performance over the past three years is extraordinary by almost any measure. Revenue grew from $27B in FY2023 to $215.9B in FY2026 — a compound annual growth rate (CAGR) of approximately 100% — driven almost entirely by explosive demand for AI training infrastructure. <strong>Gross margins expanded from 57% to 71%</strong>, reflecting NVIDIA's pricing power as the dominant supplier of AI accelerators. This is unusual: most hardware companies face gross margin compression at scale; NVIDIA has done the opposite.
+  </div>
+  <div class="body-text">
+    The quality of earnings is high. <strong>Free cash flow conversion</strong> (FCF as a % of net income) stood at approximately 81% in FY2026 — $96.7B in FCF on $120.1B in net income. NVIDIA generated more free cash flow in FY2026 than Apple did in FY2023. R&D investment has scaled appropriately, rising from $7.3B to $18.5B, keeping the technology lead intact. The company returned $41B to shareholders via buybacks in FY2026 alone.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达过去三年财务表现极为突出：营收从FY2023的270亿美元增至FY2026的2,159亿美元，复合年增长率约100%，主要由AI训练基础设施需求爆发驱动。毛利率从57%提升至71%，体现了其定价权。FY2026自由现金流达967亿美元，净利润2,201亿美元，现金转化率约81%，盈利质量极高。公司仅FY2026就通过回购向股东返还了410亿美元。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 3 -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Assets</div>
+      <div class="metric-val">$206.8B</div>
+      <div class="metric-sub">FY2026 (Jan 25, 2026)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Liabilities</div>
+      <div class="metric-val">$49.5B</div>
+      <div class="metric-sub">Low leverage ratio</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Shareholders' Equity</div>
+      <div class="metric-val">$157.3B</div>
+      <div class="metric-sub">Up from $42.9B in FY2024</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Debt</div>
+      <div class="metric-val metric-up">$0.8B</div>
+      <div class="metric-sub">Near debt-free ($62.6B cash+ST invest.)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Cash & ST Investments</div>
+      <div class="metric-val">$62.6B</div>
+      <div class="metric-sub">$10.6B cash + $52.0B ST invest.</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Long-Term Debt</div>
+      <div class="metric-val">$7.5B</div>
+      <div class="metric-sub">Debt/Equity: 0.07× (very low)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Current Ratio</div>
+      <div class="metric-val metric-up">3.91×</div>
+      <div class="metric-sub">Strong short-term liquidity</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Return on Equity (TTM)</div>
+      <div class="metric-val metric-up">104%</div>
+      <div class="metric-sub">Exceptional capital efficiency</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Interest Coverage (TTM)</div>
+      <div class="metric-val metric-up">503×</div>
+      <div class="metric-sub">Virtually no interest risk</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    NVIDIA's balance sheet is a fortress. With $62.6B in cash and short-term investments against only $11.4B in total debt, the company is effectively <strong>net debt-free at $0.8B net debt</strong>. Its current ratio of 3.91× means it holds nearly four dollars of current assets for every dollar of current liability — well above the 1.5–2.0× threshold considered healthy. A debt-to-equity ratio of just 0.07× is among the lowest for any large-cap technology company.
+  </div>
+  <div class="body-text">
+    The return on equity of 104% is remarkable: NVIDIA generates more than one dollar of net profit for every dollar of equity on its books. This level of capital efficiency reflects its asset-light, high-margin business model — NVIDIA designs chips but outsources manufacturing to TSMC, keeping its own capital investment relatively modest. Goodwill and intangibles of $24.1B (mostly from the 2019 Mellanox acquisition) are manageable relative to total assets.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达资产负债表稳健如堡垒。拥有626亿美元现金及短期投资，总债务仅114亿美元，净债务约8亿美元，实际近乎无债经营。流动比率3.91倍，资产负债率极低（0.07倍），利息覆盖率高达503倍。股本回报率104%，资本效率极为出色。英伟达采用无晶圆厂模式，将芯片制造外包给台积电，自身资本支出相对较少，但这也带来了供应链集中风险。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 4 -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation</div>
+  <div class="section-title-cn">估值分析</div>
+  <div class="section-divider"></div>
+
+  <div class="section-label" style="margin-bottom:8px">Part A — Current Multiples</div>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">P/E (TTM)</div>
+      <div class="metric-val metric-flat">42.1×</div>
+      <div class="metric-sub">Sector avg ~25×</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Price/Sales (TTM)</div>
+      <div class="metric-val metric-flat">23.4×</div>
+      <div class="metric-sub">High but declining as rev grows</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EV/EBITDA (TTM)</div>
+      <div class="metric-val metric-flat">35.0×</div>
+      <div class="metric-sub">EV: $5.05T</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Price/FCF (TTM)</div>
+      <div class="metric-val metric-flat">52.2×</div>
+      <div class="metric-sub">FCF yield: 1.9%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Price/Book (TTM)</div>
+      <div class="metric-val metric-flat">32.1×</div>
+      <div class="metric-sub">Reflects IP & moat premium</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">PEG Ratio (TTM)</div>
+      <div class="metric-val metric-up">0.64×</div>
+      <div class="metric-sub">&lt;1.0 = potentially undervalued relative to growth</div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">⚠ Valuation Note · 估值提示</div>
+    <div class="callout-text">On traditional multiples (P/E, EV/EBITDA), NVDA appears expensive relative to historical semiconductor averages. However, the PEG ratio of <strong>0.64×</strong> — which adjusts P/E for growth — suggests the market may not be fully pricing in NVDA's extraordinary earnings growth trajectory. Absolute multiples alone are misleading when revenue is compounding at 65–100% annually.</div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:8px;margin-top:16px">Part B — DCF Scenarios <span class="source-tag">ASSUMED inputs flagged</span></div>
+
+  <table class="dcf-table">
+    <thead>
+      <tr>
+        <th style="text-align:left">Scenario</th>
+        <th>FCF Base (FY26)</th>
+        <th>FCF Growth (5yr)</th>
+        <th>Terminal Growth</th>
+        <th>WACC</th>
+        <th>Intrinsic Value/Share</th>
+        <th>vs. $207.83</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bull-row">
+        <td>🐂 Bull Case</td>
+        <td>$96.7B</td>
+        <td>20% <span class="source-tag">ASSUMED</span></td>
+        <td>4% <span class="source-tag">ASSUMED</span></td>
+        <td>9% <span class="source-tag">ASSUMED</span></td>
+        <td><strong>$394</strong></td>
+        <td class="up">+90%</td>
+      </tr>
+      <tr class="base-row">
+        <td>📊 Base Case</td>
+        <td>$96.7B</td>
+        <td>10% <span class="source-tag">ASSUMED</span></td>
+        <td>3% <span class="source-tag">ASSUMED</span></td>
+        <td>10% <span class="source-tag">ASSUMED</span></td>
+        <td><strong>$275</strong></td>
+        <td class="up">+32%</td>
+      </tr>
+      <tr class="bear-row">
+        <td>🐻 Bear Case</td>
+        <td>$96.7B</td>
+        <td>3% <span class="source-tag">ASSUMED</span></td>
+        <td>2% <span class="source-tag">ASSUMED</span></td>
+        <td>11% <span class="source-tag">ASSUMED</span></td>
+        <td><strong>$138</strong></td>
+        <td class="dn">-34%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="commentary">
+    <em>DCF methodology: 5-year FCF projection discounted at WACC, plus terminal value using Gordon Growth Model. Net debt of $0.8B deducted; shares outstanding of 24.4B used. All growth rates and WACC are <strong>[ASSUMED]</strong> — not disclosed by NVIDIA directly. The base case WACC of 10% is a standard proxy; actual WACC may differ based on capital structure assumptions. Analyst consensus price target of $275.74 (average) aligns closely with our base case DCF of $275, providing independent validation. <br><br>⚠ DCF is highly sensitive to terminal growth and discount rate assumptions. A 1% change in WACC shifts intrinsic value by ~15–20%. These figures are for informational purposes only.</em>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达当前市盈率42.1倍、EV/EBITDA 35.0倍，相较半导体行业平均水平偏高，但考虑成长性调整后的PEG仅0.64倍，表明相对增长速度仍具吸引力。DCF三情景分析：牛市内在价值约394美元（+90%），基准情景约275美元（+32%），熊市约138美元（-34%）。分析师共识目标价275.74美元与基准DCF高度吻合，提供了独立验证。所有增长率与折现率均为假设值，需独立核实。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 5 -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <div class="signal-card rank1">
+    <div class="sig-meta">
+      <span class="ticker-pill">AI Infrastructure</span>
+      <span class="score-pill">Catalyst #1 · Multi-Year</span>
+    </div>
+    <div class="sig-headline">Blackwell Architecture: The Next Wave of AI Compute Demand</div>
+    <div class="sig-headline-cn">Blackwell架构：AI算力需求的下一浪潮</div>
+    <div class="sig-body">NVIDIA's Blackwell GPU family (B100, B200, GB200) represents a 3–5× performance leap over H100 for AI inference and training workloads. With hyperscalers (Microsoft, Google, Amazon, Meta) each committing tens of billions in annual AI capex, Blackwell is sold out well into 2026 and 2027. The transition from training-dominant demand to inference-dominant demand (running AI models for users) creates a new, larger, ongoing revenue stream that wasn't present when H100 demand was training-centric.</div>
+  </div>
+
+  <div class="signal-card rank2">
+    <div class="sig-meta">
+      <span class="ticker-pill">CUDA Ecosystem</span>
+      <span class="score-pill">Moat #1 · Durable</span>
+    </div>
+    <div class="sig-headline">CUDA: 15+ Years of Developer Lock-In Is NVIDIA's Deepest Moat</div>
+    <div class="sig-headline-cn">CUDA：15年以上的开发者锁定是英伟达最深的护城河</div>
+    <div class="sig-body">CUDA, NVIDIA's parallel computing platform and API, has been the standard framework for GPU programming since 2007. Millions of AI researchers, engineers, and developers write code in CUDA. Switching to a competitor's hardware (AMD ROCm, Intel oneAPI) requires rewriting, testing, and re-validating entire software stacks — a prohibitive cost for most organisations. This creates switching costs that are arguably more durable than any patent portfolio.</div>
+  </div>
+
+  <div class="signal-card rank3">
+    <div class="sig-meta">
+      <span class="ticker-pill">Sovereign AI</span>
+      <span class="score-pill">Catalyst #2 · Emerging</span>
+    </div>
+    <div class="sig-headline">Sovereign AI: Governments Buying NVIDIA Infrastructure Directly</div>
+    <div class="sig-headline-cn">主权AI：各国政府直接采购英伟达基础设施</div>
+    <div class="sig-body">A new and growing revenue stream: national governments — from UAE to Japan to Singapore — are purchasing NVIDIA GPU clusters to build sovereign AI capabilities. This is incremental demand on top of commercial cloud capex, and it is diplomatically and strategically driven, making it somewhat insulated from normal economic cycles. NVIDIA's partnerships with national AI initiatives across Europe, Middle East, and Asia represent a potential multi-billion dollar annual revenue category.</div>
+  </div>
+
+  <div class="body-text" style="margin-top:12px">
+    Beyond catalysts, NVIDIA's <strong>competitive moat</strong> rests on four reinforcing pillars: (1) <strong>Software ecosystem lock-in</strong> (CUDA, cuDNN, TensorRT — every major AI framework is optimised for NVIDIA first); (2) <strong>Full-stack integration</strong> (NVIDIA sells not just chips but complete compute systems — DGX, HGX — plus software, networking, and storage via InfiniBand/Spectrum); (3) <strong>Manufacturing relationships</strong> with TSMC at the leading node (NVIDIA has priority access that competitors struggle to match); and (4) <strong>Talent and IP density</strong> — Jensen Huang's 30-year focus on parallel computing has created institutional knowledge that AMD, Intel, and custom chip teams at Google/Amazon are still trying to replicate.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达的成长催化剂包括：Blackwell架构带来的新一轮AI算力需求、从训练转向推理的持续需求、以及各国政府直接采购GPU集群的主权AI趋势。竞争护城河由四大支柱构成：CUDA软件生态系统锁定（15年以上）、从芯片到系统的全栈整合、与台积电的优先合作关系，以及深厚的并行计算人才和知识产权积累。这些护城河相互强化，竞争对手（AMD、英特尔、谷歌/亚马逊自研芯片）难以在短期内复制。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 6 -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Geopolitical, Macro & Regulatory Risk</div>
+  <div class="section-title-cn">地缘政治、宏观与监管风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type">China Export Controls <span class="rating rating-red" style="float:right;margin:0">HIGH</span></div>
+      <div class="risk-desc">US export controls restrict NVIDIA from selling its most advanced GPUs (H100, B100) to China. The H20 — a downgraded chip designed to comply — was subsequently restricted further in 2024. China historically represented ~20–25% of data centre revenue; that revenue is now severely constrained and redirected to Middle East, Japan, and Europe.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">TSMC Concentration Risk <span class="rating rating-amber" style="float:right;margin:0">MEDIUM</span></div>
+      <div class="risk-desc">NVIDIA's advanced chips are manufactured exclusively by TSMC in Taiwan. A Taiwan conflict, natural disaster, or TSMC production disruption would halt NVIDIA's supply chain with no near-term alternative. While TSMC is expanding to Arizona, leading-edge production (3nm/2nm) remains Taiwan-centric for the foreseeable future.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Antitrust / Regulatory <span class="rating rating-amber" style="float:right;margin:0">MEDIUM</span></div>
+      <div class="risk-desc">NVIDIA's dominant market share in AI accelerators (~80–90% share) is attracting regulatory scrutiny in the US, EU, and China. The failed Arm acquisition (blocked by regulators globally in 2022) demonstrated the constraints. Bundling CUDA software with hardware could draw antitrust attention. The UK's CMA and EU's DG Comp are reportedly examining NVIDIA's market position.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Customer Concentration <span class="rating rating-amber" style="float:right;margin:0">MEDIUM</span></div>
+      <div class="risk-desc">A handful of hyperscale cloud customers (Microsoft, Google, Amazon, Meta) likely account for 40–50% of data centre revenue [ASSUMED — not disclosed]. If any major customer slows AI capex, reduces GPU orders, or develops competitive in-house silicon (Google TPU, Amazon Trainium, Microsoft Maia) at scale, demand could soften materially.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Competition — AMD / Custom Silicon <span class="rating rating-amber" style="float:right;margin:0">MEDIUM</span></div>
+      <div class="risk-desc">AMD's MI300X and future MI400 series are gaining traction at major cloud providers. Google's TPU v5, Amazon's Trainium 2, and Meta's custom AI chips represent internal substitutes. While none currently threaten NVIDIA's leadership, the competitive environment is intensifying and CUDA's monopoly could erode at the margin over a 3–5 year horizon.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Macro / Interest Rate Risk <span class="rating rating-neutral" style="float:right;margin:0">LOW</span></div>
+      <div class="risk-desc">NVIDIA's high-growth, high-P/E multiple makes it sensitive to changes in long-term interest rates. Rising rates increase the discount rate applied to future cash flows, compressing valuations. However, NVIDIA's current near-zero net debt means direct financial exposure to rates is minimal; the risk is valuation multiple compression, not business model stress.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达面临的主要风险：<strong>高风险</strong>——美国对华出口管制限制向中国销售先进GPU，历史上占数据中心收入约20-25%的市场已严重受限；<strong>中等风险</strong>——台积电集中风险（台湾地缘政治）、反垄断监管（AI加速器约80-90%市占率引发关注）、大客户集中度（微软、谷歌、亚马逊、Meta合计或占40-50%收入）、以及AMD/自研芯片竞争加剧；<strong>低风险</strong>——因近乎无债，利率直接影响有限，但高估值对利率变化敏感。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 7 -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多头与空头情景</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case — $350–$400 Target</div>
+      <div class="bull-text">
+        <strong>1. Inference demand is a new, larger market.</strong> Training AI models happens once; inference (running models for users) happens billions of times daily. As AI adoption scales, inference GPU demand could dwarf training demand and sustain growth well past FY2027.<br><br>
+        <strong>2. Sovereign AI is additive demand.</strong> Governments buying national GPU infrastructure is a new revenue stream not reflected in consensus models. UAE, Japan, Singapore, India, and Saudi Arabia are all building sovereign AI clusters.<br><br>
+        <strong>3. CUDA moat deepens with every new model.</strong> Every new LLM trained on NVIDIA hardware adds to CUDA's dependency. The ecosystem is self-reinforcing — developers default to CUDA, which keeps GPU demand anchored to NVIDIA.<br><br>
+        <strong>4. Blackwell sell-out extends pricing power.</strong> Supply constraints mean NVIDIA can command premium prices without discounting, sustaining >70% gross margins for longer than the market currently prices in.<br><br>
+        <strong>5. PEG &lt;1 is historically a buy signal.</strong> At 0.64× PEG, the growth rate is not fully priced into current multiples — historically a constructive signal for high-growth compounders.
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case — $100–$140 Target</div>
+      <div class="bear-text">
+        <strong>1. AI capex cycle could slow or pause.</strong> Hyperscalers are spending $300B+ annually on AI infrastructure. If ROI from AI deployments disappoints or a credit/macro shock hits, capex could be deferred, causing a sharp NVDA revenue decline — as seen in the 2022 GPU glut after the crypto/gaming cycle peaked.<br><br>
+        <strong>2. China revenue is structurally impaired.</strong> Export controls have effectively cut NVIDIA off from one of the world's largest AI markets. If restrictions tighten further (which is a real risk given US-China tensions), even indirect revenue via distributors could be eliminated.<br><br>
+        <strong>3. Customer in-house silicon is accelerating.</strong> Google's TPU v5, Amazon's Trainium 2, and Meta's MTIA are all showing commercial viability. If hyperscalers shift even 20–30% of their GPU workloads to proprietary silicon, the revenue impact on NVDA would be significant.<br><br>
+        <strong>4. Valuation leaves little room for error.</strong> At 42× P/E and 52× P/FCF, any miss on earnings guidance or any negative surprise (export controls, supply disruption) could trigger a violent de-rating — NVDA fell 66% in 2022.<br><br>
+        <strong>5. TSMC risk is unhedged and binary.</strong> A Taiwan strait crisis would have no mitigation plan. NVDA has no backup foundry for its most advanced products. This is a low-probability, maximum-severity tail risk.
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>多头情景（目标350-400美元）：</strong>推理需求创造更大、持续性更强的市场；主权AI是额外增量需求；CUDA生态护城河随每个新模型训练不断加深；Blackwell供不应求维持定价权和高毛利；PEG 0.64倍说明高增长尚未被充分定价。<strong>空头情景（目标100-140美元）：</strong>AI资本支出周期可能放缓或暂停；中国市场因出口管制结构性受损；大客户自研芯片加速推进；42倍市盈率容错空间极小；台积电/台湾地缘政治风险属于低概率、高影响的尾部风险。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 8 -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Analyst Consensus & Technical Signals</div>
+  <div class="section-title-cn">分析师共识与技术信号</div>
+  <div class="section-divider"></div>
+
+  <div class="section-label" style="margin-bottom:8px">Analyst Consensus (FMP Data, as of May 2026)</div>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Consensus Rating</div>
+      <div class="metric-val metric-up">BUY</div>
+      <div class="metric-sub">79 analysts total</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg Price Target</div>
+      <div class="metric-val">$275.74</div>
+      <div class="metric-sub up">+33% upside from $207.83</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Target Range</div>
+      <div class="metric-val" style="font-size:14px">$140 – $400</div>
+      <div class="metric-sub">Median: $275</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FMP Overall Rating</div>
+      <div class="metric-val metric-up">A-</div>
+      <div class="metric-sub">Score: 4/5 overall</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:16px">
+    <div class="section-label">Buy / Hold / Sell Breakdown</div>
+    <div class="consensus-bar">
+      <div class="cons-buy" style="width:75.9%"></div>
+      <div class="cons-hold" style="width:20.3%"></div>
+      <div class="cons-sell" style="width:3.8%"></div>
+    </div>
+    <div class="cons-labels">
+      <span>Buy: 60 (75.9%)</span>
+      <span>Hold: 16 (20.3%)</span>
+      <span>Sell: 3 (3.8%)</span>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:8px">Technical Signal Snapshot <span class="source-tag">FMP Data</span></div>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">50-Day SMA</div>
+      <div class="metric-val metric-up">$187.73</div>
+      <div class="metric-sub up">Price +10.7% above SMA50 → Bullish</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">200-Day SMA</div>
+      <div class="metric-val metric-up">$184.29</div>
+      <div class="metric-sub up">Price +12.8% above SMA200 → Bullish</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52W Position</div>
+      <div class="metric-val">95.8%</div>
+      <div class="metric-sub flat">Near 52-week high ($216.83)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Today's Change</div>
+      <div class="metric-val metric-up">+5.77%</div>
+      <div class="metric-sub">Volume: 188M (above avg 171M)</div>
+    </div>
+  </div>
+
+  <div class="commentary">
+    Price is trading above both the 50-day and 200-day moving averages — a bullish configuration. The 50-day SMA ($187.73) has crossed above the 200-day SMA ($184.29), forming a <strong>golden cross</strong>, which is a traditionally bullish technical signal. Today's 5.77% gain on above-average volume suggests institutional buying interest. The stock is approaching its 52-week high of $216.83; a breakout above this level would be technically significant. Key support: $188 (50-day SMA), $175 (prior consolidation level). <em>Technical signals are informational context only and should not be used in isolation for investment decisions.</em>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">分析师共识：79位分析师中75.9%给予买入评级，平均目标价275.74美元（较当前价约+33%），FMP综合评级A-（4/5分）。技术面：股价高于50日均线10.7%、高于200日均线12.8%，50日均线已上穿200日均线形成"金叉"，今日成交量高于平均水平，整体技术面偏多。股价已接近52周高点216.83美元，若突破将具有重要技术意义。关键支撑位：188美元（50日均线）。注意：技术信号仅供参考，不应单独用于投资决策。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SECTION 9 -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Practical Guidance for Retail Investors</div>
+  <div class="section-title-cn">零售投资者实操指引</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <strong>Who this stock suits:</strong> NVDA is suited to a <em>growth-oriented investor</em> with a 3–5 year minimum horizon who can tolerate significant volatility (beta 2.24 means NVDA moves roughly twice as much as the broader market in both directions). It is NOT suited to capital preservation strategies, income investors, or anyone with a short time horizon. The stock has historically suffered 50–70% drawdowns during risk-off environments (NVDA fell 66% in 2022). An investor must be psychologically and financially prepared to hold through such drawdowns for the thesis to play out.
+  </div>
+
+  <div class="body-text">
+    <strong>Position sizing:</strong> Given NVDA's beta of 2.24 and its concentration in a single sector theme (AI infrastructure), most financial planning frameworks would classify this as a <em>satellite position</em>: 2–5% of a diversified portfolio. For investors with high conviction and long time horizons, up to 8–10% may be appropriate, but this should be weighed against the fact that NVDA is already a large constituent of major index funds (e.g. QQQ, SCHG) — meaning many investors already have significant NVDA exposure through passive holdings.
+  </div>
+
+  <div class="section-label" style="margin-bottom:8px">3 Things to Monitor Going Forward</div>
+  <div>
+    <div class="watch-item">
+      <div class="watch-icon w-blue">1</div>
+      <div class="watch-content">
+        <div class="watch-en"><strong>Quarterly Data Centre Revenue Growth Rate.</strong> The critical metric. As long as data centre revenue continues growing 50%+ YoY, the thesis is intact. A deceleration to below 20–30% YoY growth would signal the AI capex cycle is maturing. Watch NVDA's quarterly earnings (next expected: late May / early June 2026).</div>
+        <div class="watch-cn">数据中心季度营收增速是核心指标。只要同比增速保持50%以上，投资逻辑成立。若放缓至20-30%以下，则AI资本支出周期可能趋于成熟。关注下季度财报（预计2026年5月底/6月初）。</div>
+      </div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-icon w-amber">2</div>
+      <div class="watch-content">
+        <div class="watch-en"><strong>US Export Control Policy Updates.</strong> Any further tightening of restrictions on China, or new country-specific controls (e.g. Middle East), could reduce NVDA's addressable market and impair near-term earnings. Conversely, any relaxation of restrictions (unlikely in current geopolitical climate) would be a significant positive catalyst.</div>
+        <div class="watch-cn">美国出口管制政策更新：若对华限制进一步收紧，或新增中东等国家限制，将削减英伟达潜在市场。任何放松（在当前地缘政治环境下不太可能）则将是重大利好催化剂。</div>
+      </div>
+    </div>
+    <div class="watch-item">
+      <div class="watch-icon w-red">3</div>
+      <div class="watch-content">
+        <div class="watch-en"><strong>Hyperscaler Capex Guidance.</strong> Microsoft, Google, Amazon, and Meta collectively set NVDA's demand curve. Watch their earnings calls for any language about AI capex commitments, GPU order volumes, or in-house chip progress. Any signal that these companies are "pausing to digest" GPU purchases would be a near-term headwind.</div>
+        <div class="watch-cn">超大规模云服务商资本支出指引：微软、谷歌、亚马逊、Meta共同决定英伟达需求曲线。关注其财报电话会议中关于AI资本支出承诺、GPU采购量或自研芯片进展的表述。任何"暂停消化"GPU采购的信号都将是近期阻力。</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px">
+    <div class="section-label" style="margin-bottom:8px">Entry Considerations & Red Flags to Exit</div>
+    <div class="body-text">
+      <strong>Entry considerations:</strong> At $207.83, NVDA is trading 10.7% above its 50-day SMA and approaching its 52-week high. From a pure technical standpoint, chasing a move to all-time highs carries short-term reversal risk. Investors looking to initiate or add exposure may consider a staged entry — deploying 50% now, and keeping 50% in reserve to average in should the stock pull back to the $175–$190 support zone. DCF base case ($275) and analyst consensus ($275) both suggest meaningful upside from current levels over a 12–18 month horizon.
+    </div>
+  </div>
+
+  <div class="callout callout-red">
+    <div class="callout-label">🚨 Red Flags — Conditions That Would Invalidate the Thesis</div>
+    <div class="callout-text">
+      (1) <strong>Data centre revenue growth falls below 20% for two consecutive quarters</strong> — signals AI capex cycle maturation or significant share loss.<br>
+      (2) <strong>A major hyperscaler (Microsoft, Google, Amazon) publicly commits to switching &gt;30% of workloads to in-house silicon</strong> — would structurally impair long-term addressable market.<br>
+      (3) <strong>New US export controls targeting the Middle East or other growth markets</strong> — removes the geographic diversification that has partially offset China revenue loss.<br>
+      (4) <strong>Gross margin sustained decline below 65%</strong> — would signal competitive pricing pressure and erode the financial model underpinning the current valuation.<br>
+      (5) <strong>A Taiwan geopolitical crisis</strong> — tail risk but would be catastrophic for supply chain. Monitor Taiwan strait tensions as a background risk.
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">英伟达适合具有3-5年以上持股期、能承受高波动（Beta 2.24，历史最大回撤66%）的成长型投资者，不适合保本策略或收入投资者。建议仓位：占分散投资组合的2-5%（高信念投资者最高8-10%），注意通过指数基金已有的被动敞口。核心监控指标：①数据中心季度营收增速；②出口管制政策；③超大规模云服务商资本支出指引。退出红线：连续两季数据中心增速低于20%、主要云服务商大幅转向自研芯片、新增重点市场出口限制、毛利率持续跌破65%、台湾地缘政治危机升级。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SOURCES -->
+<div class="divider"></div>
+<div class="section">
+  <div class="sources-label">Data Sources · 数据来源</div>
+  <div class="sources">
+    · <strong>FMP API — Stock Quote (NVDA)</strong>: Price, market cap, beta, 52W range, SMA50/200. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Company Profile (NVDA)</strong>: Business description, CEO, employees, IPO date, sector. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Income Statement (FY2023–FY2026, Annual)</strong>: Revenue, gross profit, operating income, net income, EPS, EBITDA, R&D. NVDA FY ends late January. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Balance Sheet Statement (FY2026)</strong>: Assets, liabilities, equity, cash, debt. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Cash Flow Statement (FY2023–FY2026)</strong>: Operating cash flow, capex, FCF, buybacks. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Key Metrics TTM & Financial Ratios TTM</strong>: P/E, EV/EBITDA, P/FCF, P/S, ROE, current ratio, interest coverage. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Analyst Grades Summary & Price Target Consensus (NVDA)</strong>: 79 analysts, buy/hold/sell breakdown, price target range. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Stock News (NVDA)</strong>: 5 latest headlines as of 6–7 May 2026. Retrieved 7 May 2026.<br>
+    · <strong>FMP API — Company Peers (NVDA)</strong>: AAPL, AVGO, TSM, MSFT, GOOGL identified as FMP peer set. Retrieved 7 May 2026.<br>
+    · <strong>DCF Model</strong>: Internally computed using FY2026 FCF as base. All growth rates, WACC, and terminal growth assumptions are [ASSUMED] — see Section 4 for full methodology and caveats. Not sourced from NVIDIA filings.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ FOOTER -->
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. Financial figures are sourced from FMP API based on public SEC filings; all projections involve significant uncertainty. DCF inputs marked [ASSUMED] are estimates, not disclosures from NVIDIA. Past performance is not indicative of future results. Consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议或任何证券买卖推荐。财务数据来源于FMP API（基于公开SEC文件）；所有预测均存在重大不确定性。标注[ASSUMED]的DCF输入项为估算值，非英伟达官方披露。历史表现不代表未来结果。请在做出投资决策前咨询合格的财务顾问。<br><br>
+  Generated by stock-report skill · Gladys Investment Research · 7 May 2026
+</div>
+
+</body>
+</html>

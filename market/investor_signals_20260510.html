@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Signals — May 10, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem;
+         max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #EDE9FE; border: 1px solid #C4B5FD;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #5B21B6; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .report-date { font-size: 13px; color: #777; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .investor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .investor-grid-single { margin-bottom: 12px; }
+  .investor-card { background: #fff; border: 1px solid #e8e8e0;
+                   border-top: 3px solid #5B3FA5;
+                   border-radius: 0 0 12px 12px; padding: 14px 16px; }
+  .investor-top { display: flex; justify-content: space-between;
+                  align-items: flex-start; margin-bottom: 4px; gap: 8px; flex-wrap: wrap; }
+  .investor-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .investor-handle { font-size: 11px; color: #999; margin-left: 4px; }
+  .investor-badge { font-size: 10px; font-weight: 700; padding: 2px 8px;
+                    border-radius: 20px; white-space: nowrap; }
+  .badge-alumni  { background: #EDE9FE; color: #4C1D95; }
+  .badge-vc      { background: #E0F2FE; color: #0369A1; }
+  .badge-hedge   { background: #FEF9C3; color: #713F12; }
+  .badge-founder { background: #F0FDF4; color: #14532D; }
+  .investor-fund { font-size: 11px; color: #999; margin-bottom: 10px; }
+  .investor-signal { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
+  .investor-why { background: #F5F0FF; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; }
+  .why-label { font-size: 9px; font-weight: 700; color: #7C3AED;
+               text-transform: uppercase; letter-spacing: 0.07em;
+               display: block; margin-bottom: 3px; }
+  .why-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .investor-cn { font-size: 12px; color: #999; line-height: 1.7; margin-bottom: 8px;
+                 padding-top: 8px; border-top: 1px dashed #e8e8e0;
+                 font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .src-line { font-size: 11px; color: #aaa; }
+  .src-line a { color: #5B3FA5; text-decoration: none; }
+  .no-signals { background: #f5f3ee; border: 1px dashed #ccc;
+                border-radius: 10px; padding: 2rem; text-align: center;
+                color: #888; font-size: 14px; margin-bottom: 1.5rem; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #C4B5FD;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 1.5rem; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #9CA3AF;
+              text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #5B3FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+  .ticker-pill { display: inline-block; background: #f0edfb; color: #5B3FA5;
+                 font-size: 10px; font-weight: 700; padding: 1px 6px;
+                 border-radius: 4px; margin: 0 1px; }
+  .ticker-sell { background: #fef0f0; color: #c0392b; }
+  .ticker-buy  { background: #f0fdf4; color: #166534; }
+  .context-note { background: #fffbeb; border: 1px solid #fde68a;
+                  border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;
+                  font-size: 12px; color: #78350f; line-height: 1.6; }
+  .context-note strong { color: #92400e; }
+  .context-label { font-size: 9px; font-weight: 700; color: #b45309;
+                   text-transform: uppercase; letter-spacing: 0.07em;
+                   display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Manual run · Investor signals scan
+  </div>
+  <div class="report-title">Notable investor signals</div>
+  <div class="report-title-cn">知名投资人信号追踪</div>
+  <div class="report-date">Sunday, May 10, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号</div>
+</div>
+
+<!-- CONTEXT NOTE: Near-term filing window -->
+<div class="context-note">
+  <span class="context-label">Filing window note 申报窗口提示</span>
+  Q1 2026 13F filings are due <strong>May 15, 2026</strong>. No filings from Druckenmiller, Tepper, or Situational Awareness LP have been submitted yet this cycle. Expect a wave of disclosures over the next 5 days — check <a href="https://whalewisdom.com/" style="color:#b45309">WhaleWisdom</a> or <a href="https://13f.info/" style="color:#b45309">13f.info</a> for early filers.
+  <br><span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif;">2026年第一季度13F申报截止日期为5月15日，德鲁肯米勒、特珀及Situational Awareness LP尚未提交本季度报告，未来5天将迎来密集披露窗口。</span>
+</div>
+
+<!-- SIGNALS -->
+<div class="section-label">Signals this run 本次信号 (1 found)</div>
+
+<!-- SINGLE CARD -->
+<div class="investor-grid-single">
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Cathie Wood</span>
+        <span class="investor-handle">@CathieDWood</span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">ARK Invest · ~$15B AUM · daily-disclosed ETF manager known for high-conviction disruptive tech bets</div>
+
+    <div class="investor-signal">
+      On Friday May 8, ARK disclosed its largest single-session AMD exit of the week: <strong>sold 46,034 shares of Advanced Micro Devices</strong>
+      <span class="ticker-pill ticker-sell">AMD –$18.8M</span> across ARKK, ARKW, and ARKF, continuing a systematic selldown that has now spanned every trading day this week (total AMD sold in May: ~$80M+). Simultaneously, ARK <strong>bought 113,076 shares of CoreWeave</strong>
+      <span class="ticker-pill ticker-buy">CRWV +$14.6M</span> across ARKK and ARKW — the AI hyperscaler cloud company that IPO'd in March. ARK also <strong>fully exited Rocket Lab</strong>
+      <span class="ticker-pill ticker-sell">RKLB –$14.7M</span> across ARKQ and ARKX (full position liquidation), while <strong>adding $9.6M in Kratos Defense</strong>
+      <span class="ticker-pill ticker-buy">KTOS +$9.6M</span> and opening a <strong>new position in X-Energy</strong>
+      <span class="ticker-pill ticker-buy">XE NEW $1.7M</span>, the nuclear energy startup. A smaller buy in <strong>Cloudflare</strong>
+      <span class="ticker-pill ticker-buy">NET +$3.5M</span> rounded out the session. Notably, AMD closed up +11.44% on the same day — ARK sold into strength.
+    </div>
+
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">The AMD exit-into-rally and CRWV accumulation represents ARK pivoting away from commodity semiconductors toward AI-native cloud infrastructure: CRWV is a direct OpenAI infrastructure partner, while the RKLB liquidation and KTOS/XE additions suggest a rotation from space tech toward defense AI and nuclear power — the same physical AI bottleneck thesis held by Aschenbrenner's Situational Awareness Fund.</span>
+    </div>
+
+    <div class="investor-cn">
+      凯西·伍德的ARK基金于5月8日（周五）连续抛售AMD共1880万美元，同时大举买入AI云计算公司CoreWeave（CRWV）约1460万美元，并清仓火箭实验室（RKLB）1470万美元。值得关注的是，ARK在AMD当日大涨11.44%之际逢高出货，并同步新开仓X-Energy核能股票，信号与Aschenbrenner的"AI物理基础设施瓶颈"论题高度吻合，值得密切跟踪。
+    </div>
+
+    <div class="src-line">
+      <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-amd-stock-buys-coreweave-and-kratos-93CH-4674542">Investing.com</a> · Published 08:06 PM, May 8, 2026 &nbsp;|&nbsp;
+      <a href="https://cathiesark.com/ark-funds-combined/trades">cathiesark.com</a> · Daily trade data (verified)
+    </div>
+  </div>
+</div>
+
+<!-- NEAR-MISS NOTE -->
+<div class="context-note">
+  <span class="context-label">Near-miss signals this run (failed recency) 未达标信号</span>
+  <strong>David Sacks (May 4):</strong> Said on X that "AI was already 75% of Q1 GDP growth" — corroborated by Morgan Stanley raising 2026 Big Tech AI capex forecast to $805B. Published 6 days ago; fails 48h recency. Source: <a href="https://fortune.com/2026/05/04/trump-ai-czar-david-sacks-american-gdp-economy/" style="color:#b45309">Fortune, May 4</a>.<br>
+  <strong>Trump AI oversight shift (May 5–8):</strong> Administration reversed course on AI regulation — CAISI signed pre-deployment evaluation agreements with Google DeepMind (GOOG), Microsoft (MSFT), and xAI. Sacks lost internal policy battle; this is not a direct Sacks statement. Sources from May 5–6 are outside 48h. Source: <a href="https://www.theregister.com/ai-and-ml/2026/05/08/trump-jumps-from-anything-goes-to-strict-regulation-ai-policy/5234687" style="color:#b45309">The Register, May 8</a>.<br>
+  <strong>Leopold Aschenbrenner (Motley Fool, May 5):</strong> Fund's Bloom Energy stake highlighted after 176% run; no new 13F within 7 days (Q1 2026 13F due May 15). 5 days old; fails recency.
+</div>
+
+<!-- OVERALL CHINESE SUMMARY -->
+<div class="cn-summary">
+  <div class="cn-label">中文摘要 — 本期信号汇总</div>
+  <div class="cn-text">
+    本期唯一达标信号来自ARK基金：ARK正在系统性减持AMD等传统半导体股，集中买入CoreWeave（CRWV）等AI云基础设施标的，并新开仓核能公司X-Energy，轮动方向与Aschenbrenner"AI算力+能源瓶颈"论题高度一致。对新加坡投资者而言，本周最大的宏观背景是：特朗普政府已宣布对前沿AI模型实施强制预上市审查（Google、微软、马斯克xAI已签协议），监管风向逆转利空Anthropic类封闭模型公司，但对获得政府合规背书的大型超算公司（GOOGL、MSFT）则构成中期护城河。第一季度13F申报窗口（截止5月15日）将是本周最大催化剂——届时德鲁肯米勒、特珀等巨鳄持仓将浮出水面。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources">
+  <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-amd-stock-buys-coreweave-and-kratos-93CH-4674542">Investing.com — "Cathie Wood's ARK sells AMD stock, buys CoreWeave and Kratos" (May 8, 2026)</a><br>
+  <a href="https://cathiesark.com/ark-funds-combined/trades">cathiesark.com — ARK ETF Combined Trades (May 8, 2026 daily data)</a><br>
+  <a href="https://fortune.com/2026/05/04/trump-ai-czar-david-sacks-american-gdp-economy/">Fortune — "David Sacks says AI now accounts for 75% of US GDP growth" (May 4, 2026)</a><br>
+  <a href="https://www.benzinga.com/markets/tech/26/05/52240027/david-sacks-says-ai-could-drive-75-of-us-gdp-growth-as-morgan-stanley-sees-big-tech-ai-capex-surging-past-800-billion-in-2026">Benzinga — "David Sacks Says AI Could Drive 75% Of US GDP Growth As Morgan Stanley Sees Big Tech AI Capex Surging Past $800 Billion In 2026" (May 4, 2026)</a><br>
+  <a href="https://www.theregister.com/ai-and-ml/2026/05/08/trump-jumps-from-anything-goes-to-strict-regulation-ai-policy/5234687">The Register — "Trump jumps from 'anything goes' to 'strict regulation' AI policy" (May 8, 2026)</a><br>
+  <a href="https://www.cnbc.com/2026/05/08/anthropic-mythos-ai-cybersecurity-banks.html">CNBC — "Anthropic's Mythos set off a cybersecurity 'hysteria.' Experts say the threat was already here" (May 8, 2026)</a><br>
+  <a href="https://www.fool.com/investing/2026/05/05/leopold-aschenbrenners-situational-awareness-fund/">Motley Fool — "Leopold Aschenbrenner's Situational Awareness Fund Bought Bloom Energy Stock Before a 176% Run" (May 5, 2026)</a><br>
+  <a href="https://13f.info/manager/0002045724-situational-awareness-lp">13f.info — Situational Awareness LP 13F Filing History (latest: Q4 2025, filed Feb 11, 2026)</a><br>
+  <a href="https://whalewisdom.com/filer/situational-awareness-lp">WhaleWisdom — Situational Awareness LP Holdings Tracker</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Investor Signals Scan · 投资人信号追踪<br>
+  Sunday, May 10, 2026 · Manual run · AI/VC watchlist<br>
+  Signals criteria: specific claim (named ticker / $ amount / direct quote) + verified URL + published within 48h or new SEC filing within 7 days
+</div>
+
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Market Intelligence</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+         sans-serif; background: #f8f8f6; color: #1a1a1a;
+         padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8;
+                   padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px; font-size: 11px;
+                   color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-date { font-size: 13px; color: #777; }
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px;
+              padding: 12px 16px; margin-bottom: 1.5rem; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish { background: #EAF3DE; color: #27500A; }
+  .mood-bearish { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed   { background: #FAEEDA; color: #633806; }
+  .mood-neutral { background: #f0efe8; color: #555; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+  .indices { display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+             gap: 8px; margin-bottom: 1.5rem; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .commentary { font-size: 13px; color: #555; line-height: 1.7;
+                margin-bottom: 1.5rem; }
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0;
+                 padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px;
+             margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB;
+                 color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                background: #f0efe8; color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; }
+  .s-tech     { background: #E6F1FB; color: #0C447C; }
+  .s-health   { background: #E1F5EE; color: #085041; }
+  .s-energy   { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence  { background: #EEEDFE; color: #3C3489; }
+  .s-finance  { background: #EAF3DE; color: #27500A; }
+  .s-realty   { background: #FAECE7; color: #712B13; }
+  .s-macro    { background: #F1EFE8; color: #444441; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb;
+              white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 8px; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6;
+              margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.05em;
+                margin-bottom: 3px; }
+  .bull-label { color: #27500A; } .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px;
+          flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8;
+               border-radius: 6px; padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0;
+                          top: 9px; width: 5px; height: 5px;
+                          border-radius: 50%; background: #ccc; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 1.5rem; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; gap: 6px;
+              flex-wrap: wrap; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 1.5rem; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8; font-size: 13px;
+                   color: #333; line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px;
+                display: flex; align-items: center;
+                justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 1px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-purple { background: #EEEDFE; color: #3C3489; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .notable-grid { display: grid; grid-template-columns: 1fr 1fr;
+                  gap: 8px; margin-bottom: 1.5rem; }
+  .notable-card { background: #fff; border: 1px solid #e8e8e0;
+                  border-radius: 8px; padding: 10px 12px; }
+  .notable-topic { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; margin-bottom: 4px; }
+  .notable-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .pulse-row { display: flex; gap: 10px; padding: 7px 0;
+               border-bottom: 1px solid #e0dfd8; font-size: 13px;
+               line-height: 1.5; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { font-weight: 600; white-space: nowrap;
+               min-width: 130px; color: #333; }
+  .pulse-val { color: #555; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; }
+  .intraday-note { font-size: 11px; color: #e67e22; background: #FEF9EC;
+                   border: 1px solid #F9DFAF; border-radius: 6px;
+                   padding: 4px 10px; display: inline-block;
+                   margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    PM Evening Briefing
+  </div>
+  <div class="intraday-note">⚠ Intraday data — US markets still open at briefing time (~11:05 AM EDT). Index figures are mid-session snapshots, not closing prices.</div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-date">
+    Thursday, 23 April 2026 · Singapore time (SGT) · Full US market coverage
+  </div>
+</div>
+
+<!-- MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Market mood</span>
+  <span class="mood-text">
+    Record highs fade fast — IBM and ServiceNow earnings disappoint, oil climbs back above $100 on the US-Iran Hormuz standoff, pulling indices off Wednesday's all-time peaks.
+  </span>
+  <span class="mood-pill mood-mixed">Mixed</span>
+</div>
+
+<!-- INDEX SNAPSHOT -->
+<div class="section-label">Index snapshot — intraday, ~11:05 AM EDT</div>
+<div class="indices">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,109</div>
+    <div class="idx-chg dn">−0.41%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Nasdaq</div>
+    <div class="idx-val">~24,546</div>
+    <div class="idx-chg dn">−0.45%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Dow</div>
+    <div class="idx-val">—</div>
+    <div class="idx-chg dn">−0.31%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">—</div>
+    <div class="idx-chg up">+0.74%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">VIX</div>
+    <div class="idx-val">18.92</div>
+    <div class="idx-chg up">Falling=calm</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI oil</div>
+    <div class="idx-val">$94.46</div>
+    <div class="idx-chg up">+1.67%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Brent oil</div>
+    <div class="idx-val">$103.38</div>
+    <div class="idx-chg up">+1.44%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Gold</div>
+    <div class="idx-val">$4,758</div>
+    <div class="idx-chg up">+0.82%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10-yr yield</div>
+    <div class="idx-val">4.30%</div>
+    <div class="idx-chg flat">Flat</div>
+  </div>
+</div>
+
+<!-- MARKET COMMENTARY -->
+<div class="section-label">Market commentary</div>
+<p class="commentary">
+  US equities are retreating Thursday from Wednesday's record closes — the S&P 500 falling to 7,109 (down 0.41%) and the Nasdaq slipping 0.45% — as a cluster of heavyweight earnings from ServiceNow and IBM disappointed investors while oil surges for a fourth consecutive session on the ongoing US-Iran Strait of Hormuz standoff. The sell-off is concentrated in high-growth software (SaaS) stocks, where ServiceNow's subscription revenue miss triggered its worst session in years, dragging peers like Snowflake, Workday, and Salesforce lower in sympathy. Notably, small-cap stocks (Russell 2000) are bucking the trend with a 0.74% gain, suggesting some rotation into domestically-focused companies less exposed to international geopolitical risks — a pattern known as "risk rotation" rather than full-blown risk-off. WTI crude (the US oil benchmark, priced in dollars per barrel) rising to $94.46 and Brent (the global benchmark, more sensitive to Middle East supply) topping $103 signals the market believes the Hormuz disruption is not yet resolved, keeping inflation fears alive and complicating the Federal Reserve's one-cut-in-2026 outlook. Gold at $4,758 continues its safe-haven climb. This compares to Wednesday's euphoria, when the S&P 500 hit an all-time high of 7,137.90 and the Nasdaq reached 24,657 on optimism around the ceasefire extension — today's pullback is a reminder that sentiment can swing quickly when geopolitics and earnings collide.
+</p>
+
+<!-- TOP 3 SIGNALS -->
+<div class="section-label">Top 3 signals</div>
+
+<!-- SIGNAL #1 -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">XOM · CVX · OXY · ENPH</span>
+        <span class="sector-pill s-macro">MACRO / ENERGY</span>
+        <span class="score-pill">17/20</span>
+        <span class="score-pill">Reuters · CNBC · PBS · Bloomberg</span>
+      </div>
+      <div class="sig-headline">US-Iran Peace Talks Stall — Strait of Hormuz Remains Choked, Brent Tops $103 for Fourth Day</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="sig-body">
+    The United States and Iran failed to convene for a further round of peace negotiations on Wednesday despite President Trump extending the ceasefire indefinitely on April 22. Iran continues to control traffic through the Strait of Hormuz — the narrow waterway through which roughly 20% of the world's oil supply transits — charging vessels tolls of over $1 million per ship and, according to reports, having seized two additional vessels in disputed waters. Brent crude climbed to $103.38 on Thursday (+1.44%) while WTI reached $94.46 (+1.67%), marking a fourth straight session of gains. Trump has escalated the naval posture by ordering the US Navy to shoot any vessel found laying mines in the strait.
+    <br><br>
+    Background context: A two-week ceasefire was brokered by Pakistan on April 7. On April 17, Iran briefly declared the strait open to commercial traffic, sending oil prices crashing below $84/barrel — a 10%+ intraday collapse. Since then, talks have broken down and Brent has surged 23% from that trough, more than reversing all the peace-talk gains. The Hormuz crisis is now the dominant macro variable for every sector: it drives oil prices (energy stocks), inflation expectations (Fed policy), airline fuel costs (consumer), and government procurement delays (enterprise tech).
+  </div>
+
+  <div class="src-line">
+    CNBC / PBS NewsHour / Bloomberg · Ongoing: originally broke ~16 days ago, actively trading today ·
+    <a href="https://www.cnbc.com/2026/04/22/oil-price-wti-brent-iran-ceasefire-extension-clouds-outlook.html">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">Ceasefire technically remains in force; a single peace-talk resumption could send oil back below $85 within hours, relieving inflation pressure and unlocking the rate-cut path for the Fed.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Talks show no sign of resuming; prolonged $100+ oil feeds core inflation above the Fed's 2% target, likely delaying any rate cut past December 2026 and directly compressing consumer spending power.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term:</span> Oil volatility and energy stock strength continue; airlines, shipping, consumer names under pressure
+    </div>
+    <div class="impl-item">
+      <span>Long term:</span> Accelerates energy-security investments and renewable buildout; reshuffles global shipping routes
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Will Iran agree to a new negotiating session, and under what specific concessions from the US?</li>
+    <li>At what sustained oil price level does the Fed explicitly signal it cannot deliver its projected single 2026 rate cut?</li>
+    <li>Has the US Navy's mine-clearing operation made measurable progress, or is the strait's navigational risk still acute?</li>
+  </ul>
+</div>
+
+<!-- SIGNAL #2 -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">NOW</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">16/20</span>
+        <span class="score-pill">Company earnings release</span>
+      </div>
+      <div class="sig-headline">ServiceNow (NOW) Q1 2026: EPS Beats, But Subscription Revenue Miss Triggers Worst Session in Years — Down 12–15%</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="sig-body">
+    ServiceNow reported Q1 2026 results that beat both EPS and total revenue analyst estimates, but subscription revenue growth — the single metric the market cares most about for a SaaS company — missed expectations by approximately 75 basis points (0.75 percentage points). Management attributed the shortfall directly to delayed closures of several large on-premises government deals in the Middle East, where clients paused procurement amid the US-Iran conflict. The stock fell 12–15% in extended trading and has extended losses into Thursday's session, marking one of its worst one-day reactions in years. Peers including Snowflake (SNOW), Datadog (DDOG), and CrowdStrike (CRWD) are selling off in sympathy.
+    <br><br>
+    "Subscription revenue" is the recurring monthly/annual fee clients pay for cloud software access — it's the engine of SaaS value. Even a small miss signals something is wrong with demand, and the market re-prices the entire forward growth curve instantly. ServiceNow's explanation is event-driven (the Middle East conflict disrupting government IT procurement), but investors must now decide whether this is temporary or a signal that geopolitical instability is a persistent headwind for enterprise software that relies heavily on government clients.
+  </div>
+
+  <div class="src-line">
+    ServiceNow Newsroom · 12 hours ago · Still active: shares extending losses in Thursday session ·
+    <a href="https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-Reports-First-Quarter-2026-Financial-Results/default.aspx">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">The miss is credible and event-driven — if peace talks resume and Middle East procurement normalises, delayed deals close in Q2–Q3 and the miss reverses; underlying platform demand remains robust.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">If the Hormuz crisis persists through Q2, government IT budgets across the Middle East stay frozen, setting up a second consecutive miss and forcing a full-year guidance cut that resets the multiple sharply lower.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term:</span> SaaS sector selloff continues; government-exposed software names most at risk
+    </div>
+    <div class="impl-item">
+      <span>Long term:</span> Geopolitical deal-delay risk now priced into high-multiple SaaS valuations permanently
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Did management provide updated full-year subscription revenue guidance, or only explain the Q1 miss?</li>
+    <li>What percentage of ServiceNow's total ARR (annual recurring revenue) comes from Middle East government clients specifically?</li>
+    <li>Are Salesforce (CRM), SAP, and Workday similarly exposed — should investors expect pre-warnings from SaaS peers with large government client bases?</li>
+  </ul>
+</div>
+
+<!-- SIGNAL #3 -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">IBM</span>
+        <span class="sector-pill s-tech">TECH</span>
+        <span class="score-pill">15/20</span>
+        <span class="score-pill">Company earnings release</span>
+      </div>
+      <div class="sig-headline">IBM Q1 2026: Earnings Beat, But Flat Guidance and AI-Disruption Fears Send Shares Down 7–10%</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="sig-body">
+    IBM reported Q1 2026 results that beat analyst estimates on both earnings per share and revenue — typically a reason to rally. Instead, the stock fell 7–10% after the company held its full-year guidance entirely unchanged, a significant disappointment in an earnings season where investors expect raised outlooks. The market's reaction was amplified by growing concern that Anthropic's enterprise AI tools are actively displacing IBM's traditional consulting and software business — a theme explicitly flagged in analyst commentary following the report. Software names including Adobe, Salesforce, Workday, Snowflake, HubSpot, and Autodesk fell in sympathy, with IBM as the bellwether.
+    <br><br>
+    IBM has spent years rebuilding its identity around hybrid cloud (a mix of on-premise servers and public cloud services) and AI, branded as "IBM watsonx." The bull case was always that enterprise clients would pay IBM's premium for trusted, integrated AI — but Anthropic's rapid enterprise penetration and OpenAI's GPT-4o are now offering frontier AI at a fraction of the integration cost. If clients start redirecting AI consulting spend directly to model providers, IBM's revenue growth trajectory may be structurally lower than the market had assumed. This is the "reverse AI boom" trade: chip and infrastructure companies like NVDA benefit, while legacy AI-adjacent vendors like IBM face margin compression.
+  </div>
+
+  <div class="src-line">
+    InsiderFinance / CNBC · 14 hours ago · Still active: shares extending losses Thursday ·
+    <a href="https://www.insiderfinance.io/news/ibm-q1-2026-earnings-beat-guidance-held">Read more</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">IBM's flat guidance is characteristically conservative; the company has a long track record of underpromising and overdelivering, and hybrid cloud integration services remain stickier than pure-play model subscriptions.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Revenue deceleration alongside rising Anthropic and OpenAI enterprise adoption is a structural signal, not a one-quarter blip; a multi-year multiple compression for legacy enterprise software is underway.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item">
+      <span>Short term:</span> Continued selling in legacy enterprise software; NVDA and pure AI plays benefit from the narrative rotation
+    </div>
+    <div class="impl-item">
+      <span>Long term:</span> Winner/loser split in enterprise tech widening — AI-native companies vs. incumbent vendors accelerating
+    </div>
+  </div>
+
+  <ul class="questions">
+    <li>Is IBM's watsonx revenue growing faster or slower than total company revenue — and did management disclose this on the call?</li>
+    <li>Which IBM business lines (consulting, software, infrastructure) are showing the most acute deceleration?</li>
+    <li>Have any large enterprise clients publicly cited switching from IBM platforms to Anthropic or OpenAI direct relationships?</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALSO TRACKING -->
+<div class="section-label">Also tracking</div>
+<div class="also-grid">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">TSLA</span>
+      <span class="sector-pill s-consumer">TECH / CONSUMER</span>
+      <span class="score-pill">14/20</span>
+    </div>
+    <div class="also-text">
+      Tesla beat Q1 EPS (41¢ vs. 37¢ expected) but shares reversed 3% lower after CEO Elon Musk projected $25 billion in capital expenditure for full-year 2026 — a figure that shocked investors focused on near-term cash flow. The capex surge is tied to Tesla's Megapack battery business and Robotaxi AI infrastructure buildout; the tension is between long-term optionality and short-term cash burn at a time when EV demand remains mixed.
+    </div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0">
+      <a href="https://www.fool.com/investing/2026/04/23/stock-market-today-live-coverage/">Source — The Motley Fool</a>
+    </div>
+  </div>
+
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">FED / MACRO</span>
+      <span class="sector-pill s-macro">MACRO</span>
+      <span class="score-pill">13/20</span>
+    </div>
+    <div class="also-text">
+      Trump's nominee for Fed Chair, Kevin Warsh, completed his Senate confirmation hearing, pledging monetary policy independence and stating he would not be Trump's "sock puppet" on rate cuts. Despite the moderate posture, markets are pricing just 50 basis points of total cuts through 2026 with none in the near term — the oil-driven inflation spike is making any rate relief harder to justify regardless of who leads the Fed.
+    </div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0">
+      <a href="https://www.cnbc.com/2026/04/21/kevin-warsh-fed-confirmation-hearing-trump-live-updates.html">Source — CNBC</a>
+    </div>
+  </div>
+</div>
+
+<!-- GLOBAL MACRO CONTEXT -->
+<div class="section-label">Global macro context</div>
+<div class="macro-grid">
+  <div class="macro-card">
+    <div class="macro-topic">Geopolitics</div>
+    <div class="macro-text">
+      US-Iran ceasefire technically extended indefinitely by Trump but peace talks have stalled; Strait of Hormuz remains under Iranian toll regime; US Navy ordered to engage any mine-laying vessels. Escalation risk is alive — any naval incident could spike oil 10–15% in hours.
+    </div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Oil &amp; commodities</div>
+    <div class="macro-text">
+      WTI crude: $94.46 (+1.67%), Brent: $103.38 (+1.44%) — fourth consecutive session of gains, up ~23% from the April 17 trough when Iran briefly declared the strait open. Energy is the only sector reliably outperforming in this environment. Gold at $4,758 reflects sustained safe-haven demand.
+    </div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Fed &amp; rates</div>
+    <div class="macro-text">
+      Federal funds rate held at 3.5–3.75% since March 2026 (second consecutive hold). Fed projects one cut in 2026 and one in 2027; PCE inflation revised up to 2.7%. Kevin Warsh confirmation hearing completed — markets pricing only 50bps of easing through year-end regardless of leadership change.
+    </div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Trump &amp; policy</div>
+    <div class="macro-text">
+      Warsh Fed nomination is the dominant White House policy signal this week. DOGE dividend has not materialised; Supreme Court ruling on tariff refunds has complicated the timeline. Trump threatened Iran with naval action — raising geopolitical escalation risk as a market variable.
+    </div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Currency &amp; gold</div>
+    <div class="macro-text">
+      Gold at $4,758 (+0.82%) — safe-haven demand driven by unresolved geopolitical risk and inflation uncertainty. The USD is under modest pressure as sustained $100+ oil widens the US trade deficit. Higher oil prices create a complex feedback loop: they support the petrodollar but hurt the broader US trade balance.
+    </div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Asia &amp; global</div>
+    <div class="macro-text">
+      Asian markets retreated overnight on Hormuz concerns and anticipation of the tech earnings selloff. European equities also opened lower. Singapore's STI and Hong Kong's Hang Seng both closed in the red. The risk-off mood in Asia provided an early warning for Thursday's US weakness.
+    </div>
+  </div>
+</div>
+
+<!-- WHAT TO WATCH -->
+<div class="section-label">What to watch — next 24–48 hours</div>
+<ul class="watch-list">
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span><strong>US-Iran Hormuz status</strong> — Any resumption of peace talks or confirmed naval incident will be the single biggest market mover. A strait re-opening sends oil down 10%+, unlocks equities. An escalation does the reverse. Monitor US State Department and Iranian Foreign Ministry statements.</span>
+  </li>
+  <li>
+    <span class="watch-icon w-blue">$</span>
+    <span><strong>Thermo Fisher Scientific (TMO) earnings after close today</strong> — Consensus: $5.20 EPS, $10.86B revenue. Beat in 3 of last 4 quarters. Key readthrough for life sciences capital spending — if lab equipment demand is strong, it signals healthy biotech/pharma investment cycles. Watch for any commentary on government research funding (DOGE-related budget cuts).</span>
+  </li>
+  <li>
+    <span class="watch-icon w-amber">~</span>
+    <span><strong>Kevin Warsh Senate confirmation vote timeline</strong> — The full Senate vote could come within days. Watch the 2-year Treasury yield (currently ~4%) for any market reaction; if Warsh signals dovishness post-confirmation, yields could fall and rate-sensitive sectors (REITs, financials) would rally.</span>
+  </li>
+  <li>
+    <span class="watch-icon w-purple">+</span>
+    <span><strong>Biotech sector</strong> — No major FDA decisions today, but watch for biotech names moving in sympathy with Thermo Fisher's earnings readthrough. The FDA has approved 44 novel therapies year-to-date (26 in the last 6 months), so the regulatory pipeline remains active — any PDUFA dates for the next 48 hours bear monitoring.</span>
+  </li>
+  <li>
+    <span class="watch-icon w-green">A</span>
+    <span><strong>SaaS sector follow-through</strong> — Monitor SNOW, DDOG, CRWD, CRM for sympathy selling or pre-warning announcements following ServiceNow's government-deal-delay explanation. If peers confirm similar pipeline issues, the SaaS sell-off could broaden significantly into Friday.</span>
+  </li>
+  <li>
+    <span class="watch-icon w-gray">+</span>
+    <span><strong>Airline sector fallout from American Airlines guidance cut</strong> — AAL slashed 2026 EPS guidance to −$0.40 to +$1.10 (from prior +$1.70 to +$2.70) on oil cost surge. Watch Southwest (LUV), Delta (DAL), and United (UAL, which beat Tuesday) for any revised fuel cost commentary or demand softness signals.</span>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<!-- OTHER NOTABLE NEWS -->
+<div class="section-label">Other notable news</div>
+<div class="notable-grid">
+  <div class="notable-card">
+    <div class="notable-topic">American Airlines (AAL)</div>
+    <div class="notable-text">
+      Beat Q1 forecasts but slashed full-year 2026 EPS guidance to a range of −$0.40 to +$1.10 (vs. prior +$1.70 to +$2.70) citing surging jet fuel costs from the Hormuz crisis — a direct downstream casualty of the oil spike rippling from Middle East conflict into consumer travel economics. Alaska Air revenue-sharing deal also being explored.
+    </div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Texas Instruments (TXN)</div>
+    <div class="notable-text">
+      A rare bright spot: TXN posted strong Q1 beat and shares climbed, providing a positive readthrough for broad-based chip demand (industrial, automotive, consumer electronics) outside the AI-datacenter segment — suggesting the semiconductor cycle is recovering broadly, not just in AI infrastructure.
+    </div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">United Rentals (URI)</div>
+    <div class="notable-text">
+      World's largest equipment rental company beat Q1 estimates and raised full-year guidance — a constructive signal for infrastructure and industrial construction activity in the US, suggesting physical-economy capex is holding up well even as software/tech capex faces scrutiny.
+    </div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Initial Jobless Claims</div>
+    <div class="notable-text">
+      Weekly initial jobless claims rose to 214,000 (week ended April 18), coming in above the 210,000 consensus estimate — a modest miss suggesting a very slight softening at the margin of the US labour market, though still consistent with full employment. Not yet a concern, but worth tracking as oil-driven economic pressure mounts.
+    </div>
+  </div>
+</div>
+
+<!-- MARKET PULSE -->
+<div class="section-label">Market pulse</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <span class="pulse-key">Theme</span>
+    <span class="pulse-val">The AI/tech bull market meets its first serious double threat — geopolitical disruption (Hormuz) and AI model disruption (Anthropic vs. IBM) hitting enterprise tech simultaneously from two different directions.</span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Dominant trade</span>
+    <span class="pulse-val">Selling high-multiple SaaS (ServiceNow, IBM, Adobe, Salesforce) and rotating into energy (XOM, CVX, OXY benefit from $100+ oil), value (TXN beat), and industrials (URI raised guidance); small caps outperforming large-caps for first time this week.</span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Watch next 12h</span>
+    <span class="pulse-val">Thermo Fisher (TMO) earnings after US close — if it beats and raises, healthcare becomes a defensive bright spot; if it misses, the sell-off broadens. Concurrently, any US-Iran statement from either side will dominate Friday's pre-market.</span>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources</div>
+<div class="sources">
+  CNBC — <a href="https://www.cnbc.com/2026/04/22/oil-price-wti-brent-iran-ceasefire-extension-clouds-outlook.html">Oil price: WTI, Brent, Iran ceasefire extension clouds outlook</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/21/oil-price-iran-war-middle-east.html">A timeline of how the Iran war shook oil prices — and what comes next</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/22/stock-market-today-live-updates.html">Stocks fall, S&P 500 and Nasdaq pull back from all-time highs: Live updates</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/23/american-airlines-aal-q1-2026-earnings.html">American Airlines cuts 2026 earnings projections after surge in jet fuel</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/21/kevin-warsh-fed-confirmation-hearing-trump-live-updates.html">Kevin Warsh hearing takeaways: Trump Fed chair nominee vows independence</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/22/fed-chair-kevin-warsh.html">Trump's Fed pick Kevin Warsh signals approach to rates</a><br>
+  ServiceNow Newsroom — <a href="https://newsroom.servicenow.com/press-releases/details/2026/ServiceNow-Reports-First-Quarter-2026-Financial-Results/default.aspx">ServiceNow Reports First Quarter 2026 Financial Results</a><br>
+  InsiderFinance — <a href="https://www.insiderfinance.io/news/ibm-q1-2026-earnings-beat-guidance-held">IBM Q1 2026 Earnings Beat, Guidance Held</a><br>
+  The Motley Fool — <a href="https://www.fool.com/investing/2026/04/23/stock-market-today-live-coverage/">Stock Market Today (LIVE): Tech Sell-Off Cools Market Fever; Tesla Beats but Shares Fall on $25 Billion Capex Surprise</a><br>
+  Blockonomi — <a href="https://blockonomi.com/stock-market-tumbles-as-ibm-and-servicenow-earnings-disappoint-while-oil-surges-past-102/">Stock Market Tumbles as IBM and ServiceNow Earnings Disappoint While Oil Surges Past $102</a><br>
+  Gulf News — <a href="https://gulfnews.com/business/energy/brent-crude-climbs-back-above-100-as-oil-benchmarks-rally-late-april-22-1.500516040">Brent crude climbs back above $100 as oil benchmarks rally</a><br>
+  OneIndia — <a href="https://www.oneindia.com/india/crude-oil-rates-today-april-23-2026-brent-crude-crosses-100-per-barrel-check-latest-prices-of-w-8066837.html">Crude Oil Rates Today: April 23, 2026 — Brent Crude Crosses $100 Per Barrel</a><br>
+  Benzinga — <a href="https://www.benzinga.com/insights/earnings/26/04/51993661/earnings-scheduled-for-april-23-2026">Earnings Scheduled For April 23, 2026</a><br>
+  Fortune — <a href="https://fortune.com/article/price-of-oil-04-22-2026/">Current price of oil as of April 22, 2026</a><br>
+  Federal Reserve — <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm">FOMC statement March 2026 — rates held at 3.5–3.75%</a><br>
+  Wikipedia — <a href="https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis">2026 Strait of Hormuz crisis</a><br>
+  TheStreet — <a href="https://www.thestreet.com/latest-news/stock-market-today-apr-23-2026-updates">Stock Market Today (Apr. 23, 2026): S&amp;P 500, Dow eye comeback after early declines</a><br>
+  Meyka — <a href="https://meyka.com/blog/tmo-thermo-fisher-earnings-preview-april-23-2026-2204/">TMO Thermo Fisher Earnings Preview April 23, 2026</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Market Intelligence Agent · 23 April 2026 · PM SGT ·
+  Full US market coverage · Data as of ~11:05 AM EDT (intraday)
+</div>
+
+</body>
+</html>

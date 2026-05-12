@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Investor Intelligence Profiles — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.commentary { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; margin-bottom: 18px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; margin-right: 6px; }
+.rating-green  { background: #EAF3DE; color: #27500A; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-red    { background: #FCEBEB; color: #791F1F; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+.rating-purple { background: #EEEDFE; color: #3C3489; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; display: inline-block; margin-right: 4px; margin-bottom: 4px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-health   { background: #E1F5EE; color: #085041; }
+.s-energy   { background: #FAEEDA; color: #633806; }
+.s-finance  { background: #EAF3DE; color: #27500A; }
+.s-defence  { background: #EEEDFE; color: #3C3489; }
+.s-macro    { background: #F1EFE8; color: #444441; }
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-blue  { background: #EBF3FD; border-color: #185FA5; }
+.callout-green { background: #EAF3DE; border-color: #1D9E75; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+.verdict { background: #1a1a1a; color: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 16px; }
+.verdict-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+.verdict-text { font-size: 14px; line-height: 1.8; color: #e8e8e0; }
+.verdict-text strong { color: #fff; }
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 12px; }
+.data-table th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; letter-spacing: 0.04em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid #e8e8e0; vertical-align: top; line-height: 1.5; }
+.data-table tr:nth-child(even) td { background: #f5f4f0; }
+.data-table .highlight td { background: #EBF3FD !important; }
+.investor-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; }
+.investor-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+.investor-name { font-size: 18px; font-weight: 700; color: #1a1a1a; }
+.investor-name-cn { font-size: 13px; color: #888; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; margin-top: 2px; }
+.investor-role { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.toc { background: #f0efe8; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 2rem; }
+.toc-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #888; margin-bottom: 10px; }
+.toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.toc-item { font-size: 12px; color: #185FA5; line-height: 1.8; cursor: pointer; }
+.toc-item:hover { text-decoration: underline; }
+.group-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #aaa; margin-bottom: 8px; margin-top: 4px; }
+@media (max-width: 600px) {
+  .cases { grid-template-columns: 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .data-table { font-size: 11px; }
+  .data-table th, .data-table td { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="doc-header">
+  <div class="doc-tag">INTELLIGENCE PROFILE · 投资人情报档案</div>
+  <div class="doc-title">AI Investor Profiles: Backgrounds, Achievements &amp; Theses</div>
+  <div class="doc-title-cn">人工智能投资人全景报告：背景、成就与投资逻辑</div>
+  <div class="doc-meta">17 Investors Profiled · Sources: Wikipedia, Fortune, Bloomberg, TechCrunch, Britannica · Compiled May 2026</div>
+</div>
+
+<!-- ── TABLE OF CONTENTS ── -->
+<div class="toc">
+  <div class="toc-title">Contents · 目录</div>
+  <div class="toc-grid">
+    <div><div class="group-label">OpenAI / AI Lab Alumni</div>
+      <a class="toc-item" href="#aschenbrenner">Leopold Aschenbrenner</a><br>
+      <a class="toc-item" href="#karpathy">Andrej Karpathy</a><br>
+      <a class="toc-item" href="#friedman">Nat Friedman</a><br>
+      <a class="toc-item" href="#gross">Daniel Gross</a>
+    </div>
+    <div><div class="group-label">AI-Focused VCs</div>
+      <a class="toc-item" href="#huang">Sonya Huang</a><br>
+      <a class="toc-item" href="#gil">Elad Gil</a><br>
+      <a class="toc-item" href="#khosla">Vinod Khosla</a><br>
+      <a class="toc-item" href="#andreessen">Marc Andreessen</a><br>
+      <a class="toc-item" href="#sguo">Sarah Guo</a><br>
+      <a class="toc-item" href="#sacks">David Sacks</a>
+    </div>
+    <div><div class="group-label">Hedge Funds / Macro Traders</div>
+      <a class="toc-item" href="#wood">Cathie Wood</a><br>
+      <a class="toc-item" href="#druckenmiller">Stanley Druckenmiller</a><br>
+      <a class="toc-item" href="#tepper">David Tepper</a>
+    </div>
+    <div><div class="group-label">Tech Founder-Investors</div>
+      <a class="toc-item" href="#collison">Patrick Collison</a><br>
+      <a class="toc-item" href="#altman">Sam Altman</a><br>
+      <a class="toc-item" href="#lutke">Tobi Lütke</a><br>
+      <a class="toc-item" href="#hassabis">Demis Hassabis</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">EXECUTIVE SUMMARY · 执行摘要</div>
+  <div class="section-title">Comparative Overview of 17 Elite AI Investors</div>
+  <div class="section-title-cn">17位顶级人工智能投资人对比概览</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    This report profiles 17 of the most closely watched investors, operators, and allocators at the intersection of artificial intelligence and capital markets. They span four archetypes: <strong>AI lab insiders</strong> who possess technical foresight from building frontier models; <strong>AI-focused VCs</strong> who deploy early-stage capital into the application and infrastructure layers; <strong>macro hedge fund managers</strong> who use public market positioning and 13F filings to signal large-scale thematic conviction; and <strong>tech founder-investors</strong> whose operating experience in building technology companies at scale informs both their strategic commentary and their capital allocation.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本报告涵盖17位在人工智能与资本市场交汇处备受关注的投资人、运营者与资本配置者。他们分属四种类型：<strong>AI实验室内部人士</strong>（拥有前沿模型构建经验带来的技术前瞻性）、<strong>专注AI的风险投资人</strong>（在应用层与基础设施层部署早期资本）、<strong>宏观对冲基金经理</strong>（通过公开市场持仓与13F文件传递大规模主题投资信念）以及<strong>科技创始人投资者</strong>（丰富的大规模科技公司运营经验为其策略评论与资本配置提供依据）。</div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-label">Signal Note · 信号说明</div>
+    <div class="callout-text">All factual claims in this report are sourced from publicly available, verifiable records (Wikipedia, SEC filings, major financial press). No information has been fabricated. Where AUM figures appear, they reflect the most recently disclosed public data and are subject to change.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本报告所有事实陈述均来源于公开可核实记录（维基百科、SEC文件、主流财经媒体）。所有信息均经过核实，未有任何捏造内容。AUM数字反映最新公开披露数据，可能随时发生变化。</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Investor</th>
+        <th>Category</th>
+        <th>Fund / Base</th>
+        <th>Core AI Thesis</th>
+        <th>Signal Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Leopold Aschenbrenner</strong></td>
+        <td><span class="sector-pill s-tech">AI Lab Alum</span></td>
+        <td>Situational Awareness Fund (~$5.5B)</td>
+        <td>AGI = energy + compute bottleneck; power infra is the trade</td>
+        <td>13F, X posts, essays</td>
+      </tr>
+      <tr>
+        <td><strong>Andrej Karpathy</strong></td>
+        <td><span class="sector-pill s-tech">AI Lab Alum</span></td>
+        <td>Eureka Labs / Angel</td>
+        <td>Model capability signals; AI education; early-stage LLM apps</td>
+        <td>X posts, research, lectures</td>
+      </tr>
+      <tr>
+        <td><strong>Nat Friedman</strong></td>
+        <td><span class="sector-pill s-tech">AI Lab Alum</span></td>
+        <td>C2 Investments / Meta AI</td>
+        <td>Developer tooling; AI-native apps; open-source models</td>
+        <td>X posts, portfolio signals</td>
+      </tr>
+      <tr>
+        <td><strong>Daniel Gross</strong></td>
+        <td><span class="sector-pill s-tech">AI Lab Alum</span></td>
+        <td>C2 Investments / Meta AI</td>
+        <td>Applied AI agents; compute infra; enterprise AI</td>
+        <td>X posts, portfolio signals</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>Sonya Huang</strong></td>
+        <td><span class="sector-pill s-finance">VC</span></td>
+        <td>Sequoia Capital</td>
+        <td>AI-native apps replacing legacy SaaS; application layer dominance</td>
+        <td>Reports, X, podcast</td>
+      </tr>
+      <tr>
+        <td><strong>Elad Gil</strong></td>
+        <td><span class="sector-pill s-finance">VC</span></td>
+        <td>Gil Capital ($1.5B fund)</td>
+        <td>Infrastructure + incumbents barbell; pick-and-shovel AI</td>
+        <td>Blog, X, podcast</td>
+      </tr>
+      <tr>
+        <td><strong>Vinod Khosla</strong></td>
+        <td><span class="sector-pill s-finance">VC</span></td>
+        <td>Khosla Ventures</td>
+        <td>AI replaces 80% of professional labor; humanoid robotics; biotech</td>
+        <td>X, slide decks, media</td>
+      </tr>
+      <tr>
+        <td><strong>Marc Andreessen</strong></td>
+        <td><span class="sector-pill s-finance">VC</span></td>
+        <td>a16z (tens of $B AUM)</td>
+        <td>Techno-optimism; open-source AI; US tech dominance</td>
+        <td>X, Substack, media</td>
+      </tr>
+      <tr>
+        <td><strong>Sarah Guo</strong></td>
+        <td><span class="sector-pill s-finance">VC</span></td>
+        <td>Conviction ($101M+)</td>
+        <td>AI-first B2B; agents replacing SaaS workflows</td>
+        <td>X, podcast, portfolio</td>
+      </tr>
+      <tr>
+        <td><strong>David Sacks</strong></td>
+        <td><span class="sector-pill s-defence">Policy / VC</span></td>
+        <td>Craft Ventures / Former US Czar</td>
+        <td>Enterprise AI; crypto; US AI regulatory direction</td>
+        <td>All-In podcast, policy signals</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>Cathie Wood</strong></td>
+        <td><span class="sector-pill s-macro">Hedge Fund</span></td>
+        <td>ARK Invest</td>
+        <td>AI + genomics + blockchain convergence; 5-year price targets</td>
+        <td>Daily trades, ETF disclosures</td>
+      </tr>
+      <tr>
+        <td><strong>Stanley Druckenmiller</strong></td>
+        <td><span class="sector-pill s-macro">Hedge Fund</span></td>
+        <td>Duquesne Family Office (~$4B)</td>
+        <td>AI capex cycle; macro + infrastructure plays</td>
+        <td>Quarterly 13F filings, rare interviews</td>
+      </tr>
+      <tr>
+        <td><strong>David Tepper</strong></td>
+        <td><span class="sector-pill s-macro">Hedge Fund</span></td>
+        <td>Appaloosa Management (~$8B)</td>
+        <td>AI mega-cap equities; Mag7 + AI memory/infra</td>
+        <td>Quarterly 13F filings, media</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>Patrick Collison</strong></td>
+        <td><span class="sector-pill s-tech">Founder-Investor</span></td>
+        <td>Stripe CEO / Angel LP</td>
+        <td>AI infrastructure; scientific progress; long-term societal bets</td>
+        <td>Essays, X, LP signals</td>
+      </tr>
+      <tr>
+        <td><strong>Sam Altman</strong></td>
+        <td><span class="sector-pill s-tech">Founder-Investor</span></td>
+        <td>OpenAI CEO / Personal Portfolio</td>
+        <td>AI models; nuclear energy; robotics; 400+ company portfolio</td>
+        <td>X, media, product launches</td>
+      </tr>
+      <tr>
+        <td><strong>Tobi Lütke</strong></td>
+        <td><span class="sector-pill s-tech">Founder-Investor</span></td>
+        <td>Shopify CEO ($12.3B net worth)</td>
+        <td>AI-first business transformation; elimination of routine work</td>
+        <td>X, media interviews</td>
+      </tr>
+      <tr>
+        <td><strong>Demis Hassabis</strong></td>
+        <td><span class="sector-pill s-health">Founder-Investor</span></td>
+        <td>Google DeepMind CEO</td>
+        <td>AGI research; scientific discovery via AI; protein/drug AI</td>
+        <td>Research papers, rare interviews</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">上表对比了17位投资人的所属类别、管理基金、核心AI投资逻辑及信号来源。总体而言，<strong>AI实验室系</strong>投资人以基础设施与能源为主要赌注；<strong>VC系</strong>侧重应用层与"铲子股"布局；<strong>对冲基金系</strong>以公开市场持仓与季报申报为主要信号来源；<strong>创始人系</strong>投资人的运营视角为其市场评论提供了独特的先验信息。</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 1: OpenAI / AI Lab Alumni
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">OpenAI &amp; AI Lab Alumni</div>
+  <div class="section-title-cn">OpenAI及AI实验室系投资人</div>
+  <div class="section-divider"></div>
+
+  <!-- Leopold Aschenbrenner -->
+  <div class="investor-card" id="aschenbrenner">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Leopold Aschenbrenner</div>
+        <div class="investor-name-cn">利奥波德·阿申布伦纳</div>
+        <div class="investor-role">Founder, Situational Awareness Fund</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">AI Lab Alum</span>
+        <span class="rating rating-amber">Macro/Infra</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-energy">Energy</span>
+      <span class="sector-pill s-tech">Compute</span>
+      <span class="sector-pill s-defence">Defence</span>
+      <span class="sector-pill s-tech">Bitcoin Miners</span>
+    </div>
+
+    <div class="body-text">
+      Born around 2001, Leopold Aschenbrenner graduated as <strong>valedictorian from Columbia University in 2021 at the age of 19</strong>, double-majoring in economics and mathematics-statistics — one of the youngest valedictorians in the university's modern history. While at Columbia, he co-founded the university's effective altruism chapter, an early signal of his deep engagement with long-term risk and civilizational-scale thinking. He briefly worked at the philanthropy arm of Sam Bankman-Fried's FTX exchange before pivoting to AI research.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">阿申布伦纳约生于2001年，<strong>2021年以19岁高龄以年级第一身份毕业于哥伦比亚大学</strong>，主修经济学与数学统计，是该校近代史上最年轻的毕业致辞代表之一。在校期间，他联合创立了校内有效利他主义俱乐部，展现出其对长期风险与文明尺度议题的深度关注。他曾短暂供职于FTX旗下的慈善机构，后转型从事AI研究。</div>
+    </div>
+
+    <div class="body-text">
+      Aschenbrenner joined OpenAI in 2023 as a researcher on the <strong>Superalignment team</strong>, a group tasked with developing technical methods to control AI systems more powerful than humans. He authored an internal memo warning OpenAI's board that the company's security protocols were insufficient to prevent foreign espionage — a warning that created friction with leadership. He was fired in April 2024, an event he publicly disputed. Rather than retreat, he converted the dismissal into a platform: in June 2024, he self-published the landmark <strong>"Situational Awareness: The Decade Ahead"</strong> — a 165-page essay series that became required reading in Silicon Valley and positioned him as the defining voice on AGI timelines and geopolitical AI risk.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">阿申布伦纳于2023年加入OpenAI，任职于<strong>超级对齐团队</strong>，该团队专注于研究如何控制比人类更强大的AI系统。他撰写了一份内部备忘录，警告OpenAI董事会公司的安全协议不足以防范外国间谍活动，此举在内部引发摩擦。2024年4月他遭到解雇，对此他公开表示异议。然而他将这次解雇转化为发声平台：2024年6月，他自行发布了里程碑式的<strong>《情境意识：未来十年》</strong>——165页的系列文章，迅速成为硅谷必读文本，使其成为AGI时间线与地缘政治AI风险领域最具影响力的声音。</div>
+    </div>
+
+    <div class="body-text">
+      Backed by Nat Friedman, Daniel Gross, and Patrick and John Collison (among others), Aschenbrenner launched the <strong>Situational Awareness Fund</strong>. By 2025 the fund controlled over $1.5 billion in assets; by February 2026 it had grown to <strong>$5.52 billion across 29 holdings</strong>. His core investment thesis is that the path to AGI is bottlenecked not by algorithms but by physical infrastructure: power generation, cooling, and silicon manufacturing. Key reported positions include <strong>Bloom Energy, CoreWeave, Lumentum, Bitcoin miners (IREN, Riot Platforms, Cipher Mining)</strong>, and options on Intel — a portfolio that effectively bets that energy becomes the scarcest resource in the age of superintelligence.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">在弗里德曼、格罗斯及科利森兄弟等人的支持下，阿申布伦纳创立了<strong>情境意识基金</strong>。至2025年，该基金管理资产超15亿美元；截至2026年2月，已增长至<strong>55.2亿美元，持有29只股票</strong>。其核心投资逻辑是：通往AGI的道路并不受制于算法，而是受制于物理基础设施——电力、散热与芯片制造。已披露的主要持仓包括<strong>Bloom Energy、CoreWeave、Lumentum、比特币矿商（IREN、Riot Platforms、Cipher Mining）</strong>以及英特尔期权——该投资组合实质上押注于"超级智能时代能源将成为最稀缺资源"这一主题。</div>
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Strengths · 优势</div>
+        <div class="bull-text">Insider knowledge of AI scaling dynamics. Rapid AUM growth validates thesis. Strong LP network (Collisons, Friedman, Gross).</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">Watch Risks · 风险</div>
+        <div class="bear-text">Young fund with limited public track record. AGI timeline uncertainty. Energy thesis depends on sustained capex cycles.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Andrej Karpathy -->
+  <div class="investor-card" id="karpathy">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Andrej Karpathy</div>
+        <div class="investor-name-cn">安德烈·卡帕西</div>
+        <div class="investor-role">Founder, Eureka Labs; Former Tesla Director of AI; OpenAI Co-Founder</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">AI Researcher</span>
+        <span class="rating rating-green">Tech Signal</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">LLM Research</span>
+      <span class="sector-pill s-tech">Autonomous Vehicles</span>
+      <span class="sector-pill s-tech">AI Education</span>
+    </div>
+
+    <div class="body-text">
+      Born in Bratislava, Slovakia, Karpathy moved to Toronto at age 15. He completed a BSc in Computer Science and Physics at the University of Toronto (2009), an MSc at UBC (2011), and a <strong>PhD at Stanford in 2015</strong> under Fei-Fei Li, focusing on the intersection of natural language processing and computer vision — one of the most prescient research directions of his generation. He was a founding research scientist at OpenAI from 2015 to 2017, working on deep learning, reinforcement learning, and generative modelling in the organisation's earliest days.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">卡帕西生于斯洛伐克布拉迪斯拉发，15岁移居多伦多。他先后在多伦多大学取得计算机科学与物理学学士学位（2009年）、在英属哥伦比亚大学取得硕士学位（2011年），并于2015年在<strong>斯坦福大学</strong>师从李飞飞完成博士学业，研究方向为自然语言处理与计算机视觉的交叉领域，堪称其一代最具前瞻性的研究方向之一。他是OpenAI的创始研究科学家（2015—2017年），在该机构成立初期从事深度学习、强化学习与生成式建模工作。</div>
+    </div>
+
+    <div class="body-text">
+      At Tesla (2017–2022) as <strong>Director of Artificial Intelligence</strong>, Karpathy oversaw the transformation of the Autopilot system from a radar-and-camera hybrid into a <strong>pure vision-based neural network</strong> — a controversial but technically audacious decision that influenced the entire autonomous driving industry. After a brief return to OpenAI (2023–2024), he founded <strong>Eureka Labs</strong> in July 2024, an AI-native education company aimed at using AI teaching assistants to make expert-level education universally accessible. His income derives primarily from Tesla stock options earned during his tenure, advisory roles, and angel investments in AI companies.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">在特斯拉担任<strong>人工智能总监</strong>（2017—2022年）期间，卡帕西主导了Autopilot系统从雷达摄像头混合方案向<strong>纯视觉神经网络</strong>的技术转型——这一颇具争议但技术上极为大胆的决策深刻影响了整个自动驾驶行业。短暂回归OpenAI后（2023—2024年），他于2024年7月创立了<strong>Eureka Labs</strong>，一家以人工智能教学助手为核心的AI原生教育公司，旨在让专家级教育触手可及。其收入主要来自特斯拉期权、顾问角色及AI公司天使投资。</div>
+    </div>
+
+    <div class="body-text">
+      Karpathy's value as a signal source is <strong>technical rather than financial</strong>. When he comments publicly on model capability milestones — e.g., his assessments of GPT-4, LLaMA, or training dynamics — those statements carry outsized weight because they come from someone who has trained frontier models at both OpenAI and Tesla. He was named to <strong>TIME's 100 Most Influential People in AI (2024)</strong>. His free educational content (including the popular "Neural Networks: Zero to Hero" YouTube series) has become a primary on-ramp for the next generation of AI engineers.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">卡帕西作为信号来源的价值在于<strong>技术层面而非财务层面</strong>。当他公开评论模型能力里程碑时——例如对GPT-4、LLaMA或训练动力学的判断——这些观点具有超乎寻常的参考价值，因为他是在OpenAI和特斯拉均训练过前沿模型的少数人之一。他入选<strong>《时代》2024年百位最具影响力AI人物</strong>。他的免费教育内容（包括广受欢迎的YouTube系列"神经网络：从零到英雄"）已成为新一代AI工程师的主要入门资源。</div>
+    </div>
+  </div>
+
+  <!-- Nat Friedman -->
+  <div class="investor-card" id="friedman">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Nat Friedman</div>
+        <div class="investor-name-cn">纳特·弗里德曼</div>
+        <div class="investor-role">Co-lead, Meta Superintelligence Labs; Former GitHub CEO; Co-founder, C2 Investments</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">AI Lab / VC</span>
+        <span class="rating rating-green">Builder-Investor</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">Developer Tools</span>
+      <span class="sector-pill s-tech">Open-Source AI</span>
+      <span class="sector-pill s-tech">AI Compute</span>
+    </div>
+
+    <div class="body-text">
+      Nat Friedman holds a BS in Computer Science and Mathematics from MIT (1999). In 1999, he co-founded <strong>Ximian</strong> with Miguel de Icaza to build GNOME desktop applications, later founding <strong>Xamarin</strong> in 2011 — a cross-platform mobile development tools company that Microsoft acquired in 2016. These back-to-back operator exits established Friedman as a serious builder long before his VC career. He became <strong>CEO of GitHub in October 2018</strong>, where he oversaw one of the most consequential product launches in AI history: <strong>GitHub Copilot</strong> — the first widely adopted, commercially successful generative AI product. He stepped down in November 2021.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">弗里德曼持有麻省理工学院计算机科学与数学学士学位（1999年）。1999年，他与米格尔·德·伊卡萨联合创立了<strong>Ximian</strong>，后于2011年创立了<strong>Xamarin</strong>——一家跨平台移动开发工具公司，于2016年被微软收购。连续两次创业退出奠定了他作为资深构建者的地位。2018年10月出任<strong>GitHub CEO</strong>，任内主导了AI史上最具影响力的产品发布之一：<strong>GitHub Copilot</strong>——第一个被广泛采用的商业化成功生成式AI产品。2021年11月卸任。</div>
+    </div>
+
+    <div class="body-text">
+      Alongside Daniel Gross, Friedman co-founded <strong>C2 Investments</strong> and the <strong>AI Grant</strong> programme, which provides $250,000 to AI-native startups. They also co-deployed the <strong>Andromeda Cluster</strong> in 2023 — a $100 million supercomputer of 2,512 NVIDIA H100 GPUs — directly to their portfolio companies, providing compute before most AI startups could access it commercially. Portfolio highlights include: Perplexity AI, Character.ai, Safe Superintelligence (SSI), HeyGen, Magic, Suno, Weights &amp; Biases, Pika, and EvolutionaryScale. He was an LP in the Situational Awareness Fund and joined <strong>Meta Superintelligence Labs as co-lead in June 2025</strong> alongside Alexandr Wang.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">弗里德曼与丹尼尔·格罗斯联合创立了<strong>C2 Investments</strong>与<strong>AI Grant</strong>项目（为AI原生初创公司提供25万美元资助）。二人还于2023年联合部署了<strong>仙女座集群</strong>——一台耗资约1亿美元、配备2512块英伟达H100 GPU的超级计算机，直接向其投资组合公司提供算力。主要投资包括：Perplexity AI、Character.ai、Safe Superintelligence（SSI）、HeyGen、Magic、Suno、Weights & Biases、Pika及EvolutionaryScale。他是情境意识基金的LP，并于<strong>2025年6月与王仲阳联合加入Meta超级智能实验室担任联席负责人</strong>。</div>
+    </div>
+  </div>
+
+  <!-- Daniel Gross -->
+  <div class="investor-card" id="gross">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Daniel Gross</div>
+        <div class="investor-name-cn">丹尼尔·格罗斯</div>
+        <div class="investor-role">AI Product Lead, Meta; Co-founder, Safe Superintelligence; Co-founder, C2 Investments</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">AI Insider</span>
+        <span class="rating rating-green">Builder-Investor</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI Agents</span>
+      <span class="sector-pill s-tech">AI Infrastructure</span>
+      <span class="sector-pill s-tech">Enterprise AI</span>
+    </div>
+
+    <div class="body-text">
+      Born in Jerusalem in 1991 to American parents, Daniel Gross grew up in the Katamon neighborhood and embodies the archetype of the precociously entrepreneurial immigrant: he applied to Y Combinator at age 18 on "a whim," founded the search engine <strong>Greplin (later Cue)</strong> as a teenager, and sold it to Apple for a reported $40–60 million at age 22. He then led Apple's AI and search projects from 2013 to 2017 — giving him rare access to production-scale machine learning before the current generation of AI tools existed.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">格罗斯1991年生于耶路撒冷，父母为美国人，在卡塔蒙社区长大，是典型的早熟移民创业者：他18岁"冲动"申请了YC，十几岁时创立了搜索引擎<strong>Greplin（后更名为Cue）</strong>，22岁以据报4000至6000万美元出售给苹果。此后，他于2013至2017年主导苹果的AI与搜索项目，在当前AI工具诞生之前便积累了罕见的生产级机器学习实战经验。</div>
+    </div>
+
+    <div class="body-text">
+      As a <strong>Y Combinator partner from 2017 to 2021</strong>, Gross created the dedicated "YC AI" programme and launched <strong>Pioneer</strong>, a global early-stage accelerator. With Nat Friedman, he built C2 Investments and the Andromeda Cluster. His venture bets include pre-launch positions in Uber, Instacart, Figma, Rippling, Airtable, GitHub, and early-stage stakes in CoreWeave and Perplexity AI. He was named to <strong>TIME's 100 Most Influential People in AI (2023)</strong>. In June 2024, he co-founded <strong>Safe Superintelligence (SSI)</strong> with former OpenAI Chief Scientist Ilya Sutskever — a stealth safety-focused AI lab — before departing in mid-2025 to join Meta's AI product division.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">格罗斯于<strong>2017至2021年担任Y Combinator合伙人</strong>，创立了专属的"YC AI"项目并发起了<strong>Pioneer</strong>全球早期加速器。与弗里德曼共同构建了C2 Investments与仙女座集群。其风险投资押注包括Uber、Instacart、Figma、Rippling、Airtable、GitHub的早期股份，以及CoreWeave和Perplexity AI的早期投资。他入选<strong>《时代》2023年百位最具影响力AI人物</strong>。2024年6月，他与前OpenAI首席科学家伊尔亚·苏茨克弗联合创立了<strong>Safe Superintelligence（SSI）</strong>，专注于AI安全研究；2025年中期离开SSI，加入Meta AI产品部门。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 2: AI-Focused VCs
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">AI-Focused Venture Capitalists</div>
+  <div class="section-title-cn">专注人工智能的风险投资人</div>
+  <div class="section-divider"></div>
+
+  <!-- Sonya Huang -->
+  <div class="investor-card" id="huang">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Sonya Huang</div>
+        <div class="investor-name-cn">黄颂茹</div>
+        <div class="investor-role">Partner, Sequoia Capital</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">VC · Growth</span>
+        <span class="rating rating-green">AI Applications</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">Generative AI</span>
+      <span class="sector-pill s-tech">AI SaaS</span>
+      <span class="sector-pill s-tech">AI Infrastructure</span>
+    </div>
+
+    <div class="body-text">
+      Sonya Huang trained neural networks on brain scans and astrophysics data as an undergraduate, combining an economics education with hands-on CS and ML exposure. She worked as an <strong>investment banking analyst at Goldman Sachs</strong> and as a <strong>private equity associate at TPG Global</strong> before joining Sequoia Capital, where she has been a General Partner since September 2018. At Sequoia, she focuses on the growth team's AI and data/infrastructure portfolio. Her academic and professional formation — economics training for market analysis, computer science for technical differentiation, and ML fluency for trajectory assessment — made her one of Sequoia's sharpest evaluators of AI opportunity.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">黄颂茹在本科阶段便已在脑部扫描与天体物理数据上训练神经网络，将经济学教育与计算机科学及机器学习的实践经验相结合。她曾任<strong>高盛投资银行分析师</strong>及<strong>TPG全球私募股权助理</strong>，此后加入红杉资本，自2018年9月起担任普通合伙人。在红杉，她专注于增长团队的AI与数据/基础设施投资组合。其学术与职业背景——经济学训练用于市场分析、计算机科学用于技术差异化评估、机器学习流畅度用于趋势判断——使她成为红杉最敏锐的AI机会评估者之一。</div>
+    </div>
+
+    <div class="body-text">
+      Huang led or co-led Sequoia's investments in <strong>OpenAI, Hugging Face, LangChain, Mercury, Streamlit, Glean, Gong, and Fireworks AI</strong>. She co-authored Sequoia's seminal 2022 report <strong>"Generative AI: A Creative New World"</strong> — among the first major VC frameworks to coherently map the generative AI stack — which became required strategic reading across Silicon Valley. She holds board positions at Mercury, Fireworks AI, Gong, and LangChain, hosts Sequoia's <strong>"Training Data" AI podcast</strong>, and co-organises the annual <strong>AI Ascent</strong> conference. In 2025, she appeared on the <strong>Midas List</strong> of top VC investors.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">黄颂茹主导或联合主导了红杉对<strong>OpenAI、Hugging Face、LangChain、Mercury、Streamlit、Glean、Gong及Fireworks AI</strong>的投资。她联合撰写了红杉2022年里程碑式报告<strong>《生成式AI：一个富有创造力的新世界》</strong>——这是最早系统梳理生成式AI技术栈的主流VC框架之一，迅速成为硅谷战略必读文本。她在Mercury、Fireworks AI、Gong和LangChain担任董事会成员，主持红杉<strong>"训练数据"AI播客</strong>，并联合组织年度<strong>AI Ascent</strong>大会。2025年，她荣登<strong>Midas榜</strong>。</div>
+    </div>
+  </div>
+
+  <!-- Elad Gil -->
+  <div class="investor-card" id="gil">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Elad Gil</div>
+        <div class="investor-name-cn">伊莱德·吉尔</div>
+        <div class="investor-role">Solo Capitalist, Gil Capital; Author, High Growth Handbook</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">Solo VC</span>
+        <span class="rating rating-green">40+ Unicorns</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI Infrastructure</span>
+      <span class="sector-pill s-health">Biotech AI</span>
+      <span class="sector-pill s-tech">Enterprise SaaS</span>
+    </div>
+
+    <div class="body-text">
+      Elad Gil holds a PhD from MIT in biology/mathematics and spent formative years at Google, where he <strong>started Google's mobile team, was involved in the Android acquisition, and was the original PM for Google Mobile Maps</strong> — products that collectively reached billions of users. He joined Twitter via the acquisition of his startup MixerLabs (GeoAPI), subsequently serving as VP of Corporate Strategy. He later co-founded <strong>Color Genomics</strong>, a genomic health company backed by T. Rowe Price and General Catalyst. This background — researcher, product operator, founder, and executive — is unusually broad for a solo investor.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">伊莱德·吉尔持有麻省理工学院生物学/数学博士学位，早年在谷歌担任要职——<strong>创建了谷歌移动团队、参与了Android收购，并担任谷歌移动地图的首位产品经理</strong>，相关产品后来触达数十亿用户。他通过其创业公司MixerLabs被收购而加入Twitter，后出任企业战略副总裁。他还联合创立了基因组健康公司<strong>Color Genomics</strong>，获T. Rowe Price和General Catalyst投资。这种研究员、产品运营者、创始人与高管的复合背景，对于一位单独VC而言极为罕见。</div>
+    </div>
+
+    <div class="body-text">
+      Operating as CEO of Gil Capital, Elad Gil has backed <strong>over 40 unicorns</strong>, including Airbnb, Coinbase, Stripe, Square, Figma, Airtable, Anduril, Gusto, Instacart, Notion, Pinterest, Retool, and Rippling. In the AI wave, he was an early investor in <strong>Perplexity AI, Character.AI, Mistral, Harvey, Pika, Anthropic, Scale AI, and Inflection</strong>. He co-hosts the <strong>"No Priors" podcast</strong> with Sarah Guo and is the author of the widely-cited <em>High Growth Handbook</em>. In 2025, he was reported to be raising a <strong>$1.5 billion fund</strong> and has identified <strong>AI-powered roll-ups</strong> (acquiring traditional businesses and transforming them with AI) as his next thesis.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">作为Gil Capital的CEO，伊莱德·吉尔已投资<strong>超过40家独角兽企业</strong>，包括Airbnb、Coinbase、Stripe、Square、Figma、Airtable、Anduril、Gusto、Instacart、Notion、Pinterest、Retool和Rippling。在本轮AI浪潮中，他是<strong>Perplexity AI、Character.AI、Mistral、Harvey、Pika、Anthropic、Scale AI及Inflection</strong>的早期投资人。他与郭莎拉联合主持<strong>"No Priors"播客</strong>，并著有广受引用的《高增长手册》。2025年，据报道他正在募集<strong>15亿美元基金</strong>，并将<strong>AI驱动的并购整合</strong>（收购传统企业并以AI改造之）确定为其下一阶段投资逻辑。</div>
+    </div>
+  </div>
+
+  <!-- Vinod Khosla -->
+  <div class="investor-card" id="khosla">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Vinod Khosla</div>
+        <div class="investor-name-cn">维诺德·科斯拉</div>
+        <div class="investor-role">Founder, Khosla Ventures; Co-founder, Sun Microsystems</div>
+      </div>
+      <div>
+        <span class="rating rating-amber">Contrarian VC</span>
+        <span class="rating rating-blue">Silicon Valley Legend</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-health">Biotech / Robotics</span>
+      <span class="sector-pill s-tech">AI Labor Disruption</span>
+      <span class="sector-pill s-energy">Clean Energy</span>
+    </div>
+
+    <div class="body-text">
+      Born in Pune, India in 1955, Vinod Khosla holds an MS in Biomedical Engineering from Carnegie Mellon University and an MBA from Stanford GSB. At 27, he <strong>co-founded Sun Microsystems in 1982</strong> with Andy Bechtolsheim — pioneering open systems and RISC processors. Within five years Sun reached $1 billion in annual revenue, a then-extraordinary growth curve. In 1986, Khosla joined <strong>Kleiner Perkins</strong>, where he made a series of prescient bets: helping Excite adapt its search engine for the internet, funding Cerent (an $8M investment that returned $2.4 billion in three years), and backing the first significant Intel clone via Nexgen.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">科斯拉1955年生于印度浦那，持有卡内基梅隆大学生物医学工程硕士学位及斯坦福大学商学院MBA学位。27岁时，他于1982年与安迪·贝克托尔斯海姆<strong>联合创立了Sun Microsystems</strong>，开创了开放系统与RISC处理器的先河。公司在五年内营收达到10亿美元，增速在当时极为罕见。1986年加入<strong>凯鹏华盈</strong>，随后做出一系列前瞻性押注：帮助Excite将搜索引擎适配互联网、以800万美元投资Cerent并在三年内获得24亿美元回报、支持第一家重要的英特尔兼容芯片公司Nexgen。</div>
+    </div>
+
+    <div class="body-text">
+      Khosla founded <strong>Khosla Ventures in 2004</strong>, building a firm around "black swan" technologies that most investors deemed impossible — clean energy, synthetic biology, AI robotics. He was the <strong>first institutional venture capital investor in OpenAI in 2019</strong>. His portfolio includes Square, Affirm, DoorDash, Impossible Foods, Figure AI, and Bloom Energy. His core AI thesis is among the most provocative in the industry: that <strong>AI will replace 80% of professional labor</strong> (doctors, lawyers, engineers), leading to utopian economic abundance through infinite cheap intelligence. He is known for unfiltered, combative public commentary on X and his willingness to take extreme positions decades before the mainstream catches up.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">科斯拉于<strong>2004年创立Khosla Ventures</strong>，围绕大多数投资人认为不可能实现的"黑天鹅"技术构建投资组合——清洁能源、合成生物学、AI机器人。他是<strong>2019年OpenAI的首位机构风险投资人</strong>。其投资组合包括Square、Affirm、DoorDash、Impossible Foods、Figure AI和Bloom Energy。他的核心AI观点是业内最具争议性的：<strong>AI将取代80%的专业劳动力</strong>（医生、律师、工程师），通过无限廉价智能创造乌托邦式的经济富足。他以在X上不加过滤、极具攻击性的公开评论著称，敢于在主流接受之前数十年坚持极端立场。</div>
+    </div>
+  </div>
+
+  <!-- Marc Andreessen -->
+  <div class="investor-card" id="andreessen">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Marc Andreessen</div>
+        <div class="investor-name-cn">马克·安德森</div>
+        <div class="investor-role">Co-Founder &amp; General Partner, Andreessen Horowitz (a16z)</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">Tier-1 VC</span>
+        <span class="rating rating-green">Internet Pioneer</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">Open-Source AI</span>
+      <span class="sector-pill s-tech">AI Applications</span>
+      <span class="sector-pill s-defence">Defence Tech</span>
+    </div>
+
+    <div class="body-text">
+      Marc Andreessen graduated from the University of Illinois Urbana-Champaign in 1993. As a student, he <strong>co-authored Mosaic</strong>, the first web browser to display inline images — effectively inventing the user interface of the modern web. He co-founded <strong>Netscape in 1994</strong> and its 1995 IPO ignited the first great technology boom, making Andreessen one of the central figures of the internet age. After AOL acquired Netscape, he founded Opsware with Ben Horowitz, which was acquired by Hewlett-Packard for <strong>$1.6 billion in 2007</strong>, one of the largest early cloud infrastructure exits.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">安德森1993年毕业于伊利诺伊大学厄巴纳-香槟分校。在校期间，他<strong>联合开发了Mosaic浏览器</strong>——第一个支持内嵌图片显示的网络浏览器，从而发明了现代网络的用户界面。1994年联合创立<strong>Netscape</strong>，其1995年IPO点燃了第一次互联网热潮，使安德森成为互联网时代的核心人物之一。AOL收购Netscape后，他与本·霍洛维茨创立了Opsware，并于<strong>2007年以16亿美元被惠普收购</strong>，是早期云基础设施领域规模最大的退出案例之一。</div>
+    </div>
+
+    <div class="body-text">
+      In 2009, Andreessen and Ben Horowitz launched <strong>Andreessen Horowitz (a16z)</strong>, which today manages tens of billions of dollars and is one of the most aggressive AI investors on the planet, funding Mistral, OpenAI competitors, and hundreds of application-layer startups. Portfolio landmarks include Facebook, Twitter, Airbnb, Stripe, Coinbase, Instagram, Slack, and Lyft. His 2023 publication of the <strong>"Techno-Optimist Manifesto"</strong> — framing technological stagnation as the enemy and AI as a moral imperative — made him the chief philosophical voice of techno-optimism. He is deeply opposed to AI safety "doomerism" and advocates strongly for open-source models as a safeguard against corporate monopoly.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">2009年，安德森与本·霍洛维茨共同创立了<strong>Andreessen Horowitz（a16z）</strong>，目前管理数百亿美元资产，是全球最激进的AI投资机构之一，投资了Mistral、OpenAI竞争对手及数百家应用层初创公司。标志性投资组合包括Facebook、Twitter、Airbnb、Stripe、Coinbase、Instagram、Slack和Lyft。他于2023年发布的<strong>《技术乐观主义宣言》</strong>——将技术停滞定义为公敌、将AI定义为道德必要——使他成为技术乐观主义的首席哲学代言人。他强烈反对AI安全领域的"末日论"，并大力倡导开源模型以防止企业垄断。</div>
+    </div>
+  </div>
+
+  <!-- Sarah Guo -->
+  <div class="investor-card" id="sguo">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Sarah Guo</div>
+        <div class="investor-name-cn">郭莎拉</div>
+        <div class="investor-role">Founder &amp; GP, Conviction; Host, No Priors Podcast</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">AI-Native VC</span>
+        <span class="rating rating-green">B2B Enterprise</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI Agents</span>
+      <span class="sector-pill s-tech">AI-Native SaaS</span>
+      <span class="sector-pill s-tech">Enterprise Workflow</span>
+    </div>
+
+    <div class="body-text">
+      Sarah Guo grew up in Wisconsin; her parents ran <strong>Casa</strong>, a cable and telecom infrastructure startup competing with Cisco and Ericsson, and she taught herself to code after school at their offices. She studied Finance, Economics, and Chinese at the University of Pennsylvania's Wharton School, earning both a BA/BS and an MA/MBA from the Lauder Institute, and began her career as a <strong>technology investment banker at Goldman Sachs</strong>. She became a <strong>General Partner at Greylock Partners while still in her 20s</strong> — one of the youngest GPs in the firm's history — where she spent approximately 10 years investing across software, security, crypto, and AI. In 2016, she considered leaving Greylock to co-found an AI company with Andrew Ng, an early signal of her AI conviction.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">郭莎拉在威斯康星州长大，父母经营<strong>Casa</strong>——一家与思科、爱立信竞争的有线电视与电信基础设施初创公司，她放学后在公司办公室自学编程。她就读于宾夕法尼亚大学沃顿商学院，在劳德学院修读金融学、经济学和中文，同时取得学士与MBA学位，职业起点是<strong>高盛科技投资银行家</strong>。她在<strong>20多岁时成为Greylock Partners普通合伙人</strong>——该公司历史上最年轻的GP之一——在那里投资了软件、安全、加密与AI领域约10年。2016年，她曾考虑离开Greylock与吴恩达联合创立一家AI公司，这是其AI信念的早期信号。</div>
+    </div>
+
+    <div class="body-text">
+      In 2022, Guo founded <strong>Conviction</strong>, an AI-native investing firm that raised $101 million. Her investment portfolio includes early stakes in <strong>Baseten, Cognition AI, OpenEvidence, Harvey, HeyGen, Mistral AI, Sierra Platform, Sunday Robotics, and Thinking Machines Lab</strong>. Her thesis centres on the shift from Software-as-a-Service to "Service-as-Software" — where AI agents execute work rather than merely organising it. She co-hosts the well-regarded <strong>"No Priors" podcast</strong> with Elad Gil, interviewing the most important founders and researchers in AI. She appeared on the <strong>2025 Midas Seed list</strong> of top early-stage investors.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">2022年，郭莎拉创立了<strong>Conviction</strong>，这家AI原生投资机构首轮募资1.01亿美元。其投资组合包括<strong>Baseten、Cognition AI、OpenEvidence、Harvey、HeyGen、Mistral AI、Sierra Platform、Sunday Robotics及Thinking Machines Lab</strong>的早期股份。她的投资逻辑围绕着从SaaS向"软件即服务"的转变——AI智能体执行工作而非仅仅组织工作。她与伊莱德·吉尔联合主持广受好评的<strong>"No Priors"播客</strong>，采访AI领域最重要的创始人与研究人员。她入选了<strong>2025年Midas种子榜</strong>。</div>
+    </div>
+  </div>
+
+  <!-- David Sacks -->
+  <div class="investor-card" id="sacks">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">David Sacks</div>
+        <div class="investor-name-cn">大卫·萨克斯</div>
+        <div class="investor-role">Founder, Craft Ventures; Former White House AI &amp; Crypto Czar; PayPal COO</div>
+      </div>
+      <div>
+        <span class="rating rating-amber">Policy Signal</span>
+        <span class="rating rating-blue">Enterprise VC</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">Enterprise AI</span>
+      <span class="sector-pill s-tech">Crypto / Web3</span>
+      <span class="sector-pill s-macro">US AI Policy</span>
+    </div>
+
+    <div class="body-text">
+      David Sacks was born in Cape Town, South Africa, and emigrated to Tennessee at age five. He attended Stanford University where he met Peter Thiel, then earned a law degree from the University of Chicago. He joined PayPal in 1999 as Chief Operating Officer, becoming part of the famous <strong>"PayPal Mafia"</strong> — a cohort that also produced Elon Musk, Peter Thiel, Reid Hoffman, and others who went on to found or lead Tesla, LinkedIn, Palantir, and YouTube. After leaving PayPal, he produced the satirical film <strong><em>Thank You for Smoking</em> (2005)</strong>, a Golden Globe–nominated feature.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">萨克斯生于南非开普敦，5岁随家人移居田纳西州。他就读于斯坦福大学时结识了彼得·蒂尔，后取得芝加哥大学法律学位。1999年加入PayPal出任首席运营官，成为著名<strong>"PayPal黑手党"</strong>的核心成员——该群体还孕育了埃隆·马斯克、彼得·蒂尔、里德·霍夫曼等人，后来分别创立或领导了特斯拉、领英、Palantir和YouTube。离开PayPal后，他制作了讽刺电影<strong>《感谢你抽烟》（2005年）</strong>，获金球奖提名。</div>
+    </div>
+
+    <div class="body-text">
+      Sacks founded <strong>Yammer</strong> in 2008 (enterprise social networking), which Microsoft acquired for <strong>$1.2 billion in 2012</strong>. He launched <strong>Craft Ventures in 2017</strong>, a VC firm with a portfolio spanning over 20 unicorns including Facebook, Uber, SpaceX, Palantir, Airbnb, Reddit, Slack, Twitter, Lyft, and Affirm. He co-hosts the hugely popular <strong>"All-In" podcast</strong> with Chamath Palihapitiya, Jason Calacanis, and David Friedberg — making him one of the most listened-to voices on technology and markets. In December 2024, President Trump named him <strong>White House AI &amp; Crypto Czar</strong>, a role he held until stepping down in March 2026, making his public commentary uniquely high-signal for AI regulatory direction during that period.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">萨克斯于2008年创立了<strong>Yammer</strong>（企业社交网络平台），于<strong>2012年以12亿美元被微软收购</strong>。他于<strong>2017年创立Craft Ventures</strong>，其投资组合涵盖逾20家独角兽企业，包括Facebook、Uber、SpaceX、Palantir、Airbnb、Reddit、Slack、Twitter、Lyft和Affirm。他与查马斯·帕里哈皮提亚、贾森·卡拉卡尼斯和大卫·弗里德伯格联合主持极受欢迎的<strong>"All-In"播客</strong>，是科技与市场领域最广泛被收听的声音之一。2024年12月，特朗普总统任命他为<strong>白宫AI与加密货币总监</strong>，该职位持续至2026年3月卸任，使其在此期间的公开评论成为AI监管方向的高价值信号。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 3: Hedge Funds / Macro Traders
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Hedge Funds &amp; Macro Traders</div>
+  <div class="section-title-cn">对冲基金与宏观交易员</div>
+  <div class="section-divider"></div>
+
+  <!-- Cathie Wood -->
+  <div class="investor-card" id="wood">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Cathie Wood</div>
+        <div class="investor-name-cn">凯茜·伍德</div>
+        <div class="investor-role">Founder, CEO &amp; CIO, ARK Invest</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">Public Markets</span>
+        <span class="rating rating-amber">High Volatility</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">Disruptive Innovation</span>
+      <span class="sector-pill s-health">Genomics</span>
+      <span class="sector-pill s-tech">AI + Blockchain</span>
+    </div>
+
+    <div class="body-text">
+      Cathie Wood graduated <em>summa cum laude</em> from the University of Southern California in 1981 with a BS in Finance and Economics. She spent <strong>18 years at Jennison Associates</strong> as Chief Economist, Equity Analyst, Portfolio Manager, and Director, then co-founded Tupelo Capital Management (2000, ~$800M AUM). She served as <strong>CIO of Global Thematic Strategies at AllianceBernstein for 12 years</strong>, managing over $5 billion in assets. In 2014, after AllianceBernstein rejected her proposal for disruptive innovation ETFs as "too risky," she left and founded <strong>ARK Invest</strong> — a decision that would prove both prescient and controversial.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">凯茜·伍德1981年以优等生荣誉毕业于南加州大学，取得金融与经济学学士学位。她在<strong>Jennison Associates任职18年</strong>，历任首席经济学家、股票研究员、投资组合经理与总监，后联合创立Tupelo Capital Management（2000年，管理约8亿美元）。她在<strong>AllianceBernstein担任全球主题策略首席投资官12年</strong>，管理资产超50亿美元。2014年，在AllianceBernstein以"风险太高"为由否决她提出的颠覆性创新ETF构想后，她离开并创立了<strong>ARK Invest</strong>——这一决定被证明既有先见之明又充满争议。</div>
+    </div>
+
+    <div class="body-text">
+      ARK's flagship <strong>ARKK ETF was the best-performing global equity fund in 2020</strong> with assets over $1 billion, earning Wood the title of Bloomberg's Best Stock Picker of 2020. ARK also achieved top performance in 2023 among actively traded US ETFs. However, Morningstar identified ARKK as the <strong>third largest "wealth destroyer" fund from 2014–2023</strong>, with a cumulative loss of $7.1 billion in shareholder value over that decade — a reflection of the extreme volatility inherent in her investment style. ARK's daily trade transparency, 5-year price targets, and high-volume public commentary make Wood one of the <strong>most visible signal sources</strong> in public-market AI investing, particularly for retail investors.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">ARK旗舰基金<strong>ARKK在2020年成为全球最佳表现股票基金</strong>（资产规模超10亿美元），使伍德荣获彭博社2020年最佳选股人称号。ARK在2023年也跻身美国主动交易ETF前列。然而，晨星公司将ARKK列为<strong>2014—2023年第三大"财富毁灭者"基金</strong>，十年间累计损失股东价值71亿美元——这反映出她投资风格固有的极端波动性。ARK每日交易透明度、五年价格目标及大量公开评论，使伍德成为公开市场AI投资中<strong>最具可见度的信号来源之一</strong>，尤其对散户投资者而言。</div>
+    </div>
+  </div>
+
+  <!-- Stanley Druckenmiller -->
+  <div class="investor-card" id="druckenmiller">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Stanley Druckenmiller</div>
+        <div class="investor-name-cn">斯坦利·德鲁肯米勒</div>
+        <div class="investor-role">Founder, Duquesne Family Office; Former Lead PM, Quantum Fund (Soros)</div>
+      </div>
+      <div>
+        <span class="rating rating-green">Macro Legend</span>
+        <span class="rating rating-blue">30yr No Losing Year</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-macro">Global Macro</span>
+      <span class="sector-pill s-tech">AI Capex Cycle</span>
+      <span class="sector-pill s-energy">Infrastructure</span>
+    </div>
+
+    <div class="body-text">
+      Stanley Druckenmiller founded <strong>Duquesne Capital in 1981 with just $1 million</strong>. The fund grew to approximately $23 billion before he closed it in 2010. Over its 30-year history, Duquesne achieved <strong>average annual returns of approximately 30% with no losing years</strong> — a record widely considered one of the greatest in investment history. From 1988 to 2000, he served as lead portfolio manager for George Soros's <strong>Quantum Fund</strong>. In September 1992, Druckenmiller and Soros jointly orchestrated the short of the British pound that <strong>"broke the Bank of England"</strong> — generating more than $1 billion in profits in a single trade and precipitating the UK's exit from the European Exchange Rate Mechanism.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">德鲁肯米勒于1981年以<strong>100万美元创立了杜肯资本</strong>，该基金在2010年关闭前规模增至约230亿美元。在其30年历史中，杜肯实现了<strong>约30%的年均回报且从未出现亏损年份</strong>——这一记录被广泛认为是投资史上最伟大的之一。1988至2000年，他担任乔治·索罗斯<strong>量子基金</strong>的首席投资组合经理。1992年9月，德鲁肯米勒与索罗斯联手做空英镑，<strong>"击溃英格兰银行"</strong>——单笔交易获利逾10亿美元，并促使英国退出欧洲汇率机制。</div>
+    </div>
+
+    <div class="body-text">
+      After closing Duquesne Capital, he launched the <strong>Duquesne Family Office</strong> in 2010, which manages approximately $4 billion as of 2025 and invests across equities, fixed income, currencies, and commodities. Druckenmiller has publicly allocated to <strong>AI infrastructure plays</strong>, emphasising interest in the AI capex cycle as a macro trade — analogous to past infrastructure build-outs like fibre optic networks in the late 1990s. His quarterly <strong>13F filings</strong> are considered high-signal by institutional investors given his track record, and his rare public interviews and conference appearances (such as at Sohn and the Robin Hood Investors Conference) are closely watched for macro and sector thesis shifts.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">关闭杜肯资本后，他于2010年创立了<strong>杜肯家族办公室</strong>，截至2025年管理资产约40亿美元，投资范围覆盖股票、固定收益、外汇与大宗商品。德鲁肯米勒公开布局了<strong>AI基础设施相关投资</strong>，将AI资本支出周期视为一种宏观交易——类比于1990年代末光纤网络等历史性基础设施建设。鉴于其历史业绩，其季度<strong>13F申报文件</strong>被机构投资者视为高价值信号，而他在Sohn和Robin Hood投资者大会上罕见的公开采访与演讲，也被市场密切关注以判断其宏观与行业主题的变化。</div>
+    </div>
+  </div>
+
+  <!-- David Tepper -->
+  <div class="investor-card" id="tepper">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">David Tepper</div>
+        <div class="investor-name-cn">大卫·特珀</div>
+        <div class="investor-role">Founder &amp; President, Appaloosa Management</div>
+      </div>
+      <div>
+        <span class="rating rating-green">28% Annual Returns</span>
+        <span class="rating rating-blue">Distressed Specialist</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-finance">Distressed Debt</span>
+      <span class="sector-pill s-tech">AI Mega-Cap</span>
+      <span class="sector-pill s-tech">AI Memory / Infra</span>
+    </div>
+
+    <div class="body-text">
+      David Tepper earned a BA in Economics from the University of Pittsburgh (1978) and an MBA from Carnegie Mellon (1982). After a brief stint at Goldman Sachs, where he became <strong>head of the high-yield trading desk within six months</strong>, Tepper founded <strong>Appaloosa Management in early 1993</strong> with Jack Walton. In the fund's first six months, it delivered 57% returns, growing to $300 million AUM by 1994. Since inception, Appaloosa has achieved <strong>gross annualised returns of approximately 28%</strong>. According to Forbes, a $1 million investment at the fund's inception would be worth $181 million twenty years later.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">特珀持有匹兹堡大学经济学学士（1978年）及卡内基梅隆大学MBA学位（1982年）。在高盛短暂任职后，他在入职<strong>六个月内成为高收益交易台主管</strong>，随后于1993年初与杰克·沃顿共同创立了<strong>阿帕鲁萨资产管理公司</strong>。基金成立前六个月即实现57%回报，1994年AUM增至3亿美元。自成立以来，阿帕鲁萨实现了约<strong>28%的年均毛回报率</strong>。据福布斯估算，在基金成立之初投入100万美元，二十年后价值将达1.81亿美元。</div>
+    </div>
+
+    <div class="body-text">
+      Tepper's most celebrated trade occurred in early 2009, when he bought heavily into <strong>distressed financial stocks</strong> — including Bank of America at $3 per share — betting on government support for the banking system. His fund earned approximately <strong>$7 billion that year, with $4 billion accruing to Tepper personally</strong>, making him the top-earning hedge fund manager of 2009 per the New York Times. By early 2026, Tepper had reportedly <strong>eliminated nearly all bank stock holdings</strong> from Appaloosa and sharply increased positions in an AI memory company by 200% — signalling a rotation from traditional finance toward AI hardware and infrastructure plays, consistent with a bullish thesis on the AI compute cycle.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">特珀最具代表性的交易发生在2009年初，彼时他大量买入<strong>不良金融股</strong>——包括以每股3美元买入美国银行——押注政府将救助银行体系。其基金当年获利约<strong>70亿美元，特珀个人入账约40亿美元</strong>，成为《纽约时报》评选的2009年收入最高对冲基金经理。截至2026年初，据报道特珀已从阿帕鲁萨<strong>清仓几乎所有银行股</strong>，并将某AI内存公司仓位增加200%——这一转变信号着其从传统金融股转向AI硬件与基础设施，与看涨AI算力周期的主题一致。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION 4: Tech Founder-Investors
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Tech Founder-Investors</div>
+  <div class="section-title-cn">科技创始人投资者</div>
+  <div class="section-divider"></div>
+
+  <!-- Patrick Collison -->
+  <div class="investor-card" id="collison">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Patrick Collison</div>
+        <div class="investor-name-cn">帕特里克·科利森</div>
+        <div class="investor-role">Co-Founder &amp; CEO, Stripe; LP, Situational Awareness Fund; Meta Board Member</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">Payments / Infra</span>
+        <span class="rating rating-green">Science Funder</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI Infrastructure</span>
+      <span class="sector-pill s-health">Science / Biotech</span>
+      <span class="sector-pill s-tech">Foundational Tech</span>
+    </div>
+
+    <div class="body-text">
+      Patrick Collison was born on September 9, 1988, in County Tipperary, Ireland. He began programming at age ten and won the <strong>Young Scientist and Technology Exhibition at age 16 (2005)</strong> with Croma, a LISP-type programming language — marking him as an exceptional technical talent from adolescence. He attended MIT but dropped out in 2009. At 18, he co-founded Auctomatic with his brother John and sold it to Canada's Live Current Media for <strong>$5 million within a year</strong>. In November 2016, the Collison brothers became the <strong>world's youngest self-made billionaires</strong> at the time, with net worths exceeding $1.1 billion.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">帕特里克·科利森1988年9月9日生于爱尔兰蒂珀雷里郡，10岁开始编程，并于<strong>2005年16岁时凭借自创的LISP类编程语言Croma赢得青年科学家与技术展览奖</strong>，从少年时代便展现出卓越的技术天赋。他就读于麻省理工学院，2009年辍学创业。18岁时，他与弟弟约翰联合创立了Auctomatic，并在一年内以<strong>500万美元出售给加拿大Live Current Media</strong>。2016年11月，科利森兄弟以逾11亿美元身家成为彼时<strong>全球最年轻的白手起家亿万富翁</strong>。</div>
+    </div>
+
+    <div class="body-text">
+      Collison co-founded <strong>Stripe in 2010</strong> with his brother John, building it into one of the world's most valuable private companies and the backbone of internet commerce infrastructure. He co-founded the <strong>Arc Institute (2021)</strong>, a non-profit biomedical research organisation, and launched <strong>Fast Grants (2020)</strong> with economist Tyler Cowen to rapidly fund COVID-19 science — which disbursed millions in days, demonstrating a sharp view on how institutional science moves too slowly. He is an <strong>LP in the Situational Awareness Fund</strong>, joined the <strong>Meta board of directors in April 2025</strong>, and makes angel investments concentrated in foundational technologies that address civilisational-scale challenges — reflecting an intellectual orientation shaped as much by science and philosophy as by markets.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">科利森于2010年与弟弟约翰联合创立了<strong>Stripe</strong>，将其打造为全球最有价值的私营企业之一及互联网商业基础设施的核心支柱。他于2021年联合创立了非营利生物医学研究机构<strong>Arc Institute</strong>，并与经济学家泰勒·考恩于2020年发起了<strong>Fast Grants</strong>项目，在数天内为新冠科学研究快速拨款——体现出他对体制科学运作迟缓的深刻洞察。他是<strong>情境意识基金的LP</strong>，于<strong>2025年4月加入Meta董事会</strong>，并将天使投资集中于应对文明尺度挑战的基础性技术领域——其智识取向受科学与哲学的塑造不亚于市场本身。</div>
+    </div>
+  </div>
+
+  <!-- Sam Altman -->
+  <div class="investor-card" id="altman">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Sam Altman</div>
+        <div class="investor-name-cn">山姆·奥特曼</div>
+        <div class="investor-role">Co-Founder &amp; CEO, OpenAI; Former President, Y Combinator</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">OpenAI CEO</span>
+        <span class="rating rating-green">400+ Portfolio Cos</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI Models</span>
+      <span class="sector-pill s-energy">Nuclear Energy</span>
+      <span class="sector-pill s-tech">Robotics</span>
+    </div>
+
+    <div class="body-text">
+      Sam Altman was born on April 22, 1985, in Chicago and raised in St. Louis. He attended Stanford University studying computer science but left before graduating. His first company, <strong>Loopt</strong> (a social mapping app), was sold for $43 million. In February 2014 he became <strong>President of Y Combinator</strong>, replacing co-founder Paul Graham. During his tenure (2014–2019), YC helped approximately <strong>1,900 companies</strong> including Airbnb, Instacart, DoorDash, Reddit, and Twitch, and Altman extended the scope of investments to "hard technology" — energy, biotech, space — beyond traditional software.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">奥特曼1985年4月22日生于芝加哥，在圣路易斯长大。他就读于斯坦福大学计算机科学系但中途辍学。他的第一家公司<strong>Loopt</strong>（社交地图应用）以4300万美元出售。2014年2月，他接替联合创始人保罗·格雷厄姆出任<strong>Y Combinator总裁</strong>。任职期间（2014—2019年），YC帮助约<strong>1900家公司</strong>，包括Airbnb、Instacart、DoorDash、Reddit和Twitch，奥特曼还将投资范围延伸至能源、生物技术、太空等"硬科技"领域。</div>
+    </div>
+
+    <div class="body-text">
+      Altman <strong>co-founded OpenAI in 2015</strong> alongside Elon Musk, becoming CEO in 2019 and steering the organisation through the launch of ChatGPT (November 2022) — the fastest-growing consumer application in history, reaching 100 million users in two months. As of June 2024, his personal investment portfolio spans <strong>over 400 companies valued at approximately $2.8 billion</strong>, including significant stakes in Reddit, Worldcoin, Helion Energy, and Oklo (nuclear). His investments directly signal where he believes AI's enabling infrastructure is heading — particularly his bets on nuclear and advanced energy, which align with his publicly stated view that power constraints will define the next phase of AI development.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">奥特曼于<strong>2015年与埃隆·马斯克联合创立OpenAI</strong>，2019年出任CEO，并主导了ChatGPT的发布（2022年11月）——这是史上增长最快的消费级应用，两个月内用户突破1亿。截至2024年6月，其个人投资组合涵盖<strong>超过400家公司，估值约28亿美元</strong>，包括对Reddit、Worldcoin、Helion Energy和Oklo（核能）的重要持股。这些投资直接揭示了他对AI使能基础设施走向的判断——尤其是核能与先进能源的押注，与他公开表示"电力限制将定义AI发展下一阶段"的观点高度吻合。</div>
+    </div>
+  </div>
+
+  <!-- Tobi Lütke -->
+  <div class="investor-card" id="lutke">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Tobi Lütke</div>
+        <div class="investor-name-cn">托比·吕特克</div>
+        <div class="investor-role">Co-Founder &amp; CEO, Shopify; Coinbase Board Member</div>
+      </div>
+      <div>
+        <span class="rating rating-blue">E-Commerce Pioneer</span>
+        <span class="rating rating-green">$12.3B Net Worth</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-tech">AI-First Business</span>
+      <span class="sector-pill s-tech">E-Commerce Infra</span>
+      <span class="sector-pill s-tech">Crypto / Web3</span>
+    </div>
+
+    <div class="body-text">
+      Tobias Lütke was born in Koblenz, Germany in 1980. A gifted programmer from childhood — he began modifying computer hardware and rewriting game code at age 11 — he completed a programming apprenticeship at the Carl-Benz-School after tenth grade rather than pursuing a university degree. In 2002, he moved to Canada to be closer to his future wife. Unable to find work without a formal degree, he built his own e-commerce platform using <strong>Ruby on Rails</strong>, initially to run an online snowboard shop called Snowdevil (2004). This platform became the foundation for <strong>Shopify, launched in 2006</strong>.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">托比·吕特克1980年生于德国科布伦茨，自幼编程天赋异禀——11岁便开始修改电脑硬件和重写游戏代码。他在完成十年级学业后选择在卡尔-奔驰学校接受编程学徒培训，而非攻读大学学位。2002年，他为了与未来的妻子相聚而移居加拿大。因无正式学历难以求职，他用<strong>Ruby on Rails</strong>自行构建了一套电商平台，最初用于运营名为Snowdevil的在线滑雪板商店（2004年）。这套平台后来成为<strong>Shopify的基础，于2006年正式推出</strong>。</div>
+    </div>
+
+    <div class="body-text">
+      Under Lütke's leadership, Shopify went public in 2015 and grew to become one of Canada's most valuable technology companies. He retains a 7% stake with a <strong>40% voting interest</strong> via a dual-class share structure, giving him firm control of the company's strategic direction. His <strong>net worth was approximately $12.3 billion as of August 2025</strong>. He is a core contributor to the <strong>Ruby on Rails</strong> framework and the creator of <strong>Active Merchant</strong>, a widely used open-source payment library. He joined the <strong>Coinbase board in 2022</strong>. His AI commentary — particularly his recent public statements that AI is eliminating routine work and requiring all Shopify employees to demonstrate that tasks cannot be done by AI before requesting additional headcount — are closely watched as signals of how AI is reshaping enterprise operations.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">在吕特克的领导下，Shopify于2015年上市，成长为加拿大最有价值的科技公司之一。他通过双重股权结构持有7%的股份，并保有<strong>40%的投票权</strong>，对公司战略方向拥有绝对控制。其<strong>净资产截至2025年8月约为123亿美元</strong>。他是<strong>Ruby on Rails</strong>框架的核心贡献者及广泛使用的开源支付库<strong>Active Merchant</strong>的创建者，并于<strong>2022年加入Coinbase董事会</strong>。他的AI评论——尤其是近期公开表示AI正在消除重复性工作，并要求Shopify员工在申请新增人手前先证明该工作无法由AI完成——被密切关注为AI重塑企业运营的重要信号。</div>
+    </div>
+  </div>
+
+  <!-- Demis Hassabis -->
+  <div class="investor-card" id="hassabis">
+    <div class="investor-header">
+      <div>
+        <div class="investor-name">Sir Demis Hassabis</div>
+        <div class="investor-name-cn">德米斯·哈萨比斯爵士</div>
+        <div class="investor-role">Co-Founder &amp; CEO, Google DeepMind; Nobel Laureate in Chemistry (2024)</div>
+      </div>
+      <div>
+        <span class="rating rating-green">Nobel Prize 2024</span>
+        <span class="rating rating-blue">DeepMind Founder</span>
+      </div>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="sector-pill s-health">Drug Discovery</span>
+      <span class="sector-pill s-tech">AGI Research</span>
+      <span class="sector-pill s-health">Protein Folding</span>
+    </div>
+
+    <div class="body-text">
+      Demis Hassabis was born on July 27, 1976, in London, to a Greek Cypriot father and Chinese Singaporean mother. A child prodigy in chess, he reached <strong>chess master status at age 13</strong> — competing against adults in international competitions. He earned a <strong>double first-class degree in Computer Science from Cambridge University (1997)</strong>, then founded the videogame company Elixir Studios, producing award-winning titles for publishers including Vivendi Universal. He returned to academia to complete a <strong>PhD in Cognitive Neuroscience at University College London (2009)</strong>, followed by postdoctoral research at MIT and Harvard. His unique intellectual trajectory — chess grandmaster-level pattern recognition, game design, neuroscience, and computer science — proved to be precisely the combination needed to build DeepMind.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">哈萨比斯1976年7月27日生于伦敦，父亲为希腊裔塞浦路斯人，母亲为新加坡华裔。他是国际象棋天才少年，<strong>13岁即达到国际象棋大师级别</strong>，参加成人国际赛事。他以<strong>优等双学位荣誉毕业于剑桥大学计算机科学系（1997年）</strong>，随后创立了电子游戏公司Elixir Studios，为Vivendi Universal等出版商制作获奖游戏。他后回归学术界，在伦敦大学学院完成了<strong>认知神经科学博士学位（2009年）</strong>，并在麻省理工学院和哈佛大学从事博士后研究。其独特的知识轨迹——棋手级模式识别、游戏设计、神经科学与计算机科学的融合——恰恰是创建DeepMind所需的精确组合。</div>
+    </div>
+
+    <div class="body-text">
+      Hassabis co-founded <strong>DeepMind in London in 2010</strong> with Shane Legg and Mustafa Suleyman. Google acquired DeepMind in 2014 for over <strong>$500 million</strong>. Under his leadership, DeepMind produced a series of milestone achievements: the <strong>Deep Q-Network (2013)</strong> that learned to play Atari games at superhuman level; <strong>AlphaGo (2016)</strong>, which defeated world champion Lee Sedol 4–1 in the ancient board game of Go, widely considered AI's "Sputnik moment"; and <strong>AlphaFold 2 (2020)</strong>, which solved the 50-year-old protein structure prediction problem with accuracy competitive with experimental methods — a breakthrough with immense implications for drug discovery and biology. In 2024, Hassabis and John Jumper were awarded the <strong>Nobel Prize in Chemistry</strong> for AlphaFold — the first time the Nobel Committee formally recognised an AI researcher. He was <strong>knighted</strong> for his contributions to science and was named a <strong>UK Government AI Adviser</strong>. He also co-founded <strong>Isomorphic Labs</strong>, a commercial AI drug discovery spinoff.
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">哈萨比斯于2010年在伦敦与谢恩·莱格和穆斯塔法·苏莱曼<strong>联合创立了DeepMind</strong>。谷歌于2014年以逾<strong>5亿美元</strong>收购DeepMind。在其领导下，DeepMind取得了一系列里程碑式成就：以超人类水平学习Atari游戏的<strong>深度Q网络（2013年）</strong>；以4:1击败围棋世界冠军李世石的<strong>AlphaGo（2016年）</strong>，被广泛视为AI领域的"斯普特尼克时刻"；以及以堪比实验方法的精度解决了50年悬而未决的蛋白质结构预测问题的<strong>AlphaFold 2（2020年）</strong>——这一突破对药物发现和生物学具有深远意义。2024年，哈萨比斯与约翰·朱珀因AlphaFold荣获<strong>诺贝尔化学奖</strong>——这是诺贝尔委员会首次正式表彰AI研究人员。他因对科学的贡献而被<strong>授予爵位</strong>，并被任命为<strong>英国政府AI顾问</strong>，同时联合创立了商业AI药物发现公司<strong>Isomorphic Labs</strong>。</div>
+    </div>
+    <div class="callout callout-green">
+      <div class="callout-label">Notable Distinction · 重要区别</div>
+      <div class="callout-text">Hassabis is unique among this cohort as the only individual whose work produced a <strong>Nobel Prize</strong>. As a public market signal source, his value is in research direction disclosures (papers, conference keynotes) rather than capital allocation — but when he speaks about AGI timelines or near-term AI capabilities, those statements move the technology sector.</div>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">哈萨比斯在本报告所有人物中独树一帜，是唯一凭借AI研究成果荣获<strong>诺贝尔奖</strong>的人物。作为公开市场的信号来源，他的价值体现在研究方向披露（论文、大会主旨演讲）而非资本配置——但每当他就AGI时间线或近期AI能力发表看法时，这些声明都会撼动科技板块。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     SOURCES
+════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-num">SOURCES · 资料来源</div>
+  <div class="section-title">Verified References</div>
+  <div class="section-title-cn">经核实的参考来源</div>
+  <div class="section-divider"></div>
+  <div class="sources">
+    <div class="sources-label">All sources publicly available · 所有来源均公开可查</div>
+    <a href="https://en.wikipedia.org/wiki/Leopold_Aschenbrenner" target="_blank">Wikipedia — Leopold Aschenbrenner</a><br>
+    <a href="https://fortune.com/2025/10/08/leopold-aschenbrenner-openai-ftx-1-5-billion-hedge-fund-situational-awareness/" target="_blank">Fortune — Aschenbrenner: $1.5B Hedge Fund and Outsize Influence</a><br>
+    <a href="https://fortune.com/2026/03/05/leopold-aschenbrenner-ai-hedge-fund-superintelligence-agi-power-companies-crypto-miners/" target="_blank">Fortune — Situational Awareness Fund Bets on Power &amp; Bitcoin Miners</a><br>
+    <a href="https://en.wikipedia.org/wiki/Andrej_Karpathy" target="_blank">Wikipedia — Andrej Karpathy</a><br>
+    <a href="https://time.com/7012851/andrej-karpathy/" target="_blank">TIME — Karpathy: 100 Most Influential People in AI 2024</a><br>
+    <a href="https://en.wikipedia.org/wiki/Nat_Friedman" target="_blank">Wikipedia — Nat Friedman</a><br>
+    <a href="https://en.wikipedia.org/wiki/Daniel_Gross_(businessman)" target="_blank">Wikipedia — Daniel Gross (businessman)</a><br>
+    <a href="https://sequoiacap.com/people/sonya-huang/" target="_blank">Sequoia Capital — Sonya Huang Profile</a><br>
+    <a href="https://eladgil.com/" target="_blank">Elad Gil — Personal Site</a><br>
+    <a href="https://techcrunch.com/2025/06/01/early-ai-investor-elad-gil-finds-his-next-big-bet-ai-powered-rollups/" target="_blank">TechCrunch — Elad Gil: AI-Powered Roll-ups (2025)</a><br>
+    <a href="https://en.wikipedia.org/wiki/Vinod_Khosla" target="_blank">Wikipedia — Vinod Khosla</a><br>
+    <a href="https://en.wikipedia.org/wiki/Marc_Andreessen" target="_blank">Wikipedia — Marc Andreessen</a><br>
+    <a href="https://en.wikipedia.org/wiki/Sarah_Guo" target="_blank">Wikipedia — Sarah Guo</a><br>
+    <a href="https://fortune.com/2025/04/14/conviction-ai-venture-sarah-guo-greylock-investor/" target="_blank">Fortune — Sarah Guo / Conviction (2025)</a><br>
+    <a href="https://en.wikipedia.org/wiki/David_Sacks" target="_blank">Wikipedia — David Sacks</a><br>
+    <a href="https://www.coindesk.com/policy/2024/12/05/trump-names-david-sacks-as-ai-and-crypto-czar" target="_blank">CoinDesk — Trump Names David Sacks AI &amp; Crypto Czar</a><br>
+    <a href="https://en.wikipedia.org/wiki/Cathie_Wood" target="_blank">Wikipedia — Cathie Wood</a><br>
+    <a href="https://en.wikipedia.org/wiki/Stanley_Druckenmiller" target="_blank">Wikipedia — Stanley Druckenmiller</a><br>
+    <a href="https://en.wikipedia.org/wiki/David_Tepper" target="_blank">Wikipedia — David Tepper</a><br>
+    <a href="https://www.fool.com/investing/2026/03/03/billionaire-david-tepper-eliminated-nearly-all-of/" target="_blank">Motley Fool — Tepper Eliminates Bank Stocks, Increases AI Memory Position (2026)</a><br>
+    <a href="https://en.wikipedia.org/wiki/Patrick_Collison" target="_blank">Wikipedia — Patrick Collison</a><br>
+    <a href="https://en.wikipedia.org/wiki/Sam_Altman" target="_blank">Wikipedia — Sam Altman</a><br>
+    <a href="https://en.wikipedia.org/wiki/Tobias_L%C3%BCtke" target="_blank">Wikipedia — Tobias Lütke</a><br>
+    <a href="https://en.wikipedia.org/wiki/Demis_Hassabis" target="_blank">Wikipedia — Demis Hassabis</a><br>
+    <a href="https://www.britannica.com/biography/Demis-Hassabis" target="_blank">Britannica — Demis Hassabis Biography</a>
+  </div>
+</div>
+
+<div class="footer">
+  AI Investor Intelligence Profiles · Compiled May 2026 · All information sourced from verified public records<br>
+  <span style="font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;">人工智能投资人情报档案 · 2026年5月编制 · 所有信息均来源于经核实的公开记录</span><br>
+  This document is for informational purposes only and does not constitute investment advice. · 本文件仅供参考，不构成任何投资建议。
+</div>
+
+</body>
+</html>

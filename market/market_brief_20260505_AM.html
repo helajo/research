@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Market Intelligence – 5 May 2026 AM</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+  .report-date { font-size: 13px; color: #777; }
+  .mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .mood-bullish { background: #EAF3DE; color: #27500A; }
+  .mood-bearish { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed { background: #FAEEDA; color: #633806; }
+  .mood-neutral { background: #f0efe8; color: #555; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px,1fr)); gap: 8px; margin-bottom: 8px; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val { font-size: 16px; font-weight: 600; }
+  .idx-chg { font-size: 12px; margin-top: 2px; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .commentary { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+  .signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+  .sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .s-tech { background: #E6F1FB; color: #0C447C; }
+  .s-health { background: #E1F5EE; color: #085041; }
+  .s-energy { background: #FAEEDA; color: #633806; }
+  .s-consumer { background: #FBEAF0; color: #72243E; }
+  .s-defence { background: #EEEDFE; color: #3C3489; }
+  .s-finance { background: #EAF3DE; color: #27500A; }
+  .s-realty { background: #FAECE7; color: #712B13; }
+  .s-macro { background: #F1EFE8; color: #444441; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+  .sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .bull-label { color: #27500A; }
+  .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8; border-radius: 6px; padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; margin-bottom: 8px; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5; padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: #ccc; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; gap: 6px; flex-wrap: wrap; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5; margin-bottom: 6px; }
+  .also-cn { font-size: 11px; color: #999; line-height: 1.7; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #e8e8e0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .deepdive-cta { background: #EEF4FD; border: 1px solid #C4D8F2; border-left: 3px solid #185FA5; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 8px; }
+  .deepdive-cta-label { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .deepdive-cta-text { font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 4px; }
+  .deepdive-cta-cn { font-size: 12px; color: #888; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .deepdive-cta-link { font-size: 13px; }
+  .deepdive-cta-link a { color: #185FA5; font-weight: 600; text-decoration: none; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 6px; }
+  .macro-cn { font-size: 11px; color: #999; line-height: 1.7; padding-top: 6px; border-top: 1px dashed #e8e8e0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0efe8; line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; margin-top: 2px; }
+  .w-red { background: #FCEBEB; color: #A32D2D; }
+  .w-blue { background: #E6F1FB; color: #185FA5; }
+  .w-amber { background: #FAEEDA; color: #854F0B; }
+  .w-green { background: #EAF3DE; color: #3B6D11; }
+  .w-purple { background: #EEEDFE; color: #3C3489; }
+  .w-gray { background: #f0efe8; color: #666; }
+  .watch-content { display: block; flex: 1; }
+  .watch-en { display: block; font-size: 13px; color: #333; }
+  .watch-cn { display: block; font-size: 11px; color: #999; margin-top: 3px; line-height: 1.6; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .notable-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+  .notable-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+  .notable-topic { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; margin-bottom: 4px; }
+  .notable-text { font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 6px; }
+  .notable-cn { font-size: 11px; color: #999; line-height: 1.7; padding-top: 6px; border-top: 1px dashed #e8e8e0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .pulse-card { background: #f0efe8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 8px; }
+  .pulse-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+  .pulse-val { display: block; font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+  .pulse-cn { display: block; font-size: 12px; color: #999; line-height: 1.7; padding-top: 6px; border-top: 1px dashed #ddddd5; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+  .cn-text strong { color: #444; font-weight: 600; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    AM Morning Briefing — Prior session recap + Pre-market setup
+  </div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-title-cn">每日市场情报简报</div>
+  <div class="report-date">
+    Tuesday, 5 May 2026 · 09:03 SGT · Full US market coverage · 新加坡时间 · 美国全市场覆盖
+  </div>
+</div>
+
+<!-- MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Market mood 市场情绪</span>
+  <span class="mood-text">Iran fires 19 missiles at UAE — ceasefire fracturing, oil surging — but Palantir's blowout AI earnings hold a floor under tech.</span>
+  <span class="mood-pill mood-mixed">Mixed 分化</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    市场情绪分化：伊朗向阿联酋发射19枚导弹和无人机，停火协议实际告破，国际油价暴涨逾4%，道指大跌557点。但<strong>帕兰提尔（PLTR）发布史上最强Q1财报</strong>（营收增长85%），为科技板块提供支撑，纳指仅跌0.19%。今日早盘关键焦点：中东局势升级走向，以及今晚AMD盘后财报。
+  </div>
+</div>
+
+<!-- INDEX SNAPSHOT -->
+<div class="section-label">Index snapshot 指数概览 — May 4, 2026 close 昨日收盘</div>
+<div class="indices mb16">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,200.75</div>
+    <div class="idx-chg dn">−0.41%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">纳斯达克 Nasdaq</div>
+    <div class="idx-val">25,067.80</div>
+    <div class="idx-chg dn">−0.19%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">道琼斯 Dow</div>
+    <div class="idx-val">48,941.90</div>
+    <div class="idx-chg dn">−1.13% (−557 pts)</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">2,796.00</div>
+    <div class="idx-chg dn">−0.60%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">VIX 恐慌指数</div>
+    <div class="idx-val">~18.29</div>
+    <div class="idx-chg dn">+7.65% 恐慌上升</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI 原油</div>
+    <div class="idx-val">$106.42</div>
+    <div class="idx-chg up">+4.39%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">黄金 Gold</div>
+    <div class="idx-val">~$4,551</div>
+    <div class="idx-chg dn">−0.63%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10年期美债</div>
+    <div class="idx-val">~4.39%</div>
+    <div class="idx-chg flat">Rising 上升</div>
+  </div>
+</div>
+
+<!-- MARKET COMMENTARY -->
+<div class="section-label">Market commentary 市场综述</div>
+<p class="commentary">
+  Monday's session (May 4) was dominated by a single macro shock: the UAE's air-defence systems intercepting 19 Iranian missiles and drones — the first activation of the UAE's missile shield since the US-Iran ceasefire began roughly a month ago. WTI crude surged 4.39% to $106.42 and Brent jumped 5.8% to $114.44, sending the Dow down 557 points (−1.13%) as energy-importing sectors — airlines, consumer discretionary, industrials — sold off hard. Home Depot lost 3.5%, Nike −2.95%, and Boeing −2.64%. The S&amp;P 500's narrower −0.41% loss and Nasdaq's −0.19% dip reflect tech resilience, anchored by Palantir surging 1.4% after a blowout earnings report: 85% revenue growth, US revenue up 104%, and a raised full-year guidance to $7.65B. The VIX rose 7.65% to ~18.29 — elevated but not yet at stress territory (30+). Broad earnings season remains historically strong: 84% of S&amp;P 500 reporters have beaten estimates, with aggregate EPS growth running at 27.8% vs the 13.7% originally expected.
+</p>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    5月4日（周一）美股受伊朗袭击阿联酋消息冲击：道指大跌557点，主要是航空、消费和工业股拖累，油价暴涨。但<strong>帕兰提尔Q1超预期财报</strong>（营收增85%）对科技股形成支撑，纳指仅微跌0.19%。VIX恐慌指数涨7.65%至约18.29，情绪紧张但未到危机水平。整体财报季依然强劲：84%的标普500公司盈利超预期，超额幅度创十年最高。
+  </div>
+</div>
+
+<!-- TOP 3 SIGNALS -->
+<div class="section-label">Top 3 signals 三大重点信号</div>
+
+<!-- SIGNAL #1 -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">XOM · OXY · HAL</span>
+        <span class="sector-pill s-macro">MACRO · ENERGY</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Reuters · Al Jazeera · CNN</span>
+      </div>
+      <div class="sig-headline">UAE Intercepts 19 Iranian Missiles and Drones — Ceasefire Fractures, WTI Surges 4.4%, Dow Drops 557 Points</div>
+      <div class="sig-headline-cn">阿联酋拦截伊朗19枚导弹与无人机 — 停火实际告破，WTI原油暴涨4.4%，道指大跌557点</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+
+  <div class="sig-body">
+    The UAE confirmed its missile defence systems intercepted 12 ballistic missiles, 3 cruise missiles, and 4 UAVs launched from Iran on May 4 — the first time UAE's shield has been activated since the US-Iran ceasefire was struck approximately one month ago. A drone also caused a fire at the Fujairah oil port on the UAE's eastern coast, a key petroleum export hub. This is the first direct Iranian strike on UAE soil in the current conflict and represents a significant escalation. The Strait of Hormuz — through which approximately 20 million barrels of oil per day (about 20% of global supply) transit — has already been partially disrupted since the conflict began, but Monday's events signal the ceasefire may be effectively dead. Iran's Foreign Ministry called US operations in the region a "ceasefire violation," suggesting both sides are framing the other as the aggressor. Oil markets reacted instantly: WTI +4.4% to $106.42, Brent +5.8% to $114.44 — within striking distance of the $110–$115 threshold analysts identify as a recession signal.
+  </div>
+
+  <div class="src-line">
+    Al Jazeera · 16 hours ago · Still active: oil market re-opening this morning ·
+    <a href="https://www.aljazeera.com/news/liveblog/2026/5/4/iran-war-live-tehran-says-trumps-hormuz-mission-violates-ceasefire">Read more ↗</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">US energy producers (XOM, CVX, OXY, EOG) benefit from sustained triple-digit oil — higher prices offset production losses, and defence contractors (RTX, LMT, NOC) see accelerated procurement demand.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">Every $10/barrel sustained oil increase shaves ~0.2–0.3pp from US GDP; at $110+ WTI, consumer spending contracts, airlines hemorrhage cash, and Fed is trapped between fighting inflation and preventing recession.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item"><span>Short term 短期:</span> Oil stays volatile intraday; energy stocks pop at open; consumer/airline names under pressure</div>
+    <div class="impl-item"><span>Long term 长期:</span> Structural regime change — if Hormuz stays disrupted through Q2, recession pricing accelerates and the Fed's rate-cut calculus shifts dramatically</div>
+  </div>
+
+  <ul class="questions">
+    <li>Is the ceasefire effectively over — and what is Trump's formal military response within the next 24 hours?</li>
+    <li>How long can Exxon sustain its 750,000 bpd Middle East production loss before Q2 guidance is revised downward?</li>
+    <li>At what WTI oil price does the market begin pricing a US recession more seriously — and are we near that threshold now?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      伊朗袭击阿联酋是近期最重大地缘政治升级事件。阿联酋是霍尔木兹海峡关键油气出口国，其石油港口遭无人机袭击，每日2000万桶的过境原油供应（全球20%）面临更大风险。<strong>看涨方：</strong>美国本土油气公司（XOM、OXY等）受益于高油价。<strong>看跌方：</strong>持续高油价将推高通胀、压制消费，若WTI超过每桶110美元，美国经济衰退风险将显著上升。关键看点：特朗普政府后续军事外交反应。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #2 -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">PLTR</span>
+        <span class="sector-pill s-tech">TECH · AI</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Earnings release / SEC 8-K</span>
+      </div>
+      <div class="sig-headline">Palantir Q1 2026: 85% Revenue Growth, U.S. Revenue +104%, Raises Full-Year Guidance to $7.65B — AI Platform Enters Hyper-Growth Phase</div>
+      <div class="sig-headline-cn">帕兰提尔Q1 2026：营收增长85%，美国营收+104%，全年指引上调至76.5亿美元 — AI平台进入超高速增长阶段</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+
+  <div class="sig-body">
+    Palantir Technologies reported record Q1 2026 results on May 4, delivering revenue of $1.63 billion (vs. $1.54B consensus), adjusted EPS of $0.33 (vs. $0.28 expected), and GAAP net income of $871 million — a stunning 53% net margin. US revenue grew 104% to $1.282B, the fastest US growth rate since its IPO. The company raised full-year 2026 revenue guidance to $7.65–$7.66B (implying ~71% growth) and guided Q2 revenue to $1.8B, well above the $1.68B Wall Street expected. Recent contract wins include a $300M USDA blanket purchase agreement and a multi-year Cleveland-Cliffs industrial AI deployment. This is the fastest revenue growth for Palantir since its 2020 listing. The results validate a structural shift: Palantir's AIP (Artificial Intelligence Platform) product — which helps enterprises rapidly deploy AI into operations — is becoming an enterprise standard. The stock rose 1.4% on May 4 and added 0.4% in post-market. One significant counterweight: insiders have sold $137.7M in shares over the past 90 days with zero purchases — a pattern that often signals executives managing their personal exposure at elevated valuations.
+  </div>
+
+  <div class="src-line">
+    CNBC / Palantir 8-K SEC filing · 12 hours ago · Still active: stock will react further at today's open ·
+    <a href="https://www.cnbc.com/2026/05/04/palantir-pltr-q1-earnings-report-2026.html">Read more ↗</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">AIP platform is becoming essential infrastructure for government and enterprise AI deployment; guidance raise signals sustained hyper-growth and multiple expansion, with defence AI demand supercharged by the Iran conflict.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">Stock trades at roughly 80–100x forward P/E; $137.7M insider selling with zero purchases signals insiders are not adding at current prices; a single major government contract loss could trigger a 15–25% de-rating.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item"><span>Short term 短期:</span> Expect further upside on open today; AI sector sentiment boost for NVDA, AMD, MSFT, CRM</div>
+    <div class="impl-item"><span>Long term 长期:</span> PLTR is positioning as the AI operating system for government — a structurally defensible moat if contracts renew; valuation risk is the primary long-term concern</div>
+  </div>
+
+  <ul class="questions">
+    <li>Can PLTR sustain over 80% US commercial revenue growth through H2 2026, or is Q1's pace a pull-forward effect?</li>
+    <li>What is the realistic risk-to-valuation scenario if one major US government contract lapses or is reduced by DOGE budget cuts?</li>
+    <li>Is the $137.7M insider selling a material concern, or is it standard executive compensation liquidation under a 10b5-1 plan?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      帕兰提尔是一家为政府和企业提供AI数据分析的科技公司。Q1财报堪称完美：营收16.3亿美元（超预期），美国业务增长104%，GAAP净利润率53%，并上调全年展望。<strong>关键驱动：</strong>其AIP（AI流程部署平台）正成为企业和政府的AI基础设施标准。<strong>风险：</strong>估值约为80-100倍预期市盈率，内部人员套现1.377亿美元、零增持，估值压力不可忽视。中东局势升级实际上对其军事AI合同有利。
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL #3 -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div style="flex:1;min-width:0;">
+      <div class="sig-meta">
+        <span class="ticker-pill">SPY · TLT</span>
+        <span class="sector-pill s-macro">MACRO · RATES</span>
+        <span class="score-pill">15/20</span>
+        <span class="score-pill">Federal Reserve press release</span>
+      </div>
+      <div class="sig-headline">Fed Holds at 3.5–3.75% for Third Straight Meeting, Adds Easing Bias; Kevin Warsh Replaces Powell as Chair on May 15 with "Regime Change" Pledge</div>
+      <div class="sig-headline-cn">美联储连续第三次维持利率3.5%-3.75%不变，加入宽松倾向措辞；沃什5月15日接任鲍威尔，承诺"制度变革"</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+
+  <div class="sig-body">
+    The Federal Open Market Committee (FOMC) held the federal funds rate at 3.5%–3.75% at its April 28–29 meeting — its third consecutive pause. For the first time, the statement included an easing bias, acknowledging that "developments in the Middle East are contributing to a high level of uncertainty." However, three dissenting governors (Hammack, Kashkari, Logan) opposed inclusion of the easing language, viewing inflation risks as more pressing than growth risks. One governor (Miran) wanted an immediate quarter-point cut. Separately, Kevin Warsh — Trump's nominee to replace Jerome Powell as Fed Chair — cleared the Senate Banking Committee on April 29. The full Senate vote is expected May 11, with Warsh taking over on May 15. Warsh has pledged a "regime change": eliminating forward guidance, retiring the dot plot (the quarterly interest-rate forecast chart markets rely on), and refusing to commit to post-meeting press conferences — a significant departure from Powell-era transparency. Warsh claims to support rate cuts on the back of AI-driven disinflation, but his hawkish background (Fed Governor 2006–2011) creates uncertainty about his actual posture. Markets are currently pricing a 94.9% probability of unchanged rates at the June meeting.
+  </div>
+
+  <div class="src-line">
+    Federal Reserve / Al Jazeera / CNBC · April 29 – May 1 (Ongoing: Warsh confirmation week) ·
+    <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a.htm">Fed statement ↗</a>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case 看涨理由</div>
+      <div class="bull-text">If Warsh pivots dovish sooner than expected — citing oil-driven recession risk — equity markets could front-run rate cuts aggressively; easing bias already planted in last statement signals direction of travel.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case 看跌理由</div>
+      <div class="bear-text">Warsh's "regime change" pledge — eliminating forward guidance and the dot plot — removes the transparency markets use to price risk; his hawkish background may delay cuts even as oil inflation tips the economy toward recession.</div>
+    </div>
+  </div>
+
+  <div class="impl">
+    <div class="impl-item"><span>Short term 短期:</span> Markets digest leadership uncertainty; bonds volatile around May 11 Senate vote and May 15 transition</div>
+    <div class="impl-item"><span>Long term 长期:</span> Fed communication style could become dramatically less predictable under Warsh — increasing volatility premium across all asset classes</div>
+  </div>
+
+  <ul class="questions">
+    <li>What is Kevin Warsh's actual near-term policy stance — will he lean more hawkish or dovish than Powell given the current oil shock?</li>
+    <li>At what oil price level does the Fed's inflation concern override recession risk, and is the June decision still effectively locked at "hold"?</li>
+    <li>Will the three dissenting governors (Hammack, Kashkari, Logan) maintain their anti-easing-bias stance at the June meeting, given oil has since risen further?</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      美联储（Fed）4月29日第三次维持利率不变（3.5%-3.75%），并首次加入宽松倾向措辞，但三位理事反对。更重磅的是：特朗普提名的凯文·沃什将于5月15日接任美联储主席，承诺"制度性变革"——废除前瞻性指引和利率点阵图。市场目前定价6月降息概率仅5%。<strong>关键不确定性：</strong>沃什的真实政策取向、以及高油价是否会逼迫联储在通胀与衰退之间作出艰难抉择。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ALSO TRACKING -->
+<div class="section-label">Also tracking 其他关注信号</div>
+<div class="also-grid mb16">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">PINS</span>
+      <span class="sector-pill s-tech">TECH · CONSUMER</span>
+      <span class="score-pill">13/20</span>
+    </div>
+    <div class="also-text">Pinterest surged 15% after Q1 2026 earnings: revenue hit $1.008B (+18% YoY), adjusted EPS of $0.27 beat the $0.23 consensus, and monthly active users reached a record 631M (+11%). AI-powered advertising tools drove a 46% return-on-ad-spend (ROAS) improvement for test advertisers — confirming that AI monetisation is now tangibly lifting results across social media platforms, not just AI-native companies. Q2 revenue guidance of $1.13–$1.15B also beat expectations.</div>
+    <div class="also-cn">Pinterest大涨15%。Q1营收逾10亿美元、用户数创历史新高（6.31亿），AI广告工具带动广告回报率大幅提升。证实AI商业化已在社交媒体领域全面落地。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://www.cnbc.com/2026/05/04/pinterest-pins-q1-earnings-report-2026.html">CNBC ↗</a>
+    </div>
+  </div>
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">AMD</span>
+      <span class="sector-pill s-tech">TECH · AI CHIPS</span>
+      <span class="score-pill">12/20</span>
+    </div>
+    <div class="also-text">AMD reports Q1 2026 earnings after the US market close today (May 5). Analysts expect $9.84B in revenue (+33% YoY) and EPS of $1.29–$1.30. The prior quarter (Q4 2025) delivered $10.27B revenue and $1.53 EPS, both above consensus. Key focus: MI300 AI GPU revenue trajectory, any update on the MI350/MI450 chip roadmap, and the scale of China export control impacts on sales. AMD fell 5.3% on May 4 (to $341.54 from $360.54) in the broader market selloff — providing potential for a sharp post-earnings move in either direction tonight.</div>
+    <div class="also-cn">AMD今晚（美股盘后）公布Q1财报，预期营收98.4亿美元（增33%）。关键看点：AI芯片（MI300系列）销售、对华出口管制影响、与英伟达的竞争格局。昨日股价已跌5.3%，财报后可能出现大幅波动。</div>
+    <div class="src-line" style="margin-top:6px;margin-bottom:0;">
+      <a href="https://computing.net/news/stocks/amd-q1-2026-earnings-preview-analysts-forecast-33-revenue-jump-as-ai-momentum-builds/">Computing.net preview ↗</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DEEP DIVE CTA -->
+<div class="section-label">Stock deep dive 股票深度分析</div>
+<div class="deepdive-cta mb16">
+  <div class="deepdive-cta-label">📊 Today's stock deep dive — separate file</div>
+  <div class="deepdive-cta-text">
+    Today's deep dive covers <strong>PLTR, XOM, and AMD</strong> — fundamentals (P/E, revenue, EPS, margins), technical analysis (52-week range, moving averages, RSI, key levels), today's specific catalyst for each stock, and full answers to the nine key questions from today's top three signals.
+  </div>
+  <div class="deepdive-cta-cn">
+    今日深度分析股票：<strong>帕兰提尔（PLTR）、埃克森美孚（XOM）、超微半导体（AMD）</strong>。
+    包含基本面数据（市盈率、营收、每股盈利、利润率）、技术面分析（52周价格区间、均线、相对强弱指数RSI、关键价位）、今日催化剂，以及三大信号九项关键问题的完整解答。
+  </div>
+  <div class="deepdive-cta-link">
+    → <a href="market_deepdive_20260505.html">Open Stock Deep Dive 打开深度分析报告 ↗</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- GLOBAL MACRO CONTEXT -->
+<div class="section-label">Global macro context 全球宏观背景</div>
+<div class="macro-grid">
+  <div class="macro-card">
+    <div class="macro-topic">Geopolitics 地缘政治</div>
+    <div class="macro-text">Iran fired 19 missiles and drones at UAE territory on May 4, with a drone causing a fire at the Fujairah oil port. Tehran called US operations a ceasefire violation. This is the first missile strike on UAE since the ceasefire and materially raises the probability of full Hormuz closure. US and Iranian militaries are trading shots (CNN live feed). No formal US military response confirmed as of 09:00 SGT.</div>
+    <div class="macro-cn">伊朗5月4日向阿联酋发射19枚导弹/无人机，霍尔木兹海峡局势急剧恶化，停火协议实际告破。美伊双方仍在交火，美方正式军事回应待定。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Oil &amp; commodities 原油与大宗商品</div>
+    <div class="macro-text">WTI settled at $106.42 (+4.39%); Brent at $114.44 (+5.8%). Both are now within $5–10 of the $110–$115/bbl recession-signal threshold. Gold slipped 0.63% to ~$4,551 — still up 37% year-on-year. The UAE exited OPEC effective May 1. Baltic Dry Index data n/a — unconfirmed.</div>
+    <div class="macro-cn">WTI原油收于每桶106.42美元（涨4.39%），布伦特114.44美元，距分析师预警的衰退信号阈值（110-115美元）仅剩5-10美元。黄金微跌至约4551美元，仍年涨37%。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Fed &amp; rates 美联储与利率</div>
+    <div class="macro-text">Fed held at 3.5–3.75% on April 29 (3rd straight hold). Added easing bias language for first time. Market pricing: 94.9% probability of June hold. Kevin Warsh takes over from Powell on May 15 — Warsh pledges to eliminate forward guidance and the dot plot (the Fed's quarterly interest-rate forecast), increasing future policy uncertainty. Powell will remain on the board after stepping down as chair.</div>
+    <div class="macro-cn">联储4月29日三连停，首次加入宽松偏向措辞。市场定价6月几乎不降息。5月15日沃什接任，将废除前瞻性指引和点阵图，政策透明度将降低，不确定性上升。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Trump &amp; policy 特朗普与政策</div>
+    <div class="macro-text">The baseline 10% tariff on all US imports (effective April 5) plus sector-specific tariffs remain in place. Businesses are beginning to pass costs to consumers — previously absorbing ~80% of the tariff burden, that share is narrowing. Average US household tariff cost is estimated at ~$1,500 in 2026. No new tariff actions or DOGE announcements confirmed in the past 24 hours.</div>
+    <div class="macro-cn">特朗普10%全面进口关税持续执行，企业开始将成本转嫁消费者，美国家庭年均关税成本约1500美元。过去24小时无新增关税或DOGE政策行动。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Currency &amp; gold 货币与黄金</div>
+    <div class="macro-text">The US Dollar Index (DXY) is near two-month lows, down roughly 10% since the current administration took office — unusually weak for a period of geopolitical risk. Gold ~$4,551 (−0.63% on May 4 but +37% YoY), briefly capping its rally as oil absorbed the safe-haven flows. A weaker dollar is traditionally supportive for gold and for US multinational earnings.</div>
+    <div class="macro-cn">美元指数（DXY）处于两个月低点，当届政府执政以来累跌约10%。黄金约4551美元，年涨37%但昨日微跌，油价成为主要避险资产。弱美元有利于美国跨国公司盈利。</div>
+  </div>
+  <div class="macro-card">
+    <div class="macro-topic">Asia &amp; global 亚洲与全球市场</div>
+    <div class="macro-text">Korea's Kospi index gained 5.12% on May 4, closing at 6,936.99 — a standout outperformer in Asia, likely driven by tech and semiconductor stocks. European STOXX 600 declined modestly on May 4, reflecting lack of investor conviction. Japan Nikkei data for May 4 n/a — unconfirmed. Coinbase (COIN) rose 2.5% in premarket; Circle and BitGo jumped 4%+ each.</div>
+    <div class="macro-cn">韩国综合指数（KOSPI）5月4日大涨5.12%至6936点，表现突出，半导体科技股领涨。欧洲股市小幅下跌。日本市场数据暂未确认。加密货币概念股盘前走强。</div>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">
+    全球宏观三大主线：①<strong>伊朗-霍尔木兹危机</strong>急剧升级，油价直指衰退警戒线；②<strong>美联储进入权力交接期</strong>，沃什5月15日接任带来政策不确定性；③<strong>美元持续走弱</strong>，黄金高位震荡，避险资金在油价和黄金之间再分配。对美股投资者而言，最关键的变量是：油价能否在$110以下企稳，以及沃什的首次表态方向。
+  </div>
+</div>
+
+<!-- WHAT TO WATCH -->
+<div class="section-label">What to watch — next 24–48 hours 未来24–48小时重点关注</div>
+<ul class="watch-list mb16">
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span class="watch-content">
+      <span class="watch-en">Iran–UAE escalation: Watch for a formal US military response or Trump statement on the ceasefire status. Any move toward full Hormuz closure would push WTI above $110 and trigger broader market selloff — the single most important geopolitical variable this week.</span>
+      <span class="watch-cn">伊朗-阿联酋升级：关注特朗普是否宣布停火终止、美军是否采取军事行动。若霍尔木兹海峡进一步关闭，WTI将突破每桶110美元，引发市场更大范围抛售。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-blue">$</span>
+    <span class="watch-content">
+      <span class="watch-en">AMD Q1 2026 earnings: Reports after US market close today (May 5). Consensus: $9.84B revenue (+33% YoY), EPS $1.29. Focus on MI300 AI GPU revenue, China export controls impact, and full-year guidance. Stock fell 5.3% on May 4 — either a buying opportunity ahead of a beat, or a warning signal.</span>
+      <span class="watch-cn">超微半导体（AMD）今晚盘后公布Q1财报。预期营收98.4亿美元，增速33%。核心看点：AI芯片MI300系列销售额、对华出口限制影响。昨日股价已跌5.3%，财报前后可能剧烈波动。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-amber">~</span>
+    <span class="watch-content">
+      <span class="watch-en">Kevin Warsh Senate final vote expected May 11 — confirmation hearings have highlighted his plan to eliminate forward guidance and the dot plot. Any hawkish signals this week could pressure rate-sensitive sectors (REITs, utilities, financials). Powell remains on the Fed board post-May 15.</span>
+      <span class="watch-cn">凯文·沃什参议院最终投票预计5月11日，5月15日正式接任。其废除前瞻性指引的计划将增加市场不确定性，利率敏感板块（房地产信托、公用事业、银行）受影响较大。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-blue">$</span>
+    <span class="watch-content">
+      <span class="watch-en">Arm Holdings (ARM) reports Q1 earnings Wednesday May 6 after close — another key AI/semiconductor data point. Analysts watching for royalty revenue growth from AI-optimised chip designs. ARM supplies chip architecture to virtually every major AI hardware maker.</span>
+      <span class="watch-cn">安谋控股（ARM）周三（5月6日）盘后发布Q1财报，是继AMD之后的又一重磅AI芯片数据点。安谋为全球几乎所有主流AI芯片提供架构授权，其版税收入增速至关重要。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-red">!</span>
+    <span class="watch-content">
+      <span class="watch-en">Oil price action at the US open: WTI settled at $106.42 on May 4. If overnight developments (Hormuz, Iranian response) push oil above $110 at the open, expect immediate pressure on consumer, airline, and industrial names, and a rotation into energy. Watch XOM, CVX, HAL pre-market.</span>
+      <span class="watch-cn">美股开盘时油价走向至关重要：若WTI开盘突破每桶110美元，消费、航空和工业股将承压，能源股（XOM、CVX、HAL）将持续走强。关注盘前价格信号。</span>
+    </span>
+  </li>
+  <li>
+    <span class="watch-icon w-gray">+</span>
+    <span class="watch-content">
+      <span class="watch-en">S&P 500 Q1 2026 earnings season: 126 more companies report this week (63% of index has already reported, with 84% beat rate). Remaining sectors — consumer staples, healthcare, industrials — could provide further data on tariff and energy cost pass-through impacts on margins.</span>
+      <span class="watch-cn">标普500财报季持续：本周还有126家公司发布Q1业绩。目前84%报告公司超预期，关注消费、医疗、工业板块利润率是否受关税和油价侵蚀。</span>
+    </span>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<!-- OTHER NOTABLE NEWS -->
+<div class="section-label">Other notable news 其他值得关注的新闻</div>
+<div class="notable-grid mb16">
+  <div class="notable-card">
+    <div class="notable-topic">XOM · CVX — Q1 Earnings Mixed</div>
+    <div class="notable-text">Exxon (XOM) reported Q1 EPS of $1.16 (beat $1.02 estimate) on revenue of $85.14B (beat $82.18B), but net income fell 45% year-over-year. Chevron (CVX) delivered adjusted EPS of $1.41 (beat $0.95) but revenue of $48.61B missed the $52.1B estimate, with profits down 36% YoY. Both stocks fell 1%+ on May 1 as oil dipped, but the Hormuz escalation has since reversed that — energy names are the key beneficiaries of sustained high oil.</div>
+    <div class="notable-cn">埃克森美孚Q1每股盈利1.16美元超预期，但净利润同比大降45%。雪佛龙调整后EPS超预期，但营收未达预期，利润降36%。高油价（WTI超100美元）将使两家公司Q2受益。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">S&P 500 Earnings Season — Historic Beat Rate</div>
+    <div class="notable-text">As of May 1, 63% of S&P 500 companies have reported Q1 2026 results. Of those, 84% beat EPS estimates — above both the 5-year average (78%) and 10-year average (76%). Aggregate EPS growth is running at 27.8% versus the 13.7% initially expected before the season. This is the sixth consecutive quarter of double-digit earnings growth — a remarkable streak given the macro headwinds of tariffs and geopolitical uncertainty.</div>
+    <div class="notable-cn">标普500财报季进展亮眼：84%公司盈利超预期（历史均值78%），整体EPS增速27.8%（远超预期的13.7%）。连续第六季度实现双位数盈利增长，韧性超乎预期。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">UAE Exits OPEC — Reshaping Oil Cartel</div>
+    <div class="notable-text">The UAE formally exited OPEC effective May 1, a historic move driven by the Iran conflict directly threatening its oil export capacity through the Strait of Hormuz. The UAE had targeted 5 million bpd production and felt constrained by OPEC's coordinated output quotas. The departure weakens OPEC's coordination ability at exactly the moment global oil markets face their largest supply disruption in history.</div>
+    <div class="notable-cn">阿联酋5月1日正式退出欧佩克（OPEC），是欧佩克历史上最重大的成员国退出事件。退出原因与伊朗袭击直接威胁其石油出口相关。此举削弱欧佩克在史上最大供应危机时期的协调能力。</div>
+  </div>
+  <div class="notable-card">
+    <div class="notable-topic">Korea Kospi +5.12% — Asian Bright Spot</div>
+    <div class="notable-text">The Korean Kospi surged 5.12% to close at 6,936.99 on May 4, an outstanding outperformance against broader Asian and global markets that were generally falling. The move was likely driven by Korean semiconductor and tech names (Samsung, SK Hynix) benefiting from the AI demand wave confirmed by Palantir's earnings. This is notable as a sign that the AI infrastructure spending cycle remains robust even amid geopolitical turbulence.</div>
+    <div class="notable-cn">韩国综合指数5月4日大涨5.12%，在全球股市普遍下跌的背景下格外突出。驱动因素可能是三星、SK海力士等半导体企业受AI需求利好，帕兰提尔财报强化了这一逻辑。</div>
+  </div>
+</div>
+
+<!-- MARKET PULSE -->
+<div class="section-label">Market pulse 市场脉搏</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <span class="pulse-key">Theme 主题</span>
+    <span class="pulse-val">
+      The AI earnings supercycle and the Middle East energy shock are colliding — forcing investors to simultaneously price accelerating tech profits and a potential oil-driven recession.
+    </span>
+    <span class="pulse-cn">
+      AI财报超预期周期与中东能源危机正面碰撞：科技盈利加速的同时，高油价衰退风险上升，市场面临双重定价难题。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Dominant trade 主要交易方向</span>
+    <span class="pulse-val">
+      Rotating into upstream energy (XOM, OXY, EOG) and defence (LMT, RTX, NOC) as Hormuz risk rises; selling consumer discretionary (HD, NKE), airlines (DAL, UAL), and industrials; holding AI-exposed tech (PLTR, NVDA, AMD pending) for earnings momentum.
+    </span>
+    <span class="pulse-cn">
+      资金流向：买入上游能源（XOM、OXY）和军工股（LMT、RTX），卖出消费零售（HD、NKE）和航空股；AI科技股（PLTR、NVDA、AMD待定）因财报动力暂时持有。
+    </span>
+  </div>
+  <div class="pulse-row">
+    <span class="pulse-key">Watch next 12h 未来12小时关注</span>
+    <span class="pulse-val">
+      AMD's Q1 earnings after the US close: a beat-and-raise would confirm the AI hardware cycle is intact despite Hormuz uncertainty and could lift the entire semiconductor space; a miss or cautious guidance would accelerate the tech selloff started by the Iran shock.
+    </span>
+    <span class="pulse-cn">
+      AMD今晚财报是最关键催化剂：若超预期并上调指引，确认AI硬件周期依然强劲，带动半导体板块全面反弹；若低于预期或给出谨慎指引，科技股将因伊朗冲击叠加业绩压力出现更大幅度下跌。
+    </span>
+  </div>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 今日总结</div>
+  <div class="cn-text">
+    今日市场由两条主线驱动：<strong>伊朗袭击阿联酋令油价逼近衰退警戒线</strong>（WTI接近$110），同时<strong>帕兰提尔创纪录的AI财报</strong>表明科技盈利周期仍在加速。市场在能源-科技之间撕裂：资金流向能源、军工，同时坚守AI核心持仓。未来12小时最关键事件是AMD盘后财报——这将决定AI硬件需求是否经受住中东地缘政治压力的考验。
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  Al Jazeera — <a href="https://www.aljazeera.com/news/liveblog/2026/5/4/iran-war-live-tehran-says-trumps-hormuz-mission-violates-ceasefire">Iran war live: UAE intercepts missiles, drone sparks fire at oil site</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/04/palantir-pltr-q1-earnings-report-2026.html">Palantir (PLTR) Q1 earnings report 2026</a><br>
+  247 Wall St. — <a href="https://247wallst.com/investing/2026/05/04/stock-market-live-may-4-2026-sp-500-spy-sinks-on-iran-uncertainty-again/">Stock Market Live May 4, 2026</a><br>
+  TheStreet — <a href="https://www.thestreet.com/latest-news/stock-market-today-may-4-2026-updates">Stock Market Today May 4, 2026</a><br>
+  Federal Reserve — <a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a.htm">FOMC statement April 29, 2026</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/04/29/trump-fed-nominee-kevin-warsh-senate-approval.html">Kevin Warsh clears Senate Banking Committee</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/04/pinterest-pins-q1-earnings-report-2026.html">Pinterest Q1 2026 earnings</a><br>
+  CNBC — <a href="https://www.cnbc.com/2026/05/01/exxon-xom-chevron-cvx-q1-2026-earnings.html">Exxon and Chevron Q1 2026 earnings</a><br>
+  FactSet — <a href="https://insight.factset.com/sp-500-earnings-season-update-may-1-2026">S&P 500 Earnings Season Update: May 1, 2026</a><br>
+  CNBC — <a href="https://www.cnbc.com/amp/2026/05/04/strait-hormuz-gas-price-oil-shock-recession-risk-economy-iran-us-war.html">Recession risk from Hormuz oil shock</a><br>
+  Computing.net — <a href="https://computing.net/news/stocks/amd-q1-2026-earnings-preview-analysts-forecast-33-revenue-jump-as-ai-momentum-builds/">AMD Q1 2026 Earnings Preview</a><br>
+  Yahoo Finance / Earnings Live — <a href="https://finance.yahoo.com/markets/live/earnings-live-updates-sp-500-earnings-growth-trend-impresses-100000216.html">Earnings live updates: Palantir, Pinterest, Tyson</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Market Intelligence Agent · 市场情报助手<br>
+  Tuesday 5 May 2026 · AM SGT (09:03) · Prior session: 4 May 2026 · Full US market coverage · 美国全市场覆盖<br>
+  Deep dive: <a href="market_deepdive_20260505.html" style="color:#185FA5;">market_deepdive_20260505.html</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Market Brief — Tuesday, 21 April 2026 SGT</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 860px;
+         margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem;
+                   margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #f0efe8; border: 1px solid #ddddd5;
+                   border-radius: 6px; padding: 4px 10px; font-size: 11px;
+                   color: #666; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%;
+                 background: #1D9E75; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-date { font-size: 13px; color: #777; }
+  .mood-bar { display: flex; align-items: center; gap: 12px;
+              background: #f0efe8; border-radius: 8px; padding: 12px 16px;
+              margin-bottom: 1.5rem; }
+  .mood-label { font-size: 11px; color: #888; text-transform: uppercase;
+                letter-spacing: 0.05em; white-space: nowrap; }
+  .mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+  .mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px;
+               border-radius: 20px; white-space: nowrap; }
+  .mood-bullish  { background: #EAF3DE; color: #27500A; }
+  .mood-bearish  { background: #FCEBEB; color: #791F1F; }
+  .mood-mixed    { background: #FAEEDA; color: #633806; }
+  .mood-neutral  { background: #f0efe8; color: #555; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em;
+                   margin-bottom: 10px; }
+  .indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr));
+             gap: 8px; margin-bottom: 1.5rem; }
+  .idx-card { background: #fff; border: 1px solid #e8e8e0;
+              border-radius: 8px; padding: 10px 12px; }
+  .idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .idx-val  { font-size: 16px; font-weight: 600; }
+  .idx-chg  { font-size: 12px; margin-top: 2px; }
+  .up { color: #0F6E56; } .dn { color: #A32D2D; } .flat { color: #888; }
+  .signal-card { background: #fff; border: 1px solid #e8e8e0;
+                 border-radius: 0 12px 12px 0; padding: 1rem 1.25rem;
+                 margin-bottom: 10px; }
+  .rank1 { border-left: 3px solid #185FA5; }
+  .rank2 { border-left: 3px solid #1D9E75; }
+  .rank3 { border-left: 3px solid #854F0B; }
+  .sig-top { display: flex; align-items: flex-start;
+             justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .sig-meta { display: flex; align-items: center; gap: 6px;
+              flex-wrap: wrap; margin-bottom: 6px; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill  { font-size: 11px; padding: 2px 8px; border-radius: 20px;
+                 background: #f0efe8; color: #666; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; }
+  .sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4;
+                  margin-bottom: 8px; }
+  .sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+  .src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+  .src-line a { color: #185FA5; text-decoration: none; }
+  .cases { display: grid; grid-template-columns: 1fr 1fr;
+           gap: 8px; margin-bottom: 10px; }
+  .case-box { border-radius: 8px; padding: 8px 10px; }
+  .bull-box { background: #EAF3DE; }
+  .bear-box { background: #FCEBEB; }
+  .case-label { font-size: 10px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.05em; margin-bottom: 3px; }
+  .bull-label { color: #27500A; } .bear-label { color: #791F1F; }
+  .bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+  .bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+  .impl { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .impl-item { font-size: 12px; background: #f0efe8; border-radius: 6px;
+               padding: 4px 10px; color: #555; }
+  .impl-item span { font-weight: 600; color: #333; }
+  .questions { padding: 0; list-style: none; }
+  .questions li { font-size: 12px; color: #666; line-height: 1.5;
+                  padding: 3px 0 3px 14px; position: relative; }
+  .questions li::before { content: ""; position: absolute; left: 0; top: 9px;
+                          width: 5px; height: 5px; border-radius: 50%;
+                          background: #ccc; }
+  .also-grid { display: grid; grid-template-columns: 1fr 1fr;
+               gap: 8px; margin-bottom: 1.5rem; }
+  .also-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 12px; padding: 12px 14px; }
+  .also-top { display: flex; justify-content: space-between;
+              align-items: center; margin-bottom: 6px; }
+  .also-text { font-size: 12px; color: #666; line-height: 1.5; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr;
+                gap: 8px; margin-bottom: 1.5rem; }
+  .macro-card { background: #fff; border: 1px solid #e8e8e0;
+                border-radius: 8px; padding: 10px 12px; }
+  .macro-topic { font-size: 11px; font-weight: 600; color: #888;
+                 text-transform: uppercase; letter-spacing: 0.04em;
+                 margin-bottom: 4px; }
+  .macro-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .watch-list { list-style: none; padding: 0; }
+  .watch-list li { display: flex; gap: 10px; padding: 9px 0;
+                   border-bottom: 1px solid #f0efe8; font-size: 13px;
+                   color: #333; line-height: 1.5; }
+  .watch-list li:last-child { border-bottom: none; }
+  .watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex;
+                align-items: center; justify-content: center; flex-shrink: 0;
+                font-size: 10px; font-weight: 700; margin-top: 1px; }
+  .w-red    { background: #FCEBEB; color: #A32D2D; }
+  .w-blue   { background: #E6F1FB; color: #185FA5; }
+  .w-amber  { background: #FAEEDA; color: #854F0B; }
+  .w-green  { background: #EAF3DE; color: #3B6D11; }
+  .w-gray   { background: #f0efe8; color: #666; }
+  .pulse-card { background: #f0efe8; border-radius: 12px;
+                padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .pulse-row { display: flex; gap: 10px; padding: 7px 0;
+               border-bottom: 1px solid #e0dfd8; font-size: 13px;
+               line-height: 1.5; }
+  .pulse-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .pulse-key { font-weight: 600; white-space: nowrap; min-width: 130px;
+               color: #333; }
+  .pulse-val { color: #555; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2; }
+  .sources a { color: #185FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0; }
+  .note-pill { font-size: 10px; background: #FAEEDA; color: #854F0B;
+               border-radius: 4px; padding: 2px 6px; margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    PM Evening Briefing — US Pre-Market Opening
+  </div>
+  <div class="report-title">Daily market intelligence</div>
+  <div class="report-date">Tuesday, 22 April 2026 · 8:00 PM SGT · US Large-Cap &amp; Tech/AI<br>
+    <span style="font-size:11px;color:#aaa;">Index snapshot: 20 Apr close (last full US session). US pre-market opens as you read this.</span>
+  </div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Market mood</span>
+  <span class="mood-text">Markets are cautiously mixed as geopolitical relief from Iran's Strait of Hormuz announcement lifts oil-sensitive names, but Mag7 tech stocks retreat as investors de-risk ahead of the most data-dense earnings week of the year.</span>
+  <span class="mood-pill mood-mixed">Mixed</span>
+</div>
+
+<div class="section-label">Index snapshot <span class="note-pill">20 Apr close · pre-market live</span></div>
+<div class="indices">
+  <div class="idx-card">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-val">7,109</div>
+    <div class="idx-chg dn">−0.24%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Nasdaq</div>
+    <div class="idx-val">24,404</div>
+    <div class="idx-chg dn">−0.26%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Dow</div>
+    <div class="idx-val">49,443</div>
+    <div class="idx-chg flat">−0.01%</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">Russell 2000</div>
+    <div class="idx-val">~2,285</div>
+    <div class="idx-chg flat">Est.</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">WTI Oil</div>
+    <div class="idx-val">$86.27</div>
+    <div class="idx-chg dn">Falling</div>
+  </div>
+  <div class="idx-card">
+    <div class="idx-name">10-yr yield</div>
+    <div class="idx-val">~4.45%</div>
+    <div class="idx-chg flat">Flat</div>
+  </div>
+</div>
+
+<div class="section-label">Market commentary</div>
+<p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:1.5rem;">
+  The S&amp;P 500 pulled back a modest 0.24% on Monday (April 20) to close at 7,109, snapping a stretch of record-chasing sessions that had carried the index to an all-time high of 7,022.95 on April 15 before pushing higher still. The slight retreat was led by Mag7 names — Meta fell 2.6%, Tesla slipped 2.0%, Alphabet lost 1.2%, and Nvidia dropped over 1% — as traders trimmed positions ahead of a week packed with Q1 earnings from all five remaining reporting Mag7 members. Early Tuesday (April 21) is showing a more constructive pre-market tone: Iran confirmed the Strait of Hormuz is open, sending crude from ~$90 back toward $86 and lifting futures across cyclical and consumer sectors. Despite the Monday dip, major indices remain on pace for a third consecutive weekly gain, with the Nasdaq up roughly 20%+ from its recent low and AI-infrastructure stocks acting as the primary engine of the 2026 rally.
+</p>
+
+<div class="section-label">Top 3 signals</div>
+
+<!-- Signal #1: AAPL CEO Transition -->
+<div class="signal-card rank1">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AAPL</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Official Board Announcement</span>
+      </div>
+      <div class="sig-headline">Apple CEO Tim Cook to step down September 1 — hardware boss John Ternus named successor in Apple's first CEO transition in 15 years</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+  <div class="sig-body">
+    Apple announced Monday that Tim Cook (65), who has run the company since succeeding Steve Jobs in 2011, will step down as CEO on September 1, 2026 and transition to Executive Chairman of the Board. John Ternus (50), currently Senior Vice President of Hardware Engineering and the architect of Apple's M-series chips and Vision Pro, was unanimously confirmed as the incoming CEO. Apple shares slipped on the news despite being up approximately 38% year-to-date, reflecting investor uncertainty about strategic direction under new leadership. This marks the most consequential leadership change in the $3+ trillion company since Jobs's death — Cook built Apple's supply chain and services empire into its dominant position, while Ternus's background is rooted in physical hardware and silicon design, raising questions about Apple's AI and services priorities going forward.
+  </div>
+  <div class="src-line">
+    CNBC · 20 Apr 2026 · Still active: AAPL trading on succession uncertainty, analyst community revisiting price targets ·
+    <a href="https://www.cnbc.com/2026/04/20/apple-names-john-ternus-ceo-replacing-tim-cook-who-becomes-chairman.html">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">Ternus's deep silicon expertise could finally give Apple Intelligence a credible hardware-native AI roadmap, making Apple a genuine AI platform rather than a hardware shell for third-party models.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Cook's operational discipline, China relationships, and services monetisation strategy took 15 years to build; a hardware-focused CEO risks de-prioritising the high-margin services segment that now supports 60%+ of Apple's gross profit growth.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> AAPL likely range-bound; investors will wait for Ternus's first strategic communication before re-rating</div>
+    <div class="impl-item"><span>Long term:</span> If Ternus accelerates Apple's custom silicon AI edge, this could be the catalyst to narrow AAPL's AI discount vs. peers</div>
+  </div>
+  <ul class="questions">
+    <li>What is Ternus's stated strategy for "Apple Intelligence" — will he keep the privacy-first on-device model or accelerate cloud AI partnerships?</li>
+    <li>Does the transition affect the Apple–OpenAI deal signed under Cook, and will Ternus seek deeper or more proprietary AI integrations?</li>
+    <li>How will institutional investors react to the first CEO change in 15 years — will the multiple compress until Ternus establishes strategic credibility?</li>
+  </ul>
+</div>
+
+<!-- Signal #2: Amazon / Anthropic -->
+<div class="signal-card rank2">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AMZN</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Official Press Release</span>
+      </div>
+      <div class="sig-headline">Amazon commits $5B fresh capital to Anthropic (total $13B, up to $25B possible) — Anthropic pledges $100B+ to AWS over 10 years for 5 GW of compute</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+  <div class="sig-body">
+    Amazon announced Monday an additional $5 billion investment in Anthropic, bringing its total stake to $13 billion, with provisions to inject up to $25 billion over time. In exchange, Anthropic committed to spending over $100 billion on AWS infrastructure over the next decade, securing access to up to 5 GW of cloud compute through Amazon's custom Trainium2 chips and Graviton CPUs. Project Rainier — currently one of the world's largest AI compute clusters, running ~500,000 Trainium2 chips — sits at the centre of this deal. The agreement echoes Amazon's separate $50 billion participation in OpenAI's $110 billion funding round two months earlier, confirming Amazon's dual-horse strategy of bankrolling both of the world's leading AI labs while locking them into the AWS cloud ecosystem for training and inference workloads.
+  </div>
+  <div class="src-line">
+    TechCrunch / Bloomberg / Amazon.com · 20 Apr 2026 · Still active: AMZN AWS narrative central to cloud growth thesis, deal details still being digested ·
+    <a href="https://techcrunch.com/2026/04/20/anthropic-takes-5b-from-amazon-and-pledges-100b-in-cloud-spending-in-return/">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">$100B in Anthropic cloud commitments over 10 years implies $10B+ of incremental annual AWS revenue at near-zero marginal cost — a structurally higher AWS growth floor that could re-rate AMZN's cloud segment multiple significantly.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Total exposure to Anthropic reaches $25B at max investment — an enormous bet on a company with no path to profitability yet, facing Claude vs. GPT-5 competition and potential open-weight model commoditisation from Meta's Llama.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> Modest AMZN positive; AWS segment will be the focus on Amazon's Q1 2026 earnings call (due early May)</div>
+    <div class="impl-item"><span>Long term:</span> If Anthropic scales to 5 GW on AWS, this relationship could define cloud AI leadership in the same way Azure–OpenAI defined Microsoft's 2023–2025 rally</div>
+  </div>
+  <ul class="questions">
+    <li>What is the implied enterprise value of Anthropic at the $25B max investment — does Amazon's stake justify the valuation given GPT-5 competition?</li>
+    <li>How does the $100B AWS commitment affect Anthropic's ability to negotiate with Google Cloud or Microsoft Azure as alternate providers?</li>
+    <li>Will Amazon's Trainium2 chips prove competitive enough with Nvidia H100/B200 for Anthropic's frontier model training workloads?</li>
+  </ul>
+</div>
+
+<!-- Signal #3: AVGO AI chip dominance -->
+<div class="signal-card rank3">
+  <div class="sig-top">
+    <div>
+      <div class="sig-meta">
+        <span class="ticker-pill">AVGO</span>
+        <span class="ticker-pill">GOOGL</span>
+        <span class="score-pill">18/20</span>
+        <span class="score-pill">Management Guidance / Earnings</span>
+      </div>
+      <div class="sig-headline">Ongoing: Broadcom locks in Google TPU "Ironwood" (through 2031), Meta (through 2029) and Anthropic (1 GW by end-2026) AI chip deals — AVGO +28% month-to-date</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+  <div class="sig-body">
+    Broadcom has secured a trio of landmark multi-year AI chip co-development agreements over the past two weeks, cementing its position as the dominant custom-silicon partner for hyperscalers. The Google partnership extends through 2031 and covers the joint development of Google's seventh-generation Tensor Processing Unit (TPU), codenamed "Ironwood." The Meta deal, signed April 14–15, commits Meta to over 1 GW of computing capacity through 2029. The Anthropic deal — structured via Google Cloud infrastructure — targets 1 GW of TPU-based compute for Anthropic by end-2026, scaling to 3.5 GW by 2027. AVGO shares have surged approximately 28% month-to-date on the announcements, with 51 of 54 FactSet analysts rating the stock Buy; consensus price target is $465.55, implying ~17% upside from current levels. This story remains actively traded as the market prices in a sustained AI custom-silicon upcycle.
+  </div>
+  <div class="src-line">
+    CNBC / 247WallSt / Rolling Out · Ongoing (originally broke 7 Apr, most recent catalyst 15 Apr) · Still active: AVGO +28% MTD, analyst upgrades continuing, market pricing AI chip-cycle duration ·
+    <a href="https://www.cnbc.com/2026/04/07/broadcom-shares-jump-before-bell-google-deal.html">Read more</a>
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case</div>
+      <div class="bull-text">Multi-year locked-in contracts with Google, Meta, and Anthropic de-risk AVGO's revenue for at least 5 years, positioning it as the NVIDIA alternative of choice for structured inference workloads at hyperscale — a TAM that could exceed $50B by 2028.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear case</div>
+      <div class="bear-text">Custom ASIC margins are structurally lower than NVIDIA's GPU business, and CUDA's deep ecosystem moat means AVGO wins inference cost efficiency but loses on training flexibility — the higher-margin workload.</div>
+    </div>
+  </div>
+  <div class="impl">
+    <div class="impl-item"><span>Short term:</span> AVGO momentum likely capped near-term after a 28% surge; watch for any profit-taking into earnings</div>
+    <div class="impl-item"><span>Long term:</span> If hyperscaler AI capex sustains at $600B+ annually, custom silicon addressable revenue for AVGO could be $15–20B/year by 2027</div>
+  </div>
+  <ul class="questions">
+    <li>Can Broadcom operationally execute delivery of 3.5 GW of TPU capacity for Anthropic by 2027 — what are the chip packaging and CoWoS supply constraints?</li>
+    <li>Does locking Google, Meta, and Anthropic into AVGO custom silicon reduce those hyperscalers' future flexibility and create negotiating risk at contract renewal?</li>
+    <li>With AVGO +28% MTD and consensus at $465, is the AI chip deal premium already fully priced in, or is there structural upside from revenue disclosures at next earnings?</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="section-label">Also tracking</div>
+<div class="also-grid">
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">TSLA</span>
+      <span class="score-pill">15/20</span>
+    </div>
+    <div class="also-text">
+      Tesla fell 2.0% Monday as investors trimmed ahead of Q1 2026 earnings (April 22 after close), with Elon Musk teasing images of Tesla's new "AI5" chip on social media, raising expectations for an AI monetisation update beyond EVs — the dual narrative of margin pressure (EV price wars) vs. AI upside (Dojo, Optimus) makes this the week's most binary catalyst in the Mag7.
+      <br><br>
+      <a href="https://www.wallstreethorizon.com/blog/Magnificent-7-Earnings-Out-this-Week-will-Shed-Light-on-Big-Techs-Tariff-Concerns" style="font-size:11px;color:#185FA5;text-decoration:none;">🔗 Mag7 Earnings Preview</a>
+    </div>
+  </div>
+  <div class="also-card">
+    <div class="also-top">
+      <span class="ticker-pill">NFLX</span>
+      <span class="score-pill">15/20</span>
+    </div>
+    <div class="also-text">
+      Ongoing (broke 4 days ago): Netflix dropped ~10% after Q1 2026 earnings beat on revenue ($12.25B, +16.2% YoY) and EPS ($1.23, +55.7% vs. estimate) but underwhelmed on guidance — Q2 revenue growth flagged at only 13% and the full-year midpoint of $51.2B missed consensus by $180M; Morgan Stanley remains bullish post-earnings, calling the guidance conservative, but the sell-off reflects market discipline around streaming growth deceleration.
+      <br><br>
+      <a href="https://www.gurufocus.com/news/8802290/netflix-nflx-shares-drop-10-after-q1-earnings-and-guidance-update" style="font-size:11px;color:#185FA5;text-decoration:none;">🔗 GuruFocus — NFLX Earnings Drop</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">What to watch — next 24–48 hours</div>
+<ul class="watch-list">
+  <li>
+    <div class="watch-icon w-red">ERN</div>
+    <div><strong>Tesla (TSLA) Q1 2026 earnings</strong> — Tuesday 22 Apr, after close. Street watching margin trajectory (EV gross margin ex-credits ~14–15% expected), Cybertruck ramp numbers, Dojo/FSD revenue recognition, and any commentary on AI5 chip or Optimus robotics timeline. High-vol event: TSLA implied move ~8–10% either direction.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-red">ERN</div>
+    <div><strong>ServiceNow (NOW) Q1 2026 earnings</strong> — Tuesday 22 Apr, after close. Key read on enterprise software budget health and whether AI-powered workflow automation (Now Assist) is translating to accelerated deal sizes. Consensus: cRPO growth ~20%.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-blue">FED</div>
+    <div><strong>FOMC April 28–29 meeting</strong> — 99.3% market-implied probability of a hold at 3.50–3.75%. Chair Powell's post-meeting press conference language on tariff-driven inflation (CPI now 3.3% YoY, rising from 2.4% in February) and how the Fed views trade-war price effects will drive rate expectations into summer.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-amber">GEO</div>
+    <div><strong>Iran Strait of Hormuz</strong> — Iran announced the Strait is open, sending WTI from ~$90 toward $86. Watch whether this holds or whether U.S.-Iran ceasefire negotiations evolve; energy prices directly feed into CPI and Federal Reserve rate sequencing. Oil at $86 is market-friendly; a reversal above $90 would re-inject inflation concern.</div>
+  </li>
+  <li>
+    <div class="watch-icon w-green">AI</div>
+    <div><strong>Tesla AI5 chip formal reveal</strong> — Musk's social teaser suggests a formal announcement around or following the April 22 earnings call. If positioned as a credible Nvidia alternative for robotics and autonomous systems, this could be a significant re-rating catalyst for TSLA's AI narrative beyond the EV business.</div>
+  </li>
+</ul>
+
+<div class="divider"></div>
+
+<div class="section-label">Market pulse</div>
+<div class="pulse-card">
+  <div class="pulse-row">
+    <div class="pulse-key">Theme</div>
+    <div class="pulse-val">The AI infrastructure commitment cycle is accelerating — hyperscalers are signing decade-long, hundred-billion-dollar deals locking in compute, cloud, and chip partnerships, signalling that AI capex is no longer optional spending but a structural cost of competition.</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Dominant trade</div>
+    <div class="pulse-val">Market is rotating into AI infrastructure enablers (AVGO, AMZN AWS) and selectively selling premium-multiple Mag7 names (META, GOOGL, MSFT) ahead of earnings that need to prove AI spend is generating revenue — not just cost.</div>
+  </div>
+  <div class="pulse-row">
+    <div class="pulse-key">Watch next</div>
+    <div class="pulse-val">Tesla's Q1 2026 earnings report tonight (April 22 after close) — the first Mag7 earnings of the week sets the tone; if TSLA shows EV margin stabilisation and credible AI/robotics catalysts, it could unlock a broader Mag7 re-rating into the rest of the earnings season.</div>
+  </div>
+</div>
+
+<div class="section-label">Sources</div>
+<div class="sources">
+  <a href="https://www.cnbc.com/2026/04/20/apple-names-john-ternus-ceo-replacing-tim-cook-who-becomes-chairman.html">CNBC — Apple names John Ternus CEO, Tim Cook becomes Chairman (20 Apr 2026)</a><br>
+  <a href="https://techcrunch.com/2026/04/20/apple-names-john-ternus-ceo-replacing-tim-cook-who-becomes-chairman.html">TechCrunch — Tim Cook stepping down, John Ternus taking over (20 Apr 2026)</a><br>
+  <a href="https://techcrunch.com/2026/04/20/anthropic-takes-5b-from-amazon-and-pledges-100b-in-cloud-spending-in-return/">TechCrunch — Anthropic takes $5B from Amazon, pledges $100B in cloud spending (20 Apr 2026)</a><br>
+  <a href="https://www.cnbc.com/2026/04/20/amazon-invest-up-to-25-billion-in-anthropic-part-of-ai-infrastructure.html">CNBC — Amazon to invest up to $25B in Anthropic (20 Apr 2026)</a><br>
+  <a href="https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai">Amazon.com — Amazon and Anthropic expand strategic collaboration (20 Apr 2026)</a><br>
+  <a href="https://www.cnbc.com/2026/04/07/broadcom-shares-jump-before-bell-google-deal.html">CNBC — Broadcom shares jump on Google deal (7 Apr 2026)</a><br>
+  <a href="https://247wallst.com/investing/2026/04/17/broadcoms-new-ai-partnership-with-google-and-anthropic-could-supercharge-the-next-leg-of-the-rally/">247WallSt — Broadcom AI Partnership Analysis (17 Apr 2026)</a><br>
+  <a href="https://www.gurufocus.com/news/8802290/netflix-nflx-shares-drop-10-after-q1-earnings-and-guidance-update">GuruFocus — Netflix -10% after Q1 2026 earnings and guidance (17 Apr 2026)</a><br>
+  <a href="https://www.wallstreethorizon.com/blog/Magnificent-7-Earnings-Out-this-Week-will-Shed-Light-on-Big-Techs-Tariff-Concerns">Wall Street Horizon — Mag7 Earnings Preview (Apr 2026)</a><br>
+  <a href="https://fxdailyreport.com/wti-crude-oil-price-analysis-for-april-21-2026/">FX Daily Report — WTI Crude Oil Analysis, 21 Apr 2026</a><br>
+  <a href="https://www.fool.com/investing/2026/04/20/fed-april-inflation-forecast-updated-stock-market/">Motley Fool — Fed April Inflation Forecast Update (20 Apr 2026)</a>
+</div>
+
+<div class="divider"></div>
+
+<div class="footer">
+  Automated market intelligence briefing · Generated 21 Apr 2026 20:00 SGT · For information purposes only · No buy or sell recommendations are made or implied · All prices and index levels are as of most recent available data
+</div>
+
+</body>
+</html>

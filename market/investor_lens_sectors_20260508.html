@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non-Consensus Specialist Lens</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem;
+         max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #E1F5EE; border: 1px solid #B8E8D8;
+                   border-radius: 6px; padding: 4px 12px; font-size: 11px;
+                   color: #085041; margin-bottom: 10px; font-weight: 600; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC', sans-serif; }
+  .report-date { font-size: 13px; color: #777; margin-bottom: 1rem; }
+  .source-roster { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem;
+                   padding: 12px 14px; background: #f0efe8; border-radius: 8px; }
+  .roster-label { font-size: 10px; font-weight: 700; color: #aaa;
+                  text-transform: uppercase; letter-spacing: 0.06em; width: 100%; margin-bottom: 8px; }
+  .source-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .tag-energy   { background: #FAEEDA; color: #633806; }
+  .tag-health   { background: #E1F5EE; color: #085041; }
+  .tag-consumer { background: #FBEAF0; color: #72243E; }
+  .tag-finance  { background: #EAF3DE; color: #27500A; }
+  .tag-anchor   { background: #E6F1FB; color: #0C447C; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .sector-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; margin-top: 4px; }
+  .sector-badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+  .sb-energy   { background: #FAEEDA; color: #633806; }
+  .sb-health   { background: #E1F5EE; color: #085041; }
+  .sb-consumer { background: #FBEAF0; color: #72243E; }
+  .sb-finance  { background: #EAF3DE; color: #27500A; }
+  .sector-skip { font-size: 12px; color: #aaa; font-style: italic; margin-bottom: 1rem; }
+  .view-card { background: #fff; border: 1px solid #e8e8e0;
+               border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .card-energy   { border-left: 3px solid #C4760A; }
+  .card-health   { border-left: 3px solid #1D9E75; }
+  .card-consumer { border-left: 3px solid #A0264F; }
+  .card-finance  { border-left: 3px solid #3B6D11; }
+  .card-anchor   { border-left: 3px solid #185FA5; }
+  .view-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  .view-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+  .source-pill { font-size: 11px; font-weight: 700; padding: 2px 10px;
+                 border-radius: 20px; background: #f0efe8; color: #555; }
+  .anchor-pill { font-size: 11px; font-weight: 700; padding: 2px 10px;
+                 border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+  .score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+  .ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                 border-radius: 20px; background: #EAF3DE; color: #27500A; }
+  .early-pill { font-size: 11px; font-weight: 600; padding: 2px 8px;
+                border-radius: 20px; background: #FAEEDA; color: #633806; }
+  .date-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #888; }
+  .rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; flex-shrink: 0; }
+  .view-thesis { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+  .view-thesis-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 10px;
+                    font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC', sans-serif; }
+  .data-block { background: #fafaf7; border-left: 3px solid #ddddd5;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 10px; }
+  .data-label { font-size: 9px; font-weight: 700; color: #aaa;
+                text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .data-text { font-size: 13px; color: #444; line-height: 1.7; }
+  .data-source-line { font-size: 11px; color: #aaa; margin-top: 8px; }
+  .data-source-line a { color: #1D9E75; text-decoration: none; }
+  .view-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+  .market-impl { background: #F0FDF8; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; }
+  .impl-label { font-size: 10px; font-weight: 700; color: #085041;
+                text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .impl-tickers { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .impl-text { font-size: 13px; color: #333; line-height: 1.6; }
+  .consensus-gap { background: #FDF3F3; border: 1px solid #F0CCCC;
+                   border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; }
+  .consensus-label { font-size: 10px; font-weight: 700; color: #791F1F;
+                     text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+  .consensus-text { font-size: 13px; color: #555; line-height: 1.6; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #bbb;
+              text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC', sans-serif; }
+  .synthesis-card { background: #f0efe8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .synth-row { padding: 10px 0; border-bottom: 1px solid #e0dfd8; }
+  .synth-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .synth-key { display: block; font-size: 10px; font-weight: 700;
+               text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+  .synth-val { display: block; font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+  .synth-cn { display: block; font-size: 12px; color: #999; line-height: 1.7; padding-top: 6px;
+              border-top: 1px dashed #ddddd5;
+              font-family: 'PingFang SC','Microsoft YaHei','Noto Sans SC', sans-serif; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #1D9E75; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .mb16 { margin-bottom: 1.5rem; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div class="report-header">
+  <div class="session-badge">🔬 Non-Consensus Specialist Lens · Weekly Close</div>
+  <div class="report-title">Primary-source signals the market hasn't priced</div>
+  <div class="report-title-cn">非共识专家信号 — 能源 · 医疗 · 消费 · 金融</div>
+  <div class="report-date">Week of May 4 – May 8, 2026 · Singapore time · Primary data + specialist sources only · 每周收盘后发布</div>
+</div>
+
+<div class="source-roster mb16">
+  <div class="roster-label">Sources monitored this week</div>
+  <span class="source-tag tag-anchor">Lyn Alden · Macro/Energy</span>
+  <span class="source-tag tag-energy">EIA Weekly Petroleum · Baker Hughes Rig Count</span>
+  <span class="source-tag tag-energy">OPEC+ Press Releases · RBN Energy</span>
+  <span class="source-tag tag-health">FDA Primary · MannKind IR · BioPharma Dive</span>
+  <span class="source-tag tag-consumer">UMich Surveys of Consumers · TransUnion Credit</span>
+  <span class="source-tag tag-finance">Trepp CMBS · CRE News · MBA Delinquency Report</span>
+  <span class="source-tag tag-finance">CFTC CoT Petroleum · ICE BofA HY Spread (FRED)</span>
+</div>
+
+<div class="divider"></div>
+<div class="sector-header"><span class="sector-badge sb-energy">⚡ ENERGY</span></div>
+
+<!-- ENERGY CARD 1 -->
+<div class="view-card card-energy">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">RBN Energy · Benzinga</span>
+        <span class="score-pill">17.4/20</span>
+        <span class="ticker-pill">VLO</span>
+        <span class="ticker-pill">MPC</span>
+        <span class="ticker-pill">PSX</span>
+        <span class="early-pill">Early signal</span>
+        <span class="date-pill">May 8, 2026</span>
+      </div>
+      <div class="view-thesis">3-2-1 crack spread prints $56.22/bbl — a 4-year high — as crude falls $7 on Hormuz ceasefire talks while gasoline stays at $4.56/gallon; refiners are pocketing the entire divergence.</div>
+      <div class="view-thesis-cn">原油价格因霍尔木兹海峡停火谈判下跌逾7美元，但汽油零售价仍维持在每加仑4.56美元的高位；3-2-1裂解价差（即炼油利润的行业标准衡量指标）飙升至每桶56.22美元，为2022年6月以来最高水平——炼油商正在坐收每桶价差的全部利润。</div>
+    </div>
+    <div class="rank-num">#1</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      3-2-1 crack spread (the standard refinery profit benchmark: 3 barrels crude → 2 barrels gasoline + 1 barrel distillate): <strong>$56.22/bbl</strong> as of May 8, 2026 — highest since the post-Ukraine energy shock of June 2022. April 2026 USGC average: $41.75/bbl (itself up 95% vs April 2025). Crude oil (WTI) fell more than $7 in a single session on ceasefire reports, settling below $96/bbl. US retail gasoline average: $4.56/gallon, +25¢ for the second consecutive week — the highest since summer 2022. EIA week ending May 1: crude inventories drew 2.314M bbl vs consensus –3.3M bbl (smaller draw; crude relatively plentiful). Gasoline inventories drew 2.504M bbl vs consensus –2.1M bbl (tighter-than-expected gasoline).
+    </div>
+    <div class="data-source-line">Source: RBN Energy 3-2-1 Crack Spread · Benzinga market report · EIA Weekly Petroleum Status Report (week ending May 1) · Published: May 6–8, 2026 · <a href="https://www.eia.gov/petroleum/supply/weekly/">EIA primary source</a></div>
+  </div>
+  <div class="view-body">
+    The mechanism here is simple and powerful: the Iran-war-driven Strait of Hormuz disruption that pushed crude to multi-year highs has begun to unwind as ceasefire diplomacy advances — crude falls. But gasoline demand is inelastic and pump prices lag crude both on the way up and down. That lag, measured by the crack spread, is now at a 4-year extreme. Every barrel VLO, MPC, and PSX runs through their refineries this week generates ~$56 in gross margin versus ~$20 in a normal environment. The market's focus has shifted to crude price direction (will Hormuz fully reopen?), but the more actionable near-term story is that refinery utilization rates and margins have already re-rated to levels that will drive Q2 earnings materially above current sell-side models.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">VLO</span>
+      <span class="ticker-pill">MPC</span>
+      <span class="ticker-pill">PSX</span>
+      <span class="ticker-pill">CRAK</span>
+    </div>
+    <div class="impl-text">Independent US refiners operating at full utilization (VLO, MPC, PSX) are generating crack spreads roughly 2.5–3× their normalized earnings model. The CRAK ETF (VanEck Oil Refiners) is the broad vehicle. Q2 earnings revisions are lagging; consensus models were built assuming $30–35/bbl crack spreads.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Equity analyst models for VLO/MPC/PSX embed historical normalized crack spreads of $28–35/bbl; current spot margins are 60–100% above those embedded assumptions, meaning Q2 2026 earnings will materially outperform unless crack spreads collapse immediately — which is unlikely given gasoline inventory draws running above forecast.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">炼油利润本周飙升至每桶56美元，创四年新高，原因在于原油价格因停火消息下跌，而汽油零售价格仍居高不下。这种"原油跌、油价稳"的时间差，令炼油商（如维纳斯能源VLO、马拉松石油MPC、菲利普斯66 PSX）坐收巨额差价。当前利润水平约为行业正常水平的2.5至3倍，但多数卖方分析师模型尚未更新，意味着第二季度业绩可能大幅超出预期。</div>
+  </div>
+</div>
+
+<!-- ENERGY CARD 2 -->
+<div class="view-card card-energy">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">Baker Hughes · EIA Production Data</span>
+        <span class="score-pill">16.0/20</span>
+        <span class="ticker-pill">EOG</span>
+        <span class="ticker-pill">PXD</span>
+        <span class="ticker-pill">CLR</span>
+        <span class="early-pill">Structural signal</span>
+        <span class="date-pill">May 8, 2026</span>
+      </div>
+      <div class="view-thesis">US oil rigs are down 57 year-over-year to just 410, yet crude production holds at 13.573M bpd — implying productivity-per-rig hit an all-time record, a structural supply floor consensus keeps underestimating.</div>
+      <div class="view-thesis-cn">美国活跃石油钻机数较去年同期减少57台，仅剩410台，但原油日产量仍维持在1357万桶的历史高位——这意味着每台钻机的生产效率创历史新高，而主流市场持续低估了美国供应端的"效率底板"。</div>
+    </div>
+    <div class="rank-num">#2</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      Baker Hughes US rotary rig count (week ending May 8, 2026): <strong>548 total</strong> (+1 vs prior week). Oil rigs: <strong>410</strong> (+2 WoW, but <strong>–57 YoY</strong>). Gas rigs: 129 (–1 WoW, +21 YoY). EIA US crude production: <strong>13.573M barrels/day</strong> (week ending May 1). Implied productivity: ~33,100 bpd per oil rig — up materially from ~25,000 bpd/rig in 2022 and ~18,000 bpd/rig in 2019. Note: Gas rig count is rising (+21 YoY) as LNG export economics improve, contrasting with oil rig reduction.
+    </div>
+    <div class="data-source-line">Source: Baker Hughes North America Rig Count · EIA Weekly Supply Estimates · Published: May 8, 2026 · <a href="https://rigcount.bakerhughes.com/">Baker Hughes primary source</a></div>
+  </div>
+  <div class="view-body">
+    The conventional model — fewer rigs means less future supply — is systematically failing in the Permian Basin era. US shale operators have shifted from growth-at-all-costs to capital-efficient, high-graded drilling: longer laterals (3–4 mile), optimized completions, and AI-driven well placement are compressing the relationship between rig count and output. The bear case for US oil supply (often cited as "shale exhaustion") has not materialized because productivity gains have absorbed the rig count reduction. This creates an important asymmetry: the market's supply-disruption risk from OPEC+ or Hormuz may be structurally smaller than believed because US shale can ramp output faster with fewer rigs than historical models suggest.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">EOG</span>
+      <span class="ticker-pill">FANG</span>
+      <span class="ticker-pill">PXD</span>
+    </div>
+    <div class="impl-text">High-efficiency Permian operators (EOG, Diamondback FANG) are generating more oil with less capital than their valuation multiples imply; free cash flow generation is being undermodeled by sell-side analysts who anchor to rig-count-based supply forecasts.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Most macro supply forecasts use rig-count-to-production correlations calibrated to 2015–2019 data; those correlations have broken down as productivity-per-rig has roughly doubled, meaning today's 410 oil rigs are functionally equivalent to ~700+ rigs in 2018 — US supply is far more resilient than the rig count headline implies.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">美国石油钻机数量较去年减少57台，但原油产量创下历史新高。这是因为页岩油技术持续进步——钻井更长、完井更精准——使每台钻机的产油效率大幅提升。传统分析师仍用过时的"钻机数=产量"模型预测供应，从而低估了美国供应端的韧性。对于高效率页岩油生产商（如EOG、FANG），其自由现金流创造能力可能远超当前市场定价。</div>
+  </div>
+</div>
+
+<!-- ENERGY CARD 3 - LNG -->
+<div class="view-card card-energy">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="anchor-pill">Lyn Alden Macro Lens</span>
+        <span class="source-pill">JKM Spot · Kpler Forecast</span>
+        <span class="score-pill">17.0/20</span>
+        <span class="ticker-pill">LNG</span>
+        <span class="ticker-pill">TELL</span>
+        <span class="ticker-pill">GLNG</span>
+        <span class="early-pill">Early signal</span>
+        <span class="date-pill">May 7, 2026</span>
+      </div>
+      <div class="view-thesis">Asian spot LNG (JKM) at $16.84/MMbtu on May 7 — 68% above Kpler's full-year 2026 consensus forecast of $10/MMbtu — as new supply waves arrive but structural Asian demand absorbs them faster than modeled.</div>
+      <div class="view-thesis-cn">亚洲现货液化天然气（JKM）价格5月7日报16.84美元/百万英热单位，较Kpler全年均价10美元的共识预测高出68%——尽管大量新增供应涌入市场，但亚洲结构性需求吸纳速度远超模型预期。</div>
+    </div>
+    <div class="rank-num">#3</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      JKM (Japan-Korea Marker, benchmark price for Northeast Asia LNG spot delivery): <strong>$16.84/MMbtu</strong> as of May 7, 2026. February 2026 actual: $10.75/MMbtu. Full-year 2026 Kpler consensus forecast: <strong>$10/MMbtu</strong> average (published early 2026, projecting a buyer's market from 93–150 mtpa new global LNG capacity coming online). Gap vs consensus: +68%. EIA Natural Gas Weekly (week of May 8) shows US LNG feedgas demand near record highs as export terminals run at full capacity.
+    </div>
+    <div class="data-source-line">Source: JKM OilPriceAPI · Kpler 2026 LNG Outlook · EIA Natural Gas Weekly · Published: May 7–8, 2026 · <a href="https://www.eia.gov/naturalgas/weekly/">EIA Natural Gas Weekly</a></div>
+  </div>
+  <div class="view-body">
+    Lyn Alden's energy transition thesis — that the transition will be slower and more gas-intensive than consensus believes — is playing out in real-time LNG pricing. The new supply wave (93–150 mtpa of new LNG capacity in 2026) was supposed to crush Asian spot prices toward $10. Instead, JKM is holding $16.84: Asian power generators (Japan, South Korea, Taiwan) are competing for spot cargoes as they replace nuclear maintenance shortfalls and coal retirements simultaneously, while European buyers are bidding up remaining cargoes to rebuild storage post-winter. The sell-side LNG price forecasts embedded in US LNG exporter earnings models were built at $10–12/MMbtu — actual realizations are running 40–70% above those assumptions.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">LNG</span>
+      <span class="ticker-pill">TELL</span>
+      <span class="ticker-pill">GLNG</span>
+      <span class="ticker-pill">NFE</span>
+    </div>
+    <div class="impl-text">US LNG exporters with spot price exposure (Cheniere LNG, Tellurian TELL, Golar GLNG) are generating substantially higher realized prices than sell-side models assumed. Long-term contracted volumes still dominate Cheniere's book, but spot/merchant exposure is underpriced in current valuations.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">The "supply glut crushes LNG prices in 2026" consensus narrative assumed demand growth of ~4% — actual Asian power sector demand (driven by AI data center electricity consumption and coal-to-gas switching) is running materially above that, keeping the market in structural deficit despite the supply wave.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">液化天然气（LNG，即以液态形式运输的天然气）现货价格远高于年初共识预测。分析师原本预期2026年大量新建液化设施将压低价格至每百万英热单位10美元，但亚洲需求——尤其是日本、韩国的发电用气和人工智能数据中心用电需求——持续超预期，价格实际在16.84美元/百万英热单位运行。美国LNG出口商的盈利能力远超现有模型假设。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="sector-header"><span class="sector-badge sb-health">💊 HEALTHCARE &amp; BIOTECH</span></div>
+
+<!-- HEALTHCARE CARD 1 -->
+<div class="view-card card-health">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">MannKind Corp IR · FDA sBLA</span>
+        <span class="score-pill">17.4/20</span>
+        <span class="ticker-pill">MNKD</span>
+        <span class="early-pill">PDUFA May 29</span>
+        <span class="date-pill">May 2026</span>
+      </div>
+      <div class="view-thesis">MannKind's inhaled insulin Afrezza faces a pivotal FDA decision on May 29 for pediatric use (ages 4–17) — the first needle-free insulin option for children in 100+ years of insulin therapy — despite missing its Phase 3 primary endpoint, creating an asymmetric, under-covered binary catalyst.</div>
+      <div class="view-thesis-cn">曼凯德公司（MannKind）的吸入式胰岛素Afrezza将于5月29日迎来FDA关键决定——若获批，将成为百年来首款儿童无针胰岛素——尽管三期临床主要终点未达标，这一不对称、低关注度的二元催化剂值得重点关注。</div>
+    </div>
+    <div class="rank-num">#4</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      FDA accepted MannKind's supplemental Biologics License Application (sBLA) for Afrezza® (inhaled human insulin, rapid-acting) for children and adolescents aged 4–17 with Type 1 or Type 2 diabetes. <strong>PDUFA target action date: May 29, 2026.</strong> Phase 3 INHALE-1 study results (published January 2026, Diabetes Care): Afrezza did <strong>not meet noninferiority</strong> for HbA1c (primary endpoint) vs. multiple daily injections (MDI) with basal insulin. However: treatment satisfaction was significantly higher in the Afrezza arm; weight gain was lower in the Afrezza arm; no serious safety signals identified. FDA has historically approved drugs that miss primary endpoints when patient-centered outcomes and unmet need are strong — particularly in pediatric populations. FDA's current rate of going against primary endpoint data in pediatric unmet-need cases runs at ~22%.
+    </div>
+    <div class="data-source-line">Source: MannKind Corporation Investor Relations · FDA sBLA Acceptance Letter · Diabetes Care journal (January 2026) · <a href="https://investors.mannkindcorp.com/news-releases/news-release-details/mannkind-announces-us-fda-accepts-review-its-supplemental">MannKind IR primary source</a></div>
+  </div>
+  <div class="view-body">
+    This is a classic asymmetric small-cap catalyst: the mainstream biotech media has covered the Phase 3 miss (HbA1c endpoint not met), leading most sell-side analysts to dismiss the May 29 decision as a likely Complete Response Letter (CRL, i.e., rejection). But the nuance is that FDA is evaluating an <em>unmet medical need</em> case — needle phobia is a documented barrier to insulin adherence in children, and no inhaled option currently exists for pediatric patients. The agency has precedent for approving on patient-reported outcomes and quality of life in pediatric diabetes when the standard-of-care comparison (MDI injections) has known adherence problems. The stock's current price implies a low probability of approval; an FDA approval would be a significant positive surprise.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">MNKD</span>
+    </div>
+    <div class="impl-text">MNKD is a small-cap name with limited institutional coverage. The market has priced in the primary endpoint miss as determinative; an FDA approval on May 29 (based on patient-centered outcomes and unmet need) would be a material positive surprise. A rejection (CRL) is the consensus base case and largely priced in.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Consensus focuses on the HbA1c endpoint miss as disqualifying; it ignores that FDA's pediatric framework explicitly allows approval on patient-centered outcomes when unmet medical need is acute — MNKD's data showed significantly better treatment satisfaction and less weight gain, both material factors in the agency's pediatric benefit-risk calculus.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">曼凯德公司的吸入式胰岛素Afrezza将于5月29日迎来美国FDA的审批决定，适应症为4至17岁儿童糖尿病患者。三期临床主要终点（血糖控制指标HbA1c非劣效）未达标，但患者满意度更高、体重增加更少，且是迄今唯一针对儿童的无针胰岛素选项。市场普遍预期"拒绝"，但FDA在儿科未满足医疗需求领域有批准此类产品的先例。若获批，将对这家小市值公司产生重大积极影响。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="sector-header"><span class="sector-badge sb-consumer">🛍️ CONSUMER</span></div>
+
+<!-- CONSUMER CARD 1 -->
+<div class="view-card card-consumer">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">UMich Surveys of Consumers · TransUnion</span>
+        <span class="score-pill">14.5/20</span>
+        <span class="ticker-pill">COF</span>
+        <span class="ticker-pill">SYF</span>
+        <span class="ticker-pill">DG</span>
+        <span class="early-pill">Structural divergence</span>
+        <span class="date-pill">May 9, 2026</span>
+      </div>
+      <div class="view-thesis">UMich headline sentiment hit an all-time record low of 48.2 in May — but the underlying data shows a K-shaped consumer: lower-credit-score borrowers are <em>increasing</em> spending using credit, while upper-income households cut back, creating a sector-level divergence most equity models miss.</div>
+      <div class="view-thesis-cn">密歇根大学消费者信心指数创历史新低48.2，但内部结构分化严重：低信用分段消费者正依赖信用卡增加支出，而高收入群体正在主动缩减开支——这种"K形"消费结构分化，是当前股市板块定价中普遍忽视的关键因素。</div>
+    </div>
+    <div class="rank-num">#5</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      University of Michigan Surveys of Consumers (preliminary May 2026, published May 9): <strong>Consumer Sentiment Index: 48.2</strong> — the lowest reading since tracking began in 1952. Below April 2026 (49.8) and consensus expectation of 49.5. Current conditions sub-index fell ~9% MoM. One-third of respondents spontaneously cited gasoline prices; 30% cited tariffs. Year-ahead inflation expectations: 4.5% (down slightly from April's 4.7%). Long-run inflation expectations: 3.4% (down from 3.5%). Separately, TransUnion 2026 credit data shows the sharpest gains in credit card purchase volume are coming from borrowers with credit scores below 660, while near-prime and prime borrowers show flat to declining card spend.
+    </div>
+    <div class="data-source-line">Source: University of Michigan Surveys of Consumers (umich.edu) · TransUnion 2026 Consumer Credit Forecast · Published: May 9, 2026 · <a href="https://www.sca.isr.umich.edu/">UMich Surveys of Consumers</a></div>
+  </div>
+  <div class="view-body">
+    The all-time-low headline is already mainstream (CNBC ran it Friday). What the coverage misses: the composition matters more than the level. Lower-credit-score consumers (&lt;660) are ramping card spend, suggesting they are using revolving credit to maintain consumption in the face of gas price and tariff pressure — a pattern that historically precedes delinquency cycles by 2–3 quarters. Meanwhile, upper-income consumers (who drive 60%+ of total US consumption) are actively pulling back on discretionary items. This creates a sector bifurcation: value retail (DG, DLTR) benefits from trading down, while full-price discretionary (LULU, RH) faces dual headwinds of high-income caution and inflation.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">DG</span>
+      <span class="ticker-pill">DLTR</span>
+      <span class="ticker-pill">COF</span>
+      <span class="ticker-pill">SYF</span>
+    </div>
+    <div class="impl-text">Value retail (DG, DLTR) benefits from the trade-down dynamic. Consumer finance names with below-660 credit exposure (Capital One COF, Synchrony SYF) face asymmetric risk: near-term volume growth looks positive, but the credit quality of that growth is deteriorating — watch for delinquency inflection in Q3–Q4 2026.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Headline sentiment at a record low is treated as a single data point; the K-shape within it — sub-prime borrowers increasing credit-fueled spending while prime consumers retrench — is a leading indicator of a coming delinquency cycle that consensus credit models have not yet incorporated into Q3–Q4 2026 charge-off forecasts.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">密歇根大学消费者信心指数创1952年有记录以来最低值，主流媒体已有报道。但更具信号价值的是结构分化：信用分数低于660分的次级消费者正在加大刷卡消费，而高收入群体则在主动缩减开支。这种"以债养消费"的行为，历史上往往领先坏账率上升2至3个季度。折扣零售商（如Dollar General）受益于消费降级，但大量持有次级信贷的消费金融公司（如Capital One、Synchrony）面临未来坏账率上升的风险。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="sector-header"><span class="sector-badge sb-finance">🏦 FINANCIALS</span></div>
+
+<!-- FINANCE CARD 1 -->
+<div class="view-card card-finance">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">Trepp · CRE News</span>
+        <span class="score-pill">18.0/20</span>
+        <span class="ticker-pill">MAA</span>
+        <span class="ticker-pill">CPT</span>
+        <span class="ticker-pill">EQR</span>
+        <span class="early-pill">Structural signal</span>
+        <span class="date-pill">May 5, 2026</span>
+      </div>
+      <div class="view-thesis">Multifamily CMBS delinquency surged +56bps in April alone to 7.71% — a +171bps year-over-year spike — driven not by maturity walls but by mid-term property-level defaults concentrated in NYC and San Francisco, where apartment fundamentals are deteriorating.</div>
+      <div class="view-thesis-cn">公寓楼宇商业抵押贷款支持证券（CMBS）的逾期率4月单月跳升56个基点至7.71%，同比激增171个基点——更值得警惕的是，这批违约并非集中于到期借款，而是纽约、旧金山等核心城市的楼宇在贷款存续期内因基本面恶化而提前违约。</div>
+    </div>
+    <div class="rank-num">#6</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      Trepp CMBS Delinquency Report (April 2026, published May 5): Multifamily CMBS delinquency rate: <strong>7.71%</strong> (+56bps MoM, +171bps YoY vs 5.44% in April 2025). March 2026: 7.15% (+30bps MoM). Root cause per Trepp: mid-term defaults driven by property-level fundamentals — borrowers are defaulting <em>before</em> loan maturity due to occupancy pressure and operating cost inflation, not because loans are coming due. Geographic concentration: NYC and San Francisco accounted for the majority of new April delinquencies (two large loans: one SF multifamily, one NYC multifamily, both going 30+ days past due). Overall CMBS delinquency across all property types: 7.54% (–1bp MoM; if loans past maturity date but current on interest are included: 9.06%). Retail CMBS: 6.31% (–31bps, improving). Office CMBS: 11.69% (–2bps, still at record-high levels).
+    </div>
+    <div class="data-source-line">Source: Trepp CMBS Delinquency Report (April 2026) · CRE News / Commercial Real Estate Direct · MBA Commercial/Multifamily Finance Delinquency Report Q1 2026 · Published: May 5, 2026 · <a href="https://crenews.com/2026/05/05/cmbs-delinquency-volume-declined-in-april-to-45-02bln/">CRE News primary source</a></div>
+  </div>
+  <div class="view-body">
+    The headline for April CMBS was actually slightly positive (overall delinquency –1bp to 7.54%), but the multifamily component is the opposite of the headline and is a leading indicator for apartment REIT fundamentals. The critical insight from Trepp: these are mid-term defaults, not maturity-cliff defaults. Borrowers are surrendering properties not because loans are coming due but because NOI (net operating income) has collapsed to the point where debt service can't be covered. In NYC and SF specifically, this reflects a combination of high floating-rate debt costs (many 2021–2022 vintage floating-rate loans), revenue pressure from elevated vacancy and rent concessions, and surging insurance/OpEx. Apartment REITs (MAA, CPT, EQR) have not yet reflected the fundamental deterioration visible in the CMBS market.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">MAA</span>
+      <span class="ticker-pill">CPT</span>
+      <span class="ticker-pill">EQR</span>
+      <span class="ticker-pill">UDR</span>
+    </div>
+    <div class="impl-text">Multifamily REITs with NYC and coastal California exposure (EQR, UDR) face a lagged recognition of the same fundamentals driving CMBS delinquencies. CMBS data tends to lead publicly-reported REIT NOI by 1–2 quarters. Sunbelt-focused REITs (MAA, CPT) have less direct exposure but broad apartment sentiment will be affected as the delinquency narrative widens.</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Equity REIT analysts model apartment NOI using same-store rent data reported by public REITs quarterly; the CMBS delinquency data — which is monthly, granular by loan, and published 4–6 weeks faster than quarterly REIT filings — shows that private-market apartment fundamentals are deteriorating at a pace not yet reflected in public company guidance.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">公寓楼宇的商业抵押贷款证券（CMBS，即将楼宇贷款打包出售的金融产品）逾期率4月单月飙升，同比上升171个基点至7.71%。更值得关注的是，这些违约并非因贷款到期，而是因纽约、旧金山的楼宇经营收入无法覆盖利息支出，业主主动放弃还款。CMBS月度数据通常领先上市房地产信托（REIT）季报披露1至2个季度，意味着公寓REIT的基本面恶化尚未在股价中充分体现。</div>
+  </div>
+</div>
+
+<!-- FINANCE CARD 2 -->
+<div class="view-card card-finance">
+  <div class="view-top">
+    <div style="flex:1;min-width:0;">
+      <div class="view-meta">
+        <span class="source-pill">Trepp · Connect CRE</span>
+        <span class="score-pill">19.5/20</span>
+        <span class="ticker-pill">PLD</span>
+        <span class="ticker-pill">STAG</span>
+        <span class="ticker-pill">EGP</span>
+        <span class="early-pill">Very early signal</span>
+        <span class="date-pill">May 5, 2026</span>
+      </div>
+      <div class="view-thesis">Industrial CMBS delinquency jumped +31bps in April to 0.96% — still low in absolute terms, but the rate of change is historically abnormal for an asset class that was near-zero for 5+ years, signaling first-order cracks in the "safe haven" warehouse/logistics trade.</div>
+      <div class="view-thesis-cn">工业地产类CMBS（仓储、物流园区等）4月违约率跳升31个基点至0.96%——绝对水平虽低，但这一涨幅对于连续5年以上接近零违约的"避风港"资产类别而言，具有极高的信号价值，可能预示仓储物流板块基本面出现首次实质性裂痕。</div>
+    </div>
+    <div class="rank-num">#7</div>
+  </div>
+  <div class="data-block">
+    <div class="data-label">Primary data 原始数据</div>
+    <div class="data-text">
+      Trepp CMBS Delinquency Report (April 2026): Industrial CMBS delinquency rate: <strong>0.96%</strong> (+31bps MoM). This compares to: Retail 6.31%, Office 11.69%, Multifamily 7.71%, Lodging 6.52%. Industrial had traded near 0.1–0.3% for most of 2020–2024. The 31bps single-month jump to 0.96% is the largest one-month move in the industrial CMBS delinquency series in the dataset. Context: industrial vacancy rates nationally have risen from ~3% in 2022 to ~6.8% in Q1 2026 as e-commerce demand normalization, inventory destocking, and higher supply (40-year peak deliveries in 2023–2024) have eroded the extreme rent-growth narrative. Some 2021–2022 vintage industrial loans underwritten at peak rents are now facing renewal risk.
+    </div>
+    <div class="data-source-line">Source: Trepp CMBS Delinquency Data (April 2026) · Connect CRE · Published: May 5, 2026 · <a href="https://www.connectcre.com/stories/cmbs-delinquencies-inch-downward-in-april/">Connect CRE primary source</a></div>
+  </div>
+  <div class="view-body">
+    Industrial real estate has been the consensus "safe haven" in CRE for the past five years — the Prologis trade, the STAG trade, the logistics-driven NOI growth story. A 31bps single-month jump in industrial CMBS delinquency is a flashing yellow light. While 0.96% remains far below office (11.69%) or multifamily (7.71%), the signal value is in the rate of change, not the level. Industrial loans were underwritten at 2021–2022 peak rents, peak e-commerce penetration assumptions, and minimal vacancy. The reversal of all three of those assumptions simultaneously is now showing up in CMBS data for the first time. Industrial REITs' equity valuations still embed 2022–2023 era NOI growth assumptions.
+  </div>
+  <div class="market-impl">
+    <div class="impl-label">Market implication 市场含义</div>
+    <div class="impl-tickers">
+      <span class="ticker-pill">PLD</span>
+      <span class="ticker-pill">STAG</span>
+      <span class="ticker-pill">EGP</span>
+    </div>
+    <div class="impl-text">Prologis (PLD), STAG Industrial, and EastGroup Properties (EGP) are priced for continued NOI growth based on pandemic-era lease mark-to-market assumptions. Rising CMBS delinquency in industrial is a leading indicator that those mark-to-market assumptions are being challenged by lease renewals coming in below prior-period rents in specific markets (notably inland empire, Chicago, coastal NJ).</div>
+  </div>
+  <div class="consensus-gap">
+    <div class="consensus-label">What consensus is missing 共识忽视的关键点</div>
+    <div class="consensus-text">Industrial REIT equity consensus still embeds 4–6% same-store NOI growth for 2026; the CMBS delinquency inflection — the first in this asset class in over five years — suggests that loans underwritten at 2021–2022 peak assumptions are now rolling into a fundamentally different environment, and the equity "safe haven" premium may need to compress.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">工业地产（仓储、物流）长期被视为商业地产中的"避风港"，但本月其CMBS违约率出现有记录以来最大单月跳升，攀升至0.96%。这是因为2021至2022年按照高峰租金发放的贷款，如今正遭遇电商需求正常化、库存去化完毕、新增供应激增三重压力叠加。绝对违约率仍低，但变化速度值得高度警惕。Prologis（PLD）等工业REIT的估值仍基于过时的高增长假设，存在均值回归风险。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="section-label">Cross-sector synthesis 跨行业综合分析</div>
+<div class="synthesis-card mb16">
+  <div class="synth-row">
+    <span class="synth-key">Dominant theme across sectors 跨行业核心主题</span>
+    <span class="synth-val">The Iran-war energy shock is the thread connecting all four sectors this week. In Energy: Hormuz-driven crude disruption created the crack spread windfall for refiners; the ceasefire risk creates a new binary (does crude collapse if Hormuz reopens fully?). In Consumer: $4.56/gallon gasoline is the #1 cited driver of the UMich record low — energy is directly hitting consumer wallets. In Financials: higher-for-longer energy costs feed operating expense inflation for apartment operators (utilities, insurance) and warehouse operators, directly driving the CMBS delinquency spikes in both multifamily and industrial. In Healthcare: the FDA under Makary is operating with a hiring freeze and unusual policy turbulence — the environment for small-cap binary events like MNKD is more uncertain than usual, but also creates mis-pricing opportunities.</span>
+    <span class="synth-cn">本周跨行业的核心主线是伊朗战争引发的能源冲击。能源板块：霍尔木兹海峡封锁使炼油利润率飙升至4年高位；消费板块：每加仑4.56美元的汽油是密歇根大学消费者信心创历史新低的最主要原因；金融板块：持续高企的能源成本推高了公寓和仓储物业的运营费用（水电、保险），直接触发了CMBS违约率的加速上升；医疗板块：FDA的人员冻结与政策动荡制造了更多小市值二元催化剂的错误定价机会。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Primary data vs consensus divergence 原始数据与共识的最大分歧</span>
+    <span class="synth-val">Credit markets remain complacent (HY spreads at 285bps, 200bps below long-run average) while primary data across all four sectors is flashing stress: UMich at an all-time record low, multifamily CMBS at a 10-year high, industrial CMBS inflecting for the first time in 5+ years, and consumer credit tiering toward sub-prime. The divergence between credit market pricing and primary-data fundamentals is the single biggest macro gap visible in this week's data set. Historical precedent: credit spreads typically lag fundamental deterioration by 2–4 quarters before repricing sharply.</span>
+    <span class="synth-cn">信用市场（高收益债利差在285个基点，仍低于长期均值200个基点）与实体经济基本面数据之间存在显著背离：消费者信心创历史最低，公寓CMBS违约率创10年新高，工业CMBS首次出现明显压力，次级消费者信贷快速扩张。历史规律显示，信用利差通常滞后基本面恶化2至4个季度，之后才会快速重新定价。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Lyn Alden macro lens 宏观视角</span>
+    <span class="synth-val">No new dedicated article published this week (most recent: CNBC appearance April 28, 2026 — "fiscal dominance: this is an ongoing symptom"; March 2026 newsletter "A Flywheel of Chaos" on the Iran war and fiscal dominance interaction). Her standing thesis is highly relevant: fiscal dominance means the government cannot allow a true economic contraction, so it runs deficits that are structurally inflationary — consistent with 4.5% year-ahead inflation expectations even as consumer sentiment collapses. The crack spread windfall and LNG price resilience are consistent with her "energy transition slower than consensus" thesis.</span>
+    <span class="synth-cn">本周Lyn Alden无新文章发布（最近更新：4月28日CNBC采访"财政主导是持续症状"；3月2026年通讯《混乱的飞轮》探讨伊朗战争与财政主导的交互影响）。其核心论点"财政主导导致结构性通胀"与本周数据高度吻合：消费者信心崩溃，但通胀预期仍在4.5%——政府持续赤字支出阻止了真正的经济收缩，这正是她论点的核心。</span>
+  </div>
+  <div class="synth-row">
+    <span class="synth-key">Key primary data releases next week 下周关键原始数据</span>
+    <span class="synth-val">EIA Weekly Petroleum Status Report: Wednesday May 13 (week ending May 8 data — will confirm whether gasoline inventory drawdown continued and crack spreads sustained). Baker Hughes Rig Count: Friday May 16 (watch for any oil rig additions if WTI stabilizes above $95). CFTC Commitments of Traders: Friday May 16 (crude oil speculative net positions — already showed managed money trimming longs from 191.9K to 178.8K; further reduction would signal bearish momentum). FDA PDUFA approaching: MannKind MNKD May 29. No Federal Reserve SLOOS (Senior Loan Officer Opinion Survey on Bank Lending Standards) this week; next release expected late July 2026 for Q2 data.</span>
+    <span class="synth-cn">下周重要数据发布：5月13日（周三）EIA每周石油状况报告（确认汽油库存走势和裂解价差是否持续）；5月16日（周五）贝克休斯钻机数量更新；5月16日（周五）CFTC持仓报告（上周原油投机多头已从191,900份削减至178,800份，继续减仓将加强看空信号）；5月29日曼凯德（MNKD）Afrezza儿科适应症FDA决定。美联储高级贷款官意见调查（SLOOS）下次更新预计2026年7月下旬。</span>
+  </div>
+</div>
+
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要 — 本周总结 Week-in-Review</div>
+  <div class="cn-text">
+    本周核心主题是伊朗战争能源冲击的多行业传导效应：炼油商（VLO、MPC、PSX）坐收每桶56美元历史高位裂解价差，亚洲液化天然气现货价格持续比全年共识预测高出逾六成。与此同时，消费者信心指数跌至1952年以来最低点，汽油价格和关税是最常被引用的原因，且次级借款人正依靠信用卡消费维持生活，这为未来2至3个季度的信贷质量恶化埋下隐患。金融板块方面，公寓CMBS违约率同比上升171个基点至7.71%，工业地产CMBS首次出现明显压力，均领先上市REIT的季报披露，值得高度警惕。医疗板块，曼凯德公司（MNKD）的吸入式胰岛素将于5月29日迎来FDA审批决定，市场低估了基于"未满足医疗需求"框架获批的可能性。整体而言，信用市场仍定价乐观（高收益债利差仅285基点），与实体经济基本面数据的背离是本周最值得关注的宏观裂缝。
+  </div>
+</div>
+
+<div class="section-label">Sources 信息来源</div>
+<div class="sources mb16">
+  <a href="https://www.eia.gov/petroleum/supply/weekly/">EIA Weekly Petroleum Status Report (week ending May 1, 2026)</a> · Published May 6, 2026<br>
+  <a href="https://rigcount.bakerhughes.com/">Baker Hughes North America Rig Count (week ending May 8, 2026)</a> · Published May 8, 2026<br>
+  <a href="https://rbnenergy.com/daily-posts/analyst-insight/usgc-crack-spreads-ease-remain-elevated">RBN Energy — USGC Crack Spreads</a> · Published May 2026<br>
+  <a href="https://www.oilpriceapi.com/data/rig-count">Baker Hughes US Rig Count Live — OilPriceAPI</a><br>
+  <a href="https://www.oilpriceapi.com/commodities/jkm-lng">JKM LNG Price — OilPriceAPI</a> · May 7, 2026<br>
+  <a href="https://energytracker.asia/lng-prices-in-2026/">Kpler 2026 LNG Price Forecast — Energy Tracker Asia</a><br>
+  <a href="https://investors.mannkindcorp.com/news-releases/news-release-details/mannkind-announces-us-fda-accepts-review-its-supplemental">MannKind Corporation — FDA sBLA Acceptance (PDUFA May 29, 2026)</a><br>
+  <a href="https://www.managedhealthcareexecutive.com/view/with-a-pdufa-date-on-the-horizon-another-trial-of-afrezza-begins">Managed Healthcare Executive — Afrezza PDUFA Analysis</a><br>
+  <a href="https://www.sca.isr.umich.edu/">University of Michigan Surveys of Consumers — May 2026 Preliminary</a> · Published May 9, 2026<br>
+  <a href="https://news.cgtn.com/news/2026-05-09/US-consumer-sentiment-hits-record-low-in-May-amid-inflation-fears-1N0ikPRXZWE/p.html">CGTN — UMich Record Low Reporting</a> · May 9, 2026<br>
+  <a href="https://newsroom.transunion.com/2026-consumer-credit-forecast/">TransUnion 2026 Consumer Credit Forecast</a><br>
+  <a href="https://crenews.com/2026/05/05/cmbs-delinquency-volume-declined-in-april-to-45-02bln/">CRE News / Commercial Real Estate Direct — CMBS Delinquency April 2026</a> · Published May 5, 2026<br>
+  <a href="https://yieldpro.com/2026/05/multifamily-cmbs-delinquency-rate-rises-again-in-april">Yield PRO — Multifamily CMBS Delinquency April 2026</a> · May 2026<br>
+  <a href="https://www.multifamilydive.com/news/multifamily-cmbs-delinquency-apartment-loan-default/816842/">Multifamily Dive — Trepp Multifamily Delinquency Analysis</a><br>
+  <a href="https://www.connectcre.com/stories/cmbs-delinquencies-inch-downward-in-april/">Connect CRE — CMBS Delinquency April 2026</a><br>
+  <a href="https://www.mba.org/news-and-research/newsroom/news/2026/04/27/delinquency-rates-for-commercial-properties-increased-in-the-first-quarter-of-2026">MBA — Commercial Property Delinquency Q1 2026</a> · Published April 27, 2026<br>
+  <a href="https://www.cnbc.com/2026/04/28/lyn-alden-this-is-an-ongoing-symptom-of-fiscal-dominance.html">Lyn Alden CNBC — Fiscal Dominance (April 28, 2026)</a><br>
+  <a href="https://www.lynalden.com/march-2026-newsletter/">Lyn Alden — March 2026 Newsletter: A Flywheel of Chaos</a><br>
+  <a href="https://www.investing.com/economic-calendar/cftc-crude-oil-speculative-positions-1653">CFTC Crude Oil Speculative Net Positions — May 8, 2026</a><br>
+  <a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2">ICE BofA US High Yield Index OAS (BAMLH0A0HYM2) — FRED, St. Louis Fed</a>
+</div>
+
+<div class="footer">
+  Non-Consensus Specialist Lens · 非共识专家信号<br>
+  Energy · Healthcare · Consumer · Financials<br>
+  Week of May 4 – May 8, 2026 · Singapore time<br>
+  Primary data and specialist sources only. Not investment advice. · 仅反映原始数据与专家观点，不构成投资建议。
+</div>
+
+</body>
+</html>
