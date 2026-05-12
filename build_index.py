@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 build_index.py — Market Monitor Index Generator
-Run this script whenever you add new reports. It scans stocks/ and deep-dives/
-and rebuilds index.html automatically.
+Run this script whenever you add new reports. It scans stocks/, deep-dives/,
+and any other category folders and rebuilds index.html automatically.
 
 Usage:
     python3 build_index.py
@@ -16,9 +16,10 @@ from pathlib import Path
 # ══════════════════════════════════════════════════════════════════
 #  SETTINGS — edit these two lines only
 # ══════════════════════════════════════════════════════════════════
-GITHUB_USERNAME = "helajo"   # ← replace with your GitHub username
+GITHUB_USERNAME = "helajo"
 SITE_TITLE_EN   = "Market Monitor"
 SITE_TITLE_CN   = "投研档案库"
+SITE_TAGLINE    = "H.E.L.A.J.O. — Holding Equities, Long-term Assets, Joyous Outcomes"
 # ══════════════════════════════════════════════════════════════════
 
 CATEGORIES = {
@@ -31,11 +32,6 @@ CATEGORIES = {
         "label_en": "Deep Dives",
         "label_cn": "专题深度",
         "emoji":    "🔍",
-    },
-    "market": {
-        "label_en": "Market Reports",
-        "label_cn": "市场报告",
-        "emoji":    "📊",
     },
 }
 
@@ -229,6 +225,19 @@ def build_html(reports: list, counts: dict) -> str:
       letter-spacing: .01em;
       color: rgba(255,255,255,.5);
       margin-top: 6px;
+    }}
+    .header-tagline {{
+      margin-top: 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .06em;
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 12px;
+    }}
+    .header-tagline strong {{
+      color: rgba(255,255,255,.6);
+      letter-spacing: .12em;
     }}
     .header-stats {{
       display: flex;
@@ -430,6 +439,7 @@ def build_html(reports: list, counts: dict) -> str:
       {SITE_TITLE_EN}
       <span>{SITE_TITLE_CN}</span>
     </h1>
+    <div class="header-tagline"><strong>H.E.L.A.J.O.</strong> — Holding Equities, Long-term Assets, Joyous Outcomes</div>
     <div class="header-stats">
       <div class="stat">
         <div class="stat-num">{total}</div>
