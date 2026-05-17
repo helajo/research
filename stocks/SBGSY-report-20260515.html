@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schneider Electric (SBGSY) — Equity Research Report — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 920px; margin: 0 auto; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-mixed { background: #FAEEDA; color: #633806; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up { color: #0F6E56; }
+.metric-dn { color: #A32D2D; }
+.up { color: #0F6E56; }
+.dn { color: #A32D2D; }
+.flat { color: #888; }
+.body-text { font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 12px; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.6; color: #791F1F; }
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; }
+.macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.macro-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.macro-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #185FA5; margin-bottom: 4px; }
+.macro-text { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.macro-cn { font-size: 11px; color: #999; border-top: 1px dashed #eee; padding-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; line-height: 1.6; }
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.watch-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.watch-list li { font-size: 13px; color: #333; padding: 6px 0 6px 18px; border-bottom: 1px solid #f0efe8; position: relative; line-height: 1.5; }
+.watch-list li::before { content: "→"; position: absolute; left: 0; color: #185FA5; font-weight: 600; }
+.watch-list li:last-child { border-bottom: none; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+/* AI Infra Layer */
+.layer-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0C1A2E 0%, #1a2f4a 100%); color: #fff; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px; }
+.layer-num { background: #185FA5; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.layer-names { display: flex; flex-direction: column; }
+.layer-name-en { font-weight: 700; font-size: 14px; }
+.layer-name-cn { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.layer-valuation { display: inline-flex; align-items: center; gap: 6px; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+.val-mid { background: #FEF3C7; color: #92400E; }
+.layer-peer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.peer-chip { background: #f0efe8; border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #444; }
+.layer-note { background: #f8f8f6; border: 1px solid #e0dfd8; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px; }
+@media (max-width: 640px) { .risk-grid, .cases, .macro-grid { grid-template-columns: 1fr; } .metric-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-tag">EQUITY RESEARCH · 股票研究</div>
+  <div class="doc-title">Schneider Electric S.E. (SBGSY / EPA:SU) — Comprehensive Equity Report</div>
+  <div class="doc-title-cn">施耐德电气（SBGSY / EPA:SU）— 全面股票研究报告</div>
+  <div class="doc-meta">Generated May 15, 2026 · Sector: Industrials — Energy Management & Automation · Primary: Euronext Paris (EPA:SU) · OTC ADR: SBGSY · Price (SBGSY OTC): ~$66.00 USD · Price (EPA:SU): ~€271 EUR <span class="source-tag">Web / Investing.com</span></div>
+</div>
+
+<!-- MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Investment mood 投资情绪</span>
+  <span class="mood-text">Structurally compelling — the only major global industrial at the intersection of AI data centre buildout, electrification, and industrial automation — with record financials, 16 years of dividend growth, and a €25B backlog. FX headwinds and a premium valuation are the key near-term considerations.</span>
+  <span class="mood-pill mood-bullish">Cautiously Bullish · 谨慎看多</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">施耐德电气是全球唯一同时覆盖AI数据中心基础设施、电气化转型与工业自动化三大结构性增长主题的顶级工业集团。2025年创纪录营收400亿欧元，连续16年提高股息，订单积压达254亿欧元，为未来增长提供强力保障。短期需关注欧元/美元汇率逆风（预计影响2026年收入约8.5-9.5亿欧元）及工业自动化板块的复苏节奏。整体投资情绪：谨慎看多。</div>
+</div>
+
+<!-- SECTION 1: COMPANY BACKGROUND -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Background & Business Overview</div>
+  <div class="section-title-cn">公司背景与业务概述</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">Schneider Electric S.E. was founded in 1836 in France as a steel and heavy manufacturing firm (originally Schneider & Cie), and has since reinvented itself across multiple industrial eras — from ironworks and armaments to electrical equipment and, most recently, energy technology and digital industrial software. Today, headquartered in Rueil-Malmaison, France, Schneider Electric is one of the world's most important industrial companies, employing approximately 163,000 people globally and operating in every major country. It is listed primarily on Euronext Paris (EPA: SU) and trades as an ADR in the US under the OTC ticker SBGSY (each ADR = 0.25 ordinary shares).</div>
+
+  <div class="body-text">The company operates through two major business segments. <strong>Energy Management</strong> (~80% of revenue) supplies electrical distribution, grid management, building automation, and data centre power and cooling infrastructure — everything from the transformer outside a building to the UPS and power distribution units inside a server rack. <strong>Industrial Automation</strong> (~20% of revenue) provides process control, SCADA systems, motion control, and industrial software, anchored by its AVEVA platform (one of the world's leading industrial software suites) and ETAP (electrical power simulation). Across both segments, Schneider serves four end markets: Data Centers & Networks (30% of revenues), Buildings (29%), Industry (27%), and Infrastructure (14%).</div>
+
+  <div class="body-text">What makes Schneider Electric strategically distinctive in 2026 is its "Digital Flywheel" — a strategy of connecting physical electrical products to software, data services, and AI-driven energy intelligence. The company's EcoStruxure platform enables building managers and data centre operators to monitor, optimise, and automate energy consumption in real time. In the data centre space, Schneider partners with NVIDIA (its power and cooling systems are part of NVIDIA's Vera Rubin DSX AI factory reference design) and has developed digital twins via ETAP and NVIDIA Omniverse for data centre design and simulation. This software-hardware integration gives Schneider deeper customer lock-in than pure hardware peers.</div>
+
+  <div class="body-text">The company is led by CEO Olivier Blum (who took over in late 2024) and a new CFO, Nathan Fast (appointed April 2026 after the departure of Hilary Maxson). Schneider Electric's three-year total shareholder return through December 2025 was approximately 89% — significantly above major index benchmarks.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">施耐德电气创立于1836年，总部位于法国吕埃-马尔迈松，约16.3万名员工遍布全球。两大业务板块：<strong>能源管理</strong>（约80%营收）涵盖电力分配、楼宇自动化及数据中心电力与冷却设施；<strong>工业自动化</strong>（约20%营收）包含AVEVA工业软件平台及ETAP电力仿真系统。核心战略"数字飞轮"通过EcoStruxure平台将硬件与AI驱动的能源智能管理软件深度融合，并与NVIDIA合作参与AI数据中心参考设计，为客户提供数字孪生与能耗优化解决方案。</div>
+  </div>
+</div>
+
+<!-- SECTION 2: FINANCIAL PERFORMANCE -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Financial Performance</div>
+  <div class="section-title-cn">财务业绩</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Revenue</div>
+      <div class="metric-val metric-up">€40.2B</div>
+      <div class="metric-sub">+9% organic YoY <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Adj. EBITA 2025</div>
+      <div class="metric-val metric-up">€7.52B</div>
+      <div class="metric-sub">18.7% margin, +50bps org. <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Income 2025</div>
+      <div class="metric-val">€4.2B</div>
+      <div class="metric-sub">−2% reported; +4% adj. <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Free Cash Flow 2025</div>
+      <div class="metric-val metric-up">€4.6B</div>
+      <div class="metric-sub">111% conversion ratio <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Adj. EPS 2025</div>
+      <div class="metric-val">€8.59</div>
+      <div class="metric-sub">+3% vs €8.33 in 2024 <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Revenue</div>
+      <div class="metric-val metric-up">€9.8B</div>
+      <div class="metric-sub">+11.2% organic, record Q1 <span class="source-tag">Company</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">Schneider Electric crossed €40 billion in annual revenue for the first time in 2025 — a milestone in the company's 189-year history. The 9% organic growth was broad-based but led by the Data Centres & Networks end market, which delivered its fifth consecutive year of double-digit growth. Energy Management grew 10% organically, driven by hyperscaler data centre spending in North America and power grid modernisation investments globally. Industrial Automation grew 3% organically in 2025, recovering from negative growth in prior periods, with discrete automation beginning to recover while process industries remained softer. Free cash flow of €4.6 billion — at a 111% conversion ratio — was the highest in company history, reflecting working capital discipline and strong operating leverage.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric (€ billion)</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Revenue</td><td>28.9</td><td>34.2</td><td>35.9</td><td>38.2</td><td>40.2</td></tr>
+      <tr><td>Organic Revenue Growth</td><td>+9%</td><td>+11%</td><td>+12%</td><td>+8%</td><td>+9%</td></tr>
+      <tr><td>Adj. EBITA</td><td>4.7</td><td>5.6</td><td>6.5</td><td>7.1</td><td>7.5</td></tr>
+      <tr><td>Adj. EBITA Margin</td><td>16.3%</td><td>16.4%</td><td>18.1%</td><td>18.6%</td><td>18.7%</td></tr>
+      <tr class="highlight"><td>Free Cash Flow</td><td>2.8</td><td>3.2</td><td>3.8</td><td>4.2</td><td>4.6</td></tr>
+      <tr><td>Adj. EPS (€)</td><td>5.24</td><td>6.49</td><td>7.69</td><td>8.33</td><td>8.59</td></tr>
+      <tr><td>Dividend Per Share (€)</td><td>2.90</td><td>3.20</td><td>3.50</td><td>3.89</td><td>4.20</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Source: Schneider Electric FY2025 results release, Feb 26, 2026. Revenue and EBITA in euros (EUR).</p>
+
+  <div class="body-text">The Q1 2026 results reaffirmed the trajectory: record quarterly revenue of €9.8 billion, organic growth of 11.2%, with Energy Management up 12.8% organically led by data centre demand. The stock fell ~2% on the day despite the beat — reflecting investor concern about €623 million in foreign exchange headwinds experienced in Q1 alone (primarily from USD, INR, and CNY weakness vs. the euro), with full-year FX impact now guided at -€750 to -€850 million on revenues. Management reaffirmed 2026 guidance of 7–10% organic revenue growth and 10–15% organic EBITA growth, implying continued margin expansion.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">2025年施耐德电气首次突破400亿欧元营收，有机增长9%，调整后EBITA达75亿欧元（利润率18.7%），自由现金流创纪录的46亿欧元（转化率111%）。2026年Q1营收98亿欧元（有机增长11.2%）再创季度新高，但美元/印度卢比/人民币兑欧元走弱导致汇率逆风约6.23亿欧元，全年汇率影响指引为-7.5至-8.5亿欧元。公司维持2026年有机营收增长7-10%、有机EBITA增长10-15%的全年目标。</div>
+  </div>
+</div>
+
+<!-- SECTION 3: BALANCE SHEET -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Cash & Equivalents</div>
+      <div class="metric-val">€4.63B</div>
+      <div class="metric-sub">As of latest filing <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Debt</div>
+      <div class="metric-val">€19.9B</div>
+      <div class="metric-sub">Incl. India acquisition debt <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Debt</div>
+      <div class="metric-val metric-dn">€15.3B</div>
+      <div class="metric-sub">−€27.18 per share <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Debt / Adj. EBITDA</div>
+      <div class="metric-val">~2.0x</div>
+      <div class="metric-sub">Post-India acquisition; A-rated <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Order Backlog</div>
+      <div class="metric-val metric-up">€25.4B</div>
+      <div class="metric-sub">+18% YoY, ~7 months revenue <span class="source-tag">Company</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Dividend / Share (2025)</div>
+      <div class="metric-val">€4.20</div>
+      <div class="metric-sub">+8% YoY; 16th consecutive raise <span class="source-tag">Company</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">Schneider's balance sheet has taken on incremental debt in 2025 following the acquisition of the remaining 35% stake in Schneider Electric India Private Limited (SEIPL), financed partly by a €750 million bond issued in December 2025. Net debt rose to approximately €15.3 billion, with net debt to adjusted EBITDA at approximately 2.0x — elevated vs. the company's historical comfort range but well within investment-grade parameters, and management has committed to maintaining A-level credit ratings. The company operates a clearly articulated capital allocation framework: invest in organic growth and capex, make selective acquisitions, and return capital through a progressive dividend and a new €2.5–3.5 billion share buyback programme authorised through 2030. Since the buyback inception in March 2026, €110 million of shares have already been repurchased. ROCE reached 15.1% in 2025, up 30bps year-over-year, reflecting improving capital efficiency despite the India investment.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">施耐德电气资产负债表因收购施耐德电气印度私人有限公司（SEIPL）剩余35%股权而承压，净债务约153亿欧元，净债务/调整后EBITDA约2.0倍，但公司承诺维持A级信用评级。订单积压达254亿欧元（同比+18%），约合7个月收入，能见度强。公司2030年前授权25-35亿欧元股票回购计划，并连续第16年提高股息至每股4.20欧元（+8%）。ROCE达15.1%，同比提升30bps。</div>
+  </div>
+</div>
+
+<!-- SECTION 4: VALUATION -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation</div>
+  <div class="section-title-cn">估值分析</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">SBGSY ADR Price</div>
+      <div class="metric-val">~$66.00</div>
+      <div class="metric-sub">OTC ADR (0.25 ord. share) <span class="source-tag">Investing.com</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EPA:SU Price</div>
+      <div class="metric-val">~€271</div>
+      <div class="metric-sub">Euronext Paris, May 2026 <span class="source-tag">SE.com</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">~€152B</div>
+      <div class="metric-sub">~$166B USD equiv. <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Trailing PE</div>
+      <div class="metric-val">~37x</div>
+      <div class="metric-sub">On €7.33 EPS TTM <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Forward PE</div>
+      <div class="metric-val">~26–28x</div>
+      <div class="metric-sub">On consensus 2026 EPS est. <span class="source-tag">GuruFocus</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">PEG Ratio</div>
+      <div class="metric-val">~1.94x</div>
+      <div class="metric-sub">EPA:SU; earnings growth ~14% <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EV/EBITDA</div>
+      <div class="metric-val">~20x</div>
+      <div class="metric-sub">Premium to industrial peers <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Dividend Yield</div>
+      <div class="metric-val">~1.6%</div>
+      <div class="metric-sub">ADR basis; €4.20/share <span class="source-tag">Yahoo Finance</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Range (SBGSY)</div>
+      <div class="metric-val">$47.81–$66.99</div>
+      <div class="metric-sub">Near all-time high <span class="source-tag">MacroTrends</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Beta</div>
+      <div class="metric-val">1.15</div>
+      <div class="metric-sub">Moderate market sensitivity <span class="source-tag">Vested</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">ROE</div>
+      <div class="metric-val metric-up">15.6%</div>
+      <div class="metric-sub">Strong for an industrial <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">ROIC</div>
+      <div class="metric-val metric-up">13.1%</div>
+      <div class="metric-sub">Above WACC threshold <span class="source-tag">StockAnalysis</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;font-weight:700;color:#185FA5;margin:16px 0 8px;">DCF Analysis — 3 Scenarios <span class="source-tag">[ASSUMED inputs]</span></p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Input / Output</th><th>Bear</th><th>Base</th><th>Bull</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>FCF Base (FY2025, €B)</td><td>4.6</td><td>4.6</td><td>4.6</td></tr>
+      <tr><td>FCF Growth Rate (yrs 1–5)</td><td>5%</td><td>12%</td><td>18%</td></tr>
+      <tr><td>WACC [ASSUMED]</td><td>9%</td><td>9%</td><td>9%</td></tr>
+      <tr><td>Terminal Growth Rate</td><td>3%</td><td>3%</td><td>3%</td></tr>
+      <tr><td>EV (€B, approx) [ASSUMED]</td><td>~€79B</td><td>~€103B</td><td>~€135B</td></tr>
+      <tr><td>Net Debt (€B)</td><td>15.3</td><td>15.3</td><td>15.3</td></tr>
+      <tr class="highlight"><td>Intrinsic Value / Share (€) [ASSUMED]</td><td>~€113</td><td>~€157</td><td>~€214</td></tr>
+      <tr><td>Equiv. SBGSY ADR (×0.25 / 1.09 USD/EUR) [ASSUMED]</td><td>~$26</td><td>~$36</td><td>~$49</td></tr>
+      <tr><td>Upside / (Downside) vs ~$66 ADR</td><td class="dn">−61%</td><td class="dn">−45%</td><td class="dn">−26%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Shares outstanding: ~562M ordinary. SBGSY ADR = 0.25 ordinary share. Exchange rate [ASSUMED] ~1.09 USD/EUR. All [ASSUMED] inputs require independent verification. The DCF gap vs. current price reflects the market's pricing of Schneider's structural monopoly position across electrification mega-trends — similar to how ASML and Vertiv trade above normalised DCF values.</p>
+
+  <div class="callout"><strong>Valuation Context:</strong> At €271 per ordinary share (~$66 ADR), Schneider trades at ~26–28x forward earnings — a premium to traditional industrial peers (~18–22x) but a discount to Vertiv (~53x) and ASML (~50x+). The PEG of ~1.94x is the most honest summary: you are paying a growth premium, but it is not egregious for a company with this quality of earnings, backlog visibility, and structural positioning. JPMorgan characterised 2026 guidance as "suitably beatable" — consensus is likely conservative.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">当前SBGSY ADR股价约66美元（EPA:SU约271欧元），市值约1,520亿欧元（约1,660亿美元）。追踪市盈率约37倍，前瞻市盈率约26-28倍，PEG约1.94倍，EV/EBITDA约20倍。股息收益率约1.6%（ADR基础）。基于2025年自由现金流46亿欧元的三情景DCF（熊/基/牛：FCF增速5%/12%/18%）所得内在价值均低于当前市价，表明市场为其跨越电气化、数字化与AI数据中心三大结构性增长的战略溢价买单。所有[ASSUMED]参数须独立核实。摩根大通认为2026年指引"有望超越"，一致预期存在保守偏差。</div>
+  </div>
+</div>
+
+<!-- SECTION 5: PEER BENCHMARKING -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Peer & Competitive Benchmarking</div>
+  <div class="section-title-cn">同行与竞争对比</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Company</th><th>Ticker</th><th>Fwd PE</th><th>EV/EBITDA</th><th>Revenue (TTM)</th><th>Gross Margin</th><th>Key Differentiator</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight"><td>Schneider Electric</td><td>SBGSY</td><td>~27x</td><td>~20x</td><td>€40B</td><td>~44%</td><td>Broadest portfolio; software moat (AVEVA)</td></tr>
+      <tr><td>Eaton Corporation</td><td>ETN</td><td>~24x</td><td>~18x</td><td>~$24B</td><td>~38%</td><td>Power management depth; Boyd Thermal acqn.</td></tr>
+      <tr><td>Vertiv Holdings</td><td>VRT</td><td>~53x</td><td>~30x</td><td>~$10B</td><td>~36%</td><td>Pure-play data centre cooling & power</td></tr>
+      <tr><td>ABB Ltd</td><td>ABBNY</td><td>~22x</td><td>~16x</td><td>~$34B</td><td>~37%</td><td>Industrial automation & robotics focus</td></tr>
+      <tr><td>Siemens AG</td><td>SIEGY</td><td>~18x</td><td>~13x</td><td>~€78B</td><td>~34%</td><td>Broader conglomerate; lower growth rate</td></tr>
+      <tr><td>Emerson Electric</td><td>EMR</td><td>~21x</td><td>~15x</td><td>~$17B</td><td>~48%</td><td>Process automation; Copeland spinoff</td></tr>
+    </tbody>
+  </table>
+
+  <div class="body-text">Schneider Electric occupies a unique position in this peer set. Vertiv is more expensive (53x fwd PE) but is a pure-play data centre equipment play with higher growth rates and less diversification. Eaton is the closest structural peer — both companies are at the intersection of power management and data centre cooling — but Eaton lacks Schneider's software and digital services layer (AVEVA, EcoStruxure), which provides superior long-term pricing power. ABB and Siemens are industrial conglomerates with lower data centre exposure; Siemens in particular trades at a large valuation discount, partly reflecting its less focused portfolio. Emerson has higher gross margins but a narrower end-market mix. Schneider's 27x forward PE is arguably the most rational of the group — cheaper than Vertiv, more AI-exposed than ABB/Siemens/Emerson, and with a deeper software moat than Eaton.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">在同行中，施耐德电气定位独特：前瞻市盈率约27倍，低于高度集中的数据中心纯净股威图（53倍），但高于更多元化的西门子（18倍）和ABB（22倍）。与伊顿相比，施耐德的软件护城河（AVEVA、EcoStruxure）赋予其更强的长期定价能力。综合来看，27倍前瞻PE在该组合中性价比最高——既比威图便宜，又比西门子/ABB有更直接的AI数据中心敞口。</div>
+  </div>
+</div>
+
+<!-- SECTION 6: GROWTH CATALYSTS -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>AI Data Centre Buildout (30% of revenues, growing double digits):</strong> This is the primary near-term catalyst. Every hyperscaler data centre requires Schneider's power distribution, UPS systems, busways, and increasingly its liquid cooling distribution units (via its Motivair subsidiary, acquired in 2023). Data Centres & Networks is guided to lead Schneider's growth through 2030, with the end market's CAGR exceeding 10%. The NVIDIA reference design partnership embeds Schneider's 12.5MW OneCore infrastructure blocks as the standard for AI factory deployments. The company reports "triple-digit year-on-year growth" in its pure data centre orders in 2025.</div>
+
+  <div class="body-text"><strong>Electrification Megatrend (all four end markets):</strong> The global transition to electric power — in buildings, transport, industry, and grids — is a 20-year structural tailwind. Schneider is a number-one market position holder in electrical distribution globally. Every new building, every EV charging station, every grid modernisation project requires its switchgear, transformers, and distribution equipment. This is a durable, cycle-resistant growth driver that does not depend on AI specifically.</div>
+
+  <div class="body-text"><strong>Software & Digital Services Flywheel (19% of revenues, target 25% by 2030):</strong> AVEVA (industrial software), ETAP (power simulation), and RIB Software (construction management) give Schneider an increasingly sticky, recurring revenue base. AVEVA ARR grew 12% in Q1 2026. The digital flywheel represented 62% of revenues in 2025 (target: >70% by 2030), growing at 15% organically. Software commands higher margins and higher multiples — this mix shift is a meaningful long-term earnings quality driver.</div>
+
+  <div class="body-text"><strong>India Growth Engine:</strong> The full acquisition of SEIPL gives Schneider 100% exposure to one of the fastest-growing electrical infrastructure markets in the world. India is guided as a leading regional growth contributor in 2026, alongside the US. This acquisition, while adding near-term debt, plants a long-term flag in a market with decades of electrical infrastructure buildout ahead.</div>
+
+  <div class="body-text"><strong>Moat:</strong> Schneider's competitive moat is built on: (1) number-one or number-two market positions across all four end markets; (2) the deepest software integration layer in the sector via AVEVA and EcoStruxure; (3) a 163,000-person global service and installation network that is extremely difficult to replicate; (4) 189 years of customer relationships and installed base; and (5) the NVIDIA partnership for AI infrastructure design standards.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">主要增长催化剂：<strong>①AI数据中心建设</strong>（占营收30%，持续双位数增长，与NVIDIA合作嵌入AI工厂参考设计）；<strong>②全球电气化浪潮</strong>（建筑、电网、工业、交通20年结构性主题）；<strong>③软件与数字服务飞轮</strong>（AVEVA ARR增长12%，数字飞轮占比62%，目标2030年超70%）；<strong>④印度增长引擎</strong>（全资控股SEIPL，深度布局高速增长市场）。护城河：全球四大终端市场第一/二位份额、AVEVA/EcoStruxure软件粘性、163,000人全球服务网络及NVIDIA战略合作。</div>
+  </div>
+</div>
+
+<!-- SECTION 7: MARKET TRENDS -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Current Market Trends & Sector Dynamics</div>
+  <div class="section-title-cn">当前市场趋势与行业动态</div>
+  <div class="section-divider"></div>
+
+  <div class="macro-grid">
+    <div class="macro-card">
+      <div class="macro-type">AI Infrastructure Supercycle</div>
+      <div class="macro-text">Hyperscaler and sovereign AI data centre capex is accelerating globally — Microsoft, Google, Amazon, Meta, and national AI programmes are collectively committing hundreds of billions through 2028. Schneider is in every new data centre project as the power and cooling partner of record.</div>
+      <div class="macro-cn">AI基础设施超级周期：超大云厂商与主权AI数据中心资本支出持续扩大，施耐德作为电力与冷却领域的标准合作伙伴，深度参与每一个新数据中心项目。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">Grid Modernisation Wave</div>
+      <div class="macro-text">Aging electrical grids across North America, Europe, and Asia-Pacific require massive upgrades to support both renewable energy integration and the load growth from AI data centres. Schneider's Infrastructure end market (Power & Grid segment) grew strongly in Q1 2026 as a result.</div>
+      <div class="macro-cn">电网现代化浪潮：北美、欧洲和亚太地区老化电网急需升级以支撑可再生能源接入和AI数据中心负荷增长，施耐德基础设施端市场（电力与电网板块）2026年Q1实现强劲增长。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">Industrial Automation Recovery</div>
+      <div class="macro-text">Discrete automation (manufacturing, packaging, motion control) is recovering from a 2023–2024 destocking cycle. Process industries (chemicals, oil & gas) remain softer but are expected to contribute more in H2 2026. Industrial Automation grew +4.4% in Q1 2026, accelerating vs. 2025.</div>
+      <div class="macro-cn">工业自动化复苏：离散自动化正从2023-2024年去库存周期中恢复，流程工业（化工、油气）仍相对疲软但预计将在2026年下半年贡献更多增长。工业自动化2026年Q1有机增长4.4%，较2025年全年加速。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">Tariff & FX Headwinds</div>
+      <div class="macro-text">The strengthening euro against USD, INR, and CNY creates significant earnings translation headwinds — guided at -€750 to -€850 million on 2026 revenues. US tariffs add incremental cost pressure (~double the €160M impact in 2025). Management targets net price positivity to offset these.</div>
+      <div class="macro-cn">关税与汇率逆风：欧元兑美元/印度卢比/人民币升值致2026年营收汇率影响约-7.5至-8.5亿欧元；美国关税压力预计达2025年1.6亿欧元影响的约两倍。公司目标通过净价格上涨完全覆盖上述影响。</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Key Trends to Watch</p>
+  <ul class="watch-list">
+    <li>Data centre order intake cadence — the most important leading indicator; "triple-digit YoY growth" in 2025 orders cannot compound indefinitely, watch for normalisation signals</li>
+    <li>Industrial Automation margin recovery — currently at only 14.2% adj. EBITA margin vs. Energy Management at 21.8%; convergence to 18%+ would be a significant earnings uplift</li>
+    <li>EUR/USD rate — each 10% EUR/USD move impacts revenues by roughly €2–3B and EPS by ~5–7%; the strong euro is the single biggest near-term earnings risk outside the company's control</li>
+    <li>AVEVA ARR growth acceleration — target is subscription transition; watch whether ARR can sustain 12%+ growth as the perpetual licence base converts</li>
+    <li>Data centre power density roadmap — Schneider is actively developing 800V DC architecture solutions for the 2028–2030 generation of data centres; its positioning in this transition is strategic</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">重点关注：数据中心订单节奏（2025年三位数增长不可持续，需关注正常化信号）；工业自动化利润率复苏（当前14.2% vs. 能源管理21.8%，收敛将是重大利润催化剂）；欧元/美元汇率（每10%变动影响营收约20-30亿欧元）；AVEVA年度经常性收入增速能否维持12%+；以及施耐德在2028-2030年800V直流架构数据中心中的战略定位。</div>
+  </div>
+</div>
+
+<!-- SECTION 8: RISKS -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Geopolitical, Macro & Regulatory Risk</div>
+  <div class="section-title-cn">地缘政治、宏观与监管风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type">💱 FX Translation Risk</div>
+      <div class="risk-desc">Schneider reports in euros but generates significant revenue in USD (~25%), INR (~8%), and CNY (~15%). A stronger euro directly reduces reported earnings. The 2026 FX impact is guided at -€750 to -€850M on revenues — roughly 2% of annual revenue lost to currency alone. For SBGSY ADR holders, a strong euro/weak dollar also reduces the USD value of dividends.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🇨🇳 China Exposure & Deflation</div>
+      <div class="risk-desc">China remains a significant market (~15% of revenues). The deflationary pricing environment in China — particularly in industrial automation — compresses margins. Geopolitical trade tensions add supply chain risk. Management flagged China pricing as deflationary in 2025 Q4, though early Q1 2026 price increases have partially offset this.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🏭 Industrial Automation Weakness</div>
+      <div class="risk-desc">The IA segment (20% of revenues) generates only 14.2% adjusted EBITA margin vs. Energy Management at 21.8%. Process industries remain soft. AVEVA's perpetual-to-subscription transition creates near-term revenue headwinds as licence revenue is replaced by lower-initial ARR. This segment remains the earnings drag on the group.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🔄 CFO Transition</div>
+      <div class="risk-desc">CFO Hilary Maxson departed April 2026. New CFO Nathan Fast — previously Head of IR — brings internal knowledge but limited public company CFO track record. Any credibility gap in investor communications during his first year could temporarily compress the multiple.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">💰 India Acquisition Debt</div>
+      <div class="risk-desc">The full acquisition of SEIPL added approximately €3–4B of debt, pushing net debt/EBITDA to ~2.0x. While the company maintains A-level ratings, higher financing costs (~+€150M in 2026) will weigh on reported net income and limit near-term capital allocation flexibility.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">⚡ Hyperscaler Capex Dependency</div>
+      <div class="risk-desc">Data Centres & Networks is 30% of revenues and the primary growth driver. A significant slowdown in hyperscaler AI capex spending — whether from regulatory action, model efficiency improvements (DeepSeek-style disruptions), or recession — would directly impact Schneider's most profitable growth segment.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">主要风险：<strong>①汇率风险</strong>（欧元走强致2026年营收减少7.5-8.5亿欧元，ADR持有人还面临股息美元价值缩水）；<strong>②中国市场风险</strong>（约15%营收，工业自动化定价通缩，地缘政治不确定性）；<strong>③工业自动化拖累</strong>（EBITA利润率仅14.2%，AVEVA订阅转型短期压制收入）；<strong>④CFO交接风险</strong>（新CFO Fast经验待观察）；<strong>⑤印度并购债务</strong>（净债务/EBITDA约2.0倍，融资成本增加约1.5亿欧元）；<strong>⑥超大云厂商资本支出依赖</strong>（数据中心占30%营收，若AI建设潮放缓则直接受损）。</div>
+  </div>
+</div>
+
+<!-- SECTION 9: BULL VS BEAR -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多头与空头情景</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case — Target ~$85–95 ADR</div>
+      <div class="bull-text">
+        <strong>Data Centre Super-Cycle Extends:</strong> AI infrastructure spending sustains 20%+ growth through 2028. Schneider's data centre revenue doubles from current levels as rack densities force power and cooling upgrades at every existing and new facility.<br><br>
+        <strong>Industrial Automation Re-rating:</strong> AVEVA ARR accelerates to 15%+ growth; IA margin expands from 14.2% toward 18–19%, adding 150–200bps to group margins and triggering a conglomerate discount unwind.<br><br>
+        <strong>India + Emerging Markets Surprise:</strong> Full ownership of SEIPL unlocks EBITDA above deal model assumptions; South Asia becomes Schneider's fastest-growing region by 2027.<br><br>
+        <strong>FX Reversal:</strong> EUR/USD weakens back toward parity — a 10% USD strengthening adds €1–2B to reported revenues and ~10% to EPS.<br><br>
+        <strong>Multiple Expansion:</strong> Market re-rates Schneider as a "software-industrial hybrid" at 32–35x forward earnings rather than 26–27x, consistent with its digital revenue mix.
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case — Target ~$42–50 ADR</div>
+      <div class="bear-text">
+        <strong>AI Capex Cycle Stalls:</strong> Model efficiency improvements (DeepSeek-type disruptions) reduce hyperscaler GPU cluster buildout. Data centre orders normalise from triple-digit to single-digit growth, removing the primary re-rating driver.<br><br>
+        <strong>FX Compounds:</strong> EUR/USD strengthens further to 1.20+, wiping €2–3B from reported revenues and meaningfully cutting EPS vs. consensus. ADR holders experience double-hit of lower earnings AND lower EUR→USD conversion.<br><br>
+        <strong>China Deteriorates:</strong> Geopolitical escalation leads to Chinese government procurement restrictions on French multinationals — Schneider has historic deep China exposure and could face deliberate market share erosion.<br><br>
+        <strong>AVEVA Underdelivers:</strong> Subscription transition stalls; ARR growth decelerates below 8%; software multiple justification for the stock's premium evaporates.<br><br>
+        <strong>Debt Burden Tightens:</strong> Higher-for-longer rates increase financing costs beyond guided €150M; leverage limits acquisition optionality and pressures dividend growth.
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>多头情景（目标约85-95美元ADR）：</strong>AI数据中心超级周期延续、工业自动化利润率改善驱动集团折价消除、印度超预期、欧元/美元走弱及软件-工业混合估值重估。<strong>空头情景（目标约42-50美元ADR）：</strong>AI算力效率突破压制超大云厂商资本支出、欧元持续走强、中国地缘政治风险、AVEVA订阅转型停滞及债务融资成本超出预期。</div>
+  </div>
+</div>
+
+<!-- SECTION 10: ANALYST CONSENSUS -->
+<div class="section">
+  <div class="section-num">SECTION 10 · 第十节</div>
+  <div class="section-title">Analyst Consensus & Technical Signals</div>
+  <div class="section-title-cn">分析师共识与技术信号</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Consensus (SBGSY OTC)</div>
+      <div class="metric-val" style="font-size:16px;color:#0F6E56;">Strong Buy</div>
+      <div class="metric-sub">2/2 analysts covering OTC <span class="source-tag">Investing.com</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">OTC Avg Target</div>
+      <div class="metric-val">$72.00</div>
+      <div class="metric-sub">~+9% from ~$66 current <span class="source-tag">Investing.com</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EPA:SU Coverage</div>
+      <div class="metric-val">~30+ analysts</div>
+      <div class="metric-sub">Euronext Paris primary listing <span class="source-tag">Various</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">1-Year Stock Return</div>
+      <div class="metric-val metric-up">+33%</div>
+      <div class="metric-sub">EPA:SU; outperformed CAC 40 <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Performance</div>
+      <div class="metric-val">Near ATH</div>
+      <div class="metric-sub">SBGSY ATH: $66.93 (May 6, 2026) <span class="source-tag">MacroTrends</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Post Q1 2026 Reaction</div>
+      <div class="metric-val metric-dn">−2%</div>
+      <div class="metric-sub">Beat revenue but FX concerns <span class="source-tag">Investing.com</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">Analyst coverage on the primary Paris listing (EPA:SU) is substantially deeper than on the OTC ADR. Key institutional views: JPMorgan characterised 2026 guidance as "suitably beatable" — implying consensus estimates are likely conservative. UBS described the guidance as "understandably cautious" given the CFO transition and external macro uncertainties. The general Wall Street consensus is that Schneider's structural positioning is among the best in the industrial sector, with the near-term debate centred on the extent of FX headwinds and whether Industrial Automation recovery arrives in H1 or H2 2026. The stock's 3-year TSR of ~89% significantly outpaced global benchmarks, and technical momentum is positive — trading near all-time highs despite the Q1 post-earnings dip.</div>
+
+  <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin:10px 0 4px;">Broker Consensus (EPA:SU — approximate)</p>
+  <div class="consensus-bar">
+    <div class="cons-buy" style="width:75%;"></div>
+    <div class="cons-hold" style="width:22%;"></div>
+    <div class="cons-sell" style="width:3%;"></div>
+  </div>
+  <div class="cons-labels"><span>Buy ~75%</span><span>Hold ~22%</span><span>Sell ~3%</span></div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">SBGSY OTC仅有少数分析师覆盖（目标价72美元，约+9%上行空间）；主要覆盖在欧洲交所巴黎市场（EPA:SU），约30+名分析师，75%评级为买入。摩根大通认为2026年指引"有望超越"，瑞银认为"谨慎保守"。股价技术面强劲，接近历史高位，3年总股东回报约89%，显著跑赢全球主要指数。</div>
+  </div>
+</div>
+
+<!-- SECTION 11: PRACTICAL GUIDANCE -->
+<div class="section">
+  <div class="section-num">SECTION 11 · 第十一节</div>
+  <div class="section-title">Practical Guidance for Retail Investors</div>
+  <div class="section-title-cn">零售投资者实用指引</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>Who this stock suits:</strong> Schneider Electric is a core holding for investors who want exposure to AI infrastructure without the extreme volatility of pure semiconductor or cloud plays. It suits investors with a 3–5 year horizon who want: (1) a profitable, cash-generative industrial with genuine AI tailwinds; (2) some income via a progressive, growing dividend (16 consecutive years); (3) lower beta (1.15) than most AI-adjacent names; and (4) diversified exposure across electrification, automation, and digital — not just data centres. It is less suitable for short-term traders or those seeking explosive upside — this is a quality compounder, not a momentum stock.</div>
+
+  <div class="body-text"><strong>ADR vs. Direct Paris Share:</strong> Singapore investors can access Schneider via SBGSY (US OTC ADR, each = 0.25 ordinary share) through Tiger, Moomoo, or Interactive Brokers with US market access. The primary listing on Euronext Paris (EPA:SU) is also accessible via most brokers with European market access. The ADR is less liquid and carries an additional layer of currency conversion (EUR→USD→SGD). For significant positions, the Paris listing is preferred for tighter spreads.</div>
+
+  <div class="body-text"><strong>Position sizing:</strong> Given beta of 1.15, excellent earnings quality, and diversified end-market exposure, Schneider suits a core portfolio weighting of 3–6% for investors building an AI infrastructure sleeve. It can serve as a "lower-volatility anchor" alongside higher-beta names like VRT or SMCI. The FX risk for non-EUR investors is real — consider whether hedged exposure is necessary for larger positions.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">What to Monitor</p>
+  <ul class="watch-list">
+    <li><strong>Data Centre Order Intake</strong> — the single most important leading indicator; watch for continued backlog build vs. draw-down in H2 2026 earnings</li>
+    <li><strong>EUR/USD exchange rate</strong> — a strengthening dollar is a direct earnings tailwind for USD/ADR investors; a weakening dollar is a headwind</li>
+    <li><strong>AVEVA ARR growth rate</strong> — the signal for whether the software re-rating thesis is playing out; target is >12% sustained</li>
+  </ul>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Entry Considerations</p>
+  <div class="body-text">The SBGSY ADR at ~$66 is near its all-time high of $66.93. DCF analysis suggests meaningful overvaluation on a normalised earnings basis — but this is consistent with Schneider's quality premium and is not unusual for this level of structural positioning. A staged entry — building a core position now and adding on any pullback toward the $54–58 ADR range (which would correspond to ~€210–220 on the Paris listing) — is a reasonable approach. The historical pattern shows Schneider pulls back 10–20% around macro risk-off events or after earnings where FX guidance disappoints — these are the entry windows.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Red Flags to Exit</p>
+  <ul class="watch-list">
+    <li>Data centre order intake falls negative YoY for two consecutive quarters — would signal the AI capex cycle is rolling over</li>
+    <li>AVEVA ARR growth deceleration below 6% — undermines the software premium component of the multiple</li>
+    <li>Net debt/EBITDA rises above 2.5x without a compelling acquisition rationale — signals deteriorating capital discipline</li>
+    <li>EUR/USD sustains above 1.20 for more than two quarters — would materially compress USD EPS and ADR value</li>
+  </ul>
+
+  <div class="callout"><strong>Bottom Line:</strong> Schneider Electric is the best-positioned industrial company in the world for the AI infrastructure era — not because it's the most exciting, but because it's indispensable. Every data centre, every power grid, every smart building, every electrified factory needs Schneider's products. The premium valuation is earned. For retail investors building an AI infrastructure sleeve, Schneider belongs in it as the quality anchor — the company that will still be growing steadily in 10 years regardless of which AI models win.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">施耐德电气适合希望以较低波动率（Beta 1.15）参与AI基础设施主题的核心成长型投资者，建议持仓比例3-6%（AI基础设施组合内）。新加坡投资者可通过Tiger、Moomoo或盈透证券以SBGSY ADR或欧洲交所巴黎EPA:SU形式持有。当前股价接近历史高位，建议分批建仓，等待回调至54-58美元ADR区间加仓。重点追踪数据中心订单积压、欧元/美元汇率及AVEVA ARR增速三项核心指标。若数据中心订单连续两季度同比转负、或净债务/EBITDA突破2.5倍，应重新评估持仓逻辑。</div>
+  </div>
+</div>
+
+<!-- SECTION 12: AI INFRA LAYER -->
+<div class="section">
+  <div class="section-num">SECTION 12 · 第十二节</div>
+  <div class="section-title">AI Infrastructure Stack Position</div>
+  <div class="section-title-cn">AI 基础设施层级定位</div>
+  <div class="section-divider"></div>
+
+  <p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;">Schneider Electric is a genuinely multi-layer company — one of the few in the AI infrastructure stack that materially spans more than one layer with strategic significance in both.</p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div class="layer-badge">
+      <div class="layer-num">3</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Primary: Physical Skeleton</div>
+        <div class="layer-name-cn">主层：物理躯干</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-mid">🟡 Reasonable · 合理</div>
+  </div>
+
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;"><strong>Why Layer 3 (Primary):</strong> Schneider's Energy Management segment — 80% of revenues — delivers the power distribution, UPS, thermal management, busways, switchgear, and cooling distribution units that form the physical skeleton of every AI data centre. Without Schneider's equipment, a GPU rack has no power and no cooling. The company is explicitly part of NVIDIA's Vera Rubin AI factory reference design. In Layer 3 terminology, Schneider is the most complete single-company solution: it covers both the power spine and the thermal management layer that Vertiv leads, giving it broader coverage at the cost of slightly less specialisation per product line.</p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;margin-top:20px;">
+    <div class="layer-badge" style="background:linear-gradient(135deg, #1a2f0C 0%, #2f4a1a 100%);">
+      <div class="layer-num" style="background:#1D9E75;">8</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Secondary: Application Distribution</div>
+        <div class="layer-name-cn">次层：应用分发</div>
+      </div>
+    </div>
+    <div class="layer-valuation" style="background:#FEE2E2;color:#991B1B;">🔴 Reasonably High · 合理偏高</div>
+  </div>
+
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;"><strong>Why Layer 8 (Secondary):</strong> AVEVA — Schneider's industrial software platform — is genuinely a Layer 8 (Application Distribution) business. It delivers cloud-based SaaS, process simulation, and AI-driven industrial intelligence to engineering, operations, and sustainability teams worldwide. AVEVA's ARR growing at 12% positions it alongside Snowflake, ServiceNow, and Datadog in the "enterprise software that makes the AI era's operational fabric" category. This is a material secondary layer presence (~10% of revenues directly, ~19% total Software & Services) that justifies part of Schneider's premium multiple vs. pure-hardware industrial peers.</p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Layer 3 Peers · 同层同行</div>
+  <div class="layer-peer-chips">
+    <div class="peer-chip">VRT</div>
+    <div class="peer-chip">ETN</div>
+    <div class="peer-chip">NVT</div>
+    <div class="peer-chip">MOD</div>
+    <div class="peer-chip">DELL</div>
+    <div class="peer-chip">SMCI</div>
+  </div>
+
+  <div class="layer-note">
+    💡 <strong>Cross-Layer Valuation Context:</strong> Schneider trading at ~27x forward PE sits rationally between Vertiv (53x — pure-play Layer 3 cooling premium) and Siemens (18x — diversified industrial discount). The secondary Layer 8 presence via AVEVA is the key argument for why Schneider deserves a higher multiple than traditional industrials — it is genuinely a software-hardware hybrid. Investors who understand both layers can identify that the current forward PE of 26–28x is arguably the most rational risk-adjusted entry point in the Layer 3 ecosystem for patient long-term holders.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">施耐德电气是AI基础设施栈中罕见的跨层公司：<strong>主层为第3层「物理躯干」</strong>——能源管理业务（80%营收）为AI数据中心提供配电、UPS、冷却分配单元等核心基础设施，是NVIDIA Vera Rubin AI工厂参考设计的标准合作伙伴；<strong>次层为第8层「应用分发」</strong>——AVEVA工业软件平台（ARR增长12%）提供云端SaaS与AI驱动工业智能管理，属于企业级软件服务。这种硬件+软件的跨层特性是施耐德相对传统工业同行享有估值溢价的核心依据：前瞻PE约27倍，低于威图（53倍），高于西门子（18倍），是第3层生态中最具性价比的长期投资选择之一。</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">SOURCES · 数据来源</div>
+  <div class="sources">
+    Schneider Electric FY2025 Full-Year Results Release — February 26, 2026 · <a href="https://www.se.com/ww/en/about-us/investor-relations/financial-results/" target="_blank">se.com</a><br>
+    Schneider Electric Q1 2026 Revenue Release — April 30, 2026 · <a href="https://www.se.com/ww/en/assets/pdf/release-q1-revenues-2026" target="_blank">se.com</a><br>
+    Schneider Electric Q1 2026 Earnings Call Transcript · Investing.com<br>
+    Schneider Electric FY2025 Results Presentation (slides) · Investing.com, February 26, 2026<br>
+    StockAnalysis (EPA:SU statistics) — Shares outstanding, net debt, ROE, ROIC, EV/EBITDA · Retrieved May 15, 2026<br>
+    MacroTrends — SBGSY revenue history, PE history, 52-week price range · Retrieved May 15, 2026<br>
+    Investing.com — SBGSY quote, analyst ratings, 52-week range · Retrieved May 15, 2026<br>
+    GuruFocus — Forward PE ratio (SBGSY) · Retrieved May 15, 2026<br>
+    FinanceCharts.com — PE ratio history (SBGSY) · Retrieved May 15, 2026<br>
+    Yahoo Finance — SBGSY dividend, quote, ex-date · Retrieved May 15, 2026<br>
+    Vested Finance — SBGSY P/B, Beta · Retrieved May 15, 2026<br>
+    Alex-Finance.com — Schneider Electric FY2025 analysis, data centre orders commentary<br>
+    All financial figures in euros (EUR) unless otherwise noted. SBGSY ADR = 0.25 ordinary share. USD equivalents [ASSUMED] at ~1.09 EUR/USD. All [ASSUMED] inputs should be verified independently.
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. Financial figures are sourced from Schneider Electric company releases, public filings, and reputable financial data providers; all projections involve significant uncertainty. DCF inputs marked [ASSUMED] should be verified independently. Past performance is not indicative of future results. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议、招揽或买卖任何证券的推荐。财务数据来源于施耐德电气公司公告、公开文件及知名财务数据提供商；所有预测均存在重大不确定性。标注[ASSUMED]的DCF输入项应独立核实。历史表现不代表未来结果。在做出投资决策前，请咨询合格的财务顾问。
+</div>
+
+</body>
+</html>

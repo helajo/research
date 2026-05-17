@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coherent Corp (COHR) — Deep Dive Equity Research — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 920px; margin: 0 auto; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-mixed { background: #FAEEDA; color: #633806; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up { color: #0F6E56; }
+.metric-dn { color: #A32D2D; }
+.body-text { font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 12px; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.data-table .subtotal td { border-top: 1px solid #ccc; font-weight: 600; background: #f8f8f6; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.6; color: #791F1F; }
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; }
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.callout-amber { background: #FAEEDA; border-left: 3px solid #B45309; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #633806; line-height: 1.6; }
+.watch-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.watch-list li { font-size: 13px; color: #333; padding: 6px 0 6px 18px; border-bottom: 1px solid #f0efe8; position: relative; line-height: 1.5; }
+.watch-list li::before { content: "→"; position: absolute; left: 0; color: #185FA5; font-weight: 600; }
+.watch-list li:last-child { border-bottom: none; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+.up { color: #0F6E56; }
+.dn { color: #A32D2D; }
+.flat { color: #888; }
+.seg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.seg-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.seg-name { font-size: 12px; font-weight: 700; color: #185FA5; margin-bottom: 4px; }
+.seg-pct { font-size: 22px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; }
+.seg-rev { font-size: 11px; color: #888; margin-bottom: 6px; }
+.seg-body { font-size: 12px; color: #444; line-height: 1.6; }
+.tech-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.tech-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.tech-name { font-size: 11px; font-weight: 700; color: #333; margin-bottom: 3px; }
+.tech-desc { font-size: 11px; color: #666; line-height: 1.5; }
+.tech-status { font-size: 10px; font-weight: 700; border-radius: 20px; padding: 2px 8px; display: inline-block; margin-top: 4px; }
+.status-now { background: #EAF3DE; color: #27500A; }
+.status-next { background: #FAEEDA; color: #633806; }
+.status-future { background: #E6F1FB; color: #0C447C; }
+.layer-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0C1A2E 0%, #1a2f4a 100%); color: #fff; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; }
+.layer-num { background: #185FA5; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.layer-names { display: flex; flex-direction: column; }
+.layer-name-en { font-weight: 700; font-size: 14px; }
+.layer-name-cn { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.layer-valuation { display: inline-flex; align-items: center; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+.val-high { background: #FEE2E2; color: #991B1B; }
+.layer-note { background: #f8f8f6; border: 1px solid #e0dfd8; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px; }
+.peer-chip { background: #f0efe8; border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #444; display: inline-block; margin: 3px 4px 3px 0; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+@media (max-width: 640px) { .risk-grid, .cases, .seg-grid, .tech-grid { grid-template-columns: 1fr; } .metric-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-tag">DEEP DIVE · 光领域深度分析 · 深度研究</div>
+  <div class="doc-title">Coherent Corp (COHR) — The Optical Backbone of AI</div>
+  <div class="doc-title-cn">相干公司（COHR）— AI时代的光学脊柱</div>
+  <div class="doc-meta">Generated May 15, 2026 · Sector: Technology — Photonics, Optical Networking · Exchange: NYSE · Price: $382.45 (May 14, 2026) · Market Cap: ~$60.6B <span class="source-tag">FMP</span></div>
+</div>
+
+<!-- MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Investment mood 投资情绪</span>
+  <span class="mood-text">The most vertically integrated photonics company in the world, with a freshly secured $2B NVIDIA strategic partnership, accelerating margins, and sold-out InP capacity through 2027. The stock has run hard but the PEG of 1.09 says the growth justifies it.</span>
+  <span class="mood-pill mood-bullish">Bullish · 看多</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">相干公司是全球光子学领域最完整的垂直整合企业，拥有从材料到芯片再到模块的完整产业链。2026年3月获得英伟达20亿美元战略投资及多年期采购承诺，InP激光器产能已售罄至2027年，账面订单量/出货量比率超过4倍。FY2026三季度营收18.1亿美元（同比+21%），非GAAP毛利率39.6%，非GAAP EPS $1.41（同比+55%）。PEG比率1.09，表明当前增长速度能够支撑估值。整体投资情绪：看多。</div>
+</div>
+
+<!-- SECTION 1: COMPANY BACKGROUND -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Background — 60 Years of Photonics, Three Eras of Reinvention</div>
+  <div class="section-title-cn">公司背景 — 60年光子学历史，三次战略蜕变</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">The company trading under the COHR ticker today is the product of a complex, decade-long consolidation of the global photonics industry. To understand it, you need to understand three distinct eras.</div>
+
+  <div class="body-text"><strong>Era 1 — The Original Coherent (1966–2021):</strong> Founded in 1966 in Santa Clara, California, Coherent Inc. was one of the pioneering laser companies of the Silicon Valley era. For 55 years it built precision lasers for scientific research, semiconductor manufacturing (laser annealers, excimer lasers for LASIK surgery), and industrial processing. It was a respected but relatively modest photonics business — profitable, niche, growing slowly.</div>
+
+  <div class="body-text"><strong>Era 2 — II-VI's Transformation (2021–2022):</strong> The pivotal moment came when II-VI Incorporated — a Pennsylvania-based manufacturer of compound semiconductors, optical components, and laser technology — acquired Finisar Corporation in 2019 for $3.2 billion. Finisar was the world's largest manufacturer of optical transceivers, the modules used in datacentre and telecom networks to transmit data as light. This made II-VI a major datacom player overnight. Then in January 2022, II-VI completed a $6.8 billion acquisition of the original Coherent Inc., creating a photonics giant spanning lasers, optical components, transceivers, compound semiconductors (InP, GaAs, SiC), and industrial systems. The combined company rebranded as Coherent Corp in June 2022 and trades on the NYSE under the original COHR ticker.</div>
+
+  <div class="body-text"><strong>Era 3 — AI Photonics Platform (2023–present):</strong> The newly combined Coherent spent 2022–2024 digesting the acquisitions, paying down debt, and restructuring. During this period the stock languished while the market processed the merger complexity. Then in late 2024, as AI infrastructure demand exploded, Coherent's datacentre business — driven by demand for 400G, 800G, and 1.6T optical transceivers and InP laser chips — became the growth engine of the entire company. The stock began a dramatic re-rating. In March 2026, NVIDIA cemented Coherent's strategic position with a $2 billion equity investment and a multi-billion-dollar, multi-year purchase commitment for optical products. Today Coherent is unambiguously the most comprehensive, vertically integrated photonics platform in the world, led by CEO Jim Anderson (formerly CEO of GlobalFoundries) since 2024.</div>
+
+  <div class="body-text">Coherent employs <span class="source-tag">FMP</span> approximately 26,157 people globally, operates manufacturing facilities across the US, Europe, and Asia, and sells to every major hyperscaler, networking OEM, industrial equipment maker, and research institution worldwide. Its fiscal year ends June 30.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">相干公司的历史由三个关键阶段构成：<strong>①原相干公司（1966-2021）</strong>：硅谷激光先驱，专注科研与工业激光领域；<strong>②II-VI战略整合（2021-2022）</strong>：II-VI以38亿美元收购Finisar（最大光收发器制造商），再以68亿美元收购原相干公司，合并后更名为"相干公司（Coherent Corp）"，NYSE代码COHR；<strong>③AI光子学平台（2023至今）</strong>：消化整合、聚焦数据中心光子学，2026年3月获英伟达20亿美元战略投资，确立全球光子学领域最完整垂直整合平台的战略地位。现任CEO为前格罗方德CEO吉姆·安德森，公司拥有约26,157名员工，财年截止于6月30日。</div>
+  </div>
+</div>
+
+<!-- SECTION 2: WHAT COHERENT MAKES -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">What Coherent Makes — The Full Product Stack</div>
+  <div class="section-title-cn">产品全景 — 从材料到系统的完整光子学产业链</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">Coherent's competitive advantage is not any single product — it is the fact that it owns the entire manufacturing chain from raw material to finished optical module. This vertical integration is rare and increasingly valuable as NVIDIA and hyperscalers scramble to secure supply.</div>
+
+  <div class="seg-grid">
+    <div class="seg-card">
+      <div class="seg-name">Datacenter & Communications</div>
+      <div class="seg-pct">75%</div>
+      <div class="seg-rev">~$1.35B per quarter (Q3 FY26) · +41% YoY pro forma</div>
+      <div class="seg-body">Optical transceivers (400G, 800G, 1.6T pluggables and co-packaged), InP laser chips, GaAs VCSELs, optical circuit switches (OCS), datacenter interconnect (DCI) transceivers (800G/1.6T ZR/ZR+), silicon photonics components, optical fibre amplifiers, wavelength management products.</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-name">Industrial</div>
+      <div class="seg-pct">25%</div>
+      <div class="seg-rev">~$477M per quarter (Q2 FY26) · recovering</div>
+      <div class="seg-body">High-power CO₂ and solid-state lasers for cutting, welding, marking; precision optics; laser measurement instruments; SiC substrates for EV power electronics and semiconductor equipment; ceramics and speciality materials; laser annealing for semiconductor manufacturing.</div>
+    </div>
+  </div>
+
+  <div class="body-text"><strong>The technology sub-stack within the DC&C segment</strong> is what makes Coherent uniquely defensible. Unlike Lumentum (lasers only) or Ciena (systems only), Coherent spans every layer of the optical product chain:</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-name">InP Laser Chips</div>
+      <div class="tech-desc">The light source inside every high-speed transceiver. Coherent manufactures InP wafers and processes them into EML (Electro-absorption Modulated Laser) chips — the most critical component in 400G+ transceivers. Sold out through 2027.</div>
+      <div class="tech-status status-now">Shipping Now</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">Pluggable Transceivers</div>
+      <div class="tech-desc">400G, 800G, and 1.6T modules that plug into network switches. Convert electrical signals to optical and back. The primary AI data centre revenue driver today. Book-to-bill ratio >4x.</div>
+      <div class="tech-status status-now">Ramping Now</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">Optical Circuit Switches</div>
+      <div class="tech-desc">All-optical routing without electrical conversion — enables ultra-low-latency, high-bandwidth switching inside hyperscale AI clusters. NVIDIA partnership specifically accelerates OCS development. OCS backlog >$400M.</div>
+      <div class="tech-status status-now">Early Revenue</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">Silicon Photonics (SiPho)</div>
+      <div class="tech-desc">Uses standard CMOS chip fabs to make optical components at scale. Coherent is collaborating with NVIDIA on SiPho for next-gen AI switch architecture — demonstrated 6.4T socketed SiPho CPO system at OFC 2026.</div>
+      <div class="tech-status status-next">Scaling 2026–27</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">Co-Packaged Optics (CPO)</div>
+      <div class="tech-desc">The next frontier — integrating the optical engine directly onto the switch ASIC package, eliminating the pluggable module. NVIDIA granted Coherent access to 5 additional product families specifically for CPO development.</div>
+      <div class="tech-status status-next">Revenue 2027–28</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">DCI Transceivers</div>
+      <div class="tech-desc">800G and 1.6T ZR/ZR+ coherent transceivers for inter-datacenter links. AI workloads distributed across multiple facilities drive explosive DCI demand. SAM expected to grow 10x by 2030 to $4B.</div>
+      <div class="tech-status status-now">Ramping Now</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">SiC Substrates</div>
+      <div class="tech-desc">Silicon carbide wafers for EV power electronics and semiconductor manufacturing equipment. Connects Coherent to Layer 1 (semiconductor manufacturing) and the EV supply chain. Competes with Wolfspeed.</div>
+      <div class="tech-status status-now">Established</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">GaAs VCSELs</div>
+      <div class="tech-desc">Vertical-cavity surface-emitting lasers on gallium arsenide substrates — used in shorter-range intra-rack links and 3D sensing (Apple Face ID, LiDAR). Coherent makes both the substrate and the VCSEL chip.</div>
+      <div class="tech-status status-now">Established</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-name">Industrial Lasers</div>
+      <div class="tech-desc">High-power CO₂ and fibre lasers for metal cutting, welding, and marking. Stable, profitable segment providing earnings cushion. Growing in EV battery manufacturing and clean energy applications.</div>
+      <div class="tech-status status-now">Established</div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>The vertical integration moat:</strong> Coherent is one of the only companies in the world that owns the full optical product stack — from compound semiconductor wafers (InP, GaAs, SiC) through chip fabrication, module assembly, and complete system integration. This means it can control quality at every step, capture margin at every layer, and is extraordinarily difficult to displace. NVIDIA's $2 billion investment is in part a bet on this vertical integration — securing preferential access to a supply chain that cannot be replicated quickly.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">相干公司的核心竞争优势在于其<strong>完整的垂直整合光子学产业链</strong>——从化合物半导体晶圆（InP、GaAs、SiC）到芯片制造，再到模块封装和系统集成，全程掌控。两大业务板块：<strong>数据中心与通信</strong>（75%营收）：涵盖400G/800G/1.6T可插拔光收发器、InP EML激光芯片、光电路交换机（OCS）、DCI相干收发器及硅光子/共封装光学（CPO）组件；<strong>工业</strong>（25%营收）：高功率激光器、SiC衬底及精密光学器件。英伟达20亿美元投资的核心逻辑正是这种不可复制的垂直整合能力。</div>
+  </div>
+</div>
+
+<!-- SECTION 3: FINANCIAL PERFORMANCE -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Financial Performance — Accelerating on Every Metric</div>
+  <div class="section-title-cn">财务业绩 — 全面加速增长</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY2026 Revenue</div>
+      <div class="metric-val metric-up">$1.81B</div>
+      <div class="metric-sub">+21% YoY / +27% pro forma <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">9-Month FY2026 Revenue</div>
+      <div class="metric-val metric-up">$5.07B</div>
+      <div class="metric-sub">+18.5% YoY <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q4 FY2026 Revenue Guide</div>
+      <div class="metric-val">$1.91–2.05B</div>
+      <div class="metric-sub">Sequential acceleration <span class="source-tag">Earnings call</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2026E Full Year Rev.</div>
+      <div class="metric-val metric-up">~$6.9B</div>
+      <div class="metric-sub">+19% vs FY2025 $5.81B <span class="source-tag">Implied</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY26 Non-GAAP GM</div>
+      <div class="metric-val metric-up">39.6%</div>
+      <div class="metric-sub">+105bps YoY; expanding <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY26 GAAP EPS</div>
+      <div class="metric-val metric-up">$0.97</div>
+      <div class="metric-sub">+$1.08 vs prior year <span class="source-tag">SEC 10-Q</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY26 Non-GAAP EPS</div>
+      <div class="metric-val metric-up">$1.41</div>
+      <div class="metric-sub">+55% YoY; beat consensus <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q4 FY26 Non-GAAP EPS Guide</div>
+      <div class="metric-val">$1.52–$1.72</div>
+      <div class="metric-sub">Further sequential growth <span class="source-tag">Earnings call</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">DC&C Revenue Mix</div>
+      <div class="metric-val metric-up">75%</div>
+      <div class="metric-sub">Up from 59% two years ago <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Full Year Revenue</div>
+      <div class="metric-val">$5.81B</div>
+      <div class="metric-sub">+23% vs FY2024 <span class="source-tag">SEC 8-K FY25</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Non-GAAP EPS</div>
+      <div class="metric-val">$3.53</div>
+      <div class="metric-sub">+191% vs FY2024 <span class="source-tag">SEC 8-K FY25</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Book-to-Bill (DC&C)</div>
+      <div class="metric-val metric-up">&gt;4x</div>
+      <div class="metric-sub">Extraordinary demand signal <span class="source-tag">mlq.ai research</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">The financial trajectory of Coherent is one of the most dramatic V-shaped recoveries in the technology sector. After the II-VI/Coherent merger closed in 2022, the combined company carried $4B+ in long-term debt, was integrating three major acquisitions simultaneously, and was navigating a telecom capex downcycle. From FY2022 to FY2024, the stock fell more than 60% from its peak as the market processed this complexity.</div>
+
+  <div class="body-text">Then AI changed everything. The demand for high-speed optical transceivers exploded as hyperscalers built out GPU clusters. Coherent's datacentre and communications segment revenue surged, margins expanded, and debt was systematically paid down. FY2025 non-GAAP EPS of $3.53 represented 191% growth year-on-year — a figure that barely anyone outside specialist photonics investors was tracking. By the time the broader market noticed in late 2024 and 2025, the stock had already moved significantly. The Q3 FY2026 results — $1.81B revenue, 39.6% non-GAAP gross margin, $1.41 non-GAAP EPS — confirm the acceleration is real and continuing.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric ($M)</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>Q3 FY26 (LTM est.)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total Revenue</td><td>$5,243</td><td>$4,718</td><td>$5,810</td><td>~$6,900E</td></tr>
+      <tr><td>DC&C Revenue</td><td>~$2,900</td><td>~$2,700</td><td>~$3,800</td><td>~$5,200E</td></tr>
+      <tr><td>Industrial Revenue</td><td>~$2,343</td><td>~$2,018</td><td>~$2,010</td><td>~$1,700E</td></tr>
+      <tr><td>Non-GAAP Gross Margin</td><td>~36%</td><td>~34%</td><td>37.9%</td><td>~39–41%</td></tr>
+      <tr><td>R&amp;D Expense</td><td>~$620</td><td>~$576</td><td>~$572</td><td>~$740E</td></tr>
+      <tr class="highlight"><td>Non-GAAP EPS</td><td>$1.22</td><td>$1.21</td><td>$3.53</td><td>~$5.50–6.00E</td></tr>
+      <tr><td>GAAP Net Income/(Loss)</td><td>$(1,080)</td><td>$(1,001)</td><td>$(81)</td><td>Turning positive</td></tr>
+      <tr><td>Long-Term Debt</td><td>~$5,100</td><td>~$4,200</td><td>~$4,027</td><td>~$3,498</td></tr>
+      <tr><td>Shares Outstanding (M)</td><td>~155</td><td>~155</td><td>~155</td><td>~196 (post-NVDA placement)</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Sources: Coherent SEC 8-K filings FY2023–FY2026 Q3. FY2025 figures as reported. [E] = estimated/implied. Fiscal year ends June 30.</p>
+
+  <div class="body-text"><strong>Key financial improvement story:</strong> The restructuring is working. Coherent sold its Aerospace & Defence business (closed September 2025) and its Munich, Germany industrial business (closed January 2026), streamlining into two focused segments. Long-term debt has fallen from ~$5.1B in FY2023 to ~$3.5B as of Q1 FY2026. The R&D investment of ~$186M in Q3 FY2026 — the highest in company history — is being directed almost entirely at CPO, silicon photonics, and next-generation InP laser products. Management explicitly guided that FY2027 growth will exceed FY2026's growth rate, meaning the acceleration has not yet peaked.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">相干公司呈现出科技板块中最显著的V形复苏之一。FY2026三季度营收18.1亿美元（同比+21%，剔除已出售业务后+27%），非GAAP毛利率39.6%（同比+105bps），非GAAP EPS 1.41美元（同比+55%）。公司已出售航空国防和慕尼黑工业业务，聚焦核心光子学；长期债务从约51亿美元降至约35亿美元。四季度指引营收19.1-20.5亿美元，非GAAP EPS 1.52-1.72美元，管理层明确表示FY2027增速将超过FY2026，加速趋势尚未见顶。数据中心与通信业务占比已从两年前的59%升至75%，账面订单量/出货量比率超过4倍，显示供不应求态势显著。</div>
+  </div>
+</div>
+
+<!-- SECTION 4: BALANCE SHEET -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Assets</div>
+      <div class="metric-val">$15.1B</div>
+      <div class="metric-sub">As of Q3 FY2026 <span class="source-tag">Simply Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Cash & ST Investments</div>
+      <div class="metric-val">~$870M</div>
+      <div class="metric-sub">Post-NVIDIA placement +$2B raised <span class="source-tag">Simply Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Long-Term Debt</div>
+      <div class="metric-val metric-dn">~$3.5B</div>
+      <div class="metric-sub">Down from $4.0B (FY2025) <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Debt / Equity Ratio</div>
+      <div class="metric-val">0.31–0.38x</div>
+      <div class="metric-sub">Improving; down from 0.47x 5yr ago <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Shareholders' Equity</div>
+      <div class="metric-val">$8.9B</div>
+      <div class="metric-sub">Including NVIDIA share issuance <span class="source-tag">Simply Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Goodwill + Intangibles</div>
+      <div class="metric-val metric-dn">~$7.6B</div>
+      <div class="metric-sub">Large — from II-VI/Finisar mergers <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EBIT Interest Coverage</div>
+      <div class="metric-val">3.1x</div>
+      <div class="metric-sub">Adequate; improving <span class="source-tag">Simply Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Current Ratio</div>
+      <div class="metric-val metric-up">3.05x</div>
+      <div class="metric-sub">Healthy short-term liquidity <span class="source-tag">StockAnalysis</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">The balance sheet is the most important context for Coherent. The $6.8B II-VI/Coherent merger created approximately $7.6B in goodwill and intangible assets — most of which sits on the balance sheet today. This is the primary driver of the large GAAP losses and the elevated depreciation/amortisation charges that make trailing GAAP PE ratios meaningless for analysis. On a non-GAAP basis (which adds back acquisition-related amortisation and stock-based compensation), the business is profitable and improving rapidly. The key balance sheet positive development in Q3 FY2026 was the NVIDIA equity placement: 7,788,161 new shares issued at $256.80 per share, raising $2 billion in cash. This simultaneously strengthened the balance sheet and created a strategic alignment with the world's most important AI hardware company. Debt continues to decline, the interest coverage ratio of 3.1x is adequate and improving, and the current ratio of 3.05x is healthy. The primary balance sheet concern remains the $7.6B goodwill and intangibles overhang — if the DC&C growth thesis ever materially disappoints, goodwill impairment risk becomes real.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">资产负债表方面，相干公司的最大特点是II-VI/Finisar并购产生的约76亿美元商誉和无形资产，这是GAAP亏损和高折旧摊销的主要来源，也使追踪市盈率失去参考意义。非GAAP口径下（剔除并购摊销和股权激励），业务已盈利且快速改善。积极因素：英伟达以每股256.80美元认购约778万新股，共筹资20亿美元；长期债务从40亿降至约35亿；流动比率3.05倍（健康）；EBIT利息覆盖率3.1倍（改善中）。主要风险：若数据中心业务增长预期显著不及预期，可能面临商誉减值风险。</div>
+  </div>
+</div>
+
+<!-- SECTION 5: VALUATION -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Valuation</div>
+  <div class="section-title-cn">估值分析</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Current Price</div>
+      <div class="metric-val">$382.45</div>
+      <div class="metric-sub">NYSE, May 14, 2026 <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">~$60.6B</div>
+      <div class="metric-sub">195.6M shares outstanding <span class="source-tag">FMP / StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Range</div>
+      <div class="metric-val">$73.66–$413</div>
+      <div class="metric-sub">+418% from 52-week low <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Beta</div>
+      <div class="metric-val metric-dn">2.053</div>
+      <div class="metric-sub">High volatility <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Trailing PE</div>
+      <div class="metric-val flat">158x</div>
+      <div class="metric-sub">Misleading — GAAP losses from M&A <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Forward PE (FY2027E)</div>
+      <div class="metric-val">~51x</div>
+      <div class="metric-sub">On consensus FY2027 EPS est. <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">PEG Ratio</div>
+      <div class="metric-val metric-up">1.09</div>
+      <div class="metric-sub">Growth-adjusted value <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">10-Year Avg PE</div>
+      <div class="metric-val">36.8x</div>
+      <div class="metric-sub">Historical context <span class="source-tag">FinanceCharts</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EV / EBITDA</div>
+      <div class="metric-val">~30x</div>
+      <div class="metric-sub">Enterprise value based <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Profit Margin</div>
+      <div class="metric-val metric-up">3.1%</div>
+      <div class="metric-sub">Up from -1.1% prior year <span class="source-tag">WallStreetZen</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Analyst Median Target</div>
+      <div class="metric-val">~$250–$320</div>
+      <div class="metric-sub">Pre-Q3 FY26; upward revisions likely <span class="source-tag">Quiver Quant</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NVIDIA Investment Price</div>
+      <div class="metric-val">$256.80</div>
+      <div class="metric-sub">Per share, March 2026 <span class="source-tag">SEC 8-K</span></div>
+    </div>
+  </div>
+
+  <div class="callout-amber"><strong>Key Valuation Warning:</strong> The trailing PE of 158x is not a useful metric for Coherent. It reflects ~$7.6B in goodwill/intangible amortisation from the merger creating large GAAP losses, not operating underperformance. Use forward non-GAAP PE (~51x on FY2027E) and PEG (1.09) as the primary valuation anchors. The 10-year average PE of 36.8x provides historical context — at 51x forward, the stock is trading at a premium to its own history, justified by the structural step-change in AI-driven photonics demand.</div>
+
+  <p style="font-size:13px;font-weight:700;color:#185FA5;margin:16px 0 8px;">DCF Analysis — 3 Scenarios <span class="source-tag">[ASSUMED inputs]</span></p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Input / Output</th><th>Bear</th><th>Base</th><th>Bull</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Non-GAAP FCF Base (FY2026E, $B) [ASSUMED]</td><td>$0.6</td><td>$0.8</td><td>$1.1</td></tr>
+      <tr><td>FCF Growth Rate (yrs 1–5)</td><td>8%</td><td>18%</td><td>28%</td></tr>
+      <tr><td>WACC [ASSUMED]</td><td>11%</td><td>11%</td><td>11%</td></tr>
+      <tr><td>Terminal Growth Rate</td><td>3%</td><td>3%</td><td>3%</td></tr>
+      <tr><td>EV ($B, approx) [ASSUMED]</td><td>~$9B</td><td>~$15B</td><td>~$24B</td></tr>
+      <tr><td>Net Debt ($B)</td><td>~$2.6</td><td>~$2.6</td><td>~$2.6</td></tr>
+      <tr class="highlight"><td>Intrinsic Value / Share [ASSUMED]</td><td>~$33</td><td>~$64</td><td>~$110</td></tr>
+      <tr><td>Upside / (Downside) vs $382</td><td class="dn">−91%</td><td class="dn">−83%</td><td class="dn">−71%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Note: FCF is significantly depressed by heavy capex for capacity expansion and merger-related charges. The DCF based on current FCF materially understates the intrinsic value — a more appropriate method uses normalised earnings (non-GAAP EPS × shares). At FY2027E non-GAAP EPS ~$7–8 × shares 196M × a 30x target multiple = implied price $210–$315. The stock at $382 is pricing in sustained high-growth normalisation above $8+ EPS, which is plausible given Q4 FY26 guidance trajectory. All [ASSUMED] inputs require independent verification.</p>
+
+  <div class="body-text"><strong>The more honest valuation framework:</strong> For a company transitioning from merger-era GAAP losses to strong non-GAAP profitability, the most useful metrics are: (1) PEG ratio of 1.09 — which says growth is being bought at a fair price; (2) forward non-GAAP PE of ~51x on FY2027 estimates — elevated but justified for a company with 55%+ EPS growth; (3) the NVIDIA investment at $256.80 per share — which functions as a strategic floor price set by the most informed buyer in the AI hardware universe. Current price of $382 is 49% above NVIDIA's investment price, implying the market has moved ahead of even this strategic anchor. That premium is the risk zone.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">估值分析：追踪市盈率158倍因并购摊销导致GAAP巨额亏损而失去参考价值。更有意义的指标：<strong>①PEG比率1.09</strong>——增长调整后估值合理；<strong>②前瞻非GAAP市盈率约51倍（FY2027E）</strong>——对应55%+EPS增速尚可接受；<strong>③英伟达以每股256.80美元入股</strong>——最具信息优势的战略投资者设定的"战略底价"。当前股价382美元较英伟达入股价溢价约49%，这一溢价是主要风险区间。基于当前自由现金流的DCF大幅低估内在价值（资本开支高峰扭曲FCF），建议以正常化非GAAP EPS×目标倍数估算：FY2027E非GAAP EPS约7-8美元×30倍=210-315美元/股。所有[ASSUMED]参数须独立核实。</div>
+  </div>
+</div>
+
+<!-- SECTION 6: THE NVIDIA PARTNERSHIP -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">The NVIDIA Partnership — A Strategic Game-Changer</div>
+  <div class="section-title-cn">英伟达战略合作 — 改变游戏规则的重大事件</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">The March 2, 2026 announcement of NVIDIA's $2 billion strategic investment in Coherent is the single most important event in the company's recent history. It deserves its own analysis because it is more than a financial transaction — it is a statement about which company NVIDIA believes will be the foundation of the next decade of AI optical infrastructure.</div>
+
+  <div class="body-text"><strong>What the deal actually includes:</strong></div>
+  <ul class="watch-list">
+    <li><strong>$2 billion equity investment</strong> — NVIDIA purchased 7,788,161 shares at $256.80 per share (a modest premium to the then-market price). NVIDIA now holds approximately 4% of Coherent's enlarged share count, making it a meaningful strategic shareholder with board-level alignment incentives</li>
+    <li><strong>Multi-billion-dollar purchase commitment</strong> — NVIDIA committed to a multi-year, multi-billion-dollar purchase of Coherent's advanced laser and optical networking products. The exact value is not disclosed, but at NVIDIA's current scale of AI factory deployment, even a modest allocation is transformative for Coherent's revenue</li>
+    <li><strong>Access to five additional product families for CPO</strong> — NVIDIA granted Coherent development access and co-investment rights across five co-packaged optics product families. This is the most strategically important element: CPO integrates optics directly onto NVIDIA's switch ASICs, and Coherent is the partner being brought inside the chip architecture</li>
+    <li><strong>Silicon photonics co-development</strong> — Joint development of silicon photonics technology for next-generation AI switch architecture. NVIDIA stated: "With Coherent, NVIDIA is pioneering next-generation silicon photonics to enable AI infrastructure at unprecedented scale, speed and energy efficiency"</li>
+    <li><strong>US manufacturing expansion</strong> — The investment specifically supports Coherent's US-based manufacturing buildout — strategically aligned with both NVIDIA's supply chain diversification goals and US government reshoring objectives</li>
+    <li><strong>5 GW AI factory co-investment</strong> — Coherent and NVIDIA are working together on a 5 gigawatt AI factory buildout by 2030 — an extraordinary scale commitment that validates the multi-year nature of the optical supply demand</li>
+  </ul>
+
+  <div class="body-text"><strong>Why this matters structurally:</strong> NVIDIA does not make equity investments casually. The last comparable photonics investment was NVIDIA's parallel $2B investment in Lumentum on the same day — totalling $4B in a single day to secure optical supply. This signals that NVIDIA views photonics as the binding constraint on AI infrastructure scaling — not GPUs, not memory, not power — optical interconnects. By investing in and locking up preferred supply from both major InP laser suppliers, NVIDIA is essentially pre-paying for the optical capacity it knows it will need for the GB300, Vera Rubin, and beyond product generations. For Coherent, this converts a portion of its future revenue into effectively pre-committed strategic demand at the highest-quality customer relationship possible.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">2026年3月英伟达20亿美元战略投资是相干公司近年最重大事件，包含：<strong>①20亿美元股权投资</strong>（以每股256.80美元认购778万新股，持有约4%股份）；<strong>②多年期多十亿美元采购承诺</strong>；<strong>③5个共封装光学（CPO）产品系列的联合开发权</strong>；<strong>④硅光子技术联合研发</strong>；<strong>⑤美国本土制造扩产支持</strong>；<strong>⑥2030年5GW AI工厂共同投资计划</strong>。英伟达同日还向Lumentum投资20亿美元，单日合计40亿美元光学投资，表明英伟达将光子互联视为AI基础设施扩张的最关键瓶颈——而非GPU、内存或电力。对相干公司而言，这意味着来自全球最重要AI硬件公司的预承诺战略需求，从根本上改变了公司的竞争地位。</div>
+  </div>
+</div>
+
+<!-- SECTION 7: GROWTH CATALYSTS & MOAT -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>Catalyst 1 — AI Transceiver Demand Super-Cycle:</strong> Every AI GPU cluster requires optical transceivers for intra-cluster, inter-rack, and inter-datacenter connectivity. As NVIDIA ships increasingly dense GPU clusters (GB200 NVL72 at 1.6Tbps per switch port), the transceiver speed requirement doubles roughly every 18 months (400G → 800G → 1.6T → 3.2T → 6.4T). Coherent is on this roadmap at every step. The company estimates the datacenter optical SAM will grow to $44B by 2030 — a roughly 4x expansion from today.</div>
+
+  <div class="body-text"><strong>Catalyst 2 — Co-Packaged Optics (CPO) Revolution:</strong> The transition from pluggable transceivers to CPO — where optics are integrated directly onto the switch package — is the next multi-year wave. CPO eliminates electrical cable losses, reduces power consumption by 30–40%, and enables much higher bandwidth density. Coherent's NVIDIA partnership specifically targets CPO development, and the company demonstrated a 6.4T socketed SiPho CPO system at OFC 2026. CPO revenue is expected to ramp meaningfully in 2027–2028 and could add a new revenue stream at higher margins than pluggable transceivers.</div>
+
+  <div class="body-text"><strong>Catalyst 3 — InP Scarcity Moat:</strong> InP wafer supply is structurally constrained by the difficulty of growing high-quality InP crystals. Coherent manufactures its own InP wafers through its Finisar heritage and Compound Semiconductor operations. With InP capacity sold out through 2027 and book-to-bill above 4x in the DC&C segment, Coherent is in a seller's market. The NVIDIA investment partially functions as capacity reservation — securing access to future InP supply.</div>
+
+  <div class="body-text"><strong>Catalyst 4 — Industrial Laser Recovery:</strong> The industrial segment (25% of revenue) has been flat-to-declining as factory automation capex was deferred through the 2023–2024 macro uncertainty. As industrial production recovers globally, laser demand for precision manufacturing, EV battery welding, and clean energy processing should recover. Management guided for improving Industrial demand in H2 FY2026 and through FY2027 — this segment recovery would be an incremental earnings driver above the AI narrative.</div>
+
+  <div class="body-text"><strong>Catalyst 5 — SiC Substrate Growth:</strong> Coherent's SiC substrate business (within Industrial) is quietly becoming strategically important as EV manufacturers and power electronics producers scale production. SiC enables more efficient power conversion in EV drivetrains. Coherent competes with Wolfspeed in 150mm and 200mm SiC wafers. As the EV industry recovers from its 2024–2025 slowdown, SiC substrate demand should improve.</div>
+
+  <div class="body-text"><strong>The moat — vertical integration depth:</strong> The competitive moat is Coherent's vertical integration — it is one of the only companies that can supply customers from raw semiconductor crystal to finished optical system. This creates four layers of protection: (1) material scarcity (InP crystal growth is expertise-intensive and cannot be rapidly expanded); (2) manufacturing complexity (wafer fab, chip packaging, module assembly — each a specialised capability); (3) customer qualification cycles (once a Coherent transceiver is qualified in an NVIDIA switch or hyperscaler system, switching supplier takes 12–24 months); (4) software and systems co-development (the CPO and OCS products require deep co-engineering with NVIDIA and switch OEMs — creating relationship moats beyond product specs).</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">五大增长催化剂：<strong>①AI收发器需求超级周期</strong>（DC光学SAM预计到2030年增至440亿美元，4倍扩张）；<strong>②共封装光学（CPO）革命</strong>（节能30-40%、带宽密度大幅提升，2027-2028年贡献新收入流）；<strong>③InP稀缺性护城河</strong>（产能售罄至2027年，账面订单/出货比超4倍，卖方市场）；<strong>④工业激光器复苏</strong>（宏观环境改善后工厂自动化资本开支回升的额外催化剂）；<strong>⑤SiC衬底增长</strong>（EV复苏驱动碳化硅需求）。竞争护城河由四层构成：材料稀缺性（InP晶体生长难以快速复制）、制造复杂性（晶圆→芯片→模块全链条）、客户认证周期（替换供应商需12-24个月）及系统级协同研发（CPO/OCS与英伟达深度共同开发形成的关系壁垒）。</div>
+  </div>
+</div>
+
+<!-- SECTION 8: RISKS -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Key Risks</div>
+  <div class="section-title-cn">主要风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type">📉 Valuation Premium Risk</div>
+      <div class="risk-desc">At $382, the stock is 49% above NVIDIA's $256.80 investment price. The trailing PE of 158x and forward PE of ~51x are elevated. Pre-Q3 earnings analyst median target of ~$250–$320 implies the stock has run significantly ahead of consensus. Any guidance miss or macro risk-off event could trigger a severe multiple compression.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">📦 Goodwill Impairment</div>
+      <div class="risk-desc">~$7.6B in goodwill and intangible assets from the II-VI/Finisar/Coherent mergers remains on the balance sheet. If the datacenter business materially disappoints sustained expectations, accounting tests could trigger goodwill write-downs that would devastate GAAP equity — though this would not affect the operating business or non-GAAP earnings.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🔬 Technology Transition Risk</div>
+      <div class="risk-desc">The transition from pluggable transceivers to CPO could cannibalize Coherent's existing transceiver revenue stream before CPO revenue fully ramps. If the transition happens faster than expected, there could be a 2–3 quarter revenue gap. If it happens slower, competitors may close the technology gap.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">⚡ High Beta — Extreme Volatility</div>
+      <div class="risk-desc">Beta of 2.053 means COHR moves ~2x the broader market. The 52-week range of $73 to $413 captures this — a nearly 5x range in 12 months. Investors must be comfortable with 20–30% drawdowns on macro risk-off days while holding a fundamentally sound thesis.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🏭 Manufacturing Execution</div>
+      <div class="risk-desc">Scaling InP wafer production, silicon photonics capacity, and US-based manufacturing simultaneously is operationally complex. Any yield issues, equipment delays, or cleanroom incidents could miss quarterly guidance — which at current valuations would be severely punished. The company has already guided Q4 FY26 revenue at a wide range of $1.91B–$2.05B, partly reflecting manufacturing ramp uncertainty.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🔄 Share Count Dilution</div>
+      <div class="risk-desc">Shares outstanding increased 16.99% in one year — from ~155M to ~196M — primarily due to the NVIDIA placement and merger-related equity instruments. Ongoing stock-based compensation (~$150M per quarter) continues to dilute existing shareholders. EPS growth must meaningfully outpace share count growth for per-share value creation to materialise.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🌏 China Exposure</div>
+      <div class="risk-desc">Coherent has manufacturing operations in China and sells into Chinese datacom and telecom markets. US-China export control escalation — particularly around compound semiconductors like InP and GaAs — could create supply chain disruptions or market access restrictions. The industrial laser business also has significant China revenue exposure.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">⚔️ Competitive Pressure</div>
+      <div class="risk-desc">Lumentum is aggressively expanding EML capacity (NVIDIA invested $2B in both). MACOM, Marvell (SiPho ASICs), and Broadcom all have optical ambitions. Vertically integrated Chinese competitors (HiSilicon, Accelink) may offer lower-cost alternatives in non-restricted markets. Coherent's moat is deep but not impenetrable.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">主要风险：<strong>①估值溢价风险</strong>（股价较英伟达入股价溢价49%，前瞻PE约51倍，高于分析师共识目标价）；<strong>②商誉减值风险</strong>（约76亿美元商誉，若DC业务不及预期可能触发减值）；<strong>③技术过渡风险</strong>（CPO替代可插拔收发器可能导致营收过渡期）；<strong>④高Beta极端波动</strong>（Beta 2.053，52周区间从73美元到413美元）；<strong>⑤产能扩张执行风险</strong>（InP晶圆、硅光子、美国本土制造同步扩产难度大）；<strong>⑥股份摊薄</strong>（过去一年股数增加约17%）；<strong>⑦中国敞口</strong>（制造和销售均有中国业务，出口管制升级风险）；<strong>⑧竞争压力</strong>（Lumentum、Marvell、博通及中国竞争者的挑战）。</div>
+  </div>
+</div>
+
+<!-- SECTION 9: BULL VS BEAR -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多头与空头情景</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case — Target $550–650</div>
+      <div class="bull-text">
+        <strong>CPO Revenue Inflection (2027–2028):</strong> CPO ramps ahead of schedule as NVIDIA embeds Coherent's technology in GB300 and Vera Rubin switch architectures — adding $1–2B in new annual revenue at 50%+ gross margins from 2027. This drives non-GAAP EPS toward $10–12 by FY2028.<br><br>
+        <strong>Industrial Recovery Surprise:</strong> Global manufacturing capex rebounds strongly in H2 2026; industrial laser revenue grows 15–20% in FY2027, adding $300–400M in incremental high-margin revenue the market hasn't fully modelled.<br><br>
+        <strong>Index Inclusion Momentum:</strong> S&P 500 inclusion (already achieved, March 2026) drives institutional forced buying. Additional index inclusions (Nasdaq-100 is pending) add further technical demand.<br><br>
+        <strong>FY2027 Non-GAAP EPS $10+:</strong> At 55x forward PE — already paid for recent quarters — a $10 EPS would imply $550 per share. The growth rate acceleration management guided ("FY2027 to exceed FY2026 growth rate") makes $10+ achievable.<br><br>
+        <strong>Goodwill Earned Off:</strong> As the merger proves its value through sustained earnings, the goodwill discount on GAAP PE narrows — enabling GAAP profitability to emerge and unlock a broader investor base currently excluded by GAAP losses.
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case — Target $180–240</div>
+      <div class="bear-text">
+        <strong>CPO Delays:</strong> Technical challenges in CPO yield and customer qualification extend CPO revenue ramp to 2029+, creating a 2027 earnings air pocket as pluggable growth decelerates and CPO hasn't yet contributed. The current $382 price has CPO success priced in.<br><br>
+        <strong>AI Capex Deceleration:</strong> A DeepSeek-style model efficiency breakthrough reduces hyperscaler GPU orders — directly reducing transceiver demand. InP capacity surplus quickly follows, reversing pricing power.<br><br>
+        <strong>Multiple Compression:</strong> As the stock runs far ahead of analyst targets, institutional investors lock in gains. Any two consecutive quarters of guidance misses triggers a return toward the 10-year average PE of ~37x — implying $180–220 on current earnings levels.<br><br>
+        <strong>Dilution Continues:</strong> Ongoing stock-based compensation and potential additional equity raises for capacity expansion keep share count growing faster than EPS, making per-share value creation illusory.<br><br>
+        <strong>Lumentum Wins CPO:</strong> NVIDIA's parallel $2B investment in Lumentum means COHR has a peer competitor inside the same NVIDIA supplier ecosystem. If Lumentum's EML technology proves superior for CPO integration, Coherent could lose this critical product cycle.
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>多头情景（目标550-650美元）：</strong>CPO营收2027-2028年超预期放量（新增10-20亿美元年收入，毛利率50%+）；工业激光器复苏超预期；S&P 500及纳斯达克100指数纳入带来被动资金买入；FY2027非GAAP EPS达10美元+。<strong>空头情景（目标180-240美元）：</strong>CPO延迟至2029年+（当前股价已计入CPO成功）；AI资本开支周期因模型效率突破而减速；多次指引不及预期导致估值倍数回归10年均值约37倍；股权摊薄持续；Lumentum在CPO产品周期竞争中胜出。</div>
+  </div>
+</div>
+
+<!-- SECTION 10: ANALYST CONSENSUS -->
+<div class="section">
+  <div class="section-num">SECTION 10 · 第十节</div>
+  <div class="section-title">Analyst Consensus & Technical Picture</div>
+  <div class="section-title-cn">分析师共识与技术面</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Analyst Coverage</div>
+      <div class="metric-val">~32</div>
+      <div class="metric-sub">Analysts covering COHR <span class="source-tag">Simply Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Pre-Q3 Median Target</div>
+      <div class="metric-val">~$250–320</div>
+      <div class="metric-sub">Expect significant upward revisions <span class="source-tag">Quiver Quant / Stifel</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Stifel Target (latest)</div>
+      <div class="metric-val">$275</div>
+      <div class="metric-sub">Buy rating; raised from $235 <span class="source-tag">Stifel</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Citi Target (Jan 2026)</div>
+      <div class="metric-val">$250</div>
+      <div class="metric-sub">Strong Buy; raised from $180 <span class="source-tag">WallStreetZen</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Current Price vs Targets</div>
+      <div class="metric-val metric-dn">~40–50% above</div>
+      <div class="metric-sub">Stock has run past most targets <span class="source-tag">Multiple</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">1-Year Stock Return</div>
+      <div class="metric-val metric-up">+418%</div>
+      <div class="metric-sub">From 52-wk low of $73.66 <span class="source-tag">FMP</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">The analyst consensus situation for COHR is similar to NVT — the stock has run substantially ahead of published price targets. Pre-Q3 FY2026 targets of $250–$320 are now 15–35% below the current price of $382, creating an unusual dynamic where buyers at current prices are explicitly buying above Wall Street consensus. However, the Q3 FY2026 beat (revenue $1.81B vs. expectations of ~$1.7B, non-GAAP EPS $1.41 vs. ~$1.28 guided midpoint) and the strong Q4 guidance of $1.91B–$2.05B will force significant upward target revisions across the 32 covering analysts. Post-Q3 revisions have already begun — expect median targets to move toward $350–420+ as analysts update models.</div>
+
+  <div class="body-text">Technically, COHR peaked at $413 on the 52-week high and pulled back approximately 7% to the current $382. The stock's beta of 2.053 means corrections can be sharp — a 20–25% pullback to the $285–320 range would be entirely consistent with the pattern of a high-beta momentum stock and would arguably offer the better entry point vs. consensus. S&P 500 inclusion in March 2026 has driven forced institutional buying. The NVIDIA investment at $256.80 provides a psychological floor — institutional investors are unlikely to sell materially below the price NVIDIA paid.</div>
+
+  <div class="body-text">The consensus rating across 32 analysts is overwhelmingly bullish:</div>
+  <div class="consensus-bar">
+    <div class="cons-buy" style="width:78%;"></div>
+    <div class="cons-hold" style="width:19%;"></div>
+    <div class="cons-sell" style="width:3%;"></div>
+  </div>
+  <div class="cons-labels"><span>Buy ~78%</span><span>Hold ~19%</span><span>Sell ~3%</span></div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">32名分析师覆盖，约78%评级为买入，但当前股价382美元已较现有目标价区间（约250-320美元）高出约15-50%。Q3 FY2026业绩明显超预期（营收18.1亿美元 vs. 预期约17亿美元；非GAAP EPS 1.41美元 vs. 指引中值约1.38美元），叠加Q4强劲指引，将推动分析师大幅上调目标价，预计修订后目标价将集中在350-420美元+区间。技术面：52周高点413美元，当前回调约7%至382美元；Beta 2.053意味着20-25%回调（至约285-320美元）完全符合高Beta动量股的历史规律，届时将提供更具吸引力的介入点。英伟达256.80美元的入股价为机构投资者提供了重要的心理支撑底线。</div>
+  </div>
+</div>
+
+<!-- SECTION 11: PRACTICAL GUIDANCE -->
+<div class="section">
+  <div class="section-num">SECTION 11 · 第十一节</div>
+  <div class="section-title">Practical Guidance for Investors</div>
+  <div class="section-title-cn">投资者实用指引</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>Who this stock suits:</strong> Coherent is the high-conviction photonics bet for investors who understand 光领域 deeply and have a 2–3 year investment horizon. It is not a defensive holding — beta of 2.053, no dividend, GAAP losses — but for investors building an AI infrastructure portfolio with a dedicated 光领域 allocation, Coherent is the most complete, most vertically integrated, and most strategically validated choice (NVIDIA $2B investment). It requires tolerance for significant volatility and the ability to distinguish GAAP losses (merger artefact) from operating performance (strong and improving).</div>
+
+  <div class="body-text"><strong>Position sizing:</strong> Given the beta of 2.053 and the fact that the stock already trades well above analyst consensus, a satellite weighting of 2–4% in a diversified AI infrastructure portfolio is appropriate. For investors with very high conviction on the CPO thesis and willing to accept 40–50% drawdown risk, up to 6% could be justified. Do not make this a core position at current prices — the risk-adjusted entry is not as compelling as it was at $150–200.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Key Metrics to Monitor Every Quarter</p>
+  <ul class="watch-list">
+    <li><strong>DC&C revenue growth rate and segment mix</strong> — must sustain >20% YoY organic to justify current multiple; DC&C as % of revenue should continue rising toward 80%</li>
+    <li><strong>Non-GAAP gross margin trajectory</strong> — Q4 FY26 guided 39–41%; path to 45%+ is the margin expansion thesis; any deceleration is a concern</li>
+    <li><strong>InP laser and transceiver book-to-bill ratio</strong> — currently >4x; if this falls below 2x it signals demand normalisation; below 1.5x is a red flag</li>
+    <li><strong>CPO revenue timeline and product milestones</strong> — watch for announcement of first CPO design wins in named NVIDIA products; first CPO revenue recognition; production ramp schedule</li>
+    <li><strong>Long-term debt balance</strong> — should continue declining; target below $3B by FY2027</li>
+    <li><strong>FY2027 guidance and management commentary</strong> — management's claim that "FY2027 growth rate will exceed FY2026" is the most important forward signal; watch for any softening of this language</li>
+  </ul>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Entry Considerations</p>
+  <div class="body-text">The current price of $382 is near the 52-week high of $413 and substantially above the NVIDIA investment price of $256.80. The most rational entry strategy is: (1) initiate a half position now at $370–385, knowing you are buying above consensus but with strong momentum; (2) hold cash to add at a meaningful pullback to the $285–320 range, which corresponds to approximately 30x FY2027E non-GAAP EPS of ~$9–10 — a more defensible valuation floor. A macro risk-off event, a quarter of in-line guidance rather than a beat, or broader tech sector rotation could easily create this entry opportunity. Do not chase the stock at $400+ without a significant new catalyst.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Red Flags to Exit or Reduce</p>
+  <ul class="watch-list">
+    <li>DC&C revenue growth decelerates to below 15% YoY for two consecutive quarters without a clear cyclical explanation</li>
+    <li>Non-GAAP gross margin fails to reach 40%+ by end of FY2026 — would undermine the margin expansion thesis</li>
+    <li>CPO timeline pushed to 2029+ — management historically guided CPO as a 2027 revenue event; a two-year delay would remove a key re-rating catalyst</li>
+    <li>NVIDIA publicly reduces its Coherent commitment or pivots to an alternative optical supplier — the most extreme tail risk, extremely unlikely given the equity stake</li>
+    <li>Long-term debt stops declining or a new large equity raise is announced (unexpected dilution)</li>
+  </ul>
+
+  <div class="callout"><strong>Bottom Line for Boss:</strong> Coherent Corp is the 光领域 name that your boss should know best. It is the only publicly listed company with true vertical integration across the full optical product stack — from InP crystal through finished CPO system. The NVIDIA $2B investment is the strongest possible third-party validation of Coherent's strategic position. Revenue is accelerating, margins are expanding, debt is declining, and the FY2027 outlook is stronger than FY2026. The risk is valuation — the stock at $382 trades ahead of consensus and requires high conviction. PEG of 1.09 says the growth justifies current prices; the 49% premium to NVIDIA's investment price says the market has gotten ahead of itself. Initiate on pullbacks, size modestly, and hold for the CPO inflection in 2027.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">相干公司是光领域最值得深入研究的投资标的——唯一具备从InP晶体到CPO系统完整垂直整合能力的上市公司，英伟达20亿美元的战略投资是最有力的第三方背书。建议分批建仓：当前价格区间（370-385美元）可建立半仓，预留资金等待回调至285-320美元区间（约对应FY2027E非GAAP EPS 9-10美元×30倍PE）时加仓。关键监控指标：DC&C业务增速须维持20%+、非GAAP毛利率路径向45%+推进、InP账面订单比维持>2倍，以及CPO营收时间节点（目标2027年）。整体结论：风险在估值，机会在CPO产品周期；PEG 1.09表明增长支撑估值，但较英伟达入股价49%的溢价提示当前介入需谨慎，建议逢回调布局，中等仓位持有至2027年CPO拐点。</div>
+  </div>
+</div>
+
+<!-- SECTION 12: AI INFRA LAYER -->
+<div class="section">
+  <div class="section-num">SECTION 12 · 第十二节</div>
+  <div class="section-title">AI Infrastructure Stack Position</div>
+  <div class="section-title-cn">AI基础设施层级定位</div>
+  <div class="section-divider"></div>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div class="layer-badge">
+      <div class="layer-num">2</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Primary: Compute Bloodstream</div>
+        <div class="layer-name-cn">主层：算力血管</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-high">🔴 Reasonably High — Layer-level market pricing tier (not company risk or AI exposure)</div>
+  </div>
+
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;"><strong>Why Layer 2 (Primary):</strong> Coherent's DC&C segment — 75% of revenue — is the purest expression of Layer 2 (Compute Bloodstream). It makes the optical transceivers, laser chips, optical circuit switches, and DCI coherent modules that physically move data between AI chips, between racks, and between datacentres. Without Coherent's products, the data highway of the AI infrastructure stack does not exist at scale. The 光领域 (optical domain) your boss is investigating is Layer 2.</p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;margin-top:16px;">
+    <div class="layer-badge" style="background:linear-gradient(135deg,#1a2f0C,#2f4a1a);">
+      <div class="layer-num" style="background:#1D9E75;">1</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Secondary: Silicon Brain</div>
+        <div class="layer-name-cn">次层：硅基大脑</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-high" style="background:#FEE2E2;color:#991B1B;">🔴 Reasonably High</div>
+  </div>
+
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;"><strong>Why Layer 1 (Secondary):</strong> Coherent's SiC substrate and compound semiconductor materials business (within Industrial) places it in Layer 1 — these substrates feed into the semiconductor manufacturing supply chain. SiC wafers go into EV power electronics and semiconductor processing equipment. GaAs and InP crystal growth is a Layer 1 activity — manufacturing the materials that make the photonic chips. This cross-layer presence is a structural advantage not available to pure-play optical transceiver makers.</p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin:12px 0 6px;">Layer 2 Peers · 同层同行</div>
+  <div>
+    <span class="peer-chip">CIEN</span>
+    <span class="peer-chip">LITE</span>
+    <span class="peer-chip">GLW</span>
+    <span class="peer-chip">ANET</span>
+    <span class="peer-chip">MRVL</span>
+    <span class="peer-chip">AXTI</span>
+  </div>
+
+  <div class="layer-note" style="margin-top:12px;">
+    💡 <strong>Layer Valuation Context:</strong> Layer 2 (Compute Bloodstream) is rated 💚 Undervalued in the original AI infrastructure framework — the optical networking supply chain was the last major layer to be discovered by the market. However, the discovery has now happened — COHR is up 418% from 52-week lows, CIEN up 670% YTD, LITE up 1,100%. The layer-level "undervalued" designation was accurate in 2024; in May 2026 it is more accurately "rapidly re-rating." Coherent specifically deserves a premium within Layer 2 for its vertical integration depth and NVIDIA strategic partnership — but new investors should not assume the same 4–10x gains available from 2024 entry points are still available. The layer is discovered; alpha now comes from company-specific execution rather than layer-level undervaluation.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">相干公司横跨两个AI基础设施层级：<strong>主层第2层"算力血管"</strong>——数据中心与通信业务（75%营收）提供光收发器、激光芯片、光电路交换机及DCI相干收发器，是光领域（光学域）的核心代表；<strong>次层第1层"硅基大脑"</strong>——SiC衬底和化合物半导体材料（工业板块部分）服务于半导体制造产业链。层级估值说明：第2层原框架评级为💚"低估/强补涨潜力"，这一判断在2024年高度准确（COHR从52周低点上涨超418%，CIEN年初至今涨约670%，LITE涨超1100%）；但至2026年5月，该层已完成价值发现，投资alpha已从层级贡献转向个股执行力差异。相干公司凭借垂直整合深度和英伟达战略合作在第2层中享有合理溢价，但新进投资者不应期待复制2024年4-10倍的层级红利。</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">SOURCES · 数据来源</div>
+  <div class="sources">
+    FMP API — COHR quote: price $382.45, market cap $60.6B, beta 2.053, 52-week range $73.66–$413 · Retrieved May 14, 2026<br>
+    Coherent Corp SEC Form 8-K — Q3 FY2026 Earnings Release (May 6, 2026) · <a href="https://www.sec.gov/Archives/edgar/data/0000820318/000119312526208972/d57080dex991.htm" target="_blank">SEC EDGAR</a><br>
+    Coherent Corp SEC Form 10-Q — Q3 FY2026 (quarter ended March 31, 2026) · SEC EDGAR<br>
+    Coherent Corp SEC Form 8-K — NVIDIA Strategic Partnership & $2B Investment (March 2, 2026) · SEC EDGAR<br>
+    Coherent Corp SEC Form 8-K — Q2 FY2026 Earnings Release (February 4, 2026) · SEC EDGAR<br>
+    Coherent Corp SEC Form 8-K — Q1 FY2026 Earnings Release (November 5, 2025) · SEC EDGAR<br>
+    Coherent Corp SEC Form 8-K — FY2025 Full Year Results (August 13, 2025) · SEC EDGAR<br>
+    Coherent Corp — 2025 Analyst & Investor Day Presentation (May 28, 2025) · SEC EDGAR<br>
+    StockAnalysis.com — COHR statistics: market cap, shares outstanding, trailing PE 158x, forward PE 51x, PEG 1.09, D/E 0.31 · Retrieved May 14, 2026<br>
+    Simply Wall St — COHR balance sheet: total assets $15.1B, shareholders' equity $8.9B, debt $3.4B, interest coverage 3.1x · Retrieved May 14, 2026<br>
+    FinanceCharts.com — COHR 10-year average PE: 36.76x; 15-year average: 34.43x · Retrieved May 14, 2026<br>
+    WallStreetZen — COHR analyst targets: Citi $250 (Strong Buy), Susquehanna Strong Buy · Retrieved April 2026<br>
+    Quiver Quantitative — COHR analyst median target ~$250; 9 analysts in last 6 months · Retrieved March 2026<br>
+    mlq.ai Optical Networking Research — Book-to-bill >4x; InP sold out through 2027; OCS backlog $400M+; Lumentum EML market share · March 31, 2026<br>
+    FinancialContent / Finterra — "The Optical Backbone of AI: A Deep Dive into Coherent Corp" · March 2, 2026<br>
+    Q3 FY2026 Earnings Call Transcript — Yahoo Finance / Globe and Mail · May 6, 2026<br>
+    StockTitan — COHR Q3 FY2026 summary: $1.81B revenue, non-GAAP EPS $1.41, Q4 guidance · May 6, 2026
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only and does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. All financial figures are sourced from Coherent Corp SEC filings, FMP API, and reputable financial data providers as cited. Projections and estimates marked [ASSUMED] or [E] involve significant uncertainty and require independent verification. Past performance is not indicative of future results. Beta and volatility data reflect the inherent risk of this security. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议、招揽或任何证券买卖推荐。所有财务数据来源于相干公司SEC文件、FMP API及知名财务数据提供商，所有预测和估算均须独立核实，历史表现不代表未来结果。在做出投资决策前，请咨询合格的财务顾问。
+</div>
+
+</body>
+</html>
