@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Signals — May 16, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem;
+         max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #EDE9FE; border: 1px solid #C4B5FD;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #5B21B6; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .report-date { font-size: 13px; color: #777; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .investor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .investor-grid-single { margin-bottom: 12px; }
+  .investor-card { background: #fff; border: 1px solid #e8e8e0;
+                   border-top: 3px solid #5B3FA5;
+                   border-radius: 0 0 12px 12px; padding: 14px 16px; }
+  .investor-top { display: flex; justify-content: space-between;
+                  align-items: flex-start; margin-bottom: 4px; gap: 8px; flex-wrap: wrap; }
+  .investor-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .investor-handle { font-size: 11px; color: #999; margin-left: 4px; }
+  .investor-badge { font-size: 10px; font-weight: 700; padding: 2px 8px;
+                    border-radius: 20px; white-space: nowrap; }
+  .badge-alumni  { background: #EDE9FE; color: #4C1D95; }
+  .badge-vc      { background: #E0F2FE; color: #0369A1; }
+  .badge-hedge   { background: #FEF9C3; color: #713F12; }
+  .badge-founder { background: #F0FDF4; color: #14532D; }
+  .investor-fund { font-size: 11px; color: #999; margin-bottom: 10px; }
+  .investor-signal { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
+  .investor-why { background: #F5F0FF; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; }
+  .why-label { font-size: 9px; font-weight: 700; color: #7C3AED;
+               text-transform: uppercase; letter-spacing: 0.07em;
+               display: block; margin-bottom: 3px; }
+  .why-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .investor-cn { font-size: 12px; color: #999; line-height: 1.7; margin-bottom: 8px;
+                 padding-top: 8px; border-top: 1px dashed #e8e8e0;
+                 font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .src-line { font-size: 11px; color: #aaa; }
+  .src-line a { color: #5B3FA5; text-decoration: none; }
+  .no-signals { background: #f5f3ee; border: 1px dashed #ccc;
+                border-radius: 10px; padding: 2rem; text-align: center;
+                color: #888; font-size: 14px; margin-bottom: 1.5rem; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #C4B5FD;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 1.5rem; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #9CA3AF;
+              text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #5B3FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+  .filter-note { background: #fffbeb; border: 1px solid #fde68a;
+                 border-radius: 8px; padding: 10px 14px; margin-bottom: 1.5rem;
+                 font-size: 12px; color: #78350f; line-height: 1.7; }
+  .filter-note strong { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Scheduled run · Investor signals scan
+  </div>
+  <div class="report-title">Notable investor signals</div>
+  <div class="report-title-cn">知名投资人信号追踪</div>
+  <div class="report-date">Saturday, May 16, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号</div>
+</div>
+
+<!-- SIGNALS -->
+<div class="section-label">Signals this run 本次信号 (1 found)</div>
+
+<!-- Single card layout -->
+<div class="investor-grid-single">
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Cathie Wood</span>
+        <span class="investor-handle">@CathieDWood</span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">ARK Investment Management · ~$14B AUM · Queen of high-conviction disruptive-tech ETFs; all trades disclosed daily</div>
+    <div class="investor-signal">
+      On May 14, ARK bought <strong>105,616 shares</strong> of freshly IPO'd AI chipmaker Cerebras Systems (CBRS) valued at roughly <strong>$4.85 million</strong> across ARKK and ARKW — scooping up shares on the stock's very first trading day, after it priced at $185, opened at $350, and closed at $311 (a 68% first-day pop, reaching a ~$49B valuation). Simultaneously, ARK sold <strong>41,540 shares of Taiwan Semiconductor (TSM)</strong> worth ~$16.6 million as TSM climbed 4.4% to a fresh all-time high of $421.97, and trimmed <strong>11,510 shares of AMD</strong> worth ~$5.13 million. The net message: Wood is locking in profits at foundry and legacy chip peaks while betting on a new generation of custom AI inference silicon on day one of its public life.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">ARK's rotation signals a structural shift in AI chip exposure: capital is leaving commodity chip foundries (TSM) and general-purpose GPU adjacents (AMD) and moving into purpose-built AI inference chips (CBRS). Positive read-throughs for CoreWeave (CRWV) and other custom-silicon or AI-hosting plays; a mild near-term headwind for TSM, AMD, and NVDA if the broader rotation accelerates.</span>
+    </div>
+    <div class="investor-cn">
+      木头姐（Cathie Wood）旗下ARK基金于5月14日——Cerebras（CBRS）上市首日——斥资约485万美元买入10.56万股。Cerebras是专为AI推理场景设计的定制芯片公司，首日大涨68%，市值约490亿美元。同日ARK以台积电（TSM）创历史新高421.97美元为契机，抛售约1660万美元的TSM，并减持AMD约513万美元。此举清晰表明：ARK正从传统代工与通用芯片高位出货，转而在AI推理专用芯片新赛道首日入场，值得同步关注CoreWeave（CRWV）等AI算力基础设施标的。
+    </div>
+    <div class="src-line">
+      <a href="https://www.tipranks.com/news/cathie-woods-semiconductor-trades-bets-on-cerebras-stock-cbrs-after-explosive-ipo-debut-sells-tsmc-at-record-high">TipRanks · May 15, 2026</a> ·
+      <a href="https://coincentral.com/cathie-woods-ark-invest-buys-cerebras-after-blockbuster-ipo-trims-tsmc-at-record-high/">CoinCentral</a> ·
+      <a href="https://www.investing.com/news/company-news/cathie-woods-ark-trims-taiwan-semiconductor-stock-adds-cerebras-93CH-4690954">Investing.com</a> ·
+      <a href="https://parameter.io/ark-invest-exits-taiwan-semiconductor-tsm-at-peak-piles-into-cerebras-ipo/">Parameter</a> ·
+      <a href="https://seekingalpha.com/news/4593571-cathie-wood-loads-up-on-cerebras-after-blockbuster-ipo-debut">Seeking Alpha</a>
+    </div>
+  </div>
+</div>
+
+<!-- QUALITY FILTER NOTE -->
+<div class="filter-note">
+  <strong>Quality filter log — researched but excluded:</strong>
+  <strong>David Sacks</strong> — Axios piece on White House AI model-vetting infighting (May 13) contains a specific Sacks quote, but article is 3 days old, outside the 48-hour window. ·
+  <strong>Druckenmiller / Duquesne</strong> and <strong>Tepper / Appaloosa</strong> Q1 2026 13Fs were due May 15, but no verifiable articles reporting specific new positions found at time of run. ·
+  <strong>Aschenbrenner / Situational Awareness LP</strong> Q1 2026 13F similarly due May 15; AUM appears to have grown to ~$7–9B but no linkable article reporting specific new Q1 trades yet.
+</div>
+
+<!-- OVERALL CHINESE SUMMARY -->
+<div class="cn-summary">
+  <div class="cn-label">中文摘要 — 本期信号汇总</div>
+  <div class="cn-text">
+    本期唯一通过三重筛选标准的信号来自ARK Invest：木头姐在Cerebras（CBRS）上市首日即入场，同步在台积电和AMD的阶段性高位减仓，体现出鲜明的行业轮换逻辑——从成熟代工与通用芯片获利了结，押注AI推理专用芯片新赛道。对于追踪美股的投资者而言，关键机会在CBRS及CoreWeave（CRWV）等AI基础设施早期标的；核心风险是Cerebras尚未盈利，490亿美元估值高度依赖AI推理需求持续爆发，高估值新股在市场风险偏好收缩时回调幅度可能较大。多位大型对冲基金的Q1 2026 13F文件（截止日5月15日）尚无具体报道，下期将纳入重点追踪。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources">
+  <a href="https://www.tipranks.com/news/cathie-woods-semiconductor-trades-bets-on-cerebras-stock-cbrs-after-explosive-ipo-debut-sells-tsmc-at-record-high">TipRanks — "Cathie Wood's Semiconductor Trades, 5/15/26: Bets on Cerebras Stock after Explosive IPO Debut, Sells TSMC at Record High"</a><br>
+  <a href="https://coincentral.com/cathie-woods-ark-invest-buys-cerebras-after-blockbuster-ipo-trims-tsmc-at-record-high/">CoinCentral — "Cathie Wood's ARK Invest Buys Cerebras After Blockbuster IPO, Trims TSMC at Record High"</a><br>
+  <a href="https://www.investing.com/news/company-news/cathie-woods-ark-trims-taiwan-semiconductor-stock-adds-cerebras-93CH-4690954">Investing.com — "Cathie Wood's ARK trims Taiwan Semiconductor stock, adds Cerebras"</a><br>
+  <a href="https://parameter.io/ark-invest-exits-taiwan-semiconductor-tsm-at-peak-piles-into-cerebras-ipo/">Parameter — "ARK Invest Exits Taiwan Semiconductor (TSM) at Peak, Piles Into Cerebras IPO"</a><br>
+  <a href="https://blockonomi.com/ark-invest-offloads-tsmc-tsm-at-peak-snaps-up-cerebras-after-stellar-market-debut/">Blockonomi — "ARK Invest Offloads TSMC (TSM) at Peak, Snaps Up Cerebras After Stellar Market Debut"</a><br>
+  <a href="https://seekingalpha.com/news/4593571-cathie-wood-loads-up-on-cerebras-after-blockbuster-ipo-debut">Seeking Alpha — "Cathie Wood loads up on Cerebras after blockbuster IPO debut (CBRS:NASDAQ)"</a><br>
+  <a href="https://www.axios.com/2026/05/13/ai-executive-action-white-house-infighting">Axios — "AI executive action stalled by White House infighting" (May 13 — context only, outside 48h window)</a><br>
+  <a href="https://hedgefollow.com/funds/Situational+Awareness">HedgeFollow — Situational Awareness LP 13F Holdings (context; Q1 2026 filing coverage pending)</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Investor Signals Scan · 投资人信号追踪<br>
+  Saturday, May 16, 2026 · Scheduled run · AI/VC watchlist<br>
+  Signal criteria: specific claim + verified URL + published within 48h or new SEC filing within 7 days
+</div>
+
+</body>
+</html>
