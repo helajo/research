@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASML Holding NV — Equity Research Report — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-bearish { background: #FCEBEB; color: #791F1F; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.mood-neutral { background: #f0efe8; color: #555; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.idx-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+.idx-val  { font-size: 16px; font-weight: 600; }
+.idx-chg  { font-size: 12px; margin-top: 2px; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up   { color: #0F6E56; }
+.metric-dn   { color: #A32D2D; }
+.metric-flat { color: #888; }
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+.also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.also-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.also-ticker { font-size: 12px; font-weight: 700; color: #185FA5; margin-bottom: 2px; }
+.also-name { font-size: 11px; color: #888; margin-bottom: 6px; }
+.also-text { font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 4px; }
+.also-cn { font-size: 11px; color: #999; border-top: 1px dashed #eee; padding-top: 4px; margin-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; line-height: 1.6; }
+.macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.macro-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.macro-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #185FA5; margin-bottom: 4px; }
+.macro-text { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.macro-cn { font-size: 11px; color: #999; border-top: 1px dashed #eee; padding-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; line-height: 1.6; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+.body-text { font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 12px; }
+
+/* ── STOCK REPORT SUPPLEMENT ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .subtotal td { border-top: 1px solid #ccc; font-weight: 600; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.watch-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.watch-list li { font-size: 13px; color: #333; padding: 6px 0 6px 18px; border-bottom: 1px solid #f0efe8;
+  position: relative; line-height: 1.5; }
+.watch-list li::before { content: "→"; position: absolute; left: 0; color: #185FA5; font-weight: 600; }
+.watch-list li:last-child { border-bottom: none; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888;
+  border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+.rating-green  { background: #EAF3DE; color: #27500A; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-red    { background: #FCEBEB; color: #791F1F; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+
+/* ── AI INFRA LAYER SUPPLEMENT ── */
+.layer-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0C1A2E 0%, #1a2f4a 100%); color: #fff; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px; }
+.layer-num { background: #185FA5; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.layer-name-en { font-weight: 700; font-size: 14px; }
+.layer-name-cn { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.layer-names { display: flex; flex-direction: column; }
+.layer-valuation { display: inline-flex; align-items: center; gap: 6px; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+.val-high    { background: #FEE2E2; color: #991B1B; }
+.val-mid     { background: #FEF3C7; color: #92400E; }
+.val-low     { background: #D1FAE5; color: #065F46; }
+.val-strong  { background: #DCFCE7; color: #14532D; border: 1px solid #86EFAC; }
+.val-na      { background: #F3F4F6; color: #6B7280; }
+.layer-peer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.peer-chip { background: #f0efe8; border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #444; font-family: 'SF Mono', 'Fira Code', monospace; }
+.layer-note { background: #f8f8f6; border: 1px solid #e0dfd8; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .risk-grid, .cases, .also-grid, .macro-grid { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── DOC HEADER ── -->
+<div class="doc-header">
+  <div class="doc-tag">EQUITY RESEARCH · 股票研究</div>
+  <div class="doc-title">ASML Holding N.V. (ASML) — Comprehensive Equity Report</div>
+  <div class="doc-title-cn">阿斯麦控股（ASML）— 全面股票研究报告</div>
+  <div class="doc-meta">Generated May 13, 2026 · Sector: Technology — Semiconductor Equipment · Exchange: NASDAQ · Price as of May 13, 2026: $1,520.94 <span class="source-tag">FMP</span></div>
+</div>
+
+<!-- ── MOOD BAR ── -->
+<div class="mood-bar">
+  <span class="mood-label">Investment mood 投资情绪</span>
+  <span class="mood-text">Strong long-term moat intact; near-term overhang from China restrictions and tariff uncertainty creates a buy-on-weakness opportunity for patient investors.</span>
+  <span class="mood-pill mood-mixed">Cautiously Bullish · 谨慎看多</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">ASML拥有全球EUV光刻机绝对垄断地位，是AI芯片制造不可或缺的核心设备供应商。尽管中国出口管制收紧和宏观关税不确定性带来短期压力，但公司2025年实现创纪录业绩，2026年全年营收指引上调至360–400亿欧元，长期增长逻辑依然清晰。</div>
+</div>
+
+<!-- ── SECTION 1 ── -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Background & Business Overview</div>
+  <div class="section-title-cn">公司背景与业务概述</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    ASML Holding N.V. was founded in 1984 as a joint venture between Philips and ASM International, originally known as ASM Lithography. Headquartered in Veldhoven, the Netherlands, it went public on NASDAQ in 1995 and rebranded to its current name in 2001. Today, ASML is arguably the most strategically important company in the global semiconductor supply chain — not because of its size, but because it makes machines that no other company on earth can replicate.
+  </div>
+  <div class="body-text">
+    ASML's core product is the lithography system: a machine that uses light to etch circuit patterns onto silicon wafers, the fundamental step in making every modern chip. The company is the world's sole supplier of Extreme Ultraviolet (EUV) lithography systems, which use light at a 13.5 nanometre wavelength to print the ultra-fine patterns required for the most advanced chips (below 7nm). Without EUV, companies like TSMC, Samsung, and Intel cannot manufacture leading-edge chips. ASML also supplies Deep Ultraviolet (DUV) systems — both dry and immersion — for older technology nodes, and sells metrology and inspection systems through its HMI brand. Its Installed Base Management (IBM) segment generates recurring revenue through service contracts, spare parts, and system upgrades.
+  </div>
+  <div class="body-text">
+    As of Q1 2026, ASML employed 43,882 people globally <span class="source-tag">FMP/SEC</span>. Its customers are exclusively the world's leading chipmakers: TSMC, Samsung, Intel, SK Hynix, Micron, and others. Revenue is geographically diverse — Taiwan, South Korea, Europe, and the US are major contributors — though China has historically been a significant market that is now under active restriction. CEO Christophe Fouquet, who took over in 2024, has maintained the company's long-horizon investment focus and guided confidently despite the geopolitical headwinds.
+  </div>
+  <div class="body-text">
+    ASML's competitive moat is among the deepest of any publicly traded company. EUV systems require the integration of over 100,000 precision components, including the world's most powerful lasers, mirrors accurate to the atomic level, and vacuum systems of extraordinary complexity. The company has spent over three decades and tens of billions of euros building this capability. The moat is reinforced by customer lock-in (systems are deeply embedded in fab processes), a massive installed base that generates service revenue, and a next-generation product pipeline through High-NA EUV — systems capable of printing even smaller features for sub-2nm chips.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML成立于1984年，总部位于荷兰费尔德霍芬，是全球唯一的极紫外（EUV）光刻机供应商。公司为TSMC、三星、英特尔等顶级芯片制造商提供核心设备，其技术壁垒源于数十年研发积累与不可复制的精密制造能力。现任CEO傅卡福（Christophe Fouquet）自2024年接任，持续引导公司应对地缘政治挑战，维持长期增长战略。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 2 ── -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Financial Performance</div>
+  <div class="section-title-cn">财务业绩</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">2025 Revenue</div>
+      <div class="metric-val metric-up">€32.7B</div>
+      <div class="metric-sub">+15.6% YoY <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">2025 Gross Margin</div>
+      <div class="metric-val">52.8%</div>
+      <div class="metric-sub">vs 51.3% in 2024 <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">2025 Net Income</div>
+      <div class="metric-val metric-up">€9.6B</div>
+      <div class="metric-sub">Net margin 29.4% <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">2025 Free Cash Flow</div>
+      <div class="metric-val metric-up">€11.0B</div>
+      <div class="metric-sub">Strong FCF conversion <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">2025 EPS (Basic)</div>
+      <div class="metric-val">€24.73</div>
+      <div class="metric-sub">vs €19.25 in 2024 <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Revenue</div>
+      <div class="metric-val metric-up">€8.8B</div>
+      <div class="metric-sub">+13.2% YoY, beat consensus <span class="source-tag">SEC</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    ASML delivered record performance in 2025, growing revenue 15.6% to €32.7 billion — a meaningful acceleration from the flat 2024 result of €28.3 billion. Gross margin improved to 52.8%, and the net margin reached 29.4%, producing €9.6 billion in net income and €11 billion in free cash flow. The company's five-year revenue trajectory has been consistently upward: €18.6B (2021) → €21.2B (2022) → €27.6B (2023) → €28.3B (2024) → €32.7B (2025).
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric (€ million)</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Total Net Sales</td><td>18,611</td><td>21,173</td><td>27,559</td><td>28,263</td><td>32,667</td></tr>
+      <tr><td>Gross Profit</td><td>9,809</td><td>10,700</td><td>14,136</td><td>14,492</td><td>17,258</td></tr>
+      <tr><td>Gross Margin %</td><td>52.7%</td><td>50.5%</td><td>51.3%</td><td>51.3%</td><td>52.8%</td></tr>
+      <tr><td>Operating Income</td><td>6,750</td><td>6,501</td><td>9,042</td><td>9,022</td><td>11,301</td></tr>
+      <tr class="highlight"><td>Net Income</td><td>5,883</td><td>5,624</td><td>7,839</td><td>7,572</td><td>9,609</td></tr>
+      <tr><td>EPS (Basic, €)</td><td>14.36</td><td>14.14</td><td>19.91</td><td>19.25</td><td>24.73</td></tr>
+      <tr><td>Free Cash Flow</td><td>9,907</td><td>7,168</td><td>3,247</td><td>9,083</td><td>11,028</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Source: ASML SEC Form 6-K filings (US GAAP)</p>
+
+  <div class="body-text">
+    Q1 2026 continued the strong momentum: revenue of €8.8 billion beat the consensus estimate of €8.5 billion, with a gross margin of 53.0% at the top end of guidance. EPS of €7.15 exceeded the €6.59 forecast, a 7.3% positive surprise. Net bookings for Q1 2026 have not yet been disclosed at the time of this report, but management raised full-year 2026 revenue guidance to €36–40 billion (from €34–39B), implying 10–22% revenue growth over 2025. The Installed Base Management segment (service and field options) continues to grow steadily, contributing €2.5 billion in Q1 2026 and providing earnings stability through the cycle.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML 2025年实现创纪录营收326.7亿欧元（同比+15.6%），净利润96亿欧元，自由现金流高达110亿欧元。2026年Q1营收88亿欧元，超出市场预期，全年营收指引上调至360–400亿欧元，增长势头持续强劲。五年营收轨迹持续向上，盈利质量显著提升。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 3 ── -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Assets (Q1 2025)</div>
+      <div class="metric-val">€45.5B</div>
+      <div class="metric-sub">Healthy asset base <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Shareholders' Equity</div>
+      <div class="metric-val">€17.5B</div>
+      <div class="metric-sub">43.3% of assets (Q1 2026) <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Cash & Equivalents</div>
+      <div class="metric-val">€12.9B</div>
+      <div class="metric-sub">End of FY2025 <span class="source-tag">SEC</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Backlog (end-2025)</div>
+      <div class="metric-val metric-up">€38.8B</div>
+      <div class="metric-sub">~1.2x annual revenue <span class="source-tag">Yahoo Finance</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    ASML maintains a fortress balance sheet. The company ended 2025 with €12.9 billion in cash and short-term investments, virtually no net debt in the traditional sense, and shareholders' equity representing 43.3% of total assets as of Q1 2026. The company's most strategically important balance sheet item is arguably its backlog: at €38.8 billion as of year-end 2025, it represents approximately 1.2 times full-year revenue and provides exceptional multi-year revenue visibility. This backlog is largely composed of EUV and High-NA system orders from TSMC, Samsung, Intel, and memory makers, making it extremely sticky. ASML returns substantial capital to shareholders — in 2025 it paid out €8.7 billion through dividends and buybacks, and raised the 2025 dividend by 17% to €7.50 per ordinary share. The company's R&D investment is also notable at €4.7 billion in 2025, roughly 14% of revenue, funding the High-NA roadmap and next-generation metrology tools.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML资产负债表稳健，2025年末现金及等价物129亿欧元，几乎无净债务。最关键的战略指标是388亿欧元的订单积压（约1.2倍年收入），为未来多年营收提供高度可见性。公司2025年通过分红和回购向股东返还87亿欧元，并将2025年股息上调17%至每股7.50欧元。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 4 ── -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation</div>
+  <div class="section-title-cn">估值分析</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Current Price (ADR)</div>
+      <div class="metric-val">$1,520.94</div>
+      <div class="metric-sub">NASDAQ, May 13 2026 <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">$586B</div>
+      <div class="metric-sub">As of May 13, 2026 <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">P/E (2025 EPS ~$27)</div>
+      <div class="metric-val">~56x</div>
+      <div class="metric-sub">On reported USD EPS est. <span class="source-tag">[ASSUMED]</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EV/Revenue (2025)</div>
+      <div class="metric-val">~16x</div>
+      <div class="metric-sub">Based on €32.7B revenue <span class="source-tag">[ASSUMED]</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Range</div>
+      <div class="metric-val">$683–$1,595</div>
+      <div class="metric-sub">Significant volatility <span class="source-tag">FMP</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Beta</div>
+      <div class="metric-val">1.37</div>
+      <div class="metric-sub">Above-market sensitivity <span class="source-tag">FMP</span></div>
+    </div>
+  </div>
+
+  <p class="body-text">The current price of $1,520.94 sits near the top of its 52-week range ($683–$1,595), having recovered significantly from its lows. ASML trades at a meaningful premium to the market, which is justified by its monopoly economics, high recurring revenue, and multi-year backlog visibility. The primary valuation tension is between the premium the moat commands and the risk discount from China revenue erosion and US-Netherlands export control dynamics.</p>
+
+  <p style="font-size:13px;font-weight:700;color:#185FA5;margin:16px 0 8px;">DCF Analysis — 3 Scenarios <span class="source-tag">[ASSUMED inputs]</span></p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Input / Output</th><th>Bear</th><th>Base</th><th>Bull</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>FCF Base (2025, €B)</td><td>11.0</td><td>11.0</td><td>11.0</td></tr>
+      <tr><td>FCF Growth Rate (yrs 1–5)</td><td>5%</td><td>12%</td><td>20%</td></tr>
+      <tr><td>WACC [ASSUMED]</td><td>10%</td><td>10%</td><td>10%</td></tr>
+      <tr><td>Terminal Growth Rate</td><td>3%</td><td>3%</td><td>3%</td></tr>
+      <tr><td>EV (€B, approx)</td><td>~€165B</td><td>~€230B</td><td>~€335B</td></tr>
+      <tr><td>Net Debt / (Cash) (€B)</td><td>(12.9)</td><td>(12.9)</td><td>(12.9)</td></tr>
+      <tr class="highlight"><td>Intrinsic Value / Share (EUR) [ASSUMED]</td><td>~€410</td><td>~€610</td><td>~€900</td></tr>
+      <tr><td>Equiv. USD (approx @ 1.09) [ASSUMED]</td><td>~$447</td><td>~$665</td><td>~$981</td></tr>
+      <tr><td>Upside / (Downside) vs $1,521</td><td class="dn">−71%</td><td class="dn">−56%</td><td class="dn">−35%</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Note: Shares outstanding ~385M (Q1 2026). Exchange rate [ASSUMED] ~1.09 USD/EUR. All inputs marked [ASSUMED] require independent verification. DCF outputs suggest the market is pricing in significantly higher long-term growth than modelled here — this is consistent with ASML's monopoly premium and 2030 Investor Day revenue targets of €44–60B.</p>
+
+  <div class="callout"><strong>Key Valuation Insight:</strong> ASML's current market price of ~$1,521 implies the market believes sustained FCF growth well above 20% for an extended period — reflecting the monopoly pricing power, High-NA product cycle uplift, and the 2030 revenue opportunity. Investors are paying for scarcity, not just current earnings.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML当前股价1520.94美元，市值约5860亿美元，市盈率约56倍（按2025年盈利估算）。基于2025年110亿欧元自由现金流的三情景DCF模型（熊/基/牛：FCF增长5%/12%/20%）所得内在价值远低于当前市价，表明市场为其垄断溢价、高数值孔径EUV产品周期及2030年愿景（营收440–600亿欧元）支付了显著的战略稀缺溢价。所有[ASSUMED]参数须独立核实。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 5 ── -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Peer & Competitive Benchmarking</div>
+  <div class="section-title-cn">同行与竞争对比</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Company</th><th>Ticker</th><th>Focus</th><th>Key Differentiator vs ASML</th></tr>
+    </thead>
+    <tbody>
+      <tr class="highlight"><td>ASML Holding</td><td>ASML</td><td>EUV + DUV lithography</td><td>Only EUV supplier; monopoly moat</td></tr>
+      <tr><td>Applied Materials</td><td>AMAT</td><td>Deposition, etch, inspection</td><td>Broader toolset; no EUV exposure</td></tr>
+      <tr><td>Lam Research</td><td>LRCX</td><td>Etch & deposition</td><td>Memory-heavy; no lithography</td></tr>
+      <tr><td>KLA Corporation</td><td>KLAC</td><td>Process control & inspection</td><td>Metrology leader; no litho systems</td></tr>
+      <tr><td>Tokyo Electron</td><td>8035.T</td><td>Coater/developer, etch</td><td>Japanese peer; partial DUV overlap</td></tr>
+      <tr><td>Nikon (Precision)</td><td>7731.T</td><td>DUV lithography (legacy)</td><td>Direct DUV competitor; no EUV</td></tr>
+    </tbody>
+  </table>
+
+  <div class="body-text">
+    ASML occupies a truly unique position within semiconductor equipment. While Applied Materials (AMAT), Lam Research (LRCX), and KLA (KLAC) collectively cover deposition, etch, and process control, none of them competes in lithography at the leading edge — the step that determines which circuit patterns get printed. Nikon was the only historical competitor in DUV lithography, but failed to develop a commercially viable EUV system, ceding the field entirely to ASML. This makes ASML less a "peer" of other semicon equipment companies and more akin to a utility — every advanced chip fab must buy from ASML, and there is no alternative supplier. This dynamic justifies a premium multiple relative to peers, though it also attracts geopolitical scrutiny, as both the US and Chinese governments understand the strategic leverage ASML holds.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML在半导体设备领域地位独特，无真正的EUV竞争对手。应用材料（AMAT）、泛林集团（LRCX）、科磊（KLAC）均不涉足光刻领域前沿；尼康虽有DUV产品，但已在EUV时代竞争中落败。ASML更像一家"战略基础设施公司"而非普通同行，其垄断地位同时招致美国和中国政府的高度关注。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 6 ── -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <strong>High-NA EUV:</strong> ASML has begun shipping its next-generation High Numerical Aperture (High-NA) EUV system, the TWINSCAN EXE:5000. By Q1 2025, ASML had shipped its fifth High-NA system to three different customers. These machines are significantly more expensive than current Low-NA EUV systems (reportedly over €350 million each) and are required for sub-2nm chip manufacturing. Intel, TSMC, and Samsung are all receiving or evaluating High-NA systems. Production ramp targets include at least 60 EUV Low-NA systems in 2026 and a path to 80+ by 2027, alongside growing High-NA shipments.
+  </div>
+  <div class="body-text">
+    <strong>AI Infrastructure Demand:</strong> The surge in AI chip demand — led by NVIDIA, AMD, custom silicon from hyperscalers (Google TPU, Amazon Trainium, Microsoft Maia) — is driving direct demand for ASML's most advanced EUV systems. As AI models grow in size and complexity, the demand for TSMC's and Samsung's most advanced nodes (3nm, 2nm, and beyond) drives equipment orders. CEO Fouquet has consistently cited AI as "the primary growth driver in our industry."
+  </div>
+  <div class="body-text">
+    <strong>Memory Recovery:</strong> ASML generated €8.4 billion in memory system revenue in 2025 — a notable recovery driven by HBM (High Bandwidth Memory) demand for AI accelerators. SK Hynix, Micron, and Samsung are all investing heavily in HBM3E capacity. Memory chips require lithography at increasingly advanced nodes, supporting continued ASML tool demand.
+  </div>
+  <div class="body-text">
+    <strong>2030 Investor Day Vision:</strong> At its 2024 Investor Day, ASML modelled a revenue opportunity of €44–60 billion by 2030, with gross margin expanding to 56–60%. This long-run target is underpinned by High-NA adoption, memory growth, and continued AI capex by hyperscalers and chip designers.
+  </div>
+  <div class="body-text">
+    <strong>Moat depth:</strong> The competitive moat comprises: (1) sole-source EUV supply — no alternative exists; (2) 40+ years of lithography IP and manufacturing know-how; (3) a vast installed base creating sticky service revenue; (4) a €38.8B backlog providing multi-year revenue certainty; and (5) High-NA as a future revenue step-up.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML的增长催化剂包括：高数值孔径EUV系统（High-NA，每台售价超3.5亿欧元）的持续出货、AI基础设施建设驱动的先进制程芯片需求激增、HBM高带宽存储器需求恢复推动存储设备收入，以及2030年440–600亿欧元的营收愿景。其护城河由EUV垄断地位、深厚知识产权积累、388亿欧元订单积压和高客户粘性服务业务共同构筑。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 7 ── -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Current Market Trends & Sector Dynamics</div>
+  <div class="section-title-cn">当前市场趋势与行业动态</div>
+  <div class="section-divider"></div>
+
+  <div class="macro-grid">
+    <div class="macro-card">
+      <div class="macro-type">AI Capex Supercycle</div>
+      <div class="macro-text">Hyperscalers (Microsoft, Google, Amazon, Meta) are committing hundreds of billions in AI infrastructure capex through 2026–2028. Each dollar of AI spend flows back to ASML through chip demand from TSMC, Samsung, and Intel.</div>
+      <div class="macro-cn">超大规模云厂商AI资本开支超周期：微软、谷歌、亚马逊、Meta的AI基础设施投入最终传导至芯片制造商，再传导至ASML的设备需求。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">China Revenue Headwind</div>
+      <div class="macro-text">China accounted for ~33% of ASML's 2025 sales but fell to ~19% in Q1 2026. Tightening US-Dutch export controls are progressively restricting DUV immersion and service sales to China. The MATCH Act (proposed) could further restrict older DUV tools.</div>
+      <div class="macro-cn">中国营收逆风：中国市场从2025年占总营收约33%降至2026年Q1的约19%。美荷出口管制持续收紧，中国营收占比料将进一步下降。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">Tariff & Trade Uncertainty</div>
+      <div class="macro-text">Trump-era tariff volatility has increased macro uncertainty. While ASML's machines themselves are not directly tariffed, customer capex decisions are sensitive to macro conditions. A US-Europe trade deal could be a positive catalyst.</div>
+      <div class="macro-cn">关税与贸易不确定性：宏观环境的不确定性可能影响客户资本开支决策。美欧贸易谈判若取得突破，或成为积极催化剂。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-type">Semiconductor Cycle Position</div>
+      <div class="macro-text">The non-AI chip segment (consumer electronics, automotive, industrial) remains in a recovery phase, while AI-driven logic chips are in a full upcycle. ASML benefits disproportionately from the AI segment but is not immune to non-AI weakness.</div>
+      <div class="macro-cn">半导体周期位置：AI逻辑芯片处于强劲上行周期，而消费电子、汽车及工业类非AI芯片仍在复苏阶段，ASML受益于AI上行但并非完全免疫非AI领域的疲软。</div>
+    </div>
+  </div>
+
+  <div class="body-text">The semiconductor equipment sector is in a bifurcated cycle: AI-driven leading-edge investment is booming, while legacy node capex remains subdued. ASML sits firmly in the AI beneficiary camp for its most profitable EUV product line, but its DUV business faces dual headwinds — Chinese restrictions and lower legacy demand. The industry is also increasingly shaped by geopolitics: both the US and Netherlands have imposed export control regimes, and the proposed MATCH Act in the US could extend restrictions even to older DUV immersion tools. The rare earth dispute between China and the US (suspended until November 2026 as part of a trade deal) adds a supply chain risk layer.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Key Trends to Watch</p>
+  <ul class="watch-list">
+    <li>Pace of High-NA EUV customer adoption and revenue recognition timing (lumpy, milestone-based)</li>
+    <li>China DUV service revenue trajectory as export controls expand in scope</li>
+    <li>US-Netherlands export control alignment — any tightening of immersion DUV restrictions would be a material negative</li>
+    <li>Memory capex recovery pace — HBM demand for AI accelerators is the key swing factor</li>
+    <li>ASML's 2030 Investor Day target reiteration or revision at future capital market events</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">行业呈现分化格局：AI先进制程设备需求强劲，非AI传统制程资本开支疲软。ASML在AI供应链中受益，但DUV业务面临中国管制和传统需求双重压力。需重点关注High-NA客户采购进展、中国DUV服务收入走势、美荷出口管制动向及HBM存储器资本开支复苏节奏。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 8 ── -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Geopolitical, Macro & Regulatory Risk</div>
+  <div class="section-title-cn">地缘政治、宏观与监管风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type">🇨🇳 China Export Controls</div>
+      <div class="risk-desc">China's share of ASML's revenue has collapsed from ~49% in 2023 to ~19% in Q1 2026. Further tightening — especially if the MATCH Act passes or Dutch authorities widen DUV immersion restrictions — could eliminate what remains of China DUV sales. ASML has said the impact of known restrictions falls within guidance, but future escalation is unpredictable.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🇺🇸🇳🇱 US-Netherlands Policy Alignment</div>
+      <div class="risk-desc">The Netherlands government follows but does not always move in lockstep with US restrictions. The Affiliates Rule introduced in October 2025 was suspended for one year (until Nov 2026) as part of a US-China trade deal. Its eventual implementation or lapse is a key watchpoint.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">⚗️ Rare Earth Supply Chain</div>
+      <div class="risk-desc">China suspended export restrictions on rare earth minerals until November 2026 as part of a trade agreement. ASML's precision components may have rare earth dependencies. If restrictions resume post-November 2026, supply chain disruption risk rises.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">💱 EUR/USD Currency Risk</div>
+      <div class="risk-desc">ASML reports in euros but trades as a USD ADR. A strengthening euro (or weakening dollar) reduces the USD-translated value of earnings for ADR holders. With beta of 1.37, the stock is also more volatile than the broader market.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">📦 Order Lumpiness</div>
+      <div class="risk-desc">High-NA systems are recognised on milestone completion, creating quarter-to-quarter revenue volatility. Net bookings can swing dramatically (€3.9B in Q1 2025 vs €13.2B in Q4 2025), making near-term estimates difficult and creating stock price overreaction risk.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">🔬 Technology Risk</div>
+      <div class="risk-desc">While no credible EUV alternative exists today, a breakthrough in alternative lithography (e.g., direct e-beam patterning at scale, or a Chinese state-funded EUV programme) would be an extreme long-term risk. SMIC has made some DUV-based advances but remains multiple generations behind.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">主要风险包括：中国出口管制进一步收紧（中国营收占比已从49%降至19%）；美荷出口管制政策协调的不确定性（关联方规则暂停至2026年11月）；稀土供应链风险（中国暂停出口管制至2026年11月后的续期不确定性）；欧元/美元汇率风险；以及High-NA收入的阶段性确认导致的季度营收波动。技术替代风险在中长期内较低，但不可完全忽视。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 9 ── -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多头与空头情景</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case</div>
+      <div class="bull-text">
+        <strong>High-NA Ramp Ahead of Schedule:</strong> TSMC accelerates 2nm High-NA adoption for Apple and NVIDIA chips, pulling forward €1B+ revenue recognition in 2026–2027.<br><br>
+        <strong>China Normalisation:</strong> A US-China trade deal partially reverses DUV service restrictions, recovering €3–5B in annual China revenue.<br><br>
+        <strong>Memory Supercycle:</strong> HBM demand doubles by 2027 as AI training/inference scales, driving heavy memory capex that flows to ASML EUV/DUV orders.<br><br>
+        <strong>2030 Target Hit:</strong> ASML achieves €50B+ revenue by 2030 with 56%+ gross margins, implying significant multiple expansion from current levels.<br><br>
+        <strong>Target range: $2,200–$2,800</strong>
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case</div>
+      <div class="bear-text">
+        <strong>China Revenue Eliminated:</strong> MATCH Act passes; DUV immersion tools fully restricted. China revenue falls from 19% to near-zero, removing €6–7B from the revenue base.<br><br>
+        <strong>High-NA Delays:</strong> Customer qualification issues or yield problems delay meaningful High-NA revenue recognition to 2028+, creating a 2026–2027 revenue air pocket.<br><br>
+        <strong>AI Capex Slowdown:</strong> Hyperscaler AI spending plateaus or contracts as ROI questions mount, reducing advanced node chip orders and ASML bookings.<br><br>
+        <strong>Macro Recession:</strong> A global downturn causes customers to defer capex, converting backlog to pushouts and compressing 2026 revenue below the €36B guidance floor.<br><br>
+        <strong>Target range: $800–$1,100</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>多头情景（目标$2,200–$2,800）：</strong>High-NA提前放量、中国管制部分松绑、HBM存储超级周期推动2030年营收超500亿欧元。<strong>空头情景（目标$800–$1,100）：</strong>MATCH法案通过导致中国营收近乎清零、High-NA延迟、AI资本开支放缓及宏观衰退导致客户推迟采购。两种情景差距悬殊，反映了公司所处地缘政治与技术周期的高度不确定性。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 10 ── -->
+<div class="section">
+  <div class="section-num">SECTION 10 · 第十节</div>
+  <div class="section-title">Analyst Consensus & Technical Signals</div>
+  <div class="section-title-cn">分析师共识与技术信号</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Consensus Rating</div>
+      <div class="metric-val" style="font-size:16px;color:#0F6E56;">Strong Buy</div>
+      <div class="metric-sub">Based on 35–45 analysts <span class="source-tag">Investing.com / TradingView</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg 12M Price Target</div>
+      <div class="metric-val">$1,476–$1,791</div>
+      <div class="metric-sub">Range across sources <span class="source-tag">Multiple</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">High Target</div>
+      <div class="metric-val metric-up">$1,971</div>
+      <div class="metric-sub">Bernstein, Mar 2026 <span class="source-tag">Benzinga</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Recent Implied Upside</div>
+      <div class="metric-val metric-up">~12–22%</div>
+      <div class="metric-sub">Based on consensus vs current price <span class="source-tag">TipRanks / Investing.com</span></div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    Analyst sentiment on ASML is firmly bullish. According to Investing.com, 38 of 44 analysts covering ASML recommend buying, with a consensus 12-month price target in the €1,468–1,471 EUR range (equivalent to approximately $1,600–$1,700 USD at current exchange rates), implying 5–12% upside from current ADR levels. The most recent institutional upgrades include Bernstein's March 2026 target of $1,971 and RBC Capital and Wells Fargo both issuing targets in the $1,748 range in January 2026, together implying ~20% upside. The one recent downgrade — New Street Research moving to Neutral — reflects China revenue risk concerns. Technically, the stock sits near its 52-week high ($1,595), having rallied sharply from its lows. The beta of 1.37 means any macro risk-off event creates a volatility opportunity for long-term buyers.</div>
+
+  <div class="body-text">On the technical side, ASML is near the upper end of its year range. Momentum is positive following the Q1 2026 earnings beat, though the stock fell ~6% on the day of results (April 15) due to concerns about China restrictions noted in the earnings call. This classic "buy the rumour, sell the news" pattern is a recurring feature of ASML trading around earnings.</div>
+
+  <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin:10px 0 4px;">Analyst Consensus Breakdown (approx.)</p>
+  <div class="consensus-bar">
+    <div class="cons-buy" style="width:80%;"></div>
+    <div class="cons-hold" style="width:15%;"></div>
+    <div class="cons-sell" style="width:5%;"></div>
+  </div>
+  <div class="cons-labels"><span>Buy 80%</span><span>Hold 15%</span><span>Sell 5%</span></div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">分析师共识为"强力买入"，44名分析师中38名建议买入。12个月目标价区间约1,468–1,791美元，隐含5%–22%上行空间。贝恩斯坦2026年3月最新目标价1,971美元为各机构中最高。技术面上，股价接近52周高位，Q1业绩发布后曾下跌6%（受中国管制担忧拖累），为长期投资者提供了逢低布局机会。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 11 ── -->
+<div class="section">
+  <div class="section-num">SECTION 11 · 第十一节</div>
+  <div class="section-title">Practical Guidance for Retail Investors</div>
+  <div class="section-title-cn">零售投资者实用指引</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>Who this stock suits:</strong> ASML is a core holding for long-duration growth investors who want AI infrastructure exposure without the direct model/software risk. It suits investors with a 3–5+ year horizon who can tolerate significant volatility (beta 1.37, 52-week range of 2.3x). It is less suited to income investors (dividend yield ~0.5%) or short-term traders, as earnings recognition is lumpy and macro headlines can cause sharp moves.</div>
+
+  <div class="body-text"><strong>Position sizing:</strong> Given the beta of 1.37, the China/geopolitical overhang, and the premium valuation, a satellite weighting of 2–5% in a diversified global equity portfolio is appropriate for most retail investors. For those with higher conviction on the AI infrastructure supercycle, a core position of up to 8% could be justified — but the China risk warrants a smaller starting position with room to add on pullbacks.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">What to Monitor</p>
+  <ul class="watch-list">
+    <li><strong>Net Bookings per Quarter:</strong> This is the leading indicator. Below €5B/quarter would signal demand weakness; above €7B signals upcycle. Q4 2025 was €13.2B — exceptionally strong.</li>
+    <li><strong>China Revenue %:</strong> Monitor whether the share stabilises at ~20% or continues declining toward zero. Tipping below 10% would indicate full restriction enforcement.</li>
+    <li><strong>High-NA Shipment Count:</strong> Each system shipped and revenue milestone hit adds €350M+ to revenue recognition. Track quarterly shipment disclosures carefully.</li>
+  </ul>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Entry Considerations</p>
+  <div class="body-text">The current price of ~$1,521 is near the top of the 52-week range. Historical ASML dips of 15–25% have occurred around earnings misses, China restriction news, and macro risk-off events — these are the buying windows. A staged entry — buying a half position now and adding on a pullback to the $1,200–$1,350 range (approaching the 50-day moving average area) — is a reasonable approach. The DCF base case suggests the long-term intrinsic value does not support the current price on traditional models, but the monopoly scarcity premium is real and has historically been sustained.</div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin:10px 0 6px;">Red Flags to Exit</p>
+  <ul class="watch-list">
+    <li>MATCH Act passes with full DUV immersion restriction → material China revenue elimination, immediately reassess</li>
+    <li>Net bookings fall below €3B for two consecutive quarters without recovery guidance</li>
+    <li>High-NA yield/qualification failures announced by a major customer (TSMC, Samsung, Intel)</li>
+    <li>A credible non-US EUV alternative emerges with demonstrated manufacturing yield (currently no evidence)</li>
+  </ul>
+
+  <div class="callout"><strong>Bottom Line for Retail Investors:</strong> ASML is a rare asset — a monopoly in a market that cannot exist without it. The China headwind and premium valuation are the two legitimate concerns. For investors who believe the AI chip supercycle continues for a decade, ASML at any price significantly below $2,000 is likely to prove a good long-term entry. Size positions with the China risk in mind.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML适合具有3–5年以上投资期限、能承受较高波动（Beta 1.37）的成长型投资者。建议作为AI基础设施主题的卫星仓位（2–5%），如高度认可AI超级周期可适当提升至8%，但需保留中国风险对冲空间。重点追踪净预订量、中国营收占比和High-NA出货量三项指标。建议分批建仓，等待回调至1,200–1,350美元区间加仓。若MATCH法案通过或净预订量连续两季低于30亿欧元，应重新评估持仓。</div>
+  </div>
+</div>
+
+<!-- ── SECTION 12: AI INFRA LAYER ── -->
+<div class="section">
+  <div class="section-num">SECTION 12 · 第十二节</div>
+  <div class="section-title">AI Infrastructure Stack Position</div>
+  <div class="section-title-cn">AI 基础设施层级定位</div>
+  <div class="section-divider"></div>
+
+  <p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;">
+    The AI Infrastructure Stack framework maps the full AI value chain into eight layers — from physical silicon through to cloud application delivery. Understanding which layer a company operates in reveals its structural role, competitive dynamics, and relative valuation positioning within the broader AI industrial system.
+  </p>
+  <p class="cn-text" style="font-size:12px;color:#888;line-height:1.7;margin-bottom:16px;">
+    AI基础设施层级框架将AI完整价值链划分为八个层次——从物理芯片到云应用分发。了解一家公司处于哪个层级，有助于揭示其在AI工业体系中的结构性角色、竞争动态及相对估值定位。
+  </p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div class="layer-badge">
+      <div class="layer-num">1</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Silicon Brain</div>
+        <div class="layer-name-cn">硅基大脑</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-high">🔴 Reasonably High · 合理偏高</div>
+  </div>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">What This Layer Does · 该层的作用</div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;">
+    Layer 1 — Silicon Brain — encompasses the tools and technologies that enable the physical creation of semiconductors: chip design EDA software, lithography equipment, and the manufacturing processes that print billions of transistors onto silicon wafers. Without Layer 1, there is no AI — no GPU, no ASIC, no chip of any kind exists.
+  </p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Why ASML Belongs Here · 为何归属此层</div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;">
+    ASML is the purest expression of Layer 1. It manufactures the lithography machines — particularly EUV systems — that are the essential tool for printing the most advanced semiconductor circuits. Every AI chip from NVIDIA, every Apple silicon, every Google TPU, every Amazon Trainium must pass through an ASML machine to be made. ASML does not design chips or write software; it makes the physical manufacturing equipment, placing it at the absolute foundation of the AI value chain. Peer semicon equipment companies (AMAT, LRCX, KLAC) also operate in Layer 1 but none hold ASML's EUV monopoly.
+  </p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Layer Peers · 同层同行</div>
+  <div class="layer-peer-chips">
+    <div class="peer-chip">AMAT</div>
+    <div class="peer-chip">LRCX</div>
+    <div class="peer-chip">KLAC</div>
+    <div class="peer-chip">8035.T</div>
+  </div>
+
+  <div class="layer-note">
+    💡 <strong>Layer Valuation Context:</strong> Layer 1 companies carry a "Reasonably High" valuation tier given their critical enabling role and limited substitutability in the AI stack. For ASML specifically, the monopoly premium is more justified than for any other Layer 1 peer — the EUV sole-source position is without parallel. The DCF in Section 4 confirms the market is pricing in growth well above normalised rates; investors should treat this premium as a structural monopoly rent, not a speculative bubble, while remaining alert to the China and tariff risks that could compress near-term earnings.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">ASML处于AI基础设施第1层「硅基大脑」，是光刻设备领域的绝对核心，EUV系统的垄断地位使其成为全球AI芯片制造的不可或缺基础。当前层级估值水平为「合理偏高」，但ASML的垄断溢价在同层中最具合理性。投资者应将其高估值理解为结构性垄断租金，同时关注中国管制和关税等近期风险对盈利的潜在压制。</div>
+  </div>
+</div>
+
+<!-- ── SOURCES ── -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">SOURCES · 数据来源</div>
+  <div class="sources">
+    FMP API (profile-symbol endpoint) — ASML live price, market cap, beta, 52-week range · Retrieved May 13, 2026<br>
+    ASML Press Release — Q1 2026 Results (April 15, 2026) · <a href="https://www.asml.com/en/news/press-releases/2026/q1-2026-financial-results" target="_blank">asml.com</a><br>
+    ASML SEC Form 6-K (FY2026 Q1) · SEC EDGAR · Retrieved May 13, 2026<br>
+    ASML Press Release — FY2025 Results (January 28, 2026) · asml.com<br>
+    ASML SEC Form 6-K (FY2025 Annual Summary) · SEC EDGAR<br>
+    ASML SEC Form 20-F (FY2025) — Export Control disclosures · SEC EDGAR<br>
+    TipRanks — ASML Analyst Ratings & Earnings Call Summary · tipranks.com<br>
+    Benzinga — ASML Analyst Ratings & Price Targets · benzinga.com<br>
+    WallStreetZen — ASML Price Targets · wallstreetzen.com<br>
+    TradingView — ASML Analyst Consensus (45 analysts) · tradingview.com<br>
+    CNBC — "ASML Q1 2026 earnings report" (April 15, 2026) · cnbc.com<br>
+    CNBC — "China and tariffs wipe $130B from ASML" (May 28, 2025) · cnbc.com<br>
+    Leverage Shares Insights — "ASML Stock Forecasts Rise After 2026 Guidance Lifted"<br>
+    MarketWise — "ASML Faces New China Export Restrictions" · marketwise.com<br>
+    CNAS — "The Export Control Loophole Fueling China's Chip Production" (Dec 2025) · cnas.org<br>
+    Yahoo Finance / Motley Fool — Q4 2025 Earnings Call Highlights<br>
+    All financial data in euros (EUR) unless otherwise noted. USD equivalents [ASSUMED] at ~1.09 EUR/USD.
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. Financial figures are sourced from ASML SEC filings, FMP API, and public press releases; all projections involve significant uncertainty. DCF inputs marked [ASSUMED] should be verified independently. Past performance is not indicative of future results. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议、招揽或买卖任何证券的推荐。财务数据来源于ASML SEC文件、FMP API及公开新闻稿；所有预测均存在重大不确定性。标注[ASSUMED]的DCF输入项应独立核实。历史表现不代表未来结果。在做出投资决策前，请咨询合格的财务顾问。
+</div>
+
+</body>
+</html>

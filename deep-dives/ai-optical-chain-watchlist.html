@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Optical / Silicon Photonics · Supply Chain Watchlist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --green: #10b981;
+    --red: #f43f5e;
+    --yellow: #f59e0b;
+    --stage1: #6366f1;
+    --stage2: #8b5cf6;
+    --stage3: #3b82f6;
+    --stage4: #06b6d4;
+    --stage5: #10b981;
+    --large: #059669;
+    --mid: #d97706;
+    --small: #dc2626;
+    --private: #6b7280;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 32px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0e17 0%, #0d1829 60%, #0a1220 100%);
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--accent2);
+  }
+
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .header-meta {
+    margin-top: 20px;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .meta-pill span { color: var(--text); }
+
+  /* ─── LEGEND ─── */
+  .legend-bar {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 16px 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .legend-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ─── CHAIN FLOW ─── */
+  .chain-container {
+    padding: 40px 40px 20px;
+  }
+
+  .chain-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .chain-flow {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .stage-block {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+
+  .stage-block:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 24px;
+    color: var(--text-muted);
+    font-size: 18px;
+    z-index: 2;
+  }
+
+  .stage-header {
+    padding: 14px 16px;
+    border-radius: 8px 8px 0 0;
+    border-left: 3px solid;
+    margin-right: 24px;
+  }
+
+  .stage-header .stage-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+    margin-bottom: 2px;
+  }
+
+  .stage-header .stage-name {
+    font-weight: 600;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .stage-header .stage-desc {
+    font-size: 11px;
+    opacity: 0.6;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .s1 .stage-header { background: rgba(99,102,241,0.12); border-color: var(--stage1); }
+  .s2 .stage-header { background: rgba(139,92,246,0.12); border-color: var(--stage2); }
+  .s3 .stage-header { background: rgba(59,130,246,0.12); border-color: var(--stage3); }
+  .s4 .stage-header { background: rgba(6,182,212,0.12); border-color: var(--stage4); }
+  .s5 .stage-header { background: rgba(16,185,129,0.12); border-color: var(--stage5); }
+
+  .stage-cards {
+    margin-right: 24px;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .company-card {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+  }
+
+  .company-card:last-child { border-bottom: none; }
+  .company-card:hover { background: rgba(255,255,255,0.04); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .company-name {
+    font-weight: 600;
+    font-size: 12.5px;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-top: 1px;
+  }
+
+  .revenue-badge {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .card-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .card-stat {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    margin-top: 4px;
+  }
+
+  /* ─── FILTERS ─── */
+  .filters-section {
+    padding: 24px 40px 0;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .filter-btn.s1.active { background: var(--stage1); border-color: var(--stage1); }
+  .filter-btn.s2.active { background: var(--stage2); border-color: var(--stage2); }
+  .filter-btn.s3.active { background: var(--stage3); border-color: var(--stage3); }
+  .filter-btn.s4.active { background: var(--stage4); border-color: var(--stage4); }
+  .filter-btn.s5.active { background: var(--stage5); border-color: var(--stage5); }
+
+  /* ─── TABLE ─── */
+  .table-section {
+    padding: 20px 40px 40px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  thead tr {
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  th {
+    padding: 12px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+
+  th.right, td.right { text-align: right; }
+  th.center, td.center { text-align: center; }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.12s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.025); }
+  tbody tr.hidden { display: none; }
+
+  td { padding: 10px 14px; vertical-align: top; }
+
+  .td-company { min-width: 160px; }
+  .company-cell-name { font-weight: 500; color: #fff; }
+  .company-cell-ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  .stage-pill {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .tag-s1 { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+  .tag-s2 { background: rgba(139,92,246,0.15); color: #c4b5fd; }
+  .tag-s3 { background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .tag-s4 { background: rgba(6,182,212,0.15); color: #67e8f9; }
+  .tag-s5 { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+  .rev-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+
+  .val-good { color: var(--green); }
+  .val-high { color: var(--yellow); }
+  .val-extreme { color: var(--red); }
+  .val-na { color: var(--text-muted); }
+
+  .growth-up { color: var(--green); }
+  .growth-neutral { color: var(--text-dim); }
+  .growth-down { color: var(--red); }
+
+  /* ─── NOTES SECTION ─── */
+  .notes-section {
+    padding: 0 40px 60px;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .note-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .note-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .note-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .note-card li {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .note-card li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .note-card li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .risk-list li::before { color: var(--red); }
+  .kpi-list li::before { color: var(--accent2); }
+
+  /* ─── DISCLAIMER ─── */
+  .disclaimer {
+    padding: 20px 40px 40px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    border-top: 1px solid var(--border);
+    line-height: 1.8;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .header, .chain-container, .filters-section, .table-section, .notes-section, .disclaimer { padding-left: 20px; padding-right: 20px; }
+    .legend-bar { padding: 12px 20px; }
+    .chain-flow { flex-direction: column; }
+    .stage-block::after { display: none; }
+    .stage-header, .stage-cards { margin-right: 0; }
+    .stage-block { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-label">Supply Chain Intelligence · Research</div>
+  <h1>AI Optical &amp; <em>Silicon Photonics</em><br>Supply Chain Watchlist</h1>
+  <div class="header-sub">
+    Five-stage supply chain mapping · 40+ global listed companies · Revenue / Valuation / Percentile tracking
+  </div>
+  <div class="header-meta">
+    <div class="meta-pill">Data as of <span>May 2026</span></div>
+    <div class="meta-pill">Sources: <span>Company filings · Broker reports · LightCounting</span></div>
+    <div class="meta-pill">Coverage: <span>US · A-share · HK · Taiwan</span></div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend-bar">
+  <span class="legend-label">Revenue Scale:</span>
+  <div class="legend-item"><span class="dot" style="background:var(--large)"></span>≥ $1B</div>
+  <div class="legend-item"><span class="dot" style="background:var(--mid)"></span>$200M–$1B</div>
+  <div class="legend-item"><span class="dot" style="background:var(--small)"></span>&lt; $200M (Narrative premium)</div>
+  <div class="legend-item"><span class="dot" style="background:var(--private)"></span>Private / not directly investable</div>
+  <div style="flex:1"></div>
+  <div class="legend-item"><span class="dot" style="background:var(--stage1)"></span>Upstream Chips</div>
+  <div class="legend-item"><span class="dot" style="background:var(--stage2)"></span>Components</div>
+  <div class="legend-item"><span class="dot" style="background:var(--stage3)"></span>Modules</div>
+  <div class="legend-item"><span class="dot" style="background:var(--stage4)"></span>Fiber / EMS</div>
+  <div class="legend-item"><span class="dot" style="background:var(--stage5)"></span>Downstream / Cloud</div>
+</div>
+
+<!-- CHAIN FLOW -->
+<div class="chain-container">
+  <div class="chain-title">▸ Five-Stage Supply Chain Overview</div>
+  <div class="chain-flow">
+
+    <!-- Stage 1 -->
+    <div class="stage-block s1">
+      <div class="stage-header">
+        <div class="stage-num">Stage 1 · Upstream</div>
+        <div class="stage-name">Optical &amp; Electrical Chips</div>
+        <div class="stage-desc">EML/DFB lasers · CW sources · DSP ASICs</div>
+      </div>
+      <div class="stage-cards">
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Lumentum</div>
+              <div class="ticker">LITE · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">EML + CW laser leader · FY25 $1.7B</div>
+          <div class="card-stat">200G EML sole-source status</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Coherent</div>
+              <div class="ticker">COHR · NYSE</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">EML + InP components · FY25 $5.8B</div>
+          <div class="card-stat">InP fab differentiation</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Broadcom</div>
+              <div class="ticker">AVGO · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">DSP + VCSEL + CPO silicon</div>
+          <div class="card-stat">Custom AI ASIC + photonics</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Marvell</div>
+              <div class="ticker">MRVL · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">PAM4 DSP · FY26 9M rev $4.8B</div>
+          <div class="card-stat">Data centre electro-optics</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Credo Technology</div>
+              <div class="ticker">CRDO · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--mid)"></div>
+          </div>
+          <div class="card-desc">AEC + DSP · FY26 Q2 $268M / +272%</div>
+          <div class="card-stat">Active electrical cable momentum</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Accelink Tech.</div>
+              <div class="ticker">002281 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Chip → component → module vertically integrated · FY25 ¥11.9B</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 2 -->
+    <div class="stage-block s2">
+      <div class="stage-header">
+        <div class="stage-num">Stage 2 · Upstream</div>
+        <div class="stage-name">Optical Components &amp; Engines</div>
+        <div class="stage-desc">TOSA/ROSA · Optical engines · FA arrays · Modulators</div>
+      </div>
+      <div class="stage-cards">
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">TFC Communications</div>
+              <div class="ticker">300394 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Optical engines + passive · FY25 net income ¥1.88–2.15B</div>
+          <div class="card-stat">Key Fabrinet optics supplier</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Toptec</div>
+              <div class="ticker">300570 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--mid)"></div>
+          </div>
+          <div class="card-desc">MPO + MT ferrules · FY25 net income ¥250–280M</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">O-Net Technologies</div>
+              <div class="ticker">300620 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--mid)"></div>
+          </div>
+          <div class="card-desc">LiNbO₃ modulators · TFLN roadmap</div>
+          <div class="card-stat">Silicon photonics modulator R&D</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">POET Technologies</div>
+              <div class="ticker">POET · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--small)"></div>
+          </div>
+          <div class="card-desc">Optical Interposer platform · Q3 orders $5.6M</div>
+          <div class="card-stat">Narrative premium; pre-revenue scale</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 3 -->
+    <div class="stage-block s3">
+      <div class="stage-header">
+        <div class="stage-num">Stage 3 · Midstream</div>
+        <div class="stage-name">Optical Transceivers / Modules</div>
+        <div class="stage-desc">100G / 400G / 800G / 1.6T transceivers</div>
+      </div>
+      <div class="stage-cards">
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Innolight</div>
+              <div class="ticker">300308 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">FY25 ¥38.2B · Global #1 transceiver · PE 60–80×</div>
+          <div class="card-stat">Top-5 customers = 75.98% revenue</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Eoptolink</div>
+              <div class="ticker">300502 · SZ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">FY25 net income ¥9.4–9.9B · LPO leader</div>
+          <div class="card-stat">Linear-drive pluggable pioneer</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Applied Optoelectronics</div>
+              <div class="ticker">AAOI · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--mid)"></div>
+          </div>
+          <div class="card-desc">FY25 $455M · FY26 guidance $1B+</div>
+          <div class="card-stat">Fastest US-listed comps growth</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Cambridge Industries</div>
+              <div class="ticker">603083 · SH</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--mid)"></div>
+          </div>
+          <div class="card-desc">FY25 net income ¥252–278M / +51–67%</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Hisense Broadband</div>
+              <div class="ticker">Private</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--private)"></div>
+          </div>
+          <div class="card-desc">LightCounting global #7 · Hisense Group internal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 4 -->
+    <div class="stage-block s4">
+      <div class="stage-header">
+        <div class="stage-num">Stage 4</div>
+        <div class="stage-name">Fiber, Interconnect &amp; EMS</div>
+        <div class="stage-desc">Optical fiber · MPO cable assemblies · Contract manufacturing</div>
+      </div>
+      <div class="stage-cards">
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Corning</div>
+              <div class="ticker">GLW · NYSE</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Optical comms FY25 $6.3B / +35%</div>
+          <div class="card-stat">Hyperscaler long-term agreements</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Fabrinet</div>
+              <div class="ticker">FN · NYSE</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Optical comms EMS · Quarterly rev $832M</div>
+          <div class="card-stat">Key Coherent + IIVI contract manufacturer</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Yangtze Optical Fibre</div>
+              <div class="ticker">601869 SH / 06869 HK</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">A+H dual-listed · FY25 H1 ¥6.4B / +19% · Hollow-core fiber R&D</div>
+          <div class="card-stat">Hollow-core fiber next-gen narrative</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">ZTT Group</div>
+              <div class="ticker">600522 · SH</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Fiber cable + subsea cable</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 5 -->
+    <div class="stage-block s5">
+      <div class="stage-header">
+        <div class="stage-num">Stage 5 · Downstream</div>
+        <div class="stage-name">Switches / Servers / Cloud</div>
+        <div class="stage-desc">Data centre switches · AI servers · Hyperscalers</div>
+      </div>
+      <div class="stage-cards">
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Arista Networks</div>
+              <div class="ticker">ANET · NYSE</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Data centre switching leader</div>
+          <div class="card-stat">400G → 800G migration catalyst</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">NVIDIA</div>
+              <div class="ticker">NVDA · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">GPU + InfiniBand + Spectrum-X + CPO roadmap</div>
+          <div class="card-stat">Sets optical interconnect pace</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Microsoft</div>
+              <div class="ticker">MSFT · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">Azure · FY26 Capex guidance &gt;$100B</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Google / Alphabet</div>
+              <div class="ticker">GOOGL · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">GCP · Core Innolight customer</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Meta Platforms</div>
+              <div class="ticker">META · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">$6B Corning long-term supply deal · MTIA accelerator</div>
+        </div>
+        <div class="company-card">
+          <div class="card-top">
+            <div>
+              <div class="company-name">Amazon / AWS</div>
+              <div class="ticker">AMZN · NASDAQ</div>
+            </div>
+            <div class="revenue-badge" style="background:var(--large)"></div>
+          </div>
+          <div class="card-desc">AWS · Trainium custom AI accelerator</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /chain-flow -->
+</div><!-- /chain-container -->
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <div class="filter-row">
+    <div class="filter-group">
+      <div class="filter-label">Stage Filter</div>
+      <div class="btn-group">
+        <button class="filter-btn active" onclick="filterTable('stage','all',this)">All</button>
+        <button class="filter-btn s1" onclick="filterTable('stage','s1',this)">Upstream Chips</button>
+        <button class="filter-btn s2" onclick="filterTable('stage','s2',this)">Components</button>
+        <button class="filter-btn s3" onclick="filterTable('stage','s3',this)">Modules</button>
+        <button class="filter-btn s4" onclick="filterTable('stage','s4',this)">Fiber / EMS</button>
+        <button class="filter-btn s5" onclick="filterTable('stage','s5',this)">Downstream</button>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-label">Revenue Scale</div>
+      <div class="btn-group">
+        <button class="filter-btn active" onclick="filterTable('scale','all',this)">All</button>
+        <button class="filter-btn" onclick="filterTable('scale','large',this)">≥ $1B</button>
+        <button class="filter-btn" onclick="filterTable('scale','mid',this)">$200M–$1B</button>
+        <button class="filter-btn" onclick="filterTable('scale','small',this)">&lt; $200M</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-section">
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead>
+        <tr>
+          <th class="td-company">Company</th>
+          <th>Ticker</th>
+          <th>Stage</th>
+          <th>Core Positioning</th>
+          <th class="right">FY25 Revenue</th>
+          <th class="right">YoY Growth</th>
+          <th class="right">Fwd P/E</th>
+          <th class="center">Valuation Signal</th>
+          <th>Watch Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-stage="s1" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Lumentum</div></td>
+          <td><div class="company-cell-ticker">LITE US</div></td>
+          <td><span class="stage-pill tag-s1">Upstream Chips</span></td>
+          <td>EML + CW laser · 200G sole-source position</td>
+          <td class="right">$1.7B</td>
+          <td class="right growth-up">+~40%</td>
+          <td class="right">~50×</td>
+          <td class="center val-high">Elevated</td>
+          <td>200G EML ASP trend · VCSEL competition</td>
+        </tr>
+        <tr data-stage="s1" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Coherent</div></td>
+          <td><div class="company-cell-ticker">COHR US</div></td>
+          <td><span class="stage-pill tag-s1">Upstream Chips</span></td>
+          <td>EML + InP components · diversified business drag</td>
+          <td class="right">$5.8B</td>
+          <td class="right growth-up">+~23%</td>
+          <td class="right">~35×</td>
+          <td class="center val-high">Elevated</td>
+          <td>Non-comms segment margin; InP yield rates</td>
+        </tr>
+        <tr data-stage="s1" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Broadcom</div></td>
+          <td><div class="company-cell-ticker">AVGO US</div></td>
+          <td><span class="stage-pill tag-s1">Upstream Chips</span></td>
+          <td>DSP + VCSEL + CPO chip · custom AI ASIC</td>
+          <td class="right">~$51B</td>
+          <td class="right growth-up">+~44%</td>
+          <td class="right">~28×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>Custom XPU TAM expansion; VMware integration</td>
+        </tr>
+        <tr data-stage="s1" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Marvell</div></td>
+          <td><div class="company-cell-ticker">MRVL US</div></td>
+          <td><span class="stage-pill tag-s1">Upstream Chips</span></td>
+          <td>PAM4 DSP leader · AI datacenter electro-optics</td>
+          <td class="right">~$7.0B</td>
+          <td class="right growth-up">+~67%</td>
+          <td class="right">~40×</td>
+          <td class="center val-high">Elevated</td>
+          <td>Custom ASIC pipeline; co-packaged optics timing</td>
+        </tr>
+        <tr data-stage="s1" data-scale="mid">
+          <td class="td-company"><div class="company-cell-name">Credo Technology</div></td>
+          <td><div class="company-cell-ticker">CRDO US</div></td>
+          <td><span class="stage-pill tag-s1">Upstream Chips</span></td>
+          <td>AEC + DSP · fastest-growing US-listed name</td>
+          <td class="right">~$1.1B run-rate</td>
+          <td class="right growth-up">+272%</td>
+          <td class="right">~80×</td>
+          <td class="center val-extreme">Extreme</td>
+          <td>Customer concentration; AEC vs pluggable share</td>
+        </tr>
+        <tr data-stage="s2" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">TFC Communications</div></td>
+          <td><div class="company-cell-ticker">300394 SZ</div></td>
+          <td><span class="stage-pill tag-s2">Components</span></td>
+          <td>Optical engines + passive components</td>
+          <td class="right">¥(est. 7B+)</td>
+          <td class="right growth-up">Strong</td>
+          <td class="right">~50×</td>
+          <td class="center val-high">Elevated</td>
+          <td>Fabrinet share; 1.6T engine qualification</td>
+        </tr>
+        <tr data-stage="s2" data-scale="mid">
+          <td class="td-company"><div class="company-cell-name">O-Net Technologies</div></td>
+          <td><div class="company-cell-ticker">300620 SZ</div></td>
+          <td><span class="stage-pill tag-s2">Components</span></td>
+          <td>LiNbO₃ modulators · TFLN research direction</td>
+          <td class="right">¥~2B</td>
+          <td class="right growth-up">+20%+</td>
+          <td class="right">~40×</td>
+          <td class="center val-high">Elevated</td>
+          <td>TFLN commercialisation timeline; silicon photonics rivalry</td>
+        </tr>
+        <tr data-stage="s2" data-scale="small">
+          <td class="td-company"><div class="company-cell-name">POET Technologies</div></td>
+          <td><div class="company-cell-ticker">POET US</div></td>
+          <td><span class="stage-pill tag-s2">Components</span></td>
+          <td>Optical Interposer · pre-scale narrative name</td>
+          <td class="right">~$5M</td>
+          <td class="right growth-na val-na">N/M</td>
+          <td class="right val-na">N/M</td>
+          <td class="center val-extreme">Narrative</td>
+          <td>Design wins; customer production ramp; burn rate</td>
+        </tr>
+        <tr data-stage="s3" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Innolight (Innolight Tech.)</div></td>
+          <td><div class="company-cell-ticker">300308 SZ</div></td>
+          <td><span class="stage-pill tag-s3">Modules</span></td>
+          <td>Global #1 transceiver · Google/Meta key customer</td>
+          <td class="right">¥38.2B</td>
+          <td class="right growth-up">+~80%</td>
+          <td class="right">60–80×</td>
+          <td class="center val-extreme">Extreme</td>
+          <td>Customer concentration 76%; 1.6T shipment ramp</td>
+        </tr>
+        <tr data-stage="s3" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Eoptolink Technology</div></td>
+          <td><div class="company-cell-ticker">300502 SZ</div></td>
+          <td><span class="stage-pill tag-s3">Modules</span></td>
+          <td>LPO (Linear-drive Pluggable) leader</td>
+          <td class="right">¥(est. 30B+)</td>
+          <td class="right growth-up">+~100%</td>
+          <td class="right">~50×</td>
+          <td class="center val-extreme">Extreme</td>
+          <td>LPO vs CPO resolution; margin sustainability</td>
+        </tr>
+        <tr data-stage="s3" data-scale="mid">
+          <td class="td-company"><div class="company-cell-name">Applied Optoelectronics</div></td>
+          <td><div class="company-cell-ticker">AAOI US</div></td>
+          <td><span class="stage-pill tag-s3">Modules</span></td>
+          <td>800G data-centre modules · YTD +420%</td>
+          <td class="right">$455M</td>
+          <td class="right growth-up">+~160%</td>
+          <td class="right">~50×</td>
+          <td class="center val-extreme">Extreme</td>
+          <td>$1B FY26 guidance execution; gross margin</td>
+        </tr>
+        <tr data-stage="s4" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Corning</div></td>
+          <td><div class="company-cell-ticker">GLW US</div></td>
+          <td><span class="stage-pill tag-s4">Fiber / EMS</span></td>
+          <td>Optical fibre global #1 · hyperscaler LTAs</td>
+          <td class="right">$6.3B (OC)</td>
+          <td class="right growth-up">+35%</td>
+          <td class="right">~28×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>Meta $6B contract execution; capacity expansion</td>
+        </tr>
+        <tr data-stage="s4" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Fabrinet</div></td>
+          <td><div class="company-cell-ticker">FN US</div></td>
+          <td><span class="stage-pill tag-s4">Fiber / EMS</span></td>
+          <td>Optical comms contract manufacturer · $832M/qtr</td>
+          <td class="right">~$3.3B</td>
+          <td class="right growth-up">+~26%</td>
+          <td class="right">~24×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>Customer mix shift; Thailand site capacity</td>
+        </tr>
+        <tr data-stage="s4" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Yangtze Optical Fibre (YOFC)</div></td>
+          <td><div class="company-cell-ticker">601869 SH / 6869 HK</div></td>
+          <td><span class="stage-pill tag-s4">Fiber / EMS</span></td>
+          <td>China fibre leader · hollow-core fibre R&D</td>
+          <td class="right">¥12.8B</td>
+          <td class="right growth-up">+19%</td>
+          <td class="right">~18×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>Hollow-core commercialisation pace; export risk</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Arista Networks</div></td>
+          <td><div class="company-cell-ticker">ANET US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>Data centre switching leader · 400G→800G beneficiary</td>
+          <td class="right">~$7.0B</td>
+          <td class="right growth-up">+~19%</td>
+          <td class="right">~40×</td>
+          <td class="center val-high">Elevated</td>
+          <td>AI cluster scale-out share; Cisco competition</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">NVIDIA</div></td>
+          <td><div class="company-cell-ticker">NVDA US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>GPU + InfiniBand + Spectrum-X + CPO roadmap setter</td>
+          <td class="right">~$130B</td>
+          <td class="right growth-up">+~114%</td>
+          <td class="right">~35×</td>
+          <td class="center val-high">Elevated</td>
+          <td>Blackwell 1.6T optics adoption; export control risk</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Microsoft</div></td>
+          <td><div class="company-cell-ticker">MSFT US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>Azure hyperscaler · FY26 Capex &gt;$100B</td>
+          <td class="right">~$270B</td>
+          <td class="right growth-up">+~15%</td>
+          <td class="right">~32×</td>
+          <td class="center val-high">Elevated</td>
+          <td>Azure AI revenue realisation; Capex discipline</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Alphabet / Google</div></td>
+          <td><div class="company-cell-ticker">GOOGL US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>GCP · Innolight core demand driver</td>
+          <td class="right">~$350B</td>
+          <td class="right growth-up">+~12%</td>
+          <td class="right">~22×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>GCP optical spend; TPU custom silicon mix</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Meta Platforms</div></td>
+          <td><div class="company-cell-ticker">META US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>Corning $6B LTA · MTIA AI accelerator</td>
+          <td class="right">~$165B</td>
+          <td class="right growth-up">+~19%</td>
+          <td class="right">~24×</td>
+          <td class="center val-good">Reasonable</td>
+          <td>MTIA vs NVIDIA dependency; Capex fibre intensity</td>
+        </tr>
+        <tr data-stage="s5" data-scale="large">
+          <td class="td-company"><div class="company-cell-name">Amazon / AWS</div></td>
+          <td><div class="company-cell-ticker">AMZN US</div></td>
+          <td><span class="stage-pill tag-s5">Downstream</span></td>
+          <td>AWS · Trainium AI accelerator programme</td>
+          <td class="right">~$638B</td>
+          <td class="right growth-up">+~11%</td>
+          <td class="right">~38×</td>
+          <td class="center val-high">Elevated</td>
+          <td>AWS optical interconnect capex; Trainium 2 ramp</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- NOTES SECTION -->
+<div class="notes-section">
+  <div class="notes-grid">
+
+    <div class="note-card">
+      <h3>Valuation Framework · Honest Assessment</h3>
+      <ul>
+        <li><strong>Reasonable:</strong> Fwd P/E &lt;30× or PEG &lt;0.5 — traditional DCF still applicable</li>
+        <li><strong>Elevated:</strong> Fwd P/E 30–60× — requires continued earnings delivery; re-rating risk</li>
+        <li><strong>Extreme:</strong> Fwd P/E &gt;60× or TTM &gt;100× — "dream pricing"; sector narrative dominates</li>
+        <li>As of May 2026: AAOI YTD +420%, Lumentum +184%, Innolight +38× since 2022 low — <strong>traditional DCF/PE/PB does not apply to most names</strong></li>
+        <li>Relative value still exists: Corning (LTA-backed cash), Fabrinet (EMS discipline), Coherent (valuation discount from segment complexity)</li>
+      </ul>
+    </div>
+
+    <div class="note-card">
+      <h3>Key Performance Indicators to Track</h3>
+      <ul class="kpi-list">
+        <li><strong>Demand side:</strong> Quarterly Capex guidance from top-5 CSPs (MSFT / GOOGL / AMZN / META / ORCL)</li>
+        <li><strong>Technology milestones:</strong> NVIDIA GTC / OFC CPO roadmap; 1.6T and 3.2T volume production dates</li>
+        <li><strong>Supply-demand:</strong> Optical chip gap (Nomura: ~5–15% undersupply persisting into 2026)</li>
+        <li><strong>Customer concentration:</strong> Innolight top-5 = 75.98%; monitor single-customer risk</li>
+        <li><strong>Technology resolution:</strong> CPO vs LPO vs NPO vs pluggable final share in scale-up clusters</li>
+      </ul>
+    </div>
+
+    <div class="note-card">
+      <h3>Key Risks &amp; Stress Scenarios</h3>
+      <ul class="risk-list">
+        <li><strong>Capex inflection risk:</strong> Any hyperscaler guidance cut for 2027 → instant 30–50% multiple compression across the chain</li>
+        <li><strong>CPO substitution:</strong> If scale-up commits to co-packaged optics, pluggable module vendors get displaced to scale-out only</li>
+        <li><strong>Geopolitics:</strong> China-listed leaders derive 80–90% of revenue overseas; tariff or export control disruption material</li>
+        <li><strong>Technology mis-execution:</strong> LPO, CPO, hollow-core fibre commercialisation timelines all carry risk</li>
+        <li><strong>Vertical integration:</strong> Hyperscalers developing in-house optics (Amazon, Google) — long-term OEM displacement threat</li>
+      </ul>
+    </div>
+
+    <div class="note-card">
+      <h3>Technology Roadmap · Key Debates</h3>
+      <ul>
+        <li><strong>CPO vs Pluggable:</strong> Co-packaged optics offer power/density gains but demand silicon photonics maturity; pluggable remains dominant until 2027+</li>
+        <li><strong>LPO (Linear-drive Pluggable):</strong> Eliminates DSP; lower cost but tighter link budget — key debate for 800G/1.6T scale-up</li>
+        <li><strong>1.6T / 3.2T timing:</strong> Volume production expected H2 2025–2026; watch qualification announcements</li>
+        <li><strong>Hollow-core fibre:</strong> YOFC/others developing air-guided fibre with lower latency; 5–10 year commercialisation horizon</li>
+        <li><strong>Thin-Film LiNbO₃ (TFLN):</strong> High-bandwidth modulator candidate for next-gen; still pre-production scale</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  DATA NOTES: A-share / H-share figures in RMB (¥); US-listed figures in USD ($). Non-calendar-year companies (Coherent, Lumentum, Fabrinet, etc.) use fiscal year basis. Forward P/E based on 2026E consensus estimates — verify against latest quotes as valuations change rapidly. &nbsp;|&nbsp; THIS IS NOT INVESTMENT ADVICE. For informational and research purposes only.
+</div>
+
+<script>
+  let activeStage = 'all';
+  let activeScale = 'all';
+
+  function filterTable(type, val, btn) {
+    // Update active filter
+    if (type === 'stage') activeStage = val;
+    if (type === 'scale') activeScale = val;
+
+    // Update button states within group
+    const btns = btn.parentElement.querySelectorAll('.filter-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Filter rows
+    const rows = document.querySelectorAll('#mainTable tbody tr');
+    rows.forEach(row => {
+      const stageOk = activeStage === 'all' || row.dataset.stage === activeStage;
+      const scaleOk = activeScale === 'all' || row.dataset.scale === activeScale;
+      row.style.display = (stageOk && scaleOk) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
