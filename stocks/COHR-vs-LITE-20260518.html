@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COHR vs LITE — 光领域 Head-to-Head — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f6; color: #1a1a1a; padding: 2rem; max-width: 960px; margin: 0 auto; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; background: #EAF3DE; color: #27500A; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.body-text { font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 12px; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── SNAPSHOT CARDS ── */
+.snap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.snap-card { background: #fff; border: 1px solid #e0e0d8; border-radius: 12px; padding: 16px; }
+.snap-card.cohr { border-top: 4px solid #185FA5; }
+.snap-card.lite { border-top: 4px solid #1D9E75; }
+.snap-ticker { font-size: 22px; font-weight: 800; margin-bottom: 2px; }
+.snap-ticker.cohr { color: #185FA5; }
+.snap-ticker.lite { color: #1D9E75; }
+.snap-name { font-size: 11px; color: #888; margin-bottom: 10px; }
+.snap-price { font-size: 28px; font-weight: 700; margin-bottom: 2px; }
+.snap-meta { font-size: 11px; color: #aaa; margin-bottom: 12px; }
+.snap-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.sstat { background: #f8f8f6; border-radius: 6px; padding: 6px 8px; }
+.sstat-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 2px; }
+.sstat-val { font-size: 13px; font-weight: 600; color: #222; }
+.sstat-val.green { color: #0F6E56; }
+.sstat-val.red { color: #A32D2D; }
+.sstat-val.amber { color: #B45309; }
+
+/* ── COMPARISON TABLE ── */
+.comp-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.comp-table th { background: #f0efe8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #555; padding: 8px 10px; text-align: center; border-bottom: 2px solid #e0dfd8; }
+.comp-table th.dim-h { text-align: left; }
+.comp-table th.cohr-h { color: #185FA5; }
+.comp-table th.lite-h { color: #1D9E75; }
+.comp-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: center; font-size: 12px; color: #333; vertical-align: top; }
+.comp-table td.dim { text-align: left; font-weight: 600; font-size: 11px; color: #666; }
+.comp-table td.cohr-val { color: #185FA5; font-weight: 600; }
+.comp-table td.lite-val { color: #1D9E75; font-weight: 600; }
+.comp-table td.win-cohr { background: #EBF4FF; }
+.comp-table td.win-lite { background: #EDFBF4; }
+.comp-table td.tie { background: #f8f8f6; }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table .section-row td { background: #f0efe8; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #888; padding: 5px 10px; }
+
+/* ── SCORECARD BARS ── */
+.score-section { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+.score-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 12px; }
+.score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.score-label { font-size: 11px; color: #555; width: 160px; flex-shrink: 0; }
+.bar-wrap { flex: 1; height: 10px; background: #f0efe8; border-radius: 5px; overflow: hidden; display: flex; }
+.bar-cohr { background: #185FA5; height: 100%; }
+.bar-lite { background: #1D9E75; height: 100%; }
+.score-winner { font-size: 10px; font-weight: 700; width: 80px; text-align: right; }
+.win-cohr-txt { color: #185FA5; }
+.win-lite-txt { color: #1D9E75; }
+.win-tie-txt { color: #888; }
+.legend { display: flex; gap: 16px; margin-bottom: 12px; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #555; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* ── PRODUCT STACK VISUAL ── */
+.stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stack-col { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 12px; }
+.stack-col-title { font-size: 12px; font-weight: 700; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 2px solid; }
+.stack-col-title.cohr { color: #185FA5; border-color: #185FA5; }
+.stack-col-title.lite { color: #1D9E75; border-color: #1D9E75; }
+.stack-item { font-size: 11px; color: #444; padding: 4px 0; border-bottom: 1px solid #f0efe8; line-height: 1.4; }
+.stack-item:last-child { border-bottom: none; }
+.stack-item .tag { font-size: 9px; font-weight: 700; border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+.tag-both { background: #E6F1FB; color: #0C447C; }
+.tag-unique { background: #EAF3DE; color: #27500A; }
+.tag-adv { background: #FAEEDA; color: #633806; }
+
+/* ── BULL BEAR ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.6; color: #791F1F; }
+
+/* ── VERDICT CARDS ── */
+.verdict-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.verdict-card { border-radius: 10px; padding: 14px; }
+.verdict-card.cohr { background: #EBF4FF; border: 1px solid #bcd7f5; }
+.verdict-card.lite { background: #EDFBF4; border: 1px solid #b0e8cf; }
+.verdict-title { font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+.verdict-title.cohr { color: #0C447C; }
+.verdict-title.lite { color: #0A5C3A; }
+.verdict-text { font-size: 12px; color: #444; line-height: 1.6; }
+.pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-bottom: 6px; }
+.pill-scale { background: #E6F1FB; color: #0C447C; }
+.pill-focus { background: #EAF3DE; color: #27500A; }
+.pill-risk { background: #FEE2E2; color: #991B1B; }
+
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+.up { color: #0F6E56; }
+.dn { color: #A32D2D; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+@media (max-width: 640px) { .snap-grid, .stack-grid, .cases, .verdict-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-tag">光领域对比 · HEAD-TO-HEAD COMPARISON · 深度分析</div>
+  <div class="doc-title">Coherent Corp (COHR) vs Lumentum Holdings (LITE)</div>
+  <div class="doc-title-cn">相干公司 vs 朗美通控股 — AI光子学双雄深度对比</div>
+  <div class="doc-meta">Generated May 18, 2026 · Both companies received $2B NVIDIA strategic investments on March 2, 2026 · Layer 2 — Compute Bloodstream · 光领域核心标的</div>
+</div>
+
+<!-- MOOD BAR -->
+<div class="mood-bar">
+  <span class="mood-label">Comparison mood 比较情绪</span>
+  <span class="mood-text">Two sides of the same NVIDIA bet — COHR is the vertically integrated platform play with more product breadth and deeper debt; LITE is the laser-specialist pure-play with superior margins, net cash, and a singular EML monopoly that even competitors must buy from.</span>
+  <span class="mood-pill">Both Bullish · 双看多</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">相干（COHR）与朗美通（LITE）是英伟达于同一天各投资20亿美元的两大光子学巨头，代表了同一AI光学赛道的两种战略路径：<strong>COHR</strong>是从材料到系统的完整垂直整合平台，产品线更宽、规模更大，但净债务、GAAP亏损和商誉减值风险拖累估值；<strong>LITE</strong>是以EML激光器为核心的专注型纯净股，在50-60%的全球200G EML市场份额、47.9%非GAAP毛利率及32亿美元净现金方面具有明显优势，但规模更小、估值更高。两家都是光领域的必选标的，差异在于风险偏好与投资风格。</div>
+</div>
+
+<!-- SECTION 1: SNAPSHOT -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Market Snapshot — May 18, 2026</div>
+  <div class="section-title-cn">市场快照</div>
+  <div class="section-divider"></div>
+
+  <div class="snap-grid">
+    <div class="snap-card cohr">
+      <div class="snap-ticker cohr">COHR</div>
+      <div class="snap-name">Coherent Corp · NYSE · Founded 1966 (II-VI 2022 rebranding)</div>
+      <div class="snap-price">$382.45</div>
+      <div class="snap-meta">52-wk: $73.66–$413 · +418% from low · FMP May 14</div>
+      <div class="snap-stats">
+        <div class="sstat"><div class="sstat-label">Market Cap</div><div class="sstat-val">$60.6B</div></div>
+        <div class="sstat"><div class="sstat-label">Beta</div><div class="sstat-val red">2.053</div></div>
+        <div class="sstat"><div class="sstat-label">Trailing PE</div><div class="sstat-val red">158x (merger)</div></div>
+        <div class="sstat"><div class="sstat-label">Fwd PE (FY27E)</div><div class="sstat-val amber">~51x</div></div>
+        <div class="sstat"><div class="sstat-label">PEG</div><div class="sstat-val green">1.09</div></div>
+        <div class="sstat"><div class="sstat-label">Non-GAAP GM</div><div class="sstat-val">39.6%</div></div>
+        <div class="sstat"><div class="sstat-label">Net Debt</div><div class="sstat-val red">~$2.6B</div></div>
+        <div class="sstat"><div class="sstat-label">Employees</div><div class="sstat-val">26,157</div></div>
+        <div class="sstat"><div class="sstat-label">Revenue TTM</div><div class="sstat-val">~$6.7B</div></div>
+        <div class="sstat"><div class="sstat-label">NVIDIA stake</div><div class="sstat-val green">~4%</div></div>
+      </div>
+    </div>
+    <div class="snap-card lite">
+      <div class="snap-ticker lite">LITE</div>
+      <div class="snap-name">Lumentum Holdings · NASDAQ · Founded 2015 (spun from JDSU)</div>
+      <div class="snap-price">$970.70</div>
+      <div class="snap-meta">52-wk: $71.04–$1,085.68 · +1,267% from low · FMP May 18</div>
+      <div class="snap-stats">
+        <div class="sstat"><div class="sstat-label">Market Cap</div><div class="sstat-val">$75.5B</div></div>
+        <div class="sstat"><div class="sstat-label">Beta</div><div class="sstat-val amber">1.533</div></div>
+        <div class="sstat"><div class="sstat-label">GAAP PE Q3</div><div class="sstat-val green">Profitable</div></div>
+        <div class="sstat"><div class="sstat-label">Fwd PE FY27E</div><div class="sstat-val amber">~55–60x</div></div>
+        <div class="sstat"><div class="sstat-label">PEG [ASSUMED]</div><div class="sstat-val amber">~1.0–1.2x</div></div>
+        <div class="sstat"><div class="sstat-label">Non-GAAP GM</div><div class="sstat-val green">47.9%</div></div>
+        <div class="sstat"><div class="sstat-label">Net Cash</div><div class="sstat-val green">~$3.17B</div></div>
+        <div class="sstat"><div class="sstat-label">Employees</div><div class="sstat-val">7,257</div></div>
+        <div class="sstat"><div class="sstat-label">Revenue TTM</div><div class="sstat-val">~$2.6B</div></div>
+        <div class="sstat"><div class="sstat-label">NVIDIA stake</div><div class="sstat-val green">~2.6%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">快照对比（2026年5月）：<strong>COHR</strong>市值606亿美元，股价382.45美元（NYSE），Beta 2.053，追踪PE 158倍（受并购摊销影响），前瞻PE约51倍（FY2027E），PEG 1.09，非GAAP毛利率39.6%，净债务约26亿美元，TTM营收约67亿美元；<strong>LITE</strong>市值755亿美元（已超过COHR），股价970.70美元（NASDAQ），Beta 1.533（更低波动），Q3 FY26已实现GAAP盈利，非GAAP毛利率47.9%（显著优于COHR），净现金约31.7亿美元（无负债反有大量现金），TTM营收约26亿美元（规模仅为COHR的39%）。LITE规模更小但估值更高、资产负债表更健康、利润率更强。</div>
+  </div>
+</div>
+
+<!-- SECTION 2: WHAT EACH COMPANY DOES -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">What Each Company Makes — The Product Stack Compared</div>
+  <div class="section-title-cn">产品栈对比 — 广度与深度的差异</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">Both companies make optical and photonic products for AI data centres. But their strategies are fundamentally different: COHR is a <strong>platform</strong> — owning the entire value chain from raw material to finished system. LITE is a <strong>specialist</strong> — going deeper in fewer areas, with world-beating market share at the component level.</div>
+
+  <div class="stack-grid">
+    <div class="stack-col">
+      <div class="stack-col-title cohr">COHR — The Platform (26,157 employees)</div>
+      <div class="stack-item">InP wafer manufacturing (in-house crystal growth) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">GaAs wafer manufacturing <span class="tag tag-unique">COHR only</span></div>
+      <div class="stack-item">SiC substrate manufacturing (EV + semiconductor) <span class="tag tag-unique">COHR only</span></div>
+      <div class="stack-item">EML laser chips (400G/800G) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">200G EML chips for 1.6T <span class="tag tag-both">Both · LITE leads</span></div>
+      <div class="stack-item">VCSEL arrays (3D sensing, short-range links) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">Pluggable transceivers (400G/800G/1.6T) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">Optical Circuit Switches (OCS) <span class="tag tag-both">Both · LITE leads</span></div>
+      <div class="stack-item">Silicon photonics CPO (co-packaged) <span class="tag tag-both">Both · COHR demos ahead</span></div>
+      <div class="stack-item">DCI coherent transceivers (800G/1.6T ZR/ZR+) <span class="tag tag-unique">COHR strong</span></div>
+      <div class="stack-item">Optical fibre amplifiers, ROADMs, passives <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">High-power industrial CO₂/solid-state lasers <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">Precision optics manufacturing <span class="tag tag-unique">COHR (heritage)</span></div>
+    </div>
+    <div class="stack-col">
+      <div class="stack-col-title lite">LITE — The Specialist (7,257 employees)</div>
+      <div class="stack-item">InP wafer manufacturing (San Jose + Japan fabs) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item"><strong>200G EML chips — 50–60% global market share</strong> <span class="tag tag-adv">LITE dominates</span></div>
+      <div class="stack-item">EML chips undershipping demand by ~30% — seller's market <span class="tag tag-adv">LITE advantage</span></div>
+      <div class="stack-item">All EML capacity locked under LTAs through 2027 <span class="tag tag-adv">LITE advantage</span></div>
+      <div class="stack-item">1.6T DR4 OSFP pluggable transceivers (ramping 2026) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item"><strong>OCS — backlog >$400M; fastest scaling</strong> <span class="tag tag-adv">LITE leads</span></div>
+      <div class="stack-item">Received incremental multi-hundred-million CPO order <span class="tag tag-adv">LITE momentum</span></div>
+      <div class="stack-item">VCSEL arrays (Apple FaceID; LITE historically dominant) <span class="tag tag-adv">LITE legacy</span></div>
+      <div class="stack-item">Pump lasers, narrow-linewidth lasers, ROADMs <span class="tag tag-both">Both</span></div>
+      <div class="stack-item">Commercial lasers (industrial, biotech) <span class="tag tag-both">Both</span></div>
+      <div class="stack-item"><em>Notably absent: SiC, GaAs wafers, DCI ZR/ZR+, precision optics heritage</em></div>
+    </div>
+  </div>
+
+  <div class="body-text">The critical product difference is in <strong>EML chips</strong>: Lumentum holds 50–60% global market share in 200G-per-lane EMLs — the most supply-constrained component in AI optical infrastructure. Even Coherent, its direct competitor, may buy EML chips from Lumentum for certain applications because LITE's production scale and epitaxy quality are ahead. CEO Michael Hurlston stated Lumentum is undershipping customer demand by roughly 30%, with all EML capacity locked under long-term agreements through calendar 2027 — customers who won't sign LTAs risk losing supply priority entirely. This seller's market dynamic for a monopoly-adjacent component is extraordinarily rare and valuable.</div>
+
+  <div class="body-text">Coherent's advantage is breadth and integration — it can supply a data centre operator with everything from the InP wafer through the complete system, capturing margin at every step. This makes COHR the preferred vendor for customers who want a single integrated optical supply chain partner. LITE is preferred by customers who specifically need the highest-quality EML chips and OCS systems — and are willing to pay premium prices for them.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">产品栈核心差异：<strong>COHR是平台型</strong>——从InP/GaAs/SiC晶圆到激光芯片、模块、OCS、CPO系统的完整垂直整合，可作为数据中心的一站式光学供应链合作伙伴；<strong>LITE是专家型</strong>——在EML激光芯片领域占据50-60%全球市场份额，是200G每通道EML（1.6T收发器的核心组件）唯一的量产供应商，订单需求超供给约30%，所有产能均通过长期协议（LTA）锁定至2027年。OCS方面LITE也领先——积压订单超4亿美元，且已获得数亿美元CPO增量订单。关键事实：即使是竞争对手COHR，在某些应用场景下也可能需要采购LITE的EML芯片——这在竞争格局中极为罕见。</div>
+  </div>
+</div>
+
+<!-- SECTION 3: FINANCIAL COMPARISON -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Financial Performance — Side by Side</div>
+  <div class="section-title-cn">财务业绩对比</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>COHR (Q3 FY2026)</th><th>LITE (Q3 FY2026)</th><th>Edge</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Quarterly Revenue</td><td>$1,806M</td><td>$808M</td><td style="color:#185FA5;text-align:center;">COHR 2.2× larger</td></tr>
+      <tr><td>Revenue YoY growth</td><td>+21% (+27% pro forma)</td><td class="up" style="text-align:center;font-weight:700;">+90%</td><td style="color:#1D9E75;text-align:center;">LITE faster</td></tr>
+      <tr><td>GAAP Gross Margin</td><td>37.7%</td><td class="up" style="text-align:center;font-weight:700;">44.2%</td><td style="color:#1D9E75;text-align:center;">LITE +650bps</td></tr>
+      <tr class="highlight"><td>Non-GAAP Gross Margin</td><td>39.6%</td><td class="up" style="text-align:center;font-weight:700;">47.9%</td><td style="color:#1D9E75;text-align:center;">LITE +830bps</td></tr>
+      <tr><td>Non-GAAP Op Margin</td><td>~22%</td><td class="up" style="text-align:center;font-weight:700;">32.2%</td><td style="color:#1D9E75;text-align:center;">LITE +1,000bps</td></tr>
+      <tr><td>Non-GAAP EPS (Q3)</td><td>$1.41 (+55% YoY)</td><td class="up" style="text-align:center;font-weight:700;">$2.37 (+160% YoY)</td><td style="color:#1D9E75;text-align:center;">LITE far faster</td></tr>
+      <tr><td>GAAP EPS (Q3)</td><td>$0.97 (profitable)</td><td class="up" style="text-align:center;font-weight:700;">$1.50 (profitable)</td><td style="color:#1D9E75;text-align:center;">LITE wins</td></tr>
+      <tr><td>Q4 Revenue Guidance</td><td>$1.91B–$2.05B</td><td class="up" style="text-align:center;font-weight:700;">$960M–$1.01B</td><td style="color:#185FA5;text-align:center;">COHR larger absolute</td></tr>
+      <tr><td>Q4 Non-GAAP EPS Guide</td><td>$1.52–$1.72</td><td class="up" style="text-align:center;font-weight:700;">$2.85–$3.05</td><td style="color:#1D9E75;text-align:center;">LITE higher per share</td></tr>
+      <tr><td>FY2026E Full Year Rev.</td><td>~$6.9B</td><td>~$2.98B</td><td style="color:#185FA5;text-align:center;">COHR 2.3× larger</td></tr>
+      <tr><td>FY2026E Non-GAAP EPS</td><td>~$5.50–6.00E</td><td class="up" style="text-align:center;font-weight:700;">~$8.00–9.00E</td><td style="color:#1D9E75;text-align:center;">LITE higher per share</td></tr>
+      <tr><td>Net cash / (debt)</td><td class="dn" style="text-align:center;">~($2.6B) net debt</td><td class="up" style="text-align:center;font-weight:700;">+$3.17B net cash</td><td style="color:#1D9E75;text-align:center;">LITE by far</td></tr>
+      <tr><td>CapEx (Q3)</td><td>~$180M est.</td><td>$125M</td><td style="color:#1D9E75;text-align:center;">LITE more efficient</td></tr>
+      <tr><td>R&D (Q3)</td><td>$186M (10.3% rev)</td><td>$90M (11.1% rev)</td><td style="color:#888;text-align:center;">Similar intensity</td></tr>
+      <tr><td>Goodwill + Intangibles</td><td class="dn" style="text-align:center;">~$7.6B (risk)</td><td class="up" style="text-align:center;">~$1.4B (moderate)</td><td style="color:#1D9E75;text-align:center;">LITE cleaner</td></tr>
+      <tr><td>9-month YoY Revenue growth</td><td>+18.5%</td><td class="up" style="text-align:center;font-weight:700;">+72.5%</td><td style="color:#1D9E75;text-align:center;">LITE far faster</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Sources: COHR SEC 8-K May 6, 2026; LITE SEC 8-K May 5, 2026; SEC 10-Q filings. [E] = estimated/implied. LITE fiscal year ends late June; COHR fiscal year ends June 30.</p>
+
+  <div class="callout"><strong>The margin story is the key financial insight:</strong> Lumentum's non-GAAP gross margin of 47.9% vs Coherent's 39.6% is an 830bps gap — and it is widening, not narrowing. This margin difference reflects LITE's product mix (more laser chips and OCS, fewer lower-margin industrial products), its pricing power in a seller's market, and the benefit of a focused operation with 7,257 employees vs Coherent's 26,157. The EML seller's market — where customers are paying premium prices above LTA rates for incremental supply — is the primary driver. A company that can charge premium prices for a product in shortage is fundamentally different from a company that competes on breadth.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">财务对比核心结论：<strong>COHR规模更大（季度营收18亿美元 vs LITE 8亿美元），但LITE在几乎所有质量指标上占优</strong>。LITE非GAAP毛利率47.9%（领先COHR约830个基点且差距扩大）；非GAAP营业利润率32.2%（领先约1000个基点）；Q3非GAAP EPS 2.37美元（同比+160%，COHR为+55%）；净现金31.7亿美元 vs COHR净债务约26亿美元；商誉约14亿美元 vs COHR约76亿美元（减值风险更低）。LITE的超高毛利率反映了其在EML卖方市场中的定价权——供不应求的环境使其可以对超出LTA的需求收取溢价，这是根本性的商业模式优势。</div>
+  </div>
+</div>
+
+<!-- SECTION 4: VALUATION COMPARISON -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation Comparison</div>
+  <div class="section-title-cn">估值对比</div>
+  <div class="section-divider"></div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th class="dim-h">Metric</th>
+        <th class="cohr-h">COHR</th>
+        <th class="lite-h">LITE</th>
+        <th>Better Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="dim">Current Price</td><td class="cohr-val">$382.45</td><td class="lite-val">$970.70</td><td>—</td></tr>
+      <tr><td class="dim">Market Cap</td><td class="cohr-val">$60.6B</td><td class="lite-val">$75.5B</td><td>COHR cheaper</td></tr>
+      <tr><td class="dim">Market Cap / Revenue (P/S)</td><td class="cohr-val win-cohr">~0.9x</td><td class="lite-val">~2.5x</td><td class="win-cohr">COHR cheaper</td></tr>
+      <tr><td class="dim">Trailing PE (GAAP)</td><td class="cohr-val">N/M (merger losses)</td><td class="lite-val">Positive (just turned)</td><td class="win-lite">LITE wins</td></tr>
+      <tr><td class="dim">Forward PE (FY2027E)</td><td class="cohr-val win-cohr">~51x</td><td class="lite-val">~55–60x</td><td class="win-cohr">COHR cheaper</td></tr>
+      <tr><td class="dim">PEG Ratio</td><td class="cohr-val win-cohr">1.09 (confirmed)</td><td class="lite-val">~1.0–1.2 [ASSUMED]</td><td class="tie">Similar</td></tr>
+      <tr><td class="dim">NVIDIA investment price</td><td class="cohr-val">$256.80/share (+49% gap)</td><td class="lite-val">$256/share est. (+279% gap)</td><td class="win-cohr">COHR closer to NVDA basis</td></tr>
+      <tr><td class="dim">EV / EBITDA</td><td class="cohr-val win-cohr">~30x</td><td class="lite-val">~40x+</td><td class="win-cohr">COHR cheaper</td></tr>
+      <tr><td class="dim">Revenue growth (9-month)</td><td class="cohr-val">+18.5%</td><td class="lite-val win-lite">+72.5%</td><td class="win-lite">LITE far faster</td></tr>
+      <tr><td class="dim">Non-GAAP GM (latest Q)</td><td class="cohr-val">39.6%</td><td class="lite-val win-lite">47.9%</td><td class="win-lite">LITE +830bps</td></tr>
+      <tr><td class="dim">Balance sheet quality</td><td class="cohr-val">Net debt ~$2.6B</td><td class="lite-val win-lite">Net cash +$3.17B</td><td class="win-lite">LITE far stronger</td></tr>
+      <tr><td class="dim">Goodwill impairment risk</td><td class="cohr-val">HIGH (~$7.6B)</td><td class="lite-val win-lite">LOW (~$1.4B)</td><td class="win-lite">LITE much cleaner</td></tr>
+      <tr><td class="dim">GAAP profitability</td><td class="cohr-val">Borderline / turning</td><td class="lite-val win-lite">Clearly profitable Q3</td><td class="win-lite">LITE wins</td></tr>
+      <tr><td class="dim">Analyst consensus target</td><td class="cohr-val">~$250–320 (below mkt)</td><td class="lite-val win-lite">~$1,034–1,081 (near/above mkt)</td><td class="win-lite">LITE targets match price</td></tr>
+      <tr><td class="dim">Analyst coverage</td><td class="cohr-val">~32 analysts</td><td class="lite-val">~15 analysts</td><td class="win-cohr">COHR more covered</td></tr>
+      <tr><td class="dim">Beta</td><td class="cohr-val">2.053</td><td class="lite-val win-lite">1.533</td><td class="win-lite">LITE calmer</td></tr>
+      <tr><td class="dim">Dividend</td><td class="cohr-val">None</td><td class="lite-val">None</td><td class="tie">Neither</td></div></tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">估值对比总结：<strong>COHR在P/S（约0.9倍 vs LITE约2.5倍）、EV/EBITDA（约30倍 vs LITE约40倍+）和前瞻PE（约51倍 vs LITE约55-60倍）方面相对便宜</strong>，但这一"便宜"反映了其净债务、GAAP亏损、商誉风险和工业业务拖累的折价；<strong>LITE在基本面质量上全面占优</strong>——毛利率领先830bps、净现金31.7亿美元 vs COHR净债务26亿美元、商誉减值风险更低、GAAP已明确盈利、分析师目标价与当前市价更为匹配（约1034-1081美元 vs 当前970美元）、Beta更低（1.533 vs 2.053）。这是典型的"贵的有道理"vs "便宜有代价"的对比。</div>
+  </div>
+</div>
+
+<!-- SECTION 5: PRODUCT MOAT DEEP DIVE -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">The Moat Deep Dive — Epitaxy, EMLs, and OCS</div>
+  <div class="section-title-cn">护城河深度剖析 — 外延生长、EML与光电路交换</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text"><strong>The Epitaxy Moat (LITE's deepest advantage):</strong> Both companies grow InP crystals in-house — but Lumentum's epitaxy capability, built through decades of JDSU, Oclaro, and NeoPhotonics heritage, produces InP wafers of exceptional optical quality. Lumentum organises its business into Components ($444M in Q2 FY2026, +68% YoY) and Systems ($222M, +60% YoY). Laser chips are fabricated in indium phosphide wafer fabs in San Jose and Japan. The quality of these chips — particularly the uniformity of the active layer — is what allows Lumentum's 200G EMLs to achieve the signal integrity required at 1.6T speeds. Coherent also grows InP, but Lumentum's history in high-performance laser chips is longer and its quality control in this specific application has proven superior at current production volumes.</div>
+
+  <div class="body-text"><strong>EML Market Position — Lumentum's Crown Jewel:</strong> Lumentum holds an estimated 50–60% global market share in high-end EML laser chips and is currently the only supplier shipping 200G-per-lane EMLs at volume — the critical component for 1.6T transceivers. NVIDIA pre-allocated laser chip capacity at major suppliers, pushing delivery timelines for competitors past 2027. This is not a sustainable monopoly in perpetuity — Coherent and others will scale their own 200G EML production — but through 2027–2028, Lumentum is effectively the only option for customers who need 1.6T at scale. This seller's market creates pricing power that shows directly in the 47.9% non-GAAP gross margin.</div>
+
+  <div class="body-text"><strong>OCS — Lumentum's Next Growth Vector:</strong> In OCS, Lumentum is scaling rapidly to meet extraordinary customer demand that has already driven backlog well beyond $400 million. In CPO, the company received an incremental multi-hundred-million-dollar order, deliverable in first half calendar 2027. OCS surpassed $10M per quarter ahead of schedule in Q2 FY2026, and Q3 systems revenue of $275M (+121% YoY) reflects both transceiver scaling and OCS ramp. The CEO explicitly stated the company is "only at the starting line" for OCS and CPO — both are multi-billion-dollar future markets where Lumentum already has confirmed orders and production partnerships.</div>
+
+  <div class="body-text"><strong>CPO — Coherent's Counter-Claim:</strong> COHR demonstrated a 6.4T socketed SiPho CPO system at OFC 2026 and has NVIDIA's explicit support across five CPO product families. On CPO, the race between COHR and LITE is genuinely too close to call — both have strong positions, both have NVIDIA backing, and neither has yet recognised material CPO revenue. This is the key "unknown" in both investment cases. The company that wins the CPO design win at NVIDIA's next-generation switch ASIC (likely 2027–2028 volume) will have a decisive moat for 3–5 years.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">护城河核心差异：<strong>外延生长技术（LITE优势）</strong>：LITE通过JDSU、Oclaro、NeoPhotonics数十年积累建立了全球顶尖的InP晶圆外延质量，支撑其在200G EML领域的良率和信号完整性优势；<strong>EML市场垄断（LITE王牌）</strong>：50-60%全球市场份额，唯一量产200G每通道EML的供应商，所有产能通过LTA锁定至2027年，供不应求约30%——直接驱动47.9%的超高毛利率；<strong>OCS积压订单领先（LITE）</strong>：OCS积压订单超4亿美元，已在Q2超额完成节点，Q3系统收入同比+121%；获得多亿美元CPO增量订单（2027年H1交货）；<strong>CPO竞争格局（打平）</strong>：COHR在OFC 2026展示6.4T SiPho CPO系统并获英伟达5个产品系列支持；LITE同样有英伟达背书和CPO订单——2027-2028年英伟达下一代交换机ASIC的CPO设计胜出者将决定这一领域的最终格局，目前胜负未分。</div>
+  </div>
+</div>
+
+<!-- SECTION 6: SCORECARD -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Scorecard — Who Wins Each Dimension</div>
+  <div class="section-title-cn">评分卡 — 各维度胜负</div>
+  <div class="section-divider"></div>
+
+  <div class="score-section">
+    <div class="score-title">Dimension-by-dimension scorecard</div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#185FA5;"></div>COHR</div>
+      <div class="leg"><div class="leg-dot" style="background:#1D9E75;"></div>LITE</div>
+    </div>
+    <div class="score-row"><div class="score-label">Revenue Scale</div><div class="bar-wrap"><div class="bar-cohr" style="width:70%;"></div><div class="bar-lite" style="width:30%;"></div></div><div class="score-winner win-cohr-txt">COHR ✓</div></div>
+    <div class="score-row"><div class="score-label">Revenue Growth Speed</div><div class="bar-wrap"><div class="bar-cohr" style="width:20%;"></div><div class="bar-lite" style="width:80%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">Gross Margin</div><div class="bar-wrap"><div class="bar-cohr" style="width:20%;"></div><div class="bar-lite" style="width:80%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">Operating Margin</div><div class="bar-wrap"><div class="bar-cohr" style="width:15%;"></div><div class="bar-lite" style="width:85%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">Balance Sheet Quality</div><div class="bar-wrap"><div class="bar-cohr" style="width:15%;"></div><div class="bar-lite" style="width:85%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">GAAP Profitability</div><div class="bar-wrap"><div class="bar-cohr" style="width:35%;"></div><div class="bar-lite" style="width:65%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">EML Market Position</div><div class="bar-wrap"><div class="bar-cohr" style="width:30%;"></div><div class="bar-lite" style="width:70%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">OCS Momentum</div><div class="bar-wrap"><div class="bar-cohr" style="width:35%;"></div><div class="bar-lite" style="width:65%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">CPO Positioning</div><div class="bar-wrap"><div class="bar-cohr" style="width:50%;"></div><div class="bar-lite" style="width:50%;"></div></div><div class="score-winner win-tie-txt">Tied</div></div>
+    <div class="score-row"><div class="score-label">Product Breadth</div><div class="bar-wrap"><div class="bar-cohr" style="width:80%;"></div><div class="bar-lite" style="width:20%;"></div></div><div class="score-winner win-cohr-txt">COHR ✓</div></div>
+    <div class="score-row"><div class="score-label">Vertical Integration</div><div class="bar-wrap"><div class="bar-cohr" style="width:80%;"></div><div class="bar-lite" style="width:20%;"></div></div><div class="score-winner win-cohr-txt">COHR ✓</div></div>
+    <div class="score-row"><div class="score-label">Valuation (P/S, EV/EBITDA)</div><div class="bar-wrap"><div class="bar-cohr" style="width:65%;"></div><div class="bar-lite" style="width:35%;"></div></div><div class="score-winner win-cohr-txt">COHR ✓</div></div>
+    <div class="score-row"><div class="score-label">Analyst target alignment</div><div class="bar-wrap"><div class="bar-cohr" style="width:25%;"></div><div class="bar-lite" style="width:75%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">Sleep-at-night (lower beta)</div><div class="bar-wrap"><div class="bar-cohr" style="width:20%;"></div><div class="bar-lite" style="width:80%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+    <div class="score-row"><div class="score-label">Non-GAAP EPS per share</div><div class="bar-wrap"><div class="bar-cohr" style="width:25%;"></div><div class="bar-lite" style="width:75%;"></div></div><div class="score-winner win-lite-txt">LITE ✓</div></div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">评分卡总结：<strong>COHR胜出的维度</strong>：营收规模（2.2倍于LITE）、产品广度、垂直整合深度、P/S和EV/EBITDA相对估值。<strong>LITE胜出的维度</strong>：营收增速（+72.5% vs +18.5%，9个月对比）、毛利率（+830bps）、营业利润率（+1000bps）、资产负债表质量（净现金31.7亿美元 vs 净债务26亿美元）、GAAP盈利能力、EML市场主导地位、OCS积压订单领先、分析师目标价与当前市价契合度、Beta（波动性更低）、每股非GAAP收益。<strong>平局</strong>：CPO定位（双方均有英伟达支持，2027-2028年见分晓）。LITE在质量维度上以10:3领先COHR（1个平局）。</div>
+  </div>
+</div>
+
+<!-- SECTION 7: BULL BEAR -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Bull & Bear Cases for Each</div>
+  <div class="section-title-cn">各自的多头与空头情景</div>
+  <div class="section-divider"></div>
+
+  <p style="font-size:12px;font-weight:700;color:#185FA5;margin-bottom:8px;">COHR — Bull & Bear</p>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 COHR Bull — Target $550–650</div>
+      <div class="bull-text">CPO design win at NVIDIA's next-gen switch ASIC — Coherent's demonstrated 6.4T SiPho CPO system and NVIDIA's $2B investment + 5-product-family access puts it in prime position to win the defining CPO contract of 2027. Vertical integration allows it to capture the entire value chain at higher unit volumes. Industrial recovery adds €300–400M incremental high-margin revenue. Debt continues declining; GAAP profitability emerges in FY2027, unlocking a new class of institutional buyers currently excluded by GAAP losses.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 COHR Bear — Target $180–240</div>
+      <div class="bear-text">CPO loses to LITE or a third competitor — most damaging single event possible. GAAP losses from $7.6B goodwill persist longer than expected, maintaining the earnings quality overhang. AI capex cycle pauses; transceiver demand normalises while COHR carries heavy debt service. Shares outstanding grew 17% in one year from NVIDIA placement + SBC — dilution prevents per-share value creation. Stock at $382 is 49% above NVIDIA's basis with no earnings floor.</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;font-weight:700;color:#1D9E75;margin-bottom:8px;margin-top:14px;">LITE — Bull & Bear</p>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 LITE Bull — Target $1,400–1,800</div>
+      <div class="bull-text">OCS becomes a $500M+ annual revenue business by FY2028 as Google, Microsoft, and Meta deploy all-optical AI cluster backbones — LITE is the only proven volume OCS supplier. CPO multi-hundred-million order delivers H1 2027 and scales to a $300–500M run-rate. EML demand continues to outstrip supply through 2028, sustaining 47–50%+ gross margins. Non-GAAP EPS reaches $12–15 by FY2028, justifying $1,200–1,500+ at 30x earnings. Nasdaq-100 inclusion (May 18, 2026) drives passive fund buying. Net cash of $3.17B deployed in earnings-accretive buybacks.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 LITE Bear — Target $400–550</div>
+      <div class="bear-text">EML supply catches up with demand as Coherent, II-VI heritage fabs, and Asian competitors scale 200G EML production by 2027 — pricing power evaporates, gross margin compresses from 48% back toward 38–40%. The stock at $970 is pricing in sustained EML monopoly economics; any sign of supply normalisation triggers severe multiple compression. OCS volumes slower than expected — $400M backlog but Q4 ramp disappoints. CPO delayed to 2029+. The 1,267% move from 52-week lows leaves little margin for error. Stock falls back toward 20–25x a lower EPS trajectory.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>COHR多/空头情景</strong>：多头（目标550-650美元）依赖CPO设计胜出和工业复苏；空头（目标180-240美元）源于CPO失利、商誉持续压制GAAP盈利和股份摊薄。<strong>LITE多/空头情景</strong>：多头（目标1400-1800美元）依赖OCS成为5亿美元+年收入业务、CPO订单规模化交付和EML定价权持续至2028年；空头（目标400-550美元）源于竞争对手200G EML产能快速跟进导致定价权消失、毛利率从48%压缩至38-40%，以及股价从52周低点上涨1267%后任何不及预期均可能引发估值倍数剧烈压缩。</div>
+  </div>
+</div>
+
+<!-- SECTION 8: VERDICT -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Investment Verdict — Who Should Own What</div>
+  <div class="section-title-cn">投资结论 — 谁适合持有哪一只</div>
+  <div class="section-divider"></div>
+
+  <div class="verdict-grid">
+    <div class="verdict-card cohr">
+      <div class="verdict-title cohr">Own COHR if you…</div>
+      <div class="verdict-text">
+        <span class="pill pill-scale">Scale + Breadth</span><br><br>
+        • Want the widest exposure to 光领域 through one stock — COHR touches every part of the optical stack including SiC, GaAs, DCI, and industrial lasers that LITE doesn't cover<br><br>
+        • Are comfortable with GAAP complexity — can distinguish merger-era accounting artefacts from operating performance<br><br>
+        • Want to pay less on P/S (0.9x vs 2.5x) and EV/EBITDA for the same AI optical tailwind<br><br>
+        • Believe COHR's CPO demonstration at OFC 2026 means it wins the decisive NVIDIA design cycle<br><br>
+        • Have a 3+ year horizon for GAAP profitability and debt normalisation to unlock value<br><br>
+        • Can tolerate beta of 2.053 — stock will swing violently on any AI capex news
+      </div>
+    </div>
+    <div class="verdict-card lite">
+      <div class="verdict-title lite">Own LITE if you…</div>
+      <div class="verdict-text">
+        <span class="pill pill-focus">Focus + Quality</span><br><br>
+        • Want the highest-quality, highest-margin business in 光领域 with a genuine component monopoly<br><br>
+        • Value balance sheet strength — $3.17B net cash means no dilution risk, no debt service drag, and capital available for buybacks<br><br>
+        • Prioritise margin quality — 47.9% non-GAAP gross margin is among the highest in all of semiconductor equipment and photonics<br><br>
+        • Want lower volatility (beta 1.533 vs 2.053) for a large-cap-quality position in the AI optical theme<br><br>
+        • Believe the EML seller's market — and OCS — sustain pricing power through 2027–2028<br><br>
+        • Want analyst consensus targets that actually match the current price (~$1,034–1,081 vs $970 current)
+      </div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>The single most important conclusion:</strong> If you can own only one, own <strong>LITE</strong> for quality — higher margins, net cash, genuine EML monopoly, lower beta, GAAP profitable, and analyst targets matching current prices. Own <strong>COHR</strong> as the <em>complement</em> — it gives you exposure LITE doesn't cover (SiC, GaAs, DCI coherent, industrial scale) at a cheaper P/S multiple, with the CPO wild card still open. The ideal 光领域 portfolio for your boss holds <strong>both</strong>: LITE as the 3–4% core position (quality anchor), COHR as the 2–3% satellite (breadth + CPO optionality). Together they cover essentially all of Layer 2's optical supply chain with different but complementary risk profiles.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>最终投资结论</strong>：若只能持有一只，选<strong>LITE</strong>——更高毛利率、净现金、EML近垄断地位、更低Beta、GAAP盈利、分析师目标价与市价匹配。选<strong>COHR</strong>作为补充——覆盖LITE没有的SiC、GaAs、DCI相干、工业规模，P/S更便宜（0.9倍 vs 2.5倍），CPO竞争格局尚未明朗（存在超额回报可能）。<strong>最优光领域组合建议</strong>：持有LITE作为3-4%核心仓位（质量锚），COHR作为2-3%卫星仓位（广度+CPO期权价值）。两者合计几乎覆盖Layer 2光学供应链全链条，且风险特征互补——这正是您老板要求的系统性光领域配置框架。</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">SOURCES · 数据来源</div>
+  <div class="sources">
+    FMP API — COHR: price $382.45, market cap $60.6B, beta 2.053, 52-wk $73.66–$413; LITE: price $970.70, market cap $75.5B, beta 1.533, 52-wk $71.04–$1,085.68 · Retrieved May 14–18, 2026<br>
+    Coherent Corp SEC Form 8-K — Q3 FY2026 Earnings (May 6, 2026) · SEC EDGAR<br>
+    Coherent Corp SEC Form 10-Q — Q3 FY2026 (quarter ended March 31, 2026) · SEC EDGAR<br>
+    Coherent Corp SEC Form 8-K — NVIDIA Strategic Partnership & $2B Investment (March 2, 2026) · SEC EDGAR<br>
+    Lumentum Holdings SEC Form 8-K — Q3 FY2026 Earnings (May 5, 2026) · SEC EDGAR<br>
+    Lumentum Holdings SEC Form 10-Q — Q3 FY2026 (quarter ended March 28, 2026) · SEC EDGAR<br>
+    Lumentum Holdings SEC Form 8-K — Q2 FY2026 Earnings (February 3, 2026) · SEC EDGAR<br>
+    Lumentum Holdings SEC Form 8-K — NVIDIA Strategic Partnership & $2B Investment (March 2, 2026) · SEC EDGAR<br>
+    Simply Wall St — LITE analyst targets: consensus $1,034–$1,081; EPS forecast $5.00 FY2026 · Retrieved May 14, 2026<br>
+    Public.com — LITE analyst consensus: 15 analysts, Buy majority, target ~$830 avg (pre-Q3 revision) · Retrieved May 18, 2026<br>
+    StockAnalysis — COHR statistics: trailing PE 158x, forward PE 51x, PEG 1.09, D/E 0.31 · Retrieved May 14, 2026<br>
+    mlq.ai Research — Optical Networking: EML market share, book-to-bill, OCS backlog · March 31, 2026<br>
+    ChipStrat (Austin Lyons) — "Lumentum and the Laser Bottleneck": EML undershipping 30%, LTAs, seller's market · March 2, 2026<br>
+    Vik's Newsletter — "Lumentum: Laser Demand, OCS, CPO and Optical Scale-Up": Q2 FY2026 earnings analysis · February 6, 2026<br>
+    FinancialContent (Finterra) — "The Light Engine of AI" (LITE); "The Optical Backbone of AI" (COHR) · March–April 2026<br>
+    TIKR.com — "Lumentum Stock Surged Over 1,100% in a Year" · May 17, 2026<br>
+    Wikipedia — Lumentum Holdings history, JDSU spinoff · Retrieved May 2026<br>
+    Anand Capital Substack — LITE investment thesis, epitaxy moat · April 6, 2026<br>
+    All [ASSUMED] or [E] figures require independent verification. Neither stock pays a dividend as of May 2026.
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. All financial figures are sourced from SEC filings and reputable financial data providers. All projections involve significant uncertainty. Past performance is not indicative of future results. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议或任何证券买卖推荐。所有财务数据来源于SEC文件及知名财务数据提供商。所有预测均存在重大不确定性，历史表现不代表未来结果。请在做出投资决策前咨询合格的财务顾问。
+</div>
+
+</body>
+</html>
