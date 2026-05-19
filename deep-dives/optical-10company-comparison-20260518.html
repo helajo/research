@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>光领域 10-Company Comparison — May 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f8f6;color:#1a1a1a;padding:1.5rem;max-width:1100px;margin:0 auto;font-size:13px}
+.doc-header{border-bottom:2px solid #1a1a1a;padding-bottom:1.2rem;margin-bottom:1.5rem}
+.doc-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#185FA5;margin-bottom:6px}
+.doc-title{font-size:22px;font-weight:700;line-height:1.3;margin-bottom:3px}
+.doc-title-cn{font-size:13px;color:#666;margin-bottom:6px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif}
+.doc-meta{font-size:11px;color:#888}
+.intro{background:#fff;border:1px solid #e0e0d8;border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px;color:#333;line-height:1.7}
+.intro-cn{font-size:12px;color:#888;margin-top:6px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;line-height:1.8}
+
+/* LAYER LEGEND */
+.layer-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:16px}
+.ll-card{background:#fff;border:1px solid #e0e0d8;border-radius:8px;padding:8px 10px}
+.ll-badge{display:inline-flex;align-items:center;gap:6px;background:#0C1A2E;color:#fff;border-radius:5px;padding:4px 8px;font-size:10px;margin-bottom:4px}
+.ll-num{background:#185FA5;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.ll-name{font-weight:700;font-size:10px}
+.ll-cn{font-size:9px;opacity:.75}
+.ll-tickers{font-size:11px;color:#444;margin-top:3px}
+.ll-tickers strong{color:#185FA5;font-weight:700}
+.tier-badge{font-size:9px;font-weight:700;border-radius:20px;padding:1px 6px;display:inline-block;margin-left:4px}
+.t-high{background:#FEE2E2;color:#991B1B}
+.t-mid{background:#FEF3C7;color:#92400E}
+.t-low{background:#D1FAE5;color:#065F46}
+.t-ul{background:#DCFCE7;color:#14532D;border:1px solid #86EFAC}
+
+/* SECTION */
+.section{margin-bottom:2rem}
+.sec-num{font-size:10px;font-weight:700;color:#185FA5;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.sec-title{font-size:17px;font-weight:700;margin-bottom:3px}
+.sec-title-cn{font-size:12px;color:#888;margin-bottom:12px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif}
+.sec-div{height:2px;background:#e8e8e0;margin-bottom:1rem}
+
+/* COMPANY CARD */
+.co-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.co-card{background:#fff;border:1px solid #e0e0d8;border-radius:10px;padding:14px}
+.co-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.co-ticker{font-size:16px;font-weight:800;color:#185FA5}
+.co-name{font-size:10px;color:#888;margin-top:1px}
+.co-price{text-align:right}
+.co-price-val{font-size:18px;font-weight:700}
+.co-price-meta{font-size:10px;color:#aaa}
+.co-tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.tag{font-size:9px;font-weight:700;border-radius:4px;padding:2px 7px}
+.tag-l1{background:#E6F1FB;color:#0C447C}
+.tag-l2{background:#EAF3DE;color:#27500A}
+.tag-l3{background:#FAEEDA;color:#633806}
+.tag-l8{background:#F0E6FB;color:#4A0C7C}
+.tag-sub{background:#f0efe8;color:#555}
+.co-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px}
+.cs{background:#f8f8f6;border-radius:5px;padding:4px 6px}
+.cs-label{font-size:8px;text-transform:uppercase;letter-spacing:.04em;color:#aaa;margin-bottom:1px}
+.cs-val{font-size:12px;font-weight:600;color:#222}
+.cs-val.up{color:#0F6E56}
+.cs-val.dn{color:#A32D2D}
+.cs-val.am{color:#B45309}
+.co-body{font-size:11px;color:#444;line-height:1.6;margin-bottom:8px}
+.co-cn{font-size:11px;color:#999;border-top:1px dashed #eee;padding-top:6px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;line-height:1.7}
+
+/* MEGA TABLE */
+.mega-wrap{overflow-x:auto;margin-bottom:16px}
+.mega-table{width:100%;border-collapse:collapse;font-size:11px;min-width:950px}
+.mega-table th{background:#f0efe8;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#555;padding:7px 8px;text-align:center;border-bottom:2px solid #e0dfd8;white-space:nowrap}
+.mega-table th.dim-h{text-align:left;width:130px}
+.mega-table td{padding:6px 8px;border-bottom:1px solid #f0efe8;text-align:center;color:#333;vertical-align:top}
+.mega-table td.dim{text-align:left;font-weight:600;font-size:10px;color:#666;white-space:nowrap}
+.mega-table .sec-row td{background:#f0efe8;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#888;padding:4px 8px}
+.mega-table tr:hover td{background:#fafaf8}
+.win{background:#EDFBF4;font-weight:700;color:#0A5C3A}
+.warn{background:#FAEEDA;color:#633806}
+.risk{background:#FCEBEB;color:#791F1F}
+.src{font-size:9px;background:#f0efe8;color:#999;border-radius:3px;padding:1px 4px;margin-left:2px}
+
+/* MACROIMPACT */
+.macro-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.mac-card{background:#fff;border:1px solid #e0e0d8;border-radius:8px;padding:10px 12px}
+.mac-type{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#185FA5;margin-bottom:4px}
+.mac-text{font-size:11px;color:#444;line-height:1.6;margin-bottom:6px}
+.mac-cn{font-size:10px;color:#aaa;border-top:1px dashed #eee;padding-top:4px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;line-height:1.6}
+
+/* PRICE TRENDS */
+.pt-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:10px}
+.pt-card{background:#fff;border:1px solid #e0e0d8;border-radius:8px;padding:8px}
+.pt-ticker{font-size:11px;font-weight:800;color:#185FA5}
+.pt-price{font-size:14px;font-weight:700;margin:2px 0}
+.pt-52w{font-size:9px;color:#888;margin-bottom:2px}
+.pt-1yr{font-size:10px;font-weight:700}
+.pt-up{color:#0F6E56}
+.pt-dn{color:#A32D2D}
+
+/* CALLOUT */
+.callout{background:#E6F1FB;border-left:3px solid #185FA5;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:12px;color:#0C447C;line-height:1.6}
+.callout strong{font-weight:700}
+.callout-amber{background:#FAEEDA;border-left:3px solid #B45309;border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:12px;color:#633806;line-height:1.6}
+.cn-summary{background:#f5f3ee;border-left:3px solid #d8d5cc;border-radius:0 8px 8px 0;padding:8px 12px;margin-top:10px}
+.cn-label{font-size:8px;font-weight:700;color:#bbb;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.cn-text{font-size:12px;color:#666;line-height:1.9;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif}
+.cn-text strong{color:#444;font-weight:600}
+.sources{font-size:10px;color:#aaa;line-height:2}
+.footer{font-size:10px;color:#bbb;text-align:center;padding-top:.8rem;border-top:1px solid #e8e8e0;margin-top:1.5rem;line-height:1.8}
+.divider{height:1px;background:#e8e8e0;margin:1.2rem 0}
+.body-text{font-size:13px;color:#333;line-height:1.75;margin-bottom:10px}
+.watch-list{list-style:none;padding:0;margin-bottom:10px}
+.watch-list li{font-size:12px;color:#333;padding:5px 0 5px 16px;border-bottom:1px solid #f0efe8;position:relative;line-height:1.5}
+.watch-list li::before{content:"→";position:absolute;left:0;color:#185FA5;font-weight:600}
+.watch-list li:last-child{border-bottom:none}
+@media(max-width:700px){.co-grid,.macro-grid,.pt-grid{grid-template-columns:1fr}.co-stats{grid-template-columns:1fr 1fr}.layer-legend{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="doc-tag">光领域 · AI OPTICAL INFRASTRUCTURE · 10-COMPANY INSTITUTIONAL COMPARISON · LAYER 2 DEEP DIVE</div>
+  <div class="doc-title">光领域 (Optical Domain) — 10-Company Comprehensive Analysis</div>
+  <div class="doc-title-cn">AI光学基础设施生态全景 — 10家公司机构级深度对比报告</div>
+  <div class="doc-meta">Generated May 18, 2026 · Covering: LITE, COHR, FN, CIEN, MTSI, GLW, AVGO, MRVL, TSEM, GFS · All data from SEC filings, FMP API, and financial press</div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <strong>The Copper Wall thesis in one paragraph:</strong> Every generation of NVIDIA GPU roughly doubles bandwidth requirements. Copper cables — the current standard for connecting GPUs, switches, and servers — generate too much heat, consume too much power, and lose signal integrity above ~40 metres at speeds beyond 400G. The industry is in a mandatory, non-optional transition from copper to light. The 10 companies in this report collectively own the photon supply chain that makes AI at scale physically possible.
+  <div class="intro-cn">核心命题：每一代英伟达GPU所需带宽约翻番，铜缆在400G以上速率和40米以上距离时存在严重的热损耗和信号衰减问题。整个行业正在经历从铜到光的强制性、不可逆转的转型。本报告覆盖的10家公司共同拥有这一光子供应链，是AI规模化运行的物理基础。</div>
+</div>
+
+<!-- LAYER LEGEND -->
+<div class="section">
+  <div class="sec-num">FRAMEWORK · 框架</div>
+  <div class="sec-title">AI Infrastructure Layer Map & Valuation Tier Context</div>
+  <div class="sec-title-cn">AI基础设施层级地图与估值层级说明（层级估值反映市场对该层整体的定价程度，非个股风险或AI敞口大小）</div>
+  <div class="sec-div"></div>
+  <div class="layer-legend">
+    <div class="ll-card">
+      <div class="ll-badge"><div class="ll-num">1</div><div><div class="ll-name">Silicon Brain</div><div class="ll-cn">硅基大脑</div></div></div>
+      <div class="ll-tickers"><strong>COHR, GFS, TSEM</strong> (secondary) · Chip manufacturing materials &amp; fab</div>
+      <span class="tier-badge t-high">🔴 Reasonably High</span>
+    </div>
+    <div class="ll-card">
+      <div class="ll-badge" style="background:#0C2E0C"><div class="ll-num" style="background:#1D9E75">2</div><div><div class="ll-name">Compute Bloodstream</div><div class="ll-cn">算力血管</div></div></div>
+      <div class="ll-tickers"><strong>LITE, COHR, FN, CIEN, MTSI, GLW, MRVL, TSEM, GFS</strong></div>
+      <span class="tier-badge t-ul">💚 Undervalued→Re-rating</span>
+    </div>
+    <div class="ll-card">
+      <div class="ll-badge" style="background:#2E1A0C"><div class="ll-num" style="background:#B45309">3</div><div><div class="ll-name">Physical Skeleton</div><div class="ll-cn">物理躯干</div></div></div>
+      <div class="ll-tickers"><strong>AVGO</strong> (switching silicon, CPO switch platform)</div>
+      <span class="tier-badge t-mid">🟡 Reasonable</span>
+    </div>
+    <div class="ll-card">
+      <div class="ll-badge" style="background:#2E280C"><div class="ll-num" style="background:#B4A309">8</div><div><div class="ll-name">Application Distribution</div><div class="ll-cn">应用分发</div></div></div>
+      <div class="ll-tickers"><strong>AVGO</strong> (custom ASICs for hyperscalers), <strong>MRVL</strong> (XPU)</div>
+      <span class="tier-badge t-high">🔴 Reasonably High</span>
+    </div>
+  </div>
+  <div class="callout"><strong>Layer Valuation Tier Reminder:</strong> The tier (🔴🟡🟢💚) rates how the MARKET HAS PRICED THE LAYER AS A WHOLE relative to other AI infrastructure layers — not individual company risk, not AI revenue concentration. 💚 Undervalued means the layer's AI connection was under-appreciated at framework inception (2024); by May 2026 the optical domain (Layer 2) has been substantially re-rated, though pockets of value remain vs. Layers 1 and 8.</div>
+</div>
+
+<!-- SECTION 1: LAYER SUBDIVISION -->
+<div class="section">
+  <div class="sec-num">SECTION 1 · 第一节</div>
+  <div class="sec-title">Layer 2 Sub-division — The Optical Value Chain Mapped</div>
+  <div class="sec-title-cn">第2层细分 — 光学价值链全貌（每家公司在链条中的位置）</div>
+  <div class="sec-div"></div>
+  <div class="body-text">Layer 2 (Compute Bloodstream) is not one product — it is a layered value chain from raw semiconductor crystal to complete optical networking system. Here is how the 10 companies map across six sub-tiers within this layer:</div>
+  <table class="mega-table" style="min-width:700px">
+    <thead>
+      <tr>
+        <th class="dim-h">Sub-tier within Layer 2</th>
+        <th>What it does</th>
+        <th>Companies</th>
+        <th>Layer position note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="dim">2A — Substrate / Wafer Materials</td><td>InP, GaAs, SiC crystal growth &amp; wafer production — the raw material for all photonic chips</td><td><strong>COHR, LITE, GFS, TSEM</strong></td><td>Also touches Layer 1 (Silicon Brain)</td></tr>
+      <tr><td class="dim">2B — Laser Chip Fabrication</td><td>EML, VCSEL, CW laser chips — the light source inside every transceiver. Most supply-constrained sub-tier</td><td><strong>LITE (dominant), COHR, MTSI</strong></td><td>Core Layer 2 — the photon generation layer</td></tr>
+      <tr><td class="dim">2C — Signal Processing Silicon</td><td>DSP chips, PAM4 drivers, TIAs — translate electrical data to optical and amplify signals</td><td><strong>MRVL (DSP leader), MTSI (LPO driver), AVGO</strong></td><td>Layer 2 intelligence layer — bridges electrical and optical</td></tr>
+      <tr><td class="dim">2D — Transceiver Module Assembly</td><td>Complete pluggable modules (400G/800G/1.6T) integrating laser + DSP + housing — what plugs into a switch</td><td><strong>COHR, LITE, CIEN (WaveLogic), FN (contract mfg)</strong></td><td>Core Layer 2 — the deployable product</td></tr>
+      <tr><td class="dim">2E — Optical Networking Systems</td><td>Complete WDM systems, optical switching, reconfigurable add/drop multiplexers (ROADMs), amplifiers, OCS</td><td><strong>CIEN (leader), LITE (OCS), COHR, AVGO</strong></td><td>Upper Layer 2 — moves toward Layer 3 physical infrastructure</td></tr>
+      <tr><td class="dim">2F — Physical Optical Infrastructure</td><td>Optical fibre cables, connectors, ULE glass substrates, specialty glass for transceivers and EUV masks</td><td><strong>GLW (dominant), GFS (SiPho foundry)</strong></td><td>Foundation of Layer 2 — the physical medium</td></tr>
+    </tbody>
+  </table>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">第2层（算力血管）内部细分为6个子层：<strong>2A衬底/晶圆材料</strong>（COHR、LITE、GFS、TSEM，也涉及第1层）→<strong>2B激光芯片制造</strong>（LITE主导，COHR次之，MTSI参与）→<strong>2C信号处理硅芯片</strong>（MRVL主导DSP，MTSI推进LPO，AVGO参与）→<strong>2D收发器模块组装</strong>（COHR、LITE、CIEN，FN为合同制造商）→<strong>2E光学网络系统</strong>（CIEN领导，LITE推OCS，COHR和AVGO参与）→<strong>2F物理光学基础设施</strong>（GLW主导光纤电缆，GFS为硅光子代工厂）。理解每家公司在价值链中的位置是评估其竞争优势和风险的关键。</div>
+  </div>
+</div>
+
+<!-- SECTION 2: 10-COMPANY PROFILES -->
+<div class="section">
+  <div class="sec-num">SECTION 2 · 第二节</div>
+  <div class="sec-title">10-Company Profiles — Segment Analysis, Moat & Supplier/Buyer Reliance</div>
+  <div class="sec-title-cn">10家公司档案 — 业务板块、护城河与供应商/买家依赖度</div>
+  <div class="sec-div"></div>
+
+  <div class="co-grid">
+    <!-- LITE -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">LITE</div><div class="co-name">Lumentum Holdings · NASDAQ · San Jose CA</div></div>
+        <div class="co-price"><div class="co-price-val">$970.70</div><div class="co-price-meta">52wk: $71–$1,086 · +1,267%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span>
+        <span class="tag tag-sub">Sub-tier: 2B+2D+2E</span>
+        <span class="tier-badge t-ul">💚 Re-rating</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">$75.5B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~120x+</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~55–60x</div></div>
+        <div class="cs"><div class="cs-label">Revenue TTM</div><div class="cs-val">~$2.6B</div></div>
+        <div class="cs"><div class="cs-label">Non-GAAP GM</div><div class="cs-val up">47.9%</div></div>
+        <div class="cs"><div class="cs-label">Net Cash</div><div class="cs-val up">+$3.17B</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Cloud &amp; Networking (88%) — EML laser chips, 800G/1.6T transceivers, OCS, CPO; Industrial Tech (12%) — VCSELs, commercial lasers. <strong>Moat:</strong> 50–60% global 200G EML market share; sole volume supplier of 200G-per-lane EMLs; all InP EML capacity locked via LTAs through 2027; undershipping demand by ~30%; $400M+ OCS backlog. <strong>Supplier reliance:</strong> InP wafer fabs in San Jose &amp; Japan — self-supplied, reducing dependency. Dependent on Foxconn/contract manufacturers for transceiver assembly. <strong>Buyer reliance:</strong> Top customers Google, Amazon, Meta — hyperscaler concentration but diversifying. CloudLight acquisition (2023) enabled direct hyperscaler sales. NVIDIA $2B strategic partner.</div>
+      <div class="co-cn">核心优势：200G EML激光芯片全球50-60%市场份额，唯一量产供应商；所有产能LTA锁定至2027年，供不应求约30%。88%营收来自云和网络。净现金31.7亿美元，财务健康。买方集中度：谷歌、亚马逊、Meta为主要客户，正在多元化。</div>
+    </div>
+
+    <!-- COHR -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">COHR</div><div class="co-name">Coherent Corp · NYSE · Saxonburg PA</div></div>
+        <div class="co-price"><div class="co-price-val">$382.45</div><div class="co-price-meta">52wk: $74–$413 · +418%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span><span class="tag tag-l1">Layer 1 Secondary</span>
+        <span class="tag tag-sub">Sub-tier: 2A+2B+2D+2E+2F</span>
+        <span class="tier-badge t-ul">💚 Re-rating</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">$60.6B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val dn">~513x (GAAP)</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~47x</div></div>
+        <div class="cs"><div class="cs-label">Revenue TTM</div><div class="cs-val">~$6.7B</div></div>
+        <div class="cs"><div class="cs-label">Non-GAAP GM</div><div class="cs-val">39.6%</div></div>
+        <div class="cs"><div class="cs-label">Net Debt</div><div class="cs-val dn">~$2.6B</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Datacenter &amp; Communications (75%) — InP laser chips, 400G–1.6T transceivers, OCS, SiPho CPO, DCI coherent; Industrial (25%) — SiC substrates, high-power lasers, precision optics. <strong>Moat:</strong> Broadest vertical integration (InP/GaAs/SiC wafer to finished system); NVIDIA $2B strategic partner; ~25% global transceiver market share; 5 CPO product families co-developed with NVIDIA; OFC 2026 demo of 6.4T SiPho CPO. <strong>Supplier reliance:</strong> InP crystal growth in-house; SiC manufacturing in Sherman TX. Some raw material dependencies on Chinese supply chains. <strong>Buyer reliance:</strong> NVIDIA is the anchor strategic partner; hyperscalers (Google, Amazon, Meta) are customers. $7.6B goodwill from mergers remains balance sheet risk.</div>
+      <div class="co-cn">核心优势：全球最宽垂直整合产业链（InP/GaAs/SiC晶圆→模块→系统）；英伟达20亿美元战略投资及5个CPO产品系列联合开发权；约25%全球收发器市场份额。风险：76亿美元商誉、GAAP持续亏损、净债务26亿美元。</div>
+    </div>
+
+    <!-- FN -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">FN</div><div class="co-name">Fabrinet · NYSE · Bangkok Thailand</div></div>
+        <div class="co-price"><div class="co-price-val">~$720</div><div class="co-price-meta">52wk: ~$200–$800 · +260%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span>
+        <span class="tag tag-sub">Sub-tier: 2D (contract mfg)</span>
+        <span class="tier-badge t-ul">💚 Re-rating</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$26B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~44x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~49x</div></div>
+        <div class="cs"><div class="cs-label">Revenue TTM</div><div class="cs-val">~$4.5B</div></div>
+        <div class="cs"><div class="cs-label">GAAP GM</div><div class="cs-val">~12%</div></div>
+        <div class="cs"><div class="cs-label">GAAP profitable</div><div class="cs-val up">Yes</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Optical Communications (majority, ~75%) — contract manufacturing of COHR/LITE/CIEN/Viavi transceiver modules and optical subsystems; Datacom/Telecom/HPC discrete split; Automotive, Medical, Industrial (minority ~25%). <strong>Moat:</strong> The "TSMC of optics" — manufactures for every major photonics OEM simultaneously; no competing with customers; Thailand manufacturing base = cost competitive + geopolitically neutral; $32M strategic investment in Raytec Semiconductor (CPO-focused). <strong>Supplier reliance:</strong> Deeply integrated with COHR, LITE, CIEN as OEM partners who design the products FN manufactures. Fabrinet has minimal raw materials exposure — it is a value-added manufacturer. <strong>Buyer reliance:</strong> Customer concentration around COHR and LITE historically, but expanding via newer programs with Arista, Cisco, NVIDIA partners. Q4 guidance $1.25–1.29B, +47% YoY.</div>
+      <div class="co-cn">核心优势：光学模块合同制造第一名，同时为所有主要光子学OEM制造产品，不与客户竞争——是"光学领域的台积电"；泰国制造基地提供成本优势和地缘中立性。薄利（毛利率约12%）但规模巨大，Q3 FY2026营收12.1亿美元（同比+39%）。</div>
+    </div>
+
+    <!-- CIEN -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">CIEN</div><div class="co-name">Ciena Corporation · NYSE · Hanover MD</div></div>
+        <div class="co-price"><div class="co-price-val">~$530</div><div class="co-price-meta">52wk: ~$80–$560 · +460%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span>
+        <span class="tag tag-sub">Sub-tier: 2D+2E</span>
+        <span class="tier-badge t-ul">💚 Re-rating</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$70B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val dn">~345x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~30x</div></div>
+        <div class="cs"><div class="cs-label">Revenue FY26E</div><div class="cs-val up">$5.9–6.3B</div></div>
+        <div class="cs"><div class="cs-label">Adj GM</div><div class="cs-val up">~44%</div></div>
+        <div class="cs"><div class="cs-label">Backlog</div><div class="cs-val up">$7B</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Optical Networking (72%) — WaveServer, 6500 Reconfigurable Line System, 800G/1.6T pluggables; Routing &amp; Switching (9%); Platform Software &amp; Services (7%) — Blue Planet automation AI; Global Services (12%). Acquired Nubis (Sept 2025) for shorter-reach DC optics. <strong>Moat:</strong> WaveLogic coherent modem technology — 800G ZR market share rising to ~50% in 2026; deepest software integration (Blue Planet automation AI); $7B record backlog; ~48% cloud networking market share. <strong>Supplier reliance:</strong> Sources DSIC chips and optical components from LITE/COHR; wafer supply from Global Foundries and TSEM. <strong>Buyer reliance:</strong> Cloud providers (Google, Azure, Amazon) are largest customers at ~40% of revenue; AT&amp;T and telcos provide diversification. Raised FY2026 guidance to $5.9–6.3B (+28% YoY).</div>
+      <div class="co-cn">核心优势：WaveLogic相干调制解调器技术主导800G ZR市场（预计2026年份额升至约50%）；700亿美元积压订单；约48%云网络市场份额；Blue Planet自动化软件提供额外粘性。FY2026全年营收指引59-63亿美元（+28%）。风险：追踪PE约345倍（受转型影响），前瞻PE约30倍更具参考价值。</div>
+    </div>
+
+    <!-- MTSI -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">MTSI</div><div class="co-name">MACOM Technology Solutions · NASDAQ · Lowell MA</div></div>
+        <div class="co-price"><div class="co-price-val">~$300</div><div class="co-price-meta">52wk: $84–$232+ · +28.9% recent</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span>
+        <span class="tag tag-sub">Sub-tier: 2B+2C</span>
+        <span class="tier-badge t-mid">🟡 Reasonable</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$18B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~65x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~60–65x</div></div>
+        <div class="cs"><div class="cs-label">Revenue TTM</div><div class="cs-val">~$1.1B</div></div>
+        <div class="cs"><div class="cs-label">Gross Margin</div><div class="cs-val up">55.9%</div></div>
+        <div class="cs"><div class="cs-label">Beat rate</div><div class="cs-val up">88–100%</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> No formal disclosed segments — blended across: Data Center optical (drivers, TIAs, amplifiers for 400G–3.2T); Telecom (microwave backhaul, metro); Defence/Aerospace (GaN RF, radar, EW — ~20% revenue, unique diversifier); Industrial/Other. Announced 448G PAM4 modulator drivers for 1.6T/3.2T (March 2026). <strong>Moat:</strong> Highest gross margin in the group (55.9%) — reflects MACOM's pricing power in analog semiconductors and defence/aerospace content; LPO (Linear Pluggable Optics) technology avoids expensive DSPs for cost-sensitive 800G deployment; 100% revenue beat rate over 2 years. <strong>Supplier reliance:</strong> Fabless model — outsources wafer fabrication to TSEM and others, concentrating risk on fab partners. <strong>Buyer reliance:</strong> Cloud hyperscalers (~50% DC exposure); defence contractors and US govt (~20%); telcos (~30%). Q1 FY2026 revenue guidance: $284.6M (+30.5% YoY).</div>
+      <div class="co-cn">核心优势：最高毛利率（55.9%）——反映模拟半导体定价权；独特的国防/航空航天业务（约20%营收）提供差异化收入来源；LPO技术绕过昂贵DSP为800G提供低成本方案；近两年财报100%超出营收预期。风险：无晶圆厂模式依赖代工合作伙伴；前瞻PE约60-65倍在组合中偏高。</div>
+    </div>
+
+    <!-- GLW -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">GLW</div><div class="co-name">Corning Incorporated · NYSE · Corning NY</div></div>
+        <div class="co-price"><div class="co-price-val">~$189.62</div><div class="co-price-meta">52wk: $58–$202 · +298% trailing 12mo</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2 Primary</span><span class="tag tag-l1">Layer 1 Secondary</span>
+        <span class="tag tag-sub">Sub-tier: 2F (fibre) + 2A (ULE glass)</span>
+        <span class="tier-badge t-ul">💚 Re-rating</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$165B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val dn">~92x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~51x</div></div>
+        <div class="cs"><div class="cs-label">Q1 2026 Revenue</div><div class="cs-val up">$4.35B (+18%)</div></div>
+        <div class="cs"><div class="cs-label">Optical Comms</div><div class="cs-val up">$1.85B (+36%)</div></div>
+        <div class="cs"><div class="cs-label">NVIDIA deal</div><div class="cs-val up">$500M</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Optical Communications (~38%) — AI datacenter fibre cables, enterprise optical connectivity (36% YoY in Q1); Specialty Materials (~13%) — Gorilla Glass, ULE glass for EUV mirrors; Display Technologies (~23%) — LCD glass panels; Solar (~9%) — polysilicon and solar energy; Life Sciences (~6%). NVIDIA invested $500M (May 6, 2026), issued warrants for up to 18M shares; $6B Meta deal signed; two more hyperscale customers at similar scale signed Q1 2026. <strong>Moat:</strong> World's largest optical fibre producer; sole supplier of ULE glass for EUV mirror substrates; Gorilla Glass phone-screen monopoly; NVIDIA strategic partner for AI optical connectivity. <strong>Supplier reliance:</strong> Integrated manufacturer — controls raw material sourcing for most segments. <strong>Buyer reliance:</strong> Hyperscalers (Meta, Google, Amazon, Microsoft) dominate optical comms growth; Apple for Gorilla Glass. 2030 revenue target raised to $40B. Q2 2026 guidance $4.6B (+14% YoY).</div>
+      <div class="co-cn">核心优势：全球最大光纤生产商；EUV反射镜衬底玻璃（ULE）唯一供应商；英伟达5亿美元战略投资（2026年5月），Meta 60亿美元多年期协议，另有两家超大云厂商签署类似规模协议；2030年营收目标上调至400亿美元。Q1 2026营收43.5亿美元（+18%），光通信业务增长36%。风险：PE偏高（追踪92倍，前瞻51倍），股价接近52周高位。</div>
+    </div>
+
+    <!-- AVGO -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">AVGO</div><div class="co-name">Broadcom Inc · NASDAQ · San Jose CA</div></div>
+        <div class="co-price"><div class="co-price-val">~$423.50</div><div class="co-price-meta">52wk: $222–$442 · +91%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2</span><span class="tag tag-l3">Layer 3</span><span class="tag tag-l8">Layer 8</span>
+        <span class="tag tag-sub">Sub-tier: 2C+2E (CPO switch)</span>
+        <span class="tier-badge t-high">🔴 Priced In</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$1T</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~62x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~30x</div></div>
+        <div class="cs"><div class="cs-label">Revenue TTM</div><div class="cs-val">~$55B</div></div>
+        <div class="cs"><div class="cs-label">Gross Margin</div><div class="cs-val up">~66%</div></div>
+        <div class="cs"><div class="cs-label">Dividend Yield</div><div class="cs-val">~1.2%</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Semiconductor Solutions (~55%) — networking ASICs (Tomahawk, Jericho), custom XPUs for Google TPU/Meta MTIA/Apple, silicon photonics CPO technology, Ethernet transceivers; Infrastructure Software (~45%) — VMware, CA Technologies, Symantec enterprise software. <strong>Moat:</strong> "Platform lock-in" — Broadcom's CPO switches force customers to adopt its optical architecture; only company where buying the fastest switch = buying its optical ecosystem; custom ASIC design wins at Google, Meta, Apple, ByteDance represent $20B+ in AI semiconductor revenue; 66% gross margin reflects extreme pricing power. <strong>Supplier reliance:</strong> Fabless — uses TSMC exclusively for leading-edge chips. VMware dependency — if enterprise IT spending slows, software revenue headwind. <strong>Buyer reliance:</strong> Google (~20%+ of semi revenue), Apple, Meta, Amazon are top customers; hyperscaler concentration is the primary risk. Dividend growth 15 consecutive years.</div>
+      <div class="co-cn">核心优势：CPO交换机平台锁定（客户买最快交换机=被迫采用AVGO光学架构）；谷歌、Meta、苹果自定义AI芯片（XPU）设计胜出代表200亿美元以上AI半导体收入；66%毛利率反映极强定价权；连续15年增加股息。风险：前瞻PE约30倍在组合中最便宜，但规模已达1万亿美元市值，α空间有限。无晶圆厂，高度依赖台积电。</div>
+    </div>
+
+    <!-- MRVL -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">MRVL</div><div class="co-name">Marvell Technology · NASDAQ · Santa Clara CA</div></div>
+        <div class="co-price"><div class="co-price-val">~$178</div><div class="co-price-meta">52wk: ~$65–$200 · +176%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l2">Layer 2</span><span class="tag tag-l8">Layer 8</span>
+        <span class="tag tag-sub">Sub-tier: 2C (DSP) + custom XPU</span>
+        <span class="tier-badge t-high">🔴 Premium Priced</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$156B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~58x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val am">~47x</div></div>
+        <div class="cs"><div class="cs-label">Revenue Q4 FY26</div><div class="cs-val up">$2.2B (+22%)</div></div>
+        <div class="cs"><div class="cs-label">Data Center %</div><div class="cs-val up">74%</div></div>
+        <div class="cs"><div class="cs-label">PEG</div><div class="cs-val up">1.12</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Data Center (~74%) — custom AI accelerators (XPU) for Amazon, Google; DSP chips for 800G/1.6T optical transceivers; DCI (Data Center Interconnect) coherent optics; NVLink Fusion optical interconnect (NVIDIA $2B investment); Carrier Infrastructure (~12%); Enterprise Networking (~9%); Consumer (~5%). Acquired Celestial AI ($5.5B, Dec 2025) for silicon photonics; acquired Polariton Technologies (Apr 2026) for high-speed optical modulation. <strong>Moat:</strong> DSP chip dominance — Marvell's DSPs are inside the majority of 800G coherent optical transceivers globally; custom ASIC relationships with hyperscalers create switching barriers; NVLink Fusion positions MRVL as NVIDIA's optical interconnect fabric partner. BofA projects FY2027 revenue of $11.12B and FY2028 of $15.35B. <strong>Supplier reliance:</strong> Fabless — primarily uses TSMC. <strong>Buyer reliance:</strong> Amazon (~40% of revenue historically) — extreme concentration risk; Google and Microsoft expanding exposure. Q1 FY2027 earnings May 27, 2026.</div>
+      <div class="co-cn">核心优势：DSP芯片主导全球800G相干光收发器市场；与亚马逊、谷歌的自定义AI加速器（XPU）设计胜出；英伟达20亿美元投资NVLink Fusion光互联架构；收购Celestial AI（55亿美元，2025年12月）和Polariton（2026年4月）持续强化硅光子布局；PEG 1.12反映增速与估值较为匹配。风险：亚马逊约占历史营收40%，客户集中度极高；前瞻PE约47倍，股价已大幅上涨176%。</div>
+    </div>
+
+    <!-- TSEM -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">TSEM</div><div class="co-name">Tower Semiconductor · NASDAQ/TASE · Israel</div></div>
+        <div class="co-price"><div class="co-price-val">~$274</div><div class="co-price-meta">52wk: ~$105–$290 · +60% YTD</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l1">Layer 1</span><span class="tag tag-l2">Layer 2</span>
+        <span class="tag tag-sub">Sub-tier: 2A+2B (SiPho foundry)</span>
+        <span class="tier-badge t-mid">🟡 Reasonable</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$9B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~105x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val">~35–40x</div></div>
+        <div class="cs"><div class="cs-label">Q1 2026 Revenue</div><div class="cs-val up">$413M (+15%)</div></div>
+        <div class="cs"><div class="cs-label">Q2 2026 Guide</div><div class="cs-val up">$455M (record)</div></div>
+        <div class="cs"><div class="cs-label">SiPho 2027 Rev</div><div class="cs-val up">$1.3B contracts</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Silicon Photonics (~20% of revenue, fastest-growing) — 200mm foundry for SiPho chips; SiGe/BiCMOS (~30%) — RF, millimetre wave, radar; RF CMOS (~20%); BCD/Power (~15%); CMOS Image Sensors (~15%). May 13, 2026: announced signed silicon photonics customer contracts for $1.3B in 2027 revenue, with $290M in customer prepayments. Tower investing $650M to triple SiPho shipments by mid-2026. <strong>Moat:</strong> The only dedicated analog specialty foundry with leading-edge silicon photonics process at scale; SCALE™ optical module solution for CPO announced May 4, 2026; specialty processes not available at TSMC or Samsung; loyal, long-term customer relationships across RF, imaging, and SiPho. <strong>Supplier reliance:</strong> Equipment from ASML/AMAT/LRCX; specialty chemicals. Single Israel headquarter is geopolitical risk. <strong>Buyer reliance:</strong> Diversified customer base; SiPho contracts with "largest customers" (not disclosed); Broadcom and Marvell are likely significant SiPho customers.</div>
+      <div class="co-cn">核心优势：领先的模拟专业代工厂，拥有规模化硅光子工艺；2026年5月签署13亿美元2027年硅光子收入合同（含2.9亿美元客户预付款）；台积电和三星不具备同等模拟工艺，客户切换成本高。风险：以色列地缘政治风险；追踪PE约105倍偏高（但前瞻PE约35-40倍更合理）；规模相对较小（市值约90亿美元）。</div>
+    </div>
+
+    <!-- GFS -->
+    <div class="co-card">
+      <div class="co-header">
+        <div><div class="co-ticker">GFS</div><div class="co-name">GlobalFoundries · NASDAQ · Malta NY (Singapore fabs)</div></div>
+        <div class="co-price"><div class="co-price-val">~$65</div><div class="co-price-meta">52wk: $31.51–$65.05 · +90%</div></div>
+      </div>
+      <div class="co-tag-row">
+        <span class="tag tag-l1">Layer 1</span><span class="tag tag-l2">Layer 2</span>
+        <span class="tag tag-sub">Sub-tier: 2F (SiPho foundry, AMF Singapore)</span>
+        <span class="tier-badge t-low">🟢 Reasonably Low</span>
+      </div>
+      <div class="co-stats">
+        <div class="cs"><div class="cs-label">Mkt Cap</div><div class="cs-val">~$32.5B</div></div>
+        <div class="cs"><div class="cs-label">Trailing PE</div><div class="cs-val am">~37x</div></div>
+        <div class="cs"><div class="cs-label">Fwd PE</div><div class="cs-val up">~20x</div></div>
+        <div class="cs"><div class="cs-label">Q1 2026 Revenue</div><div class="cs-val up">$1.64B (+3.1%)</div></div>
+        <div class="cs"><div class="cs-label">Gross Margin</div><div class="cs-val am">~30%</div></div>
+        <div class="cs"><div class="cs-label">FY2025 Net Income</div><div class="cs-val up">$888M</div></div>
+      </div>
+      <div class="co-body"><strong>Segments:</strong> Smart Mobile Devices (~40%); Communications Infrastructure &amp; Data Center (~25%, +30% YoY guided); Home &amp; Industrial IoT (~20%); Automotive (~15%). Silicon photonics via AMF Singapore acquisition (Nov 2025) — world's first specialty SiPho foundry; SCALE™ CPO module (May 4, 2026); $1B revenue target from SiPho + processor IP by 2028. CHIPS Act: $1.5B + $570M NY State funding. Launched first-ever dividend Q1 2026. <strong>Moat:</strong> Largest silicon photonics pure-play foundry by revenue (post-AMF); Singapore AMF provides geopolitically diverse SiPho supply chain; CHIPS Act support provides cost advantage; diversified end markets reduce AI-only concentration risk; 2030 Investor Day targets: 10–12% revenue CAGR, 40% gross margin. <strong>Supplier reliance:</strong> Equipment suppliers (ASML, AMAT) and specialty gases; relatively self-sufficient in process IP post Synopsys/AMF acquisitions. <strong>Buyer reliance:</strong> Diverse customer base across 4 segments; no single customer >15% revenue; AMF Singapore adds data centre and AI exposure without existential single-customer risk.</div>
+      <div class="co-cn">核心优势：后AMF收购成为全球最大硅光子纯代工厂（按营收计）；AMF新加坡为光子芯片提供地缘多样化供应链；美国CHIPS法案支持（15亿+5.7亿美元）提供成本优势；前瞻PE约20倍是组合中最便宜之一；分散的四大终端市场降低AI单一集中风险；首次派息（2026年Q1）。分析师平均目标价约52美元，低于当前约65美元，提示已有一定超涨。风险：SiPho收入尚小（2028年目标10亿美元），整体增速相对较慢（Q1 +3.1% YoY）。</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: MEGA COMPARISON TABLE -->
+<div class="section">
+  <div class="sec-num">SECTION 3 · 第三节</div>
+  <div class="sec-title">Comprehensive Metrics Comparison — All 10 Companies</div>
+  <div class="sec-title-cn">综合指标对比 — 10家公司全面横向比较</div>
+  <div class="sec-div"></div>
+  <div class="mega-wrap">
+  <table class="mega-table">
+    <thead>
+      <tr>
+        <th class="dim-h">Metric</th>
+        <th>LITE</th><th>COHR</th><th>FN</th><th>CIEN</th><th>MTSI</th>
+        <th>GLW</th><th>AVGO</th><th>MRVL</th><th>TSEM</th><th>GFS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="sec-row"><td colspan="11">MARKET DATA (May 2026)</td></tr>
+      <tr>
+        <td class="dim">Price (USD)</td>
+        <td>$970.70</td><td>$382.45</td><td>~$720</td><td>~$530</td><td>~$300</td>
+        <td>~$190</td><td>~$424</td><td>~$178</td><td>~$274</td><td>~$65</td>
+      </tr>
+      <tr>
+        <td class="dim">Market Cap</td>
+        <td>$75.5B</td><td>$60.6B</td><td>~$26B</td><td>~$70B</td><td>~$18B</td>
+        <td class="win">~$165B</td><td class="win">~$1T</td><td>~$156B</td><td>~$9B</td><td>~$32.5B</td>
+      </tr>
+      <tr>
+        <td class="dim">52-Week Return</td>
+        <td class="win">+1,267%</td><td class="win">+418%</td><td>+260%</td><td>+460%</td><td>+~150%</td>
+        <td>+298%</td><td>+91%</td><td>+176%</td><td>+60% YTD</td><td>+90%</td>
+      </tr>
+      <tr>
+        <td class="dim">Beta</td>
+        <td class="warn">1.533</td><td class="warn">2.053</td><td>~1.5</td><td>~1.6</td><td>~1.3</td>
+        <td class="win">~1.0</td><td class="win">0.8</td><td>2.25</td><td>~1.4</td><td>~1.2</td>
+      </tr>
+      <tr class="sec-row"><td colspan="11">VALUATION</td></tr>
+      <tr>
+        <td class="dim">Trailing PE</td>
+        <td class="warn">~120x+</td><td class="risk">~513x</td><td class="warn">~44x</td><td class="risk">~345x</td><td class="warn">~65x</td>
+        <td class="risk">~92x</td><td class="warn">~62x</td><td class="warn">~58x</td><td class="warn">~105x</td><td class="win">~37x</td>
+      </tr>
+      <tr>
+        <td class="dim">Forward PE (consensus)</td>
+        <td class="warn">~55–60x</td><td class="warn">~47x</td><td class="warn">~49x</td><td class="win">~30x</td><td class="warn">~60x</td>
+        <td class="warn">~51x</td><td class="win">~30x</td><td class="warn">~47x</td><td class="warn">~35–40x</td><td class="win">~20x</td>
+      </tr>
+      <tr>
+        <td class="dim">PEG Ratio</td>
+        <td class="win">~1.0–1.2</td><td class="win">1.09</td><td>~1.2</td><td>~1.1</td><td>~1.4</td>
+        <td class="warn">~2.5</td><td>~1.0</td><td class="win">1.12</td><td>~1.5</td><td class="win">~0.7</td>
+      </tr>
+      <tr>
+        <td class="dim">Price vs Analyst Target</td>
+        <td class="win">Near target $1,034</td><td class="warn">40% above $312</td><td class="warn">Above $700</td><td class="warn">Near high</td><td class="warn">Above $283</td>
+        <td class="warn">Near target $163</td><td class="win">Below $450+</td><td class="warn">Above median $130</td><td class="win">Near fair</td><td class="risk">Above avg $52</td>
+      </tr>
+      <tr class="sec-row"><td colspan="11">FINANCIALS</td></tr>
+      <tr>
+        <td class="dim">Revenue TTM / FY Guide</td>
+        <td>~$2.6B</td><td>~$6.7B</td><td>~$4.5B</td><td class="win">$5.9–6.3B</td><td>~$1.1B</td>
+        <td class="win">~$17B</td><td class="win">~$55B</td><td>~$8B+</td><td>~$1.7B</td><td>~$7B</td>
+      </tr>
+      <tr>
+        <td class="dim">Revenue Growth (latest Q)</td>
+        <td class="win">+90% YoY</td><td>+21% YoY</td><td>+39% YoY</td><td>+33% YoY</td><td>+24.5% YoY</td>
+        <td>+18% YoY</td><td>~+20% YoY</td><td>+42% YoY</td><td class="win">+15% YoY</td><td>+3.1% YoY</td>
+      </tr>
+      <tr>
+        <td class="dim">Non-GAAP Gross Margin</td>
+        <td class="win">47.9%</td><td>39.6%</td><td>~12%</td><td class="win">~44%</td><td class="win">55.9%</td>
+        <td>~39%</td><td class="win">~66%</td><td>~56%</td><td>~36%</td><td>~30%</td>
+      </tr>
+      <tr>
+        <td class="dim">GAAP Profitable?</td>
+        <td class="win">Yes (Q3)</td><td class="warn">Borderline</td><td class="win">Yes</td><td class="win">Yes</td><td class="win">Yes</td>
+        <td class="win">Yes</td><td class="win">Yes</td><td class="win">Yes</td><td class="win">Yes</td><td class="win">Yes</td>
+      </tr>
+      <tr>
+        <td class="dim">Net Cash / (Debt)</td>
+        <td class="win">+$3.17B</td><td class="risk">−$2.6B</td><td class="win">Net cash</td><td class="win">~+$1.2B</td><td>Modest debt</td>
+        <td class="warn">Net debt</td><td class="warn">Net debt ~$30B</td><td class="win">Low D/E 0.33</td><td class="win">Net cash</td><td class="warn">Some debt</td>
+      </tr>
+      <tr>
+        <td class="dim">Dividend?</td>
+        <td class="risk">None</td><td class="risk">None</td><td class="risk">None</td><td class="risk">None</td><td class="risk">None</td>
+        <td class="win">Yes, growing</td><td class="win">Yes, 15yr growth</td><td class="win">Yes</td><td class="risk">None</td><td class="warn">New, $0.12/sh</td>
+      </tr>
+      <tr class="sec-row"><td colspan="11">OPTICAL LAYER POSITION</td></tr>
+      <tr>
+        <td class="dim">Primary Layer</td>
+        <td>L2</td><td>L2+L1</td><td>L2</td><td>L2</td><td>L2</td>
+        <td>L2+L1</td><td>L2+L3+L8</td><td>L2+L8</td><td>L1+L2</td><td>L1+L2</td>
+      </tr>
+      <tr>
+        <td class="dim">Sub-tier within L2</td>
+        <td class="win">2B+2D+2E</td><td class="win">2A+2B+2D+2E</td><td>2D (mfg)</td><td>2D+2E</td><td>2B+2C</td>
+        <td>2F+2A</td><td>2C+2E</td><td>2C</td><td>2A+2B</td><td>2F</td>
+      </tr>
+      <tr>
+        <td class="dim">Pure-play optical %</td>
+        <td class="win">~88%</td><td>~75%</td><td>~75%</td><td class="win">~90%</td><td>~50%</td>
+        <td>~38%</td><td>~15%</td><td>~25%</td><td>~20%</td><td>~10%</td>
+      </tr>
+      <tr>
+        <td class="dim">NVIDIA relationship</td>
+        <td class="win">$2B partner</td><td class="win">$2B partner</td><td>Indirect</td><td>None direct</td><td>None direct</td>
+        <td class="win">$500M partner</td><td class="win">Key supplier</td><td class="win">$2B partner</td><td>Indirect</td><td>Indirect</td>
+      </tr>
+      <tr class="sec-row"><td colspan="11">MOAT &amp; COMPETITIVE POSITION</td></tr>
+      <tr>
+        <td class="dim">EML Laser chips</td>
+        <td class="win">50–60% mkt share</td><td>~25% mkt share</td><td>Mfg for LITE/COHR</td><td>Buyer only</td><td>Driver chips</td>
+        <td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td><td>N/A</td>
+      </tr>
+      <tr>
+        <td class="dim">Transceiver market share</td>
+        <td>Growing fast</td><td class="win">~25% global</td><td>Mfg for all</td><td>Systems integrator</td><td>N/A (analog chips)</td>
+        <td>N/A</td><td>CPO switch</td><td>DSP inside</td><td>N/A (foundry)</td><td>N/A (foundry)</td>
+      </tr>
+      <tr>
+        <td class="dim">Customer switching cost</td>
+        <td class="win">Very high (EML LTAs)</td><td class="win">High (system partner)</td><td>Med (multi-OEM)</td><td class="win">High (WaveLogic)</td><td>Med (chip swap)</td>
+        <td>Med</td><td class="win">Very high (CPO lock)</td><td class="win">High (custom ASIC)</td><td class="win">High (SiPho qual)</td><td>Med</td>
+      </tr>
+      <tr>
+        <td class="dim">Supply concentration risk</td>
+        <td class="warn">InP scarcity (upside)</td><td class="warn">Merger integration</td><td class="win">Low</td><td class="warn">LITE/COHR dependent</td><td class="win">Fabless diversified</td>
+        <td class="win">Self-integrated</td><td class="risk">TSMC only</td><td class="risk">TSMC mostly</td><td class="win">Own fabs</td><td class="win">Own fabs multi-site</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要 — 综合指标横向对比</div>
+    <div class="cn-text">
+      <strong>估值最便宜（前瞻PE）：</strong>GFS（约20倍）、AVGO（约30倍）、CIEN（约30倍）——三者中GFS绝对估值最低但增速也最慢；CIEN前瞻PE约30倍对应33%营收增速性价比突出；AVGO是组合中万亿美元市值中最便宜且有股息。
+      <strong>增速最快：</strong>LITE（+90% YoY）、MRVL（+42%）、FN（+39%）、CIEN（+33%）——LITE增速遥遥领先。
+      <strong>毛利率最高：</strong>AVGO（约66%）→MRVL（约56%）→MTSI（55.9%）→CIEN（约44%）→LITE（47.9%）——高毛利率反映定价权和技术壁垒。
+      <strong>资产负债表最健康：</strong>LITE（净现金31.7亿美元）、FN、CIEN、TSEM。
+      <strong>英伟达战略伙伴：</strong>LITE（20亿美元）、COHR（20亿美元）、GLW（5亿美元）、MRVL（20亿美元）——四家公司获得英伟达合计65亿美元战略认可。
+      <strong>最纯净光学敞口：</strong>CIEN（约90%）→LITE（约88%）→FN（约75%）→COHR（约75%）。
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: PRICE TRENDS -->
+<div class="section">
+  <div class="sec-num">SECTION 4 · 第四节</div>
+  <div class="sec-title">Price Trends — The Re-Rating That Already Happened</div>
+  <div class="sec-title-cn">价格趋势 — 已经发生的重估浪潮与尚未完成的估值修复</div>
+  <div class="sec-div"></div>
+  <div class="pt-grid">
+    <div class="pt-card"><div class="pt-ticker">LITE</div><div class="pt-price">$970.70</div><div class="pt-52w">52wk: $71–$1,086</div><div class="pt-1yr pt-up">+1,267%</div></div>
+    <div class="pt-card"><div class="pt-ticker">CIEN</div><div class="pt-price">~$530</div><div class="pt-52w">52wk: $80–$560</div><div class="pt-1yr pt-up">+460%</div></div>
+    <div class="pt-card"><div class="pt-ticker">COHR</div><div class="pt-price">$382.45</div><div class="pt-52w">52wk: $74–$413</div><div class="pt-1yr pt-up">+418%</div></div>
+    <div class="pt-card"><div class="pt-ticker">GLW</div><div class="pt-price">~$190</div><div class="pt-52w">52wk: $58–$202</div><div class="pt-1yr pt-up">+298%</div></div>
+    <div class="pt-card"><div class="pt-ticker">FN</div><div class="pt-price">~$720</div><div class="pt-52w">52wk: ~$200–$800</div><div class="pt-1yr pt-up">+260%</div></div>
+    <div class="pt-card"><div class="pt-ticker">MRVL</div><div class="pt-price">~$178</div><div class="pt-52w">52wk: $65–$200</div><div class="pt-1yr pt-up">+176%</div></div>
+    <div class="pt-card"><div class="pt-ticker">GFS</div><div class="pt-price">~$65</div><div class="pt-52w">52wk: $31.51–$65</div><div class="pt-1yr pt-up">+90%</div></div>
+    <div class="pt-card"><div class="pt-ticker">AVGO</div><div class="pt-price">~$424</div><div class="pt-52w">52wk: $222–$442</div><div class="pt-1yr pt-up">+91%</div></div>
+    <div class="pt-card"><div class="pt-ticker">MTSI</div><div class="pt-price">~$300</div><div class="pt-52w">52wk: $84–$232+</div><div class="pt-1yr pt-up">+~150%</div></div>
+    <div class="pt-card"><div class="pt-ticker">TSEM</div><div class="pt-price">~$274</div><div class="pt-52w">est. wide range</div><div class="pt-1yr pt-up">+60% YTD</div></div>
+  </div>
+
+  <div class="body-text">The one-year returns across this group are among the most extraordinary in any sector in modern stock market history. LITE has returned 1,267% in a single year. CIEN is up 460%. The optical networking theme was the "hidden" AI trade of 2025–2026 — discovered late but repriced violently once institutional investors understood that photons are the binding constraint on AI scaling. The critical question for new investors is: how much of this re-rating is complete vs. still ahead?</div>
+
+  <div class="body-text"><strong>Basket behaviour:</strong> The optical group trades together on shared AI datacenter exposure and hyperscaler customer concentration — when AAOI crashed 14%, Coherent slid 10%, Lumentum fell 7%, Ciena fell 10%, and Fabrinet was down 8% in a single session, confirming this is correlated basket selling rather than single-name issues. This correlation is both a risk (macro risk-off hits all simultaneously) and an opportunity (rotation into the cheapest names within the basket on sector-wide selloffs).</div>
+
+  <div class="body-text"><strong>Three-tier analysis of where re-rating stands:</strong> (1) <em>Fully re-rated, priced for perfection:</em> LITE (+1,267%), CIEN (+460%), COHR (+418%). These are now above most analyst consensus targets. (2) <em>Re-rated but still reasonable:</em> FN (+260%), GLW (+298%), MRVL (+176%), AVGO (+91%). Most still have analyst targets above or near current prices. (3) <em>Under-re-rated, most remaining upside:</em> GFS (+90%), TSEM (+60% YTD). Both have the lowest forward PEs in the group and the largest gap remaining between current price and structural opportunity.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">价格趋势三层分析：<strong>①已充分重估（谨慎）：</strong>LITE（+1,267%）、CIEN（+460%）、COHR（+418%）——当前价格均已超过或接近分析师目标价，买入需高度谨慎，逢回调布局；<strong>②重估进行中（合理）：</strong>FN（+260%）、GLW（+298%）、MRVL（+176%）、AVGO（+91%）——大多数分析师目标价仍高于或接近当前股价，性价比相对更佳；<strong>③重估不足（机会）：</strong>GFS（+90%）、TSEM（+60% YTD）——前瞻PE最低（GFS约20倍、TSEM约35-40倍），是组合中最具结构性价值的两个名字，尤其是GFS凭借新加坡AMF硅光子代工厂和CHIPS法案支持，具备独特的地缘政治价值。</div>
+  </div>
+</div>
+
+<!-- SECTION 5: MACRO & GLOBAL IMPACT -->
+<div class="section">
+  <div class="sec-num">SECTION 5 · 第五节</div>
+  <div class="sec-title">Market Impact of Global Happenings</div>
+  <div class="sec-title-cn">全球宏观事件的市场影响</div>
+  <div class="sec-div"></div>
+  <div class="macro-grid">
+    <div class="mac-card">
+      <div class="mac-type">🤖 AI Capex Supercycle</div>
+      <div class="mac-text">Hyperscalers are committing $700B+ in AI capex in 2026 alone. Every dollar spent on GPU clusters requires proportional optical networking investment. This is the core demand driver for all 10 companies. Direction: ↑ for all, but especially LITE, COHR, CIEN, GLW.</div>
+      <div class="mac-cn">AI资本支出超级周期：超大云厂商2026年仅AI资本支出即逾7000亿美元，每一美元GPU集群投资都需要相应的光学网络支出。对组合内所有10家公司均为正向驱动，尤其利好LITE、COHR、CIEN、GLW。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🇺🇸🇨🇳 US-China Trade & Export Controls</div>
+      <div class="mac-text">China export restrictions on rare earth minerals (gallium, germanium — key InP inputs) suspended until Nov 2026 via trade deal. If resumed: threatens InP laser production (LITE, COHR). US export restrictions on photonics equipment to China: limits COHR/LITE China revenue. US CHIPS Act: favours GFS, TSEM US operations. Net: bifurcated impact.</div>
+      <div class="mac-cn">美中贸易：中国稀土（镓、锗——InP激光器关键原材料）出口管制已暂停至2026年11月，若恢复将威胁LITE、COHR的InP激光芯片生产。美国对华光子设备出口限制压制COHR/LITE中国营收。CHIPS法案利好GFS和TSEM在美扩产。整体影响：分化，需个股分析。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🌐 Geopolitical Risk — Israel (TSEM)</div>
+      <div class="mac-text">Tower Semiconductor is headquartered in Israel (Migdal Haemek). Ongoing regional tensions create a geopolitical risk discount on TSEM that is not present for US/Thailand-headquartered peers. Any escalation in the Middle East could trigger manufacturing disruption and significant stock volatility. This is the single largest company-specific macro risk in the 10-company group.</div>
+      <div class="mac-cn">以色列地缘政治风险：TSEM总部位于以色列，是组合内唯一具有重大地缘政治风险敞口的公司，中东地区紧张局势升级可能导致制造中断和股价剧烈波动，是10家公司中最大的单一宏观尾部风险。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">💰 Interest Rate Environment</div>
+      <div class="mac-text">Higher-for-longer rates disproportionately impact loss-making high-growth names (COHR's GAAP losses, LITE's transitioning profitability) by increasing the discount rate applied to future earnings. AVGO, GLW, and MRVL — all currently GAAP profitable with dividends/buybacks — are more resilient to rate headwinds. A rate cut cycle would be a meaningful re-rating catalyst for COHR and TSEM specifically.</div>
+      <div class="mac-cn">利率环境：持续高利率对GAAP亏损的高成长公司（COHR、CIEN历史上）影响更大，因折现率提升压低远期盈利的现值。AVGO、GLW、MRVL和GFS均为GAAP盈利且有股息回购，对利率更具韧性。降息周期将对COHR和TSEM产生明显的估值催化效应。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🚗 EV Industry Slowdown (COHR, TSEM)</div>
+      <div class="mac-text">EV adoption decelerated globally in 2024–2025. Coherent's SiC substrate business and TSEM's automotive process revenue both faced headwinds. However, EV recovery in 2026 (China stimulus, US IRA incentives) is beginning to provide a tailwind. This is a meaningful secondary growth vector that could accelerate earnings ahead of consensus for both.</div>
+      <div class="mac-cn">电动车行业周期：2024-2025年EV增速放缓导致COHR碳化硅衬底和TSEM汽车工艺收入承压。但2026年EV复苏（中国政策刺激、美国IRA激励）逐步提供顺风，可能使两家公司盈利超出市场预期。这是AI光学主题之外的重要次级增长向量。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🔄 DeepSeek-Style Model Efficiency Risk</div>
+      <div class="mac-text">A breakthrough in AI model efficiency (reducing compute needed for given performance) could temporarily slow hyperscaler GPU orders and optical capex. All 10 companies are correlated to this risk. However, historical precedent (transistor density improvements) shows that efficiency gains tend to unlock new applications, expanding total AI demand rather than reducing it. Management teams universally cite this as a "when, not if" risk but discount long-term impact.</div>
+      <div class="mac-cn">AI模型效率突破风险：DeepSeek式效率提升可能短期放缓超大云厂商GPU采购和光学资本开支，对组合内所有10家公司均有影响。但历史先例（晶体管密度提升）表明，效率提升往往带来新应用扩展，而非减少总需求。各公司管理层普遍将其视为"何时而非是否"的风险，但不认为影响长期趋势。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🏭 US Manufacturing Reshoring</div>
+      <div class="mac-text">The US CHIPS Act and "America First" trade policy are actively incentivising domestic semiconductor manufacturing. GFS ($1.5B CHIPS Act), TSEM (US fabs), COHR (NVIDIA partnership explicitly tied to US manufacturing expansion), and GLW (NVIDIA partnership centered on US optical capacity) all directly benefit. This creates a geopolitical floor on these companies' strategic value that transcends normal valuation metrics.</div>
+      <div class="mac-cn">美国制造业回流：CHIPS法案和"美国优先"政策为GFS（15亿美元联邦支持）、TSEM（美国晶圆厂）、COHR（英伟达合作明确绑定美国本土制造扩张）和GLW（英伟达合作聚焦美国光学产能）提供直接利好，创造了超越正常估值指标的地缘政治底部支撑。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">📡 Telecom 5G/6G Upgrade Cycle</div>
+      <div class="mac-text">Ciena (CIEN) and MACOM (MTSI) both have significant telecom exposure (~30-40% of revenue each). Global 5G densification and early 6G planning are driving optical networking infrastructure upgrades independent of AI datacenter demand. This provides revenue diversification and a non-AI growth vector for these two companies specifically.</div>
+      <div class="mac-cn">电信5G/6G升级周期：CIEN和MTSI均有约30-40%的电信营收敞口，全球5G致密化和早期6G规划推动光网络基础设施独立于AI数据中心需求的升级。为这两家公司提供非AI增长向量和营收多样化。</div>
+    </div>
+    <div class="mac-card">
+      <div class="mac-type">🌊 Optical Group Correlation Risk</div>
+      <div class="mac-text">The entire optical group trades as one correlated basket. When macro risk-off hits, all 10 fall simultaneously and sharply (beta 1.0–2.25 across the group). The positive: this creates identical entry windows across different risk profiles within the same trade. The negative: diversifying across all 10 does NOT reduce sector-level drawdown risk — only adding non-optical positions achieves true diversification.</div>
+      <div class="mac-cn">光学板块整体相关性风险：组合内10家公司作为一个相关性篮子交易，宏观风险事件发生时同步大幅下跌（Beta范围1.0-2.25）。积极面：提供在同一主题内跨不同风险特征同时建仓的机会。消极面：在10家公司内部分散并不能真正降低板块整体回撤风险——只有加入非光学持仓才能实现真正的多样化。</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">九大宏观因素对光领域10家公司的综合影响：<strong>全面正向</strong>：AI资本支出超级周期（对所有10家）；美国制造业回流/CHIPS法案（尤其利好GFS、TSEM、COHR、GLW）；5G/6G电信升级（利好CIEN、MTSI）。<strong>风险因素</strong>：中国稀土出口管制（如恢复将影响LITE、COHR的InP供应）；中东地缘政治（TSEM特定风险）；高利率环境（压制COHR等GAAP亏损公司估值）；AI模型效率突破（整体系统性风险，但历史表明效率提升往往扩大总需求而非减少）；EV周期放缓（短期拖累COHR SiC和TSEM汽车业务，但2026年已见复苏迹象）；光学板块整体相关性（所有10家在宏观风险事件中同步下跌，分散在板块内部不能真正降低尾部风险）。</div>
+  </div>
+</div>
+
+<!-- SECTION 6: PORTFOLIO ALLOCATION GUIDE -->
+<div class="section">
+  <div class="sec-num">SECTION 6 · 第六节</div>
+  <div class="sec-title">Portfolio Allocation Framework — For Your Boss</div>
+  <div class="sec-title-cn">投资组合配置框架 — 适合不同风险偏好的光领域配置建议</div>
+  <div class="sec-div"></div>
+
+  <div class="body-text">Given the run that has already occurred, the optimal approach is to tier allocations by: (A) quality of moat, (B) how much of the re-rating is already priced in, and (C) balance sheet strength. Here is a suggested framework for a dedicated 光领域 portfolio sleeve of 15% of a broader AI infrastructure allocation:</div>
+
+  <table class="mega-table" style="min-width:500px">
+    <thead>
+      <tr><th class="dim-h">Tier</th><th>Ticker</th><th>Suggested Weight</th><th>Rationale</th><th>Risk</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="dim">Core Anchor</td><td><strong>AVGO</strong></td><td class="win">4%</td><td>Cheapest forward PE (30x), highest GM (66%), dividend, CPO platform lock-in. The defensive large-cap in the group.</td><td>Low</td></tr>
+      <tr><td class="dim">Core Anchor</td><td><strong>GLW</strong></td><td class="win">3%</td><td>Largest revenue ($17B+), NVIDIA $500M partner, $40B 2030 target, dividend, lowest beta in group. New AI re-rating underway.</td><td>Low</td></tr>
+      <tr><td class="dim">Core Growth</td><td><strong>LITE</strong></td><td>2.5%</td><td>EML monopoly, highest margin (47.9%), net cash. But 1,267% run — size modestly, add on pullbacks.</td><td>High</td></tr>
+      <tr><td class="dim">Core Growth</td><td><strong>CIEN</strong></td><td>2.5%</td><td>Best forward PE (30x) among pure-play optical; $7B backlog, 90% pure-play, GAAP profitable. Undervalued vs LITE/COHR.</td><td>Medium</td></tr>
+      <tr><td class="dim">Satellite</td><td><strong>FN</strong></td><td>1.5%</td><td>Manufactures for everyone; no design risk; GAAP profitable; CPO investment. The "safe optical pick."</td><td>Low-Med</td></tr>
+      <tr><td class="dim">Satellite</td><td><strong>MRVL</strong></td><td>1.5%</td><td>DSP dominance + custom ASIC + NVIDIA $2B partner. PEG 1.12. Q1 FY2027 earnings May 27 = near-term catalyst.</td><td>High</td></tr>
+      <tr><td class="dim">Value Play</td><td><strong>GFS</strong></td><td>0.5%</td><td>Cheapest forward PE (20x), Singapore SiPho foundry, CHIPS Act beneficiary. Most upside remaining relative to peers.</td><td>Medium</td></tr>
+      <tr><td class="dim">Watch / Add on dip</td><td><strong>COHR</strong></td><td>0% now, add at $285–320</td><td>Broadest vertical integration + NVIDIA $2B — but 49% above NVIDIA's entry, above all analyst targets. Better entry below $320.</td><td>High</td></tr>
+      <tr><td class="dim">Watch / Add on dip</td><td><strong>MTSI</strong></td><td>0% now, watch</td><td>Highest GM (55.9%) + defence diversification, but fwd PE ~60x vs sub-$1B revenue. Wait for Q1 FY2026 results.</td><td>High</td></tr>
+      <tr><td class="dim">Watch only</td><td><strong>TSEM</strong></td><td>Small speculative only</td><td>SiPho foundry moat + $1.3B 2027 contracts signed. But Israel geopolitical risk + trailing PE 105x creates caution.</td><td>Very High</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout"><strong>Bottom Line:</strong> The 光领域 re-rating is one of the most powerful thematic moves in AI infrastructure investing. But the easy money is made — LITE at $71, CIEN at $80, GLW at $58 were the generational entries. In May 2026, the discipline is sizing appropriately (the whole basket should not exceed 10–15% of a portfolio), anchoring in quality (AVGO, GLW, CIEN have the best risk-adjusted entries today), and adding to the high-conviction names (LITE, COHR) only on meaningful pullbacks. GFS is the most overlooked name in the group given its unique Singapore SiPho moat, cheapest valuation, and CHIPS Act support — worth a closer look.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">配置框架总结：<strong>核心锚仓（低风险）：</strong>AVGO（前瞻PE 30倍，66%毛利率，CPO平台锁定，有股息，4%权重）和GLW（营收体量最大，英伟达5亿美元战略合作，2030年400亿美元目标，有股息，3%权重）。<strong>核心成长（中高风险）：</strong>LITE（EML垄断，净现金，但已大幅上涨，仅持2.5%并逢回调加仓）和CIEN（光学纯净股中前瞻PE最低约30倍，70亿美元积压订单，GAAP盈利，2.5%权重）。<strong>卫星配置：</strong>FN（合同制造商，无设计风险，GAAP盈利，1.5%）和MRVL（DSP主导+定制XPU+英伟达20亿美元合作，PEG 1.12，1.5%）。<strong>价值机会：</strong>GFS（前瞻PE仅约20倍，新加坡AMF硅光子代工厂，CHIPS法案受益者，组合中最被低估的名字，0.5%启动仓）。<strong>逢低加仓：</strong>COHR（285-320美元以下布局）、MTSI（等待Q1财报后布局）。<strong>谨慎持有：</strong>TSEM（以色列地缘风险，仅小规模投机仓）。整体光领域配置不应超过总组合的10-15%。</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="divider"></div>
+<div style="font-size:11px;color:#888;margin-bottom:8px;font-weight:700;text-transform:uppercase;letter-spacing:.05em">SOURCES · 数据来源</div>
+<div class="sources">
+  FMP API — LITE ($970.70), COHR ($382.45), AVGO ($423.50) live prices, market caps, betas · Retrieved May 14–18, 2026<br>
+  Lumentum Holdings SEC Form 8-K Q3 FY2026 &amp; 10-Q (May 5, 2026); Coherent Corp SEC Form 8-K Q3 FY2026 (May 6, 2026)<br>
+  Fabrinet SEC Form 8-K Q3 FY2026 (May 4, 2026) — revenue $1,214.3M, EPS $3.45<br>
+  Ciena Corporation SEC Form 10-Q Q1 FY2026; Q1 FY2026 Earnings Press Release — revenue $1.427B<br>
+  Corning Inc — Q1 2026 Earnings Call (April 28, 2026); NVIDIA strategic partnership press release (May 6, 2026)<br>
+  Tower Semiconductor — Q1 2026 results (May 4, 2026) — revenue $413.63M; SiPho contracts announcement (May 13, 2026)<br>
+  GlobalFoundries — Q1 2026 results (May 5, 2026) — revenue $1.64B; 2026 Investor Day (May 7, 2026); AMF acquisition (Nov 2025)<br>
+  Broadcom (AVGO) — MacroTrends PE ratio 62.34 (May 15, 2026); Robinhood price data<br>
+  Marvell Technology — Simply Wall St analysis; StockAnalysis statistics (trailing PE 58x, fwd PE 47x, PEG 1.12, market cap $156B); TheStreet BofA/Goldman targets; Sherwood News analysis<br>
+  MACOM (MTSI) — FinancialContent Q1 earnings preview; StockAnalysis (market cap $8B, TTM revenue $967M); analyst target $283<br>
+  24/7 Wall St — "Applied Optoelectronics Crashes 14%, Coherent Slides 10%, Lumentum Falls 7%" (May 7, 2026) — basket correlation analysis<br>
+  Seeking Alpha — "Top 5 Stocks for AI's Optical Revolution" (April 8, 2026) — MRVL PEG 0.7, sector analysis<br>
+  Exoswan — "Top Silicon Photonics Stocks 2026" — MACOM, POET, AAOI, Tower, GFS overview<br>
+  mmmtwealth.com — "Optics: The Next Big Theme" — AVGO CPO lock-in analysis, GFS foundry overview<br>
+  36kr.com EN — "COHR vs LITE vs AAOI" — LPO vs DSP analysis, competitive landscape<br>
+  All [ASSUMED] estimates require independent verification. This report is for informational purposes only.
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only and does not constitute financial advice, solicitation, or a recommendation to buy or sell any security. All financial figures are sourced from SEC filings, FMP API, and reputable financial data providers. All projections involve significant uncertainty. Past performance is not indicative of future results. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议或任何证券买卖推荐。请在做出投资决策前咨询合格的财务顾问。
+</div>
+
+</body>
+</html>
