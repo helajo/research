@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Situational Awareness LP — Q1 2026 13F Deep Dive</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+
+/* ── DOC HEADER ── */
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+/* ── MOOD BAR ── */
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-bearish { background: #FCEBEB; color: #791F1F; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.mood-neutral { background: #f0efe8; color: #555; }
+
+/* ── SECTION ── */
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+/* ── METRIC CARDS ── */
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up   { color: #0F6E56; }
+.metric-dn   { color: #A32D2D; }
+.metric-flat { color: #888; }
+.metric-blue { color: #185FA5; }
+
+/* ── COLOUR UTILS ── */
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+
+/* ── TICKER PILL ── */
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-energy   { background: #FAEEDA; color: #633806; }
+.s-macro    { background: #F1EFE8; color: #444441; }
+.s-finance  { background: #EAF3DE; color: #27500A; }
+
+/* ── BULL/BEAR CASES ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+
+/* ── DATA TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.data-table th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; letter-spacing: 0.04em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid #e8e8e0; vertical-align: top; }
+.data-table tr:nth-child(even) td { background: #f5f4f0; }
+.data-table .beat { color: #0F6E56; font-weight: 700; }
+.data-table .miss { color: #A32D2D; font-weight: 700; }
+.data-table .neutral { color: #888; }
+.data-table .highlight td { background: #EBF3FD !important; }
+
+/* ── BODY TEXT ── */
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.commentary { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+
+/* ── CALLOUT ── */
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-blue  { background: #EBF3FD; border-color: #185FA5; }
+.callout-green { background: #EAF3DE; border-color: #1D9E75; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-red   { background: #FCEBEB; border-color: #A32D2D; }
+.callout-gray  { background: #f0efe8; border-color: #bbb; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+
+/* ── VERDICT / DARK BOX ── */
+.verdict { background: #1a1a1a; color: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 16px; }
+.verdict-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+.verdict-text { font-size: 14px; line-height: 1.8; color: #e8e8e0; }
+.verdict-text strong { color: #fff; }
+
+/* ── CHINESE SUMMARY BLOCK ── */
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── AI LAYER BADGE ── */
+.layer-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-right: 4px; margin-bottom: 4px; }
+.layer-1 { background: #EEEDFE; color: #3C3489; }
+.layer-2 { background: #E6F1FB; color: #0C447C; }
+.layer-4 { background: #E1F5EE; color: #085041; }
+.layer-5 { background: #EAF3DE; color: #27500A; }
+.layer-67 { background: #FAEEDA; color: #633806; }
+
+/* ── WATCH LIST ── */
+.watch-list { list-style: none; padding: 0; }
+.watch-list li { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0efe8; line-height: 1.5; }
+.watch-list li:last-child { border-bottom: none; }
+.watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; margin-top: 2px; }
+.w-red    { background: #FCEBEB; color: #A32D2D; }
+.w-blue   { background: #E6F1FB; color: #185FA5; }
+.w-amber  { background: #FAEEDA; color: #854F0B; }
+.w-green  { background: #EAF3DE; color: #3B6D11; }
+.w-gray   { background: #f0efe8; color: #666; }
+.watch-content { display: block; flex: 1; }
+.watch-en { display: block; font-size: 13px; color: #333; }
+.watch-cn { display: block; font-size: 11px; color: #999; margin-top: 3px; line-height: 1.6; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+
+/* ── TIMELINE ── */
+.timeline { list-style: none; padding: 0; margin-bottom: 16px; }
+.timeline li { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0efe8; font-size: 13px; line-height: 1.6; }
+.timeline li:last-child { border-bottom: none; }
+.tl-date { font-size: 11px; font-weight: 700; color: #185FA5; white-space: nowrap; min-width: 70px; padding-top: 2px; }
+.tl-text { color: #444; flex: 1; }
+.tl-text strong { color: #1a1a1a; }
+
+/* ── SOURCES & FOOTER ── */
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+
+/* ── LAYOUT UTILS ── */
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+
+/* ── TWO-COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.col-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 14px; }
+.col-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #888; margin-bottom: 8px; }
+.col-text { font-size: 13px; color: #444; line-height: 1.6; }
+
+@media (max-width: 640px) {
+  body { padding: 1rem; }
+  .two-col, .cases, .metric-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="doc-header">
+  <div class="doc-tag">DEEP DIVE · 深度分析 &nbsp;|&nbsp; 13F ANALYSIS · 持仓解析</div>
+  <div class="doc-title">Situational Awareness LP — Q1 2026 13F<br>The Barbell Manifesto: Long Electrons, Short Silicon Froth</div>
+  <div class="doc-title-cn">情境感知对冲基金 — 2026年第一季度13F持仓报告<br>哑铃策略宣言：做多电力基础设施，做空泡沫半导体</div>
+  <div class="doc-meta">Filed May 18, 2026 · Period ending March 31, 2026 · Leopold Aschenbrenner, Founder · San Francisco, CA<br>
+  <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; color:#aaa;">申报日期：2026年5月18日 · 报告期截至：2026年3月31日 · 创始人：Leopold Aschenbrenner · 旧金山</span></div>
+</div>
+
+<!-- ═══ MOOD BAR ═══ -->
+<div class="mood-bar">
+  <span class="mood-label">Portfolio Stance 仓位立场</span>
+  <span class="mood-text">Aggressive barbell — long AI physical infrastructure and power, short the high-valuation semiconductor complex via puts. Not bearish on AI; bearish on overpriced chips.</span>
+  <span class="mood-pill mood-mixed">Barbell · 哑铃策略</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">本报告分析Leopold Aschenbrenner旗下情境感知对冲基金（Situational Awareness LP）于2026年5月18日向美国SEC申报的2026年第一季度13F持仓报告。核心策略为激进哑铃配置：<strong>一方面继续重仓AI物理基础设施与电力资产</strong>（Bloom Energy、比特币矿工转型AI托管商、光学网络），<strong>另一方面新增逾84.6亿美元名义规模的半导体看跌期权</strong>（NVDA、SMH、AMD、AVGO、TSM等）作为对冲。此举并非全面看空AI，而是对已经高估的芯片板块进行风险对冲。</div>
+</div>
+
+<!-- ═══ KEY METRICS ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Portfolio Snapshot — Q1 2026</div>
+  <div class="section-title-cn">投资组合概览 — 2026年第一季度</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Notional AUM</div>
+      <div class="metric-val metric-blue">$13.7B</div>
+      <div class="metric-sub">Q4 2025: $5.52B · +148%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Put Notional (Semis)</div>
+      <div class="metric-val metric-dn">$8.46B</div>
+      <div class="metric-sub">62% of total notional</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Long Equity Book</div>
+      <div class="metric-val metric-up">$5.52B</div>
+      <div class="metric-sub">AI infra, power, miners</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Holdings Count</div>
+      <div class="metric-val">29</div>
+      <div class="metric-sub">+10 new vs Q4 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Top 10 Concentration</div>
+      <div class="metric-val">72.7%</div>
+      <div class="metric-sub">High-conviction book</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Largest Long</div>
+      <div class="metric-val">BE</div>
+      <div class="metric-sub">$879M · Bloom Energy</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">2026年第一季度，情境感知基金申报的名义持仓规模从上季度末的55.2亿美元大幅增长至<strong>136.8亿美元</strong>，增幅高达148%。其中<strong>做空半导体看跌期权名义规模达84.6亿美元</strong>，占总名义规模的62%。多头权益仓位维持55.2亿美元，主要集中于AI电力基础设施、光学网络和矿工转型AI托管商。持仓高度集中，前十大持仓占比72.7%，最大多头为Bloom Energy（8.79亿美元）。</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2 — THE SHORT BOOK ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">The Short Book — $8.46B in Semiconductor Puts</div>
+  <div class="section-title-cn">空头仓位——84.6亿美元半导体看跌期权</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    The most striking feature of the Q1 2026 filing is the construction of a massive put option book against the semiconductor complex. These are <strong>purchased puts</strong> (long puts) — Aschenbrenner paid premiums to acquire the right to profit from declines in these names. This is not a short sale, nor a sold put (which would imply willingness to own at a lower price). It is a deliberate, premium-costing hedge against a potential derating of overvalued chips.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">此次申报中最引人注目的是针对半导体板块建立的巨额看跌期权仓位。这些均为<strong>买入看跌期权（long puts）</strong>——阿申布伦纳支付期权费，获得在相关股票下跌时获利的权利。这既不是卖空，也不是卖出看跌期权（后者意味着愿意在低位接货）。这是一种需要支付权利金的主动对冲策略，对应的是对高估值芯片板块可能出现估值回调的判断。</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Company</th>
+        <th>Put Notional</th>
+        <th>% of Portfolio</th>
+        <th>Contracts</th>
+        <th>AI Stack Layer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong>SMH</strong></td>
+        <td>VanEck Semiconductor ETF</td>
+        <td class="miss"><strong>$2.04B</strong></td>
+        <td>14.94%</td>
+        <td>5,327,900</td>
+        <td><span class="layer-badge layer-1">Layer 1 Basket</span></td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>NVDA</strong></td>
+        <td>NVIDIA Corporation</td>
+        <td class="miss"><strong>$1.57B</strong></td>
+        <td>11.47%</td>
+        <td>8,992,300</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>ORCL</strong></td>
+        <td>Oracle Corporation</td>
+        <td class="miss">$1.07B</td>
+        <td>7.84%</td>
+        <td>7,293,000</td>
+        <td><span class="layer-badge" style="background:#f0efe8;color:#555;">Layer 8</span></td>
+      </tr>
+      <tr>
+        <td><strong>AVGO</strong></td>
+        <td>Broadcom Inc.</td>
+        <td class="miss">$1.01B</td>
+        <td>7.36%</td>
+        <td>3,251,100</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>AMD</strong></td>
+        <td>Advanced Micro Devices</td>
+        <td class="miss">$969M</td>
+        <td>7.09%</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>MU</strong></td>
+        <td>Micron Technology</td>
+        <td class="miss">$584M</td>
+        <td>4.27%</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-4">Layer 4</span></td>
+      </tr>
+      <tr>
+        <td><strong>TSM</strong></td>
+        <td>Taiwan Semiconductor</td>
+        <td class="miss">$535M</td>
+        <td>3.91%</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>ASML</strong></td>
+        <td>ASML Holding</td>
+        <td class="miss">~$200M+</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>INTC</strong></td>
+        <td>Intel Corporation</td>
+        <td class="miss">$159M</td>
+        <td>1.16%</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+      </tr>
+      <tr>
+        <td><strong>GLW</strong></td>
+        <td>Corning Inc.</td>
+        <td class="miss">Disclosed</td>
+        <td>—</td>
+        <td>—</td>
+        <td><span class="layer-badge layer-2">Layer 2</span></td>
+      </tr>
+      <tr>
+        <td style="font-weight:700; color:#A32D2D;">TOTAL</td>
+        <td style="color:#888;">Semiconductor put complex</td>
+        <td style="font-weight:700; color:#A32D2D;"><strong>~$8.46B</strong></td>
+        <td style="font-weight:700;">~62%</td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">空头仓位覆盖整个半导体生态系统：<strong>SMH（半导体ETF）20.4亿美元</strong>作为最大单笔空头，相当于对整个板块的系统性对冲；<strong>NVDA 15.7亿美元</strong>为第二大；其次是Oracle（10.7亿）、Broadcom（10.1亿）、AMD（9.69亿）、美光（5.84亿）、台积电（5.35亿）等。值得注意的是，INTC既有多头头寸（上季度的看涨期权），本季度又出现在空头名单中，显示对英特尔的判断较为复杂。空头总名义规模约84.6亿美元，主要针对估值已充分反映AI预期的Layer 1（硅基芯片）板块。</div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">⚠ Important Caveat · 重要说明</div>
+    <div class="callout-text">
+      A 13F captures positions as of <strong>March 31, 2026</strong> — the end of Q1. Several of these semiconductor names staged sharp rallies between April and May 2026 (partly driven by tariff relief news and Nvidia's Blackwell demand). The puts, if not rolled or exited, may have incurred mark-to-market losses since the snapshot date. The fund's <em>current</em> positioning is unknown until the next filing.
+      <br><br>
+      <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; color:#555; font-size:12px;">13F仅反映2026年3月31日的持仓快照。4月至5月间部分半导体股票因关税豁免消息和英伟达Blackwell需求强劲而大幅反弹，若看跌期权未被平仓或展期，期间可能存在浮亏。基金当前实际持仓须等待下一份13F才能得知。</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 3 — THE LONG BOOK ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">The Long Book — AI Infrastructure Convictions</div>
+  <div class="section-title-cn">多头仓位——AI基础设施的高信念押注</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    The long book remains structurally unchanged from Q4 2025 but has been scaled up. Bloom Energy holds its position as the flagship long. Bitcoin miners pivoting to AI hosting continue to be added. The thesis: <strong>whoever controls cheap, reliable power and rack space wins the AGI buildout</strong> — not whoever ships the next model or the next chip.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">多头仓位结构与2025年第四季度基本一致，但规模有所扩大。Bloom Energy继续作为最大多头旗舰持仓。矿工转型AI托管商方向持续加仓。核心逻辑：<strong>在通往AGI的竞赛中，控制廉价可靠电力和机架空间的人才是最终赢家</strong>，而非开发下一代模型或芯片的公司。</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Company</th>
+        <th>Value / Position</th>
+        <th>Change vs Q4 '25</th>
+        <th>AI Stack Layer</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong>BE</strong></td>
+        <td>Bloom Energy</td>
+        <td class="beat"><strong>$879M · 6.5M sh</strong></td>
+        <td class="flat">≈ Maintained</td>
+        <td><span class="layer-badge layer-67">L6/L7</span></td>
+        <td>Solid-oxide fuel cells; on-site data center power bypassing the grid</td>
+      </tr>
+      <tr>
+        <td><strong>CRWV</strong></td>
+        <td>CoreWeave</td>
+        <td class="beat">Increased</td>
+        <td class="beat">↑ Added</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>Largest third-party GPU cloud; primary compute for OpenAI/MSFT</td>
+      </tr>
+      <tr>
+        <td><strong>CORZ</strong></td>
+        <td>Core Scientific</td>
+        <td>$419M+</td>
+        <td class="beat">↑ Maintained</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>CoreWeave's primary HPC hosting partner; converted mining halls</td>
+      </tr>
+      <tr>
+        <td><strong>APLD</strong></td>
+        <td>Applied Digital</td>
+        <td>$278M+</td>
+        <td class="beat">↑ Increased</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>Next-gen liquid-cooled AI campus operator</td>
+      </tr>
+      <tr>
+        <td><strong>IREN</strong></td>
+        <td>Iris Energy</td>
+        <td>$329M+</td>
+        <td class="beat">↑ Increased</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>Miner → AI compute; hydro-rich low-cost power</td>
+      </tr>
+      <tr>
+        <td><strong>RIOT</strong></td>
+        <td>Riot Platforms</td>
+        <td>Added</td>
+        <td class="beat">↑ Increased</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>~1GW power rights; pivoting to AI/HPC hosting</td>
+      </tr>
+      <tr>
+        <td><strong>CLSK</strong></td>
+        <td>CleanSpark</td>
+        <td>New</td>
+        <td class="beat">★ New position</td>
+        <td><span class="layer-badge layer-5">Layer 5</span></td>
+        <td>Bitcoin miner with US-based clean power assets; HPC pivot candidate</td>
+      </tr>
+      <tr>
+        <td><strong>LITE</strong></td>
+        <td>Lumentum</td>
+        <td>$479M</td>
+        <td class="flat">≈ Maintained</td>
+        <td><span class="layer-badge layer-2">Layer 2</span></td>
+        <td>Coherent optical transceivers; 800G/1.6T data center interconnect</td>
+      </tr>
+      <tr>
+        <td><strong>SNDK</strong></td>
+        <td>SanDisk</td>
+        <td>$250M</td>
+        <td class="flat">≈ Maintained</td>
+        <td><span class="layer-badge layer-4">Layer 4</span></td>
+        <td>Pure-play NAND flash; AI training data storage</td>
+      </tr>
+      <tr>
+        <td><strong>EQT</strong></td>
+        <td>EQT Corporation</td>
+        <td>~$105M</td>
+        <td class="flat">≈ Maintained</td>
+        <td><span class="layer-badge layer-67">L6/L7</span></td>
+        <td>Largest US nat gas producer; feedstock for data center power</td>
+      </tr>
+      <tr>
+        <td><strong>SMH</strong></td>
+        <td>VanEck Semi ETF</td>
+        <td>5.3M shares <em>long</em></td>
+        <td class="beat">★ New long</td>
+        <td><span class="layer-badge layer-1">Layer 1</span></td>
+        <td>Long equity + long puts simultaneously — collar hedge structure</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">多头仓位核心：<strong>Bloom Energy（8.79亿美元）</strong>继续领跑，代表电力基础设施Layer 6/7的最高信念押注。Layer 5算力基建商板块（CoreWeave、Core Scientific、Applied Digital、IREN、Riot、CleanSpark）持续扩大。新增CleanSpark为Layer 5新仓位。同时，基金在SMH上同时持有多头股票（530万股）和空头看跌期权，形成领口（collar）对冲结构，而非单边做空。光学网络（Lumentum，Layer 2）和存储（SanDisk，Layer 4）则作为战术性补充仓位。</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4 — THE BARBELL THESIS ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">The Barbell — What Aschenbrenner Is Really Saying</div>
+  <div class="section-title-cn">哑铃策略——阿申布伦纳真正的市场判断</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    The SMH position is the key to reading the entire filing correctly. The fund <strong>simultaneously holds 5.3 million shares of SMH long AND $2.04 billion in SMH puts</strong>. This is not a contradictory position — it is a classic <em>barbell with tail-risk protection</em>. Aschenbrenner is saying: "I believe semiconductors will continue to benefit from AI capex in the base case, but I am paying insurance premium against the risk of a sharp derating if the cycle turns, earnings disappoint, or macro headwinds hit."
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">理解整份申报的关键在于SMH仓位：基金<strong>同时持有530万股SMH多头股票和20.4亿美元SMH看跌期权</strong>。这并非矛盾——而是经典的"哑铃+尾部风险保护"结构。阿申布伦纳的逻辑是：基准情景下半导体仍受益于AI资本支出，但愿意支付保险费，以防周期逆转、盈利不及预期或宏观逆风导致板块急剧杀估值。</div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-card">
+      <div class="col-label" style="color:#27500A;">The Long Side — "Physical AI Wins"</div>
+      <div class="col-text">
+        Power → Compute → Storage → Optical. These four layers form the supply-constrained bottleneck of AGI. Unlike chips (increasingly commoditized, subject to geopolitical risk via Taiwan), data center power and rack space cannot be reproduced quickly. Bloom Energy's fuel cells, for instance, allow data centers to bypass the strained power grid entirely — a structural advantage as utilities struggle to keep pace with AI demand.
+      </div>
+      <div style="margin-top:8px; font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:12px; color:#555; padding-top:8px; border-top:1px dashed #e8e8e0;">多头逻辑：电力→算力→存储→光学，构成AGI竞赛中真正的供给约束瓶颈。与芯片（商品化加速、受台湾地缘政治风险影响）不同，数据中心的电力和机架空间无法快速复制。Bloom Energy燃料电池让数据中心完全绕开拥堵的公共电网，在电力需求爆炸性增长背景下具有结构性优势。</div>
+    </div>
+    <div class="col-card">
+      <div class="col-label" style="color:#791F1F;">The Short Side — "Chips Are Overpriced Insurance"</div>
+      <div class="col-text">
+        NVDA trades at 30–35x forward earnings. AVGO and AMD are similarly stretched. The puts are not a "semis will collapse" bet — they are a "risk/reward is asymmetric" bet. If AI capex sustains, the puts expire worthless (premium lost but long book profits). If there is any disappointment — supply glut, customer capex slowdown, US-China chip restriction escalation — the puts generate outsized returns. The SMH basket put is the broadest hedge, covering the entire sector rather than stock-picking the loser.
+      </div>
+      <div style="margin-top:8px; font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:12px; color:#555; padding-top:8px; border-top:1px dashed #e8e8e0;">空头逻辑：NVDA市盈率高达30-35倍，AVGO和AMD估值同样偏贵。看跌期权并非押注"芯片崩溃"，而是"风险收益不对称"的保护。若AI资本支出持续，期权到期归零（损失权利金，但多头账面盈利）；若出现任何负面因素——供应过剩、客户削减资本支出、中美芯片限制升级——看跌期权将产生超额回报。SMH是最宽泛的对冲，无需精选个股。</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-label">🔍 Analyst Read · 分析师解读</div>
+    <div class="callout-text">
+      The Oracle puts are the most intriguing outlier. Oracle ($ORCL) is not a semiconductor company — it is a cloud infrastructure and database software company (Layer 8). Aschenbrenner appears to be extending his hedge to cover the <strong>hyperscaler AI spending chain</strong> more broadly: if GPU capex slows, Oracle Cloud's data center expansion narrative loses its catalyst. The $1.07B ORCL put suggests the fund sees Oracle's AI-driven re-rating as equally at risk as the chip names.
+      <br><br>
+      <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:12px; color:#555;">最值得关注的异类是Oracle的看跌期权。Oracle并非半导体公司，而是云基础设施和数据库软件公司（Layer 8）。阿申布伦纳似乎将对冲范围扩展至<strong>整个超大规模AI支出链条</strong>：若GPU资本支出放缓，Oracle云数据中心扩张的叙事逻辑就会失去催化剂。10.7亿美元的Oracle看跌期权表明，基金认为Oracle受AI驱动的估值重评风险与芯片公司同样大。</span>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">哑铃两端逻辑清晰：<strong>多头侧</strong>押注物理AI基础设施的供给约束性（电力、算力托管），这些资产无法快速复制；<strong>空头侧</strong>用看跌期权对冲高估值芯片板块的下行风险，这是非对称保护而非方向性做空。Oracle看跌期权尤为值得关注——揭示基金将对冲延伸至整个AI资本支出链，而非仅限于芯片公司。</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5 — AI STACK MAP ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">AI Infrastructure Stack — Layer-by-Layer Classification</div>
+  <div class="section-title-cn">AI基础设施层级图谱——逐层分类</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Mapped against the 8-layer AI Infrastructure Stack framework, the fund's positions reveal a deliberate avoidance of the most crowded layers (Layer 1 chips and Layer 8 applications) as <em>longs</em>, while using puts to extract value from chip overvaluation. The fund is overwhelmingly concentrated in Layers 5–7 — the physical bottleneck layers.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">对照八层AI基础设施框架分析，该基金多头仓位刻意回避最拥挤的Layer 1（芯片）和Layer 8（应用），转而通过看跌期权从芯片高估值中获益。多头仓位高度集中于<strong>Layer 5-7（算力基建商、能量缓冲、能源原力）</strong>，即AI扩张中真正的物理瓶颈层级。</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Name</th>
+        <th>Long Positions</th>
+        <th>Short (Puts)</th>
+        <th>Stance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>L1</strong></td>
+        <td>Silicon Brain 硅基大脑</td>
+        <td>SMH (long shares), INTC calls, TSEM</td>
+        <td class="miss">NVDA, AMD, AVGO, TSM, ASML, INTC, SMH puts</td>
+        <td><span class="sector-pill" style="background:#FAEEDA;color:#633806;">Hedged / Net Short</span></td>
+      </tr>
+      <tr>
+        <td><strong>L2</strong></td>
+        <td>Compute Bloodstream 算力血管</td>
+        <td class="beat">LITE, COHR</td>
+        <td>GLW puts (minor)</td>
+        <td><span class="sector-pill" style="background:#EAF3DE;color:#27500A;">Net Long</span></td>
+      </tr>
+      <tr>
+        <td><strong>L3</strong></td>
+        <td>Physical Skeleton 物理躯干</td>
+        <td>None</td>
+        <td>None</td>
+        <td><span class="sector-pill" style="background:#f0efe8;color:#888;">Not Held</span></td>
+      </tr>
+      <tr>
+        <td><strong>L4</strong></td>
+        <td>Digital Memory 数字记忆</td>
+        <td class="beat">SNDK</td>
+        <td>MU puts</td>
+        <td><span class="sector-pill" style="background:#FAEEDA;color:#633806;">Split / Tactical</span></td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>L5</strong></td>
+        <td>Compute Infra Builders 算力基建商</td>
+        <td class="beat"><strong>CRWV, CORZ, APLD, IREN, RIOT, HUT, CIFR, CLSK</strong></td>
+        <td>None</td>
+        <td><span class="sector-pill" style="background:#EAF3DE;color:#27500A;"><strong>Core Long</strong></span></td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>L6/7</strong></td>
+        <td>Energy Buffer + Source 能量缓冲/能源原力</td>
+        <td class="beat"><strong>BE ($879M), EQT, SEI</strong></td>
+        <td>None</td>
+        <td><span class="sector-pill" style="background:#EAF3DE;color:#27500A;"><strong>Core Long</strong></span></td>
+      </tr>
+      <tr>
+        <td><strong>L8</strong></td>
+        <td>Application Distribution 应用分发</td>
+        <td>None</td>
+        <td class="miss">ORCL puts ($1.07B)</td>
+        <td><span class="sector-pill" style="background:#FCEBEB;color:#791F1F;">Net Short</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">层级分布一目了然：<strong>Layer 5（算力基建）和Layer 6/7（能源）为核心多头</strong>，无任何空头对冲；Layer 2（光学网络）为战术性多头；Layer 1（芯片）为净空头（多空并存但空头名义规模更大）；Layer 4（存储）为混合仓位（持有SanDisk多头，同时做空美光）；Layer 3（物理骨架，如服务器/机架/数据中心REIT）完全空白；Layer 8（应用层）仅有Oracle空头，无多头。</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6 — BULL / BEAR ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Bull Case vs. Bear Case for This Positioning</div>
+  <div class="section-title-cn">多空两种情景分析</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🟢 Bull Case — Thesis Plays Out</div>
+      <div class="bull-text">
+        <strong>Power remains the binding constraint.</strong> As hyperscalers commit to 100GW+ of AI data center power over 2026–2030, Bloom Energy and the mining-to-AI operators become the only scalable supply. The semiconductor derating occurs — NVDA misses on guidance, or export controls escalate — and the $8.46B puts generate outsized returns. The fund doubles again.
+        <br><br>
+        <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:11px;">电力继续成为AGI扩张的核心瓶颈。超大规模云厂商承诺的100GW+数据中心建设落地，Bloom Energy和矿工转型AI托管商成为唯一可快速扩张的供给。同时，半导体出现杀估值——英伟达指引令市场失望或出口管制升级——84.6亿美元看跌期权获取超额收益。</span>
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🔴 Bear Case — Thesis Breaks</div>
+      <div class="bear-text">
+        <strong>NVIDIA beats massively on Q1 FY27 earnings (May 20)</strong>, semis rally hard, puts expire worthless or are closed at a loss. Meanwhile, power infrastructure longs underperform if the "electrons" narrative loses market attention. CleanSpark and Riot remain tethered to Bitcoin price. The fund takes material premium losses on $8.46B of puts — a costly hedge that failed.
+        <br><br>
+        <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:11px;">英伟达在2026年5月20日的季报中大幅超预期（FY27 Q1），半导体板块强力反弹，看跌期权到期归零或亏损平仓。同时，若"电力叙事"失去市场关注，电力基础设施多头亦可能跑输。CleanSpark和Riot仍高度依赖比特币价格。84.6亿美元看跌期权权利金损失将是一笔代价高昂的失败对冲。</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">多头情景：电力瓶颈叙事持续，半导体出现负面催化剂，看跌期权大幅获利，多头仓位同步受益于物理基础设施稀缺性溢价。空头情景：英伟达业绩超预期（5月20日季报），半导体反弹，看跌期权全线亏损，期权费付出代价；而矿工多头仓位受比特币价格拖累，双线失守。<strong>关键催化剂：英伟达5月20日季报及全年指引。</strong></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7 — TIMELINE ═══ -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Fund Growth Timeline</div>
+  <div class="section-title-cn">基金成长时间线</div>
+  <div class="section-divider"></div>
+
+  <ul class="timeline">
+    <li>
+      <span class="tl-date">Mid 2024</span>
+      <span class="tl-text"><strong>Fund launched.</strong> Seed capital from Patrick &amp; John Collison (Stripe), Daniel Gross, Nat Friedman. Initial focus: AI infrastructure equity. Published <em>Situational Awareness: The Decade Ahead</em> — 165-page AGI thesis. <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#888;display:block;margin-top:3px;">基金成立，获Stripe创始人Collison兄弟、Daniel Gross、Nat Friedman等人支持。同期发布165页AGI论文《情境感知：未来十年》。</span></span>
+    </li>
+    <li>
+      <span class="tl-date">Q4 2024</span>
+      <span class="tl-text"><strong>First 13F filed.</strong> $254.8M in equity, 6 holdings. Core positions: Bloom Energy, CoreWeave calls, IREN. <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#888;display:block;margin-top:3px;">首次申报13F，权益规模2.548亿美元，6个持仓。核心仓位：Bloom Energy、CoreWeave看涨期权、IREN。</span></span>
+    </li>
+    <li>
+      <span class="tl-date">Q1 2025</span>
+      <span class="tl-text"><strong>Rapid scaling.</strong> AUM grows to ~$383M. Miners added aggressively. Thesis: Bitcoin miners have stranded power assets perfectly suited for AI compute. <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#888;display:block;margin-top:3px;">规模快速扩张至约3.83亿美元。大举加仓矿工——判断其搁置电力资产完美适配AI算力需求。</span></span>
+    </li>
+    <li>
+      <span class="tl-date">Q4 2025</span>
+      <span class="tl-text"><strong>$5.52B disclosed.</strong> CoreWeave calls +672%, SanDisk +817%, Core Scientific +42%. Bloom Energy up 176% since entry. Fund emerges as one of Wall Street's most-watched books. <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#888;display:block;margin-top:3px;">申报规模达55.2亿美元。CoreWeave看涨期权+672%，SanDisk+817%，Core Scientific+42%。Bloom Energy较建仓价+176%。基金跃升为华尔街最受关注的投资组合之一。</span></span>
+    </li>
+    <li>
+      <span class="tl-date">Q1 2026</span>
+      <span class="tl-text"><strong>$13.7B notional — the barbell.</strong> Puts $8.46B against semiconductor complex. Long book maintained and expanded. CleanSpark added. SMH long + put collar constructed. Total notional more than doubles QoQ. <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;color:#888;display:block;margin-top:3px;">名义规模136.8亿美元——哑铃策略全面成型。新增84.6亿美元半导体看跌期权，多头账本维持并扩大，新开CleanSpark仓位，构建SMH领口对冲结构。</span></span>
+    </li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">从2024年中期不到2.55亿美元起步，到2026年第一季度136.8亿美元名义规模，情境感知基金在不到两年内实现约54倍规模增长。这一增长既来自持仓标的的巨大涨幅（Bloom Energy +176%、SanDisk +817%），也来自持续获得的外部LP资金注入。基金已从小众AI主题基金跃升为华尔街最受机构关注的对冲基金之一。</div>
+  </div>
+</div>
+
+<!-- ═══ VERDICT ═══ -->
+<div class="verdict">
+  <div class="verdict-label">Bottom Line · 核心结论</div>
+  <div class="verdict-text">
+    Leopold Aschenbrenner is running <strong>the most intellectually coherent AI infrastructure trade on public record</strong>. He is not chasing NVDA. He is not buying cloud stocks. He is buying the physical constraints that every AI model needs to exist — power, rack space, and the optical pipes between them — while using puts to hedge against the frothy valuation of chips that have already been fully re-rated by the market. <strong>The barbell works if you believe the AGI buildout is real but the chip rally has run ahead of fundamentals.</strong> The key test arrives May 20: NVIDIA earnings.
+    <br><br>
+    <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:13px; color:#ccc;">阿申布伦纳执行的是<strong>迄今公开记录中逻辑最严密的AI基础设施交易</strong>。他不追逐英伟达，不购买云计算股票，而是买入每一个AI模型赖以存在的物理约束要素——电力、机架空间和光学互联——同时用看跌期权对冲已被市场充分重新定价的芯片板块高估值风险。<strong>若相信AGI建设浪潮是真实的，但芯片涨幅已超越基本面，则哑铃策略逻辑成立。</strong>关键考验将在5月20日英伟达季报揭晓。</span>
+  </div>
+</div>
+
+<!-- ═══ TIMING NOTE ═══ -->
+<div class="callout callout-amber" style="margin-bottom: 2rem;">
+  <div class="callout-label">⏰ Timing Note · 时机说明</div>
+  <div class="callout-text">
+    The 13F reflects positions as of <strong>March 31, 2026</strong>. NVIDIA reports Q1 FY2027 earnings on <strong>Wednesday, May 20, 2026</strong> — two days after this filing. Whether the puts were rolled, exited, or maintained into earnings is unknown. A strong NVIDIA beat could make this filing look premature; a miss or cautious guidance would validate the hedge perfectly.
+    <br><br>
+    <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif; font-size:12px; color:#555;">本13F反映的是2026年3月31日的持仓快照。英伟达将于2026年5月20日（本次申报两天后）公布FY2027第一季度业绩。看跌期权是否已被展期、平仓或维持至财报季目前未知。英伟达若大幅超预期，本次申报的空头布局将显得过早；若业绩不及预期或指引偏谨慎，则对冲策略将得到完美验证。</span>
+  </div>
+</div>
+
+<!-- ═══ SOURCES ═══ -->
+<div class="section">
+  <div class="sources-label">Sources · 信息来源</div>
+  <div class="sources">
+    SEC EDGAR — Situational Awareness LP 13F-HR Q1 2026 (filed May 18, 2026) ·
+    <a href="https://www.capitalaidaily.com/ai-focused-fund-places-8272174735-bearish-bets-on-semiconductor-complex-including-nvidia-oracle-amd-micron-and-more/" target="_blank">CapitalAI Daily</a> ·
+    <a href="https://www.bankless.com/read/news/leopold-aschenbrenners-situational-awareness-files-quarterly-investment-disclosure" target="_blank">Bankless</a> ·
+    <a href="https://hedgefundalpha.com/news/leopold-aschenbrenner-situational-awareness-13f/" target="_blank">Hedge Fund Alpha</a> ·
+    <a href="https://blockspace.media/insight/situational-awareness-lp-bitcoin-miner-longs/" target="_blank">Blockspace</a> ·
+    <a href="https://www.annacoulling.com/stock-trader-tips/situational-awareness-lp-q1-2026-13f-filings-explosive-growth-to-13-7b-doubling-down-on-ai-energy-infrastructure-while-hedging-the-semiconductor-layer/" target="_blank">Anna Coulling / VPA Analysis</a> ·
+    <a href="https://www.danielscrivner.com/leopold-aschenbrenner-trades-and-holdings-q4-2025/" target="_blank">Daniel Scrivner (Q4 2025 reference)</a>
+  </div>
+</div>
+
+<div class="footer">
+  Situational Awareness LP — Q1 2026 13F Analysis · Prepared May 19, 2026<br>
+  <span style="font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;">情境感知对冲基金 2026年第一季度持仓分析报告 · 制作日期：2026年5月19日</span><br>
+  <span style="color:#ddd;">This report is for informational purposes only and does not constitute investment advice. · 本报告仅供参考，不构成任何投资建议。</span>
+</div>
+
+</body>
+</html>
