@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<title>HBM Deep Dive — The AI Memory Trade — May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+
+/* ── CHART CONTAINERS ── */
+.chart-wrap { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 18px 20px; margin: 16px 0; }
+.chart-title { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 4px; }
+.chart-sub { font-size: 11px; color: #888; margin-bottom: 14px; }
+.chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.chart-note { font-size: 10.5px; color: #aaa; margin-top: 6px; font-style: italic; }
+canvas { max-width: 100%; }
+
+/* ── HEADER ── */
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+/* ── SECTION ── */
+.section { margin-bottom: 2.5rem; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.body-text { font-size: 14px; line-height: 1.75; color: #2a2a2a; margin-bottom: 10px; }
+.body-text p { margin-bottom: 10px; }
+.body-text strong { font-weight: 600; }
+
+/* ── CHINESE SUMMARY ── */
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; margin-bottom: 6px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── METRICS ── */
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.up { color: #0F6E56; }
+.dn { color: #A32D2D; }
+.flat { color: #888; }
+
+/* ── CALLOUT ── */
+.callout { background: #EAF3DE; border-left: 4px solid #1D9E75; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 14px 0; font-size: 13.5px; line-height: 1.7; color: #1a3a1a; }
+.callout-warn { background: #FAEEDA; border-left: 4px solid #e0901a; color: #3a2a0a; }
+.callout-bear { background: #FCEBEB; border-left: 4px solid #A32D2D; color: #3a0a0a; }
+.callout-blue { background: #E6F1FB; border-left: 4px solid #185FA5; color: #0a1a3a; }
+.callout strong { font-weight: 700; }
+
+/* ── CASES ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.6; color: #791F1F; }
+
+/* ── STOCK HEADER CARD ── */
+.stock-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 20px 22px; margin-bottom: 16px; }
+.stock-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.stock-name { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+.stock-name-cn { font-size: 12px; color: #888; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.stock-ticker { font-size: 22px; font-weight: 800; color: #185FA5; }
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 6px; }
+.rating-green { background: #EAF3DE; color: #27500A; }
+.rating-amber { background: #FAEEDA; color: #633806; }
+.rating-red { background: #FCEBEB; color: #791F1F; }
+.rating-blue { background: #E6F1FB; color: #0C447C; }
+
+/* ── COMPARISON TABLE ── */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 14px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e0; }
+.compare-table th { background: #f0efe8; color: #555; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; text-align: left; }
+.compare-table td { padding: 9px 14px; border-top: 1px solid #f0efe8; vertical-align: top; line-height: 1.5; }
+.compare-table tr:hover td { background: #fafaf8; }
+.t-metric { color: #888; font-size: 12px; font-weight: 600; }
+.t-best { background: #EAF3DE !important; font-weight: 600; color: #27500A; }
+.t-mid { background: #FAEEDA !important; color: #633806; }
+.t-weak { background: #FCEBEB !important; color: #791F1F; }
+
+/* ── ANALOG EXPLAINER ── */
+.analogy-box { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 16px 18px; margin: 14px 0; }
+.analogy-title { font-size: 12px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.analogy-text { font-size: 13.5px; line-height: 1.75; color: #333; }
+
+/* ── STACK FLOW ── */
+.stack-flow { display: flex; align-items: stretch; gap: 0; margin: 14px 0; overflow-x: auto; }
+.sf-node { flex: 1; min-width: 100px; }
+.sf-inner { border-radius: 8px; padding: 12px 12px 10px; border: 1px solid; height: 100%; }
+.sf-arrow { display: flex; align-items: center; justify-content: center; width: 22px; flex-shrink: 0; color: #bbb; font-size: 16px; }
+.sf-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+.sf-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.sf-detail { font-size: 11px; line-height: 1.4; opacity: 0.85; }
+.sf-red .sf-inner { background: #FCEBEB; border-color: #f5baba; }
+.sf-red .sf-label { color: #A32D2D; }
+.sf-orange .sf-inner { background: #FAEEDA; border-color: #f0cfa0; }
+.sf-orange .sf-label { color: #854F0B; }
+.sf-blue .sf-inner { background: #E6F1FB; border-color: #b8d4f0; }
+.sf-blue .sf-label { color: #185FA5; }
+.sf-gray .sf-inner { background: #f0efe8; border-color: #ddddd5; }
+.sf-gray .sf-label { color: #888; }
+
+/* ── DIVIDER / UTILS ── */
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1rem; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; display: inline-block; margin-right: 4px; }
+.tag-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; display: inline-block; margin-right: 4px; }
+
+/* ── VERDICT BOX ── */
+.verdict { background: #fff; border: 2px solid #1a1a1a; border-radius: 10px; padding: 18px 20px; margin: 14px 0; }
+.verdict-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; color: #185FA5; }
+.verdict-text { font-size: 13.5px; line-height: 1.75; }
+
+/* ── SOURCES / FOOTER ── */
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<div class="doc-header">
+  <div class="doc-tag">DEEP DIVE · 深度分析 · FOR THE RETAIL INVESTOR</div>
+  <div class="doc-title">The AI Memory Trade: Why HBM Is the Most Important Bottleneck You've Never Heard Of</div>
+  <div class="doc-title-cn">AI内存投资：高带宽内存（HBM）—— 你从未听说过的最重要的瓶颈</div>
+  <div class="doc-meta">Based on Dylan Patel / SemiAnalysis framework · May 2026 · Stocks: MU · 000660.KS · 005930.KS</div>
+</div>
+
+
+<!-- ══════════════════ SECTION 1: THE PATEL THESIS ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">The Patel Framework: Where the Money Actually Goes in AI</div>
+  <div class="section-title-cn">Patel框架：AI时代资金真正流向何处</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <p>Dylan Patel is the founder of SemiAnalysis, a research firm that tracks the AI semiconductor supply chain with more granularity than almost anyone else on earth — literally using satellite imagery to watch data centers being built, and mapping global capital flows across fabs, equipment vendors, and cloud providers. His firm is projected to generate over $100 million in revenue in 2026, with hyperscalers and AI labs on its client list.</p>
+    <p>His central argument is deceptively simple: <strong>in a technology revolution, the companies that control physical bottlenecks earn outsized returns</strong> — not the companies getting the most headlines. During the Gold Rush, it wasn't the miners who got reliably rich. It was the people selling picks, shovels, and denim jeans. Patel applies this logic to AI with extreme precision, tracking exactly which physical constraints will bind first.</p>
+    <p>From 2023 to 2025, the biggest bottleneck was GPU compute — and Nvidia captured most of that value. But Patel's latest analysis marks a regime shift: <strong>the tightest choke point has now moved to memory</strong>, specifically High Bandwidth Memory (HBM). All three manufacturers are completely sold out through 2026. Goldman Sachs called the current DRAM supply-demand gap the most severe in 15 years. And crucially — new memory fab capacity takes 4–5 years to build.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">Dylan Patel是SemiAnalysis创始人，他的核心论点是：在技术革命中，<strong>控制物理瓶颈的公司才能获得超额回报</strong>——而不是获得最多头条的公司。2023至2025年，最大瓶颈是GPU算力，英伟达获取了大部分价值。但Patel最新分析标志着一个制度性转变：<strong>最紧张的瓶颈已转移到内存</strong>，特别是高带宽内存（HBM）。三家制造商2026年产能已全部售罄，高盛称当前DRAM供需缺口是15年来最严重的，而新的内存工厂需要4至5年才能建成。</div>
+  </div>
+</div>
+
+
+
+<!-- CHART: Patel Conviction -->
+<div class="chart-wrap">
+  <div class="chart-title">AI Stack — Where Value Accrues (Patel Framework, May 2026)</div>
+  <div class="chart-sub">Conviction score per layer — higher means tighter, harder-to-replace bottleneck</div>
+  <canvas id="patelvChart" height="200"></canvas>
+  <div class="chart-note">Source: SemiAnalysis / Dylan Patel analysis. Scores are qualitative assessments derived from supply-demand constraint analysis, not price targets.</div>
+</div>
+
+<!-- ══════════════════ SECTION 2: WHAT IS HBM ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">What Is HBM? A Plain-English Explanation</div>
+  <div class="section-title-cn">什么是HBM？通俗解释</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <p>HBM stands for <strong>High Bandwidth Memory</strong>. It is a special type of RAM chip that sits physically on the same chip package as a GPU or AI accelerator, connected by thousands of tiny wires called through-silicon vias (TSVs). The "high bandwidth" means it can move data extremely fast — much faster than the regular memory in your laptop or phone.</p>
+  </div>
+
+  <div class="analogy-box">
+    <div class="analogy-title">🏭 The Factory Analogy</div>
+    <div class="analogy-text">Think of an AI chip as a giant factory with thousands of workers (the GPU cores) who can process calculations simultaneously. Those workers are useless if they're sitting idle waiting for raw materials. <strong>HBM is the conveyor belt system</strong> that feeds each worker the exact data they need at exactly the right moment — thousands of times per second. The faster and wider the conveyor, the more productive the entire factory. Without HBM, your $40,000 Nvidia H100 is a very expensive paperweight.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">HBM（高带宽内存）是一种特殊的RAM芯片，与GPU封装在同一个芯片上，通过数千条微型导线相连。可以把AI芯片比作一个拥有数千名工人的工厂，<strong>HBM就是传送带系统</strong>，每秒数千次地为每个工人提供他们需要的数据。没有HBM，一块价值4万美元的英伟达H100只是一块昂贵的镇纸。</div>
+  </div>
+
+  <div class="body-text" style="margin-top:14px;">
+    <p><strong>Why isn't it the same as optics?</strong> Optics (the fibre and laser-based links that companies like Lumentum and Ciena make) is the highway between cities — it moves data between servers, racks, and data centers. HBM is the fuel injector inside the engine. Both matter, but they solve different problems at different scales. Patel's argument is that the most acute, least-substitutable bottleneck right now is <em>inside the chip package</em> — the speed at which the GPU can feed itself data — not the highways between buildings.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">光学（Optics，如Lumentum生产的光纤和激光链路）是城市之间的高速公路——在服务器、机架和数据中心之间传输数据。HBM是发动机内部的燃油喷射器。两者都重要，但解决的是不同层面的问题。Patel认为，目前最紧迫、最难替代的瓶颈在于<strong>芯片封装内部</strong>——GPU自身获取数据的速度——而不是楼宇之间的数据传输。</div>
+  </div>
+
+  <!-- Stack flow -->
+  <div style="margin-top:18px;">
+    <div class="section-num" style="margin-bottom:8px;">WHERE HBM FITS IN THE STACK · HBM在技术栈中的位置</div>
+    <div class="stack-flow">
+      <div class="sf-node sf-red">
+        <div class="sf-inner">
+          <div class="sf-label">🔴 Inside the chip</div>
+          <div class="sf-name">HBM Memory</div>
+          <div class="sf-detail">Feeds data to GPU cores. The binding constraint today.</div>
+        </div>
+      </div>
+      <div class="sf-arrow">›</div>
+      <div class="sf-node sf-orange">
+        <div class="sf-inner">
+          <div class="sf-label">🟡 Between chips</div>
+          <div class="sf-name">NVLink / PCIe</div>
+          <div class="sf-detail">GPU-to-GPU links within a single server.</div>
+        </div>
+      </div>
+      <div class="sf-arrow">›</div>
+      <div class="sf-node sf-blue">
+        <div class="sf-inner">
+          <div class="sf-label">🔵 Between servers</div>
+          <div class="sf-name">Optics / InfiniBand</div>
+          <div class="sf-detail">Lumentum, Ciena, Coherent. Critical at cluster scale.</div>
+        </div>
+      </div>
+      <div class="sf-arrow">›</div>
+      <div class="sf-node sf-gray">
+        <div class="sf-inner">
+          <div class="sf-label">⬜ Between buildings</div>
+          <div class="sf-name">Long-haul Fibre</div>
+          <div class="sf-detail">Data center to data center interconnect.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- CHARTS: HBM Market Share + TAM -->
+<div class="chart-grid-2">
+  <div class="chart-wrap" style="margin:0;">
+    <div class="chart-title">HBM Global Market Share (2026)</div>
+    <div class="chart-sub">Only 3 manufacturers. No new entrant possible before 2030.</div>
+    <canvas id="hbmShareChart" height="230"></canvas>
+  </div>
+  <div class="chart-wrap" style="margin:0;">
+    <div class="chart-title">HBM Total Addressable Market ($B)</div>
+    <div class="chart-sub">Micron management forecast — pulled forward 2 years</div>
+    <canvas id="tamChart" height="230"></canvas>
+  </div>
+</div>
+<div class="chart-note" style="margin-top:-10px; margin-bottom:12px;">Sources: SemiAnalysis, TradingKey, Micron Q1 FY2026 earnings, Goldman Sachs April 2026.</div>
+
+<!-- ══════════════════ SECTION 3: WHY HBM IS THE TRADE ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Why HBM Is the Investment Opportunity Right Now</div>
+  <div class="section-title-cn">为什么HBM是当前最重要的投资机会</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <p>Five structural facts stack on top of each other to create the investment case:</p>
+  </div>
+
+
+<div class="chart-wrap">
+  <div class="chart-title">Data Center Power — % of US Total Grid (Actual + Projected)</div>
+  <div class="chart-sub">Patel's core "3–4% today, needs to triple" — the buildout is still early</div>
+  <canvas id="powerChart" height="170"></canvas>
+  <div class="chart-note">Source: SemiAnalysis projections based on announced hyperscaler CapEx and fab build timelines.</div>
+</div>
+  <div class="callout callout-blue">
+    <strong>Fact 1 — Complete sold-out through 2026.</strong> All three HBM manufacturers (SK Hynix, Samsung, Micron) have fully booked capacity through year-end. They literally cannot satisfy all customer orders. Microsoft, Google, and Amazon were reported in May 2026 to be offering to co-fund SK Hynix's capacity expansion just to secure future allocation.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>事实1——2026年全年产能已售罄。</strong> 三家HBM制造商（SK海力士、三星、美光）产能已全部订满，根本无法满足所有客户需求。2026年5月，据报道微软、谷歌、亚马逊正提议联合出资扩大SK海力士产能，仅为确保未来的产能分配。</div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:8px;">
+    <strong>Fact 2 — Most severe supply shortage in 15 years.</strong> Goldman Sachs raised its 2026 DRAM supply-demand gap forecast to 4.9% in April 2026 — their highest estimate in over a decade. SK Group's chairman publicly stated the chip wafer shortage is likely to persist until 2030.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>事实2——15年来最严峻的供应短缺。</strong> 2026年4月，高盛将2026年DRAM供需缺口预测上调至4.9%，创十年来最高预测值。SK集团董事长公开表示，芯片晶圆短缺可能持续至2030年。</div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:8px;">
+    <strong>Fact 3 — You cannot fix it quickly.</strong> Building a new memory fab takes 4–5 years and $15–20 billion. Even if someone broke ground today, it wouldn't help until 2030+. This is not a problem that can be solved with money alone — it's a time problem.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>事实3——无法快速解决。</strong> 建设一座新的内存工厂需要4至5年时间和150至200亿美元资金。即使今天就开工，2030年之前也无法缓解产能缺口。这不是单纯用钱能解决的问题——它是时间问题。</div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:8px;">
+    <strong>Fact 4 — Each GPU generation needs more HBM, not less.</strong> Nvidia's H100 used HBM2e. The H200 uses more HBM3. Blackwell uses even more HBM3e. The next generation (Vera Rubin) uses 8 stacks of HBM4 per chip. Demand compounds with every product cycle.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>事实4——每代GPU都需要更多HBM。</strong> 英伟达H100使用HBM2e，H200使用更多的HBM3，Blackwell使用更多的HBM3e，下一代Vera Rubin每块芯片将使用8组HBM4。需求随每个产品周期复合增长。</div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:8px;">
+    <strong>Fact 5 — HBM TAM is exploding.</strong> Micron's management forecasts the HBM total addressable market to grow from approximately $35 billion in 2025 to around $100 billion in 2028 — pulled forward by two years from earlier estimates. Memory prices have already risen ~6× in the past year.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>事实5——HBM市场规模爆炸性增长。</strong> 美光管理层预测，HBM可寻址市场规模将从2025年的约350亿美元增长至2028年的约1000亿美元——比此前预测提前了两年。内存价格在过去一年已上涨约6倍。</div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:12px;">
+    <strong>⚠ The key risk to understand:</strong> Memory is historically a cyclical industry — boom and bust. The risk is that AI investment slows, hyperscalers pull back CapEx, or new fabs eventually come online and create oversupply. HBM is less commodity-like than regular DRAM (each chip is increasingly customised for specific customers), but the cyclical risk does not disappear entirely. Invest with a 2–4 year horizon, not a 2-month trade.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>⚠ 需了解的核心风险：</strong>内存历史上是一个周期性行业——繁荣与萧条交替。风险在于AI投资放缓、超大规模云厂商削减资本支出，或新工厂最终投产造成供应过剩。HBM的商品化程度低于普通DRAM（每款芯片越来越多地针对特定客户定制），但周期性风险并未完全消失。应以2至4年的投资周期来考量，而非短线操作。</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SECTION 4: THREE STOCKS ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">The Three HBM Stocks: A Full Analysis</div>
+  <div class="section-title-cn">三支HBM股票：完整分析</div>
+  <div class="section-divider"></div>
+
+
+<div class="chart-wrap" style="margin-top:14px;">
+  <div class="chart-title">HBM Manufacturer Revenue Growth YoY — Q1 2026 (%)</div>
+  <div class="chart-sub">All three posting extraordinary top-line acceleration driven by AI demand</div>
+  <canvas id="revenueGrowthChart" height="200"></canvas>
+  <div class="chart-note">Sources: Micron Q1 FY2026, SK Hynix Q1 2026, Samsung DS Division Q1 2026.</div>
+</div>
+<div class="chart-grid-2">
+  <div class="chart-wrap" style="margin:0;">
+    <div class="chart-title">Operating Margins — HBM Manufacturers (%)</div>
+    <div class="chart-sub">SK Hynix 72% beats even Nvidia's 65%</div>
+    <canvas id="marginChart" height="250"></canvas>
+  </div>
+  <div class="chart-wrap" style="margin:0;">
+    <div class="chart-title">Forward P/E vs Sector Average</div>
+    <div class="chart-sub">HBM stocks dramatically cheaper than their growth implies</div>
+    <canvas id="peChart" height="250"></canvas>
+  </div>
+</div>
+<div class="chart-note" style="margin-top:-10px; margin-bottom:12px;">Sources: StockAnalysis, FullRatio, GuruFocus, May 2026.</div>
+  <!-- COMPARISON TABLE -->
+  <div class="mb16">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Metric 指标</th>
+          <th>Micron (MU) 🇺🇸</th>
+          <th>SK Hynix (000660.KS) 🇰🇷</th>
+          <th>Samsung (005930.KS) 🇰🇷</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="t-metric">HBM Market Share</td><td class="t-mid">~25% · rising</td><td class="t-best">~57–70% · dominant</td><td>~15–20% · recovering</td></tr>
+        <tr><td class="t-metric">Trailing P/E</td><td>~32×</td><td class="t-best">~5–6× fwd</td><td>~10–12× fwd</td></tr>
+        <tr><td class="t-metric">PEG Ratio</td><td class="t-best">0.08 (extremely cheap vs growth)</td><td class="t-best">~0.05</td><td>~0.10</td></tr>
+        <tr><td class="t-metric">Q1 2026 Revenue Growth (YoY)</td><td class="t-best">+57% ($13.6B record)</td><td class="t-best">+198% (₩52.58T record)</td><td>+~48× operating profit (DS div)</td></tr>
+        <tr><td class="t-metric">Operating Margin</td><td>~42%</td><td class="t-best">72% (all-time record, beats Nvidia)</td><td>~65% (DS division)</td></tr>
+        <tr><td class="t-metric">HBM Generation Lead</td><td class="t-mid">HBM4 samples shown, 1–2Q lag</td><td class="t-best">HBM4 mass production, HBM4E samples H2</td><td>HBM4 mass production started Jun 2026</td></tr>
+        <tr><td class="t-metric">Nvidia Relationship</td><td class="t-mid">Qualified supplier</td><td class="t-best">~70% of Nvidia HBM orders</td><td>Recently re-qualified for HBM4</td></tr>
+        <tr><td class="t-metric">Sold Out Through</td><td class="t-best">2026 fully booked</td><td class="t-best">Next 3 yrs demand exceeds capacity</td><td>HBM4 fully sold out for 2026</td></tr>
+        <tr><td class="t-metric">Key Risk</td><td>1–2Q behind on HBM4 vs peers</td><td>Samsung HBM4 market share recovery</td><td>Labour strike risk; conglomerate discount</td></tr>
+        <tr><td class="t-metric">Listing / Access</td><td class="t-best">Nasdaq — easiest access</td><td>Korea Exchange (KRX)</td><td>Korea Exchange (KRX)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">三家HBM制造商对比：<strong>SK海力士</strong>以57–70%的市占率主导市场，2026年Q1创下72%营业利润率纪录，超过英伟达的65%；前瞻市盈率仅约5–6倍。<strong>美光</strong>是美国唯一的HBM制造商，纳斯达克上市，PEG约0.08，HBM市占率约25%且持续上升，但HBM4量产进度落后竞争对手1–2个季度。<strong>三星</strong>HBM4已开始量产，2026年HBM收入预计增长超三倍，但面临劳资纠纷风险及集团折价。</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ STOCK 1: MICRON ══════════════════ -->
+<div class="section">
+  <div class="section-num">STOCK 1 · 股票一</div>
+  <div class="section-title">Micron Technology</div>
+  <div class="section-title-cn">美光科技</div>
+  <div class="section-divider"></div>
+
+  <div class="stock-card">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">Micron Technology, Inc.</div>
+        <div class="stock-name-cn">美光科技（纳斯达克上市）</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">MU · Nasdaq</span>
+          <span class="tag-pill">🇺🇸 US-listed</span>
+          <span class="tag-pill">HBM ~25% share</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker">MU</div>
+        <div class="rating rating-green">★ HIGHEST CONVICTION FOR RETAIL</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Stock Price (May 2026)</div>
+        <div class="metric-val">~$681</div>
+        <div class="metric-sub">Nasdaq: MU</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Trailing P/E</div>
+        <div class="metric-val up">~32×</div>
+        <div class="metric-sub">Forward P/E: ~7.3×</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">PEG Ratio</div>
+        <div class="metric-val up">0.08</div>
+        <div class="metric-sub">Sector avg: 0.67×. MU is 88% cheaper.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Revenue Q1 FY2026</div>
+        <div class="metric-val up">$13.6B</div>
+        <div class="metric-sub">+57% YoY. Record high.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Data Center % Revenue</div>
+        <div class="metric-val up">56%</div>
+        <div class="metric-sub">Was <10% in 2022</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">HBM TAM (2028 est.)</div>
+        <div class="metric-val">$100B</div>
+        <div class="metric-sub">Up from $35B in 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p><strong>Who they are:</strong> Micron is the only American HBM manufacturer and the third-largest memory company in the world. For decades it was an afterthought — a distant #3 behind Samsung and SK Hynix. The AI boom changed everything. Micron has moved aggressively into HBM and is now a validated Nvidia supplier for HBM3e, with HBM4 samples already shown to customers.</p>
+    <p><strong>The investment case:</strong> Micron's data centre revenue tripled year-on-year and is now 56% of total revenue — a structural shift from a consumer memory company to an AI infrastructure company. Management forecasts the HBM total addressable market to grow from $35 billion in 2025 to $100 billion in 2028, pulled forward two full years from earlier estimates. HBM capacity for 2026 is completely sold out. The forward P/E of ~7× is extraordinarily cheap for a company growing earnings by 411% year-on-year — which is why the PEG ratio is a remarkable 0.08, versus a technology sector average of 0.67.</p>
+    <p><strong>Why it is the most accessible pick:</strong> MU trades on Nasdaq, in US dollars, with enormous daily liquidity. Any Singapore broker with US market access can buy it. SK Hynix may have higher conviction on the HBM thesis, but Micron is the simplest entry point.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>美光是美国唯一的HBM制造商</strong>，也是全球第三大内存公司。AI热潮彻底改变了其业务格局——数据中心收入同比翻三倍，占总收入56%，标志着从消费内存公司向AI基础设施公司的结构性转变。管理层预测HBM可寻址市场将从2025年的350亿美元增至2028年的1000亿美元，提前两年实现。2026年HBM产能已全部售罄。前瞻市盈率约7倍，PEG仅0.08（科技板块平均为0.67），估值极具吸引力。对散户投资者而言，<strong>MU是最易获取的入场点</strong>：在纳斯达克上市，美元计价，流动性强。</div>
+  </div>
+
+  <div class="cases" style="margin-top:14px;">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🟢 Bull Case 看多理由</div>
+      <div class="bull-text">Only US-listed pure-play HBM stock. Forward P/E of 7× with 400%+ earnings growth is historically cheap. HBM4 qualification with Nvidia expected H2 2026. CapEx of $20B being invested now — this builds the moat. HBM TAM doubles by 2028. US CHIPS Act subsidies provide tailwind.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🔴 Bear Case 看空风险</div>
+      <div class="bear-text">HBM4 mass production lags SK Hynix and Samsung by 1–2 quarters. Trailing P/E of ~32× feels elevated if the memory cycle turns. If AI investment slows, memory prices could fall sharply. China exposure could face tariff/regulatory risk. Memory has historically been boom-bust.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ STOCK 2: SK HYNIX ══════════════════ -->
+<div class="section">
+  <div class="section-num">STOCK 2 · 股票二</div>
+  <div class="section-title">SK Hynix</div>
+  <div class="section-title-cn">SK海力士</div>
+  <div class="section-divider"></div>
+
+  <div class="stock-card">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">SK hynix Inc.</div>
+        <div class="stock-name-cn">SK海力士（韩国交易所上市）</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">000660.KS · KRX</span>
+          <span class="tag-pill">🇰🇷 Korea Exchange</span>
+          <span class="tag-pill">HBM ~57–70% share</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker" style="font-size:18px;">000660.KS</div>
+        <div class="rating rating-green">★ HIGHEST FUNDAMENTAL CONVICTION</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Stock Price (May 2026)</div>
+        <div class="metric-val">~₩749,000</div>
+        <div class="metric-sub">All-time high hit ₩1.95M intraday May 11</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Forward P/E</div>
+        <div class="metric-val up">~5–6×</div>
+        <div class="metric-sub">Despite stock up 285% in past year</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Q1 2026 Revenue</div>
+        <div class="metric-val up">+198% YoY</div>
+        <div class="metric-sub">₩52.58T. First time >₩50T.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Operating Margin</div>
+        <div class="metric-val up">72%</div>
+        <div class="metric-sub">All-time record for semiconductor mfg. Beats Nvidia's 65%.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Nvidia HBM Orders</div>
+        <div class="metric-val up">~70%</div>
+        <div class="metric-sub">Of Nvidia's total HBM allocation</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Market Cap</div>
+        <div class="metric-val">~$900B+</div>
+        <div class="metric-sub">Surpassed at all-time high</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p><strong>Who they are:</strong> SK Hynix is the undisputed leader in HBM. They were first to ship HBM2e, first to ship HBM3e, first to ship HBM4, and are already preparing HBM4E samples. Their manufacturing process — particularly the TSV stacking and 1c-nanometer DRAM technology — is a full generation ahead of Samsung. Nvidia sends approximately 70% of its HBM orders to SK Hynix. That is not an accident: it reflects years of process refinement, qualification trust, and supply reliability.</p>
+    <p><strong>The extraordinary operating margin story:</strong> In Q1 2026, SK Hynix posted an operating margin of <strong>72%</strong> — an all-time record for any semiconductor manufacturer, surpassing even Nvidia's celebrated 65%. Revenue nearly tripled year-on-year. The reason: when supply is structurally constrained and customers are price-insensitive (because they need HBM to run multi-billion-dollar AI clusters), pricing power is nearly absolute. An executive noted on the earnings call: "customers are prioritising procurement over price."</p>
+    <p><strong>The remarkable valuation paradox:</strong> The stock has risen ~285% over the past year, and yet the forward P/E is still approximately 5–6×. This isn't a mistake — earnings expectations have risen so dramatically that the stock is cheap relative to its growth even after a massive run. One value investor analysis noted that a stock going up 9× in a year while the forward P/E barely moves from 5× is a signal of genuine earnings power, not multiple expansion.</p>
+    <p><strong>Customer demand is extraordinary:</strong> In May 2026, Microsoft, Google, and Amazon were reported to be offering to fund capacity expansion at SK Hynix in exchange for securing future HBM allocations. When your customers are offering to build your factory for you, you have pricing power.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>SK海力士是HBM市场无可争议的领导者</strong>，HBM市占率约57–70%，约占英伟达HBM订单的70%。2026年Q1创下72%的营业利润率历史纪录，超越英伟达的65%，营收同比增长198%。<strong>估值悖论：</strong>股价过去一年上涨285%，前瞻市盈率依然仅约5–6倍——因为盈利预期增速更快。2026年5月，微软、谷歌、亚马逊据报道主动提出出资帮助SK海力士扩产，以换取未来产能配额——这是定价权的有力证明。访问方式：需通过支持韩国交易所（KRX）的券商购买，如DBS Vickers、老虎证券或富途证券。</div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:14px;">
+    <strong>⚠ Access note for Singapore investors:</strong> SK Hynix trades on the Korea Stock Exchange (KRX) in Korean Won. You need a broker with KRX access. In Singapore, DBS Vickers, POEMS (Phillip Securities), Tiger Brokers, and Futu (moomoo) all offer KRX market access. The ticker is <strong>000660.KS</strong>. Currency risk (SGD/KRW) applies.
+  </div>
+
+  <div class="cases" style="margin-top:14px;">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🟢 Bull Case 看多理由</div>
+      <div class="bull-text">Dominant HBM technology lead — multiple generations ahead on process. 72% operating margins. 70% of Nvidia's HBM allocation. Forward P/E ~5× is anomalously cheap given growth. Customer demand for next 3 years already exceeds current supply capacity. HBM4 and HBM4E pipeline locked in.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🔴 Bear Case 看空风险</div>
+      <div class="bear-text">Samsung's HBM4 recovery could erode market share to 50–60% in H2 2026. KRX listing adds currency and market access friction for non-Korean investors. Memory industry cyclicality: if AI CapEx slows, prices could correct sharply. Stock has already run 285%+ — timing risk for new entrants.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ STOCK 3: SAMSUNG ══════════════════ -->
+<div class="section">
+  <div class="section-num">STOCK 3 · 股票三</div>
+  <div class="section-title">Samsung Electronics</div>
+  <div class="section-title-cn">三星电子</div>
+  <div class="section-divider"></div>
+
+  <div class="stock-card">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">Samsung Electronics Co., Ltd.</div>
+        <div class="stock-name-cn">三星电子（韩国交易所上市）</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">005930.KS · KRX</span>
+          <span class="tag-pill">🇰🇷 Korea Exchange</span>
+          <span class="tag-pill">HBM ~15–20% share (recovering)</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker" style="font-size:18px;">005930.KS</div>
+        <div class="rating rating-amber">⚠ MONITOR — COMPLEX STORY</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Q1 2026 Revenue</div>
+        <div class="metric-val up">₩133.87T</div>
+        <div class="metric-sub">Record quarterly earnings</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">DS Division Op. Profit</div>
+        <div class="metric-val up">₩53.7T</div>
+        <div class="metric-sub">~48× increase from Q1 2025</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">HBM Revenue 2026E</div>
+        <div class="metric-val up">+3× YoY</div>
+        <div class="metric-sub">HBM4 2026 production sold out</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">HBM4 Yield</div>
+        <div class="metric-val flat">~60%</div>
+        <div class="metric-sub">vs SK Hynix's ~80%. Gap closing.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Conglomerate Scope</div>
+        <div class="metric-label" style="margin-top:6px;">Phones · TVs · Appliances · Memory · Foundry · Display</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Key Near-Term Risk</div>
+        <div class="metric-val dn">Strike ⚠</div>
+        <div class="metric-sub">Labour dispute ongoing May 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p><strong>Who they are:</strong> Samsung is the world's largest memory company by revenue — and also makes smartphones, TVs, home appliances, displays, and foundry chips. This breadth is both strength and weakness: the HBM upside is diluted by exposure to consumer electronics, which is suffering from the very memory price surge that makes HBM so profitable.</p>
+    <p><strong>The recovery story:</strong> Samsung badly fumbled the HBM3e generation — Nvidia famously rejected their chips in quality testing in 2024 due to heat and power consumption issues. They have been fighting back. Their HBM4 has now passed qualification with Nvidia and AMD, with full-scale supply beginning in June 2026. Their entire 2026 HBM4 production run is already sold out. HBM4 is expected to account for more than half of their total HBM revenue starting Q3 2026. Management projects HBM revenue to more than triple versus 2025.</p>
+    <p><strong>Why the "conglomerate discount" matters:</strong> Samsung's semiconductor division (DS) is posting extraordinary results — operating profit increased nearly 48-fold versus Q1 2025. But the smartphone division (MX) and TV division are actually being hurt by high memory prices, which raise their own component costs. This offsetting effect suppresses the overall stock multiple relative to a pure-play memory company like SK Hynix. You get a discount on the HBM story — but you also get exposure to businesses that are struggling.</p>
+    <p><strong>The labour strike risk:</strong> In May 2026, Samsung is facing a significant labour dispute. Its union is demanding 15% of operating profit in bonuses. After paying no bonuses in 2024 (during the memory downturn), workers are pushing hard. JPMorgan estimates that meeting full union demands could reduce 2026 operating profit by 7–12%, before any lost production from strikes.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>三星是全球最大的内存公司</strong>，同时涉足智能手机、电视、家电、显示器和代工业务。这种多元化既是优势也是弱点——HBM的上行空间被消费电子业务的拖累所稀释。<strong>复苏故事：</strong>三星的HBM4已通过英伟达和AMD认证，2026年全年HBM4产量已售罄，HBM收入预计同比增长超过三倍。<strong>风险：</strong>劳动争议（工会要求将15%营业利润用于分红）可能使2026年利润减少7–12%；作为综合性大企业，存在集团折价；HBM4良率（约60%）仍低于SK海力士（约80%）。<strong>结论：</strong>三星是三者中最复杂的投资，适合有耐心追踪多条业务线的投资者。</div>
+  </div>
+
+  <div class="cases" style="margin-top:14px;">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🟢 Bull Case 看多理由</div>
+      <div class="bull-text">HBM4 now qualified with Nvidia — the key overhang is cleared. HBM revenue tripling in 2026. Largest memory manufacturer by scale — can ramp capacity faster than others. DS division op. profit up 48× YoY. At a discounted multiple vs SK Hynix — upside if yield gap closes further.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🔴 Bear Case 看空风险</div>
+      <div class="bear-text">Conglomerate discount: phone and TV divisions are being hurt by the same memory price surge. Labour strike could cost 7–12% operating profit. HBM4 yield (~60%) still trails SK Hynix (~80%) meaningfully. History of execution struggles on advanced memory nodes. Complex business to analyse for retail investors.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SECTION 5: VERDICT & TIMING ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Timing, Market Trends, and How to Think About Entering</div>
+  <div class="section-title-cn">时机、市场趋势及入场思路</div>
+  <div class="section-divider"></div>
+
+  
+<div class="chart-wrap">
+  <div class="chart-title">HBM Stacks Per Nvidia GPU — Each Generation Demands More</div>
+  <div class="chart-sub">Demand compounds structurally with every product cycle — not a one-off boom</div>
+  <canvas id="gpuHbmChart" height="180"></canvas>
+  <div class="chart-note">Sources: SemiAnalysis, Nvidia specs. Vera Rubin (2026) announced; Feynman (2027E) projected.</div>
+</div>
+<div class="body-text">
+    <p><strong>Market trend:</strong> The memory upcycle is well underway, but the duration appears unusually long. Goldman Sachs called the 2026 supply-demand gap the worst in 15 years. SK Group's chairman expects the wafer shortage to persist until 2030. The reason is structural: new fabs take 4–5 years to build, and demand is compounding with every AI product cycle. This is not a typical 12-month memory boom.</p>
+    <p><strong>Where we are in the cycle:</strong> HBM4 is just beginning to ramp. Nvidia's Vera Rubin platform (which uses 8 stacks of HBM4 per chip) is launching H2 2026. HBM5 is in development. Each new GPU generation requires more HBM than the last. The next 2–3 years of product cycles are essentially locked in — all three manufacturers are already receiving orders and design specifications from hyperscalers for hardware that hasn't been built yet.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>市场趋势：</strong>内存上行周期正在进行中，且持续时间似乎异常长。高盛称2026年供需缺口是15年来最严峻的，SK集团董事长预计晶圆短缺将持续至2030年。原因是结构性的：新工厂需要4–5年才能建成，而需求随每个AI产品周期复合增长。英伟达Vera Rubin平台（每块芯片使用8组HBM4）将于2026年下半年推出。三家制造商已在接受超大规模云厂商对尚未生产硬件的订单——未来2–3年的产品周期实际上已被锁定。</div>
+  </div>
+
+  <div class="verdict" style="margin-top:14px;">
+    <div class="verdict-title">⭐ The Patel-Informed Verdict for a Retail Investor · 散户投资者的结论</div>
+    <div class="verdict-text">
+      <p style="margin-bottom:10px;"><strong>If you can only own one name:</strong> Own <strong>Micron (MU)</strong>. It is the most accessible (Nasdaq-listed, USD), has a PEG of 0.08 against a sector average of 0.67, is the only US HBM manufacturer, and its HBM market share is rising. The forward P/E of ~7× is extraordinarily cheap for the growth on offer. This is the picks-and-shovels trade that Dylan Patel's framework points to most clearly for a US-accessible investor.</p>
+      <p style="margin-bottom:10px;"><strong>If you have KRX market access and want the highest-conviction pure play:</strong> Add <strong>SK Hynix (000660.KS)</strong>. The 72% operating margin, 70% share of Nvidia's HBM orders, and forward P/E of ~5× despite a 285% rally is an almost paradoxically cheap situation for the single most irreplaceable company in the AI supply chain below the model layer.</p>
+      <p><strong>Samsung (005930.KS)</strong> is the most complex case — a genuine recovery story with a conglomerate discount, labour risk, and a yield gap that is closing but not yet closed. Best suited for investors who want diversified Korea semiconductor exposure rather than a pure HBM play.</p>
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>散户投资者结论：</strong>若只能持有一只股票，选<strong>美光（MU）</strong>——纳斯达克上市，PEG仅0.08，前瞻市盈率约7倍，是最易获取的HBM纯粹概念股。若有韩国股市访问渠道且追求最高确定性，加仓<strong>SK海力士（000660.KS）</strong>——72%营业利润率、占英伟达70%的HBM订单、前瞻市盈率约5倍，是AI供应链中最不可替代的公司之一。<strong>三星</strong>适合寻求多元化韩国半导体敞口的投资者，而非单纯HBM主题投资。建议以2–4年的投资周期持有，而非短线操作。</div>
+  </div>
+
+  <div class="callout callout-warn" style="margin-top:14px;">
+    <strong>⚠ Important reminder — this is a cyclical industry.</strong> Memory has historically swung from extreme shortage to massive oversupply. The current cycle appears structurally longer than normal due to the 4–5 year fab build time, but it will eventually turn. Position sizing matters: treat these as high-conviction growth positions, not speculative bets. A 2–4 year investment horizon is appropriate; do not day-trade these names around earnings.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>⚠ 重要提示：这是一个周期性行业。</strong>内存历史上多次经历从极度短缺到严重过剩的大幅波动。当前周期因工厂建设需要4–5年而呈现出比常规更长的持续性，但最终仍会转向。仓位管理至关重要：将这些股票视为高确定性成长仓位，而非投机性押注。2–4年的投资周期是合适的，不建议围绕财报做短线交易。</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SECTION 6: HBM vs OPTICS ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">HBM vs Optics Stocks: Same AI Wave, Very Different Investments</div>
+  <div class="section-title-cn">HBM与光学股票对比：同一波AI浪潮，截然不同的投资</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    <p>If you've been following the AI infrastructure trade, you've probably heard about optical networking stocks alongside HBM. Both sectors are riding the same AI data center spending boom. Both are supply-constrained. Both have produced spectacular returns in 2026. But they are solving fundamentally different problems — at different points in the stack — and understanding the distinction matters enormously for how you size and time these positions.</p>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">如果你一直在关注AI基础设施投资，你可能同时听说过HBM内存和光学网络股票。两个板块都受益于同一波AI数据中心支出热潮，都面临供应紧张，2026年也都创造了惊人回报。但它们解决的是根本不同的问题——在技术栈的不同位置——理解这一差异对于如何配置和择时至关重要。</div>
+  </div>
+
+  <!-- THE PLAIN-ENGLISH DISTINCTION -->
+  <div style="margin-top:18px;">
+    <div class="section-num" style="margin-bottom:8px;">FIRST: WHAT OPTICS ACTUALLY DOES · 首先：光学技术的实际用途</div>
+  </div>
+
+  <div class="analogy-box">
+    <div class="analogy-title">🌆 The City Infrastructure Analogy</div>
+    <div class="analogy-text">
+      Imagine an AI data center as a city.<br><br>
+      <strong>HBM</strong> is the plumbing <em>inside each building</em> — the pipes that carry water from the mains to every tap on every floor. Without it, nothing in the building works, no matter how good the city's roads are.<br><br>
+      <strong>Optical networking</strong> is the <em>roads, highways, and bridges between buildings</em> — it moves data from one server to another, from one rack to another, from one data center to another. As AI clusters scale from hundreds to hundreds of thousands of GPUs working in parallel, you need faster and faster roads between them.<br><br>
+      Both are essential. But they operate at different scales, serve different engineering problems, and have different competitive moats.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">把AI数据中心想象成一座城市：<strong>HBM</strong>是每栋建筑内部的管道系统——将水从总管道输送到每个楼层的每个水龙头；<strong>光学网络</strong>是建筑之间的道路、高速公路和桥梁——在服务器之间、机架之间、数据中心之间传输数据。随着AI集群从数百个扩展到数十万个并行工作的GPU，建筑之间需要越来越快的"道路"。两者都不可或缺，但它们服务于不同层面的工程问题，拥有不同的竞争壁垒。</div>
+  </div>
+
+  <!-- THE OPTICS STOCKS -->
+  <div style="margin-top:22px;">
+    <div class="section-num" style="margin-bottom:8px;">THE OPTICS STOCKS — WHO THEY ARE · 光学股票概览</div>
+  </div>
+
+
+<div class="chart-wrap" style="margin-top:14px; margin-bottom:16px;">
+  <div class="chart-title">2026 Year-to-Date Returns: Optics vs HBM Stocks (%)</div>
+  <div class="chart-sub">Optics have outrun HBM on price — but valuations now reflect it</div>
+  <canvas id="ytdChart" height="220"></canvas>
+  <div class="chart-note">Sources: 24/7 Wall St., StocksToTrade, Yahoo Finance. Mid-May 2026. SK Hynix shown as 1-year return.</div>
+</div>
+  <!-- LUMENTUM -->
+  <div class="stock-card" style="margin-top:10px;">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">Lumentum Holdings</div>
+        <div class="stock-name-cn">朗美通 · 光学电路交换与激光芯片领导者</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">LITE · Nasdaq</span>
+          <span class="tag-pill">Optical Circuit Switches</span>
+          <span class="tag-pill">Laser chips</span>
+          <span class="tag-pill">Co-packaged optics</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker">LITE</div>
+        <div class="rating rating-amber">⚠ RICHLY VALUED · HIGH MOMENTUM</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Q3 FY2026 Revenue</div>
+        <div class="metric-val up">$808M</div>
+        <div class="metric-sub">+90% YoY. Record quarter.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Q4 FY2026 Guidance</div>
+        <div class="metric-val up">$960M–$1.01B</div>
+        <div class="metric-sub">Heading toward $1B/quarter</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Trailing P/E</div>
+        <div class="metric-val dn">~261×</div>
+        <div class="metric-sub">Premium valuation. Earnings still ramping.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Stock return (1yr)</div>
+        <div class="metric-val up">+1,269%</div>
+        <div class="metric-sub">YTD 2026: +166%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Operating Margin</div>
+        <div class="metric-val up">32.2%</div>
+        <div class="metric-sub">Up 700bps YoY</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Key Catalyst</div>
+        <div class="metric-val" style="font-size:13px;">Nasdaq-100</div>
+        <div class="metric-sub">Joined index May 18 2026 → forced ETF buying</div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p><strong>What they make:</strong> Lumentum makes laser chips and optical components that go inside the networking equipment connecting AI servers. Their star product right now is the <strong>Optical Circuit Switch (OCS)</strong> — a device that replaces traditional mechanical switches in data center networks with all-optical switching, dramatically increasing speed and reducing latency. They also make co-packaged optics (CPO), which integrates optical transceivers directly onto the switch chip — the next generation of data center networking.</p>
+      <p><strong>The constraint:</strong> Lumentum is still under-shipping demand by approximately 30% — meaning customers want more than they can produce. They have $400M+ in OCS backlog and a multi-hundred-million-dollar co-packaged optics order deliverable in H1 2027. Revenue is heading toward $1B per quarter. Analysts at Rosenblatt see $2B per quarter by 2027.</p>
+      <p><strong>The valuation problem:</strong> A trailing P/E of ~261× prices in a very long runway of flawless execution. The stock is up over 1,200% in one year. There is very little margin for error at this price. This is a stock where the thesis is clearly correct — AI networks need more optics — but the question is whether the price already reflects years of future growth.</p>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text"><strong>朗美通</strong>生产激光芯片和光学组件，用于连接AI服务器的网络设备。明星产品是<strong>光学电路交换机（OCS）</strong>——以全光交换取代传统机械交换机，大幅提升速度并降低延迟。当前需求仍超出供应约30%，OCS积压订单超4亿美元。Q3 FY2026营收同比增长90%，营业利润率达32.2%。<strong>估值隐患：</strong>过去一年股价上涨逾1200%，市盈率约261倍，需要多年无瑕疵执行才能消化当前估值，留给新进投资者的安全边际极小。</div>
+    </div>
+
+    <div class="cases" style="margin-top:10px;">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">🟢 Bull Case</div>
+        <div class="bull-text">90% revenue growth. Supply still can't meet demand. OCS is becoming the standard in next-gen AI networks. Nasdaq-100 inclusion forces mechanical ETF buying. Rosenblatt targets $1.3K. $2.62B cash on hand for expansion.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">🔴 Bear Case</div>
+        <div class="bear-text">261× trailing P/E prices in perfection. Up 1,269% in a year — most good news already in the price. Any guidance miss could cause severe drawdown. Competition from Coherent and co-packaged optics alternatives intensifying. P/S of ~33× is story-stock territory.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COHERENT -->
+  <div class="stock-card" style="margin-top:14px;">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">Coherent Corp.</div>
+        <div class="stock-name-cn">相干公司 · 光子材料与高速收发器</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">COHR · NYSE</span>
+          <span class="tag-pill">800G/1.6T transceivers</span>
+          <span class="tag-pill">InP photonics</span>
+          <span class="tag-pill">S&amp;P 500 member</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker">COHR</div>
+        <div class="rating rating-blue">DIVERSIFIED · REASONABLE VALUATION</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Q3 FY2026 Revenue</div>
+        <div class="metric-val up">$1.81B</div>
+        <div class="metric-sub">+21% YoY. Accelerating.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Revenue FY2028E</div>
+        <div class="metric-val up">$10.6B</div>
+        <div class="metric-sub">From $5.8B in FY2025. EPS CAGR 45%.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">PEG Ratio</div>
+        <div class="metric-val flat">~1.7×</div>
+        <div class="metric-sub">Premium but not extreme. More reasonable than LITE.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Stock YTD 2026</div>
+        <div class="metric-val up">+88%</div>
+        <div class="metric-sub">Laggard vs LITE/AAOI but more stable.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Datacenter % Revenue</div>
+        <div class="metric-val up">72%</div>
+        <div class="metric-sub">Was 41% in Q3 FY25. Rapid mix shift.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Book-to-Bill Ratio</div>
+        <div class="metric-val up">4×</div>
+        <div class="metric-sub">Orders coming in 4× faster than shipping</div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p><strong>What they make:</strong> Coherent sits at the intersection of compound semiconductors, photonics, and optical networking. They make 800G and 1.6T optical transceivers — the components that move data between servers at the speed of light — as well as the underlying photonic materials (indium phosphide, or InP) that make those transceivers work. They are the only company that makes everything from the raw material to the finished module.</p>
+      <p><strong>The vertical integration moat:</strong> Coherent is doubling its internal InP output by year-end and more than doubling again by 2027. Their 6-inch wafer platform delivers higher yields than the industry-standard 3-inch lines. This manufacturing depth is hard to replicate quickly and gives them cost and capacity advantages that pure-play transceiver assemblers don't have.</p>
+      <p><strong>The conglomerate overhang:</strong> Like Samsung in HBM, Coherent carries an industrial segment (25% of revenue) that was weaker and creates a conglomerate discount. The good news: they have already sold off their Aerospace & Defence division (closed Sept 2025) and a Munich business (closed Jan 2026), simplifying the story and improving margins. The remaining industrial exposure continues to shrink as a percentage of revenue.</p>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text"><strong>相干公司</strong>处于复合半导体、光子学和光学网络的交汇点，生产800G和1.6T光学收发器及底层光子材料（磷化铟，InP）——是唯一一家从原材料到成品模块均自主生产的公司。竞争壁垒在于<strong>垂直一体化</strong>：正在将内部InP产能翻倍，6英寸晶圆平台良率高于行业标准的3英寸产线。订单出货比高达4倍，数据中心收入占比从去年的41%升至72%。PEG约1.7倍，估值比LITE更合理，YTD涨幅+88%——在光学板块中属于"稳健者"。</div>
+    </div>
+
+    <div class="cases" style="margin-top:10px;">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">🟢 Bull Case</div>
+        <div class="bull-text">Only vertically integrated photonics company. Revenue projected to nearly double by FY2028. EPS CAGR of 45%. Book-to-bill of 4× shows massive demand backlog. Portfolio simplification ongoing (industrial sold off). Nvidia partnership announced. S&P 500 member — institutional coverage.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">🔴 Bear Case</div>
+        <div class="bear-text">Still 25% industrial exposure weighing on margins and multiples. Slower YTD gains than LITE/AAOI — momentum traders may prefer purer plays. PEG of 1.7× isn't cheap. Integration of II-VI acquisition still being digested. Competition from Marvell silicon photonics.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AAOI -->
+  <div class="stock-card" style="margin-top:14px;">
+    <div class="stock-header">
+      <div>
+        <div class="stock-name">Applied Optoelectronics (AAOI)</div>
+        <div class="stock-name-cn">应用光电 · 高速光学收发器</div>
+        <div style="margin-top:6px;">
+          <span class="ticker-pill">AAOI · Nasdaq</span>
+          <span class="tag-pill">800G transceivers</span>
+          <span class="tag-pill">Amazon supplier</span>
+          <span class="tag-pill">High risk / high reward</span>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <div class="stock-ticker">AAOI</div>
+        <div class="rating rating-red">⚠ HIGH RISK · MOMENTUM PLAY</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-label">Stock YTD 2026</div>
+        <div class="metric-val up">+441%</div>
+        <div class="metric-sub">1-year return: +934%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">FY2026 Revenue Target</div>
+        <div class="metric-val up">&gt;$1B</div>
+        <div class="metric-sub">Company guidance. Not yet profitable.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Profitability</div>
+        <div class="metric-val dn">Q2 2026</div>
+        <div class="metric-sub">Expects first non-GAAP profit Q2 2026</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Price/Sales</div>
+        <div class="metric-val dn">&gt;30×</div>
+        <div class="metric-sub">Classic story-stock territory</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Key Customer</div>
+        <div class="metric-val" style="font-size:14px;">Amazon</div>
+        <div class="metric-sub">Primary driver of 800G revenue</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">2027 Monthly Rev Target</div>
+        <div class="metric-val up">$378M</div>
+        <div class="metric-sub">If 800G + 1.6T ramp as guided</div>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p><strong>What they make:</strong> AAOI makes optical transceivers — the modules that plug into networking equipment and convert electrical signals to light for high-speed data transmission. They supply 100G, 400G, 800G, and early 1.6T products, primarily to hyperscalers building AI data centers. Their main customer is Amazon. They are a US-based manufacturer benefiting from the onshoring trend in optical components.</p>
+      <p><strong>Why the stock ran so hard:</strong> AAOI is a small company transforming into a major AI infrastructure supplier, and markets love that narrative. The 800G transceiver ramp is real — Amazon is scaling AI infrastructure aggressively, and AAOI is a key supplier. Rosenblatt raised their price target to $220, citing strong Amazon 800G momentum and upcoming Oracle qualifications.</p>
+      <p><strong>The risk is real:</strong> AAOI is not yet consistently profitable. The P/S ratio above 30× means you are paying for a future that hasn't fully arrived. The stock dropped 14% in a single session in early May on sector de-risking — showing the volatility embedded in a name that has run 900%+ in a year. This is a high-reward, high-risk story for investors with a strong risk tolerance.</p>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text"><strong>应用光电（AAOI）</strong>生产光学收发器，主要客户是亚马逊，供应100G至1.6T产品。股价年初至今上涨441%（过去一年+934%），是光学板块中涨幅最大的标的。<strong>风险极高：</strong>公司尚未实现持续盈利，市销率超30倍，是典型的"故事股"。2026年5月初，该股在单日内下跌14%，清楚展示了其内嵌的高波动性。适合风险承受能力强、能接受大幅回撤的投资者——不适合保守型散户。</div>
+    </div>
+
+    <div class="cases" style="margin-top:10px;">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">🟢 Bull Case</div>
+        <div class="bull-text">Amazon 800G demand is real and growing. Oracle qualification could add another major hyperscaler. US-based manufacturer benefits from onshoring tailwinds. Targeting $378M/month revenue by mid-2027. Gross margins heading to 40%+. Small cap with room to grow into a large-cap story.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">🔴 Bear Case</div>
+        <div class="bear-text">Not yet profitable. P/S above 30× is extreme. Stock already up 934% in a year — most optimism priced in. Customer concentration risk: heavily Amazon-dependent. Can drop 14% in a day on sentiment shift. Execution risk is high for a small company scaling rapidly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OTHERS WORTH KNOWING -->
+  <div style="margin-top:22px; margin-bottom:10px;">
+    <div class="section-num">OTHER NAMES IN THE OPTICS UNIVERSE · 其他值得关注的光学股票</div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+    <div class="analogy-box" style="margin:0;">
+      <div class="analogy-title">Ciena (CIEN) — The Telecom-to-AI Migrator</div>
+      <div class="analogy-text" style="font-size:12.5px;">Ciena makes coherent optical systems for telecom and increasingly AI data centers. Their backlog is up 45% and they're targeting 1.6T innovations. YTD 2026: +91.5%. More mature and stable than AAOI, with better margins (~43.5–44.5% gross margin guided). A solid mid-risk option for investors who want optics exposure with a more established business.</div>
+    </div>
+    <div class="analogy-box" style="margin:0;">
+      <div class="analogy-title">Marvell Technology (MRVL) — Silicon Photonics Wildcard</div>
+      <div class="analogy-text" style="font-size:12.5px;">Marvell is pushing silicon photonics "light engine" platforms for low-power rack-scale AI interconnect. They compete more directly with Coherent in the co-packaged optics space. Also makes custom AI chips (XPUs) for Google and Amazon — so it straddles both the AI chip and optics story. Higher earnings visibility than pure-play optics names.</div>
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>Ciena（CIEN）：</strong>电信转AI数据中心的光学系统供应商，积压订单增长45%，毛利率约43–44%，YTD涨幅+91.5%，是光学板块中较为成熟稳健的选择。<strong>Marvell Technology（MRVL）：</strong>推进硅光子"光引擎"平台，同时为谷歌、亚马逊制造定制AI芯片（XPU），横跨AI芯片与光学两条主线，盈利可见度高于纯光学股。</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SECTION 7: HEAD-TO-HEAD ══════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">HBM vs Optics: The Head-to-Head for a Retail Investor</div>
+  <div class="section-title-cn">HBM与光学股票正面对比：散户投资者视角</div>
+  <div class="section-divider"></div>
+
+  <!-- MASTER COMPARISON TABLE -->
+  
+<div class="chart-wrap">
+  <div class="chart-title">Forward P/E — All 6 Stocks (Lower = Cheaper vs Growth)</div>
+  <div class="chart-sub">HBM stocks are dramatically cheaper than optics despite similar or stronger fundamentals</div>
+  <canvas id="valChart" height="220"></canvas>
+  <div class="chart-note">LITE capped at 99× (actual ~261× trailing P/E). AAOI shown as P/S ratio (no earnings). Sources: May 2026.</div>
+</div>
+<div class="chart-wrap">
+  <div class="chart-title">Operating Margins — All 6 Stocks (%)</div>
+  <div class="chart-sub">HBM manufacturers earn far higher margins — SK Hynix 72% beats even Nvidia</div>
+  <canvas id="allMarginChart" height="200"></canvas>
+  <div class="chart-note">Sources: Company Q1/Q3 2026 earnings releases. AAOI near breakeven.</div>
+</div>
+<table class="compare-table" style="margin-bottom:16px;">
+    <thead>
+      <tr>
+        <th>Factor 维度</th>
+        <th>HBM Stocks 内存股票<br><small>MU · SK Hynix · Samsung</small></th>
+        <th>Optics Stocks 光学股票<br><small>LITE · COHR · AAOI</small></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="t-metric">What bottleneck do they solve?</td>
+        <td>Data speed <em>inside</em> the AI chip package. Every GPU needs it.</td>
+        <td>Data speed <em>between</em> servers, racks, and data centers.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Patel's bottleneck ranking</td>
+        <td class="t-best">🔴 #1 most acute right now. "Tightest constraint in the stack."</td>
+        <td class="t-mid">🔵 Real bottleneck but at a different, larger scale.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Barriers to new entrants</td>
+        <td class="t-best">Extremely high. 4–5 years + $15–20B to build a fab. Only 3 players.</td>
+        <td>High but lower. More players, faster technology refresh cycles.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Sold out / supply-constrained?</td>
+        <td class="t-best">Yes — fully sold out through 2026. Shortage until 2030 per SK Group.</td>
+        <td>Yes — LITE under-shipping demand by 30%. COHR book-to-bill 4×.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Valuation (P/E)</td>
+        <td class="t-best">MU: ~7× forward. SK Hynix: ~5–6× forward. Cheap vs growth.</td>
+        <td class="t-weak">LITE: ~261× trailing. COHR: PEG 1.7×. AAOI: not yet profitable.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">PEG ratio</td>
+        <td class="t-best">MU: 0.08. SK Hynix: ~0.05. Among cheapest in all of tech.</td>
+        <td>LITE: effectively infinite (earnings still ramping). COHR: 1.7×.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">2026 YTD stock returns</td>
+        <td>MU: modest. SK Hynix: +285% (1yr). Samsung: recovering.</td>
+        <td class="t-best">AAOI: +441%. LITE: +166%. COHR: +88%. Higher momentum.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Cyclicality risk</td>
+        <td class="t-weak">High — memory has historically been boom/bust.</td>
+        <td class="t-mid">Moderate — driven by long-term AI CapEx, not consumer cycles.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Operating margins</td>
+        <td class="t-best">SK Hynix: 72%. MU: ~42%. Exceptional for manufacturers.</td>
+        <td>LITE: 32.2% (rising). COHR: ~39.6%. AAOI: near breakeven.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">TAM growth</td>
+        <td class="t-best">HBM TAM: $35B → $100B by 2028 (Micron mgmt forecast).</td>
+        <td>Optical AI sector: 35–40% CAGR 2025–2027 (industry est.).</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Ease of access for SG investor</td>
+        <td>MU: easy (Nasdaq). SK Hynix/Samsung: need KRX broker access.</td>
+        <td class="t-best">LITE, COHR, AAOI: all Nasdaq/NYSE — easy access.</td>
+      </tr>
+      <tr>
+        <td class="t-metric">Patel's framework priority</td>
+        <td class="t-best">Tier 1 — inside the chip. Most binding constraint.</td>
+        <td>Tier 2 — between chips. Real but further down the priority list.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">核心对比：<strong>HBM股票</strong>——解决芯片封装内部的数据速度瓶颈，是Patel框架中最紧迫的约束；估值极具吸引力（美光前瞻市盈率约7倍，SK海力士约5–6倍，PEG均低于0.1）；营业利润率异常高（SK海力士72%）；但具有一定周期性风险，且SK海力士/三星需要通过韩国交易所购买。<strong>光学股票</strong>——解决服务器之间的数据传输瓶颈；估值普遍较高（LITE市盈率约261倍，AAOI尚未盈利）；2026年YTD涨幅更大（AAOI +441%）；所有主要光学股均在纳斯达克/纽交所上市，新加坡投资者更易获取。</div>
+  </div>
+
+  <!-- CONCEPTUAL VERDICT -->
+  <div class="verdict" style="margin-top:20px;">
+    <div class="verdict-title">⭐ The Plain-English Verdict: Which Should You Own? · 通俗结论：应该选哪个？</div>
+    <div class="verdict-text">
+      <p style="margin-bottom:12px;"><strong>If you want the Patel-framework pick — own HBM, specifically Micron (MU).</strong> HBM is the constraint that binds first, has the fewest competitors, is hardest to replicate, and yet trades at the cheapest valuation relative to growth of any AI infrastructure category. A PEG of 0.08 versus a sector average of 0.67 tells you the market is still not fully pricing in HBM's earnings power. SK Hynix is the even higher-conviction version if you can access KRX.</p>
+      <p style="margin-bottom:12px;"><strong>If you want optics exposure — Coherent (COHR) is the most balanced pick.</strong> It has genuine vertical integration moats, a reasonable PEG of 1.7× (unlike LITE's nearly infinite trailing multiple), is S&P 500-listed with strong institutional coverage, and its earnings are set to compound at 45% CAGR to FY2028. It is the "SK Hynix equivalent" of the optics space — not the most exciting momentum story, but the one with the most defensible business.</p>
+      <p style="margin-bottom:12px;"><strong>LITE (Lumentum) at 261× P/E is a bet that everything goes right for a very long time.</strong> The growth is real. The technology lead is real. But after a 1,269% one-year run, you are paying for years of future success upfront. For new investors entering today, the risk/reward is much less asymmetric than it was twelve months ago.</p>
+      <p><strong>AAOI is for sophisticated investors who can stomach 20–30% drawdowns.</strong> The story is compelling — US-based, Amazon-anchored, ramping fast — but not yet profitable, and the P/S above 30× means there is almost no margin of safety. It can double from here or fall 40%. Not a first position for a retail investor.</p>
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>通俗结论：</strong><br>
+      • 若追求Patel框架下的最优选择——买HBM，首选<strong>美光（MU）</strong>：PEG 0.08，前瞻市盈率约7倍，是AI基础设施类别中估值最低而增长最快的股票；有KRX渠道者可加仓<strong>SK海力士</strong>。<br>
+      • 若寻求光学板块敞口——<strong>相干公司（COHR）</strong>是最均衡的选择：垂直一体化壁垒，PEG 1.7倍，EPS年复合增长率45%，标普500成分股。<br>
+      • <strong>朗美通（LITE）</strong>在261倍市盈率下，是对未来多年完美执行的豪赌——增长真实，但经历1269%涨幅后，新进投资者的安全边际所剩无几。<br>
+      • <strong>AAOI</strong>适合能承受20–30%回撤的成熟投资者——故事引人入胜但尚未盈利，市销率超30倍几乎没有安全边际，不适合作为散户的首选仓位。
+    </div>
+  </div>
+
+  <!-- FINAL QUICK-REFERENCE -->
+  <div style="margin-top:20px;">
+    <div class="section-num" style="margin-bottom:10px;">QUICK REFERENCE CARD — ALL 6 STOCKS · 六支股票快速参考</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Stock</th>
+          <th>Sector</th>
+          <th>Bottleneck It Solves</th>
+          <th>Valuation Signal</th>
+          <th>Risk Level</th>
+          <th>Retail Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MU</strong> (Micron)</td>
+          <td><span class="ticker-pill">HBM</span></td>
+          <td>Inside-chip data feed</td>
+          <td class="t-best">PEG 0.08 · Fwd P/E 7×</td>
+          <td>Medium</td>
+          <td class="t-best">★ Best entry point</td>
+        </tr>
+        <tr>
+          <td><strong>000660.KS</strong> (SK Hynix)</td>
+          <td><span class="ticker-pill">HBM</span></td>
+          <td>Inside-chip data feed</td>
+          <td class="t-best">Fwd P/E ~5× · 72% margins</td>
+          <td>Medium</td>
+          <td class="t-best">★ Highest conviction</td>
+        </tr>
+        <tr>
+          <td><strong>005930.KS</strong> (Samsung)</td>
+          <td><span class="ticker-pill">HBM</span></td>
+          <td>Inside-chip data feed</td>
+          <td>Conglomerate discount</td>
+          <td>Medium-High</td>
+          <td>Monitor — complex</td>
+        </tr>
+        <tr>
+          <td><strong>COHR</strong> (Coherent)</td>
+          <td><span class="tag-pill">Optics</span></td>
+          <td>Between servers / racks</td>
+          <td class="t-mid">PEG 1.7× · EPS CAGR 45%</td>
+          <td>Medium</td>
+          <td class="t-mid">Best optics pick</td>
+        </tr>
+        <tr>
+          <td><strong>LITE</strong> (Lumentum)</td>
+          <td><span class="tag-pill">Optics</span></td>
+          <td>Between servers / racks</td>
+          <td class="t-weak">P/E 261× · P/S 33×</td>
+          <td>High</td>
+          <td class="t-weak">Already expensive</td>
+        </tr>
+        <tr>
+          <td><strong>AAOI</strong> (Appl. Opto)</td>
+          <td><span class="tag-pill">Optics</span></td>
+          <td>Between servers / racks</td>
+          <td class="t-weak">P/S 30×+ · not profitable</td>
+          <td>Very High</td>
+          <td class="t-weak">Sophisticated only</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cn-summary" style="margin-top:10px;">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">六支股票快速参考：HBM板块中，<strong>美光（MU）</strong>是最佳入场点（PEG 0.08，前瞻市盈率7倍），<strong>SK海力士</strong>是最高确定性选择（前瞻市盈率约5倍，营业利润率72%），<strong>三星</strong>逻辑复杂需持续跟踪。光学板块中，<strong>相干公司（COHR）</strong>是最佳光学股选择（PEG 1.7倍，EPS年复合增长率45%），<strong>朗美通（LITE）</strong>估值已偏贵（市盈率261倍），<strong>AAOI</strong>仅适合能承受高波动的成熟投资者。</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════ SOURCES ══════════════════ -->
+<div class="divider"></div>
+<div class="sources-label">Sources · 信息来源</div>
+<div class="sources">
+  SemiAnalysis / Dylan Patel — "AI Value Capture: The Shift to Model Labs" (May 2026) · Dwarkesh Podcast with Dylan Patel (March 2026) · Invest Like the Best with Dylan Patel (Sep 2025) · Micron Technology Q1 FY2026 Earnings Release (Dec 2025) · SK Hynix Q1 2026 Earnings Release (Apr 2026) · Samsung Electronics Q1 2026 Results (Apr/May 2026) · Goldman Sachs DRAM supply-demand forecast (Apr 2026) · TradingKey SK Hynix analysis (May 2026) · Fortune — Samsung labour dispute (May 2026) · Modern Value Investing — SK Hynix analysis (May 2026) · CNBC — SK Hynix Q1 2026 earnings (Apr 2026) · Lumentum Q3 FY2026 10-Q (May 2026) · Coherent Q3 FY2026 8-K (May 2026) · 24/7 Wall St. — Optics stock comparison (May 2026) · StocksToTrade — LITE earnings analysis (May 2026) · Seeking Alpha — COHR analysis (Apr 2026) · Yahoo Finance — AAOI analysis (Apr 2026) · IndexBox — Optical networking AI infrastructure (May 2026)
+</div>
+
+<div class="footer">
+  This report is for educational purposes only and does not constitute financial advice. All investment decisions should be made with reference to your own financial situation and risk tolerance. Past performance does not guarantee future results. · 本报告仅供教育目的，不构成投资建议。所有投资决策应结合个人财务状况和风险承受能力做出。过往业绩不代表未来表现。<br><br>
+  Prepared May 2026 · Based on Dylan Patel / SemiAnalysis AI infrastructure thesis · Sections 1–7
+</div>
+
+
+<script>
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#666';
+
+// 1. Patel conviction by layer
+new Chart(document.getElementById('patelvChart'), {
+  type: 'bar',
+  data: {
+    labels: ['HBM Memory (inside chip)','Advanced Logic TSMC N3','Fab Equipment ASML/LRCX','Power Infra VST/CEG/BE','Hyperscalers MSFT/GOOGL','GPU Rental Neoclouds','Traditional SaaS'],
+    datasets: [{ label: 'Conviction', data: [95,90,82,80,68,62,18],
+      backgroundColor:['#ef4444','#f97316','#a855f7','#eab308','#3b82f6','#06b6d4','#94a3b8'],
+      borderRadius:6, borderSkipped:false }]
+  },
+  options: { indexAxis:'y', responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}/100`}} },
+    scales:{ x:{min:0,max:100,grid:{color:'#f0efe8'},ticks:{callback:v=>v+'%'}}, y:{grid:{display:false},ticks:{font:{size:10}}} }
+  }
+});
+
+// 2. HBM market share
+new Chart(document.getElementById('hbmShareChart'), {
+  type: 'doughnut',
+  data: { labels:['SK Hynix ~57%','Micron ~25%','Samsung ~18%'],
+    datasets:[{ data:[57,25,18], backgroundColor:['#185FA5','#1D9E75','#e0901a'], borderWidth:2, borderColor:'#fff', hoverOffset:6 }]
+  },
+  options: { responsive:true, cutout:'60%',
+    plugins:{ legend:{position:'bottom',labels:{font:{size:11},padding:12}}, tooltip:{callbacks:{label:c=>` ${c.label}`}} }
+  }
+});
+
+// 3. HBM TAM
+new Chart(document.getElementById('tamChart'), {
+  type: 'bar',
+  data: { labels:['2024','2025','2026E','2027E','2028E'],
+    datasets:[{ label:'TAM $B', data:[15,35,55,75,100],
+      backgroundColor:['#cbd5e1','#185FA5','#185FA5','#1D9E75','#1D9E75'], borderRadius:5 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` $${c.raw}B`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>'$'+v+'B'}}, x:{grid:{display:false}} }
+  }
+});
+
+// 4. Data center power
+new Chart(document.getElementById('powerChart'), {
+  type: 'line',
+  data: { labels:['2020','2022','2024','2025','2026E','2027E','2028E','2030E'],
+    datasets:[{ label:'% of US Grid', data:[1.5,2.2,3.0,3.8,5.0,6.5,8.5,12],
+      borderColor:'#185FA5', backgroundColor:'rgba(24,95,165,0.08)', fill:true, tension:0.4, pointBackgroundColor:'#185FA5', pointRadius:4 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}% of US grid`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>v+'%'},min:0,max:14}, x:{grid:{display:false}} }
+  }
+});
+
+// 5. Revenue growth YoY
+new Chart(document.getElementById('revenueGrowthChart'), {
+  type: 'bar',
+  data: { labels:['Micron (MU)','SK Hynix','Samsung DS Division'],
+    datasets:[{ label:'Revenue Growth YoY %', data:[57,198,380],
+      backgroundColor:['#1D9E75','#185FA5','#e0901a'], borderRadius:7 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` +${c.raw}% YoY`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>'+'+v+'%'}}, x:{grid:{display:false}} }
+  }
+});
+
+// 6. Operating margins HBM
+new Chart(document.getElementById('marginChart'), {
+  type: 'bar',
+  data: { labels:['SK Hynix','Nvidia (benchmark)','Samsung DS','Micron'],
+    datasets:[{ label:'Op. Margin %', data:[72,65,65,42],
+      backgroundColor:['#185FA5','#94a3b8','#e0901a','#1D9E75'], borderRadius:6 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}%`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>v+'%'},max:90}, x:{grid:{display:false}} }
+  }
+});
+
+// 7. Forward PE HBM
+new Chart(document.getElementById('peChart'), {
+  type: 'bar',
+  data: { labels:['SK Hynix','Micron (MU)','Samsung','Semicon Sector Avg'],
+    datasets:[{ label:'Fwd P/E', data:[5.5,7,11,25],
+      backgroundColor:['#185FA5','#1D9E75','#e0901a','#94a3b8'], borderRadius:6 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}× P/E`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>v+'×'}}, x:{grid:{display:false}} }
+  }
+});
+
+// 8. GPU HBM stacks
+new Chart(document.getElementById('gpuHbmChart'), {
+  type: 'bar',
+  data: { labels:['A100 (2020)','H100 (2022)','H200 (2023)','Blackwell (2024)','Vera Rubin (2026)','Feynman (2027E)'],
+    datasets:[{ label:'HBM Stacks', data:[6,6,8,8,8,12],
+      backgroundColor:['#cbd5e1','#94a3b8','#64748b','#3b82f6','#185FA5','#1D9E75'], borderRadius:6 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw} HBM stacks per GPU`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},min:0,max:14,ticks:{callback:v=>v+' stacks'}}, x:{grid:{display:false}} }
+  }
+});
+
+// 9. YTD returns
+new Chart(document.getElementById('ytdChart'), {
+  type: 'bar',
+  data: { labels:['AAOI (Optics)','SK Hynix (HBM, 1yr)','LITE (Optics)','COHR (Optics)','Micron (HBM, YTD)'],
+    datasets:[{ label:'Return %', data:[441,285,166,88,45],
+      backgroundColor:['#ef4444','#185FA5','#f97316','#64748b','#1D9E75'], borderRadius:7 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` +${c.raw}%`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>'+'+v+'%'}}, x:{grid:{display:false}} }
+  }
+});
+
+// 10. Valuation all 6
+new Chart(document.getElementById('valChart'), {
+  type: 'bar',
+  data: { labels:['SK Hynix (HBM)','Micron (HBM)','Samsung (HBM)','COHR (Optics)','AAOI P/S (Optics)','LITE capped (Optics)'],
+    datasets:[{ label:'Fwd P/E or equiv.', data:[5.5,7,11,27,30,99],
+      backgroundColor:['#185FA5','#1D9E75','#e0901a','#64748b','#f97316','#ef4444'], borderRadius:6 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false},
+      tooltip:{callbacks:{label:c=>{
+        if(c.dataIndex===4) return ' AAOI P/S ~30× (not yet profitable)';
+        if(c.dataIndex===5) return ' LITE ~261× trailing P/E (capped at 99 for scale)';
+        return ` ${c.raw}× fwd P/E`;
+      }}}
+    },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>v+'×'},max:110}, x:{grid:{display:false}} }
+  }
+});
+
+// 11. Operating margins all 6
+new Chart(document.getElementById('allMarginChart'), {
+  type: 'bar',
+  data: { labels:['SK Hynix (HBM)','Samsung DS (HBM)','Micron (HBM)','COHR (Optics)','LITE (Optics)','AAOI (Optics)'],
+    datasets:[{ label:'Op. Margin %', data:[72,65,42,39.6,32.2,1],
+      backgroundColor:['#185FA5','#e0901a','#1D9E75','#64748b','#f97316','#ef4444'], borderRadius:6 }]
+  },
+  options: { responsive:true,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>` ${c.raw}%`}} },
+    scales:{ y:{grid:{color:'#f0efe8'},ticks:{callback:v=>v+'%'},max:85}, x:{grid:{display:false}} }
+  }
+});
+</script>
+
+</body>
+</html>

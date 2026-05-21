@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dylan Patel — AI Stack Value Map</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0d1117;
+    color: #e2e8f0;
+    padding: 32px 28px;
+    min-height: 100vh;
+  }
+
+  .header { margin-bottom: 28px; }
+  .header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+  }
+  .header p {
+    font-size: 12px;
+    color: #64748b;
+    letter-spacing: 0.03em;
+  }
+
+  /* REGIME SHIFT BANNER */
+  .shift-banner {
+    background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1));
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .shift-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .shift-text { font-size: 12.5px; line-height: 1.6; color: #c4b5fd; }
+  .shift-text strong { color: #e9d5ff; }
+
+  /* FLOW DIAGRAM */
+  .flow-section { margin-bottom: 28px; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    margin-bottom: 12px;
+  }
+
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .flow-node {
+    flex: 1;
+    min-width: 130px;
+    position: relative;
+  }
+
+  .flow-node-inner {
+    border-radius: 8px;
+    padding: 14px 14px 12px;
+    border: 1px solid;
+    height: 100%;
+    margin-right: 0;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    flex-shrink: 0;
+    color: #334155;
+    font-size: 18px;
+    padding-top: 2px;
+  }
+
+  .node-tier {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 5px;
+  }
+  .node-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .node-insight {
+    font-size: 11px;
+    line-height: 1.5;
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+  .node-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .node-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Node color themes */
+  .n-red .flow-node-inner { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+  .n-red .node-tier { color: #f87171; }
+  .n-red .node-tag { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+  .n-orange .flow-node-inner { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.3); }
+  .n-orange .node-tier { color: #fb923c; }
+  .n-orange .node-tag { background: rgba(249,115,22,0.15); color: #fdba74; }
+
+  .n-yellow .flow-node-inner { background: rgba(234,179,8,0.08); border-color: rgba(234,179,8,0.3); }
+  .n-yellow .node-tier { color: #facc15; }
+  .n-yellow .node-tag { background: rgba(234,179,8,0.15); color: #fde047; }
+
+  .n-blue .flow-node-inner { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
+  .n-blue .node-tier { color: #60a5fa; }
+  .n-blue .node-tag { background: rgba(59,130,246,0.15); color: #93c5fd; }
+
+  .n-green .flow-node-inner { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.3); }
+  .n-green .node-tier { color: #4ade80; }
+  .n-green .node-tag { background: rgba(34,197,94,0.15); color: #86efac; }
+
+  .n-gray .flow-node-inner { background: rgba(100,116,139,0.08); border-color: rgba(100,116,139,0.25); }
+  .n-gray .node-tier { color: #94a3b8; }
+  .n-gray .node-tag { background: rgba(100,116,139,0.15); color: #cbd5e1; }
+
+  /* GRID SECTION */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+
+  .card {
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .card-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .card-title { font-size: 13px; font-weight: 700; }
+  .card-body { font-size: 11.5px; line-height: 1.6; opacity: 0.82; margin-bottom: 10px; }
+  .card-stocks { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stock-pill {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .c-mem { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+  .c-mem .card-dot { background: #ef4444; }
+  .c-mem .card-title { color: #fca5a5; }
+  .c-mem .stock-pill { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+  .c-logic { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.3); }
+  .c-logic .card-dot { background: #f97316; }
+  .c-logic .card-title { color: #fdba74; }
+  .c-logic .stock-pill { background: rgba(249,115,22,0.15); color: #fdba74; }
+
+  .c-power { background: rgba(234,179,8,0.08); border-color: rgba(234,179,8,0.3); }
+  .c-power .card-dot { background: #eab308; }
+  .c-power .card-title { color: #fde047; }
+  .c-power .stock-pill { background: rgba(234,179,8,0.15); color: #fef08a; }
+
+  .c-equip { background: rgba(168,85,247,0.08); border-color: rgba(168,85,247,0.3); }
+  .c-equip .card-dot { background: #a855f7; }
+  .c-equip .card-title { color: #d8b4fe; }
+  .c-equip .stock-pill { background: rgba(168,85,247,0.15); color: #d8b4fe; }
+
+  .c-hyper { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.3); }
+  .c-hyper .card-dot { background: #3b82f6; }
+  .c-hyper .card-title { color: #93c5fd; }
+  .c-hyper .stock-pill { background: rgba(59,130,246,0.15); color: #93c5fd; }
+
+  .c-saas { background: rgba(100,116,139,0.06); border-color: rgba(100,116,139,0.2); }
+  .c-saas .card-dot { background: #64748b; }
+  .c-saas .card-title { color: #94a3b8; }
+  .c-saas .stock-pill { background: rgba(100,116,139,0.12); color: #94a3b8; }
+
+  /* CONVICTION METER */
+  .meters { margin-bottom: 24px; }
+  .meter-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+  }
+  .meter-label { font-size: 11.5px; width: 200px; flex-shrink: 0; color: #cbd5e1; }
+  .meter-bar-bg {
+    flex: 1;
+    height: 7px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .meter-bar { height: 100%; border-radius: 4px; }
+  .meter-val { font-size: 11px; font-weight: 700; width: 50px; text-align: right; flex-shrink: 0; }
+
+  /* AVOID BOX */
+  .avoid-box {
+    background: rgba(100,116,139,0.07);
+    border: 1px solid rgba(100,116,139,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .avoid-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #64748b; margin-bottom: 6px; }
+  .avoid-text { font-size: 12px; line-height: 1.6; color: #94a3b8; }
+
+  .footer {
+    font-size: 10.5px;
+    color: #334155;
+    border-top: 1px solid #1e293b;
+    padding-top: 14px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Dylan Patel / SemiAnalysis — AI Stack Value Map</h1>
+  <p>Where value is accruing now vs. later · Based on SemiAnalysis bottleneck analysis · May 2026</p>
+</div>
+
+<!-- REGIME SHIFT BANNER -->
+<div class="shift-banner">
+  <div class="shift-icon">⚡</div>
+  <div class="shift-text">
+    <strong>Regime shift in progress.</strong> 2023–2025: all value captured by infrastructure (Nvidia, data centers, power). Now: the tightest bottleneck has moved upstream to <strong>memory (HBM)</strong> and <strong>leading-edge wafers (TSMC N3)</strong> — while value simultaneously begins flowing to <strong>AI labs, hyperscalers, and inference providers</strong> as token monetisation improves. The picks-and-shovels era is evolving, not ending.
+  </div>
+</div>
+
+<!-- STACK FLOW -->
+<div class="flow-section">
+  <div class="section-label">The Stack — Value Flow Direction</div>
+  <div class="flow">
+
+    <div class="flow-node n-red">
+      <div class="flow-node-inner">
+        <div class="node-tier">🔴 Bottleneck #1</div>
+        <div class="node-name">Memory / HBM</div>
+        <div class="node-insight">All vendors sold out through 2026. 6× price increase. 41% of DRAM revenue. The hardest physical constraint.</div>
+        <div class="node-tags">
+          <span class="node-tag">SK Hynix</span>
+          <span class="node-tag">Micron (MU)</span>
+          <span class="node-tag">Samsung</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">›</div>
+
+    <div class="flow-node n-orange">
+      <div class="flow-node-inner">
+        <div class="node-tier">🔴 Bottleneck #2</div>
+        <div class="node-name">Logic / TSMC N3</div>
+        <div class="node-insight">N3 runs >100% utilisation H2 2026. Nvidia now TSMC's #1 customer. Supply constrained through 2027.</div>
+        <div class="node-tags">
+          <span class="node-tag">TSMC (TSM)</span>
+          <span class="node-tag">NVIDIA (NVDA)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">›</div>
+
+    <div class="flow-node n-yellow">
+      <div class="flow-node-inner">
+        <div class="node-tier">🟡 Bottleneck #3</div>
+        <div class="node-name">Power & Grid</div>
+        <div class="node-insight">3–4% of US power today. Needs to triple+. Multi-year build. On-site gen is the near-term wedge play.</div>
+        <div class="node-tags">
+          <span class="node-tag">Vistra (VST)</span>
+          <span class="node-tag">CEG</span>
+          <span class="node-tag">Bloom (BE)</span>
+          <span class="node-tag">GEV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">›</div>
+
+    <div class="flow-node n-blue">
+      <div class="flow-node-inner">
+        <div class="node-tier">🔵 Value Shifting Here</div>
+        <div class="node-name">AI Labs & Hyperscalers</div>
+        <div class="node-insight">Token demand price-inelastic. Unit economics improving fast. Value accruing to labs + inference providers.</div>
+        <div class="node-tags">
+          <span class="node-tag">MSFT</span>
+          <span class="node-tag">GOOGL</span>
+          <span class="node-tag">META</span>
+          <span class="node-tag">AMZN</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">›</div>
+
+    <div class="flow-node n-gray">
+      <div class="flow-node-inner">
+        <div class="node-tier">⚠️ Under Pressure</div>
+        <div class="node-name">Traditional SaaS</div>
+        <div class="node-insight">High AI COGS breaks SaaS margins. Middleware squeezed as model becomes the product. Avoid generic wrappers.</div>
+        <div class="node-tags">
+          <span class="node-tag">CRM ⚠</span>
+          <span class="node-tag">NOW ⚠</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONVICTION METER -->
+<div class="meters">
+  <div class="section-label">Conviction Meter by Category</div>
+
+  <div class="meter-row">
+    <div class="meter-label">HBM Memory (MU, SK Hynix)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:95%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div>
+    <div class="meter-val" style="color:#f87171">95%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">TSMC / Advanced Foundry (TSM)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:90%;background:linear-gradient(90deg,#f97316,#fb923c)"></div></div>
+    <div class="meter-val" style="color:#fb923c">90%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">Fab Equipment (ASML, LRCX, AMAT)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:82%;background:linear-gradient(90deg,#a855f7,#c084fc)"></div></div>
+    <div class="meter-val" style="color:#c084fc">82%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">Power Infrastructure (VST, CEG, BE)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:80%;background:linear-gradient(90deg,#eab308,#facc15)"></div></div>
+    <div class="meter-val" style="color:#facc15">80%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">Hyperscalers (MSFT, GOOGL, META)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:68%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
+    <div class="meter-val" style="color:#60a5fa">68%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">Neoclouds / GPU Rental (CRWV)</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:62%;background:linear-gradient(90deg,#06b6d4,#67e8f9)"></div></div>
+    <div class="meter-val" style="color:#67e8f9">62%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">NVIDIA (NVDA) — underpricing scarcity</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:75%;background:linear-gradient(90deg,#22c55e,#4ade80)"></div></div>
+    <div class="meter-val" style="color:#4ade80">75%</div>
+  </div>
+  <div class="meter-row">
+    <div class="meter-label">Traditional SaaS — structural risk</div>
+    <div class="meter-bar-bg"><div class="meter-bar" style="width:18%;background:linear-gradient(90deg,#475569,#64748b)"></div></div>
+    <div class="meter-val" style="color:#64748b">18%</div>
+  </div>
+</div>
+
+<!-- DETAIL CARDS -->
+<div class="section-label">Position Detail</div>
+<div class="grid">
+
+  <div class="card c-mem">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Memory / HBM — The #1 Choke Point</div>
+    </div>
+    <div class="card-body">All three major vendors (SK Hynix, Samsung, Micron) sold out through 2026. HBM now 41% of DRAM revenue, consuming 4× the wafer area per GB and crowding out consumer DRAM. Memory prices up 6× in a year. SemiAnalysis: this is the tightest constraint in the entire stack right now.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">Micron (MU) ★</span>
+      <span class="stock-pill">SK Hynix (KRX)</span>
+      <span class="stock-pill">Samsung (KRX)</span>
+    </div>
+  </div>
+
+  <div class="card c-logic">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Logic & Foundry — Underpriced Scarcity</div>
+    </div>
+    <div class="card-body">TSMC N3 utilisation exceeds 100% in H2 2026. Nvidia overtook Apple as TSMC's largest customer at ~19% of revenue. SemiAnalysis calls TSMC's refusal to raise prices "a strategic error" — meaning latent pricing power exists. Constrained through 2027 with no relief in sight.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">TSMC (TSM) ★</span>
+      <span class="stock-pill">NVIDIA (NVDA)</span>
+    </div>
+  </div>
+
+  <div class="card c-equip">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Fab Equipment — TSMC's Bottleneck</div>
+    </div>
+    <div class="card-body">TSMC can't add capacity without EUV. Long lead times create durable order books. If TSMC is the bottleneck, ASML is TSMC's bottleneck — arguably more structural pricing power. Lam Research and AMAT capture the etch/deposition steps at every advanced node.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">ASML (ASML) ★</span>
+      <span class="stock-pill">Lam Research (LRCX)</span>
+      <span class="stock-pill">AMAT</span>
+      <span class="stock-pill">KLA (KLAC)</span>
+    </div>
+  </div>
+
+  <div class="card c-power">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Power — Multi-Year Structural Build</div>
+    </div>
+    <div class="card-body">Data centers at 3–4% of US power. Patel's thesis: this needs to 3–5× as AI scales. Power infrastructure takes years to permit and build — the constraint compounds. On-site generation (fuel cells, nuclear offtakes) is the near-term workaround for data centers that can't wait for grid upgrades. Electrician wages have doubled in boom areas.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">Vistra (VST)</span>
+      <span class="stock-pill">Constellation (CEG)</span>
+      <span class="stock-pill">Bloom Energy (BE)</span>
+      <span class="stock-pill">GE Vernova (GEV)</span>
+    </div>
+  </div>
+
+  <div class="card c-hyper">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Hyperscalers — Value Shifting Here (New)</div>
+    </div>
+    <div class="card-body">SemiAnalysis's most recent update marks a regime shift: token demand is price-inelastic, unit economics are improving, and AI labs + hyperscalers are now capturing a disproportionate share of value. Willingness to pay for frontier models is "nearly unbounded." This is the newer leg of the thesis — the infrastructure bottleneck layer is being joined by a model-layer value accrual story.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">Microsoft (MSFT)</span>
+      <span class="stock-pill">Alphabet (GOOGL)</span>
+      <span class="stock-pill">Meta (META)</span>
+      <span class="stock-pill">Amazon (AMZN)</span>
+      <span class="stock-pill">CoreWeave (CRWV)</span>
+    </div>
+  </div>
+
+  <div class="card c-saas">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Traditional SaaS — Structural Risk</div>
+    </div>
+    <div class="card-body">Patel's bear case: AI's high cost of goods sold breaks SaaS economics. When the model is the product, middleware and workflow-wrapper SaaS get squeezed out. Value flows to whoever owns tokens and compute — not to companies charging for "digital transformation" on top. Avoid undifferentiated enterprise SaaS without a clear AI moat.</div>
+    <div class="card-stocks">
+      <span class="stock-pill">Salesforce (CRM) ⚠</span>
+      <span class="stock-pill">ServiceNow (NOW) ⚠</span>
+      <span class="stock-pill">Generic SaaS ⚠</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- AVOID -->
+<div class="avoid-box">
+  <div class="avoid-title">⚠ The Patel Bear Case — What to Avoid</div>
+  <div class="avoid-text">Traditional SaaS economics break under AI's high COGS structure. If AI is embedded everywhere, the middleware layer that used to charge for workflow automation gets hollowed out. Value bypasses them and accrues to whoever owns the model and the compute stack. Avoid companies whose moat is integration, not infrastructure or intelligence.</div>
+</div>
+
+<div class="footer">
+  Sources: SemiAnalysis (Dylan Patel), Dwarkesh Podcast March 2026, Invest Like the Best Sep 2025, SemiAnalysis "AI Value Capture — The Shift to Model Labs" May 2026. ★ = highest accessibility / liquidity for public market investors. This is a research framework, not investment advice.
+</div>
+
+</body>
+</html>
