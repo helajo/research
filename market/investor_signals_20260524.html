@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Signals — May 24, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem;
+         max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #EDE9FE; border: 1px solid #C4B5FD;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #5B21B6; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .report-date { font-size: 13px; color: #777; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .investor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .investor-grid-single { margin-bottom: 12px; }
+  .investor-card { background: #fff; border: 1px solid #e8e8e0;
+                   border-top: 3px solid #5B3FA5;
+                   border-radius: 0 0 12px 12px; padding: 14px 16px; }
+  .investor-top { display: flex; justify-content: space-between;
+                  align-items: flex-start; margin-bottom: 4px; gap: 8px; flex-wrap: wrap; }
+  .investor-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .investor-handle { font-size: 11px; color: #999; margin-left: 4px; }
+  .investor-badge { font-size: 10px; font-weight: 700; padding: 2px 8px;
+                    border-radius: 20px; white-space: nowrap; }
+  .badge-alumni  { background: #EDE9FE; color: #4C1D95; }
+  .badge-vc      { background: #E0F2FE; color: #0369A1; }
+  .badge-hedge   { background: #FEF9C3; color: #713F12; }
+  .badge-founder { background: #F0FDF4; color: #14532D; }
+  .investor-fund { font-size: 11px; color: #999; margin-bottom: 10px; }
+  .investor-signal { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
+  .investor-why { background: #F5F0FF; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; }
+  .why-label { font-size: 9px; font-weight: 700; color: #7C3AED;
+               text-transform: uppercase; letter-spacing: 0.07em;
+               display: block; margin-bottom: 3px; }
+  .why-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .investor-cn { font-size: 12px; color: #999; line-height: 1.7; margin-bottom: 8px;
+                 padding-top: 8px; border-top: 1px dashed #e8e8e0;
+                 font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .src-line { font-size: 11px; color: #aaa; }
+  .src-line a { color: #5B3FA5; text-decoration: none; }
+  .no-signals { background: #f5f3ee; border: 1px dashed #ccc;
+                border-radius: 10px; padding: 2rem; text-align: center;
+                color: #888; font-size: 14px; margin-bottom: 1.5rem; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #C4B5FD;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 1.5rem; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #9CA3AF;
+              text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #5B3FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+  .ticker { display: inline-block; background: #f0f0f0; border-radius: 3px;
+            padding: 1px 5px; font-size: 11px; font-weight: 600;
+            color: #333; font-family: monospace; margin: 0 1px; }
+  @media (max-width: 600px) {
+    .investor-grid { grid-template-columns: 1fr; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Scheduled run · Investor signals scan
+  </div>
+  <div class="report-title">Notable investor signals</div>
+  <div class="report-title-cn">知名投资人信号追踪</div>
+  <div class="report-date">Sunday, May 24, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号</div>
+</div>
+
+<!-- SIGNALS -->
+<div class="section-label">Signals this run 本次信号 (4 found)</div>
+
+<div class="investor-grid">
+
+  <!-- CARD 1: Leopold Aschenbrenner -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Leopold Aschenbrenner</span>
+        <span class="investor-handle">@leopoldasch</span>
+      </div>
+      <span class="investor-badge badge-alumni">AI Lab Alumni</span>
+    </div>
+    <div class="investor-fund">Situational Awareness LP · ~$13.7B AUM · Former OpenAI researcher turned AI infrastructure fund manager</div>
+    <div class="investor-signal">
+      The Q1 2026 13F filed May 18 reveals a sweeping hedge: Situational Awareness LP added <strong>$8.46B in notional put options</strong> against virtually every major AI chip name — including <span class="ticker">$1.6B vs NVDA</span>, <span class="ticker">$2B vs VanEck Semiconductor ETF (SMH)</span>, plus puts on <span class="ticker">AVGO</span>, <span class="ticker">ORCL</span>, <span class="ticker">AMD</span>, <span class="ticker">MU</span>, and <span class="ticker">TSM</span>. At the same time, the fund's largest long remains Bloom Energy <span class="ticker">BE</span> — 6.5M shares worth $879M — and it added to bitcoin miner/AI host operators <span class="ticker">CLSK</span>, <span class="ticker">RIOT</span>, <span class="ticker">APLD</span>, and <span class="ticker">IREN</span>. Fund AUM more than doubled this quarter to $13.68B.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Aschenbrenner is now positioned for a potential semiconductor drawdown while staying long the physical AI build-out (power, mining infrastructure) — a notable split that could pressure <span class="ticker">NVDA</span>, <span class="ticker">AVGO</span>, and <span class="ticker">AMD</span> if his thesis plays out.</span>
+    </div>
+    <div class="investor-cn">
+      前OpenAI研究员、Situational Awareness LP创始人Aschenbrenner于5月18日提交Q1 2026 13F，披露持有846亿美元名义价值的半导体看跌期权（含16亿美元做空英伟达），同时继续重仓Bloom Energy（价值8.79亿美元）及加仓加密矿机/AI数据中心运营商。其"做空芯片股、做多AI物理基础设施"的对冲组合是本季度最受关注的机构持仓变化。
+    </div>
+    <div class="src-line">
+      <a href="https://trendspider.com/blog/leopold-aschenbrenner-situational-awareness-lp-13f-may-18-2026/">TrendSpider</a> ·
+      <a href="https://www.davemanuel.com/2026/05/19/leopold-aschenbrenner-q1-2026-13f-situational-awareness/">DaveManuel.com</a> ·
+      <a href="https://finance.yahoo.com/markets/options/articles/leopold-aschenbrenners-situational-awareness-files-174339413.html">Yahoo Finance</a> · SEC 13F filed May 18, 2026
+    </div>
+  </div>
+
+  <!-- CARD 2: David Sacks -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">David Sacks</span>
+        <span class="investor-handle">@DavidSacks</span>
+      </div>
+      <span class="investor-badge badge-founder">Founder-Investor</span>
+    </div>
+    <div class="investor-fund">Co-Chair, White House PCAST · Former US AI/Crypto Czar · Influential policy voice shaping federal AI direction</div>
+    <div class="investor-signal">
+      On May 22–23, Sacks called President Trump directly to block a proposed AI Executive Order, warning that it <strong>"could slow the pace of AI industry development and put the U.S. at a disadvantage in competition with China."</strong> Trump indefinitely postponed signing — even as tech executives were already en route to Washington for the scheduled signing ceremony. The order reportedly would have imposed new disclosure and safety requirements on frontier AI developers. Sacks, now co-chair of the President's Council of Advisors on Science and Technology, remains the most influential non-government voice in US AI policy.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Heavy-handed federal AI regulation is now effectively off the table for the near term, removing a key overhang for <span class="ticker">MSFT</span>, <span class="ticker">GOOGL</span>, <span class="ticker">META</span>, <span class="ticker">AMZN</span>, and frontier AI names — and accelerating the US AI infrastructure build-out thesis.</span>
+    </div>
+    <div class="investor-cn">
+      前美国AI/加密政策主管、现任白宫科技顾问委员会联席主席David Sacks于5月22-23日直接致电特朗普总统，成功阻止一项可能对前沿AI开发商施加披露和安全要求的行政令签署。这一举动表明，短期内美国联邦AI强监管基本不会落地，对微软、谷歌、Meta等AI科技巨头构成实质性利好。
+    </div>
+    <div class="src-line">
+      <a href="https://fortune.com/2026/05/22/tech-billionaires-convince-trump-to-back-off-ai-executive-order-but-much-of-maga-favors-ai-regulation/">Fortune</a> ·
+      <a href="https://en.sedaily.com/international/2026/05/23/paypal-mafia-sacks-halts-trumps-ai-executive-order-with-one">Seoul Economic Daily</a> · May 22–23, 2026
+    </div>
+  </div>
+
+</div>
+
+<div class="investor-grid">
+
+  <!-- CARD 3: Stanley Druckenmiller -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Stanley Druckenmiller</span>
+        <span class="investor-handle"></span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">Duquesne Family Office · ~$3.4B AUM · Macro legend with deep AI sector read-through</div>
+    <div class="investor-signal">
+      Q1 2026 13F (articles published May 20) shows Druckenmiller <strong>completely exited Alphabet <span class="ticker">GOOGL</span></strong> — liquidating all 385,000 shares — while initiating new positions in Broadcom <span class="ticker">AVGO</span> (195,955 shares, 1.8% of portfolio), Intel <span class="ticker">INTC</span> (411,400 shares, 0.5%), and Micron Technology <span class="ticker">MU</span> (23,400 shares). He also exited <span class="ticker">XLF</span>, Delta <span class="ticker">DAL</span>, and American Airlines <span class="ticker">AAL</span>. Notably, <strong>Nvidia <span class="ticker">NVDA</span> remains entirely absent</strong> from the portfolio despite prior interest.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Druckenmiller's full GOOGL exit — a high-conviction move from a macro legend — combined with new buys in <span class="ticker">AVGO</span> and <span class="ticker">INTC</span> suggests a rotation from software/search giants toward chip infrastructure plays, while his continued NVDA absence is a meaningful bearish data point on that name.</span>
+    </div>
+    <div class="investor-cn">
+      宏观传奇投资人Druckenmiller在2026年Q1完全清仓谷歌（Alphabet），同时新买入博通（AVGO）、英特尔（INTC）和美光科技（MU），英伟达（NVDA）仍不在其持仓中。这一"抛弃互联网巨头、买入AI芯片基础设施"的换仓方向值得重点关注。
+    </div>
+    <div class="src-line">
+      <a href="https://www.indexbox.io/blog/stanley-druckenmillers-q1-portfolio-no-nvidia-new-ai-bets/">IndexBox</a> ·
+      <a href="https://247wallst.com/investing/2026/05/20/billionaire-stanley-druckenmiller-dumped-every-share-of-alphabet-he-bought-ai-memory-stocks-up-581-to-3467-instead/">247 Wall St.</a> · Q1 2026 13F, reported May 20, 2026
+    </div>
+  </div>
+
+  <!-- CARD 4: ARK Invest / Cathie Wood -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Cathie Wood / ARK Invest</span>
+        <span class="investor-handle">@CathieDWood</span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">ARK Investment Management · ~$14B AUM · Thematic ETF manager; daily trades publicly disclosed</div>
+    <div class="investor-signal">
+      Three moves this week: (1) <strong>May 15 — opened a new position in Cerebras Systems <span class="ticker">ACBRS</span></strong>, a direct AI compute rival to Nvidia. (2) <strong>May 18 — sold $28M+ in AMD <span class="ticker">AMD</span> and TSMC <span class="ticker">TSM</span></strong> while buying Nvidia <span class="ticker">NVDA</span>, Tesla <span class="ticker">TSLA</span>, Archer Aviation <span class="ticker">ACHR</span>, and Joby Aviation <span class="ticker">JOBY</span>. (3) <strong>May 21 — bought 139,117 shares of Bullish <span class="ticker">BLSH</span></strong> (~$5.14M across ARKK, ARKW, ARKF), doubling down on a crypto exchange position initiated the prior day.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">ARK's simultaneous exit from <span class="ticker">AMD</span>/<span class="ticker">TSM</span> and entry into Cerebras (<span class="ticker">ACBRS</span>) signals a rotation within AI compute — away from incumbent chipmakers toward emerging GPU alternatives, with a concurrent doubling of crypto exchange exposure.</span>
+    </div>
+    <div class="investor-cn">
+      Cathie Wood旗下ARK投资本周动作密集：5月15日新开仓英伟达竞争对手Cerebras Systems（ACBRS），5月18日减持AMD和台积电逾2800万美元并加仓英伟达和特斯拉，5月21日在加密交易所Bullish（BLSH）上投入约514万美元。三连动作显示ARK正在AI芯片赛道内部进行轮动，同时增加加密资产敞口。
+    </div>
+    <div class="src-line">
+      <a href="https://www.benzinga.com/etfs/broad-u-s-equity-etfs/26/05/52653442/cathie-wood-sells-amd-tsmc-buys-nvidia-tesla-flying-taxis">Benzinga</a> ·
+      <a href="https://coincentral.com/cathie-woods-ark-invest-buys-more-bullish-stock-and-trims-tsmc-position-in-latest-trades/">CoinCentral</a> ·
+      <a href="https://blog.arkinvesttrades.com/2026/05/21/arkf-05-21-2026/">ARK Invest Trades Tracker</a> · May 15–21, 2026
+    </div>
+  </div>
+
+</div>
+
+<!-- BONUS NOTE: Karpathy -->
+<div style="background:#fff8ed; border:1px solid #f0dfa0; border-left:3px solid #d97706; border-radius:0 8px 8px 0; padding:10px 14px; margin-bottom:1.5rem; font-size:12px; color:#555; line-height:1.7;">
+  <strong style="font-size:11px; font-weight:700; color:#92400E; text-transform:uppercase; letter-spacing:0.06em;">Notable Industry Signal (not a trade) 行业动态</strong><br>
+  <strong>Andrej Karpathy</strong> (former OpenAI founding member &amp; Tesla AI director) <a href="https://techcrunch.com/2026/05/19/openai-co-founder-andrej-karpathy-joins-anthropics-pre-training-team/" style="color:#5B3FA5;">joined Anthropic's pre-training team</a> on May 19, tasked with using Claude to accelerate pretraining research. This is not a disclosed investment but is high-signal for Anthropic's competitive position vs OpenAI in foundational model training. <span style="font-family:'PingFang SC','Microsoft YaHei',sans-serif; color:#aaa; font-size:11px;">（Karpathy于5月19日加入Anthropic预训练团队，直接加剧与OpenAI的顶尖人才竞争。）</span>
+</div>
+
+<!-- OVERALL CHINESE SUMMARY -->
+<div class="cn-summary">
+  <div class="cn-label">中文摘要 — 本期信号汇总</div>
+  <div class="cn-text">
+    本期四大信号呈现出一致方向：聪明钱正在对冲甚至做空主流AI芯片股（NVDA、AMD、TSM），同时增持AI物理基础设施（电力、数据中心运营商）和新兴算力替代方案（Cerebras）。Druckenmiller完全清仓谷歌、Aschenbrenner持有高达846亿美元名义价值的半导体看跌期权，两大信号均指向"AI大盘芯片股短期存在回调风险"。与此同时，David Sacks成功阻止AI行政令签署，意味着美国监管环境短期内对AI行业仍属友好，有利于大型平台企业。对于追踪美股AI板块的新加坡投资者而言，当前核心风险在于半导体硬件估值过高，而核心机会在于AI电力基础设施及尚未被主流关注的AI算力新进入者。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources">
+  <a href="https://trendspider.com/blog/leopold-aschenbrenner-situational-awareness-lp-13f-may-18-2026/">TrendSpider — Leopold Aschenbrenner Adds $7.7B in Semi Put Notional While Holding AI Infrastructure Longs (May 18, 2026)</a><br>
+  <a href="https://www.davemanuel.com/2026/05/19/leopold-aschenbrenner-q1-2026-13f-situational-awareness/">DaveManuel.com — The Most-Anticipated 13F of 2026: What Leopold Aschenbrenner Actually Owns (May 19, 2026)</a><br>
+  <a href="https://finance.yahoo.com/markets/options/articles/leopold-aschenbrenners-situational-awareness-files-174339413.html">Yahoo Finance — Situational Awareness LP 13F Filing (May 18, 2026)</a><br>
+  <a href="https://www.kucoin.com/news/flash/24-year-old-ai-stock-guru-leopold-aschenbrenner-s-fund-buys-137b-in-ai-hardware-put-options">KuCoin — Aschenbrenner Fund Purchases $137B in AI Hardware Put Options</a><br>
+  <a href="https://fortune.com/2026/05/22/tech-billionaires-convince-trump-to-back-off-ai-executive-order-but-much-of-maga-favors-ai-regulation/">Fortune — Tech Billionaires Win Fight Over AI Executive Order (May 22, 2026)</a><br>
+  <a href="https://en.sedaily.com/international/2026/05/23/paypal-mafia-sacks-halts-trumps-ai-executive-order-with-one">Seoul Economic Daily — Sacks Halts Trump's AI Executive Order With One Phone Call (May 23, 2026)</a><br>
+  <a href="https://www.washingtonpost.com/wp-intelligence/ai-tech-brief/2026/05/22/ai-tech-brief-tech-ceos-blocked-executive-order/">Washington Post AI &amp; Tech Brief — Tech CEOs Blocked Executive Order (May 22, 2026)</a><br>
+  <a href="https://www.indexbox.io/blog/stanley-druckenmillers-q1-portfolio-no-nvidia-new-ai-bets/">IndexBox — Stanley Druckenmiller Avoids Nvidia, Buys Broadcom, Micron, and Intel in Q1 2026</a><br>
+  <a href="https://247wallst.com/investing/2026/05/20/billionaire-stanley-druckenmiller-dumped-every-share-of-alphabet-he-bought-ai-memory-stocks-up-581-to-3467-instead/">247 Wall St. — Druckenmiller Dumped Every Share of Alphabet (May 20, 2026)</a><br>
+  <a href="https://blockonomi.com/billionaire-druckenmiller-exits-alphabet-googl-slashes-amazon-amzn-in-q1-2026/">Blockonomi — Druckenmiller Exits Alphabet, Slashes Amazon in Q1 2026</a><br>
+  <a href="https://www.benzinga.com/etfs/broad-u-s-equity-etfs/26/05/52653442/cathie-wood-sells-amd-tsmc-buys-nvidia-tesla-flying-taxis">Benzinga — Cathie Wood Sells $28M Worth of AMD and TSMC, Loads Up on Nvidia and Tesla (May 18, 2026)</a><br>
+  <a href="https://coincentral.com/cathie-woods-ark-invest-buys-more-bullish-stock-and-trims-tsmc-position-in-latest-trades/">CoinCentral — ARK Buys Bullish Stock, Trims TSMC (May 21, 2026)</a><br>
+  <a href="https://blog.arkinvesttrades.com/2026/05/21/arkf-05-21-2026/">ARK Invest Trades Tracker — ARKF May 21, 2026</a><br>
+  <a href="https://techcrunch.com/2026/05/19/openai-co-founder-andrej-karpathy-joins-anthropics-pre-training-team/">TechCrunch — Andrej Karpathy Joins Anthropic's Pre-Training Team (May 19, 2026)</a><br>
+  <a href="https://www.axios.com/2026/05/19/anthropic-openai-karpathy-andrej-claude">Axios — OpenAI co-founder Andrej Karpathy joins Anthropic (May 19, 2026)</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Investor Signals Scan · 投资人信号追踪<br>
+  May 24, 2026 · Scheduled run · AI/VC watchlist<br>
+  <span style="color:#ddd;">Signals filtered: specific claim + verified URL + published within 7 days or new SEC filing</span>
+</div>
+
+</body>
+</html>

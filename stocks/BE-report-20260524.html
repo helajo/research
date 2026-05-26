@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Energy (BE) — Equity Research Report · May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-bearish { background: #FCEBEB; color: #791F1F; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.mood-neutral { background: #f0efe8; color: #555; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.indices { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.idx-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.idx-name { font-size: 11px; color: #888; margin-bottom: 4px; }
+.idx-val  { font-size: 16px; font-weight: 600; }
+.idx-chg  { font-size: 12px; margin-top: 2px; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up   { color: #0F6E56; }
+.metric-dn   { color: #A32D2D; }
+.metric-flat { color: #888; }
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+.signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+.rank1 { border-left: 3px solid #185FA5; }
+.rank2 { border-left: 3px solid #1D9E75; }
+.rank3 { border-left: 3px solid #854F0B; }
+.sig-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+.sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-health   { background: #E1F5EE; color: #085041; }
+.s-energy   { background: #FAEEDA; color: #633806; }
+.s-consumer { background: #FBEAF0; color: #72243E; }
+.s-defence  { background: #EEEDFE; color: #3C3489; }
+.s-finance  { background: #EAF3DE; color: #27500A; }
+.s-realty   { background: #FAECE7; color: #712B13; }
+.s-macro    { background: #F1EFE8; color: #444441; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+.also-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.also-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.also-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.also-text { font-size: 12px; color: #444; line-height: 1.5; margin-bottom: 4px; }
+.also-cn { font-size: 11px; color: #999; line-height: 1.6; border-top: 1px dashed #e8e8e0; padding-top: 4px; margin-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.macro-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.macro-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.macro-text { font-size: 12px; color: #333; line-height: 1.5; margin-bottom: 4px; }
+.macro-cn { font-size: 11px; color: #999; line-height: 1.6; border-top: 1px dashed #e8e8e0; padding-top: 4px; margin-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.notable-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+.notable-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #854F0B; margin-bottom: 4px; }
+.notable-text { font-size: 12px; color: #333; line-height: 1.5; }
+.notable-cn { font-size: 11px; color: #999; line-height: 1.6; border-top: 1px dashed #e8e8e0; padding-top: 4px; margin-top: 4px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+.rating-green  { background: #EAF3DE; color: #27500A; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-red    { background: #FCEBEB; color: #791F1F; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+.impl { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.impl-item { font-size: 12px; background: #f0efe8; border-radius: 6px; padding: 4px 10px; color: #555; }
+.impl-item span { font-weight: 600; color: #333; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1.5rem; }
+
+/* STOCK REPORT SUPPLEMENT */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .subtotal td { border-top: 1px solid #ccc; font-weight: 600; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0;
+  padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.watch-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.watch-list li { font-size: 13px; color: #333; padding: 6px 0 6px 18px; border-bottom: 1px solid #f0efe8;
+  position: relative; line-height: 1.5; }
+.watch-list li::before { content: "→"; position: absolute; left: 0; color: #185FA5; font-weight: 600; }
+.watch-list li:last-child { border-bottom: none; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888;
+  border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+
+/* AI INFRA LAYER SUPPLEMENT */
+.layer-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, #0C1A2E 0%, #1a2f4a 100%);
+  color: #fff; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px;
+}
+.layer-num {
+  background: #185FA5; border-radius: 50%; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; flex-shrink: 0;
+}
+.layer-name-en { font-weight: 700; font-size: 14px; }
+.layer-name-cn { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.layer-names { display: flex; flex-direction: column; }
+.layer-valuation {
+  display: inline-flex; align-items: center; gap: 6px; border-radius: 20px;
+  padding: 4px 12px; font-size: 12px; font-weight: 600; margin-left: 8px;
+}
+.val-high    { background: #FEE2E2; color: #991B1B; }
+.val-mid     { background: #FEF3C7; color: #92400E; }
+.val-low     { background: #D1FAE5; color: #065F46; }
+.val-strong  { background: #DCFCE7; color: #14532D; border: 1px solid #86EFAC; }
+.val-na      { background: #F3F4F6; color: #6B7280; }
+.layer-peer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.peer-chip {
+  background: #f0efe8; border-radius: 4px; padding: 3px 8px;
+  font-size: 11px; font-weight: 600; color: #444;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.layer-note {
+  background: #f8f8f6; border: 1px solid #e0dfd8; border-radius: 6px;
+  padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px;
+}
+.multi-layer-tag {
+  display: inline-block; background: #EDE9FE; color: #5B21B6; border-radius: 4px;
+  padding: 2px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 8px;
+}
+body p { font-size: 13px; color: #444; line-height: 1.75; margin-bottom: 12px; }
+
+@media (max-width: 640px) {
+  .risk-grid, .cases, .also-grid, .macro-grid { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">EQUITY RESEARCH · 股票研究</div>
+  <div class="doc-title">Bloom Energy Corporation (NYSE: BE) — Comprehensive Equity Report</div>
+  <div class="doc-title-cn">布鲁姆能源公司（纽交所：BE）— 全面股票研究报告</div>
+  <div class="doc-meta">Generated 24 May 2026 · Sector: Industrials / Clean Energy · Exchange: NYSE · Price as of 23 May 2026: <strong>$302.49</strong> · Market Cap: ~$86.0B · CEO: K.R. Sridhar</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Investment Mood 投资情绪</span>
+  <span class="mood-text">Exceptional growth inflection underway; AI power crisis is Bloom's structural tailwind — but a 1,200%+ one-year run means valuation is the central debate.</span>
+  <span class="mood-pill mood-mixed">Bullish Growth · 增长偏强 / 估值偏高</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">布鲁姆能源正处于历史性增长拐点：Q1 2026营收同比增长130%，全年指引大幅上调至34–38亿美元，AI数据中心订单持续爆发。股价过去一年暴涨逾1200%，估值高企是当前最大争议焦点。</div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Background & Business Overview</div>
+  <div class="section-title-cn">公司背景与业务概览</div>
+  <div class="section-divider"></div>
+
+  <p>Bloom Energy Corporation, incorporated in 2001 and formerly known as Ion America Corp., is headquartered in San Jose, California. It designs, manufactures, sells, and installs solid-oxide fuel cell (SOFC) systems for on-site power generation. The company's flagship product — the Bloom Energy Server — converts natural gas, biogas, or hydrogen into electricity through an electrochemical process without combustion, delivering highly efficient, low-emission, and reliable baseload power.</p>
+
+  <p>The company went public on the NYSE in July 2018 and for most of its early public life struggled to reach profitability, burning cash while scaling manufacturing operations at its Newark, Delaware and Fremont, California facilities. That narrative changed fundamentally in 2024–2025, when Bloom reported its first full year of positive GAAP net income and hit revenues surpassing $2.1 billion — a pivotal credibility moment for the company after years of commercial promises.</p>
+
+  <p>Bloom's core customers span data centers, hospitals, biotechnology facilities, grocery retailers, telecom infrastructure, and banks — essentially any facility requiring mission-critical, always-on power. Revenue is segmented into product sales (Energy Servers), service contracts (long-term operations and maintenance), installation services, and electricity sales under its managed services model. CEO K.R. Sridhar has led the company since inception and is widely credited with its technical vision, particularly around solid-oxide cell technology that operates at substantially higher efficiency than competing proton exchange membrane (PEM) designs.</p>
+
+  <p>The AI boom has transformed Bloom's addressable market. Grid interconnection queues now run 5–7 years in key US markets; Bloom's fuel cells can be deployed in as little as 55 days, a capability that no grid alternative or SMR can match. This speed-to-power differentiation has attracted hyperscaler-class customers and positioned Bloom as arguably the most actionable near-term solution to the AI power crisis — not a theoretical 2030 play like SMRs, but deliverable capacity right now.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">布鲁姆能源成立于2001年，总部位于加利福尼亚州圣何塞。核心产品为固体氧化物燃料电池（SOFC）服务器，通过电化学方式将天然气、沼气或氢气转化为电力。公司2018年在纽交所上市，2025年首次实现全年GAAP净利润转正。AI数据中心对即时电力的需求，使布鲁姆55天交付能力成为其最强差异化优势——远优于需要5–7年并网等待的传统方案。</div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Financial Performance</div>
+  <div class="section-title-cn">财务表现</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Revenue</div>
+      <div class="metric-val metric-up">$2.02B</div>
+      <div class="metric-sub">+37% YoY vs $1.47B in FY2024</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Revenue</div>
+      <div class="metric-val metric-up">$751M</div>
+      <div class="metric-sub">+130% YoY — first >100% public co. quarter</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2026 Guidance</div>
+      <div class="metric-val metric-up">$3.4–3.8B</div>
+      <div class="metric-sub">~80% midpoint growth; raised April 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Non-GAAP Gross Margin</div>
+      <div class="metric-val metric-up">31.5%</div>
+      <div class="metric-sub">Q1 2026; target ~34% for FY2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Non-GAAP EPS (Q1 2026)</div>
+      <div class="metric-val metric-up">$0.44</div>
+      <div class="metric-sub">vs consensus $0.13 — 4x beat</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2026 EPS Guidance</div>
+      <div class="metric-val metric-up">$1.85–2.25</div>
+      <div class="metric-sub">Non-GAAP; operating cash >$200M guided</div>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>FY2022</th>
+        <th>FY2023</th>
+        <th>FY2024</th>
+        <th>FY2025</th>
+        <th>Q1 2026</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Revenue ($B)</td>
+        <td>$1.20</td>
+        <td>$1.30</td>
+        <td>$1.47</td>
+        <td>$2.02</td>
+        <td>$0.75</td>
+      </tr>
+      <tr>
+        <td>Revenue Growth YoY</td>
+        <td>—</td>
+        <td class="up">+8%</td>
+        <td class="up">+13%</td>
+        <td class="up">+37%</td>
+        <td class="up">+130%</td>
+      </tr>
+      <tr>
+        <td>Non-GAAP Gross Margin</td>
+        <td>~15%</td>
+        <td>~22%</td>
+        <td>~30%</td>
+        <td>~32%</td>
+        <td>31.5%</td>
+      </tr>
+      <tr>
+        <td>Product Gross Margin</td>
+        <td>~10%</td>
+        <td>~15%</td>
+        <td>~35%</td>
+        <td>~35%</td>
+        <td>35.3%</td>
+      </tr>
+      <tr class="highlight">
+        <td>GAAP Net Income</td>
+        <td class="dn">Loss</td>
+        <td class="dn">Loss</td>
+        <td class="dn">–$29M</td>
+        <td class="up">+Positive</td>
+        <td class="up">+$70.7M</td>
+      </tr>
+      <tr>
+        <td>Adj. EBITDA</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td>$143M</td>
+      </tr>
+      <tr>
+        <td>Operating Cash Flow</td>
+        <td class="dn">Negative</td>
+        <td class="dn">Negative</td>
+        <td class="dn">Neg.</td>
+        <td class="up">Positive</td>
+        <td class="up">+$73.6M</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;">Sources: SEC filings (8-K), Bloom Energy Q1 2026 earnings release, Stockanalysis.com. <span class="source-tag">SEC Filings</span></p>
+
+  <p>The margin expansion story is genuine. Bloom has delivered double-digit annual cost reductions for over 15 years through manufacturing automation. Product gross margin at 35.3% in Q1 2026 compares starkly to direct fuel cell peers: Plug Power at negative 70.7% gross margins and FuelCell Energy at negative 19.3%. Q1 2026 also marked the first Q1 in company history with positive operating cash flow, a watershed shift confirming operating leverage is now real.</p>
+
+  <p>The company enters Q2 2026 with a record backlog of approximately $14.5 billion (service backlog dominant), providing exceptional forward revenue visibility. Management guided Q2 2026 revenue to be at least as strong as Q1's $751M run rate.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">布鲁姆能源2026年Q1营收7.51亿美元，同比增长130%，非GAAP毛利率31.5%，调整后EPS 0.44美元（超预期4倍）。全年指引上调至34–38亿美元，中值增速约80%。积压订单达145亿美元，营收能见度极高。公司毛利率显著优于同业：Plug Power毛利率为–70.7%，FuelCell Energy为–19.3%。</div>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Cash & Equivalents (Q1 2026)</div>
+      <div class="metric-val">$2.49B</div>
+      <div class="metric-sub">Strong liquidity position</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Recourse Debt</div>
+      <div class="metric-val metric-dn">$2.60B</div>
+      <div class="metric-sub">Incl. 3% Green Convertible Notes due 2029</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Debt (approx.)</div>
+      <div class="metric-val metric-dn">~$110M</div>
+      <div class="metric-sub">Modest net debt relative to revenue trajectory</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Debt/Capital Ratio</div>
+      <div class="metric-val">~66%</div>
+      <div class="metric-sub">High vs peers; manageable given FCF inflection</div>
+    </div>
+  </div>
+
+  <p>Bloom carries more debt relative to capital than peers, reflecting years of pre-profitability infrastructure investment. However, the balance sheet has improved materially. As of Q1 2026, cash of $2.49B nearly matches recourse debt of $2.60B, yielding a net debt position of roughly $110M. Management confirmed cash plus operating cash flow are sufficient for at least the next 12 months without additional financing. The company's 3% Green Convertible Notes due 2029 are favorably structured given the stock's dramatic appreciation.</p>
+
+  <p>The Brookfield Asset Management partnership — up to $5 billion in deployment financing — functions as a balance sheet amplifier, allowing Bloom to scale AI data center deployments without straining its own capital base. This is a structurally important feature: Bloom effectively gains a project-finance backstop comparable to what SMR developers could only dream of.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">截至2026年Q1，布鲁姆账面现金24.9亿美元，有追索权债务26亿美元，净债务约1.1亿美元，整体流动性充足。与布鲁克菲尔德资产管理公司高达50亿美元的部署融资合作，有效充当其资产负债表的放大器，为AI数据中心的大规模扩张提供资金保障。</div>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation — Multiples & DCF</div>
+  <div class="section-title-cn">估值分析 — 市场倍数与现金流折现</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Current Price</div>
+      <div class="metric-val">$302.49</div>
+      <div class="metric-sub">As of 23 May 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">$86.0B</div>
+      <div class="metric-sub">NYSE: BE</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">52-Week Range</div>
+      <div class="metric-val">$18–$323</div>
+      <div class="metric-sub">~1,500% 52-week move</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EV/Revenue (FY2026E)</div>
+      <div class="metric-val metric-dn">~15x</div>
+      <div class="metric-sub">On $3.6B midpoint guidance</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Price/Sales (F12M)</div>
+      <div class="metric-val metric-dn">~13.4x</div>
+      <div class="metric-sub">vs PLUG at 3.8x, FCEL at 1.8x</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Analyst Consensus PT</div>
+      <div class="metric-val">$237</div>
+      <div class="metric-sub">27 analysts; stock trades ~27% above PT</div>
+    </div>
+  </div>
+
+  <p>Bloom trades at a significant premium to both its own history and fuel cell peers. The EV/EBITDA multiple is elevated (663x on trailing basis, improving sharply on forward guidance). The stock currently trades roughly 27% above the average analyst consensus price target of $237.38, reflecting the market's willingness to pay for the AI power demand story ahead of proven execution at scale.</p>
+
+  <p><strong>DCF Analysis — Three Scenarios</strong> <span class="source-tag">ASSUMED inputs flagged</span></p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Assumption</th>
+        <th>Bear</th>
+        <th>Base</th>
+        <th>Bull</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>FY2025 FCF (Base) [ASSUMED ~breakeven]</td>
+        <td>$0M</td>
+        <td>$50M</td>
+        <td>$100M</td>
+      </tr>
+      <tr>
+        <td>FCF Growth Rate (Yrs 1–5) [ASSUMED]</td>
+        <td>15%</td>
+        <td>40%</td>
+        <td>65%</td>
+      </tr>
+      <tr>
+        <td>WACC [ASSUMED]</td>
+        <td>12%</td>
+        <td>10%</td>
+        <td>9%</td>
+      </tr>
+      <tr>
+        <td>Terminal Growth Rate [ASSUMED]</td>
+        <td>2%</td>
+        <td>3%</td>
+        <td>4%</td>
+      </tr>
+      <tr>
+        <td>Net Debt</td>
+        <td>$110M</td>
+        <td>$110M</td>
+        <td>$110M</td>
+      </tr>
+      <tr>
+        <td>Shares Outstanding [ASSUMED ~285M]</td>
+        <td>285M</td>
+        <td>285M</td>
+        <td>285M</td>
+      </tr>
+      <tr class="highlight">
+        <td>Intrinsic Value / Share</td>
+        <td class="dn">~$15–30</td>
+        <td class="flat">~$70–120</td>
+        <td class="up">~$250–380</td>
+      </tr>
+      <tr>
+        <td>vs Current Price $302</td>
+        <td class="dn">–90%</td>
+        <td class="dn">–65%</td>
+        <td class="up">–10% to +25%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>DCF Caveat:</strong> Traditional DCF analysis is largely irrelevant for Bloom at this stage. The company's value is driven by the optionality of its AI power backlog, order momentum, and whether the $14.5B backlog materialises into revenue. Bear and base DCF cases imply massive downside — but these assume normalised growth, not the current AI power demand inflection. The bull case (~$250–380/share) aligns with current market pricing. All inputs are [ASSUMED]; verify independently.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">布鲁姆当前股价302美元，市值860亿美元，EV/营收约15倍，远高于燃料电池同业。分析师共识目标价237美元，股价已超出目标价约27%。DCF三情景显示：熊市内在价值约15–30美元，基准约70–120美元，牛市约250–380美元。当前估值仅在牛市AI订单持续兑现的情境下方可成立，传统DCF意义有限。所有输入均标注[ASSUMED]，需独立核实。</div>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Peer & Competitive Benchmarking</div>
+  <div class="section-title-cn">同业比较与竞争基准</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Ticker</th>
+        <th>EV/Rev (FY2026E)</th>
+        <th>Gross Margin</th>
+        <th>Revenue Growth</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td>Bloom Energy</td>
+        <td>BE</td>
+        <td>~15x</td>
+        <td>31.5% (Q1'26)</td>
+        <td class="up">+130% Q1'26</td>
+        <td>🟢 Operating & scaling</td>
+      </tr>
+      <tr>
+        <td>Plug Power</td>
+        <td>PLUG</td>
+        <td>~5.4x</td>
+        <td class="dn">–70.7%</td>
+        <td class="flat">Negative</td>
+        <td>🔴 Distressed</td>
+      </tr>
+      <tr>
+        <td>FuelCell Energy</td>
+        <td>FCEL</td>
+        <td>~1.8x</td>
+        <td class="dn">–19.3%</td>
+        <td class="flat">Flat</td>
+        <td>🔴 Struggling</td>
+      </tr>
+      <tr>
+        <td>Ballard Power</td>
+        <td>BLDP</td>
+        <td>~3.4x</td>
+        <td class="dn">–3.7%</td>
+        <td class="flat">Low growth</td>
+        <td>🟡 Vehicle-focused</td>
+      </tr>
+      <tr>
+        <td>Cummins (Accelera)</td>
+        <td>CMI</td>
+        <td>N/A (congl.)</td>
+        <td>~22%</td>
+        <td class="flat">Moderate</td>
+        <td>🟡 Industrial rival</td>
+      </tr>
+      <tr>
+        <td>NuScale Power</td>
+        <td>SMR</td>
+        <td>N/A (pre-rev.)</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>🔵 Pre-commercial</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Bloom occupies a fundamentally different competitive position from its fuel cell peers. While Plug Power, FuelCell Energy, and Ballard all trade at lower multiples, they also have deeply negative or near-zero gross margins, making them uninvestable on fundamentals alone. Bloom is the only fuel cell company that has achieved genuine commercial scale with expanding margins, a backlog measured in the tens of billions, and hyperscaler partnerships. The more relevant valuation peer is arguably Vertiv (VRT) — a data center infrastructure play — which trades at ~20x EV/Revenue, suggesting the AI infrastructure premium Bloom commands may not be entirely unreasonable.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">布鲁姆在燃料电池行业中拥有截然不同的竞争地位：毛利率31.5%远超同业（Plug Power为–70.7%，FuelCell Energy为–19.3%）。从AI基础设施视角看，Vertiv（VRT）20倍EV/营收是更合适的估值参照，这意味着布鲁姆当前约15倍的倍数并非完全没有依据。</div>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <div class="also-grid">
+    <div class="also-card">
+      <div class="also-title">🏗️ Oracle "Project Jupiter" — 2.8 GW</div>
+      <div class="also-text">Oracle expanded its agreement with Bloom to supply up to 2.8 GW of fuel cell capacity. First 1.2 GW deal was signed last year; deployments are underway. Oracle cited Bloom's 55-day deployment timeline as critical for its AI data center rollout.</div>
+      <div class="also-cn">甲骨文将与布鲁姆的合作规模扩展至2.8吉瓦，首批1.2吉瓦部署已启动，55天交付能力是甲骨文选择布鲁姆的核心原因。</div>
+    </div>
+    <div class="also-card">
+      <div class="also-title">💰 Brookfield — $5B Financing Facility</div>
+      <div class="also-text">Brookfield Asset Management committed up to $5 billion to fund Bloom deployments at AI data centers — one of the largest single power infrastructure financing deals in clean energy history. Acts as a force multiplier for Bloom's growth without diluting equity.</div>
+      <div class="also-cn">布鲁克菲尔德资产管理承诺为布鲁姆AI数据中心部署提供高达50亿美元融资，是清洁能源史上最大单笔电力基础设施融资之一。</div>
+    </div>
+    <div class="also-card">
+      <div class="also-title">🤖 Nebius — $2.6B Deal (May 2026)</div>
+      <div class="also-text">AI cloud provider Nebius (backed by Yandex) announced a $2.6B lifetime fuel cell service agreement on 20 May 2026. First phase includes 328 MW of capacity, expected operational in 2026 — eliminating gas turbines at the site entirely.</div>
+      <div class="also-cn">AI云服务商Nebius于2026年5月20日宣布价值26亿美元的燃料电池服务协议，首期328兆瓦容量将于2026年投入运营，完全取代现场燃气轮机。</div>
+    </div>
+    <div class="also-card">
+      <div class="also-title">⚡ AEP + Equinix + AEP Deals</div>
+      <div class="also-text">American Electric Power (up to 1 GW of SOFCs for off-grid AI data centers) and Equinix (deployments across 19 data centers, 100+ MW) demonstrate Bloom is not dependent on any single customer. Diversification of the order book is accelerating.</div>
+      <div class="also-cn">美国电力公司（AEP）签约最多1吉瓦离网AI数据中心部署，Equinix在19个数据中心超100兆瓦部署——客户多元化正在加速。</div>
+    </div>
+  </div>
+
+  <p><strong>The 55-Day Moat:</strong> When Oracle needed its first AI data center powered, Bloom delivered in 55 days instead of the promised 90. Hyperscalers spending over $1 billion per day on CapEx cannot afford grid delays measured in years. This deployment speed — rooted in Bloom's 15+ years of manufacturing iteration — is the company's deepest competitive moat. It cannot be replicated overnight by SMR vendors, gas turbine makers, or new fuel cell entrants.</p>
+
+  <p><strong>Electrolyzer Optionality:</strong> Bloom's solid-oxide electrolyzer cell (SOEC) technology is among the most efficient green hydrogen producers commercially available, particularly when integrated with industrial waste heat. This positions Bloom in a second, potentially enormous market as green hydrogen demand scales — creating a real option value on top of the core fuel cell business.</p>
+
+  <p><strong>Manufacturing Cost Genetics:</strong> Bloom has delivered double-digit annual product cost reductions for over 15 years. As revenue scales from $2B to $3.6B+ in 2026, operating leverage should drive non-GAAP margins from 34% toward 40%+ over a multi-year horizon. This is not a temporary phenomenon — it is embedded in the company's engineering DNA.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">布鲁姆的核心护城河在于"55天交付"——这是超大规模数据中心在5–7年并网等待背景下的最优解。主要催化剂包括：甲骨文2.8吉瓦合作、布鲁克菲尔德50亿美元融资、Nebius 26亿美元新协议（2026年5月）、AEP 1吉瓦合作及Equinix 19个数据中心部署。固体氧化物电解槽（SOEC）提供绿氢市场的期权价值；15年以上的制造成本下降基因支撑持续的利润率扩张。</div>
+  </div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Market Trends & Sector Dynamics</div>
+  <div class="section-title-cn">市场趋势与行业动态</div>
+  <div class="section-divider"></div>
+
+  <div class="macro-grid">
+    <div class="macro-card">
+      <div class="macro-label">⚡ AI Power Crisis</div>
+      <div class="macro-text">Data center energy consumption is on track to double by 2028. Grid interconnection queues in Virginia, Oregon, and Texas are 5–7 years. Every month of delay costs hyperscalers hundreds of millions in lost AI revenue. This is Bloom's primary market driver.</div>
+      <div class="macro-cn">数据中心能耗预计2028年翻倍，美国主要市场并网等待时间长达5–7年，这是布鲁姆最核心的市场驱动力。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-label">🏭 SMR Reality Check</div>
+      <div class="macro-text">Small modular reactors are real but 5–8 years away from commercial data center deployment. Bloom is not in competition with SMRs — it occupies the "now" while SMRs occupy the "2030s." The two technologies are complementary, not substitutes in the near term.</div>
+      <div class="macro-cn">小型模块化反应堆需5–8年才能商业化部署，布鲁姆与SMR定位互补而非竞争：SMR是2030年代的解决方案，布鲁姆是当下的解决方案。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-label">🌱 Clean Energy Policy</div>
+      <div class="macro-text">The IRA's Section 48C tax credits and clean power investment incentives have structurally reduced the cost hurdle for customers deploying Bloom systems. Policy is now a fundamental commercial tailwind, not just a subsidy story.</div>
+      <div class="macro-cn">《通胀削减法案》第48C条款等清洁能源税收抵免显著降低了客户部署成本门槛，政策支持已成为基本面级别的顺风车。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-label">🌐 Green Hydrogen Momentum</div>
+      <div class="macro-text">Long-term, Bloom's SOEC technology positions it as a green hydrogen infrastructure play. While near-term hydrogen economics are challenging, the optionality is real and increases the TAM significantly over a 10-year horizon.</div>
+      <div class="macro-cn">长期来看，布鲁姆的SOEC技术使其跻身绿氢基础设施赛道。近期氢气经济性仍具挑战，但10年维度内的期权价值显著扩大了总可寻址市场。</div>
+    </div>
+  </div>
+
+  <p>The sector is at an early-phase growth inflection. The intersection of AI-driven power demand with clean energy mandates, grid infrastructure limitations, and technology readiness has created a narrow window in which Bloom's technology is uniquely positioned. The sector cycle is transitioning from "promising but pre-commercial" to "scaling with real revenue" — a move the market has priced aggressively.</p>
+
+  <ul class="watch-list">
+    <li>Grid interconnection reform: any policy changes that speed up utility grid connections could reduce Bloom's speed-to-power premium</li>
+    <li>Natural gas price trajectory: Bloom's SOFC economics are partly dependent on gas prices — fuel cost increases could pressure customer ROI calculations</li>
+    <li>SMR regulatory pace: faster-than-expected SMR licensing (DOE July 4, 2026 target) could shift long-term capital allocation away from fuel cells</li>
+    <li>IRA tax credit stability: any US legislative rollback of clean energy incentives represents a policy risk to the demand pipeline</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">行业处于增长拐点：AI算力驱动的电力危机、清洁能源政策支持、电网基础设施瓶颈与技术成熟度的交汇，为布鲁姆创造了独特的时间窗口。需关注风险：电网并网改革、天然气价格、SMR监管提速以及美国清洁能源税收抵免政策的稳定性。</div>
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Geopolitical, Macro & Regulatory Risk</div>
+  <div class="section-title-cn">地缘政治、宏观与监管风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type">Tariff / Supply Chain Risk</div>
+      <div class="risk-desc">Bloom's 10-Q explicitly flags supply chain exposure to tariffs, China geopolitical developments, and raw material availability. SOFC components involve specialty materials; any escalation in US-China trade tensions could pressure costs. Manufacturing in the US (Newark, DE) provides partial insulation.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Customer Concentration Risk</div>
+      <div class="risk-desc">Brookfield-related revenue reportedly dominates product sales. Oracle, Nebius, AEP, and Equinix are large contracts; the loss of any single anchor customer would materially impact revenue. Diversification is improving but concentration remains a real watch item.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Policy Risk (IRA / Tax Credits)</div>
+      <div class="risk-desc">US clean energy incentives under the IRA are a structural demand tailwind. Any legislative rollback (possible under future Congressional changes) would raise customer deployment costs and potentially defer orders. This is a medium-probability, high-impact risk.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Korea JV Exposure</div>
+      <div class="risk-desc">Bloom's Korean JV with SK ecoplant (Bloom SK Fuel Cell) includes non-recourse debt. South Korea is a meaningful revenue contributor; any deterioration in the Korean energy policy environment or SK ecoplant's financial health could affect this segment.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">Execution at Scale Risk</div>
+      <div class="risk-desc">Bloom has never delivered at $3.6B annual revenue pace before. Manufacturing ramp, supply chain reliability, installation quality, and service delivery at 5 GW annual shipment capacity are all first-time-at-scale challenges. Execution risk is real and rising.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type">AI Capex Cycle Sensitivity</div>
+      <div class="risk-desc">Bloom's revenue now depends heavily on AI hyperscaler CapEx cycles. Any macro deterioration, AI bubble narrative, or pullback in cloud/AI investment would directly reduce demand for new fuel cell deployments. Beta of 3.83 reflects this sensitivity.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">主要风险包括：关税与供应链（中美贸易摩擦影响特种材料采购）、客户集中（布鲁克菲尔德相关收入占比高）、政策风险（IRA税收抵免可能被削减）、韩国合资企业敞口、历史最高规模执行挑战，以及AI资本支出周期波动。布鲁姆贝塔高达3.83，反映其高度的市场敏感性。</div>
+  </div>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多空对决</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case</div>
+      <div class="bull-text">
+        <strong>AI power as a decade-long supercycle.</strong> Hyperscaler CapEx remains elevated well into the 2030s. Bloom executes on its $14.5B backlog, delivers $3.6B+ in 2026 and accelerates to $6B+ by 2028. Non-GAAP margins reach 40%+. The electrolyzer business scales into a $1B+ revenue line. Green hydrogen policy tailwinds accelerate. At 20x EV/Revenue on $6B revenue (2028E), equity value exceeds $500/share. The Brookfield, Oracle, Nebius, AEP ecosystem becomes self-reinforcing. Bloom becomes the energy infrastructure layer for AI — a category-defining company worth $150B+.
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case</div>
+      <div class="bear-text">
+        <strong>Valuation disconnected from fundamentals.</strong> At 80x book value and 663x trailing EV/EBITDA, even modest execution misses would trigger severe multiple compression. Grid interconnection reform speeds up, reducing Bloom's speed-to-power premium. AI CapEx cycle peaks in 2026; hyperscalers slow new data center orders. Customer concentration (Brookfield) means any partner stress creates a cliff. IRA tax credits rolled back. Natural gas costs rise. Stock has a beta of 3.83 — in a risk-off environment, it could retrace to $100–150. Insider selling at $288–293 on coordinated Rule 10b5-1 plans by C-suite executives in May 2026 is a notable cautionary signal.
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>牛市观点：</strong>AI电力超级周期延续十年，布鲁姆执行145亿美元积压订单，2026年营收达36亿美元以上，2028年进一步提速，电解槽业务形成第二增长曲线，股价目标500美元以上。<strong>熊市观点：</strong>估值严重脱离基本面（80倍账面值，663倍EV/EBITDA），任何执行失误或AI资本支出放缓均将引发多倍数压缩；管理层在2026年5月协调性抛售（288–293美元）是警示信号；下行目标100–150美元。</div>
+  </div>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section">
+  <div class="section-num">SECTION 10 · 第十节</div>
+  <div class="section-title">Analyst Consensus & Technical Signals</div>
+  <div class="section-title-cn">分析师共识与技术信号</div>
+  <div class="section-divider"></div>
+
+  <p><strong>Analyst Consensus (27 analysts):</strong> Average rating "Buy." Consensus 12-month price target of $237.38 — approximately 24% below the current price of $302.49. Daiwa recently upgraded to Outperform with a $324 target. Citi raised its target to $250 (from $180) in mid-May 2026. Some recent analyst targets have been reset as high as $335. The stock's dramatic run means it now trades above most analyst targets — a yellow flag for near-term positioning.</p>
+
+  <div class="consensus-bar">
+    <div class="cons-buy" style="width:47%"></div>
+    <div class="cons-hold" style="width:39%"></div>
+    <div class="cons-sell" style="width:14%"></div>
+  </div>
+  <div class="cons-labels">
+    <span>Buy 47% (Strong Buy 17% + Buy 30%)</span>
+    <span>Hold 39%</span>
+    <span>Sell 14%</span>
+  </div>
+
+  <p><strong>Technical Picture:</strong> BE has returned over 1,259% in the past year and approximately 200% year-to-date. The 52-week high is $322.83; current price is $302.49, roughly 6% below the high. The stock's beta of 3.83 means it moves approximately 3.8x the S&P 500 in either direction. It is classified as more volatile than 90% of US stocks, typically moving 16% per week. The current share price is extended relative to most moving averages. Short-term momentum remains positive following the Nebius deal announcement on May 20, 2026, which caused a single-day surge.</p>
+
+  <p><strong>Insider Activity:</strong> C-suite executives (COO, CCO, CAO) sold shares on coordinated Rule 10b5-1 plans on May 14, 2026, at prices between $288–293. While these are pre-scheduled plans and executives retain large stakes, the scale of insider selling is a notable data point for risk assessment.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">27位分析师共识评级"买入"，目标价中值237美元（低于当前股价24%）。部分分析师已将目标价上调至324–335美元。过去一年回报超1259%，股票波动性高于90%的美国股票。2026年5月14日，多位高管依据Rule 10b5-1计划在288–293美元区间集中出售，构成需关注的风险信号。</div>
+  </div>
+</div>
+
+<!-- SECTION 11 -->
+<div class="section">
+  <div class="section-num">SECTION 11 · 第十一节</div>
+  <div class="section-title">Practical Guidance for Retail Investors</div>
+  <div class="section-title-cn">散户投资者实操指引</div>
+  <div class="section-divider"></div>
+
+  <p><strong>Who this suits:</strong> High-conviction growth investors who believe the AI power crisis is structural and long-lived, and who can tolerate extreme volatility (beta 3.83, 16% weekly moves). Not suitable as a core holding for conservative portfolios. Best treated as a high-conviction satellite position.</p>
+
+  <p><strong>Position sizing:</strong> Given the beta, volatility, and extended valuation, a satellite allocation of 1–3% of portfolio is more appropriate than a core position. Even well-positioned long-term AI infrastructure investors should be cautious adding at current prices given the stock trades 27% above consensus analyst targets.</p>
+
+  <p><strong>What to monitor (3 key metrics):</strong></p>
+  <ul class="watch-list">
+    <li><strong>Quarterly backlog conversion rate</strong> — watch whether the $14.5B backlog translates to revenue at pace; any miss signals execution deterioration</li>
+    <li><strong>Non-GAAP gross margin trajectory toward 34% guidance</strong> — margin expansion is the operational proof point; if margins plateau below 34% in Q2/Q3 2026, thesis weakens</li>
+    <li><strong>New major customer announcements / hyperscaler order flow</strong> — Nebius-scale deals (>$1B) need to keep arriving to justify the valuation; any slowdown in order velocity is a red flag</li>
+  </ul>
+
+  <p><strong>Entry considerations:</strong> The stock has paused ~6% below its 52-week high ($322). For new positions, a pullback toward the $220–$250 range (closer to analyst consensus targets) would offer a more favourable risk/reward. Momentum buyers may chase strength; value-conscious investors should wait for consolidation.</p>
+
+  <div class="callout">
+    <strong>Key takeaway:</strong> Bloom Energy is arguably the most operationally credible AI power play available today — but the stock already reflects a near-perfect execution scenario. The 130% Q1 2026 revenue growth and $14.5B backlog are real, but so is the 80x book value and the 27% premium to analyst consensus. This is a high-reward, high-volatility situation that rewards patient position-sizing discipline over momentum chasing.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">适合高风险偏好的成长型投资者，建议卫星仓位1–3%，不适合保守型核心持仓。三大关键指标：积压订单转化率、毛利率向34%目标的推进、超大规模客户新签订单流速。理想入场区间为220–250美元（接近分析师共识）。核心结论：布鲁姆是目前最具运营可信度的AI电力标的，但股价已隐含近乎完美的执行预期，需保持仓位纪律。</div>
+  </div>
+</div>
+
+<!-- SECTION 12: AI INFRASTRUCTURE LAYER -->
+<div class="section">
+  <div class="section-num">SECTION 12 · 第十二节</div>
+  <div class="section-title">AI Infrastructure Stack Position</div>
+  <div class="section-title-cn">AI 基础设施层级定位</div>
+  <div class="section-divider"></div>
+
+  <div class="multi-layer-tag">⚡ Multi-Layer Company · 跨层企业</div>
+
+  <p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;">
+    Bloom Energy operates across two layers of the AI infrastructure stack. Its primary business — stationary solid-oxide fuel cell power generation — maps directly to Layer 7 (Energy Source), while its electrolyzer and energy storage-adjacent capabilities place a secondary segment in Layer 6 (Energy Buffer). This cross-layer position provides diversification within the AI energy theme and creates a long-term optionality story beyond the core fuel cell deployment cycle.
+  </p>
+  <p class="cn-text" style="font-size:12px;color:#888;line-height:1.7;margin-bottom:16px;">
+    布鲁姆能源业务横跨AI基础设施两个层级：核心固体氧化物燃料电池发电业务归属第7层「能源原力」，固体氧化物电解槽（SOEC）及储能相关业务则属于第6层「能量缓冲」。这种跨层布局在AI能源主题内提供分散化，并在核心燃料电池部署周期之外创造长期期权价值。
+  </p>
+
+  <!-- Primary Layer Badge -->
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#185FA5;margin-bottom:6px;">Primary Layer · 主层级</div>
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+    <div class="layer-badge">
+      <div class="layer-num">7</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Energy Source</div>
+        <div class="layer-name-cn">能源原力</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-na">⚪ Not Assessed (Novel Position) · 未评估（新兴定位）</div>
+  </div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:16px;">
+    Layer 7 covers power generation infrastructure that feeds AI compute systems — nuclear, gas, solar, wind, and now solid-oxide fuel cells. Bloom's Energy Servers generate on-site baseload electricity for AI data centers, hospitals, and industrial facilities, converting natural gas, biogas, or hydrogen to power through a combustion-free electrochemical process. The company's Q1 2026 revenue of $751M and $14.5B backlog are almost entirely driven by this layer's function. Oracle (2.8 GW), Nebius (328 MW), AEP (1 GW), and the $5B Brookfield deployment programme are all Layer 7 contracts.
+  </p>
+
+  <!-- Secondary Layer Badge -->
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Secondary Layer · 次层级</div>
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
+    <div class="layer-badge" style="background:linear-gradient(135deg,#1a2f1a 0%,#2a4a2a 100%);">
+      <div class="layer-num" style="background:#1D9E75;">6</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Energy Buffer</div>
+        <div class="layer-name-cn">能量缓冲</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-na">⚪ Not Assessed · 未评估</div>
+  </div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;">
+    Bloom's SOEC electrolyzer platform and its "Island Mode" microgrid capability (allowing data centers to disconnect from the grid entirely and operate on Bloom power alone, with ultracapacitor backup) place a meaningful secondary segment in Layer 6. The company's management of on-site power reliability — achieving "six nines" (99.9999%) uptime — blurs the line between energy generation and energy buffering/management. While this is not yet a significant revenue contributor, the optionality is commercially validated.
+  </p>
+
+  <!-- Peer Companies -->
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Primary Layer Peers · 主层同行</div>
+  <div class="layer-peer-chips">
+    <div class="peer-chip">NuScale (SMR)</div>
+    <div class="peer-chip">Oklo (OKLO)</div>
+    <div class="peer-chip">Plug Power (PLUG)</div>
+    <div class="peer-chip">NANO Nuclear (NNE)</div>
+    <div class="peer-chip">Constellation (CEG)</div>
+  </div>
+
+  <div class="layer-note">
+    💡 <strong>Multi-Layer Note:</strong> Bloom is the only Layer 7 company currently delivering AI data center power at commercial scale today — not in 2028 or 2030. SMR peers (NuScale, Oklo) occupy the same layer but are pre-commercial. This temporal differentiation — "the only Layer 7 play you can actually buy that is operating now" — is central to Bloom's premium valuation. As SMRs commercialise, Layer 7 competition will intensify, but Bloom will have a multi-year head start in installed base, service contracts, and customer relationships. The Layer 6 electrolyzer optionality is a free call option on the green hydrogen economy that most Layer 7 peers do not possess.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">BE 是跨层企业，主层为第7层「能源原力」（固体氧化物燃料电池发电，当前收入几乎全部来源于此），次层为第6层「能量缓冲」（SOEC电解槽 + 孤岛模式微电网）。最关键的投资逻辑：布鲁姆是目前唯一在商业规模上实际为AI数据中心供电的第7层企业，SMR同类公司（NuScale、Oklo）仍处于商业化前阶段。随着SMR逐步商业化，第7层竞争将加剧，但布鲁姆在装机基础、服务合同和客户关系上已拥有多年先发优势。</div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">SOURCES · 数据来源</div>
+  <div class="sources">
+    FMP MCP API — company profile (BE), market cap, price, sector data — retrieved 24 May 2026<br>
+    Bloom Energy 8-K Q1 2026 Earnings Release (April 28, 2026) — SEC EDGAR<br>
+    Bloom Energy 8-K FY2024 Full Year Results (February 27, 2025) — SEC EDGAR<br>
+    Bloom Energy 10-Q Q1 2025 (March 31, 2025) — SEC EDGAR<br>
+    Bloom Energy Q1 2026 Earnings Call Transcript — Motley Fool / Benzinga (April 28, 2026)<br>
+    Nebius + Bloom Energy partnership announcement — BusinessWire (May 20, 2026)<br>
+    Data Center Dynamics: Nebius–Bloom deal coverage (May 21, 2026)<br>
+    TechStartups: "$2.6B Nebius deal" article (May 21, 2026)<br>
+    FinancialContent: "The Power Bridge: Bloom Energy in the AI Era" (April 1, 2026)<br>
+    24/7 Wall St.: Bloom Energy valuation analysis (May 21, 2026)<br>
+    Simply Wall St.: BE stock analysis and analyst consensus data (May 21–24, 2026)<br>
+    Stockanalysis.com: FY2025 revenue and loss data<br>
+    Aryadeniz Substack: Bloom Energy deep dive (December 2025)<br>
+    WWT.com: "Big Tech's Nuclear Bet" (December 2025)<br>
+    Yahoo Finance / Zacks: Bloom vs. Plug Power comparative analysis<br>
+    Quartr: Q1 2026 earnings summary data<br>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. Financial figures are sourced from FMP API, SEC filings, and public sources; all projections involve significant uncertainty. DCF inputs marked [ASSUMED] should be verified independently. Past performance is not indicative of future results. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议、招揽或买卖任何证券的推荐。财务数据来源于FMP API、SEC文件及公开资料；所有预测均存在重大不确定性。标注[ASSUMED]的DCF输入项应独立核实。历史表现不代表未来结果。在做出投资决策前，请咨询合格的财务顾问。
+</div>
+
+</body>
+</html>

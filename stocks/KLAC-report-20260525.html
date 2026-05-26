@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KLA Corporation (KLAC) — Comprehensive Equity Research Report</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-mixed { background: #FAEEDA; color: #633806; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up { color: #0F6E56; }
+.metric-dn { color: #A32D2D; }
+.metric-flat { color: #888; }
+.up { color: #0F6E56; }
+.dn { color: #A32D2D; }
+.flat { color: #888; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; }
+.data-table th { background: #f0efe8; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: #555; padding: 8px 10px; text-align: right; border-bottom: 2px solid #e0dfd8; }
+.data-table th:first-child { text-align: left; }
+.data-table td { padding: 7px 10px; border-bottom: 1px solid #f0efe8; text-align: right; color: #333; }
+.data-table td:first-child { text-align: left; font-weight: 500; color: #555; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .highlight td { background: #E6F1FB !important; font-weight: 600; }
+.data-table .subtotal td { border-top: 1px solid #ccc; font-weight: 600; }
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.risk-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.risk-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-bottom: 4px; }
+.risk-desc { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.callout { background: #E6F1FB; border-left: 3px solid #185FA5; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #0C447C; line-height: 1.6; }
+.callout strong { font-weight: 700; }
+.callout-green { background: #EAF3DE; border-left: 3px solid #1D9E75; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #27500A; line-height: 1.6; }
+.callout-amber { background: #FAEEDA; border-left: 3px solid #854F0B; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #633806; line-height: 1.6; }
+.callout-red { background: #FCEBEB; border-left: 3px solid #A32D2D; border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 12px 0; font-size: 13px; color: #791F1F; line-height: 1.6; }
+.consensus-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+.cons-buy { background: #1D9E75; }
+.cons-hold { background: #e8c84a; }
+.cons-sell { background: #A32D2D; }
+.cons-labels { display: flex; justify-content: space-between; font-size: 10px; color: #888; margin-bottom: 10px; }
+.watch-list { list-style: none; padding: 0; margin-bottom: 10px; }
+.watch-list li { font-size: 13px; color: #333; padding: 6px 0 6px 18px; border-bottom: 1px solid #f0efe8; position: relative; line-height: 1.5; }
+.watch-list li::before { content: "→"; position: absolute; left: 0; color: #185FA5; font-weight: 600; }
+.watch-list li:last-child { border-bottom: none; }
+.source-tag { display: inline-block; font-size: 10px; background: #f0efe8; color: #888; border-radius: 4px; padding: 1px 6px; margin-left: 4px; vertical-align: middle; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.6; color: #791F1F; }
+.macro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.macro-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 8px; padding: 10px 12px; }
+.macro-topic { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+.macro-text { font-size: 12px; color: #444; line-height: 1.6; margin-bottom: 6px; }
+.macro-cn { font-size: 11px; color: #999; line-height: 1.7; padding-top: 6px; border-top: 1px dashed #e8e8e0; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+
+/* ── CHARTS ── */
+.chart-wrap { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.chart-title { font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 12px; }
+svg text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+/* ── AI INFRA LAYER SUPPLEMENT ── */
+.layer-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0C1A2E 0%, #1a2f4a 100%); color: #fff; border-radius: 8px; padding: 10px 16px; margin-bottom: 12px; font-size: 13px; }
+.layer-num { background: #185FA5; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+.layer-name-en { font-weight: 700; font-size: 14px; }
+.layer-name-cn { font-size: 11px; opacity: 0.75; margin-top: 1px; }
+.layer-names { display: flex; flex-direction: column; }
+.layer-valuation { display: inline-flex; align-items: center; gap: 6px; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+.val-high { background: #FEE2E2; color: #991B1B; }
+.val-mid { background: #FEF3C7; color: #92400E; }
+.layer-peer-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.peer-chip { background: #f0efe8; border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 600; color: #444; font-family: 'SF Mono', 'Fira Code', monospace; }
+.layer-note { background: #f8f8f6; border: 1px solid #e0dfd8; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #555; line-height: 1.6; margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .risk-grid, .cases, .macro-grid { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ HEADER ══════════════════════ -->
+<div class="doc-header">
+  <div class="doc-tag">EQUITY RESEARCH · 股票研究</div>
+  <div class="doc-title">KLA Corporation (KLAC) — Comprehensive Equity Deep Dive</div>
+  <div class="doc-title-cn">科磊半导体（KLAC）— 全面股票深度研究报告</div>
+  <div class="doc-meta">
+    Generated May 25, 2026 · Sector: Technology — Semiconductor Equipment · Exchange: NASDAQ · Price as of May 22, 2026: <strong>$1,888.38</strong> <span style="color:#0F6E56;font-weight:600;">▲ +2.51% (day)</span> · <strong>Note: 10-for-1 stock split effective June 12, 2026</strong>
+  </div>
+</div>
+
+<!-- ══════════════════════ MOOD BAR ══════════════════════ -->
+<div class="mood-bar">
+  <span class="mood-label">Investment Mood 投资情绪</span>
+  <span class="mood-text">Structurally bullish on AI infrastructure tailwinds and process-control dominance, tempered by elevated valuation and geopolitical overhang from U.S.–China export controls</span>
+  <span class="mood-pill mood-bullish">Bullish with Caution · 审慎看多</span>
+</div>
+<div class="cn-summary" style="margin-bottom:2rem;">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">KLA Corporation（科磊半导体）是全球半导体过程控制设备的绝对龙头，其产品在AI基础设施建设浪潮中不可或缺。公司FY2025全年营收121.6亿美元，自由现金流37.5亿美元，FY2026 Q3再超预期。核心逻辑为：<strong>AI驱动的晶圆检测需求上升、先进封装收入激增、服务收入稳定</strong>。主要风险为美中出口管制持续收紧及估值偏高（NTM P/E约39x）。近期宣布10比1拆股及第17次连续提高股息，彰显管理层信心。总体情绪：<strong>审慎看多</strong>。</div>
+</div>
+
+<!-- ══════════════════════ SECTION 1 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Company Background & Business Overview</div>
+  <div class="section-title-cn">公司背景与业务概述</div>
+  <div class="section-divider"></div>
+
+  <p class="body-text">KLA Corporation — formerly KLA-Tencor Corporation, rebranded in July 2019 — was incorporated in 1975 and is headquartered in Milpitas, California. Over five decades it has evolved from a niche wafer inspection startup into the undisputed global leader in semiconductor <strong>process control, yield management, and metrology</strong>. With approximately 15,000 employees worldwide, KLA's technologies sit at the intersection of every major semiconductor node transition, making it indispensable to chip manufacturers ranging from TSMC and Samsung to Intel and NAND players like SK Hynix and Micron.</p>
+
+  <p class="body-text">KLA operates through four reportable segments: <strong>Semiconductor Process Control</strong> (the dominant engine, contributing ~75% of revenue via wafer inspection, patterning, metrology and review systems); <strong>Specialty Semiconductor Process</strong> (etch, deposition, and plasma dicing for specialty fabs); <strong>PCB, Display and Component Inspection</strong> (imaging and electrical testing for the PCB and display markets); and <strong>Other</strong> (OEM components and refurbished equipment). The services business — spanning recurring revenue from installed-base contracts — contributes roughly 23% of revenue and grows at a more predictable mid-teens pace, providing a structural floor through downturns.</p>
+
+  <p class="body-text">The business model is durable and high-moat: as chips become more complex at advanced nodes (3nm, 2nm, and below), defects become exponentially more costly. Every additional layer of patterning or 3D integration requires more — and more sophisticated — process control. KLA's tools are the feedback loop. Its addressable market in wafer fab equipment is expected to <strong>exceed $140 billion in 2026</strong>, and KLA's share of the process control sub-segment is estimated at 50–55% globally, a near-monopoly position built over decades of R&D investment and customer lock-in through proprietary data analytics software (Cimetric, GroupSystems).</p>
+
+  <p class="body-text">The company has a remarkable capital return track record, having just announced its <strong>17th consecutive annual dividend increase</strong> (to $2.30/share/quarter, a 21% increase). A <strong>10-for-1 forward stock split</strong> effective June 12, 2026 will broaden retail accessibility without affecting fundamentals. CEO Rick Wallace has led KLA since 2006, providing exceptional continuity and execution discipline.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLA Corporation成立于1975年，总部位于加州米尔皮塔斯，是全球半导体过程控制与良率管理设备的绝对领导者。公司业务分为四大板块：<strong>半导体过程控制（约占营收75%）、特种半导体工艺、PCB及显示检测、其他</strong>。随着芯片制程愈发先进，每一层工艺都需要更多KLA设备参与检测，公司在过程控制领域约占50–55%全球市场份额。近期宣布2026年6月12日实施10比1拆股，并连续第17年提高季度股息（至每股2.30美元，涨幅21%）。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 2 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Financial Performance</div>
+  <div class="section-title-cn">财务表现</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Revenue</div>
+      <div class="metric-val metric-up">$12.16B</div>
+      <div class="metric-sub">+21% YoY from $10.02B <span class="source-tag">SEC 8-K</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Net Income</div>
+      <div class="metric-val metric-up">$4.06B</div>
+      <div class="metric-sub">Net margin 33.4%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Gross Margin</div>
+      <div class="metric-val">62.3%</div>
+      <div class="metric-sub">Operating margin 43.1%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Free Cash Flow</div>
+      <div class="metric-val metric-up">$3.75B</div>
+      <div class="metric-sub">FCF margin ~31%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY2026 Revenue</div>
+      <div class="metric-val metric-up">$3.42B</div>
+      <div class="metric-sub">+11.5% YoY vs $3.06B <span class="source-tag">Apr 29, 2026</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q3 FY2026 Non-GAAP EPS</div>
+      <div class="metric-val metric-up">$9.40</div>
+      <div class="metric-sub">Beat consensus of $9.15</div>
+    </div>
+  </div>
+
+  <!-- Revenue Bar Chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Annual Revenue (USD billions) · 年度营收（亿美元）</div>
+    <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <!-- Grid lines -->
+      <line x1="70" y1="20" x2="660" y2="20" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="60" x2="660" y2="60" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="100" x2="660" y2="100" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="140" x2="660" y2="140" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="180" x2="660" y2="180" stroke="#e8e8e0" stroke-width="1"/>
+      <!-- Y-axis labels -->
+      <text x="60" y="24" text-anchor="end" font-size="11" fill="#999">$15B</text>
+      <text x="60" y="64" text-anchor="end" font-size="11" fill="#999">$12B</text>
+      <text x="60" y="104" text-anchor="end" font-size="11" fill="#999">$9B</text>
+      <text x="60" y="144" text-anchor="end" font-size="11" fill="#999">$6B</text>
+      <text x="60" y="184" text-anchor="end" font-size="11" fill="#999">$3B</text>
+      <!-- Bars: FY2021=$7.01B, FY2022=$9.21B, FY2023=$10.01B (est), FY2024=$10.02B, FY2025=$12.16B -->
+      <!-- Scale: 180px = $15B → 1B = 12px -->
+      <!-- FY2021: 7.01B → height=84, y=180-84=96 -->
+      <rect x="90" y="96" width="80" height="84" fill="#185FA5" opacity="0.6" rx="4"/>
+      <text x="130" y="90" text-anchor="middle" font-size="11" fill="#555" font-weight="600">$7.0B</text>
+      <text x="130" y="205" text-anchor="middle" font-size="11" fill="#888">FY2021</text>
+      <!-- FY2022: 9.21B → height=110, y=180-110=70 -->
+      <rect x="205" y="70" width="80" height="110" fill="#185FA5" opacity="0.7" rx="4"/>
+      <text x="245" y="64" text-anchor="middle" font-size="11" fill="#555" font-weight="600">$9.2B</text>
+      <text x="245" y="205" text-anchor="middle" font-size="11" fill="#888">FY2022</text>
+      <!-- FY2023: ~$10.01B → height=120, y=180-120=60 -->
+      <rect x="320" y="60" width="80" height="120" fill="#185FA5" opacity="0.8" rx="4"/>
+      <text x="360" y="54" text-anchor="middle" font-size="11" fill="#555" font-weight="600">$10.0B</text>
+      <text x="360" y="205" text-anchor="middle" font-size="11" fill="#888">FY2023</text>
+      <!-- FY2024: $10.02B → height=120, y=180-120=60 -->
+      <rect x="435" y="60" width="80" height="120" fill="#185FA5" opacity="0.9" rx="4"/>
+      <text x="475" y="54" text-anchor="middle" font-size="11" fill="#555" font-weight="600">$10.0B</text>
+      <text x="475" y="205" text-anchor="middle" font-size="11" fill="#888">FY2024</text>
+      <!-- FY2025: $12.16B → height=146, y=180-146=34 -->
+      <rect x="550" y="34" width="80" height="146" fill="#0F6E56" rx="4"/>
+      <text x="590" y="28" text-anchor="middle" font-size="11" fill="#0F6E56" font-weight="700">$12.2B ✓</text>
+      <text x="590" y="205" text-anchor="middle" font-size="11" fill="#0F6E56" font-weight="600">FY2025</text>
+    </svg>
+  </div>
+
+  <!-- FCF & Margin Chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Free Cash Flow & Gross Margin Trend · 自由现金流与毛利率趋势</div>
+    <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <!-- Grid -->
+      <line x1="70" y1="20" x2="660" y2="20" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="60" x2="660" y2="60" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="100" x2="660" y2="100" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="140" x2="660" y2="140" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="70" y1="180" x2="660" y2="180" stroke="#e8e8e0" stroke-width="1"/>
+      <!-- Y-axis FCF labels -->
+      <text x="60" y="24" text-anchor="end" font-size="11" fill="#999">$4.5B</text>
+      <text x="60" y="64" text-anchor="end" font-size="11" fill="#999">$3.5B</text>
+      <text x="60" y="104" text-anchor="end" font-size="11" fill="#999">$2.5B</text>
+      <text x="60" y="144" text-anchor="end" font-size="11" fill="#999">$1.5B</text>
+      <text x="60" y="184" text-anchor="end" font-size="11" fill="#999">$0.5B</text>
+      <!-- FCF bars: FY2022=$3.0B, FY2023=$3.4B, FY2024=$3.04B, FY2025=$3.75B -->
+      <!-- Scale: 160px = $4B → 1B = 40px -->
+      <!-- FY2022: 3.0B → height=100, y=180-100=80 -->
+      <rect x="110" y="80" width="70" height="100" fill="#1D9E75" opacity="0.7" rx="4"/>
+      <text x="145" y="74" text-anchor="middle" font-size="11" fill="#555">$3.0B</text>
+      <text x="145" y="205" text-anchor="middle" font-size="11" fill="#888">FY2022</text>
+      <!-- FY2023: 3.4B → height=116, y=180-116=64 -->
+      <rect x="240" y="64" width="70" height="116" fill="#1D9E75" opacity="0.8" rx="4"/>
+      <text x="275" y="58" text-anchor="middle" font-size="11" fill="#555">$3.4B</text>
+      <text x="275" y="205" text-anchor="middle" font-size="11" fill="#888">FY2023</text>
+      <!-- FY2024: 3.04B → height=102, y=180-102=78 -->
+      <rect x="370" y="78" width="70" height="102" fill="#1D9E75" opacity="0.7" rx="4"/>
+      <text x="405" y="72" text-anchor="middle" font-size="11" fill="#555">$3.0B</text>
+      <text x="405" y="205" text-anchor="middle" font-size="11" fill="#888">FY2024</text>
+      <!-- FY2025: 3.75B → height=130, y=180-130=50 -->
+      <rect x="500" y="50" width="70" height="130" fill="#0F6E56" rx="4"/>
+      <text x="535" y="44" text-anchor="middle" font-size="11" fill="#0F6E56" font-weight="700">$3.75B</text>
+      <text x="535" y="205" text-anchor="middle" font-size="11" fill="#0F6E56" font-weight="600">FY2025</text>
+      <!-- Gross margin line (secondary) -->
+      <!-- Points: FY2022≈61%, FY2023≈62%, FY2024≈61.5%, FY2025≈62.3% -->
+      <!-- Scale on right axis: 50–70% → 180px for 20ppt → 9px/ppt -->
+      <!-- 61% → 180-(11*9)=81; 62%→180-(12*9)=72; 61.5%→76.5; 62.3%→68.3 -->
+      <polyline points="145,79 275,72 405,76 535,69" fill="none" stroke="#185FA5" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <circle cx="145" cy="79" r="4" fill="#185FA5"/>
+      <circle cx="275" cy="72" r="4" fill="#185FA5"/>
+      <circle cx="405" cy="76" r="4" fill="#185FA5"/>
+      <circle cx="535" cy="69" r="4" fill="#185FA5"/>
+      <!-- Legend -->
+      <rect x="420" y="8" width="12" height="12" fill="#0F6E56" rx="2"/>
+      <text x="436" y="19" font-size="10" fill="#555">Free Cash Flow</text>
+      <line x1="510" y1="14" x2="530" y2="14" stroke="#185FA5" stroke-width="2.5" stroke-dasharray="4,2"/>
+      <circle cx="520" cy="14" r="3" fill="#185FA5"/>
+      <text x="534" y="19" font-size="10" fill="#555">Gross Margin</text>
+    </svg>
+  </div>
+
+  <p class="body-text">Revenue growth has accelerated sharply, rising from $7.0B in FY2021 to $12.2B in FY2025 — a 74% increase. The Q3 FY2026 print of $3.42B annualises to ~$13.7B, in line with analyst consensus for FY2026. Gross margins have held remarkably steady at 61–63% through the cycle, reflecting KLA's pricing power in a near-monopoly process-control segment. The services segment (~23% of revenue, $3.2B annualised) provides recurring income that is effectively non-cyclical — customers cannot risk shutting down installed inspection equipment mid-production run. FCF generation has been exceptional, averaging $3.3B annually over the last four fiscal years. Q3 FY2026 FCF topped $1 billion for the second consecutive quarter, a milestone management highlighted. <span class="source-tag">KLA SEC filings 2022–2026</span></p>
+
+  <!-- Revenue Breakdown Table -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Revenue by Product (Q1 FY2026 10-Q)</th>
+        <th>Revenue ($M)</th>
+        <th>Mix %</th>
+        <th>YoY Growth</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td>Wafer Inspection</td>
+        <td>$1,537</td>
+        <td>48%</td>
+        <td class="up">+12%</td>
+      </tr>
+      <tr>
+        <td>Patterning / Metrology</td>
+        <td>$667</td>
+        <td>21%</td>
+        <td class="up">+16%</td>
+      </tr>
+      <tr>
+        <td>Services</td>
+        <td>$745</td>
+        <td>23%</td>
+        <td class="up">+16%</td>
+      </tr>
+      <tr>
+        <td>PCB &amp; Component Inspection</td>
+        <td>$117</td>
+        <td>4%</td>
+        <td class="up">+61%</td>
+      </tr>
+      <tr>
+        <td>Specialty Semiconductor Process</td>
+        <td>$100</td>
+        <td>3%</td>
+        <td class="dn">−11%</td>
+      </tr>
+      <tr>
+        <td>Other</td>
+        <td>$43</td>
+        <td>1%</td>
+        <td class="dn">−35%</td>
+      </tr>
+      <tr class="subtotal">
+        <td><strong>Total</strong></td>
+        <td><strong>$3,210</strong></td>
+        <td>100%</td>
+        <td class="up"><strong>+13%</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLA FY2025全年营收121.6亿美元（同比+21%），净收入40.6亿美元，净利润率33.4%，毛利率62.3%，自由现金流37.5亿美元。FY2026 Q3营收34.2亿美元（同比+11.5%），非GAAP EPS 9.40美元，再次超出预期。晶圆检测（占48%）和服务（占23%）是最大收入支柱，先进封装业务增长最为强劲。公司盈利质量极高，毛利率多年维持在61–63%，展现出强大的定价权。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 3 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Balance Sheet & Capital Structure</div>
+  <div class="section-title-cn">资产负债表与资本结构</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Assets (Jun 2025)</div>
+      <div class="metric-val">$16.1B</div>
+      <div class="metric-sub">vs $16.3B Sep 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Cash</div>
+      <div class="metric-val metric-up">$4.6B</div>
+      <div class="metric-sub">Q1 FY2026 balance <span class="source-tag">Earnings call</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Total Debt</div>
+      <div class="metric-val metric-dn">$6.7B</div>
+      <div class="metric-sub">Declining as bonds mature</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Net Debt</div>
+      <div class="metric-val metric-dn">~$2.1B</div>
+      <div class="metric-sub">Net debt / EBITDA ~0.4x</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Return on Equity</div>
+      <div class="metric-val metric-up">95%</div>
+      <div class="metric-sub">LTM basis <span class="source-tag">TIKR</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">ROIC (LTM)</div>
+      <div class="metric-val metric-up">43.9%</div>
+      <div class="metric-sub">Exceptional capital efficiency</div>
+    </div>
+  </div>
+
+  <p class="body-text">KLA's balance sheet is investment-grade across all three major ratings agencies. The $6.7B gross debt level is manageable relative to $5.3B EBITDA, giving a comfortable net debt/EBITDA of roughly 0.4x. Debt levels are declining as bonds mature — the November 2024 bonds were retired on schedule. The company's $8.9B remaining performance obligation (RPO) as of March 31, 2025 provides forward revenue visibility that most industrial peers would envy. Capital returns are a key management priority: FY2025 saw $3.05B returned to shareholders (buybacks + dividends), and the Q3 FY2026 announcement added a further $7B to repurchase authorisation alongside the dividend raise. KLA completed its 2022 buyback program, retiring 19.3 million shares (13.7% of share count) for total consideration of approximately $5B. <span class="source-tag">KLA 10-Q Sep 2025, Earnings Calls</span></p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLA资产负债表健康，总资产161亿美元，现金约46亿美元，总债务67亿美元，净负债约21亿美元，净债务/EBITDA约0.4倍。公司信用评级为投资级，三大评级机构均给予认可。剩余履约义务（RPO）达89亿美元，彰显出色的未来营收能见度。股东回报力度大：FY2025回购+分红共计30.5亿美元，FY2026 Q3再授权70亿美元回购额度。净资产收益率95%，资本回报率43.9%，盈利质量极高。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 4 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Valuation — Current Multiples & DCF Analysis</div>
+  <div class="section-title-cn">估值分析 — 市场倍数与DCF模型</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Current Price</div>
+      <div class="metric-val">$1,888</div>
+      <div class="metric-sub">As of May 22, 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Market Cap</div>
+      <div class="metric-val">$246.7B</div>
+      <div class="metric-sub"><span class="source-tag">FMP — profile</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NTM P/E</div>
+      <div class="metric-val metric-dn">~38–39x</div>
+      <div class="metric-sub">vs 5yr avg ~27x</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NTM EV/EBITDA</div>
+      <div class="metric-val metric-dn">~32x</div>
+      <div class="metric-sub">vs 5yr avg ~20x</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NTM EV/Revenue</div>
+      <div class="metric-val">~14.8x</div>
+      <div class="metric-sub">Premium to peers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">P/S (TTM)</div>
+      <div class="metric-val">~13x</div>
+      <div class="metric-sub">Near 10-year high</div>
+    </div>
+  </div>
+
+  <!-- DCF Model -->
+  <p style="font-size:13px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;">DCF Valuation — 3 Scenarios · DCF估值三情景</p>
+  <p style="font-size:12px;color:#888;margin-bottom:10px;">
+    Base inputs: FCF FY2025 = $3,750M <span class="source-tag">KLA SEC 8-K</span> · WACC = 10% <span class="source-tag">[ASSUMED]</span> · Terminal growth = 3% <span class="source-tag">[ASSUMED]</span> · Shares = ~131M · Net debt = ~$2,100M <span class="source-tag">[ASSUMED from Q1 FY26 balance sheet]</span> · Projection horizon = 5 years
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Scenario</th>
+        <th>FCF Growth (Yr 1–5)</th>
+        <th>FCF Year 5 ($M)</th>
+        <th>Terminal Value ($B)</th>
+        <th>Enterprise Value ($B)</th>
+        <th>Equity Value ($B)</th>
+        <th>Intrinsic Value/Share</th>
+        <th>vs Current Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>🐻 Bear</strong></td>
+        <td>5%</td>
+        <td>$4,789</td>
+        <td>$71.8</td>
+        <td>$61.5</td>
+        <td>$59.4</td>
+        <td>$453</td>
+        <td class="dn">−76%</td>
+      </tr>
+      <tr class="highlight">
+        <td><strong>⚖️ Base</strong></td>
+        <td>12%</td>
+        <td>$6,613</td>
+        <td>$99.2</td>
+        <td>$84.5</td>
+        <td>$82.4</td>
+        <td>$629</td>
+        <td class="dn">−67%</td>
+      </tr>
+      <tr>
+        <td><strong>🐂 Bull</strong></td>
+        <td>20%</td>
+        <td>$9,322</td>
+        <td>$139.8</td>
+        <td>$118.6</td>
+        <td>$116.5</td>
+        <td>$889</td>
+        <td class="dn">−53%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout-amber">
+    ⚠️ <strong>DCF Interpretation Note:</strong> The wide gap between DCF intrinsic value and current price is common for highly profitable, near-monopoly businesses trading on long-duration growth expectations. KLA's stock is priced to discount continued AI-driven semiconductor intensity expansion through the late 2020s and beyond. A base-case DCF using conservative near-term growth rates will always appear stretched for such franchises. Investors are paying a significant "quality and growth" premium. The more relevant question is whether the premium is sustainable — which depends on the AI CAPEX cycle duration.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">当前估值较历史均值显著偏高：NTM P/E约38–39倍（历史均值约27倍），NTM EV/EBITDA约32倍（历史均值约20倍）。三情景DCF模型显示，即使在乐观情景（FCF年增20%）下，内在价值约为889美元/股，较当前股价仍有约53%差距。这意味着市场已定价了极高的长期AI基础设施增长预期。对于该类近乎垄断的高质量企业，DCF估值往往会"低估"其真实价值，投资者为此支付的是"高质量溢价"，核心问题是AI资本支出周期的持续时间。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 5 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Peer & Competitive Benchmarking</div>
+  <div class="section-title-cn">同行比较与竞争定位</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Mkt Cap</th>
+        <th>NTM P/E</th>
+        <th>EV/EBITDA</th>
+        <th>EV/Rev</th>
+        <th>Gross Margin</th>
+        <th>FCF ($B TTM)</th>
+        <th>Focus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong>KLAC — KLA Corp</strong></td>
+        <td>$247B</td>
+        <td><strong>~39x</strong></td>
+        <td>32x</td>
+        <td>14.8x</td>
+        <td>62.3%</td>
+        <td>$3.75B</td>
+        <td>Process control (monopoly)</td>
+      </tr>
+      <tr>
+        <td>ASML — ASML Holding</td>
+        <td>~$582B</td>
+        <td>~49x</td>
+        <td>~30x</td>
+        <td>12.2x</td>
+        <td>~50%</td>
+        <td>~$5B+</td>
+        <td>Lithography (monopoly EUV)</td>
+      </tr>
+      <tr>
+        <td>LRCX — Lam Research</td>
+        <td>~$150B</td>
+        <td>~25x</td>
+        <td>33x</td>
+        <td>12.6x</td>
+        <td>~48%</td>
+        <td>~$4B</td>
+        <td>Etch &amp; deposition</td>
+      </tr>
+      <tr>
+        <td>AMAT — Applied Materials</td>
+        <td>~$130B</td>
+        <td>~20x</td>
+        <td>24.6x</td>
+        <td>8.8x</td>
+        <td>~46%</td>
+        <td>~$6B</td>
+        <td>Broad WFE (deposition/etch/inspect)</td>
+      </tr>
+      <tr>
+        <td>TEL — Tokyo Electron</td>
+        <td>~$50B</td>
+        <td>~22x</td>
+        <td>~18x</td>
+        <td>~6x</td>
+        <td>~44%</td>
+        <td>~$2B</td>
+        <td>Etch, coat/develop (Japan)</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:11px;color:#aaa;margin-bottom:12px;">Sources: TIKR, Tickeron, KoalaGains (Oct 2025 report), FMP profile data. Figures approximate; NTM multiples as of May 2026.</p>
+
+  <p class="body-text">KLA commands a meaningful <strong>premium to most peers on EV/Revenue</strong> (14.8x vs LRCX at 12.6x and AMAT at 8.8x), justified by its near-monopoly process control franchise, superior gross margins (62%+ vs peers' 44–50%), and exceptional ROIC (44%). The only comparable monopoly premium is ASML's EUV lithography franchise, though ASML's P/E (~49x) is even higher due to technology scarcity. AMAT and LRCX, while large and profitable, face more competitive deposition/etch markets and thus trade at lower multiples. KLA's differentiation is structural: its tools are the error-checking infrastructure of chipmaking — every competitor in the fab space uses them.</p>
+
+  <!-- Valuation Comparison Chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">NTM EV/Revenue Comparison · NTM EV/收入倍数对比</div>
+    <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+      <!-- Grid lines -->
+      <line x1="100" y1="20" x2="580" y2="20" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="100" y1="60" x2="580" y2="60" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="100" y1="100" x2="580" y2="100" stroke="#e8e8e0" stroke-width="1"/>
+      <line x1="100" y1="140" x2="580" y2="140" stroke="#e8e8e0" stroke-width="1"/>
+      <!-- Y-axis EV/Rev labels -->
+      <text x="92" y="24" text-anchor="end" font-size="10" fill="#999">16x</text>
+      <text x="92" y="64" text-anchor="end" font-size="10" fill="#999">12x</text>
+      <text x="92" y="104" text-anchor="end" font-size="10" fill="#999">8x</text>
+      <text x="92" y="144" text-anchor="end" font-size="10" fill="#999">4x</text>
+      <!-- Bars (scale: 160px=16x → 10px/1x) -->
+      <!-- KLAC 14.8x → 148px, y=140-148+?... let me align: base y=140, height=(14.8/16)*120=111 -->
+      <rect x="110" y="29" width="60" height="111" fill="#0F6E56" rx="3"/>
+      <text x="140" y="24" text-anchor="middle" font-size="11" fill="#0F6E56" font-weight="700">14.8x</text>
+      <text x="140" y="160" text-anchor="middle" font-size="10" fill="#555" font-weight="600">KLAC</text>
+      <!-- ASML 12.2x → height=91.5 -->
+      <rect x="210" y="48" width="60" height="92" fill="#185FA5" opacity="0.6" rx="3"/>
+      <text x="240" y="42" text-anchor="middle" font-size="11" fill="#555">12.2x</text>
+      <text x="240" y="160" text-anchor="middle" font-size="10" fill="#888">ASML</text>
+      <!-- LRCX 12.6x → height=94.5 -->
+      <rect x="310" y="45" width="60" height="95" fill="#185FA5" opacity="0.5" rx="3"/>
+      <text x="340" y="39" text-anchor="middle" font-size="11" fill="#555">12.6x</text>
+      <text x="340" y="160" text-anchor="middle" font-size="10" fill="#888">LRCX</text>
+      <!-- AMAT 8.8x → height=66 -->
+      <rect x="410" y="74" width="60" height="66" fill="#185FA5" opacity="0.4" rx="3"/>
+      <text x="440" y="68" text-anchor="middle" font-size="11" fill="#555">8.8x</text>
+      <text x="440" y="160" text-anchor="middle" font-size="10" fill="#888">AMAT</text>
+      <!-- TEL 6x → height=45 -->
+      <rect x="510" y="95" width="60" height="45" fill="#185FA5" opacity="0.3" rx="3"/>
+      <text x="540" y="89" text-anchor="middle" font-size="11" fill="#555">6.0x</text>
+      <text x="540" y="160" text-anchor="middle" font-size="10" fill="#888">TEL</text>
+    </svg>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">在同行对比中，KLA以NTM EV/收入14.8倍居首，高于ASML（12.2倍）、LRCX（12.6倍）和AMAT（8.8倍）。这一溢价来源于KLA在过程控制领域约50–55%的垄断性市场份额、超过62%的毛利率以及44%的资本回报率，均优于同行。唯一可比的"垄断溢价"是ASML在EUV光刻领域的地位，但ASML P/E更高（约49倍）。KLA的竞争护城河极深：每家芯片制造商都必须使用其检测设备，竞争替代几乎不可能。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 6 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Growth Catalysts & Competitive Moat</div>
+  <div class="section-title-cn">增长催化剂与竞争护城河</div>
+  <div class="section-divider"></div>
+
+  <p class="body-text"><strong>1. AI Infrastructure Buildout:</strong> The insatiable demand for AI accelerators — NVIDIA H100/B200, AMD MI300, custom ASICs at TSMC N3/N2 — requires the most precise process control in semiconductor history. At 3nm and below, any defect in a gate-all-around (GAA) transistor or buried power rail is catastrophic. KLA's tools are the irreplaceable quality filter in this process. Management has directly linked its Q3 FY2026 momentum to AI infrastructure buildout across foundry/logic, memory (HBM), and advanced packaging.</p>
+
+  <p class="body-text"><strong>2. Advanced Packaging Surge:</strong> Advanced packaging (CoWoS, HBM stacking, chiplets) is the fastest-growing vector for KLA. Revenue from this segment is forecast to exceed $925M in calendar 2025 — up 85% year-over-year — versus $500M in 2024. KLA's inspection and metrology tools are essential to verify heterogeneous integration where the inter-die connections are nanometre-scale. This is a multi-year structural growth driver disconnected from traditional fab cycle timing.</p>
+
+  <p class="body-text"><strong>3. E-Beam Inspection Expansion:</strong> KLA has doubled its e-beam inspection revenues, as leading-edge fabs shift from optical to electron-beam inspection for the most critical layers. E-beam systems command higher ASP and carry superior margins. This shift is driven by the physics of defect detection at sub-3nm geometries — optical wavelengths simply cannot resolve them.</p>
+
+  <p class="body-text"><strong>4. WFE Market Expansion:</strong> KLA forecasts the overall wafer fab equipment (WFE) market to exceed $140B in 2026. The company's 2030 target model (shared at March 2026 Investor Day) projects $14.8B revenue and $5.3B earnings, implying ~22% revenue growth from FY2025 levels. Management reiterated "durable value creation" confidence via the new $7B buyback and 17th consecutive dividend increase.</p>
+
+  <p class="body-text"><strong>5. Competitive Moat:</strong> KLA's moat has four reinforcing layers: (a) <em>technology lock-in</em> — switching costs are enormous as fabs build process recipes around KLA data; (b) <em>installed base</em> — 23% services revenue is near-contractual and grows as the base expands; (c) <em>data network effects</em> — KLA's analytics software (GroupSystems) aggregates defect data across customers, improving its models and making the software stickier over time; (d) <em>R&amp;D scale</em> — at ~$2B+ annual R&amp;D spend, KLA maintains technology leads that smaller players cannot match.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLA的核心增长催化剂包括：①AI基础设施建设拉动先进制程需求（3nm及以下节点必须使用更多过程控制设备）；②先进封装（CoWoS、HBM堆叠、Chiplet）收入2025年预计突破9.25亿美元（同比+85%）；③电子束（E-Beam）检测系统收入翻倍，随光刻制程细化持续高速增长；④WFE市场预计2026年超1400亿美元；⑤管理层2030年目标为营收148亿美元、盈利53亿美元。竞争护城河体现在技术锁定、装机基础的服务收入、数据网络效应及超过20亿美元年度研发投入，极难被颠覆。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 7 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 7 · 第七节</div>
+  <div class="section-title">Market Trends & Sector Dynamics</div>
+  <div class="section-title-cn">市场趋势与行业动态</div>
+  <div class="section-divider"></div>
+
+  <div class="macro-grid">
+    <div class="macro-card">
+      <div class="macro-topic">🤖 AI CAPEX Supercycle</div>
+      <div class="macro-text">Hyperscalers (MSFT, GOOGL, META, AMZN) are committing unprecedented CAPEX to AI data centres. TSMC and Samsung's leading-edge capacity builds require escalating process control intensity at every new node — more KLA tools per wafer start.</div>
+      <div class="macro-cn">AI超大规模资本支出周期：微软、谷歌、Meta、亚马逊持续加大AI数据中心投入，台积电与三星先进制程产能扩建带动每片晶圆的过程控制设备需求持续增加。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-topic">📦 Advanced Packaging Boom</div>
+      <div class="macro-text">CoWoS, HBM3/3E/4, chiplet stacking — all require inspection at levels previously unnecessary. KLA's advanced packaging tools are the fastest-growing revenue segment, expected to hit $925M+ in 2025. This trend is multi-year and AI-native.</div>
+      <div class="macro-cn">先进封装爆发：CoWoS、HBM3/3E/4、Chiplet堆叠技术对检测工具的需求远超以往，KLA先进封装业务收入2025年预计达9.25亿美元以上，是最快增长板块。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-topic">🏭 Fab Diversification (CHIPS Act)</div>
+      <div class="macro-text">CHIPS Act subsidies are driving new fab builds in the US (TSMC Arizona, Intel Ohio, Samsung Texas). Each new fab requires a complete KLA tool set from day one. Japan (Rapidus), Germany (Intel Magdeburg), and India also present greenfield opportunities.</div>
+      <div class="macro-cn">晶圆厂多元化（芯片法案）：美国《芯片法案》推动台积电（亚利桑那州）、英特尔、三星等新建晶圆厂，每座新厂均需配置全套KLA工具。日本、德国、印度的新建项目亦提供增量机遇。</div>
+    </div>
+    <div class="macro-card">
+      <div class="macro-topic">⚠️ Export Controls Headwind</div>
+      <div class="macro-text">US BIS export controls have reduced KLA's China revenue share from 41–44% (FY2024) to ~30% (FY2025), with guidance for further moderation to high-20s in FY2026. Jefferies estimates a $300–350M revenue impact in CY2026. Management is actively diversifying to Korea (15%) and Taiwan (27%).</div>
+      <div class="macro-cn">出口管制逆风：美国出口管制将KLA中国营收占比从41–44%（FY2024）降至约30%（FY2025），预计FY2026进一步降至20%末段。Jefferies估算CY2026收入影响约3–3.5亿美元。</div>
+    </div>
+  </div>
+
+  <p class="body-text">The semiconductor equipment sector has entered a new phase: the AI-driven "process control intensity" cycle, where chips that are harder to build require more KLA tools per unit of output. Unlike prior cycles driven by unit volume, this cycle is driven by chip complexity. Even a flat or declining unit volume environment would support KLA's business if node transitions continue. The primary risk is a demand pause — if hyperscalers defer CAPEX, orders could slow. However, backlog visibility from the $8.9B RPO and the services base provides a cushion.</p>
+
+  <ul class="watch-list">
+    <li>Monitor TSMC quarterly commentary on N2 and A16 ramp timing — accelerated ramps = more KLA orders</li>
+    <li>Track HBM demand signals from Samsung, SK Hynix, Micron — advanced packaging is the highest-growth KLAC vector</li>
+    <li>Watch BIS export control developments — any tightening to "mature node" equipment would be a negative surprise</li>
+    <li>Follow hyperscaler CAPEX guidance (MSFT, GOOGL, META Q2 2026 earnings) for AI spending trajectory</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">半导体设备行业已进入AI驱动的"过程控制密度"周期：芯片越复杂，每片晶圆所需KLA工具越多，与晶圆出货量关系不大。主要关注点：台积电N2/A16节点量产进度（加速量产→更多订单）、HBM需求信号（三星/SK海力士/美光）、美国出口管制新动态（成熟制程设备若受限将为重大负面）、超大规模云厂商2026年资本支出指引。89亿美元RPO和服务收入基础为业绩提供缓冲。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 8 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 8 · 第八节</div>
+  <div class="section-title">Geopolitical, Macro & Regulatory Risk</div>
+  <div class="section-title-cn">地缘政治、宏观与监管风险</div>
+  <div class="section-divider"></div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <div class="risk-type" style="color:#A32D2D;">🚨 China Export Controls</div>
+      <div class="risk-desc">The most material risk. US BIS regulations have progressively restricted advanced wafer fab equipment sales to China. KLA's China revenue fell from ~41% (FY2024) to ~30% (FY2025). Further rules targeting mature-node equipment could extend the headwind beyond advanced fabs. Management estimates a ~100bp gross margin headwind from tariffs. Jefferies forecasts a $300–350M CY2026 revenue impact. Active lobbying and licence applications provide some mitigation.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type" style="color:#854F0B;">⚠️ Semiconductor Cycle Risk</div>
+      <div class="risk-desc">KLA's revenue is tied to semiconductor CAPEX cycles, which are inherently volatile. A prolonged NAND over-supply (as seen in 2023–24) or memory CAPEX pullback would reduce order flows. However, KLA's FY2025 results demonstrated resilience: even with China headwinds, revenue grew 21% as leading-edge logic and advanced packaging demand filled the gap.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type" style="color:#854F0B;">⚠️ Tariff Margin Headwind</div>
+      <div class="risk-desc">Service-related tariffs on components imported and serviced internationally create a ~100 basis point gross margin headwind per quarter. Management is actively using global manufacturing footprint flexibility and logistics optimisation to mitigate, but this remains a cost pressure for as long as tariff regimes persist.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-type" style="color:#185FA5;">ℹ️ Valuation / Macro Risk</div>
+      <div class="risk-desc">At ~39x NTM P/E — well above the 5-year average of ~27x — the stock carries significant multiple compression risk if AI CAPEX sentiment turns. Rising interest rates or a macro slowdown compressing semiconductor demand could trigger a meaningful de-rating. CEO insider selling in May 2026 (4,512 shares) adds a cautionary note, though this may be pre-scheduled.</div>
+    </div>
+  </div>
+
+  <div class="callout-amber">
+    <strong>Geopolitical Summary:</strong> KLA has navigated the China export control shift with relative resilience — redirecting revenue to Korea (+growth) and Taiwan (+growth). However, approximately 25–30% of revenue still comes from China (FY2026 guidance), and any escalatory measures could create a near-term earnings shock. The scenario where U.S. controls expand to "legacy node" equipment (~28nm and above, which China fabs buy in quantity) would be the most damaging surprise.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">最大风险为美国出口管制：KLA中国营收占比已从FY2024的约41%降至FY2025的约30%，如监管进一步扩大至成熟制程（28nm及以上），影响将更为显著。此外还需关注：半导体行业周期性（NAND过剩或存储资本支出削减）、关税导致毛利率每季下降约100bp、以及当前约39倍NTM P/E估值下的多倍数收缩风险。公司已通过扩大韩国（15%）和台湾（27%）业务来对冲中国风险，但短期仍有不确定性。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 9 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 9 · 第九节</div>
+  <div class="section-title">Bull vs. Bear Case</div>
+  <div class="section-title-cn">多头与空头论据</div>
+  <div class="section-divider"></div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">🐂 Bull Case</div>
+      <ul class="bull-text" style="list-style:none;padding:0;">
+        <li style="padding:4px 0;border-bottom:1px solid rgba(27,80,10,0.15);">AI CAPEX supercycle extends to 2030, driving >20% FCF CAGR</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(27,80,10,0.15);">Advanced packaging revenue hits $2B+ by 2027 as HBM and CoWoS proliferate</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(27,80,10,0.15);">CHIPS Act fabs (TSMC AZ, Intel OH) ramp, adding greenfield tool sets</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(27,80,10,0.15);">China revenue stabilises at 25–28% with selective export licences granted</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(27,80,10,0.15);">Services CAGR re-accelerates to mid-teens on a larger installed base</li>
+        <li style="padding:4px 0;">2030 target model ($14.8B revenue, $5.3B earnings) achieved on schedule → stock reaches $2,500+</li>
+      </ul>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">🐻 Bear Case</div>
+      <ul class="bear-text" style="list-style:none;padding:0;">
+        <li style="padding:4px 0;border-bottom:1px solid rgba(121,31,31,0.15);">AI CAPEX digestion phase in 2027–28 triggers a WFE downcycle</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(121,31,31,0.15);">China export controls expand to mature-node equipment (28nm+), removing another $1B+ revenue</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(121,31,31,0.15);">Multiple compression from 39x to 25x P/E would imply a ~35% price decline, all else equal</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(121,31,31,0.15);">Memory capex (NAND) cuts by Samsung/Hynix/Micron reduce order flows</li>
+        <li style="padding:4px 0;border-bottom:1px solid rgba(121,31,31,0.15);">Gross margin erosion below 60% from persistent tariffs + mix shift</li>
+        <li style="padding:4px 0;">CEO insider selling and premium valuation attract profit-taking if any guidance miss occurs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>多头论据：</strong>AI资本支出超级周期延续至2030年，先进封装收入2027年可达20亿美元以上，美国芯片法案新建晶圆厂带来增量工具集采购，2030年目标（营收148亿、盈利53亿美元）如期实现，股价可达2500美元以上。<strong>空头论据：</strong>2027–28年AI资本支出消化期导致WFE下行周期，出口管制扩大至成熟制程、多倍数压缩（从39倍降至25倍P/E将导致约35%跌幅）、存储资本支出削减，以及CEO减持信号引发获利回吐。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 10 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 10 · 第十节</div>
+  <div class="section-title">Analyst Consensus & Technical Signals</div>
+  <div class="section-title-cn">分析师共识与技术信号</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Consensus Rating</div>
+      <div class="metric-val" style="font-size:16px;color:#0F6E56;">Moderate Buy</div>
+      <div class="metric-sub">19 Buy / 10 Hold / 1 Sell (30 analysts) <span class="source-tag">24/7 Wall St</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg Price Target</div>
+      <div class="metric-val metric-up">$1,651</div>
+      <div class="metric-sub">vs $1,888 current (-13%) <span class="source-tag">StockAnalysis</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">High Price Target</div>
+      <div class="metric-val">$2,100</div>
+      <div class="metric-sub">+11% upside</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">RSI (14-day)</div>
+      <div class="metric-val">~62–68</div>
+      <div class="metric-sub">Neutral-to-slightly overbought</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">MACD Signal</div>
+      <div class="metric-val metric-up">Bullish</div>
+      <div class="metric-sub">+39.85, bullish crossover <span class="source-tag">TradingKey</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">SMA Trend</div>
+      <div class="metric-val metric-up">Bullish</div>
+      <div class="metric-sub">Above 5-day &amp; 20-day SMAs</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;font-weight:600;color:#555;margin-bottom:6px;">Analyst Consensus Breakdown · 分析师评级分布</p>
+  <div class="consensus-bar">
+    <div class="cons-buy" style="width:63%;"></div>
+    <div class="cons-hold" style="width:34%;"></div>
+    <div class="cons-sell" style="width:3%;"></div>
+  </div>
+  <div class="cons-labels">
+    <span>Buy 63% (19)</span>
+    <span>Hold 34% (10)</span>
+    <span>Sell 3% (1)</span>
+  </div>
+
+  <p class="body-text">A notable nuance: while the consensus is "Buy", the <strong>average price target of ~$1,651 is ~13% below the current price</strong>, meaning analyst targets have not kept pace with KLAC's recent strong rally (+41.6% YTD as of May 2026 per reports). The stock has run ahead of street estimates. Key recent analyst actions: Citigroup maintained Buy with target $1,060 raised to $1,060; JP Morgan raised to $1,070; Stifel raised to $922 (post–August 2025 FY Q4 print). These targets reflect data from mid-2025 when the stock was trading much lower — more recent targets from the May 2026 print are likely to be refreshed upward. Technical momentum is constructive: RSI of 62–68 (approaching overbought), bullish MACD crossover, price above 5- and 20-day SMAs. The 30-day range is $1,646–$1,939 with the current price near the upper end. ChartMill rates KLAC 10/10 technically, noting it outperforms 95% of all stocks over the past year. The upcoming 10-for-1 split on June 12 may attract additional retail interest.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">分析师共识为"适度买入"，30位分析师中19位看买入、10位持有、1位看卖出。平均目标价约1651美元，低于当前股价约13%——显示股价已跑赢大部分目标价（年初至今涨幅约41.6%）。技术面：RSI约62–68（中性偏强），MACD看涨金叉，股价高于5日和20日均线，ChartMill技术评分满分10分，跑赢95%股票。2026年6月12日实施的10比1拆股预计吸引更多散户关注。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 11 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 11 · 第十一节</div>
+  <div class="section-title">Practical Guidance for Retail Investors</div>
+  <div class="section-title-cn">散户投资者实用指引</div>
+  <div class="section-divider"></div>
+
+  <p class="body-text"><strong>Who this stock suits:</strong> KLAC is best suited to a <em>growth-quality investor</em> with a 3–5+ year horizon who believes in the AI infrastructure supercycle thesis. It is not an income stock in the traditional sense (dividend yield ~0.5% pre-split), but the 17-year dividend growth track record and $7B buyback authorisation make it an attractive total-return vehicle for longer-duration holders. Given beta of ~1.5, it is a <em>satellite position</em> candidate rather than a core holding — meaningful upside but volatility to match.</p>
+
+  <p class="body-text"><strong>Position sizing:</strong> Given beta of 1.5 and the current elevated valuation (39x NTM P/E), we suggest a <em>satellite position of 2–4%</em> of a diversified technology portfolio. Full conviction investors might size to 5% but should be prepared for significant drawdowns in a semiconductor cycle correction or macro deterioration.</p>
+
+  <p class="body-text"><strong>Three things to monitor going forward:</strong></p>
+  <ul class="watch-list">
+    <li><strong>Q4 FY2026 guidance execution:</strong> Management guided Q4 FY2026 revenue to $3.575B ±$200M and non-GAAP EPS to $9.87 ±$1.00. A beat reinforces the bull case; a miss on China or margin grounds could trigger sharp de-rating at current valuation.</li>
+    <li><strong>Advanced packaging revenue trajectory:</strong> Confirm whether the $925M+ CY2025 forecast was met, and watch for CY2026 advanced packaging guidance. Exceeding $1.2B would strongly validate the bull case.</li>
+    <li><strong>China revenue and export control developments:</strong> Any new BIS rule announcements — whether covering mature-node equipment — is the single most impactful binary risk event for KLAC.</li>
+  </ul>
+
+  <p class="body-text"><strong>Entry considerations:</strong> Post-split (effective June 12, 2026), the stock trades at ~$188.84 per share (adjusted), which materially lowers the barrier for retail investors. On a pre-split basis, the stock near $1,750–$1,800 would represent ~5% off current highs and potentially a better risk/reward entry. On technicals, the 20-day SMA (approximately $1,800–1,820) has acted as a support level in recent weeks.</p>
+
+  <div class="callout">
+    <strong>Key Takeaway:</strong> KLA Corporation is a world-class franchise with a near-irreplaceable role in AI infrastructure enablement. The business quality is exceptional. The primary caution is valuation — investors paying 39x forward earnings must have conviction in a multi-year AI CAPEX expansion. For those with that conviction, KLAC is a core AI infrastructure holding. Size it as a satellite (2–4%) and add on China-related sell-offs.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLAC适合相信AI基础设施超级周期的<strong>成长-质量型投资者</strong>，建议持有期3–5年以上。鉴于Beta约1.5和当前高估值（NTM P/E约39倍），建议作为<strong>卫星持仓（占科技组合2–4%）</strong>，而非核心重仓。三大跟踪要点：①FY2026 Q4业绩是否达标（营收指引35.75亿美元）；②先进封装收入能否超过12亿美元（CY2026）；③美国出口管制是否扩展至成熟制程（最大风险事件）。股票分拆后（约每股188.84美元）散户门槛大幅降低，20日均线附近（约1800–1820美元）为近期支撑，可作为加仓参考。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SECTION 12 ══════════════════════ -->
+<div class="section">
+  <div class="section-num">SECTION 12 · 第十二节</div>
+  <div class="section-title">AI Infrastructure Stack Position</div>
+  <div class="section-title-cn">AI 基础设施层级定位</div>
+  <div class="section-divider"></div>
+
+  <p style="font-size:13px;color:#555;line-height:1.7;margin-bottom:14px;">
+    The AI Infrastructure Stack framework maps the full AI value chain into eight layers — from physical silicon through to cloud application delivery. Understanding which layer a company operates in reveals its structural role, competitive dynamics, and relative valuation positioning within the broader AI industrial system.
+  </p>
+  <p style="font-size:12px;color:#888;line-height:1.7;margin-bottom:16px;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;">
+    AI基础设施层级框架将AI完整价值链划分为八个层次——从物理芯片到云应用分发。了解一家公司处于哪个层级，有助于揭示其在AI工业体系中的结构性角色、竞争动态及相对估值定位。
+  </p>
+
+  <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
+    <div class="layer-badge">
+      <div class="layer-num">1</div>
+      <div class="layer-names">
+        <div class="layer-name-en">Silicon Brain</div>
+        <div class="layer-name-cn">硅基大脑 — 半导体设备支持层</div>
+      </div>
+    </div>
+    <div class="layer-valuation val-high">🔴 Reasonably High · 合理偏高</div>
+  </div>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">What This Layer Does · 该层的作用</div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;">
+    Layer 1 is the Silicon Brain — the foundation of the entire AI infrastructure stack. It encompasses the design, manufacturing, and quality-assurance of the physical chips that power all AI computation. Semiconductor equipment companies like KLA are the enabling infrastructure for chip manufacturing: without process control and yield management, no advanced chip can be produced reliably at scale.
+  </p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Why KLAC Belongs Here · 为何归属此层</div>
+  <p style="font-size:13px;color:#333;line-height:1.7;margin-bottom:12px;">
+    KLA Corporation is the dominant process control and yield management equipment vendor for semiconductor fabs globally. Its wafer inspection, patterning metrology, and review systems are deployed at every leading-edge fab (TSMC, Samsung, Intel, SK Hynix) to detect nanometre-scale defects before chips fail. KLA does not make chips — it makes the quality assurance infrastructure that makes chips possible, placing it squarely in Layer 1 alongside chip designers and EDA tools. The AI boom requires ever-more-complex chips at advanced nodes (3nm, 2nm), driving exponentially more demand for KLA's process control tools per wafer start.
+  </p>
+
+  <div class="metric-label" style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px;">Layer Peers · 同层同行</div>
+  <div class="layer-peer-chips">
+    <div class="peer-chip">AMAT</div>
+    <div class="peer-chip">LRCX</div>
+    <div class="peer-chip">ASML</div>
+    <div class="peer-chip">NVMI</div>
+  </div>
+
+  <div class="layer-note">
+    💡 <strong>Layer Valuation Context:</strong> Layer 1 semiconductor equipment companies are rated "Reasonably High" in the AI Infrastructure Stack framework, reflecting the market's willingness to pay elevated multiples for near-monopoly process control tools that are irreplaceable in AI chip manufacturing. For KLAC specifically, the 39x NTM P/E sits well above the layer's historical norms — investors are pricing a sustained AI CAPEX supercycle. This premium is defensible given KLA's 50–55% process control market share and 62%+ gross margins, but it leaves limited margin of safety if the AI spending cycle moderates sooner than expected.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">KLAC处于AI基础设施第1层「硅基大脑」，作为半导体制造设备的核心支柱，其晶圆检测与量测工具是先进芯片生产不可或缺的质控基础设施。同层同行包括AMAT、LRCX、ASML和NVMI。当前层级估值水平为「合理偏高（🔴）」，KLAC的NTM P/E约39倍远超历史均值，市场已定价AI资本支出超级周期长期延续。投资者应结合第四节DCF分析综合判断，在出口管制或AI资本支出放缓时适当调低仓位期望。</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SOURCES ══════════════════════ -->
+<div class="divider"></div>
+<div class="section">
+  <div class="section-label">Sources · 数据来源</div>
+  <div class="sources">
+    · KLA Corporation SEC 8-K filings: FY2022–FY2026 Q3 earnings releases (sec.gov) — retrieved May 25, 2026<br>
+    · KLA Corporation 10-Q: September 30, 2025 and March 31, 2025 (sec.gov)<br>
+    · FMP MCP API: Company profile data for KLAC — retrieved May 25, 2026<br>
+    · StockAnalysis.com — analyst consensus ratings and price targets<br>
+    · 24/7 Wall St — consensus analyst summary (30 analysts, May 2026)<br>
+    · Benzinga — individual analyst ratings (Citigroup, Stifel, JP Morgan, Aug 2025)<br>
+    · TIKR — NTM valuation multiples (May 2026)<br>
+    · TradingKey — technical indicators (RSI, MACD; May 2026)<br>
+    · KoalaGains — peer multiple comparison report (Oct 2025)<br>
+    · Fintool — Q3 FY2025 earnings analysis<br>
+    · Tickeron — KLAC vs AMAT/ASML comparison<br>
+    · Macrotrends — free cash flow historical series<br>
+    · DCFModeling.com — FY2025 margin and FCF analysis<br>
+    · AInvest — KLA China strategic recalibration analysis (Sep 2025)<br>
+    · Bullfincher — FY2025 financial statement summary<br>
+    · AI Infrastructure Layer taxonomy: internal framework<br>
+    · All [ASSUMED] DCF inputs are explicitly flagged and should be independently verified.
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Disclaimer · 免责声明</strong><br>
+  This report is for informational and educational purposes only. It does not constitute financial advice, a solicitation, or a recommendation to buy or sell any security. Financial figures are sourced from KLA SEC filings, FMP API, and third-party research; all projections involve significant uncertainty. DCF inputs marked [ASSUMED] should be verified independently. Past performance is not indicative of future results. The upcoming 10-for-1 stock split (effective June 12, 2026) means pre-split prices cited herein will require adjustment post-split. Please consult a qualified financial advisor before making investment decisions.<br><br>
+  本报告仅供信息及教育用途，不构成财务建议、招揽或买卖任何证券的推荐。财务数据来源于KLA SEC文件、FMP API及第三方研究；所有预测均存在重大不确定性。标注[ASSUMED]的DCF输入项应独立核实。历史表现不代表未来结果。KLA将于2026年6月12日实施10比1拆股，届时报告中引用的前拆股价格需相应调整。在做出投资决策前，请咨询合格的财务顾问。
+</div>
+
+</body>
+</html>

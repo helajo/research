@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$2B CHIPS Act Quantum Awards — Deep Dive · May 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ── HEADER ── */
+.report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+.session-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0efe8; border: 1px solid #ddddd5; border-radius: 6px; padding: 4px 10px; font-size: 11px; color: #666; margin-bottom: 10px; }
+.session-dot { width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; font-weight: 400; }
+.report-date { font-size: 13px; color: #777; }
+
+/* ── DOC HEADER ── */
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+/* ── MOOD BAR ── */
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-bullish { background: #EAF3DE; color: #27500A; }
+.mood-bearish { background: #FCEBEB; color: #791F1F; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.mood-neutral { background: #f0efe8; color: #555; }
+
+/* ── SECTION ── */
+.section-label { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+/* ── METRIC CARDS ── */
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.metric-up   { color: #0F6E56; }
+.metric-dn   { color: #A32D2D; }
+.metric-flat { color: #888; }
+
+/* ── COLOUR UTILITIES ── */
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+
+/* ── SIGNAL / STORY CARDS ── */
+.signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 10px; }
+.rank1 { border-left: 3px solid #185FA5; }
+.rank2 { border-left: 3px solid #1D9E75; }
+.rank3 { border-left: 3px solid #854F0B; }
+.sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+.sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+
+/* ── SECTOR PILLS ── */
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-defence  { background: #EEEDFE; color: #3C3489; }
+.s-macro    { background: #F1EFE8; color: #444441; }
+
+/* ── BULL / BEAR CASES ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 16px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e0; }
+.data-table th { background: #f0efe8; color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; text-align: left; font-weight: 600; }
+.data-table td { padding: 9px 12px; border-top: 1px solid #f0efe8; vertical-align: middle; }
+.data-table tr:hover td { background: #fafaf8; }
+.data-table .bold { font-weight: 700; }
+
+/* ── CHART WRAPPER ── */
+.chart-wrap { background: #fff; border: 1px solid #e8e8e0; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.chart-title { font-size: 13px; font-weight: 600; color: #333; margin-bottom: 4px; }
+.chart-sub { font-size: 11px; color: #999; margin-bottom: 16px; }
+
+/* ── CALLOUT ── */
+.callout { border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; font-size: 13px; line-height: 1.6; }
+.callout-blue  { background: #E6F1FB; border-left: 3px solid #185FA5; color: #0C447C; }
+.callout-amber { background: #FAEEDA; border-left: 3px solid #C97A2A; color: #633806; }
+.callout-green { background: #EAF3DE; border-left: 3px solid #1D9E75; color: #27500A; }
+.callout-red   { background: #FCEBEB; border-left: 3px solid #A32D2D; color: #791F1F; }
+
+/* ── CHINESE SUMMARY ── */
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── BODY TEXT ── */
+.body-text { font-size: 14px; color: #333; line-height: 1.75; margin-bottom: 12px; }
+
+/* ── FOOTER ── */
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+
+/* ── UTILS ── */
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.mb16 { margin-bottom: 1rem; }
+.premarket-note { font-size: 11px; background: #FAEEDA; color: #633806; border-radius: 6px; padding: 5px 10px; display: inline-block; margin-bottom: 10px; font-weight: 600; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .cases { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="doc-header">
+  <div class="doc-tag">DEEP DIVE · 深度分析 &nbsp;|&nbsp; CHIPS ACT · 芯片法案</div>
+  <div class="doc-title">Trump's $2B Quantum Bet: Winners, Awards & Market Impact</div>
+  <div class="doc-title-cn">特朗普20亿美元量子押注：获奖者、资助金额与市场影响</div>
+  <div class="doc-meta">Published: 25 May 2026 &nbsp;·&nbsp; Source: NIST / Commerce Dept / WSJ · 来源：美国国家标准与技术研究所 / 商务部 / 华尔街日报</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Signal 信号</span>
+  <span class="mood-text">Historic first: US government becomes equity shareholder in nine quantum computing companies under CHIPS Act R&amp;D tranche.</span>
+  <span class="mood-pill mood-bullish">Bullish · 看涨</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">历史性首次：美国政府通过《芯片法案》研发拨款，以股权方式入股九家量子计算公司。总金额20.13亿美元，涵盖超导、中性原子、硅自旋、光子及捕获离子等多种技术路线。</div>
+</div>
+
+<!-- ══ SECTION 1: THE ANNOUNCEMENT ══ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">The Announcement</div>
+  <div class="section-title-cn">公告详情</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    On 21 May 2026, the Department of Commerce signed nine letters of intent totalling <strong>$2.013 billion</strong> in federal incentives under the CHIPS and Science Act. Administered by NIST's CHIPS R&amp;D Office, the awards target utility-scale, fault-tolerant quantum computing — a deliberate portfolio covering every major hardware modality: superconducting, neutral atom, silicon spin, photonic, and trapped ion.
+  </div>
+  <div class="body-text">
+    The structural innovation: Commerce Secretary Howard Lutnick attached <strong>minority equity stakes</strong> to each award. The government becomes a shareholder, not merely a grant-writer — a model last used at scale during the 2008 financial crisis, and applied to Intel's CHIPS deal in 2025 (where $5.7B converted into ~433M shares, later valued at over $56B).
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">2026年5月21日，美国商务部签署九份意向书，依据《芯片与科学法案》拨付<strong>20.13亿美元</strong>。由美国国家标准与技术研究所（NIST）旗下芯片研发办公室负责执行，覆盖超导、中性原子、硅自旋、光子及捕获离子等全部主流量子计算技术路线。关键创新在于：商务部长霍华德·卢特尼克为每笔拨款附加了<strong>少数股权</strong>条款，政府将成为股东，而非单纯的资助方。</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: AWARD BREAKDOWN ══ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">Award Breakdown — The Nine Recipients</div>
+  <div class="section-title-cn">资助明细 — 九家获奖企业</div>
+  <div class="section-divider"></div>
+
+  <!-- Metric summary cards -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Package</div>
+      <div class="metric-val metric-up">$2.013B</div>
+      <div class="metric-sub">9 Letters of Intent</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Largest Award</div>
+      <div class="metric-val" style="color:#185FA5;">$1.0B</div>
+      <div class="metric-sub">IBM — Quantum Foundry</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Smallest Award</div>
+      <div class="metric-val metric-flat">$38M</div>
+      <div class="metric-sub">Diraq — Silicon Spin</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Equity Structure</div>
+      <div class="metric-val" style="font-size:15px; color:#854F0B;">Minority Stakes</div>
+      <div class="metric-sub">All 9 recipients</div>
+    </div>
+  </div>
+
+  <!-- Award allocation chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Award Allocation by Company</div>
+    <div class="chart-sub">$2.013B total — May 21, 2026 · 资金分配情况</div>
+    <canvas id="awardChart" height="260"></canvas>
+  </div>
+
+  <!-- Detailed table -->
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Ticker</th>
+        <th>Award</th>
+        <th>% of Total</th>
+        <th>Modality</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">IBM</td>
+        <td><span class="ticker-pill">IBM</span></td>
+        <td class="bold up">$1,000M</td>
+        <td>49.7%</td>
+        <td>Superconducting (Foundry)</td>
+        <td><span class="sector-pill s-tech">Public</span></td>
+      </tr>
+      <tr>
+        <td class="bold">GlobalFoundries</td>
+        <td><span class="ticker-pill">GFS</span></td>
+        <td class="bold up">$375M</td>
+        <td>18.6%</td>
+        <td>Foundry / Fabrication</td>
+        <td><span class="sector-pill s-tech">Public</span></td>
+      </tr>
+      <tr>
+        <td class="bold">D-Wave Quantum</td>
+        <td><span class="ticker-pill">QBTS</span></td>
+        <td class="bold">~$100M</td>
+        <td>~5.0%</td>
+        <td>Quantum Annealing</td>
+        <td><span class="sector-pill s-tech">Public</span></td>
+      </tr>
+      <tr>
+        <td class="bold">Rigetti Computing</td>
+        <td><span class="ticker-pill">RGTI</span></td>
+        <td class="bold">~$100M</td>
+        <td>~5.0%</td>
+        <td>Superconducting Qubits</td>
+        <td><span class="sector-pill s-tech">Public</span></td>
+      </tr>
+      <tr>
+        <td class="bold">Infleqtion</td>
+        <td><span class="ticker-pill">INFQ</span></td>
+        <td class="bold">~$100M</td>
+        <td>~5.0%</td>
+        <td>Neutral Atoms</td>
+        <td><span class="sector-pill s-tech">Public</span></td>
+      </tr>
+      <tr>
+        <td class="bold">Diraq</td>
+        <td><span class="score-pill">Private</span></td>
+        <td class="bold">$38M</td>
+        <td>1.9%</td>
+        <td>Silicon Spin Qubits</td>
+        <td><span class="sector-pill s-macro">Private</span></td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:#999;">3 Undisclosed Firms</td>
+        <td>—</td>
+        <td class="flat">~$100M each</td>
+        <td>~15%</td>
+        <td>Various</td>
+        <td><span class="score-pill">Not Disclosed</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-amber">
+    <strong>Conflict of interest flag:</strong> One of the undisclosed private recipients is reportedly part-owned by Donald Trump Jr.'s investment firm, 1789 Capital. Terms including voting rights, lockup periods, and exit conditions remain undisclosed across all nine deals.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>IBM</strong>获得最大份额10亿美元，用于建立量子代工厂子公司；<strong>格芯（GlobalFoundries）</strong>获3.75亿美元；D-Wave、Rigetti及Infleqtion各获约1亿美元；初创公司<strong>Diraq</strong>获3800万美元。其余三家企业未予公开。值得注意的是，据报道有一家未披露的私人企业部分由特朗普之子小唐纳德·特朗普的投资公司1789 Capital持股，引发潜在利益冲突质疑。各项交易的投票权、锁定期及退出条款均未公开。</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 3: STOCK PRICE REACTION ══ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Stock Price Reaction — Two-Day Rally</div>
+  <div class="section-title-cn">股价反应 — 两日涨势</div>
+  <div class="section-divider"></div>
+
+  <!-- Stock move metrics -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">QBTS (D-Wave)</div>
+      <div class="metric-val metric-up">+33%</div>
+      <div class="metric-sub">Cumulative 2-day · $29.40</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">RGTI (Rigetti)</div>
+      <div class="metric-val metric-up">+40%</div>
+      <div class="metric-sub">Cumulative 2-day · ~$26.42</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">INFQ (Infleqtion)</div>
+      <div class="metric-val metric-up">+31%</div>
+      <div class="metric-sub">Cumulative 2-day · $16.35</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IONQ (not a recipient)</div>
+      <div class="metric-val" style="color:#854F0B;">+20%</div>
+      <div class="metric-sub">Sympathy rally · ~$55–56</div>
+    </div>
+  </div>
+
+  <!-- Day-by-day chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Day-by-Day Stock Move: May 21 vs May 22</div>
+    <div class="chart-sub">Percentage gain each day · 逐日涨幅对比</div>
+    <canvas id="stockMoveChart" height="280"></canvas>
+  </div>
+
+  <!-- Cumulative chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Cumulative Two-Day Gain (May 21–22)</div>
+    <div class="chart-sub">Total % move from pre-announcement close · 两日累计涨幅</div>
+    <canvas id="cumulativeChart" height="240"></canvas>
+  </div>
+
+  <div class="body-text">
+    The market reaction was swift and significant. Small-cap pure plays QBTS, RGTI, and INFQ — the most beaten-down names heading into the week — led the two-day rally with 30%+ cumulative gains. IBM and GFS, being far larger and more diversified, saw modest but sustained single-digit moves. IonQ, notably absent from the award list, rallied in sympathy on the strength of its own fundamentals: Q1 2026 revenue of $64.67M (up 755% year-over-year) and raised FY2026 guidance of $260–270M.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">市场反应迅速而强烈。小市值纯量子计算股QBTS、RGTI和INFQ两日累计涨幅均超30%，是涨幅最大的一批。IBM和GFS因体量更大、业务更多元，涨幅相对温和。值得关注的是，未获任何资助的IonQ同样大幅上涨，原因在于其自身基本面扎实：2026年一季度营收6467万美元（同比增长755%），并上调全年业绩指引至2.6亿—2.7亿美元。</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4: STRATEGIC ANALYSIS ══ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Strategic Analysis — What This Actually Means</div>
+  <div class="section-title-cn">战略分析 — 深层含义解读</div>
+  <div class="section-divider"></div>
+
+  <!-- Modality diversification chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Award Distribution by Quantum Modality</div>
+    <div class="chart-sub">Government's deliberate hedge across competing technology approaches · 量子技术路线资金分布</div>
+    <canvas id="modalityChart" height="240"></canvas>
+  </div>
+
+  <div class="body-text">
+    The portfolio design is deliberate. Rather than betting on one hardware approach, the CHIPS R&amp;D Office spread funding across <strong>five distinct quantum modalities</strong>. This mirrors how venture capital funds a sector in its pre-dominant-design phase — when it is unclear which technical approach will win. Superconducting (IBM + Rigetti), neutral atom (Infleqtion), annealing (D-Wave), silicon spin (Diraq), and foundry infrastructure (GlobalFoundries) are all represented.
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull Case · 看涨逻辑</div>
+      <div class="bull-text">
+        • US locks in domestic quantum supply chain ahead of China<br>
+        • Equity model captures taxpayer upside — Intel deal turned $5.7B into $56B+<br>
+        • Government anchor enables private capital formation<br>
+        • National security use cases (cryptography, defence) are near-term and real<br>
+        • Portfolio approach hedges technology risk across all modalities
+      </div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear Case · 看跌逻辑</div>
+      <div class="bear-text">
+        • US VC already pumped $2.7B into quantum in 2025 — no market failure to fix<br>
+        • IBM has $67.5B revenue and $8.3B R&amp;D spend — does not need subsidies<br>
+        • Commercial utility-scale quantum computing may be a decade away<br>
+        • Equity terms (voting rights, lockups, exit) remain entirely undisclosed<br>
+        • Conflict of interest: one recipient linked to Trump Jr.'s 1789 Capital
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <strong>The Intel precedent:</strong> The prior CHIPS Act equity structure converted $5.7B in grants into ~433M Intel shares, a position later valued at over $56B. If even one quantum recipient achieves breakout commercial success, the equity stakes could generate multiples of the original $2B investment for taxpayers.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">此次资金布局经过精心设计，横跨五种不同量子技术路线，逻辑类似风险投资在技术路线尚未明朗阶段的广撒网策略。<strong>看涨逻辑</strong>：锁定国内供应链、股权模式可为纳税人带来潜在超额回报（英特尔案例：57亿美元转化为逾560亿美元价值）、有助于吸引更多私人资本跟进。<strong>看跌逻辑</strong>：2025年量子赛道私人风险投资已达27亿美元，市场失灵论据不足；IBM体量庞大，无需补贴；商业化实用量子计算机可能仍需十年；股权条款至今未予披露；且存在潜在利益冲突问题。</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 5: INVESTMENT IMPLICATIONS ══ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Investment Implications by Company</div>
+  <div class="section-title-cn">各公司投资含义</div>
+  <div class="section-divider"></div>
+
+  <div class="signal-card rank1">
+    <div class="sig-meta">
+      <span class="ticker-pill">IBM</span>
+      <span class="sector-pill s-tech">Award: $1.0B</span>
+      <span class="score-pill">Large Cap</span>
+    </div>
+    <div class="sig-headline">Strategically significant; financially immaterial</div>
+    <div class="sig-headline-cn">战略意义重大，财务影响有限</div>
+    <div class="sig-body">With $67.5B in revenue and $14.7B in free cash flow, the $1B grant is less than 7 weeks of cash generation. The real value is the new quantum foundry subsidiary — a dedicated vehicle that could attract additional investment and eventually be separately valued. The equity stake the government takes could also limit IBM's strategic flexibility in the subsidiary.</div>
+  </div>
+
+  <div class="signal-card rank2">
+    <div class="sig-meta">
+      <span class="ticker-pill">GFS</span>
+      <span class="sector-pill s-tech">Award: $375M</span>
+      <span class="score-pill">Mid Cap</span>
+    </div>
+    <div class="sig-headline">Most defensive play — real revenues, capex subsidy</div>
+    <div class="sig-headline-cn">防御性最强 — 真实营收，资本开支补贴</div>
+    <div class="sig-body">GlobalFoundries is a proven semiconductor foundry with real revenues. The $375M functions effectively as a capital expenditure subsidy for quantum chip fabrication capacity. Unlike the pure-play quantum names, GFS has existing commercial operations that de-risk the investment. This is the closest analog to traditional CHIPS Act semiconductor manufacturing awards.</div>
+  </div>
+
+  <div class="signal-card rank3">
+    <div class="sig-meta">
+      <span class="ticker-pill">QBTS</span>
+      <span class="ticker-pill">RGTI</span>
+      <span class="ticker-pill">INFQ</span>
+      <span class="sector-pill s-defence">High Risk / High Reward</span>
+    </div>
+    <div class="sig-headline">Small-cap pure plays: biggest re-rating, most technology risk</div>
+    <div class="sig-headline-cn">小市值纯量子股：重估幅度最大，技术风险最高</div>
+    <div class="sig-body">These three received the largest relative market re-rating from the announcement (30%+ each). The government equity stake provides a powerful legitimacy signal and extends their cash runways by years. However, they remain pre-revenue or early-revenue businesses with deep technology uncertainty. The basket trade has held up through Friday's close, suggesting genuine re-rating rather than a one-day pop. The undisclosed equity terms are the key unknown — if the government takes aggressive economic stakes, it could significantly dilute existing shareholders.</div>
+  </div>
+
+  <div class="signal-card" style="border-left: 3px solid #888;">
+    <div class="sig-meta">
+      <span class="ticker-pill">IONQ</span>
+      <span class="sector-pill s-macro">Not a recipient</span>
+    </div>
+    <div class="sig-headline">Strongest fundamentals; notable exclusion</div>
+    <div class="sig-headline-cn">基本面最强；未入选颇为引人注目</div>
+    <div class="sig-body">IonQ was absent from the award list — notable given it is the sector's largest and best-funded pure-play. B. Riley commented the exclusion was "not a slight." IonQ's Q1 2026 revenue of $64.67M (up 755% YoY) and raised FY2026 guidance of $260–270M make it the group's fundamental leader. The sympathy rally (20%+ over two days) suggests markets view the sector tailwind as more important than the specific grant allocation. IonQ is also acquiring SkyWater Technology (deal approved by SKYT shareholders in May 2026), adding a domestic foundry capability organically.</div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>IBM</strong>：战略意义大于财务影响，新设的量子代工子公司是核心看点。<strong>GFS</strong>：最具防御性，本质是对成熟半导体代工厂的资本开支补贴。<strong>QBTS / RGTI / INFQ</strong>：重估幅度最大，政府股权入股提供强力背书，但仍是高技术风险的早期企业，股权稀释条款尚未披露。<strong>IONQ</strong>：未获资助，但拥有最强的基本面（营收同比大增755%），且正通过收购SkyWater Technology自主构建代工能力，两日同情性涨幅逾20%。</div>
+  </div>
+</div>
+
+<!-- ══ SECTION 6: BROADER CONTEXT ══ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Broader Context — The New Industrial Policy</div>
+  <div class="section-title-cn">宏观背景 — 新型产业政策</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    This is genuinely new territory for US industrial policy. The government is not just funding R&amp;D — it is taking equity positions across an entire nascent sector, creating a $2B quasi-sovereign quantum venture fund. The approach echoes sovereign wealth funds in Singapore, China, and the Gulf states, which have long used state capital to build strategic technology capabilities. Whether this represents prudent strategic competition or market-distorting industrial policy depends on one's priors — but the direction of travel is clear.
+  </div>
+
+  <!-- Context comparison -->
+  <div class="chart-wrap">
+    <div class="chart-title">Private vs Government Quantum Investment Comparison</div>
+    <div class="chart-sub">2025 US quantum VC vs. this award tranche · 私人与政府量子投资对比</div>
+    <canvas id="contextChart" height="220"></canvas>
+  </div>
+
+  <div class="callout callout-green">
+    <strong>National security angle:</strong> Quantum computing has direct implications for breaking current encryption standards (RSA, ECC). A utility-scale fault-tolerant quantum computer would render most of today's public-key cryptography obsolete. The defence and intelligence community's interest in ensuring this technology is developed domestically — rather than in China — is the deepest driver behind these awards.
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">此举标志着美国产业政策进入全新领域——政府不仅资助研发，更对整个新兴行业进行股权投资，实质上构建了一只20亿美元的"准主权量子风险基金"。这与新加坡、中国和海湾国家主权财富基金的战略布局如出一辙。从国家安全角度看，实用化容错量子计算机一旦实现，将使现有主流公钥加密体系（RSA、ECC）面临瓦解风险，确保该技术在本土而非中国率先突破，是此次拨款最深层的战略驱动力。</div>
+  </div>
+</div>
+
+<!-- ══ SOURCES ══ -->
+<div class="section">
+  <div class="sources-label">Sources · 信息来源</div>
+  <div class="sources">
+    NIST / Department of Commerce press release, 21 May 2026 &nbsp;·&nbsp;
+    Wall Street Journal (initial reporting) &nbsp;·&nbsp;
+    TheStreet, 23 May 2026 &nbsp;·&nbsp;
+    Motley Fool, 21 May 2026 &nbsp;·&nbsp;
+    247 Wall Street, 22 May 2026 &nbsp;·&nbsp;
+    Cato Institute analysis, 21 May 2026 &nbsp;·&nbsp;
+    Google Finance / Stocktwits (price data as of 23 May 2026 close)
+  </div>
+</div>
+
+<div class="footer">
+  This report is for informational purposes only and does not constitute investment advice. · 本报告仅供参考，不构成投资建议。<br>
+  Generated 25 May 2026 · US markets closed for Memorial Day · 美国市场因阵亡将士纪念日休市
+</div>
+
+<script>
+// ── Chart 1: Award Allocation (Doughnut) ──
+const awardCtx = document.getElementById('awardChart').getContext('2d');
+new Chart(awardCtx, {
+  type: 'bar',
+  data: {
+    labels: ['IBM', 'GlobalFoundries', 'D-Wave (QBTS)', 'Rigetti (RGTI)', 'Infleqtion (INFQ)', 'Diraq', '3 Undisclosed'],
+    datasets: [{
+      label: 'Award Amount ($M)',
+      data: [1000, 375, 100, 100, 100, 38, 300],
+      backgroundColor: ['#185FA5', '#1D9E75', '#3B82F6', '#6366F1', '#8B5CF6', '#F59E0B', '#D1D5DB'],
+      borderRadius: 6,
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` $${ctx.parsed.x.toLocaleString()}M`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: '#f0efe8' },
+        ticks: {
+          callback: v => `$${v}M`,
+          font: { size: 11 },
+          color: '#999'
+        }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 12 }, color: '#333' }
+      }
+    }
+  }
+});
+
+// ── Chart 2: Day-by-day stock moves (Grouped bar) ──
+const stockCtx = document.getElementById('stockMoveChart').getContext('2d');
+new Chart(stockCtx, {
+  type: 'bar',
+  data: {
+    labels: ['IBM', 'GFS', 'QBTS', 'RGTI', 'INFQ', 'IONQ*'],
+    datasets: [
+      {
+        label: 'May 21 (Announcement Day)',
+        data: [6.5, 5.6, 19, 20, 17, 12],
+        backgroundColor: '#185FA5',
+        borderRadius: 4,
+        borderWidth: 0,
+      },
+      {
+        label: 'May 22 (Day 2)',
+        data: [1.5, 2, 13, 17, 11, 8],
+        backgroundColor: '#1D9E75',
+        borderRadius: 4,
+        borderWidth: 0,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: { font: { size: 12 }, color: '#555', boxWidth: 14, padding: 16 }
+      },
+      tooltip: {
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: +${ctx.parsed.y}%` }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 12 }, color: '#333' }
+      },
+      y: {
+        grid: { color: '#f0efe8' },
+        ticks: {
+          callback: v => `+${v}%`,
+          font: { size: 11 },
+          color: '#999'
+        }
+      }
+    }
+  }
+});
+
+// ── Chart 3: Cumulative gains ──
+const cumCtx = document.getElementById('cumulativeChart').getContext('2d');
+new Chart(cumCtx, {
+  type: 'bar',
+  data: {
+    labels: ['IBM', 'GFS', 'QBTS\n(D-Wave)', 'RGTI\n(Rigetti)', 'INFQ\n(Infleqtion)', 'IONQ*\n(sympathy)'],
+    datasets: [{
+      label: 'Cumulative 2-day gain (%)',
+      data: [8.2, 7.7, 33, 40, 30, 20],
+      backgroundColor: ctx => {
+        const vals = [8.2, 7.7, 33, 40, 30, 20];
+        return vals[ctx.dataIndex] >= 30 ? '#0F6E56' : vals[ctx.dataIndex] >= 15 ? '#1D9E75' : '#185FA5';
+      },
+      borderRadius: 6,
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => ` +${ctx.parsed.y}% cumulative` }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { size: 11 }, color: '#333' }
+      },
+      y: {
+        grid: { color: '#f0efe8' },
+        ticks: {
+          callback: v => `+${v}%`,
+          font: { size: 11 },
+          color: '#999'
+        }
+      }
+    }
+  }
+});
+
+// ── Chart 4: Modality distribution (doughnut) ──
+const modCtx = document.getElementById('modalityChart').getContext('2d');
+new Chart(modCtx, {
+  type: 'doughnut',
+  data: {
+    labels: [
+      'Superconducting (IBM + Rigetti)',
+      'Foundry Infrastructure (GFS)',
+      'Neutral Atom (Infleqtion)',
+      'Quantum Annealing (D-Wave)',
+      'Silicon Spin (Diraq)',
+      'Undisclosed'
+    ],
+    datasets: [{
+      data: [1100, 375, 100, 100, 38, 300],
+      backgroundColor: ['#185FA5', '#1D9E75', '#6366F1', '#F59E0B', '#EC4899', '#D1D5DB'],
+      borderWidth: 2,
+      borderColor: '#f8f8f6',
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '60%',
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: { font: { size: 11 }, color: '#555', boxWidth: 12, padding: 12 }
+      },
+      tooltip: {
+        callbacks: { label: ctx => ` ${ctx.label}: $${ctx.parsed.toLocaleString()}M` }
+      }
+    }
+  }
+});
+
+// ── Chart 5: Context comparison (horizontal bar) ──
+const ctxChart = document.getElementById('contextChart').getContext('2d');
+new Chart(ctxChart, {
+  type: 'bar',
+  data: {
+    labels: ['US Quantum VC (2024)', 'US Quantum VC (2025)', 'This CHIPS Award'],
+    datasets: [{
+      label: 'USD Billions',
+      data: [1.7, 2.7, 2.013],
+      backgroundColor: ['#D1D5DB', '#9CA3AF', '#185FA5'],
+      borderRadius: 6,
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => ` $${ctx.parsed.x.toFixed(2)}B` }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: '#f0efe8' },
+        ticks: {
+          callback: v => `$${v}B`,
+          font: { size: 11 },
+          color: '#999'
+        }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 12 }, color: '#333' }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
