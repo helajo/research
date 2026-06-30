@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Infrastructure Themes — Deep Dive — June 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ── DOC HEADER ── */
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+/* ── MOOD BAR ── */
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+
+/* ── SECTION ── */
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+/* ── CALLOUT BOXES ── */
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-blue  { background: #EBF3FD; border-color: #185FA5; }
+.callout-green { background: #EAF3DE; border-color: #1D9E75; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-red   { background: #FCEBEB; border-color: #A32D2D; }
+.callout-gray  { background: #f0efe8; border-color: #bbb; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+
+/* ── DATA TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.data-table th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; letter-spacing: 0.04em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid #e8e8e0; vertical-align: top; }
+.data-table tr:nth-child(even) td { background: #f5f4f0; }
+.data-table .highlight td { background: #EBF3FD !important; }
+
+/* ── BODY TEXT ── */
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+
+/* ── BULL / BEAR ── */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.55; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.55; color: #791F1F; }
+
+/* ── TIMELINE ── */
+.timeline { list-style: none; padding: 0; margin-bottom: 16px; }
+.timeline li { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid #f0efe8; font-size: 13px; line-height: 1.6; }
+.timeline li:last-child { border-bottom: none; }
+.tl-date { font-size: 11px; font-weight: 700; color: #185FA5; white-space: nowrap; min-width: 72px; padding-top: 2px; }
+.tl-text { color: #444; flex: 1; }
+.tl-text strong { color: #1a1a1a; }
+
+/* ── VERDICT / DARK BOX ── */
+.verdict { background: #1a1a1a; color: #fff; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 16px; }
+.verdict-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 8px; }
+.verdict-text { font-size: 14px; line-height: 1.8; color: #e8e8e0; }
+.verdict-text strong { color: #fff; }
+
+/* ── RATING PILLS ── */
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; display: inline-block; margin: 2px 2px; }
+
+/* ── CHINESE SUMMARY ── */
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+/* ── FOOTER ── */
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">DEEP DIVE · 深度分析</div>
+  <div class="doc-title">AI Infrastructure: Themes, Timing, and the Chokepoint Lens</div>
+  <div class="doc-title-cn">AI 基础设施:主题、时机与瓶颈视角</div>
+  <div class="doc-meta">June 30, 2026 · Internal research synthesis · Coverage: photonics, memory, neoclouds, robotics, supply-chain bottlenecks</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Read 整体判断</span>
+  <span class="mood-text">Strong structural demand, but leadership is broadening and froth is real — selectivity and timing now matter more than theme selection.</span>
+  <span class="mood-pill mood-mixed">Constructive · Selective 谨慎乐观</span>
+</div>
+<div class="cn-summary" style="margin-bottom:1.5rem;">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">结构性需求强劲,但市场领导权正在扩散,泡沫风险真实存在。如今<strong>选股的精准度与买入时机</strong>比单纯挑选主题更为关键。本报告综合了 AI 基础设施各主题、"提前 8 个月定价"框架,以及"瓶颈"投资视角。</div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">The master shift: from training to inference</div>
+  <div class="section-title-cn">核心转变:从训练转向推理</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Every theme in this report hangs off one structural shift: the AI compute mix is tipping from <strong>training</strong> toward <strong>inference</strong>. Inference is expected to account for roughly two-thirds of AI compute in 2026, up from about half in 2025. This matters because training and inference have different hardware economics — inference rewards efficiency, memory bandwidth, and distributed/edge deployment rather than raw training-cluster scale. The rise of agentic AI (continuous, multi-step autonomous tasks) is the demand engine, sending token consumption — and therefore compute and memory needs — sharply higher.
+  </div>
+  <div class="callout callout-amber">
+    <div class="callout-label">Why it matters 为何重要</div>
+    <div class="callout-text">The era of being rewarded merely for "mentioning AI" has passed. 2026 investors demand proof of revenue scaling. The opportunity has shifted from <strong>which themes exist</strong> to <strong>which names convert the buildout into cash, and when the market pays for it</strong>.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本报告所有主题都建立在一个结构性转变之上:AI 算力正从<strong>训练</strong>转向<strong>推理</strong>。预计 2026 年推理将占 AI 算力约三分之二(2025 年约为一半)。这一点很重要,因为训练与推理的硬件经济学不同——推理更看重能效、内存带宽以及分布式/边缘部署。代理式 AI(持续、多步骤的自主任务)是需求引擎,推动 token 消耗及算力、内存需求大幅上升。"提到 AI 就被奖励"的时代已经结束,2026 年的投资者要求看到实际营收兑现。</div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">The framework: the ~8-month pricing clock</div>
+  <div class="section-title-cn">框架:提前约 8 个月的定价时钟</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    A stock price is the market's bet on future cash, discounted to today. It moves when <strong>conviction</strong> about that future changes — not when the revenue actually arrives. For capex-driven, contract-based AI names, the conviction-building evidence (hyperscaler buildout announcements, GPU roadmap commitments, design wins, large purchase orders, earnings guidance) reliably shows up <strong>before</strong> the revenue prints. The lag between "milestone becomes visible" and "revenue inflects" tends to cluster around three quarters — roughly eight months.
+  </div>
+  <div class="callout callout-blue">
+    <div class="callout-label">The mechanism in one line 一句话机制</div>
+    <div class="callout-text">Price tracks <strong>conviction</strong>, conviction builds on a <strong>sequence of public signals</strong>, and revenue is the <strong>last</strong> signal, not the first. By the time cash prints, the informed money has been watching the breadcrumbs for ~8 months. This is why "buy the rumour, sell the news" exists.</div>
+  </div>
+  <div class="body-text">
+    The "8" is a median, not a constant. It shifts <strong>earlier</strong> for liquid, heavily-covered names (more analysts racing to discount the future) and <strong>later</strong> for small, under-covered names (the market ignores them until revenue shows up — the gap a diligent researcher exploits). For purely speculative names with no orders or guidance to anchor on, the clock doesn't apply at all — they trade on narrative and can price years early or not at all.
+  </div>
+  <div class="callout callout-red">
+    <div class="callout-label">Limitation 局限性</div>
+    <div class="callout-text">This is a descriptive heuristic with a small, anecdotal sample — not a law. It works best where a hard order book anchors conviction, and worst at the speculative end, where being "early" is indistinguishable from being wrong. Use it for <strong>position sizing and patience</strong>, not as a standalone buy signal.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">股价是市场对未来现金流的押注,并折现到今天。它在对未来的<strong>信心</strong>发生变化时变动——而非在营收真正到来时。对于资本开支驱动、以合约为基础的 AI 公司,建立信心的证据(云厂商建设公告、GPU 路线图承诺、设计中标、大额采购订单、业绩指引)总是在营收兑现<strong>之前</strong>出现。从"里程碑变得可见"到"营收拐点"的时间差通常约为三个季度,即大约八个月。机制一句话:<strong>价格追踪信心,信心建立在一系列公开信号上,而营收是最后一个信号,不是第一个</strong>。"8"是中位数而非定值:对流动性高、覆盖充分的大盘股会<strong>更早</strong>,对小盘、覆盖不足的股票会<strong>更晚</strong>。这是描述性经验法则,样本小,并非定律——最适合用于<strong>仓位管理与耐心持有</strong>,而非单独作为买入信号。</div>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">The themes, sorted by when their window opens</div>
+  <div class="section-title-cn">各主题:按定价窗口开启时间排序</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Applying the clock to the themes tracked across this research. "Status" reflects how much the trade is already discovered and priced.
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Theme</th><th>Window opens</th><th>Status</th><th>Representative names</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Memory (HBM3E / HBM4)</strong></td><td>Now</td><td>Mid-bottleneck, re-rating</td><td>MU, SK Hynix, Samsung</td></tr>
+      <tr><td><strong>1.6T pluggables</strong></td><td>Now</td><td>Shipping</td><td>LITE, COHR, Innolight</td></tr>
+      <tr><td><strong>Cooling (liquid / DTC)</strong></td><td>Now</td><td>Already run hard, pricey</td><td>VRT, MOD, ETN</td></tr>
+      <tr class="highlight"><td><strong>CPO scale-out</strong></td><td>Late H2 2026</td><td>Window opening</td><td>POET, LITE, COHR</td></tr>
+      <tr class="highlight"><td><strong>Neoclouds inflect</strong></td><td>Q4 2026 earnings</td><td>Window opening</td><td>NBIS</td></tr>
+      <tr class="highlight"><td><strong>Equipment / tool makers</strong></td><td>Now (leads ramp)</td><td>Early, in a good way</td><td>LPK</td></tr>
+      <tr><td><strong>Glass substrates</strong></td><td>H2 2026 → 2028</td><td>Early</td><td>SKC Absolics, TSMC CoPoS</td></tr>
+      <tr><td><strong>CPO scale-up</strong></td><td>H2 2027</td><td>Early (mostly private)</td><td>Ayar, Celestial (in MRVL)</td></tr>
+      <tr><td><strong>Humanoid robots</strong></td><td>2027+</td><td>Very early, narrative-priced</td><td>TSLA (Optimus), Unitree*</td></tr>
+    </tbody>
+  </table>
+  <div class="body-text" style="font-size:12px;color:#888;">*Unitree / AGIBot are private Chinese players, not directly investable.</div>
+
+  <div class="callout callout-green">
+    <div class="callout-label">The "act-now" band 当前窗口</div>
+    <div class="callout-text">Under the framework, the live window sits at <strong>CPO scale-out, neoclouds (into Q4 2026 earnings), and equipment makers</strong> — which is exactly where repositioning is concentrating: memory, neoclouds, photonics, robotics.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">将"时钟"框架套用到各主题上。"状态"反映该交易已被市场发现与定价的程度。<strong>已充分定价区(绿区)</strong>:内存、1.6T 可插拔光模块、散热——主题强劲但价格已反映,散热股估值偏高。<strong>窗口开启区(琥珀区,当前最佳)</strong>:CPO scale-out、Neocloud(临近 2026 Q4 财报)、设备/机台供应商。<strong>偏早区(紫区,"过早=痛苦")</strong>:玻璃基板、CPO scale-up(多为非上市公司)、人形机器人(主要靠叙事定价)。一个关键结构性洞见:<strong>机台/设备供应商比量产更早兑现营收</strong>,因为三星、Absolics 等必须先购买机台才能开始生产。</div>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">The spine: own the chokepoint every architecture needs</div>
+  <div class="section-title-cn">主线:押注每种架构都离不开的瓶颈</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    The most defensible idea running through this research: rather than predicting <strong>which</strong> optical or compute architecture wins, own the <strong>bottleneck that every variant depends on</strong>. Two stand out.
+  </div>
+
+  <div class="body-text">
+    <strong>Indium phosphide (InP) and the indium escalation ladder.</strong> InP substrates and lasers sit underneath every photonics theme — 1.6T pluggables, NPO, and all CPO variants. AXT and Sumitomo are ~80% of global InP substrate supply. China controls ~70% of primary indium (over 80% including recycled), and has been <strong>tightening export inspections</strong> — not a formal ban yet, but the same deniable-escalation playbook seen with gallium and tungsten. The InP-specific volume is tiny (under ~10 tons even with waste vs. ~350 tons of non-China output), so an InP-only squeeze is a <strong>price / lead-time</strong> story, not a supply-collapse story. The larger-volume risk sits in ITO (display electrodes) — which hits smartphones, TVs, and autos far harder than AI photonics.
+  </div>
+  <div class="callout callout-amber">
+    <div class="callout-label">Watch — the AXTI nuance AXTI 的关键细节</div>
+    <div class="callout-text">AXT is <strong>not</strong> a clean ex-China substitute: it manufactures inside China, so its own Chinese subsidiary is a second, independent export-licensing chokepoint. Management has called InP export permits "the most significant challenge we currently face." This is the bear case on the cleanest-looking name in the theme.</div>
+  </div>
+
+  <div class="body-text">
+    <strong>Memory as the gating constraint.</strong> HBM is now over half the bill of materials of a modern AI GPU (rising toward 55–60% with HBM4 on Rubin). Every GPU generation is constrained by memory, not compute. Because HBM carries roughly 4x the wafer intensity of commodity DRAM, AI is set to consume nearly 20% of global DRAM wafer capacity in 2026 — cannibalising mainstream supply and reinforcing price resilience across the board. The three-player oligopoly (MU, SK Hynix, Samsung) has locked in 2026 capacity and pricing, giving the cycle revenue visibility it historically never had.
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本研究中最具防御性的思路:与其预测<strong>哪一种</strong>光学或算力架构胜出,不如押注<strong>每种架构都离不开的瓶颈</strong>。两个最突出。<strong>磷化铟(InP)与铟的升级阶梯</strong>:InP 衬底和激光器是所有光子学主题的底层基础。AXT 与住友合计约占全球 InP 衬底供应的 80%。中国控制约 70% 的原生铟,并正在<strong>收紧出口检验</strong>——尚非正式禁令,但与镓、钨如出一辙的"可否认式升级"手法。需注意:AXT 并非"纯非中国"替代标的,它在中国境内生产,其中国子公司本身就是第二个独立的出口许可瓶颈。<strong>内存作为闸口约束</strong>:HBM 如今占现代 AI GPU 物料成本的一半以上(Rubin 上的 HBM4 升至 55–60%)。由于 HBM 的晶圆强度约为普通 DRAM 的 4 倍,2026 年 AI 预计将消耗全球近 20% 的 DRAM 晶圆产能。三巨头(美光、SK 海力士、三星)已锁定 2026 年产能与定价,使本轮周期具备前所未有的营收可见度。</div>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Leadership is broadening: beyond the Magnificent 7</div>
+  <div class="section-title-cn">市场领导权扩散:超越"七巨头"</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    The Mag 7 isn't failing — the opportunity set is expanding. Dispersion within the group has widened sharply as each member pursues a different AI strategy, and Goldman expects the cohort to underperform the equal-weight S&P 500 in 2026. There is no single agreed successor acronym (competing labels like "FAB 10" and "MANGOS" are circulating); the real shift is the <strong>broadening itself</strong> — into semiconductors, memory, networking/photonics, power, and cooling. Notably, memory names (SK Hynix, Micron) have entered the trillion-dollar conversation, validating the gating-constraint thesis.
+  </div>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull 多头</div>
+      <div class="bull-text">Capex is real and cash-funded; sold-out memory capacity; broadening creates more ways to win beyond a handful of mega-caps.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Bear 空头</div>
+      <div class="bear-text">Froth is visible; neocloud credit fragility and rising private-credit write-downs could be the system's first real test if debt markets tighten.</div>
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">"七巨头"并非失败,而是机会集在扩大。组内分化显著加剧,高盛预计 2026 年该组合将跑输等权重标普 500。目前没有公认的接班缩写(市面上有"FAB 10""MANGOS"等竞争性标签);真正的转变是<strong>扩散本身</strong>——扩散到半导体、内存、网络/光子学、电力与散热。值得注意的是,内存公司(SK 海力士、美光)已进入万亿美元市值的讨论范畴,印证了"闸口约束"论点。<strong>多头</strong>:资本开支真实且由现金支撑、内存产能售罄。<strong>空头</strong>:泡沫可见,Neocloud 信用脆弱性与私募信贷减记上升,可能成为系统的首次真正考验。</div>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Synthesis & positioning logic</div>
+  <div class="section-title-cn">综合结论与配置逻辑</div>
+  <div class="section-divider"></div>
+
+  <div class="verdict">
+    <div class="verdict-label">Bottom line 核心结论</div>
+    <div class="verdict-text">The strongest single idea is the <strong>overlap of chokepoint + timing</strong>: a name that sits at a bottleneck every architecture needs <em>and</em> has its 8-month window open now. Multi-theme names (e.g. a photonics name spanning pluggable → NPO → CPO) earn heavier weight because they don't require betting on one architecture winning. Avoid heavy exposure to anything 12+ months out — that's where being early becomes a live drawdown.</div>
+  </div>
+
+  <div class="body-text">
+    <strong>Weighting logic distilled:</strong>
+  </div>
+  <ul class="timeline">
+    <li><span class="tl-date">Heavier</span><span class="tl-text"><strong>~8 months out, or multi-theme.</strong> The window is open and the name captures several themes at once — best risk/reward under the framework.</span></li>
+    <li><span class="tl-date">Lighter</span><span class="tl-text"><strong>Mini-shifts in between.</strong> Advanced packaging materials, hybrid bonding for memory, episodic bottlenecks (MLCCs) — real but narrower.</span></li>
+    <li><span class="tl-date">Earlier</span><span class="tl-text"><strong>Equipment makers.</strong> Tool suppliers inflect before the volume ramp, since producers must buy machines first.</span></li>
+    <li><span class="tl-date">Avoid</span><span class="tl-text"><strong>12+ months out.</strong> Compelling thesis, wrong time — the most common and most painful mistake.</span></li>
+  </ul>
+
+  <div class="callout callout-gray">
+    <div class="callout-label">Discipline 纪律</div>
+    <div class="callout-text">Being right too early is indistinguishable from being wrong. The clock is a tool for <strong>patience and sizing</strong>, not a licence to chase. Every name, timeline, and supplier share here is fast-moving — reverify against primary sources and live prices before acting.</div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">最强的单一思路是<strong>"瓶颈 + 时机"的叠加</strong>:既位于每种架构都离不开的瓶颈,又恰逢 8 个月窗口开启的标的。<strong>多主题标的</strong>(例如横跨可插拔 → NPO → CPO 的光子学公司)应给予更高权重,因为无需押注某一种架构胜出。<strong>配置逻辑</strong>:8 个月窗口内或多主题标的→加重;中间的小型转变(先进封装材料、内存混合键合、MLCC 等阶段性瓶颈)→轻配;设备机台供应商→更早布局;12 个月以上的远期主题→规避。<strong>纪律</strong>:过早正确与错误无异。这套时钟是<strong>耐心与仓位管理</strong>的工具,而非追高的许可。本报告所有标的、时间表与供应商份额变动迅速——在行动前请对照一手资料与实时价格重新核实。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="callout callout-red">
+  <div class="callout-label">Not investment advice 非投资建议</div>
+  <div class="callout-text">This document is a research synthesis for internal discussion. It is not a recommendation to buy or sell any security and does not account for any individual's circumstances. Frameworks cited (including the ~8-month clock) are heuristics, not guarantees. Verify all figures, timelines, and prices against primary sources before any decision.</div>
+</div>
+
+<div class="footer">
+  AI Infrastructure Deep Dive · 内部研究综合 · June 30, 2026<br>
+  Synthesised from internal research notes and discussion · Figures subject to change · 数据可能变动
+</div>
+
+</body>
+</html>

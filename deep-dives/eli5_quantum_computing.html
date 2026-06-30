@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELI5: Quantum Computing 量子计算，小孩子也能懂！</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --cream:   #fdf9f3;
+  --card:    #ffffff;
+  --border:  #ede8df;
+  --text:    #1c1a17;
+  --muted:   #7a7169;
+  --blue:    #185FA5;
+  --blue-lt: #e8f1fb;
+  --green:   #1a8c5a;
+  --green-lt:#e4f5ed;
+  --amber:   #c46b00;
+  --amber-lt:#fff3e0;
+  --red:     #b83232;
+  --red-lt:  #fdeaea;
+  --purple:  #6b3fa0;
+  --purple-lt:#f1ebfa;
+  --teal:    #0e7c7b;
+  --teal-lt: #e0f5f5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  padding: 2rem 1.5rem 4rem;
+  max-width: 860px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem 2.5rem;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+.hero-tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-lt);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.hero-title span { color: var(--blue); }
+.hero-subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 480px;
+  margin: 0 auto 6px;
+}
+.hero-cn {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+}
+
+/* ── SECTION ── */
+.section {
+  margin-bottom: 2.5rem;
+}
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-size: 1.55rem;
+  font-weight: 900;
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+.section-cn-title {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  margin-bottom: 18px;
+}
+.divider {
+  height: 2px;
+  background: var(--border);
+  margin-bottom: 1.4rem;
+  border-radius: 2px;
+}
+
+/* ── BODY TEXT ── */
+.body-text {
+  font-size: 0.97rem;
+  line-height: 1.85;
+  color: #2e2b26;
+  margin-bottom: 12px;
+}
+.body-text strong { color: var(--blue); font-weight: 800; }
+
+/* ── CN BLOCK ── */
+.cn-block {
+  background: #f5f2ec;
+  border-left: 3px solid #d5cfc5;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.cn-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b8b0a4;
+  margin-bottom: 5px;
+}
+.cn-text {
+  font-size: 0.85rem;
+  color: #6a6259;
+  line-height: 1.9;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+}
+.cn-text strong { color: #444; font-weight: 700; }
+
+/* ── BIG ANALOGY CARD ── */
+.analogy-card {
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 1.5px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.analogy-card::before {
+  content: attr(data-emoji);
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 4rem;
+  opacity: 0.15;
+  pointer-events: none;
+}
+.analogy-blue  { background: var(--blue-lt);   border-color: #c5d9f0; }
+.analogy-green { background: var(--green-lt);  border-color: #b5e4cb; }
+.analogy-amber { background: var(--amber-lt);  border-color: #f4d4a0; }
+.analogy-purple{ background: var(--purple-lt); border-color: #d4bfee; }
+.analogy-teal  { background: var(--teal-lt);   border-color: #9fd8d7; }
+.analogy-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.analogy-headline {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.analogy-body {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  max-width: 560px;
+}
+
+/* ── CHART CARDS ── */
+.chart-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+.chart-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.chart-note {
+  font-size: 0.75rem;
+  color: #b0a89e;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ── STEP CARDS ── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-body { font-size: 0.9rem; line-height: 1.7; }
+.step-body strong { color: var(--blue); font-weight: 800; }
+
+/* ── QUBIT VISUAL ── */
+.qubit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.qubit-box {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.qubit-box.quantum { border-color: #c5d9f0; background: var(--blue-lt); }
+.qubit-icon { font-size: 2.5rem; margin-bottom: 6px; }
+.qubit-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+.qubit-desc { font-size: 0.85rem; line-height: 1.6; }
+
+/* ── COMPARISON TABLE ── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 14px;
+  background: var(--card);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+.compare-table th {
+  background: #f0ede7;
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.compare-table td {
+  padding: 10px 14px;
+  border-top: 1px solid #f0ede7;
+  vertical-align: top;
+}
+.compare-table tr:nth-child(even) td { background: #faf8f4; }
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.badge-blue   { background: var(--blue-lt);   color: var(--blue); }
+.badge-green  { background: var(--green-lt);  color: var(--green); }
+.badge-amber  { background: var(--amber-lt);  color: var(--amber); }
+.badge-purple { background: var(--purple-lt); color: var(--purple); }
+
+/* ── CALLOUT ── */
+.callout {
+  border-left: 3px solid var(--blue);
+  background: var(--blue-lt);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  color: #1a3c68;
+}
+.callout strong { font-weight: 800; }
+
+/* ── PILL GRID ── */
+.pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.use-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* ── SUPERPOSITION VISUAL (CSS) ── */
+.superposition-demo {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.coin-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.coin {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+}
+.coin-classical-h { background: #e8f5e9; border: 2px solid #81c784; }
+.coin-classical-t { background: #fce4ec; border: 2px solid #e57373; }
+.coin-quantum {
+  background: linear-gradient(135deg, #e8f1fb 50%, #f3e8fb 50%);
+  border: 2px solid var(--blue);
+  animation: spin-glow 3s ease-in-out infinite;
+}
+@keyframes spin-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(24,95,165,0); }
+  50% { box-shadow: 0 0 18px 4px rgba(24,95,165,0.25); }
+}
+.coin-sub {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #b0a89e;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  line-height: 1.9;
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+}
+
+@media (max-width: 560px) {
+  .qubit-grid { grid-template-columns: 1fr; }
+  body { padding: 1.2rem 1rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-tag">ELI5 Explainer · 小孩子也能懂</div>
+  <h1 class="hero-title">What is <span>Quantum</span><br>Computing?</h1>
+  <p class="hero-subtitle">Explained like you're 5 — with analogies, visuals, and zero scary maths.</p>
+  <p class="hero-cn">用最简单的方式解释量子计算——类比、图表、零数学公式。</p>
+</div>
+
+<!-- ══ SECTION 1: THE BIG IDEA ══ -->
+<div class="section">
+  <div class="section-label">Concept 01 · 概念一</div>
+  <div class="section-title">Normal computers vs. quantum computers</div>
+  <div class="section-cn-title">普通电脑 vs 量子电脑</div>
+  <div class="divider"></div>
+
+  <div class="analogy-card analogy-blue" data-emoji="🔦">
+    <div class="analogy-tag">The analogy · 类比</div>
+    <div class="analogy-headline">Imagine a maze 🌀</div>
+    <div class="analogy-body">
+      A normal computer is like someone walking through a maze — it tries <strong>one path at a time</strong>, backs up when stuck, tries another. It's fast, but still one path at a time.<br><br>
+      A quantum computer is like <strong>flooding the maze with water all at once</strong> — the water finds every path simultaneously, and the solution (the exit) is where the water flows out first.
+    </div>
+  </div>
+
+  <div class="body-text">
+    Regular computers store everything as <strong>bits</strong> — tiny switches that are either OFF (0) or ON (1). Every calculation is a sequence of these tiny switches flipping. They're incredibly fast, but they're still going through options <em>one at a time</em>.
+  </div>
+  <div class="body-text">
+    Quantum computers use <strong>qubits</strong> — and qubits can be 0, 1, or <em>both at the same time</em> (more on this below). This lets them explore enormous numbers of possibilities simultaneously for certain types of hard problems.
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      想象一个迷宫：<strong>普通电脑</strong>像一个人在迷宫里一条路一条路地试，试错、退回、再试；<strong>量子电脑</strong>则像往迷宫里注水——水同时涌入所有通道，出口最快流出的就是答案。普通电脑用"比特（bits）"存储信息，每个比特非0即1；量子电脑用<strong>量子比特（qubits）</strong>，可以同时是0和1，从而同时探索海量可能性。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: SUPERPOSITION ══ -->
+<div class="section">
+  <div class="section-label">Concept 02 · 概念二</div>
+  <div class="section-title">Superposition — being two things at once</div>
+  <div class="section-cn-title">叠加态——同时存在于两种状态</div>
+  <div class="divider"></div>
+
+  <div class="superposition-demo">
+    <div class="chart-title">The Spinning Coin Analogy · 旋转硬币类比</div>
+    <div class="coin-row">
+      <div style="text-align:center">
+        <div class="coin coin-classical-h">H</div>
+        <div class="coin-sub">Classical<br>Heads (1)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="coin coin-classical-t">T</div>
+        <div class="coin-sub">Classical<br>Tails (0)</div>
+      </div>
+      <div style="text-align:center">
+        <div class="coin coin-quantum">🌀</div>
+        <div class="coin-sub">Quantum Qubit<br>Both at once!</div>
+      </div>
+    </div>
+    <div style="font-size:0.82rem; color:var(--muted); max-width:420px; margin:0 auto;">
+      A classical bit is like a coin lying flat — either heads or tails. A qubit is like a coin <em>spinning in the air</em> — it's both heads AND tails until you look at it (measure it), at which point it "collapses" to one.
+    </div>
+  </div>
+
+  <div class="body-text">
+    This is called <strong>superposition</strong>. A qubit isn't just faster than a bit — it's fundamentally different. It carries <em>both possibilities simultaneously</em> until you measure it. The magic is in doing calculations while it's still spinning — before it collapses into a definite answer.
+  </div>
+  <div class="body-text">
+    With 2 qubits in superposition, you can represent 4 states at once (00, 01, 10, 11). With 3 qubits: 8 states. With 300 qubits: more states than there are <strong>atoms in the observable universe</strong>. That's the power of quantum parallelism.
+  </div>
+
+  <!-- Qubits power chart -->
+  <div class="chart-card">
+    <div class="chart-title">How many states can N qubits represent simultaneously? (2ᴺ)</div>
+    <canvas id="qubitPowerChart" height="200"></canvas>
+    <div class="chart-note">Each qubit doubles the number of simultaneous states. At ~300 qubits, the number exceeds atoms in the observable universe (~10⁸⁰).</div>
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      <strong>叠加态（Superposition）</strong>就像一枚旋转中的硬币——它同时既是正面又是反面，直到你去"看"它（测量），才会"坍缩"成一个确定的结果。量子比特在被测量前同时代表多种可能性，这让量子计算机可以并行处理海量信息。<strong>2个量子比特 = 同时表示4种状态；10个 = 1024种；300个 = 比宇宙中所有原子还多的状态数</strong>。这就是量子并行的威力所在。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 3: ENTANGLEMENT ══ -->
+<div class="section">
+  <div class="section-label">Concept 03 · 概念三</div>
+  <div class="section-title">Entanglement — spooky action at a distance</div>
+  <div class="section-cn-title">量子纠缠——神秘的"心灵感应"</div>
+  <div class="divider"></div>
+
+  <div class="analogy-card analogy-purple" data-emoji="🔮">
+    <div class="analogy-tag">Einstein called it "spooky" · 爱因斯坦称之为"鬼魅般的远程效应"</div>
+    <div class="analogy-headline">Magic gloves 🧤🧤</div>
+    <div class="analogy-body">
+      Imagine you have a pair of gloves. You put one in a box and ship it to Tokyo. When you open your box in Singapore and see a left glove — you instantly know Tokyo has the right glove.<br><br>
+      Quantum entanglement is like that, but <strong>weirder</strong>: neither glove <em>decided</em> to be left or right until you opened the box. The act of measuring one <em>instantly</em> determines the other — no matter how far apart they are.
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Entanglement</strong> links two qubits together so that the state of one instantly determines the state of the other — even across vast distances. Einstein hated this idea (he called it "spooky action at a distance") but experiments have proven it's real.
+  </div>
+  <div class="body-text">
+    In a quantum computer, entanglement is a resource — it means qubits can be correlated in ways that amplify correct answers and cancel out wrong ones when you run a calculation. It's one of the key ingredients that makes quantum computers more powerful than classical ones for specific problems.
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      <strong>量子纠缠</strong>可以用一双魔法手套来理解：你把一只装进箱子寄到东京，另一只留在新加坡。打开箱子看到左手套的瞬间，你就知道东京那只是右手套——这并不神奇。但量子纠缠更离奇：在你打开箱子之前，两只手套<em>都还没有决定</em>自己是左还是右！测量其中一个，另一个瞬间"知道"自己的状态，无论相隔多远。爱因斯坦称之为"鬼魅般的远程效应"，但实验已证明它确实存在。在量子计算中，纠缠是一种资源，帮助量子比特相互协调，从而放大正确答案、消除错误答案。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4: INTERFERENCE ══ -->
+<div class="section">
+  <div class="section-label">Concept 04 · 概念四</div>
+  <div class="section-title">Interference — boosting good answers, killing bad ones</div>
+  <div class="section-cn-title">量子干涉——放大正确答案，消除错误答案</div>
+  <div class="divider"></div>
+
+  <div class="analogy-card analogy-teal" data-emoji="🌊">
+    <div class="analogy-tag">The analogy · 类比</div>
+    <div class="analogy-headline">Ocean waves 🌊</div>
+    <div class="analogy-body">
+      When two ocean waves meet, they can <strong>add together</strong> (constructive interference — a bigger wave) or <strong>cancel each other out</strong> (destructive interference — flat water).<br><br>
+      Quantum algorithms use this same trick: they're designed so that paths leading to the <strong>correct answer add up</strong>, while paths leading to wrong answers <strong>cancel each other out</strong>. What's left is your answer.
+    </div>
+  </div>
+
+  <div class="body-text">
+    This is why quantum computers aren't just "faster classical computers." They use a fundamentally different trick: <strong>interference</strong> allows quantum algorithms to be designed so that wrong answers destroy themselves, and the correct answer survives. It's like nature doing the filtering for you.
+  </div>
+
+  <!-- Interference chart -->
+  <div class="chart-card">
+    <div class="chart-title">Constructive vs Destructive Interference — Wave Analogy · 建设性与破坏性干涉</div>
+    <canvas id="interferenceChart" height="180"></canvas>
+    <div class="chart-note">Correct computation paths are reinforced (add together). Wrong paths cancel. The surviving signal is your answer.</div>
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      <strong>量子干涉</strong>就像海浪：两列波相遇，可以叠加变大（建设性干涉），也可以相互抵消变平（破坏性干涉）。量子算法正是利用这一原理精心设计——让通向正确答案的路径相互叠加放大，让通向错误答案的路径相互抵消消失。这就是量子计算机与普通计算机的根本区别：它不是更快地逐一枚举答案，而是让错误答案<em>自动消失</em>，正确答案自然浮现。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 5: CLASSICAL VS QUANTUM ══ -->
+<div class="section">
+  <div class="section-label">Concept 05 · 概念五</div>
+  <div class="section-title">What can quantum computers actually do?</div>
+  <div class="section-cn-title">量子电脑到底能做什么？</div>
+  <div class="divider"></div>
+
+  <div class="body-text">
+    Here's the most important thing to understand: <strong>quantum computers are not better at everything</strong>. They're not going to replace your laptop. They excel at specific types of hard problems that classical computers struggle with.
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Problem Type · 问题类型</th>
+        <th>Classical 💻</th>
+        <th>Quantum ⚛️</th>
+        <th>Why it matters · 重要性</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sending email</strong><br>发邮件</td>
+        <td>✅ Perfect</td>
+        <td>😐 Overkill</td>
+        <td>Stick with your laptop</td>
+      </tr>
+      <tr>
+        <td><strong>Breaking encryption</strong><br>破解密码</td>
+        <td>❌ Millions of years</td>
+        <td>✅ Hours (one day)</td>
+        <td>🔴 National security risk</td>
+      </tr>
+      <tr>
+        <td><strong>Drug discovery</strong><br>新药研发</td>
+        <td>😓 Approx. (very slow)</td>
+        <td>✅ Simulate molecules exactly</td>
+        <td>Cure diseases faster</td>
+      </tr>
+      <tr>
+        <td><strong>Portfolio optimisation</strong><br>投资组合优化</td>
+        <td>😓 Approximates</td>
+        <td>✅ Near-exact solutions</td>
+        <td>Better returns, lower risk</td>
+      </tr>
+      <tr>
+        <td><strong>Logistics routing</strong><br>物流路径规划</td>
+        <td>😓 Heuristics only</td>
+        <td>✅ True optimal paths</td>
+        <td>Billions saved in shipping</td>
+      </tr>
+      <tr>
+        <td><strong>Weather forecasting</strong><br>天气预报</td>
+        <td>😓 Limited accuracy</td>
+        <td>✅ Far more variables</td>
+        <td>Better climate models</td>
+      </tr>
+      <tr>
+        <td><strong>AI training</strong><br>AI模型训练</td>
+        <td>✅ Very good (GPUs)</td>
+        <td>🔬 Possible speedup (future)</td>
+        <td>Still being researched</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pill-grid">
+    <div class="use-pill">💊 Drug discovery</div>
+    <div class="use-pill">🔐 Quantum-safe crypto</div>
+    <div class="use-pill">📈 Finance optimisation</div>
+    <div class="use-pill">🚚 Supply chain</div>
+    <div class="use-pill">🌤️ Climate modelling</div>
+    <div class="use-pill">🔋 Battery chemistry</div>
+    <div class="use-pill">✈️ Aerospace simulation</div>
+    <div class="use-pill">🧬 Protein folding</div>
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      最重要的是：<strong>量子电脑不是万能的，不会取代你的笔记本</strong>。它只在特定类型的"超难问题"上比经典计算机强，主要包括：<strong>密码破解</strong>（国家安全级别的威胁）、<strong>分子模拟/新药研发</strong>（比现有方法精确得多）、<strong>金融投资组合优化</strong>、<strong>物流路径规划</strong>、<strong>气候建模</strong>、<strong>电池化学</strong>等。发邮件、刷社交媒体——继续用你的手机就好。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 6: WHERE ARE WE NOW ══ -->
+<div class="section">
+  <div class="section-label">Concept 06 · 概念六</div>
+  <div class="section-title">Where are we today? The quantum roadmap</div>
+  <div class="section-cn-title">现在进展到哪里了？量子路线图</div>
+  <div class="divider"></div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>NISQ Era (Now — ~2030)</strong> — "Noisy Intermediate-Scale Quantum." Machines have 50–1,000+ qubits but make errors. Like a calculator that sometimes gives wrong answers. Useful for specific optimisation problems today. IonQ, Rigetti, D-Wave live here.<br>
+        <span style="color:var(--muted); font-size:0.8rem;">当前阶段（约至2030年）：有噪声的中等规模量子计算，误差较高，适用于特定优化问题。</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Quantum Advantage (~2028–2033)</strong> — Quantum computers reliably outperform classical computers on commercially valuable problems. The inflection point investors are betting on. Error correction improves dramatically.<br>
+        <span style="color:var(--muted); font-size:0.8rem;">量子优势阶段：量子机器在商业重要问题上稳定超越经典计算机，纠错能力大幅提升。</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Fault-Tolerant Quantum Computing (~2033–2040+)</strong> — Errors are corrected in real-time. Millions of logical qubits. This is when quantum computers truly change the world — breaking encryption, simulating biology at atomic scale, solving optimisation problems humans cannot even frame today.<br>
+        <span style="color:var(--muted); font-size:0.8rem;">容错量子计算阶段：实时纠错，数百万逻辑量子比特，真正改变世界的阶段。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline chart -->
+  <div class="chart-card">
+    <div class="chart-title">Quantum computing timeline — capability milestones · 量子计算能力发展路线图</div>
+    <canvas id="timelineChart" height="220"></canvas>
+    <div class="chart-note">Illustrative only. Actual timelines uncertain — IonQ is the most commercially advanced pure-play today. [ESTIMATED projections]</div>
+  </div>
+
+  <div class="callout">
+    <strong>The big risk:</strong> Nobody knows exactly when fault-tolerant quantum computing arrives. It could be 2030. It could be 2040. This is why quantum stocks are so speculative — you're essentially betting on a timeline. IonQ is the only pure-play with real revenue today (~$265M guided for 2026). Everyone else is still building.
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      量子计算发展分三阶段：<strong>①当前NISQ时代</strong>（约至2030年）——有噪声、高误差，但已可用于特定优化问题；<strong>②量子优势阶段</strong>（约2028–2033年）——量子机器在商业重要问题上稳定超越经典计算机，这是投资者最关注的拐点；<strong>③容错量子计算阶段</strong>（约2033年后）——实时纠错，真正颠覆世界。最大风险：<strong>没有人确切知道容错量子计算何时到来</strong>。这正是量子股票高度投机的根本原因——你是在押注一个时间表。目前唯一有真实规模收入的纯享股是IonQ（2026年指引约2.65亿美元）。
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 7: THE THREE MAGIC INGREDIENTS ══ -->
+<div class="section">
+  <div class="section-label">Recap · 总结</div>
+  <div class="section-title">The 3 magic ingredients — in 3 sentences</div>
+  <div class="section-cn-title">三个魔法成分——三句话说清楚</div>
+  <div class="divider"></div>
+
+  <div class="qubit-grid">
+    <div class="qubit-box quantum">
+      <div class="qubit-icon">🌀</div>
+      <div class="qubit-label">Superposition</div>
+      <div class="qubit-desc"><strong>Be both 0 and 1</strong> at the same time — explore all possibilities simultaneously.</div>
+      <div style="margin-top:6px; font-size:0.75rem; color:var(--muted); font-family:'PingFang SC','Microsoft YaHei',sans-serif;"><strong>叠加态</strong>：同时是0又是1，并行探索所有可能性。</div>
+    </div>
+    <div class="qubit-box quantum">
+      <div class="qubit-icon">🔮</div>
+      <div class="qubit-label">Entanglement</div>
+      <div class="qubit-desc"><strong>Link qubits together</strong> so they instantly affect each other, no matter the distance.</div>
+      <div style="margin-top:6px; font-size:0.75rem; color:var(--muted); font-family:'PingFang SC','Microsoft YaHei',sans-serif;"><strong>纠缠</strong>：量子比特相互关联，瞬间影响彼此。</div>
+    </div>
+    <div class="qubit-box quantum">
+      <div class="qubit-icon">🌊</div>
+      <div class="qubit-label">Interference</div>
+      <div class="qubit-desc"><strong>Wrong answers cancel out.</strong> Correct answers amplify. Nature does the filtering.</div>
+      <div style="margin-top:6px; font-size:0.75rem; color:var(--muted); font-family:'PingFang SC','Microsoft YaHei',sans-serif;"><strong>干涉</strong>：错误答案自动消除，正确答案自动放大。</div>
+    </div>
+    <div class="qubit-box">
+      <div class="qubit-icon">💻</div>
+      <div class="qubit-label">Classical Bit</div>
+      <div class="qubit-desc">Can only be <strong>0 OR 1</strong>. Processes one state at a time. Fast but sequential.</div>
+      <div style="margin-top:6px; font-size:0.75rem; color:var(--muted); font-family:'PingFang SC','Microsoft YaHei',sans-serif;"><strong>普通比特</strong>：只能是0或1，一次处理一个状态。</div>
+    </div>
+  </div>
+
+  <!-- Speedup comparison -->
+  <div class="chart-card">
+    <div class="chart-title">Time to solve a 1,000-variable optimisation problem — Classical vs Quantum [ILLUSTRATIVE EST.]</div>
+    <canvas id="speedupChart" height="180"></canvas>
+    <div class="chart-note">[ESTIMATED — illustrative only.] Actual speedup depends entirely on problem type and algorithm. Quantum advantage is problem-specific, not universal.</div>
+  </div>
+
+  <div class="cn-block">
+    <div class="cn-lbl">中文摘要</div>
+    <div class="cn-text">
+      量子计算的三大核心原理：<br>
+      🌀 <strong>叠加态</strong>——量子比特同时是0和1，像旋转中的硬币，并行探索所有可能性；<br>
+      🔮 <strong>纠缠</strong>——量子比特之间神秘地相互关联，测量其中一个，另一个瞬间"感知"，无论相距多远；<br>
+      🌊 <strong>干涉</strong>——通过波的叠加与抵消，错误答案自动消除，正确答案自动浮现。<br>
+      三者结合，造就了量子计算在特定问题上远超经典计算机的能力。
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  ELI5: Quantum Computing · 量子计算科普 · Prepared for Ting · May 2026<br>
+  本文件仅供教育参考，不构成投资建议。
+</div>
+
+<!-- ══ CHARTS ══ -->
+<script>
+// 1. Qubit power chart
+new Chart(document.getElementById('qubitPowerChart'), {
+  type: 'bar',
+  data: {
+    labels: ['1 qubit', '2 qubits', '4 qubits', '8 qubits', '16 qubits', '32 qubits', '64 qubits'],
+    datasets: [{
+      label: 'Simultaneous states (2ᴺ)',
+      data: [2, 4, 16, 256, 65536, 4294967296, 1.8e19],
+      backgroundColor: [
+        'rgba(24,95,165,0.5)',
+        'rgba(24,95,165,0.55)',
+        'rgba(24,95,165,0.6)',
+        'rgba(24,95,165,0.65)',
+        'rgba(24,95,165,0.7)',
+        'rgba(24,95,165,0.8)',
+        'rgba(24,95,165,0.95)',
+      ],
+      borderRadius: 6,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const v = ctx.raw;
+            if (v >= 1e18) return '~' + (v/1e18).toFixed(0) + ' quintillion states';
+            if (v >= 1e9) return '~' + (v/1e9).toFixed(0) + ' billion states';
+            if (v >= 1e6) return '~' + (v/1e6).toFixed(0) + ' million states';
+            return v.toLocaleString() + ' states';
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        type: 'logarithmic',
+        ticks: {
+          callback: v => {
+            if (v >= 1e18) return (v/1e18).toFixed(0)+'Q';
+            if (v >= 1e9) return (v/1e9).toFixed(0)+'B';
+            if (v >= 1e6) return (v/1e6).toFixed(0)+'M';
+            if (v >= 1e3) return (v/1e3).toFixed(0)+'K';
+            return v;
+          },
+          font: { size: 10, family: 'Space Mono' }
+        },
+        grid: { color: '#f0ede7' }
+      },
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// 2. Interference wave chart
+const labels2 = Array.from({length: 60}, (_, i) => i);
+const waveA = labels2.map(x => Math.sin(x * 0.3));
+const waveB = labels2.map(x => Math.sin(x * 0.3 + 0.2));
+const constructive = labels2.map((x, i) => waveA[i] + waveB[i]);
+const destructive  = labels2.map((x, i) => Math.sin(x * 0.3) + Math.sin(x * 0.3 + Math.PI));
+
+new Chart(document.getElementById('interferenceChart'), {
+  type: 'line',
+  data: {
+    labels: labels2,
+    datasets: [
+      {
+        label: 'Correct path (amplified)',
+        data: constructive,
+        borderColor: '#1a8c5a',
+        backgroundColor: 'rgba(26,140,90,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0.4,
+        fill: true
+      },
+      {
+        label: 'Wrong path (cancelled)',
+        data: destructive,
+        borderColor: '#b83232',
+        backgroundColor: 'rgba(184,50,50,0.06)',
+        borderWidth: 2,
+        borderDash: [5, 4],
+        pointRadius: 0,
+        tension: 0.4,
+        fill: true
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 16 } }
+    },
+    scales: {
+      y: { ticks: { font: { size: 10 } }, grid: { color: '#f0ede7' } },
+      x: { display: false }
+    }
+  }
+});
+
+// 3. Timeline / capability chart
+new Chart(document.getElementById('timelineChart'), {
+  type: 'line',
+  data: {
+    labels: ['2020', '2022', '2024', '2026', '2028', '2030', '2032', '2035', '2040'],
+    datasets: [
+      {
+        label: 'Qubit Count (leading hardware)',
+        data: [65, 127, 1000, 1500, 4000, 10000, 50000, 200000, 1000000],
+        borderColor: '#185FA5',
+        backgroundColor: 'rgba(24,95,165,0.08)',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#185FA5',
+        pointRadius: 4,
+        tension: 0.35,
+        yAxisID: 'y',
+        fill: true
+      },
+      {
+        label: 'Commercial relevance score [EST]',
+        data: [1, 2, 4, 8, 18, 35, 55, 78, 95],
+        borderColor: '#1a8c5a',
+        backgroundColor: 'rgba(26,140,90,0.07)',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#1a8c5a',
+        pointRadius: 4,
+        borderDash: [6, 3],
+        tension: 0.35,
+        yAxisID: 'y2',
+        fill: true
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 11 }, boxWidth: 16 } },
+      annotation: {}
+    },
+    scales: {
+      y: {
+        type: 'logarithmic',
+        position: 'left',
+        title: { display: true, text: 'Qubit Count (log)', font: { size: 10 } },
+        ticks: { font: { size: 9 }, callback: v => v >= 1000 ? (v/1000)+'K' : v },
+        grid: { color: '#f0ede7' }
+      },
+      y2: {
+        type: 'linear',
+        position: 'right',
+        title: { display: true, text: 'Commercial Score [EST]', font: { size: 10 } },
+        max: 100, min: 0,
+        ticks: { font: { size: 9 } },
+        grid: { display: false }
+      },
+      x: { ticks: { font: { size: 11 } }, grid: { color: '#f5f2ec' } }
+    }
+  }
+});
+
+// 4. Speedup comparison
+new Chart(document.getElementById('speedupChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Email / Word Processing', 'Simple Database Query', 'Molecule Simulation\n(10 atoms)', 'Portfolio Optimisation\n(1,000 assets)', 'Breaking RSA Encryption\n(2048-bit)'],
+    datasets: [
+      {
+        label: 'Classical computer 💻',
+        data: [0.001, 0.01, 8760, 43800, 1e9],  // hours
+        backgroundColor: 'rgba(122,113,105,0.6)',
+        borderRadius: 4
+      },
+      {
+        label: 'Quantum computer (future fault-tolerant) ⚛️ [EST]',
+        data: [0.001, 0.01, 0.1, 0.5, 2],  // hours
+        backgroundColor: 'rgba(24,95,165,0.7)',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 14 } },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const v = ctx.raw;
+            if (v >= 8760) return ctx.dataset.label + ': ~' + (v/8760).toFixed(0) + ' years';
+            if (v >= 24) return ctx.dataset.label + ': ~' + (v/24).toFixed(0) + ' days';
+            if (v < 0.01) return ctx.dataset.label + ': milliseconds';
+            return ctx.dataset.label + ': ~' + v.toFixed(1) + ' hrs';
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'logarithmic',
+        ticks: {
+          callback: v => {
+            if (v >= 8760) return (v/8760).toFixed(0)+'yr';
+            if (v >= 24) return (v/24).toFixed(0)+'d';
+            if (v >= 1) return v+'h';
+            return v*60+'min';
+          },
+          font: { size: 9 }
+        },
+        title: { display: true, text: 'Time to solve (log scale)', font: { size: 10 } },
+        grid: { color: '#f0ede7' }
+      },
+      y: { ticks: { font: { size: 9 } }, grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
