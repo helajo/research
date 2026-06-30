@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investor Signals — June 30, 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: #f8f8f6; color: #1a1a1a; padding: 2rem;
+         max-width: 900px; margin: 0 auto; }
+  .report-header { border-bottom: 1px solid #e0e0d8; padding-bottom: 1.25rem; margin-bottom: 1.5rem; }
+  .session-badge { display: inline-flex; align-items: center; gap: 6px;
+                   background: #EDE9FE; border: 1px solid #C4B5FD;
+                   border-radius: 6px; padding: 4px 10px;
+                   font-size: 11px; color: #5B21B6; margin-bottom: 10px; }
+  .session-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; }
+  .report-title { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .report-title-cn { font-size: 14px; color: #888; margin-bottom: 6px;
+                     font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .report-date { font-size: 13px; color: #777; }
+  .section-label { font-size: 11px; font-weight: 600; color: #888;
+                   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .window-note { font-size: 11px; color: #aaa; margin-bottom: 14px; font-style: italic; }
+  .investor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .investor-grid-single { margin-bottom: 12px; }
+  .investor-card { background: #fff; border: 1px solid #e8e8e0;
+                   border-top: 3px solid #5B3FA5;
+                   border-radius: 0 0 12px 12px; padding: 14px 16px; }
+  .investor-top { display: flex; justify-content: space-between;
+                  align-items: flex-start; margin-bottom: 4px; gap: 8px; flex-wrap: wrap; }
+  .investor-name { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+  .investor-handle { font-size: 11px; color: #999; margin-left: 4px; }
+  .investor-badge { font-size: 10px; font-weight: 700; padding: 2px 8px;
+                    border-radius: 20px; white-space: nowrap; }
+  .badge-alumni  { background: #EDE9FE; color: #4C1D95; }
+  .badge-vc      { background: #E0F2FE; color: #0369A1; }
+  .badge-hedge   { background: #FEF9C3; color: #713F12; }
+  .badge-founder { background: #F0FDF4; color: #14532D; }
+  .investor-fund { font-size: 11px; color: #999; margin-bottom: 10px; }
+  .investor-signal { font-size: 13px; color: #444; line-height: 1.65; margin-bottom: 10px; }
+  .investor-why { background: #F5F0FF; border-radius: 6px; padding: 8px 12px; margin-bottom: 10px; }
+  .why-label { font-size: 9px; font-weight: 700; color: #7C3AED;
+               text-transform: uppercase; letter-spacing: 0.07em;
+               display: block; margin-bottom: 3px; }
+  .why-text { font-size: 12px; color: #444; line-height: 1.5; }
+  .investor-cn { font-size: 12px; color: #999; line-height: 1.7; margin-bottom: 8px;
+                 padding-top: 8px; border-top: 1px dashed #e8e8e0;
+                 font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .src-line { font-size: 11px; color: #aaa; }
+  .src-line a { color: #5B3FA5; text-decoration: none; }
+  .cn-summary { background: #f5f3ee; border-left: 3px solid #C4B5FD;
+                border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 1.5rem; }
+  .cn-label { font-size: 9px; font-weight: 700; color: #9CA3AF;
+              text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .cn-text { font-size: 13px; color: #666; line-height: 1.9;
+             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  .sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+  .sources a { color: #5B3FA5; text-decoration: none; }
+  .divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+  .footer { font-size: 11px; color: #bbb; text-align: center;
+            padding-top: 1rem; border-top: 1px solid #e8e8e0;
+            margin-top: 1.5rem; line-height: 1.8; }
+  ticker { font-weight: 600; color: #1a1a1a; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <div class="session-badge">
+    <span class="session-dot"></span>
+    Manual run · Investor signals scan · 4-week window
+  </div>
+  <div class="report-title">Notable investor signals</div>
+  <div class="report-title-cn">知名投资人信号追踪</div>
+  <div class="report-date">Tuesday, June 30, 2026 · Singapore time · AI/VC watchlist · 新加坡时间 · AI与风投信号</div>
+</div>
+
+<!-- SIGNALS -->
+<div class="section-label">Signals this run 本次信号 (4 found)</div>
+<div class="window-note">Lookback window: 4 weeks (June 2 – June 30, 2026). Standard run uses 7 days.</div>
+
+<!-- ROW 1 -->
+<div class="investor-grid">
+
+  <!-- CARD 1: Leopold Aschenbrenner -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Leopold Aschenbrenner</span>
+        <span class="investor-handle">@leopoldasch</span>
+      </div>
+      <span class="investor-badge badge-alumni">AI Lab Alumni</span>
+    </div>
+    <div class="investor-fund">Situational Awareness LP · $20B+ AUM · Former OpenAI researcher turned AI infrastructure fund manager</div>
+    <div class="investor-signal">
+      Situational Awareness has surpassed <strong>$20 billion AUM</strong>, up <strong>270% after fees in 2026 YTD</strong> and more than 1,000% since inception, per the WSJ (June 8). Jane Street — the notoriously selective quant firm — became a new LP, a rare endorsement from institutional capital that almost never backs outside managers. Separately, a Schedule 13G filed in late May disclosed a <strong>5.6% stake in Nebius Group (NBIS)</strong> — 12.41 million Class A shares valued at ~$2.58B at the time — making it the fund's largest single equity holding.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Jane Street's LP commitment validates the AI-infrastructure-as-bottleneck thesis at scale; watch <ticker>NBIS</ticker>, <ticker>IREN</ticker>, <ticker>RIOT</ticker>, <ticker>BTDR</ticker>, and <ticker>INTC</ticker> as the fund's publicly disclosed infrastructure plays.</span>
+    </div>
+    <div class="investor-cn">
+      前OpenAI研究员Aschenbrenner旗下的Situational Awareness基金规模已突破200亿美元，2026年迄今回报率高达270%，并获得顶级量化交易公司Jane Street罕见注资。基金通过持有Nebius（NBIS）5.6%股权（约25.8亿美元）押注AI算力基础设施，表明市场资金正加速流向云计算与数据中心赛道。
+    </div>
+    <div class="src-line">
+      <a href="https://finance.yahoo.com/markets/stocks/articles/situational-awareness-270-2026-now-183812603.html">Yahoo Finance / Blockspace</a> · June 8, 2026 &nbsp;|&nbsp;
+      <a href="https://sherwood.news/markets/nebius-rises-after-ai-hedge-fund-situational-awareness-discloses-5-6-stake/">Sherwood News — Nebius 13G</a> · May 28, 2026
+    </div>
+  </div>
+
+  <!-- CARD 2: Cathie Wood / ARK -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Cathie Wood</span>
+        <span class="investor-handle">@CathieDWood</span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">ARK Invest · ~$15B AUM · Daily-disclosed ETF manager, 5-year disruptive innovation thesis</div>
+    <div class="investor-signal">
+      On June 25–26, ARK executed a notable rotation: it <strong>sold 570,391 shares of Alibaba (BABA)</strong> across ARKK, ARKW, and ARKF — approximately <strong>$54.2M</strong> — while simultaneously buying <strong>111,989 shares of Cerebras Systems (CBRS)</strong> for <strong>$20.4M</strong>. The Cerebras buy follows a June 24 purchase of 99,000 CBRS shares, signaling a deliberate accumulation of the AI chip IPO. ARK has now been a consistent buyer of CBRS for multiple consecutive sessions.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">ARK's multi-day CBRS accumulation and its exit from China tech (BABA) is a clean signal: ARK is rotating from China AI exposure into domestic AI chip challengers to <ticker>NVDA</ticker> — directly bullish for <ticker>CBRS</ticker>, bearish for <ticker>BABA</ticker>.</span>
+    </div>
+    <div class="investor-cn">
+      方舟投资（ARK）在6月25–26日大幅出售阿里巴巴（BABA）约5420万美元，同期连续买入AI芯片新星Cerebras Systems（CBRS）合计约2040万美元。这一轮换明确表明ARK正将资金从中国科技股转向美国本土AI芯片赛道，对国内算力供应链具有直接看涨信号。
+    </div>
+    <div class="src-line">
+      <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-alibaba-and-roku-stock-buys-cerebras-systems-93CH-4761916">Investing.com — CBRS buy / BABA sell</a> · June 25, 2026 &nbsp;|&nbsp;
+      <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-alibaba-stock-buys-coinbase-and-palantir-93CH-4763883">Investing.com — June 26 trades</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ROW 2 -->
+<div class="investor-grid">
+
+  <!-- CARD 3: Stanley Druckenmiller -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">Stanley Druckenmiller</span>
+        <span class="investor-handle"></span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">Duquesne Family Office · Macro legend who called the 2008 bubble and turned $12B into $40B</div>
+    <div class="investor-signal">
+      Druckenmiller's Q1 2026 13F (filed May 15, widely analyzed June 22–23) revealed he <strong>sold his entire Alphabet (GOOGL) position</strong> — 385,000 shares — and rotated the proceeds into <strong>SanDisk (SNDK), Micron Technology (MU), and Seagate Technology (STX)</strong>. The connecting thesis: AI workloads require massive memory and storage regardless of which model or hyperscaler wins. SNDK is up ~4,800% over 12 months, MU +875%, STX +705%.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Druckenmiller's "picks and shovels" rotation away from GOOGL and into AI memory infrastructure (SNDK, MU, STX) reinforces the view that even macro legends now see storage and DRAM — not model-layer software — as the durable AI bottleneck.</span>
+    </div>
+    <div class="investor-cn">
+      传奇宏观投资人德鲁肯米勒在2026年一季度清仓谷歌（GOOGL），将资金全面转入AI存储基础设施：闪迪（SNDK）、美光（MU）和希捷（STX）。其逻辑是：无论哪家AI模型或超大规模云厂商胜出，存储需求都是硬性瓶颈，这一"卖铲子"策略对储存芯片板块具有强烈看涨含义。
+    </div>
+    <div class="src-line">
+      <a href="https://247wallst.com/investing/2026/06/23/stanley-druckenmiller-backs-these-3-chip-and-tech-stocks-should-you-follow/">24/7 Wall St.</a> · June 23, 2026 &nbsp;|&nbsp;
+      <a href="https://finance.yahoo.com/markets/stocks/articles/billionaire-stanley-druckenmiller-dumped-every-145823004.html">Yahoo Finance — Alphabet exit</a> · May 20, 2026
+    </div>
+  </div>
+
+  <!-- CARD 4: David Tepper -->
+  <div class="investor-card">
+    <div class="investor-top">
+      <div>
+        <span class="investor-name">David Tepper</span>
+        <span class="investor-handle"></span>
+      </div>
+      <span class="investor-badge badge-hedge">Hedge Fund</span>
+    </div>
+    <div class="investor-fund">Appaloosa Management · ~$8B AUM · AI mega-cap bull known for outsized conviction trades</div>
+    <div class="investor-signal">
+      Appaloosa's Q1 2026 13F (filed May 15, analyzed June 22) showed Tepper <strong>tripled his Micron (MU) position</strong> from 500,000 to 1.5 million shares (+200% in one quarter). <strong>Amazon (AMZN)</strong> became the portfolio's single largest holding after Tepper nearly doubled the position (+98%, adding ~2.14M shares). He simultaneously <strong>trimmed NVIDIA (NVDA) by ~13%</strong> and <strong>cut AMD by ~32%</strong>, and exited all airline positions entirely.
+    </div>
+    <div class="investor-why">
+      <span class="why-label">Why it matters 为何重要</span>
+      <span class="why-text">Tepper's simultaneous MU +200% and NVDA/AMD trims suggest he sees AI infrastructure spending shifting from GPU procurement to memory/HBM supply — converging with Druckenmiller's thesis — and that AWS cloud capex makes <ticker>AMZN</ticker> a cleaner AI infrastructure play than pure chip names.</span>
+    </div>
+    <div class="investor-cn">
+      对冲基金大佬大卫·泰珀在2026年一季度将美光（MU）持仓增加200%，同时将亚马逊（AMZN）提升为第一大重仓股（增持98%），并削减英伟达13%和AMD 32%。与德鲁肯米勒的逻辑相呼应——聪明资金正从GPU供应商转向AI存储芯片与云基础设施，高内存带宽（HBM）需求或成为下一个超额回报来源。
+    </div>
+    <div class="src-line">
+      <a href="https://247wallst.com/investing/2026/06/22/david-tepper-trimmed-nvidia-and-amd-but-doubled-down-on-this-ai-stock/">24/7 Wall St. — Tepper Q1 2026</a> · June 22, 2026 &nbsp;|&nbsp;
+      <a href="https://www.fool.com/investing/2026/05/20/billionaire-david-tepper-appaloosa-pile-ai-3-stock/">Motley Fool — Appaloosa 13F</a> · May 20, 2026
+    </div>
+  </div>
+
+</div>
+
+<!-- OVERALL CHINESE SUMMARY -->
+<div class="cn-summary">
+  <div class="cn-label">中文摘要 — 本期信号汇总</div>
+  <div class="cn-text">
+    本期四项信号呈现高度一致的主题：AI聪明资金正从模型层与GPU供应商转向基础设施瓶颈——存储芯片（MU、SNDK、STX）、算力云（NBIS、AMZN）与国产AI芯片（CBRS）。德鲁肯米勒与泰珀同步减持NVDA、GOOGL，增持存储赛道，表明市场共识正在形成：下一个超额回报来自"算力所需的水、电、储存"，而非模型本身。对于跟踪美股的新加坡投资者而言，关键风险在于存储股估值已大幅上涨（SNDK年涨超4800%），追高需谨慎；机会则在于Cerebras（CBRS）等AI芯片IPO若获ARK持续加仓，可能引发新一轮机构跟风效应。
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOURCES -->
+<div class="section-label">Sources 信息来源</div>
+<div class="sources">
+  <a href="https://finance.yahoo.com/markets/stocks/articles/situational-awareness-270-2026-now-183812603.html">Yahoo Finance / Blockspace — "Situational Awareness up 270% in 2026, now counts Jane Street as investor"</a> · June 8, 2026<br>
+  <a href="https://sherwood.news/markets/nebius-rises-after-ai-hedge-fund-situational-awareness-discloses-5-6-stake/">Sherwood News — "Nebius rises after AI hedge fund Situational Awareness discloses 5.6% stake"</a> · May 28, 2026<br>
+  <a href="https://www.cnbc.com/2026/05/28/nebius-situational-awareness-ai-stock-ex-openai-stake.html">CNBC — "This AI stock is surging after an ex-OpenAI employee's fund disclosed a stake"</a> · May 28, 2026<br>
+  <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-alibaba-and-roku-stock-buys-cerebras-systems-93CH-4761916">Investing.com — "Cathie Wood's ARK sells Alibaba and Roku, buys Cerebras Systems"</a> · June 25, 2026<br>
+  <a href="https://www.investing.com/news/company-news/cathie-woods-ark-sells-alibaba-stock-buys-coinbase-and-palantir-93CH-4763883">Investing.com — "Cathie Wood's ARK sells Alibaba, buys Coinbase and Palantir"</a> · June 26, 2026<br>
+  <a href="https://247wallst.com/investing/2026/06/23/stanley-druckenmiller-backs-these-3-chip-and-tech-stocks-should-you-follow/">24/7 Wall St. — "Stanley Druckenmiller Backs These 3 Chip and Tech Stocks"</a> · June 23, 2026<br>
+  <a href="https://finance.yahoo.com/markets/stocks/articles/billionaire-stanley-druckenmiller-dumped-every-145823004.html">Yahoo Finance — "Druckenmiller Dumped Every Share of Alphabet, Bought AI Memory Stocks"</a> · May 20, 2026<br>
+  <a href="https://247wallst.com/investing/2026/06/22/david-tepper-trimmed-nvidia-and-amd-but-doubled-down-on-this-ai-stock/">24/7 Wall St. — "David Tepper Trimmed Nvidia and AMD, but Doubled Down on This AI Stock"</a> · June 22, 2026<br>
+  <a href="https://www.fool.com/investing/2026/05/20/billionaire-david-tepper-appaloosa-pile-ai-3-stock/">The Motley Fool — "Billionaire David Tepper of Appaloosa Is Piling Into the AI Revolution"</a> · May 20, 2026<br>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Investor Signals Scan · 投资人信号追踪<br>
+  June 30, 2026 · Manual run · 4-week window · AI/VC watchlist
+</div>
+
+</body>
+</html>
