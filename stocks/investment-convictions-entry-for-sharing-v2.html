@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment Convictions at Entry — COHR, IQE, IONQ, BE (For Sharing)</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 12px 14px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+
+.rating { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 12px; }
+.rating-green  { background: #EAF3DE; color: #27500A; }
+.rating-amber  { background: #FAEEDA; color: #633806; }
+.rating-blue   { background: #E6F1FB; color: #0C447C; }
+
+.body-text { font-size: 14px; line-height: 1.7; color: #333; margin-bottom: 6px; }
+.body-text strong { color: #111; }
+
+.bullets { list-style: none; margin: 10px 0; padding: 0; }
+.bullets li { font-size: 13.5px; line-height: 1.6; color: #333; padding: 4px 0 4px 16px; position: relative; }
+.bullets li::before { content: "—"; position: absolute; left: 0; color: #185FA5; font-weight: 700; }
+
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+.case-box { border-radius: 8px; padding: 10px 12px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12.5px; line-height: 1.6; color: #27500A; }
+.bear-text { font-size: 12.5px; line-height: 1.6; color: #791F1F; }
+
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+.divider { height: 1px; background: #e8e8e0; margin: 1.5rem 0; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+
+/* ── CURRENT STATUS UPDATE ── */
+.status-block { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 14px 16px; margin-top: 16px; }
+.status-header { font-size: 10px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.status-cell { padding: 6px 0; }
+.status-label { font-size: 10px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.status-val { font-size: 16px; font-weight: 700; }
+.status-sub { font-size: 11px; margin-top: 1px; }
+.thesis-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 8px; }
+.thesis-intact  { background: #EAF3DE; color: #27500A; }
+.thesis-watch   { background: #FAEEDA; color: #633806; }
+.thesis-broken  { background: #FCEBEB; color: #791F1F; }
+.status-note { font-size: 12.5px; color: #555; line-height: 1.6; }
+.up   { color: #0F6E56; }
+.dn   { color: #A32D2D; }
+.flat { color: #888; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">CONVICTION RECORD + CURRENT STATUS · 建仓信念记录及最新状态</div>
+  <div class="doc-title">Investment Convictions at Entry — With Current Status Update</div>
+  <div class="doc-title-cn">建仓时点的投资信念记录及当前持仓状态更新</div>
+  <div class="doc-meta">COHR · IQE · IONQ · BE — Prices updated 2 July 2026 · 价格更新于2026年7月2日</div>
+</div>
+
+<!-- ============ PORTFOLIO SNAPSHOT ============ -->
+<div class="section">
+  <div class="section-num">PORTFOLIO SNAPSHOT · 持仓概览</div>
+  <div class="section-title">Current Status — All Four Positions</div>
+  <div class="section-title-cn">四项持仓当前状态汇总 — 2026年7月2日</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="metric-card">
+      <div class="metric-label">COHR</div>
+      <div class="metric-val dn">$368.65</div>
+      <div class="metric-sub dn">−3.6% vs avg entry</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IQE</div>
+      <div class="metric-val up">48.73 GBX</div>
+      <div class="metric-sub up">+1.5% vs entry</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">IONQ</div>
+      <div class="metric-val dn">$51.40</div>
+      <div class="metric-sub dn">−4.8% vs entry</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">BE</div>
+      <div class="metric-val up">$289.50</div>
+      <div class="metric-sub up">+15.8% vs entry</div>
+    </div>
+  </div>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Thesis intact — no action</div>
+      <div class="bull-text">COHR, IQE, IONQ — all three are in normal
+      operating range. Drawdowns reflect sector sentiment or technical sellers,
+      not fundamental deterioration. No exit criteria triggered across any of
+      the three.</div>
+    </div>
+    <div class="case-box" style="background:#FAEEDA;">
+      <div class="case-label" style="color:#633806;">Monitor — decision point approaching</div>
+      <div class="bull-text" style="color:#633806;">BE — best performer but highest
+      valuation risk. July 30 earnings set as explicit decision point at entry.
+      Oracle deal status and Q2 guidance are the two variables that determine
+      whether the hold extends.</div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      截至2026年7月2日，四项持仓整体情况：<strong>COHR</strong> 较平均建仓成本浮亏 3.6%，
+      由 Bain Capital 持续退出造成的技术性抛压所致，基本面未变；<strong>IQE</strong> 较建仓价
+      小幅浮盈 1.5%，建仓以来经历大幅双向波动后回归原点，Tower 供应协议作为建仓后
+      验证性信号已经兑现；<strong>IONQ</strong> 较建仓价浮亏 4.8%，属行政令驱动涨幅后
+      的正常回调，三项硬性退出标准均未触发；<strong>BE</strong> 浮盈 +15.8%，
+      为最佳表现持仓，7 月 30 日财报为建仓时明确设定的决策节点，
+      届时将根据甲骨文协议进展及第二季度指引决定是否继续持有。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ COHR ============ -->
+<div class="section">
+  <div class="section-num">POSITION 1 · 第一项持仓</div>
+  <div class="section-title">COHR — Coherent Corp</div>
+  <div class="section-title-cn">COHR — 相干公司</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-blue">AI Photonics · Layer 2 — Compute Bloodstream</span>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Entry 1</div>
+      <div class="metric-val">$375.00</div>
+      <div class="metric-sub">26 May 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Entry 2 (add)</div>
+      <div class="metric-val">$390.00</div>
+      <div class="metric-sub">16 Jun 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Average Cost</div>
+      <div class="metric-val">$382.50</div>
+      <div class="metric-sub">Across both entries</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Conviction at entry:</strong> COHR sits at the centre of the AI optical
+    photonics supply chain — the company builds the optical transceivers and
+    interconnects that move data between servers in AI data centers as the industry
+    transitions toward Co-Packaged Optics (CPO). Conviction was anchored on three
+    concrete, verifiable facts rather than narrative alone.
+  </div>
+
+  <ul class="bullets">
+    <li>Nvidia made a <strong>$2 billion strategic equity investment</strong> in Coherent
+    in early 2026, including multi-year purchase commitments — the most important
+    customer in AI hardware putting capital behind the company.</li>
+    <li>InP (Indium Phosphide) manufacturing capacity ramp confirmed
+    <strong>ahead of schedule</strong>, with the order book reported sold out
+    through 2027.</li>
+    <li>Second entry (add at $390) was made <strong>after</strong> two independent
+    confirmations: Jensen Huang publicly stated at Computex that AI data centers are
+    being "rewired around optical interconnects," and the Tower Semiconductor–IQE
+    supply deal validated demand one layer further down the same chain. The add was
+    a conviction-driven decision on confirming news flow, not a momentum chase —
+    entered roughly 11% below the all-time high of $440.</li>
+  </ul>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case at entry</div>
+      <div class="bull-text">Structural, multi-year photonics demand cycle with the
+      industry's most important customer (Nvidia) as a locked-in strategic partner.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Known risk at entry</div>
+      <div class="bear-text">Valuation always rich (179x+ P/E); Bain Capital running
+      a multi-tranche private equity exit, creating recurring technical selling
+      pressure unrelated to the business.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Exit criteria set at entry:</strong> Sell if photonics revenue declines
+    two consecutive quarters, if the Nvidia partnership is cancelled or reduced, or
+    if a major customer publicly switches to a competitor. Not a sell on daily price
+    moves, analyst downgrades, or one weak quarter.
+  </div>
+
+  <div class="status-block">
+    <div class="status-header">📍 Current Status · 当前状态 — 2 Jul 2026</div>
+    <div class="status-grid">
+      <div class="status-cell">
+        <div class="status-label">Entry (avg)</div>
+        <div class="status-val">$382.50</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Current Price</div>
+        <div class="status-val">$368.65</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Unrealised P&L</div>
+        <div class="status-val dn">−$13.85</div>
+        <div class="status-sub dn">−3.6% per share</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Next Catalyst</div>
+        <div class="status-val" style="font-size:13px;">Aug 13</div>
+        <div class="status-sub">Q4 FY2026 earnings</div>
+      </div>
+    </div>
+    <span class="thesis-pill thesis-intact">Thesis Intact · 逻辑未变</span>
+    <div class="status-note">
+      Current drawdown from average entry is driven by the same Bain Capital
+      multi-tranche exit overhang documented at entry — not any deterioration
+      in the photonics business. Nvidia's $2B partnership remains in place.
+      InP ramp confirmed ahead of schedule. Revenue +21% YoY last print.
+      No exit criteria have been triggered. Next decision point: August 13 earnings —
+      watching for data centre revenue growth trajectory and any CPO design-win
+      commentary.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">
+        当前相对于平均建仓成本的浮亏，与建仓时已记录的 Bain Capital 分批退出
+        所造成的供应压力有关——并非光子业务本身出现恶化。英伟达 20 亿美元战略
+        合作保持不变，InP 产能爬坡进度确认超前于计划，上一财报期收入同比增长 21%。
+        所有预设退出标准均未触发。下一个决策节点：8 月 13 日财报，
+        重点关注数据中心收入增长走势及 CPO 设计胜出的相关表态。
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>建仓信念：</strong>COHR 处于 AI 光子供应链的核心位置——该公司生产光学收发器和互连器，
+      在行业向共封装光学（CPO）转型的过程中，负责在 AI 数据中心服务器之间传输数据。建仓信念建立在三个
+      可核实的具体事实之上，而非单纯的叙事。<br><br>
+      第一，英伟达（Nvidia）于 2026 年初对 Coherent 进行了
+      <strong>20 亿美元的战略股权投资</strong>，并附带多年期采购承诺——这是 AI 硬件领域最重要的客户，
+      用真金白银表态。<br>
+      第二，InP（磷化铟）产能爬坡<strong>进度超前于计划</strong>，订单已排满至 2027 年。<br>
+      第三，第二次加仓（390 美元）是在<strong>两项独立验证之后</strong>做出的：黄仁勋在 Computex 上
+      公开表示 AI 数据中心正在"围绕光学互连重构"，同时 Tower Semiconductor 与 IQE 的供应协议从
+      供应链更下游验证了同一需求。此次加仓是基于确认性消息流的信念决策，而非追涨——
+      入场价较 440 美元的历史高点低约 11%。<br><br>
+      <strong>看涨理由：</strong>结构性、多年期的光子需求周期，且行业最重要的客户（英伟达）
+      已成为锁定的战略合作伙伴。<br>
+      <strong>已知风险：</strong>估值始终偏高（市盈率 179 倍以上）；Bain Capital 正在分批
+      减持私募股权头寸，造成与基本面无关的反复性技术性抛压。<br><br>
+      <strong>建仓时设定的退出标准：</strong>若光子业务收入连续两个季度下滑、英伟达合作关系
+      被取消或削减、或主要客户公开转向竞争对手，则卖出。日常价格波动、分析师下调评级，
+      或单季度业绩疲软，均不构成卖出理由。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ IQE ============ -->
+<div class="section">
+  <div class="section-num">POSITION 2 · 第二项持仓</div>
+  <div class="section-title">IQE plc — Compound Semiconductor Wafers</div>
+  <div class="section-title-cn">IQE plc — 化合物半导体晶圆</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-blue">AI Photonics Raw Material · Layer 1 adjacent</span>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Entry Price</div>
+      <div class="metric-val">48.00 GBX</div>
+      <div class="metric-sub">28 May 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Earnings Score</div>
+      <div class="metric-val">23 / 25</div>
+      <div class="metric-sub">Custom framework — Strong Buy</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Exchange</div>
+      <div class="metric-val">London AIM</div>
+      <div class="metric-sub">IQE.L</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Conviction at entry:</strong> IQE sits one layer deeper than COHR in the
+    photonics supply chain — it grows the Indium Phosphide (InP) epitaxial wafers
+    that are the raw material everything else in the chain is built from. The thesis
+    was a "follow the supply chain downward" extension of the COHR thesis: a deep
+    technical moat (epitaxy foundries take decades to replicate) sitting underneath
+    a confirmed structural demand story.
+  </div>
+
+  <ul class="bullets">
+    <li>Entry was deliberately timed <strong>after</strong> FY2025 earnings on
+    28 May 2026, scored against a custom 25-point framework: <strong>23/25 — Strong Buy.</strong></li>
+    <li>Photonics segment revenue grew <strong>+15% year-on-year</strong> to £57.1m
+    even as total group revenue fell on wireless segment weakness — the AI-relevant
+    part of the business was accelerating while the unrelated part declined.</li>
+    <li><strong>MACOM Technology Solutions invested £45m</strong> as a strategic
+    partner (equity + convertible notes) with board seats and long-term supply
+    agreements — the clearest possible validation from a sophisticated industry
+    insider, on the same day as the earnings release.</li>
+    <li>FY2026 guidance: <strong>&gt;20% revenue growth</strong>, with management
+    explicitly naming "InP solutions supporting data centre and AI markets" as the
+    material growth driver.</li>
+    <li>Subsequent confirmation (post-entry): <strong>Tower Semiconductor</strong>
+    signed a multi-year InP supply agreement with minimum purchase commitments —
+    a second independent customer validating the same raw-material thesis.</li>
+  </ul>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case at entry</div>
+      <div class="bull-text">Owns the deepest, hardest-to-replicate layer of the AI
+      photonics chain, now backed by two confirmed strategic customers (MACOM, Tower).</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Known risk at entry</div>
+      <div class="bear-text">Small-cap AIM stock, extreme volatility (beta ~2.2,
+      ~12% weekly moves typical); dilutive fundraise at 19.8p creates recurring
+      psychological pressure on the share price; Morningstar flagged 98% premium
+      to its conservative fair value model.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Exit criteria set at entry:</strong> Sell if photonics revenue reverses
+    decline, if the MACOM or Tower relationships deteriorate, or if InP demand
+    signals from customers reverse. Not a sell on AIM-typical volatility or further
+    dilution noise alone.
+  </div>
+
+  <div class="status-block">
+    <div class="status-header">📍 Current Status · 当前状态 — 2 Jul 2026</div>
+    <div class="status-grid">
+      <div class="status-cell">
+        <div class="status-label">Entry Price</div>
+        <div class="status-val">48.00 GBX</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Current Price</div>
+        <div class="status-val">48.73 GBX</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Unrealised P&L</div>
+        <div class="status-val up">+0.73 GBX</div>
+        <div class="status-sub up">+1.5% per share</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Next Catalyst</div>
+        <div class="status-val" style="font-size:13px;">Sept 2026</div>
+        <div class="status-sub">Next trading update</div>
+      </div>
+    </div>
+    <span class="thesis-pill thesis-intact">Thesis Intact · 逻辑未变</span>
+    <div class="status-note">
+      Essentially at cost after a volatile six weeks — the share price has
+      swung between 38.5 GBX (post-earnings EBITDA headline selloff) and
+      56.4 GBX (post-Tower Semiconductor deal announcement) before settling
+      near entry. Both swings were anticipated: the downside was a known
+      AIM-liquidity and dilution-overhang risk documented at entry; the upside
+      was the Tower deal, which came as a post-entry confirmation of the
+      raw-material demand thesis. MACOM partnership and >20% FY2026 guidance
+      remain intact. No exit criteria triggered.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">
+        六周内经历大幅波动后，股价基本回归至建仓成本附近——期间曾从最低
+        38.5 便士（财报 EBITDA 标题数据引发抛售）反弹至最高 56.4 便士
+        （Tower Semiconductor 合作协议公告后），随后回落至建仓价附近。
+        两次波动均在意料之中：下行风险是建仓时已记录的 AIM 流动性与稀释性融资
+        压力；上行则来自 Tower 协议——作为建仓后对原材料需求逻辑的进一步验证。
+        MACOM 合作关系与 2026 财年超过 20% 的收入增长指引均保持不变，
+        所有预设退出标准均未触发。
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>建仓信念：</strong>IQE 在光子供应链中比 COHR 更深一层——它生产磷化铟（InP）
+      外延晶圆，是整个供应链其他环节赖以制造的原材料。该投资逻辑是 COHR 论点"向供应链下游延伸"
+      的自然结果：一道深厚的技术护城河（外延工艺代工厂需要数十年才能复制）位于已被验证的
+      结构性需求故事之下。<br><br>
+      建仓时机刻意选在 2026 年 5 月 28 日 2025 财年业绩公布<strong>之后</strong>，
+      并按自定的 25 分评分体系打分：<strong>23/25 分——强烈买入。</strong><br>
+      光子业务收入<strong>同比增长 15%</strong>至 5710 万英镑，即便集团整体收入因无线业务疲软
+      而下滑——与 AI 相关的业务在加速增长，而不相关的业务在萎缩。<br>
+      <strong>MACOM Technology Solutions 以 4500 万英镑</strong>作为战略投资者入股
+      （股权加可转换票据），并获得董事会席位及长期供应协议——这是来自资深行业内部人士
+      最清晰的验证信号，且与业绩发布同日宣布。<br>
+      2026 财年指引：<strong>收入增长超过 20%</strong>，管理层明确将"支持数据中心和 AI 市场的
+      InP 解决方案"列为主要增长动力。<br>
+      建仓后的进一步验证：<strong>Tower Semiconductor</strong> 签署了带有最低采购承诺的
+      多年期 InP 供应协议——第二个独立客户验证了同一原材料逻辑。<br><br>
+      <strong>看涨理由：</strong>占据 AI 光子链中最深、最难复制的环节，目前已获得两家
+      已确认的战略客户（MACOM、Tower）背书。<br>
+      <strong>已知风险：</strong>小盘 AIM 股票，波动性极高（贝塔系数约 2.2，
+      单周波动常达 12%）；以 19.8 便士价格进行的稀释性融资对股价造成反复的心理压力；
+      晨星按保守公允价值模型测算其溢价达 98%。<br><br>
+      <strong>建仓时设定的退出标准：</strong>若光子业务收入再度下滑、与 MACOM 或 Tower 的
+      合作关系恶化、或客户端的 InP 需求信号逆转，则卖出。AIM 股票典型的波动或进一步的
+      稀释噪音本身不构成卖出理由。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ IONQ ============ -->
+<div class="section">
+  <div class="section-num">POSITION 3 · 第三项持仓</div>
+  <div class="section-title">IONQ Inc. — Quantum Computing</div>
+  <div class="section-title-cn">IONQ — 量子计算</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-amber">Speculative Sleeve · 5–7 Year Horizon</span>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Entry Price</div>
+      <div class="metric-val">$54.00</div>
+      <div class="metric-sub">25 Jun 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Position Type</div>
+      <div class="metric-val">Speculative Sleeve</div>
+      <div class="metric-sub">Deliberately small, capped allocation</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Sizing Rule</div>
+      <div class="metric-val">Hard Cap</div>
+      <div class="metric-sub">Pure speculation budget, set in advance</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Conviction at entry:</strong> Of the four publicly listed pure-play
+    quantum computing names (IONQ, RGTI, QBTS, QUBT), IONQ was selected specifically
+    because it was the only one with the balance sheet and contract visibility to
+    survive the long, uncertain wait to commercial-scale quantum advantage. This was
+    explicitly sized as speculation, not a core holding — purchased with the
+    pre-commitment that it must be able to withstand a 50% drawdown without
+    reconsideration.
+  </div>
+
+  <ul class="bullets">
+    <li><strong>$3.1 billion in cash</strong> as of Q1 2026 — by far the largest
+    war chest of any quantum pure-play, giving the longest runway through the
+    current unprofitable, cash-burning phase of the industry.</li>
+    <li>Q1 2026 revenue <strong>$64.7m, up 755% year-on-year</strong>; contracted
+    backlog (RPO) <strong>surged 554% to ~$470m</strong> — not speculative
+    revenue, but signed and contracted.</li>
+    <li>Listed and available on all three major cloud platforms — AWS, Azure,
+    and Google Cloud — the lowest adoption barrier of any competitor.</li>
+    <li>Part of the <strong>$2 billion US federal quantum investment program</strong>
+    and benefiting from Trump executive orders accelerating quantum development.</li>
+    <li><strong>Actively vertically integrating</strong> — acquiring Bluefors
+    (cryogenics, the cooling layer of the quantum stack) and SkyWater (chip
+    control) — buying up its own supply chain rather than depending on it.</li>
+    <li>Strong Buy consensus from 13 analysts, average target $68.79 at time
+    of entry (≈18% implied upside).</li>
+  </ul>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case at entry</div>
+      <div class="bull-text">Best balance sheet, best contract visibility, and
+      broadest cloud distribution of any quantum pure-play — the most likely
+      survivor if quantum computing takes longer than hoped to reach scale.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Known risk at entry</div>
+      <div class="bear-text">Still trading at ~109x sales even as the "cheapest"
+      of its peer group — fundamentally pricing in a future that must be real,
+      large, and reasonably soon. Routine 10-15% single-day moves on no news;
+      insider net-selling across the entire sector (~$931m).</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Exit criteria set at entry:</strong> Sell if cash position drops below
+    $1 billion, if a major cloud platform drops IONQ, or if government contracts
+    are cancelled. Explicitly <strong>not</strong> a sell on daily volatility,
+    sector-wide profit-taking, or a single down week — this position was
+    pre-committed to a multi-year hold regardless of near-term price action.
+  </div>
+
+  <div class="status-block">
+    <div class="status-header">📍 Current Status · 当前状态 — 2 Jul 2026</div>
+    <div class="status-grid">
+      <div class="status-cell">
+        <div class="status-label">Entry Price</div>
+        <div class="status-val">$54.00</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Current Price</div>
+        <div class="status-val">$51.40</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Unrealised P&L</div>
+        <div class="status-val dn">−$2.60</div>
+        <div class="status-sub dn">−4.8% per share</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Next Catalyst</div>
+        <div class="status-val" style="font-size:13px;">Q2 Results</div>
+        <div class="status-sub">Bluefors integration update</div>
+      </div>
+    </div>
+    <span class="thesis-pill thesis-intact">Thesis Intact · 逻辑未变</span>
+    <div class="status-note">
+      A 4.8% drawdown from entry is well within the normal operating range
+      for this position — pre-entry diligence specifically flagged routine
+      10–15% single-session moves on no news. The current pullback reflects
+      sector-wide profit-taking following the June Trump executive-order rally,
+      not any company-specific deterioration. All three hard exit criteria remain
+      uncrossed: cash ($3.1B) is well above the $1B floor; all three cloud
+      platforms (AWS, Azure, Google) retain IONQ; federal contracts are active.
+      Bluefors and SkyWater acquisitions are progressing. This is a 5–7 year
+      position and the holding clock started approximately one week ago.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">
+        建仓以来 4.8% 的浮亏完全在该仓位的正常波动范围之内——建仓前的尽调
+        已明确指出该股在无具体消息的情况下，单个交易日内常规波动幅度即可达
+        10%-15%。当前回调反映了市场在六月特朗普量子行政令引发的大幅上涨后
+        的整体获利了结，并非公司层面的基本面恶化。三项硬性退出标准均未触发：
+        现金储备（31 亿美元）远高于 10 亿美元的下限红线；三大云平台
+        （亚马逊 AWS、微软 Azure、谷歌云）均保留 IONQ 产品；联邦合同仍处于
+        有效状态。Bluefors 与 SkyWater 的收购进程正在推进。
+        这是一项 5-7 年期的持仓，持仓时钟大约在一周前才刚刚开始计时。
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>建仓信念：</strong>在四家上市的纯量子计算公司（IONQ、RGTI、QBTS、QUBT）中，
+      选择 IONQ 的原因很明确——它是唯一拥有足够资产负债表实力和合同可见度、能够撑过
+      通往商业级量子优势这段漫长且充满不确定性的等待期的公司。此仓位被明确定位为投机性配置，
+      而非核心持仓——买入前已预先承诺：必须能够承受 50% 的回撤而不动摇。<br><br>
+      截至 2026 年第一季度，<strong>现金及投资达 31 亿美元</strong>——远超同业任何一家纯量子公司，
+      为公司在当前全行业仍处于亏损、烧钱阶段提供了最长的资金跑道。<br>
+      2026 年第一季度收入<strong>6470 万美元，同比增长 755%</strong>；合同储备（RPO）
+      <strong>激增 554% 至约 4.7 亿美元</strong>——这并非预测性收入，而是已签约、有合同约束的收入。<br>
+      已在亚马逊云（AWS）、微软云（Azure）和谷歌云三大主流云平台同时上线——
+      是同业中采用门槛最低的一家。<br>
+      属于<strong>美国联邦 20 亿美元量子投资计划</strong>的一部分，并受益于特朗普政府
+      加速量子发展的行政命令。<br>
+      <strong>正在积极纵向整合</strong>——收购 Bluefors（低温制冷，量子技术栈中的冷却环节）
+      和 SkyWater（芯片控制）——主动买下自己的供应链，而非单纯依赖外部供应商。<br>
+      建仓时获 13 位分析师一致强烈买入评级，平均目标价 68.79 美元（隐含上涨空间约 18%）。<br><br>
+      <strong>看涨理由：</strong>在所有纯量子公司中拥有最佳资产负债表、最强合同可见度
+      及最广的云平台覆盖——若量子计算实现规模化的时间比预期更长，它最有可能是最终的幸存者。<br>
+      <strong>已知风险：</strong>即便是同业中"最便宜"的一家，市销率仍高达约 109 倍——
+      本质上是在为一个必须真实、必须够大、且必须在合理时间内到来的未来定价。
+      该股常在没有具体消息的情况下单日波动 10%-15%；全行业内部人士净卖出约 9.31 亿美元。<br><br>
+      <strong>建仓时设定的退出标准：</strong>若现金储备跌破 10 亿美元、主要云平台下架 IONQ、
+      或政府合同被取消，则卖出。<strong>明确不</strong>因日常波动、行业性获利了结，
+      或单周下跌而卖出——此仓位在建仓时已预先承诺为多年期持有，不受短期价格波动影响。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ BE ============ -->
+<div class="section">
+  <div class="section-num">POSITION 4 · 第四项持仓</div>
+  <div class="section-title">BE — Bloom Energy</div>
+  <div class="section-title-cn">BE — Bloom Energy（博隆能源）</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-amber">Clean AI Power · Layer 6/7 — Energy Buffer / Source</span>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Entry Price</div>
+      <div class="metric-val">$250.00</div>
+      <div class="metric-sub">June 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Entry Trigger</div>
+      <div class="metric-val">Price Alert</div>
+      <div class="metric-sub">Bought on pullback notification</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Position Status</div>
+      <div class="metric-val">Most speculative</div>
+      <div class="metric-sub">of the four core positions</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Conviction at entry:</strong> Bloom Energy provides on-site fuel-cell
+    power generation that lets AI data centers bypass slow, constrained grid
+    interconnection queues — addressing one of the most binding near-term
+    bottlenecks in AI infrastructure buildout: getting enough power, fast enough,
+    to the data center. This was always flagged and entered as the
+    <strong>highest-risk</strong> of the four positions.
+  </div>
+
+  <ul class="bullets">
+    <li><strong>Oracle 2.8GW deal</strong> — a large, named, confirmed hyperscaler
+    commitment, not a speculative pipeline figure.</li>
+    <li>Additional confirmed deal with <strong>Nebius</strong> for AI data centre power.</li>
+    <li>Revenue growth of <strong>+130%</strong> in the most recent reported quarter
+    at time of research.</li>
+    <li>Entry was disciplined — bought on an alert price after a pullback, not
+    chased at the highs, following an extended +1,300%+ run from 52-week lows that
+    had already been flagged repeatedly as "meme stock" territory requiring caution.</li>
+  </ul>
+
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Bull case at entry</div>
+      <div class="bull-text">Solves a genuine, immediate physical bottleneck
+      (grid interconnection delays) that pure compute and chip plays cannot
+      address — power is the binding constraint, and Bloom sells the workaround.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Known risk at entry</div>
+      <div class="bear-text">By far the most extreme valuation in the portfolio —
+      GuruFocus flagged ~944% premium to its fair value model. Director sold
+      55,000 shares shortly before/around entry. Citi published a "fully valued"
+      note. Explicitly entered with eyes open as a momentum/narrative-driven
+      position, not a value position.</div>
+    </div>
+  </div>
+
+  <div class="body-text">
+    <strong>Exit criteria set at entry:</strong> Sell if the Oracle 2.8GW deal is
+    cancelled or materially reduced, if Q2 revenue misses significantly, or if
+    management lowers guidance. Decision point explicitly set for the next
+    earnings report (30 July 2026) rather than reacting to interim price swings —
+    this stock was acknowledged at entry to be capable of large single-session
+    moves in both directions on sentiment alone.
+  </div>
+
+  <div class="status-block">
+    <div class="status-header">📍 Current Status · 当前状态 — 2 Jul 2026</div>
+    <div class="status-grid">
+      <div class="status-cell">
+        <div class="status-label">Entry Price</div>
+        <div class="status-val">$250.00</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Current Price</div>
+        <div class="status-val">$289.50</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Unrealised P&L</div>
+        <div class="status-val up">+$39.50</div>
+        <div class="status-sub up">+15.8% per share</div>
+      </div>
+      <div class="status-cell">
+        <div class="status-label">Next Catalyst</div>
+        <div class="status-val" style="font-size:13px;">Jul 30</div>
+        <div class="status-sub">Q2 FY2026 earnings — key decision point</div>
+      </div>
+    </div>
+    <span class="thesis-pill thesis-watch">Monitor Closely · 密切关注</span>
+    <div class="status-note">
+      Best performer of the four positions at +15.8%. The Oracle 2.8GW deal
+      remains the anchor of this thesis and has not been reduced or cancelled.
+      The position has already experienced a full cycle since entry: rallied to
+      ~$291 before pulling back to $247, then recovered to $289. The stock's
+      high-volatility profile noted at entry has been confirmed in practice.
+      <strong>July 30 is the explicit decision point set at entry</strong> —
+      if Q2 revenue continues growing and guidance is maintained, the thesis
+      extends; if management signals headwinds on the Oracle delivery timeline
+      or margins, the exit criteria are approached. A director sale of 55,000
+      shares near entry remains a monitored yellow flag. The "Thesis: Watch"
+      rating reflects the valuation stretch, not any fundamental deterioration.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">
+        四项持仓中表现最佳，浮盈 +15.8%。作为本论点核心支撑的甲骨文 2.8 吉瓦
+        合作协议未被削减或取消。建仓以来该持仓已经历完整的波动周期：曾涨至约
+        291 美元，回落至 247 美元，随后再度反弹至 289 美元。建仓时已记录的
+        高波动性特征在实际中得到了印证。<strong>7 月 30 日是建仓时明确设定的
+        决策节点</strong>——若第二季度收入延续增长态势且指引维持不变，则持有逻辑
+        得以延伸；若管理层就甲骨文交付时间表或利润率发出不利信号，
+        则接近退出标准。一位董事在建仓前后出售 5.5 万股的情况仍作为黄色预警
+        持续跟踪。"密切关注"评级反映的是估值层面的压力，而非基本面的恶化。
+      </div>
+    </div>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>建仓信念：</strong>Bloom Energy 提供现场燃料电池发电方案，使 AI 数据中心
+      得以绕开缓慢且受限的电网并网排队流程——这正是当前 AI 基础设施建设中最紧迫的瓶颈之一：
+      如何足够快地为数据中心获取足够的电力。此仓位自建仓起便被明确标记为四项核心持仓中
+      <strong>风险最高</strong>的一项。<br><br>
+      <strong>甲骨文（Oracle）2.8 吉瓦的合作协议</strong>——这是一项规模庞大、对象明确、
+      已确认的超大规模云服务商承诺，而非推测性的潜在订单数字。<br>
+      另与 <strong>Nebius</strong> 达成 AI 数据中心供电的确认协议。<br>
+      研究当时最近一个报告季度收入增长<strong>达 130%</strong>。<br>
+      建仓过程保持纪律——是在价格提醒触发、股价回调后买入，而非在高点追涨，
+      此前该股已从 52 周低点暴涨超过 1300%，并多次被提示存在"概念炒作股"特征，
+      需要谨慎对待。<br><br>
+      <strong>看涨理由：</strong>解决了一个真实而紧迫的物理瓶颈（电网并网延迟问题），
+      这是纯算力和芯片类公司无法解决的——电力是制约因素，而 Bloom 正是出售这一解决方案的公司。<br>
+      <strong>已知风险：</strong>是整个组合中估值最为极端的一项——GuruFocus 测算其较公允价值
+      溢价约 944%。董事在建仓前后曾出售 5.5 万股。花旗发布"估值已充分反映"的研报。
+      该仓位在建仓时已明确认知为动量／叙事驱动型仓位，而非价值型仓位。<br><br>
+      <strong>建仓时设定的退出标准：</strong>若甲骨文 2.8 吉瓦合作被取消或大幅削减、
+      第二季度收入大幅不及预期、或管理层下调指引，则卖出。决策节点明确设定为
+      下一次财报（2026 年 7 月 30 日），而非对期间的价格波动做出反应——
+      该股在建仓时已被认知为可能仅因市场情绪就在单个交易日内出现大幅双向波动。
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Thesis log compiled at entry · Current prices updated 2 July 2026 ·
+  For comparing original conviction against live thesis-check at each earnings checkpoint.<br>
+  建仓信念记录 · 当前价格更新于2026年7月2日 ·
+  用于在每次财报节点将最初的投资逻辑与实时状态进行对照核查。
+</div>
+
+</body>
+</html>
