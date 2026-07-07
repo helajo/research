@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI 8-Layer Stack — Thematic Research Note (2026-07-07)</title>
+<style>
+  :root{
+    --ink:#1a2332; --muted:#5b6b7f; --accent:#0e5fd8; --accent2:#0a3d91;
+    --bg:#f6f8fb; --card:#ffffff; --line:#dde5ee;
+    --zh-bg:#eef4ff; --zh-border:#0e5fd8;
+    --warn-bg:#fff7e8; --warn-border:#d97706;
+    --good:#0a7d4f; --bad:#b42318;
+  }
+  *{box-sizing:border-box}
+  body{font-family:"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.55}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 24px 64px}
+  header.hero{background:linear-gradient(135deg,#0a3d91,#0e5fd8);color:#fff;border-radius:14px;padding:28px 32px;margin-bottom:28px}
+  header.hero h1{margin:0 0 6px;font-size:26px}
+  header.hero .sub{opacity:.9;font-size:14px}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:2px 12px;font-size:12px;margin-top:10px;margin-right:8px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:22px}
+  h2{font-size:19px;color:var(--accent2);border-bottom:2px solid var(--line);padding-bottom:8px;margin-top:0}
+  h3{font-size:15px;color:var(--ink);margin-bottom:6px}
+  p,li{font-size:14px}
+  ul{padding-left:20px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;margin:12px 0}
+  th{background:#eef2f8;color:var(--accent2);text-align:left;padding:7px 9px;border:1px solid var(--line);white-space:nowrap}
+  td{padding:6px 9px;border:1px solid var(--line);vertical-align:top}
+  tr:nth-child(even) td{background:#fafcfe}
+  .zh{background:var(--zh-bg);border-left:4px solid var(--zh-border);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:16px;font-size:14px}
+  .zh .zh-label{font-weight:700;color:var(--accent2);display:block;margin-bottom:4px;font-size:13px}
+  .warn{background:var(--warn-bg);border-left:4px solid var(--warn-border);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13.5px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:1px 6px;margin-right:4px}
+  .tag.kb{background:#e6f4ea;color:var(--good)} .tag.est{background:#fdf0e6;color:#b45309} .tag.live{background:#e6efff;color:var(--accent2)}
+  .benef{background:#f0f7f2;border-left:4px solid var(--good);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13.5px;margin-top:12px}
+  .up{color:var(--good);font-weight:600} .down{color:var(--bad);font-weight:600}
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+  .num{white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>The AI 8-Layer Stack: A Full Value-Chain Primer</h1>
+  <div class="sub">AI 八层价值链全景研究报告 · Thematic research note — July 7, 2026 · Market Researcher agent + live stock-data refresh</div>
+  <span class="badge">DRAFT — for analyst review</span>
+  <span class="badge">Not for distribution</span>
+  <span class="badge">EN body · 中文摘要 per section</span>
+</header>
+
+<!-- ==================== DISCLAIMER ==================== -->
+<section>
+  <h2>0. Sourcing &amp; Data Disclaimer (read first)</h2>
+  <div class="warn">
+    <b>Capital IQ / FactSet connectors were not authorized</b> at drafting time. Figures come from the author's knowledge base (reliable through ~January 2026), except Section 9a which is <b>live Yahoo Finance data pulled 2026-07-07</b> via the local stock-data MCP server. Labels: <span class="tag kb">KB, date</span> dated fact &nbsp;<span class="tag est">EST</span> directional estimate &nbsp;<span class="tag live">LIVE</span> quote as of 2026-07-07. Market caps and multiples for AI names can move 30%+ in six months — <b>refresh every valuation figure before any client-facing use</b> (checklist in Appendix).
+  </div>
+  <div class="zh"><span class="zh-label">中文摘要 · 数据来源声明</span>
+  本报告撰写时未接入 Capital IQ / FactSet 付费数据源，正文数字来自模型知识库（可靠截至约2026年1月）；仅第9a节为2026年7月7日通过本地 stock-data 服务器（雅虎财经）获取的实时行情。所有估值数字在对外使用前必须刷新核实，附录附有核查清单。</div>
+</section>
+
+<!-- ==================== 1 FRAMEWORK ==================== -->
+<section>
+  <h2>1. Framework: Why Eight Layers</h2>
+  <p>The AI trade began as a one-stock story (NVIDIA) and has broadened into a full industrial value chain, segmented into eight layers from physical inputs to end demand:</p>
+  <table>
+    <tr><th>#</th><th>Layer</th><th>What it sells</th><th>Economic character</th></tr>
+    <tr><td>1</td><td>Semiconductors / AI accelerators</td><td>Compute engines (GPUs, custom ASICs)</td><td>Oligopoly, extreme margins</td></tr>
+    <tr><td>2</td><td>Semi equipment, foundry &amp; memory</td><td>The means of production (fabs, litho, HBM)</td><td>Monopoly/oligopoly toll roads</td></tr>
+    <tr><td>3</td><td>Data center hardware &amp; networking</td><td>Racks, switches, optics, cooling</td><td>Competitive, mixed margins</td></tr>
+    <tr><td>4</td><td>Power &amp; energy infrastructure</td><td>Electrons and grid capacity</td><td>Scarcity repricing, long duration</td></tr>
+    <tr><td>5</td><td>Cloud &amp; AI compute platforms</td><td>Rentable compute (hyperscalers, neoclouds)</td><td>Scale game, capex-heavy</td></tr>
+    <tr><td>6</td><td>Foundation models</td><td>Intelligence itself (mostly private)</td><td>Land-grab, deeply cash-burning</td></tr>
+    <tr><td>7</td><td>Data, tooling &amp; middleware</td><td>Plumbing between models and enterprises</td><td>Fragmented, being re-sorted</td></tr>
+    <tr><td>8</td><td>Applications &amp; AI-native software</td><td>Workflows, agents, copilots</td><td>Disruption zone — winners and casualties</td></tr>
+  </table>
+  <p><b>Core claim:</b> value accrues fastest where physical scarcity binds (Layers 1, 2, 4) and where distribution plus integration compound (Layer 5); economics are most contested in models and applications (6, 8). Aggregate context: hyperscaler + frontier-lab AI capex tracking toward <b>$550–650B in 2026</b> <span class="tag est">EST</span>, up from ~$400B in 2025. Whether that spend earns its cost of capital is the single biggest debate in equities today.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 框架：为什么是八层</span>
+  AI 行情已从英伟达一只股票扩展为完整的产业价值链，本报告将其分为八层：芯片、设备/代工/存储、数据中心硬件、电力、云平台、基础模型、数据工具层、应用层。核心观点：价值最快积聚在物理稀缺环节（第1、2、4层）和具备分发+整合优势的云平台（第5层）；模型层和应用层（第6、8层）竞争最激烈、护城河最不确定。2026年AI基础设施资本开支预计达5500–6500亿美元【估算】，其回报率是当前股市最大的争论。</div>
+</section>
+
+<!-- ==================== LAYER 1 ==================== -->
+<section>
+  <h2>Layer 1 — Semiconductors / AI Accelerators</h2>
+  <p><b>Why it matters:</b> the compute engines that train and run models — the largest single profit pool in the stack today; the accelerator vendor captures the first and fattest cut of every AI capex dollar.</p>
+  <ul>
+    <li><b>NVIDIA (NVDA)</b> — ~85–90% of merchant AI accelerator revenue <span class="tag est">EST</span>. Blackwell ramped through 2025; <b>Rubin platform (HBM4)</b> slated for 2026 volume <span class="tag kb">KB Mar-2025</span>. Data center run-rate &gt;$200B annualized exiting 2025 <span class="tag est">EST</span>; first $5T company (Oct 2025). Moat = CUDA + NVLink rack-scale systems + one-year cadence.</li>
+    <li><b>AMD</b> — Credible #2; MI400/Helios targeted 2026. <b>OpenAI deal (Oct 2025): 6 GW of GPUs + warrants for ~160M AMD shares</b> <span class="tag kb">KB</span> — transformational validation, but emblematic of vendor-customer entanglement. AI GPU revenue still &lt;10% of NVIDIA's.</li>
+    <li><b>Broadcom (AVGO)</b> — Custom-ASIC king: Google TPU, Meta MTIA, ~$10B+ OpenAI XPU deal (Sep 2025), 10 GW OpenAI custom silicon (Oct 2025) <span class="tag kb">KB</span>. FY2026 AI semis guided ~$60B+ <span class="tag est">EST</span>; plus AI networking silicon (Tomahawk 6).</li>
+    <li><b>Marvell</b> — #2 custom silicon (Trainium, Maia programs) + electro-optics; share-shift questions vs. AVGO.</li>
+    <li><b>In-house hyperscaler silicon</b> — Google TPU (Gemini trained fully on TPU), Amazon Trainium 2/3 (Anthropic Project Rainier ~1M chips), Microsoft Maia, Meta MTIA — caps NVIDIA's share of internal workloads.</li>
+    <li><b>China domestic</b> — Huawei Ascend, Cambricon: export-control-capped but improving; "good enough" for domestic inference.</li>
+  </ul>
+  <p><b>Dynamics:</b> supply constraint migrated to CoWoS packaging + HBM, and increasingly power/shells; custom ASIC unit share ~15–20% (2025) → 25–30% by 2027 <span class="tag est">EST</span> — grows the pie near term, caps NVIDIA's long-run share. NVIDIA gross margins ~73–75%. NVIDIA captured an estimated <b>~40–45% of every AI data-center capex dollar</b> in 2025.</p>
+  <div class="benef"><b>Beneficiaries:</b> NVDA (the toll road, rack-scale lock-in) · AVGO (the hedge — wins whether the future is merchant or custom)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第1层：半导体 / AI 加速器</span>
+  这是当前整个价值链最大的利润池。英伟达占商用AI加速器收入约85–90%，凭借 CUDA 生态、NVLink 机架级系统和一年一代的节奏构筑护城河，2025年约每1美元AI数据中心资本开支中拿走40–45美分。博通是定制芯片(ASIC)之王（谷歌TPU、Meta、OpenAI 10GW订单），无论未来走商用GPU还是定制芯片路线都受益。AMD凭借OpenAI 6GW大单成为可信的第二名。风险：定制芯片份额上升（2027年或达25–30%）将长期压制英伟达份额。首选：NVDA、AVGO。</div>
+</section>
+
+<!-- ==================== LAYER 2 ==================== -->
+<section>
+  <h2>Layer 2 — Semi Equipment, Foundry &amp; Memory</h2>
+  <p><b>Why it matters:</b> the means of production — every accelerator, merchant or custom, is made by the same handful of companies. The purest "sell shovels to everyone" layer.</p>
+  <ul>
+    <li><b>TSMC (TSM)</b> — Effective monopoly on leading-edge AI logic: ~90%+ of sub-5nm accelerator production <span class="tag est">EST</span>. N2 ramps through 2026; CoWoS packaging capacity roughly doubling annually and still the gating factor for GPU output. HPC/AI passed 50% of revenue in 2025; ~$165B announced US expansion partially de-risks geography. Structurally under-multipled on the Taiwan-strait discount.</li>
+    <li><b>ASML</b> — EUV monopoly; High-NA adoption decisions define 2026–28. Orders reaccelerated on AI logic + memory capex upturn <span class="tag kb">KB Q3-2025</span>.</li>
+    <li><b>AMAT / LRCX / KLAC / TEL</b> — Broad WFE; Lam disproportionately levered to the NAND/DRAM upgrade cycle and HBM etch/deposition.</li>
+    <li><b>HBM triopoly</b> — <b>SK Hynix</b> ~55–60% HBM share, first to HBM4 qualification for Rubin; <b>Micron (MU)</b> strong #2/#3, HBM sold out through 2026, cleanest US-listed play; <b>Samsung</b> playing HBM4 catch-up.</li>
+    <li><b>Memory supercycle</b> — late 2025: DRAM/NAND contract prices spiked 30–60%+ q/q in some segments as HBM crowded out standard DRAM capacity <span class="tag kb">KB Nov–Dec 2025</span>. Memory entered 2026 in genuine shortage; HBM consumes ~3x the wafer capacity of standard DRAM per bit.</li>
+  </ul>
+  <p><b>Risk:</b> classic cyclicality — this layer gets hit first and hardest in any capex digestion phase.</p>
+  <div class="benef"><b>Beneficiaries:</b> TSM (monopoly toll road at a discount multiple) · SK Hynix / MU (HBM4 pricing cycle)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第2层：设备、代工与存储</span>
+  这是"卖铲子给所有人"的一层。台积电垄断先进制程AI芯片代工（5nm以下约90%+），CoWoS先进封装仍是全行业GPU产量的瓶颈；ASML垄断EUV光刻。HBM存储呈三寡头格局：SK海力士领先（约55–60%份额），美光是最纯正的美股标的，HBM已售罄至2026年。2025年底常规内存价格暴涨30–60%，2026年进入真正的存储短缺周期。主要风险是周期性——资本开支一旦消化，此层最先、最重地受创。首选：TSM、美光/SK海力士。<b>注意：实时数据显示美光市值已达约1.1万亿美元，此轮涨价逻辑已大幅兑现（见第9a节）。</b></div>
+</section>
+
+<!-- ==================== LAYER 3 ==================== -->
+<section>
+  <h2>Layer 3 — Data Center Hardware &amp; Networking</h2>
+  <p><b>Why it matters:</b> turns chips into deployable systems. As clusters scale to hundreds of thousands of accelerators, <b>the network and the thermal system become the product</b>. Rack power moved from ~10kW (cloud era) to 130kW+ (GB200/NVL72), heading to megawatt-class racks (Rubin Ultra, ~2027) — liquid cooling is now mandatory.</p>
+  <ul>
+    <li><b>Servers:</b> Dell (AI servers &gt;$20B annualized, CoreWeave/xAI wins, but low-teens gross margin pass-through); Super Micro (share and margin compression after 2024–25 accounting turmoil); Foxconn/Quanta/Wiwynn (the real volume rack builders); Celestica (hyperscaler ODM winner).</li>
+    <li><b>Networking:</b> <b>Arista (ANET)</b> — Ethernet won vs. InfiniBand for scale-out AI fabrics; Meta/Microsoft/Oracle anchors; $10B+ revenue framework. NVIDIA (Spectrum-X, NVLink) is both biggest competitor and biggest attach.</li>
+    <li><b>Optics:</b> Coherent, Lumentum (800G→1.6T cycle), Credo (AECs), Astera Labs (PCIe/CXL, Scorpio). Watch co-packaged optics shifting value from pluggables to the switch late-decade.</li>
+    <li><b>Power/cooling in the rack:</b> <b>Vertiv (VRT)</b> — the pure-play on liquid cooling + power distribution; book-to-bill consistently &gt;1.3x through 2025.</li>
+  </ul>
+  <p><b>Margin bifurcation:</b> commodity box assembly (low-teens GM) vs. differentiated content (ANET ~64% GM, VRT margin expansion, optics in shortage). Own the differentiated content; customer concentration is extreme layer-wide.</p>
+  <div class="benef"><b>Beneficiaries:</b> VRT (chip-agnostic content per rack rises every generation) · ANET (Ethernet share + 1.6T cycle)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第3层：数据中心硬件与网络</span>
+  随着集群规模扩大到几十万颗芯片，网络和散热系统本身成为核心产品：单机架功率从云时代约10kW升至130kW以上，液冷已成必需。价值向差异化环节集中：Arista（AI以太网龙头，毛利约64%）、Vertiv（液冷+配电纯正标的，订单出货比持续大于1.3倍）、光模块（800G→1.6T升级周期）；而组装服务器（戴尔、超微）是低毛利过手生意。该层普遍存在客户高度集中风险。首选：VRT（无论谁的芯片赢，机架含量都在上升）、ANET。</div>
+</section>
+
+<!-- ==================== LAYER 4 ==================== -->
+<section>
+  <h2>Layer 4 — Power &amp; Energy Infrastructure</h2>
+  <p><b>Why it matters:</b> the newest binding constraint — chips can be manufactured faster than gigawatts can be built. US data-center load ~4–5% of electricity (2024) with credible paths to ~9–12% by 2030 <span class="tag est">EST</span>. <b>"Time to power" — not chips — became the #1 cited constraint during 2025.</b></p>
+  <ul>
+    <li><b>Generators/nuclear:</b> Constellation (largest US nuclear fleet; Microsoft Three Mile Island restart PPA, target 2027–28; Calpine acquisition ~$27B); Vistra (nuclear + ERCOT gas — the most AI-levered power market); Talen (AWS Susquehanna); NRG (GE Vernova JV).</li>
+    <li><b>Equipment:</b> <b>GE Vernova (GEV)</b> — heavy-duty gas turbines effectively <b>sold out into 2028–29</b> with slot-reservation payments and rising pricing; grid equipment (transformers, HVDC) in structural shortage. Also Siemens Energy, Eaton, Schneider, Quanta Services.</li>
+    <li><b>Next-gen:</b> Bloom Energy (bridge fuel cells); SMRs (Oklo, NuScale) are ~2030+ options, not earnings; natural gas is the realistic marginal fuel for AI load 2026–2030.</li>
+    <li><b>Regulated utilities:</b> Dominion, AEP, Southern, Duke, Entergy (Meta's Louisiana campus) — slower-burn rate-base growth.</li>
+  </ul>
+  <p><b>Dynamics:</b> turbine/transformer lead times 3–5+ years; hyperscalers signing 10–20 year premium PPAs and going behind-the-meter — a structural repricing of firm, clean capacity. <b>Key risk: the trade is consensus and crowded</b>; power names de-rate violently on any capex scare (Jan-2025 DeepSeek episode hit VST/CEG hardest).</p>
+  <div class="benef"><b>Beneficiaries:</b> GEV (sold-out turbines + grid = visibility through 2028) · CEG or VST (firm capacity repriced via hyperscaler PPAs)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第4层：电力与能源基础设施</span>
+  电力是最新的硬约束——造芯片比建电厂快。"拿到电的时间"取代芯片成为2025年AI扩建的头号瓶颈；美国数据中心用电占比或从4–5%升至2030年的9–12%。GE Vernova燃气轮机已售罄至2028–29年且持续提价；核电（Constellation、Vistra）通过与超大规模云厂商签订10–20年溢价购电协议实现资产重估。风险：该交易已成共识且拥挤，任何资本开支恐慌都会引发剧烈回调（参考2025年1月DeepSeek事件）。首选：GEV、CEG/VST。</div>
+</section>
+
+<!-- ==================== LAYER 5 ==================== -->
+<section>
+  <h2>Layer 5 — Cloud &amp; AI Compute Platforms</h2>
+  <p><b>Why it matters:</b> aggregates Layers 1–4 into rentable compute and distributes AI to enterprises. This layer writes the checks that fund everything below it — its returns discipline is the system's thermostat.</p>
+  <ul>
+    <li><b>Microsoft</b> — Azure high-30s% growth through 2025, AI-driven; restructured OpenAI deal (Oct 2025): ~27% of the OpenAI PBC + IP rights into the 2030s.</li>
+    <li><b>Amazon</b> — AWS reaccelerated to ~20%+; Trainium 2 + Anthropic (Project Rainier) counters "AWS is behind"; Bedrock as neutral marketplace.</li>
+    <li><b>Alphabet (GOOGL)</b> — The most vertically integrated stack in the world: TPU → GCP → Gemini → Search/Workspace distribution. Gemini 3 (Nov 2025) flipped the narrative to "Google may be winning"; Cloud growth 30%+.</li>
+    <li><b>Oracle (ORCL)</b> — High-beta expression: RPO ~$455B after the ~$300B/5-yr OpenAI contract; market then interrogated single-counterparty risk, thin OCI margins, leverage/CDS spreads. Effectively a leveraged bet on OpenAI's ability to pay.</li>
+    <li><b>Meta</b> — Top-3 capex spender (2026 &gt;$100B guided) with no external compute revenue — the most scrutinized ROI story; novel off-balance-sheet financing (Hyperion JV).</li>
+    <li><b>Neoclouds</b> — CoreWeave (~$30B+ backlog incl. OpenAI $22B+, Meta ~$14B; heavy GPU-collateralized debt), Nebius (Microsoft up to ~$19.4B), Lambda/Crusoe/Together. Essentially <b>GPU landlords financed with debt against depreciating collateral</b> — first casualties if utilization or residuals disappoint. Stargate (~$500B ambition) is the emblem of scale and financing complexity.</li>
+  </ul>
+  <p><b>Debates:</b> big-4 capex ~$400B (2025) → ~$550–650B (2026) <span class="tag est">EST</span>, all citing power/shell constraints, not demand. <b>Depreciation debate:</b> 5–6-year server lives vs. critics' 2–3-year competitive GPU lives — directly drives whether cloud AI margins are real. Inference passing 50% of workloads favors owned silicon and improves revenue quality.</p>
+  <div class="benef"><b>Beneficiaries:</b> GOOGL (full-stack integration finally priced as an advantage) · MSFT (distribution + enterprise default). High-beta: CRWV.</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第5层：云与AI算力平台</span>
+  云平台层是整个体系的"出资方"，其投资纪律是系统的恒温器。2026年四大厂资本开支预计5500–6500亿美元，均表示瓶颈在电力和机房而非需求。谷歌是全球唯一全栈自有者（TPU→云→Gemini→分发），Gemini 3之后叙事已反转；微软持有OpenAI约27%股权+IP授权；甲骨文4550亿美元RPO实质是对OpenAI付款能力的杠杆押注；CoreWeave等"新云"是用债务购买快速贬值GPU的房东，是任何风险事件的第一批伤亡者。关键争论：GPU折旧年限（5–6年 vs 2–3年）直接决定云厂商盈利的真实性。首选：GOOGL、MSFT。</div>
+</section>
+
+<!-- ==================== LAYER 6 ==================== -->
+<section>
+  <h2>Layer 6 — Foundation Models</h2>
+  <p><b>Why it matters:</b> where capability is created and where, in theory, the largest long-run value should sit. Almost entirely private — public access is indirect (MSFT→OpenAI, GOOGL→DeepMind, AMZN/GOOGL→Anthropic).</p>
+  <ul>
+    <li><b>OpenAI</b> — ~$500B valuation (Oct 2025 secondary); revenue run-rate ~$13–20B exiting 2025 <span class="tag est">EST</span>; <b>&gt;$1T cumulative compute commitments</b> across Oracle/Microsoft/AMD/Broadcom/CoreWeave/Stargate — the central node of the circular-financing debate. PBC restructuring cleared the IPO path; ChatGPT ~800M weekly users.</li>
+    <li><b>Anthropic</b> — $183B post-money (Sep 2025), reported talks at $300–350B; run-rate passed ~$7B in 2025 with the steepest enterprise slope; strongest in coding (Claude Code) and enterprise API; compute via AWS Trainium + Google TPU (~1M TPUs deal).</li>
+    <li><b>Google DeepMind</b> — Gemini 3 judged frontier-leading or co-leading; the only lab with owned silicon-to-distribution integration.</li>
+    <li><b>Meta</b> — $14.3B Scale AI deal + researcher poaching; pivoted from pure open-weights toward closed frontier work.</li>
+    <li><b>xAI</b> — Colossus (1M+ GPU ambitions), merged with X, funding talks at $200B+.</li>
+    <li><b>Open-weights insurgents</b> — DeepSeek (whose R1 caused the ~$600B one-day NVDA drawdown, Jan 2025), Alibaba Qwen, Mistral (~$14B) — anchor the commoditization bear case: frontier capability, 6–12 months later, near-zero price.</li>
+  </ul>
+  <p><b>Dynamics:</b> marginal compute dollar shifting to inference-time reasoning + RL post-training; all frontier labs deeply cash-flow negative (OpenAI burn reportedly tens of billions through 2028–29); token prices deflate 10x+ every 12–18 months. Moats shifting from raw model quality to distribution, enterprise trust, and agentic surfaces. <b>Read-through: own the labs via their public equity holders rather than paying private-round marks.</b></p>
+  <div class="benef"><b>Beneficiaries (public proxies):</b> GOOGL (owns its lab outright) · MSFT (~27% of OpenAI PBC + IP rights)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第6层：基础模型</span>
+  智能创造层，理论上长期价值最大，但几乎全部为私有公司：OpenAI估值约5000亿美元（对外算力承诺超1万亿美元，是"循环融资"争论的核心节点）；Anthropic估值1830亿并传闻谈至3000–3500亿，企业收入增速最陡；谷歌DeepMind是唯一从芯片到分发全自有的实验室。所有前沿实验室现金流均深度为负，代币价格每12–18个月通缩10倍以上，DeepSeek、Qwen等开源模型支撑"模型商品化"的空头论点。结论：通过公开股东（GOOGL、MSFT）间接持有模型层，勿以私募估值接盘。</div>
+</section>
+
+<!-- ==================== LAYER 7 ==================== -->
+<section>
+  <h2>Layer 7 — Data, Tooling &amp; Middleware</h2>
+  <p><b>Why it matters:</b> the connective tissue — getting enterprise data to models, orchestrating agents, observing what they do. Being re-sorted: foundation models absorb some functions even as agents create new needs.</p>
+  <ul>
+    <li><b>Palantir (PLTR)</b> — The breakout: AIP made it the default "make AI work inside an enterprise/government" vendor; US commercial growth &gt;60–100% y/y. The problem is price: entered 2026 at roughly <b>60–75x forward sales</b> <span class="tag est">EST</span> — separate thesis from valuation ruthlessly.</li>
+    <li><b>Snowflake</b> — successful AI-era repositioning (Cortex); growth ~25–30%; competes with private <b>Databricks</b> (&gt;$100B valuation, ~$4B run-rate) which owns more AI-native workload.</li>
+    <li><b>MDB / DDOG / CFLT / Elastic</b> — genuine but second-derivative exposure; DDOG added LLM observability; MDB's vector search squeezed standalone vector DBs.</li>
+    <li><b>Vector/RAG specialists</b> — cautionary tale: vector search became a database <i>feature</i> within 18 months; standalone value eroded.</li>
+    <li><b>Agent tooling</b> — LangChain/LlamaIndex strategically important, economically small; <b>Anthropic's MCP became the de facto agent-integration standard in 2025</b> — advantaging model vendors, not middleware startups.</li>
+    <li><b>Data labeling / RL environments</b> — Scale AI (post-Meta), Surge (&gt;$1B, profitable), Mercor — quietly enormous private revenue.</li>
+  </ul>
+  <p><b>Bull:</b> agents multiply demand for context, memory, observability, governance. <b>Bear:</b> the model layer eats the middleware. Both partly true — buy data gravity, avoid glue.</p>
+  <div class="benef"><b>Beneficiaries:</b> PLTR (fundamental winner — flag valuation loudly) · SNOW / private Databricks (the enterprise data-to-AI gateway)</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第7层：数据、工具与中间件</span>
+  连接企业数据与模型的"结缔组织"，正在被重新洗牌：模型层不断吞噬中间件功能（长上下文取代RAG管道、模型厂商自带编排），但智能体又创造新需求（记忆、可观测、治理）。Palantir是基本面赢家但估值极端（约60–75倍远期市销率）；Snowflake/Databricks占据企业数据入口；独立向量数据库18个月内沦为大厂"功能"，是警示案例。选股原则：买有数据引力的平台，避开卖"胶水"的点状工具。首选：PLTR（须大声提示估值风险）、SNOW。</div>
+</section>
+
+<!-- ==================== LAYER 8 ==================== -->
+<section>
+  <h2>Layer 8 — Applications &amp; AI-Native Software</h2>
+  <p><b>Why it matters:</b> where AI meets end demand — the market is repricing both the biggest opportunity (AI-native franchises) and the biggest risk (agents disrupting seat-based SaaS). 2025's "SaaS-mageddon" de-rating was this layer's defining event.</p>
+  <ul>
+    <li><b>Coding agents — the first killer app:</b> Cursor/Anysphere (~$29B, Nov 2025; ~$1B run-rate), GitHub Copilot, Claude Code (&gt;$1B run-rate within months), Replit, Cognition. Real revenue and productivity, brutal competition, questionable gross margins (thin/negative spread reselling frontier tokens).</li>
+    <li><b>Incumbent copilots:</b> Microsoft (widest distribution in software history); <b>ServiceNow (NOW)</b> — best-in-class AI SKU attach, ~$1B+ AI ACV <span class="tag est">EST</span>; Salesforce — Agentforce monetization underwhelmed, de-rated to ~20x fwd EPS: cheap compounder or structurally disrupted?; Adobe — Firefly real but market prices generative video as existential; ~15–17x.</li>
+    <li><b>AI-native consumer:</b> ChatGPT (the franchise), Perplexity (~$18–20B), Midjourney, ElevenLabs; Duolingo/AppLovin as public AI-leverage proof points.</li>
+    <li><b>Vertical AI:</b> Harvey (legal), Abridge/OpenEvidence (health), Sierra (~$10B) — the fastest 0→$100M ARR cohort in software history.</li>
+  </ul>
+  <p><b>Dynamics:</b> seats → outcomes/consumption pricing transition; AI-native gross margins 40–60% vs. classic SaaS 80%+ (model-price deflation helps yearly); the labor-budget TAM argument ($30T payroll vs. $1T software) holds only if reliability crosses the delegation threshold. <b>Value bifurcating violently</b> — accruing to distribution-rich incumbents and escape-velocity AI-natives; eroding for undifferentiated seat-based SaaS. Stock selection matters most here; index exposure works worst.</p>
+  <div class="benef"><b>Beneficiaries:</b> NOW (cleanest incumbent AI monetizer) · MSFT (distribution). Contrarian watch: CRM / ADBE as priced-for-disruption options.</div>
+  <div class="zh"><span class="zh-label">中文摘要 · 第8层：应用与AI原生软件</span>
+  AI与终端需求的交汇处，也是2025年"SaaS大杀跌"的震中。编程智能体是第一个杀手级应用（Cursor估值290亿、Claude Code数月内收入破10亿美元），但普遍毛利存疑。现有软件商两极分化：ServiceNow是将AI变现最干净的在位者；Salesforce、Adobe被市场按"结构性被颠覆"定价（仅15–22倍市盈率），是逆向期权。商业模式正从按席位收费转向按结果/用量收费；AI原生应用毛利仅40–60%。该层选股最重要、指数化最失效。首选：NOW、MSFT。<b>实时数据：NOW已较52周高点回撤约49%，回调远超报告基准假设（见第9a节）。</b></div>
+</section>
+
+<!-- ==================== 9 COMPS ==================== -->
+<section>
+  <h2>9. Cross-Stack Comps Snapshot</h2>
+
+  <h3>9a. Live market snapshot — top-idea names <span class="tag live">LIVE 2026-07-07</span> (Yahoo Finance via stock-data MCP)</h3>
+  <table>
+    <tr><th>Ticker</th><th>Price</th><th>Mkt cap</th><th>Trailing P/E</th><th>Fwd P/E</th><th>52-wk range</th><th>vs. stale [EST] table</th></tr>
+    <tr><td><b>NVDA</b></td><td class="num">$195.55</td><td class="num">$4.74T</td><td>29.9x</td><td>15.3x</td><td class="num">$157–237</td><td>In line; fwd P/E far lower than est.</td></tr>
+    <tr><td><b>AVGO</b></td><td class="num">$373.90</td><td class="num">$1.78T</td><td>62.1x</td><td>19.3x</td><td class="num">$270–495</td><td><span class="down">~24% below 52-wk high</span>; fwd multiple compressed vs. est. 40–45x</td></tr>
+    <tr><td><b>TSM</b></td><td class="num">$451.79</td><td class="num">$2.34T</td><td>39.3x</td><td>22.3x</td><td class="num">$224–479</td><td><span class="up">~2x the stale est.</span> — major re-rating; "cheapest layer" claim needs re-check</td></tr>
+    <tr><td><b>GEV</b></td><td class="num">$1,152.04</td><td class="num">$310B</td><td>33.7x</td><td>46.9x</td><td class="num">$512–1,196</td><td><span class="up">~2x the stale est.</span>; near 52-wk high</td></tr>
+    <tr><td><b>MU</b></td><td class="num">$984.75</td><td class="num">$1.11T</td><td>22.3x</td><td>6.6x</td><td class="num">$103–1,255</td><td><span class="up"><b>~5x the stale est. ($150–250B)</b></span> — memory super-cycle already substantially repriced</td></tr>
+    <tr><td><b>VRT</b></td><td class="num">$318.47</td><td class="num">$122B</td><td>80.2x</td><td>36.0x</td><td class="num">$110–380</td><td>Above est. range</td></tr>
+    <tr><td><b>GOOGL</b></td><td class="num">$366.46</td><td class="num">$4.47T</td><td>28.0x</td><td>25.2x</td><td class="num">$173–409</td><td>Above est.; now ~par with NVDA in mkt cap</td></tr>
+    <tr><td><b>NOW</b></td><td class="num">$107.93</td><td class="num">$111B</td><td>64.2x</td><td>21.5x</td><td class="num">$81–210</td><td><span class="down">Split-adjusted; mkt cap ~45% below est.</span> — de-rating went further than assumed</td></tr>
+  </table>
+  <p><b>Live takeaways:</b> (1) MU and TSM have re-rated dramatically beyond the knowledge-base estimates — the scarcity-layers thesis has already been substantially paid; (2) NOW has de-rated ~49% from its high, deepening the app-layer bear case (or the entry point); (3) AVGO sits ~24% below its high — the custom-ASIC trade has cooled. Forward P/Es of 15x (NVDA) and 7x (MU) embed enormous expected EPS growth: the trailing/forward gap is the market's statement of the cycle debate.</p>
+
+  <h3>9b. Knowledge-base comps <span class="tag est">EST — late 2025/early 2026, NOT live; refresh before use</span></h3>
+  <table>
+    <tr><th>Layer</th><th>Ticker</th><th>Mkt cap [EST]</th><th>EV/NTM sales</th><th>NTM P/E</th><th>Note</th></tr>
+    <tr><td>1</td><td>NVDA</td><td>~$4.5–5T</td><td>~15–18x</td><td>~28–32x</td><td>Debate is duration, not multiple</td></tr>
+    <tr><td>1</td><td>AVGO</td><td>~$1.6–1.8T</td><td>~17–20x</td><td>~40–45x</td><td>Re-rated on OpenAI ASIC wins</td></tr>
+    <tr><td>1</td><td>AMD</td><td>~$350–450B</td><td>~8–10x</td><td>~35–45x</td><td>Optionality partially priced post-OpenAI deal</td></tr>
+    <tr><td>2</td><td>TSM</td><td>~$1.1–1.3T</td><td>~9–11x</td><td>~22–26x</td><td>Discount to customers; geopolitics</td></tr>
+    <tr><td>2</td><td>ASML</td><td>~$400–450B</td><td>~11–13x</td><td>~30–34x</td><td>High-NA optionality</td></tr>
+    <tr><td>2</td><td>MU</td><td>~$150–250B</td><td>~4–6x</td><td>~10–14x</td><td>OUTLIER: classic memory trap/opportunity</td></tr>
+    <tr><td>3</td><td>ANET</td><td>~$150–180B</td><td>~15–18x</td><td>~40–45x</td><td>Premium justified by AI backbone share</td></tr>
+    <tr><td>3</td><td>VRT</td><td>~$70–90B</td><td>~5–7x</td><td>~35–40x</td><td>Orders &gt; revenue; backlog visibility</td></tr>
+    <tr><td>3</td><td>DELL</td><td>~$90–110B</td><td>~1x</td><td>~13–16x</td><td>OUTLIER low: low-margin pass-through</td></tr>
+    <tr><td>4</td><td>GEV</td><td>~$150–180B</td><td>~3–4x</td><td>~40–50x</td><td>OUTLIER: industrial at software multiple; sold-out backlog</td></tr>
+    <tr><td>4</td><td>CEG / VST</td><td>~$90–110B / ~$60–70B</td><td>n/m</td><td>~25–30x</td><td>Power P/Es doubled off 2023 base</td></tr>
+    <tr><td>5</td><td>MSFT</td><td>~$3.5–4T</td><td>~11–12x</td><td>~30–33x</td><td></td></tr>
+    <tr><td>5</td><td>GOOGL</td><td>~$3–3.5T</td><td>~7–8x</td><td>~24–28x</td><td>Cheapest hyperscaler per unit of AI integration</td></tr>
+    <tr><td>5</td><td>ORCL</td><td>~$600–800B</td><td>~8–10x</td><td>~25–35x</td><td>OUTLIER: RPO-driven; credit concerns</td></tr>
+    <tr><td>5</td><td>CRWV</td><td>~$40–80B</td><td>~5–8x</td><td>n/m (loss)</td><td>OUTLIER: debt-heavy; not a comps anchor</td></tr>
+    <tr><td>7</td><td>PLTR</td><td>~$400–450B</td><td>~60–75x</td><td>~200x+</td><td>EXTREME OUTLIER; exclude from layer averages</td></tr>
+    <tr><td>7</td><td>SNOW</td><td>~$70–90B</td><td>~13–16x</td><td>n/m</td><td>Use FCF multiples instead</td></tr>
+    <tr><td>7</td><td>DDOG</td><td>~$45–55B</td><td>~12–14x</td><td>~55–65x</td><td></td></tr>
+    <tr><td>8</td><td>NOW</td><td>~$180–220B</td><td>~13–15x</td><td>~50–55x</td><td>De-rated from 60x+ despite execution</td></tr>
+    <tr><td>8</td><td>CRM</td><td>~$220–260B</td><td>~5–6x</td><td>~18–22x</td><td>OUTLIER low: disruption priced in</td></tr>
+    <tr><td>8</td><td>ADBE</td><td>~$140–170B</td><td>~6–7x</td><td>~15–17x</td><td>OUTLIER low: same</td></tr>
+  </table>
+  <p><b>Comps takeaways:</b> (1) the market pays the highest multiples at the physical-scarcity layers (1–4) and the lowest at the application layer — the inverse of the 2021 software regime; (2) PLTR must be shown separately; (3) the "cheap" names (MU, CRM, ADBE, DELL) are cheap for articulable reasons — each is a debate, not a screen.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 第9节：跨层估值对比</span>
+  9a节为2026年7月7日实时行情（雅虎财经）：美光市值已达约1.1万亿美元（约为知识库估算的5倍），台积电约2.34万亿（约2倍）——"稀缺层便宜"的论点已大幅兑现，需重新审视；ServiceNow较高点回撤约49%、博通回撤约24%，反而改善了买点。9b节为知识库旧估算，仅作参照。整体规律：市场给物理稀缺层（1–4层）最高估值、给应用层最低估值，与2021年软件牛市正好相反；"便宜"的股票（美光、Salesforce、Adobe、戴尔）各有其便宜的理由，是辩题而非捡漏清单。</div>
+</section>
+
+<!-- ==================== 10 SYNTHESIS ==================== -->
+<section>
+  <h2>10. Cross-Stack Synthesis</h2>
+
+  <h3>Where the profit pool sits today</h3>
+  <ol style="font-size:14px">
+    <li><b>Layer 1 (NVIDIA + Broadcom)</b> — the overwhelming majority of current economic profit; NVIDIA alone likely earns more AI operating profit than Layers 3–8 combined.</li>
+    <li><b>Layer 2 (TSMC, HBM, equipment)</b> — second-largest and most durable (everyone's supplier).</li>
+    <li><b>Layer 5 (hyperscalers)</b> — large gross profits netted against enormous capex; true ROIC unresolved.</li>
+    <li><b>Layer 4 (power)</b> — smaller pool but the fastest repricing of existing assets.</li>
+    <li><b>Layers 3, 7</b> — real but selective (content-per-rack winners; data-gravity platforms).</li>
+    <li><b>Layers 6, 8</b> — massive value creation, negative aggregate cash flow. The stack's paradox mirrors 1999 (infrastructure profitable, applications not) — a pattern that then inverted over a decade. <b>Positioning: own scarcity layers for the current regime; own distribution/integration (MSFT, GOOGL) for the inversion.</b></li>
+  </ol>
+
+  <h3>The key debates</h3>
+  <ul>
+    <li><b>Capex sustainability &amp; circularity</b> — ~$600B of 2026 spend rests substantially on unprofitable labs' revenue plans; NVIDIA→OpenAI→Oracle→NVIDIA circularity; AMD pays OpenAI in warrants. Our read: more demand-backed than 2000-era telecom (contracted RPO, ~100% utilization), but <b>the financing chain — not demand — is where an accident starts</b>. Watch OCI margins, CRWV refis, lab fundraising terms.</li>
+    <li><b>Inference vs. training</b> — inference &gt;50% favors custom silicon, memory, power, and makes revenue recurring; marginally negative for NVIDIA share.</li>
+    <li><b>Custom ASIC vs. merchant GPU</b> — ASICs toward 25–30% of units by 2027, concentrated at the 5 biggest buyers; both NVDA and AVGO can win; the loser is anyone in between without scale.</li>
+    <li><b>Model commoditization</b> — open-weights at frontier-minus-6-months and near-zero price; if intelligence commoditizes, value flows to distribution and physical scarcity — where we already recommend positioning.</li>
+    <li><b>Depreciation &amp; earnings quality (the sleeper)</b> — 3-year competitive GPU life would overstate hyperscaler EPS mid-to-high single digits and crush neocloud equity; A100 longevity favors the longer-life view, but Rubin-era efficiency could compress residuals abruptly.</li>
+  </ul>
+
+  <h3>Biggest risks</h3>
+  <ul>
+    <li><b>Capex air-pocket</b> — one hyperscaler blinking on 2027 guidance de-rates Layers 1–4 by 20–30% (Jan-2025 DeepSeek was the fire drill).</li>
+    <li><b>Financing-chain accident</b> — OpenAI's ~$1T+ commitments vs. revenue; Oracle/CoreWeave leverage; GPU-collateralized private credit.</li>
+    <li><b>Power/permitting slippage</b> delaying revenue recognition stack-wide.</li>
+    <li><b>Geopolitics</b> — Taiwan concentration is un-hedgeable within the theme; export-control escalation either direction.</li>
+    <li><b>Model-efficiency shock</b> — another 10x algorithmic gain (long-term Jevons, short-term drawdown).</li>
+    <li><b>Concentration</b> — the theme is ~40%+ of S&amp;P 500 cap: theme risk is now market risk.</li>
+  </ul>
+
+  <h3>Ideas shortlist (thematic — not recommendations; sizing and price work required)</h3>
+  <table>
+    <tr><th>#</th><th>Name</th><th>Layer</th><th>One-line thesis hook</th></tr>
+    <tr><td>1</td><td><b>NVDA</b></td><td>1</td><td>The toll road still under-priced per unit of growth; Rubin cycle extends the cadence moat through 2027.</td></tr>
+    <tr><td>2</td><td><b>AVGO</b></td><td>1/3</td><td>The both-ways bet: wins if silicon goes custom, clips networking content either way.</td></tr>
+    <tr><td>3</td><td><b>TSM</b></td><td>2</td><td>Everyone's monopoly supplier; geopolitics is the discount you're paid to hold. <i>(Live: already ~2x re-rated — re-check entry.)</i></td></tr>
+    <tr><td>4</td><td><b>GEV</b></td><td>4</td><td>Turbines sold out into 2028–29 — rare contractual, non-cancelable earnings visibility.</td></tr>
+    <tr><td>5</td><td><b>MU</b> / SK Hynix</td><td>2</td><td>HBM4 + genuine shortage turns memory into the cycle's best pricing story. <i>(Live: ~$1.1T cap — thesis substantially paid.)</i></td></tr>
+    <tr><td>6</td><td><b>VRT</b></td><td>3</td><td>Power density and liquid cooling are chip-agnostic; content per rack rises every generation.</td></tr>
+    <tr><td>7</td><td><b>GOOGL</b></td><td>5/6</td><td>The only full-stack owner; post-Gemini-3, integration finally priced as the advantage it is.</td></tr>
+    <tr><td>8</td><td><b>NOW</b></td><td>8</td><td>Incumbents with workflow gravity monetize agents rather than get eaten — at a post-derating multiple. <i>(Live: −49% from high.)</i></td></tr>
+  </table>
+  <p><i>Barbell watch-list (higher risk, not core): CRWV (levered compute-scarcity pure-play), ANET (1.6T cycle), CRM (disruption fears at value multiples — an option on "SaaS survives").</i></p>
+
+  <div class="zh"><span class="zh-label">中文摘要 · 第10节：跨层综合结论</span>
+  <b>利润池：</b>当前经济利润与终端用户呈倒挂分布——第1层（英伟达+博通）独占大头，第2层（台积电、HBM）次之且最持久；电力层重估最快；超大规模云厂商毛利巨大但资本回报率未定论；模型层和应用层创造巨大价值却整体现金流为负，与1999年互联网格局如出一辙（当年基础设施先赚钱、十年后应用层反转）。<b>配置建议：</b>现阶段持有稀缺层，同时通过 MSFT/GOOGL 布局未来的反转。<b>八大标的：</b>NVDA、AVGO、TSM、GEV、美光/SK海力士、VRT、GOOGL、NOW（观察名单：CRWV、ANET、CRM）。<b>六大风险：</b>①资本开支急刹车（任一大厂退缩即令1–4层回调20–30%）；②融资链事故（OpenAI超1万亿美元算力承诺 vs 其收入、甲骨文/CoreWeave杠杆、GPU抵押贷款）；③GPU折旧年限虚增云厂商盈利；④台湾集中度风险无法在主题内对冲；⑤开源模型令智能商品化；⑥该主题已占标普500市值约40%以上，主题风险即市场风险。<b>注意：实时行情显示美光、台积电已大幅重估，稀缺层论点部分兑现，入场价位需重新评估。</b></div>
+</section>
+
+<!-- ==================== APPENDIX ==================== -->
+<section>
+  <h2>Appendix: Verification Checklist Before External Use</h2>
+  <ol style="font-size:14px">
+    <li>Refresh all market caps/multiples in Section 9b via live data (CapIQ/FactSet when authorized, or the local stock-data MCP). <i>Section 9a top-8 names refreshed 2026-07-07.</i></li>
+    <li>Confirm current status of: OpenAI PBC structure / IPO filings; Anthropic's latest round; Oracle RPO (May-2026 FQ4 print); NVDA April-2026 quarter; big-4 capex guidance from the Apr–May 2026 earnings cycle; GEV backlog (Q1 2026); memory contract pricing (H1 2026); CRWV capital structure post any 2026 refinancing.</li>
+    <li>Re-verify all private valuations — Layers 6–8 marks move quarterly.</li>
+  </ol>
+  <div class="zh"><span class="zh-label">中文摘要 · 附录：对外使用前核查清单</span>
+  对外使用前须：①用实时数据刷新第9b节全部估值（9a节前八大标的已于2026年7月7日刷新）；②核实 OpenAI 结构/IPO进展、Anthropic 最新融资、甲骨文RPO、英伟达最新季报、四大厂最新资本开支指引、GEV订单、存储合约价、CoreWeave资本结构；③重新核实全部私募估值（第6–8层估值每季度都在变动）。</div>
+</section>
+
+<footer>Prepared by: Market Researcher agent (Claude Code) · Live quotes: local stock-data MCP (Yahoo Finance), 2026-07-07 · Draft v2 — pending analyst review · Not investment advice · Distribution prohibited</footer>
+</div>
+</body>
+</html>
