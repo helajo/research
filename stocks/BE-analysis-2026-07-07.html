@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BE — Bloom Energy Corporation — Deep-Dive Analysis — 2026-07-07</title>
+<style>
+  :root {
+    --strong:#1e7e34; --strong-bg:#e6f4ea;
+    --neutral:#b8860b; --neutral-bg:#fdf6e3;
+    --weak:#c0392b; --weak-bg:#fdecea;
+    --accent:#0b5394; --zh-bg:#f0f6ff; --zh-border:#0b5394;
+  }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+         margin:0; color:#222; line-height:1.55; background:#fafafa; }
+  .wrap { max-width:900px; margin:0 auto; padding:0 24px 60px; }
+  header { background:linear-gradient(135deg,#0b5394,#073763); color:#fff; padding:28px 24px; }
+  header .wrap { padding:0 24px; }
+  header h1 { margin:0 0 4px; font-size:1.7em; }
+  header .sub { opacity:.85; font-size:.95em; }
+  section { background:#fff; border:1px solid #e3e3e3; border-radius:8px; padding:20px 26px; margin:22px 0; }
+  h2 { color:var(--accent); font-size:1.2em; margin-top:0; border-bottom:2px solid #eef; padding-bottom:6px; }
+  table { border-collapse:collapse; width:100%; margin:12px 0; font-size:.92em; }
+  th, td { border:1px solid #ddd; padding:7px 10px; text-align:left; }
+  th { background:#eef3fa; }
+  tr:nth-child(even) td { background:#f7f9fc; }
+  .zh { background:var(--zh-bg); border-left:4px solid var(--zh-border); padding:10px 14px; margin-top:14px; border-radius:0 6px 6px 0; font-size:.93em; }
+  .zh b { color:var(--accent); }
+  .tag { font-weight:600; padding:2px 10px; border-radius:12px; font-size:.88em; white-space:nowrap; }
+  .s { color:var(--strong); background:var(--strong-bg); }
+  .n { color:var(--neutral); background:var(--neutral-bg); }
+  .w { color:var(--weak); background:var(--weak-bg); }
+  .verdict { font-weight:700; }
+  .up { color:var(--strong); } .down { color:var(--weak); }
+  .note { font-size:.85em; color:#666; }
+  .disc { text-align:center; font-size:.88em; color:#555; margin-top:30px; padding:16px; background:#f0f0f0; border-radius:8px; }
+  ul { margin:8px 0; padding-left:22px; }
+  .small { font-size:.86em; }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>BE · Bloom Energy Corporation</h1>
+  <div class="sub">NYSE · Deep-Dive Analysis · July 7, 2026 · Price $295.05 (2026-07-07) · Market cap $83.9B</div>
+</div></header>
+<div class="wrap">
+
+<!-- 1 SCORECARD -->
+<section>
+<h2>1. Scorecard</h2>
+<table>
+<tr><th>Dimension</th><th>Rating</th><th>Reason</th></tr>
+<tr><td>Financial health</td><td><span class="tag n">Neutral</span></td><td>Turned operating-profitable & FCF-positive in FY2025, $2.49B cash — but $2.95B debt (incl. leases) and a long loss history.</td></tr>
+<tr><td>Valuation</td><td><span class="tag w">Weak</span></td><td>34.3× trailing sales, 66.6× forward earnings; stock trades <em>above</em> the mean analyst target ($280.93).</td></tr>
+<tr><td>Growth</td><td><span class="tag s">Strong</span></td><td>Q1 FY2026 revenue +130% YoY; $25B Brookfield framework and hyperscaler partnerships.</td></tr>
+<tr><td>Industry tailwind</td><td><span class="tag s">Strong</span></td><td>AI data-center power bottleneck + 5-year gas-turbine wait times push demand to fuel cells.</td></tr>
+<tr><td>Momentum</td><td><span class="tag s">Strong</span></td><td>+457% in 1 year; 5.6% above 50-day and 79% above 200-day average.</td></tr>
+<tr><td>Earnings track record</td><td><span class="tag s">Strong</span></td><td>Six consecutive beats, most recent +242% EPS surprise (Q1 2026).</td></tr>
+<tr><td>Capital return</td><td><span class="tag w">Weak</span></td><td>No dividend, no buybacks; diluted share count +29% since FY2022 and $2.5B new debt in FY2025.</td></tr>
+</table>
+<p><b>Overall take:</b> Bloom is executing a genuine inflection — revenue accelerating sharply, gross margin ~30%, operations profitable — into the strongest demand backdrop in its history (AI power scarcity). But the market already knows: at 34× sales and above the average analyst target, the price assumes flawless multi-year execution of the $25B Brookfield framework. This is a momentum/story stock with real fundamentals improving underneath, at a valuation that leaves little room for stumbles.</p>
+<div class="zh"><b>中文摘要：</b>Bloom Energy 基本面确实出现拐点：收入同比大增 130%，毛利率约 30%，经营层面已转为盈利，且连续六个季度盈利超预期。行业顺风强劲（AI 数据中心电力短缺、燃气轮机交付周期长达 5 年以上）。但估值极高（市销率 34.3 倍，远期市盈率 66.6 倍），股价已超过分析师平均目标价 $280.93，且无股息、持续摊薄股本。这是一只基本面改善中的高动能股票，估值几乎没有容错空间。</div>
+</section>
+
+<!-- 2 SNAPSHOT -->
+<section>
+<h2>2. Snapshot</h2>
+<table>
+<tr><td>Ticker / Exchange</td><td>BE / NYSE</td><td>Sector / Industry</td><td>Industrials / Electrical Equipment &amp; Parts</td></tr>
+<tr><td>Price (2026-07-07)</td><td>$295.05</td><td>Market cap</td><td>$83.9B</td></tr>
+<tr><td>52-week range</td><td>$23.75 – $351.28</td><td>1-year return</td><td class="up">+457.3%</td></tr>
+<tr><td>Trailing P/E</td><td>n/m (TTM EPS −$0.03)</td><td>Forward P/E</td><td>66.6× (fwd EPS $4.43)</td></tr>
+<tr><td>P/S (trailing)</td><td>34.3×</td><td>Dividend yield</td><td>None</td></tr>
+<tr><td>Beta</td><td>3.74</td><td>Short interest</td><td>12.0% of float</td></tr>
+</table>
+<div class="zh"><b>中文摘要：</b>BE 现价 $295.05（2026-07-07），市值 $839 亿，52 周区间 $23.75–$351.28，一年回报 +457.3%。目前 TTM 每股收益约为盈亏平衡，远期市盈率 66.6 倍，市销率 34.3 倍，无股息，做空比例占流通盘 12%，Beta 高达 3.74，波动极大。</div>
+</section>
+
+<!-- 3 BUSINESS -->
+<section>
+<h2>3. Business overview</h2>
+<p>Bloom Energy (San Jose, CA; incorporated 2001) designs, manufactures, sells and installs <b>solid oxide fuel cell (SOFC) systems</b> for on-site power generation. Its core product, the <b>Bloom Energy Server</b>, converts natural gas, biogas, hydrogen, or blends into electricity through a non-combustion electrochemical process — deployable in months rather than the multi-year wait for grid interconnections or gas turbines. It also sells the <b>Bloom Electrolyzer</b> for hydrogen production.</p>
+<p>Customers span utilities, <b>data centers</b> (the key growth driver — partnerships with American Electric Power, Equinix, Oracle, and the Brookfield AI-infrastructure framework), retail, healthcare, education, telecom and manufacturing, sold through direct and indirect channels in the US and internationally (South Korea via SK ecoplant is a long-standing market). Revenue splits across product, installation, service, and electricity (per the FY2025 10-K filed 2026-02-09).</p>
+<div class="zh"><b>中文摘要：</b>Bloom Energy 设计和制造固体氧化物燃料电池（SOFC）系统，用于现场发电，核心产品 Bloom Energy Server 可将天然气、沼气或氢气通过非燃烧的电化学过程转化为电力，部署周期仅需数月。数据中心是关键增长引擎，合作伙伴包括 AEP、Equinix、Oracle 和 Brookfield。收入分为产品、安装、服务和电力四个部分。</div>
+</section>
+
+<!-- 4 FINANCIAL HEALTH -->
+<section>
+<h2>4. Financial health</h2>
+<table>
+<tr><th>Fiscal year</th><th>Revenue</th><th>Net income</th><th>Diluted EPS</th><th>Gross margin</th><th>Free cash flow</th></tr>
+<tr><td>FY2022</td><td>$1,199M</td><td class="down">−$301M</td><td>−$1.62</td><td>12.4%</td><td class="down">−$309M</td></tr>
+<tr><td>FY2023</td><td>$1,333M</td><td class="down">−$302M</td><td>−$1.42</td><td>14.8%</td><td class="down">−$456M</td></tr>
+<tr><td>FY2024</td><td>$1,474M</td><td class="down">−$29M</td><td>−$0.13</td><td>27.5%</td><td class="up">+$33M</td></tr>
+<tr><td>FY2025</td><td>$2,024M</td><td class="down">−$88M*</td><td>−$0.37</td><td>29.0%</td><td class="up">+$57M</td></tr>
+</table>
+<p class="note">*FY2025 GAAP loss despite +$72.8M operating income — dragged by ~$99M of unusual/special charges and $40M equity-method losses. Yahoo Finance data.</p>
+<p><b>Cross-check vs SEC EDGAR:</b> Diluted EPS matches EDGAR exactly for all four years (−1.62 / −1.42 / −0.13 / −0.37), and FY2023 net income matches to the dollar (−$302.1M) — <b>figures verified against SEC filings</b>. Revenue shows a consistent 1–5% gap (EDGAR tags FY2025 revenue at $2,001.6M vs $2,024.0M): the EDGAR concept appears to capture contract revenue excluding certain electricity/lease lines, while the company-reported total (matching press releases) is shown above. Flagged for transparency; the trend is identical on both bases.</p>
+<p><b>Balance sheet (2025-12-31):</b> cash $2,454M vs total debt $2,992M (incl. $374M lease obligations) — near net-neutral, but note Bloom issued <b>$2.5B of new debt in FY2025</b> (convertible notes) while repaying $987M. Working capital $3,107M. Accumulated deficit −$3,987M tells the history: this company burned cash for two decades and only turned FCF-positive in FY2024.</p>
+<h3 class="small" style="margin-bottom:2px">Quarterly trend (last 5 reported quarters)</h3>
+<table>
+<tr><th>Quarter (end)</th><th>Revenue</th><th>Gross margin</th><th>Net income</th><th>Diluted EPS (GAAP)</th></tr>
+<tr><td>Q1 FY2025 (2025-03-31)</td><td>$326.0M</td><td>27.2%</td><td class="down">−$23.8M</td><td>−$0.10</td></tr>
+<tr><td>Q2 FY2025 (2025-06-30)</td><td>$401.2M</td><td>26.7%</td><td class="down">−$42.6M</td><td>−$0.18</td></tr>
+<tr><td>Q3 FY2025 (2025-09-30)</td><td>$519.0M</td><td>29.2%</td><td class="down">−$23.1M</td><td>−$0.10</td></tr>
+<tr><td>Q4 FY2025 (2025-12-31)</td><td>$777.7M</td><td>30.8%</td><td class="up">+$1.1M</td><td>$0.00</td></tr>
+<tr><td>Q1 FY2026 (2026-03-31)</td><td>$751.1M</td><td>30.0%</td><td class="up">+$70.7M</td><td>+$0.23</td></tr>
+</table>
+<p><b>The business is clearly accelerating:</b> revenue more than doubled year-over-year in Q1 FY2026 (+130% vs Q1 FY2025), gross margin has climbed from ~27% to ~30%, and GAAP net income swung from a $24M loss to a $71M profit. This is a real inflection, not an annual-data illusion.</p>
+<div class="zh"><b>中文摘要：</b>财务面正在真实拐点中：FY2025 收入 $20.24 亿（同比 +37%），Q1 FY2026 收入 $7.51 亿（同比 +130%），毛利率升至约 30%，GAAP 净利润转正（+$7,070 万）。EPS 与净利润已与 SEC EDGAR 核对一致；收入存在 1–5% 的口径差异（EDGAR 标签不含部分电力/租赁收入），已标注。资产负债表上现金 $24.5 亿对债务 $29.9 亿，FY2025 新发 $25 亿可转债；公司累计亏损近 $40 亿，2024 年才首次实现正自由现金流。</div>
+</section>
+
+<!-- 5 EARNINGS TRACK -->
+<section>
+<h2>5. Earnings track record</h2>
+<table>
+<tr><th>Report date</th><th>EPS estimate</th><th>EPS reported</th><th>Surprise</th></tr>
+<tr><td>2024-08-08</td><td>−$0.05</td><td>−$0.06</td><td class="down">−31.5%</td></tr>
+<tr><td>2024-11-07</td><td>$0.08</td><td>−$0.01</td><td class="down">−112.1%</td></tr>
+<tr><td>2025-02-27</td><td>$0.31</td><td>$0.43</td><td class="up">+39.9%</td></tr>
+<tr><td>2025-04-30</td><td>−$0.06</td><td>$0.03</td><td class="up">+147.4%</td></tr>
+<tr><td>2025-07-31</td><td>$0.02</td><td>$0.10</td><td class="up">+457.1%</td></tr>
+<tr><td>2025-10-28</td><td>$0.10</td><td>$0.15</td><td class="up">+47.0%</td></tr>
+<tr><td>2026-02-05</td><td>$0.30</td><td>$0.45</td><td class="up">+50.4%</td></tr>
+<tr><td>2026-04-28</td><td>$0.13</td><td>$0.44</td><td class="up">+242.4%</td></tr>
+</table>
+<p><b>Pattern:</b> two misses in 2024, then <b>six consecutive beats of increasing magnitude</b> — analysts have chronically underestimated the ramp. <b>Next earnings: 2026-07-30</b>, consensus EPS $0.39 (range $0.29–$0.48), consensus revenue ~$813M (range $747M–$945M).</p>
+<div class="zh"><b>中文摘要：</b>2024 年两次不及预期后，Bloom 已连续六个季度大幅超预期，最近一季（2026-04-28）EPS 超预期 242%。下次财报为 2026-07-30，市场一致预期 EPS $0.39、收入约 $8.13 亿。分析师持续低估其增长速度。</div>
+</section>
+
+<!-- 6 VALUATION -->
+<section>
+<h2>6. Valuation verdict &amp; scenario grid</h2>
+<p>Trailing P/E is meaningless (TTM GAAP EPS ≈ $0). On the metrics that work: <b>forward P/E 66.6×</b> (consensus forward EPS $4.43) and <b>trailing P/S 34.3×</b>. Context:</p>
+<ul>
+<li><b>vs peers:</b> GE Vernova — the other "power for AI" winner — trades at 7.9× sales and 46.9× forward earnings <em>with</em> $9.3B of free cash flow. Unprofitable fuel-cell peers (FCEL, PLUG, BLDP) trade at 5–12× sales. Bloom is at 34× sales.</li>
+<li><b>vs its own history:</b> a year ago BE traded near $53 (Aug 2025 close), roughly 8× then-current sales. The multiple has expanded ~4× while revenue roughly doubled — most of the 457% return is re-rating, not earnings.</li>
+<li><b>vs analyst targets:</b> price ($295.05) is <em>above</em> the mean target ($280.93) and median ($285).</li>
+</ul>
+<p class="verdict">Verdict: looks expensive.</p>
+<p>The premium is not irrational — Bloom is the only at-scale, profitable, pure-play SOFC vendor in an AI power shortage — but the stock discounts years of flawless growth. Even the base case below struggles to justify today's price without a premium multiple.</p>
+<h3 class="small" style="margin-bottom:2px">Bear / base / bull scenario grid (illustrative assumptions, not forecasts)</h3>
+<table>
+<tr><th>Scenario (≈FY2027 EPS)</th><th>Low multiple</th><th>Mid multiple</th><th>High multiple</th><th>What it requires</th></tr>
+<tr><td><b>Bear — $2.00</b><br class="small">(ramp stalls, margin pressure)</td><td>25× = $50 <span class="down">(−83%)</span></td><td>35× = $70 <span class="down">(−76%)</span></td><td>45× = $90 <span class="down">(−69%)</span></td><td>Brookfield deployments slip; gas prices squeeze economics; growth decelerates to &lt;30%. Anchors: street-low target $55.</td></tr>
+<tr><td><b>Base — $4.43</b><br class="small">(consensus forward EPS)</td><td>40× = $177 <span class="down">(−40%)</span></td><td>55× = $244 <span class="down">(−17%)</span></td><td>65× = $288 <span class="down">(−2%)</span></td><td>Consensus delivered: continued ~50%+ growth, ~30% gross margin, Brookfield projects convert on schedule.</td></tr>
+<tr><td><b>Bull — $6.50</b><br class="small">(beats keep coming)</td><td>55× = $358 <span class="up">(+21%)</span></td><td>70× = $455 <span class="up">(+54%)</span></td><td>85× = $553 <span class="up">(+87%)</span></td><td>$25B framework converts to firm orders fast, capacity scales, margins expand past 32%. Anchors: street-high target $390; recent surprise cadence.</td></tr>
+</table>
+<p class="note">Multiples bracketed from GEV's forward P/E (~47×), BE's own current 66.6×, and high-growth premiums. Note the asymmetry: even the base case at a generous 65× lands ~2% below today's price.</p>
+<div class="zh"><b>中文摘要：</b>估值结论：<b>偏贵</b>。远期市盈率 66.6 倍、市销率 34.3 倍，远高于 GE Vernova（GEV，7.9 倍市销率）及其他燃料电池同行（5–12 倍），且现价已高于分析师平均目标价。过去一年 457% 的涨幅大部分来自估值扩张而非盈利。情景分析显示：熊市情景 $50–90（−69% 至 −83%），基准情景 $177–288（即使给 65 倍高估值仍略低于现价），牛市情景 $358–553（需 $25B Brookfield 框架快速落地）。风险收益不对称，偏向下行。</div>
+</section>
+
+<!-- 7 INDUSTRY -->
+<section>
+<h2>7. Industry analysis</h2>
+<p><b>The AI power bottleneck is the story of 2025–2026.</b> Data-center demand has overwhelmed the US grid: interconnection queues stretch years, and the scramble for natural-gas plants has created a <b>gas-turbine shortage</b> — per TechCrunch (Apr 2026), turbine prices are expected to end 2026 up ~195% vs 2019, with wait times of five to seven years for large units. That pushes hyperscalers toward anything deployable now.</p>
+<p><b>Fuel cells are a prime beneficiary.</b> Rystad Energy projects <b>10.4 GW of cumulative data-center fuel-cell demand 2026–2030</b> (investment reaching ~$30B by 2030) and models ~40% of projected 2030 US data-center capacity pursuing dedicated on-site power. Solid oxide fuel cells — Bloom's technology — hold roughly 48% of the data-center fuel-cell market (Persistence Market Research), and Goldman Sachs has highlighted fuel cells' months-not-years deployment and 10–30% better fuel efficiency vs turbines.</p>
+<p><b>Bloom's position: the at-scale leader.</b> It is the only SOFC vendor with GW-scale manufacturing, ~30% gross margins, hyperscaler references (Oracle, Equinix), utility channels (AEP), and now a $25B capital partner (Brookfield). FCEL is a distant, unprofitable competitor; the real long-term competition is gas turbines (GEV, Caterpillar, Cummins gensets) once supply normalizes, plus nuclear SMRs post-2030.</p>
+<p><b>Headwinds:</b> elevated natural-gas prices (Middle East conflict) worsen fuel-cell operating economics; turbine supply eventually catches up; policy support for clean energy has become less generous under current US policy.</p>
+<div class="zh"><b>中文摘要：</b>AI 数据中心电力短缺是行业核心逻辑：电网接入排队数年，燃气轮机价格较 2019 年上涨约 195%、交付周期 5–7 年，迫使超大规模数据中心转向可快速部署的现场电源。Rystad 预测 2026–2030 年数据中心燃料电池累计需求 10.4 GW，2030 年投资规模达 $300 亿。Bloom 是 SOFC 领域唯一规模化且盈利的龙头（该技术占数据中心燃料电池市场约 48%）。逆风：天然气价格高企、轮机供应终将恢复、清洁能源政策支持减弱。</div>
+</section>
+
+<!-- 8 PEERS -->
+<section>
+<h2>8. Peer comparison</h2>
+<table>
+<tr><th>Company</th><th>Market cap</th><th>Valuation</th><th>Revenue growth (YoY)</th><th>Note</th></tr>
+<tr><td><b>BE — Bloom Energy</b></td><td><b>$83.9B</b></td><td><b>P/S 34.3× · fwd P/E 66.6×</b></td><td class="up"><b>+130.4%</b></td><td>At-scale SOFC leader, newly profitable</td></tr>
+<tr><td>GEV — GE Vernova</td><td>$309.6B</td><td>P/E 33.7× · P/S 7.9×</td><td class="up">+16.3%</td><td>Gas turbines/grid — the incumbent AI-power winner, hugely FCF-positive</td></tr>
+<tr><td>CMI — Cummins</td><td>$93.6B</td><td>P/E 35.2× · P/S 2.8×</td><td>+2.7%</td><td>Gensets/engines; similar market cap on 6× Bloom's revenue</td></tr>
+<tr><td>FCEL — FuelCell Energy</td><td>$2.0B</td><td>P/S 12.0× (unprofitable)</td><td class="down">−4.9%</td><td>Carbonate/SOFC rival; negative gross margin</td></tr>
+<tr><td>PLUG — Plug Power</td><td>$3.7B</td><td>P/S 5.0× (unprofitable)</td><td class="up">+22.3%</td><td>PEM/hydrogen; heavy cash burn, 27% short interest</td></tr>
+<tr><td>BLDP — Ballard Power</td><td>$1.0B</td><td>P/S 10.1× (unprofitable)</td><td class="up">+26.2%</td><td>PEM for transport; niche</td></tr>
+</table>
+<p>Bloom's growth is in a different league than every peer — +130% vs +16% for GEV — and it's the only fuel-cell name with positive margins. But the valuation gap is extreme: Bloom carries a $84B market cap on ~$2.4B of trailing revenue, while Cummins carries $94B on ~$34B of revenue. The market is paying Bloom for 2029's income statement today. Notably, a Stocktwits piece (2026-07-06) flagged exactly this "massive premium to peers" while retail sentiment remains euphoric.</p>
+<div class="zh"><b>中文摘要：</b>BE 增速（+130%）远超所有同行（GEV +16%，CMI +3%），也是唯一毛利为正的燃料电池公司。但估值差距极端：BE 市值 $839 亿对应约 $24 亿收入（市销率 34 倍），而 Cummins 市值 $936 亿对应约 $340 亿收入。市场是在为 2029 年的利润表提前买单。</div>
+</section>
+
+<!-- 9 TECHNICALS -->
+<section>
+<h2>9. Technical, momentum &amp; what holding it feels like</h2>
+<p>Price $295.05 sits <b>+5.6% above the 50-day average</b> ($279.32) and <b>+79% above the 200-day</b> ($164.86) — a powerful, extended uptrend. It is 16% below the 52-week high ($351.28) and 12.4× the 52-week low ($23.75). The 1-year shape: steady climb Aug–Oct 2025, a −34% two-month correction into December 2025, then a violent re-acceleration after Q4 earnings and the April 2026 blowout quarter, and a grind higher since.</p>
+<svg viewBox="0 0 800 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:#fdfdfd;border:1px solid #eee;border-radius:6px">
+  <text x="400" y="14" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">BE monthly closes — Aug 2025 to Jul 2026</text>
+  <line x1="50" y1="290" x2="780" y2="290" stroke="#ccc"/><text x="45" y="294" text-anchor="end" font-size="10" fill="#888">$0</text>
+  <line x1="50" y1="215" x2="780" y2="215" stroke="#eee"/><text x="45" y="219" text-anchor="end" font-size="10" fill="#888">$100</text>
+  <line x1="50" y1="140" x2="780" y2="140" stroke="#eee"/><text x="45" y="144" text-anchor="end" font-size="10" fill="#888">$200</text>
+  <line x1="50" y1="65" x2="780" y2="65" stroke="#eee"/><text x="45" y="69" text-anchor="end" font-size="10" fill="#888">$300</text>
+  <line x1="50" y1="26.5" x2="780" y2="26.5" stroke="#c0392b" stroke-dasharray="5,4"/><text x="778" y="23" text-anchor="end" font-size="10" fill="#c0392b">52w high $351.28</text>
+  <line x1="50" y1="272.2" x2="780" y2="272.2" stroke="#1e7e34" stroke-dasharray="5,4"/><text x="778" y="269" text-anchor="end" font-size="10" fill="#1e7e34">52w low $23.75</text>
+  <polyline fill="none" stroke="#0b5394" stroke-width="2.5" points="50,250.3 116.4,226.6 182.7,190.9 249.1,208.1 315.5,224.8 381.8,176.5 448.2,173.2 514.5,188.4 580.9,77.5 647.3,76.3 713.6,63.0 780,68.7"/>
+  <circle cx="780" cy="68.7" r="4" fill="#0b5394"/><text x="775" y="55" text-anchor="end" font-size="11" fill="#0b5394" font-weight="bold">$295.05</text>
+  <text x="50" y="308" font-size="10" fill="#888">Aug'25</text><text x="315" y="308" font-size="10" fill="#888">Dec'25</text><text x="580" y="308" font-size="10" fill="#888">Apr'26</text><text x="760" y="308" font-size="10" fill="#888">Jul'26</text>
+</svg>
+<h3 class="small" style="margin-bottom:2px">1-year return vs benchmarks</h3>
+<table>
+<tr><th>BE</th><th>SPY (S&amp;P 500)</th><th>QQQ (Nasdaq-100)</th><th>SOXX (Semis)</th></tr>
+<tr><td class="up"><b>+457.3%</b></td><td class="up">+17.8%</td><td class="up">+27.3%</td><td class="up">+138.1%</td></tr>
+</table>
+<p><b>Drawdown context — what you must be able to stomach:</b> worst 5-year peak-to-trough drop was <b>−71.9%</b> (monthly-close basis: $31.26 in Oct 2021 → $8.77 in Feb 2024, a 28-month decline). Even inside the current 1-year rally there was a −34% correction (Oct–Dec 2025). With a <b>beta of 3.74</b>, BE routinely moves ~4× the market. A holder must accept that a −50% drawdown from any point is normal behavior for this stock, not a tail event.</p>
+<p><b>Conclusion:</b> the market is emphatically <em>buying</em> this story — BE beat even the red-hot semiconductor index by 3×. But the stock is extended far above trend, and momentum this steep cuts both ways.</p>
+<div class="zh"><b>中文摘要：</b>股价高于 50 日均线 5.6%、高于 200 日均线 79%，处于强势但已过度延伸的上升趋势。一年回报 +457%，远超 SPY（+17.8%）、QQQ（+27.3%）和 SOXX（+138.1%）。持仓体验方面：过去 5 年最大回撤 −71.9%（月收盘口径，2021/10–2024/2），本轮上涨途中也有 −34% 的回调，Beta 3.74，−50% 级别的回撤属于该股"常态"。市场目前显然在买入这个故事，但斜率过陡，双向波动都会放大。</div>
+</section>
+
+<!-- 10 FUTURE TRENDS -->
+<section>
+<h2>10. Expected future trends</h2>
+<p><b>Analyst consensus (Yahoo, 2026-07-07):</b> targets low $55 / mean $280.93 / median $285 / high $390 vs price $295.05 — the stock trades ~5% <em>above</em> the mean. Ratings: 5 Strong Buy, 9 Buy, 12 Hold, 2 Sell. The last two weeks brought a wave of target raises on the Brookfield news — UBS to $350 (Buy), Evercore to $350 (Outperform), Roth to $285, Jefferies to $246, Barclays to $276 — but mostly without rating upgrades: the street likes the story, not the price.</p>
+<p><b>Company/partner announcements (reported):</b> Brookfield expanded the AI-infrastructure partnership to <b>$25B on 2026-06-30</b> (5× the original $5B framework of Nov 2025), under Brookfield's $100B AI Infrastructure Fund; Bloom has deployed hundreds of MW to data centers via AEP, Equinix and Oracle partnerships. Formal FY2026 guidance figures weren't in the retrieved sources — check the Q2 call (2026-07-30).</p>
+<p><b>Catalysts ahead:</b> Q2 earnings 2026-07-30 (consensus EPS $0.39, revenue ~$813M); first concrete Brookfield project awards/MW; further utility partnerships; capacity-expansion announcements.</p>
+<p><b>My synthesis:</b> the demand side is not the question — the conversion of the $25B framework into booked orders, and Bloom's manufacturing capacity, are. Consensus forward EPS of $4.43 implies earnings compounding faster than any point in company history; six straight beats say don't bet against it near-term, but the price already assumes it.</p>
+<div class="zh"><b>中文摘要：</b>分析师目标价：最低 $55 / 平均 $280.93 / 最高 $390，现价已高于平均目标价约 5%；评级以持有为主（12 家 Hold）。Brookfield 于 2026-06-30 将合作框架扩大至 $250 亿（原为 $50 亿）。近期催化剂：7 月 30 日 Q2 财报（预期 EPS $0.39、收入约 $8.13 亿）、Brookfield 框架下首批具体项目订单。关键不在需求，而在框架协议转化为实际订单的速度和产能扩张。</div>
+</section>
+
+<!-- 11 BULL BEAR -->
+<section>
+<h2>11. Bull case vs bear case</h2>
+<table>
+<tr><th style="width:50%">🐂 Why it goes up</th><th>🐻 Why it goes down</th></tr>
+<tr><td>
+<ul>
+<li>Only at-scale, gross-margin-positive SOFC vendor amid a 5–7 year gas-turbine shortage; deployment in months is a genuine moat right now.</li>
+<li>$25B Brookfield framework + AEP/Equinix/Oracle channels de-risk both demand and financing.</li>
+<li>Six straight beats (last one +242%); analysts keep chasing estimates upward — forward EPS $4.43 may itself be low.</li>
+<li>Revenue +130% YoY with margins expanding, now GAAP-profitable quarterly — the operating-leverage phase is just starting.</li>
+<li>87.8% institutional ownership with BlackRock, Goldman and Vanguard adding in Q1 2026.</li>
+</ul>
+</td><td>
+<ul>
+<li>34× sales / 67× forward earnings, above the mean analyst target — the base case is already priced in; scenario grid shows asymmetric downside.</li>
+<li>Framework ≠ orders: $25B is a financing envelope, not booked revenue. Any conversion delay cracks the narrative.</li>
+<li>Elevated natural-gas prices (Middle East conflict) worsen fuel-cell economics vs grid power; the turbine shortage will eventually ease.</li>
+<li>Dilution machine: diluted shares +29% since FY2022, $2.5B converts issued FY2025; 12% short interest invites violent air pockets both ways.</li>
+<li>History of deep drawdowns (−72%) and a GAAP loss as recently as FY2025; one bad quarter at beta 3.7 could halve the stock.</li>
+</ul>
+</td></tr>
+</table>
+<div class="zh"><b>中文摘要：</b>多头逻辑：唯一规模化盈利的 SOFC 厂商，燃气轮机短缺形成时间窗口护城河，$25B Brookfield 框架解决需求与融资，连续六季超预期，经营杠杆刚开始释放。空头逻辑：估值已透支基准情景（34 倍市销率、高于平均目标价），框架协议不等于订单，天然气价格高企削弱经济性，股本持续摊薄（三年 +29%），历史最大回撤 −72%，Beta 3.7 下一次不及预期可能腰斩。</div>
+</section>
+
+<!-- 12 MACRO -->
+<section>
+<h2>12. Macro sensitivity</h2>
+<ul>
+<li><b>Interest rates — high exposure, partly hedged.</b> Fed on hold at 3.50–3.75% (June 2026 FOMC), with some officials leaning toward <em>hikes</em> as PCE inflation runs ~3.6%. Long-duration growth stocks like BE (value in far-future earnings) are rate-sensitive, and customer projects are financing-heavy — though the Brookfield capital partnership blunts the project-financing side.</li>
+<li><b>Natural-gas prices — direct negative.</b> The Middle East conflict has kept energy costs elevated (EIA: not normalizing until ~2028). Bloom's servers consume gas; expensive fuel worsens the levelized cost vs grid power. Partly offset because the alternative (turbines) burns more gas per kWh and can't be delivered anyway.</li>
+<li><b>Tariffs/trade — moderate.</b> Tariffs are feeding the ~3.6% inflation; Bloom manufactures in the US (a relative advantage) but imports components; tariff-driven capex inflation raises system costs.</li>
+<li><b>Enterprise/AI capex cycle — the whole thesis.</b> BE is effectively a leveraged bet on hyperscaler data-center capex continuing at record pace. Any AI-capex digestion phase hits BE harder than the hyperscalers themselves (beta 3.74).</li>
+<li><b>Net read:</b> today's macro is a tailwind on the demand side (grid scarcity, AI capex) and a headwind on rates and fuel costs. The demand tailwind currently dominates — that's what the +457% says.</li>
+</ul>
+<div class="zh"><b>中文摘要：</b>宏观敏感度：利率维持 3.50–3.75% 且通胀 3.6% 使降息遥远，对长久期成长股不利（Brookfield 资本部分对冲了项目融资压力）；中东冲突推高天然气价格，直接恶化燃料电池运营经济性；关税推升成本；但最核心的敞口是 AI 资本开支周期——BE 本质上是对超大规模数据中心建设的高杠杆押注。目前需求端顺风占主导。</div>
+</section>
+
+<!-- 13 INSIDERS -->
+<section>
+<h2>13. Insider &amp; ownership</h2>
+<p><b>Insiders are net sellers — zero open-market purchases (type P) in the recent record.</b> Classification per official Form 4 Rule 10b5-1 checkbox:</p>
+<table>
+<tr><th>Insider / role</th><th>Date</th><th>Action</th><th>Value</th><th>Classification</th></tr>
+<tr><td>John Chambers, Director</td><td>2026-05-28</td><td>Sale 55,000 sh @ $297.69</td><td>$16.37M</td><td><span class="tag n">Routine (10b5-1 plan)</span></td></tr>
+<tr><td>Aman Joshi, Chief Commercial Officer</td><td>2026-06-16 &amp; 07-01</td><td>Sales 11,901 sh total</td><td>$3.53M</td><td><span class="tag n">Routine (10b5-1 plan)</span></td></tr>
+<tr><td>Satish Chitoori, COO</td><td>2026-06-16</td><td>Sale 2,837 sh @ $289.11</td><td>$0.82M</td><td><span class="tag n">Routine (10b5-1 plan)</span></td></tr>
+<tr><td>Maciej Kurzymski, Chief Accounting Officer</td><td>2026-06-16</td><td>Sale 2,259 sh @ $288.62</td><td>$0.65M</td><td><span class="tag w">Discretionary (no plan)</span></td></tr>
+<tr><td>Shawn Soderberg, Officer (EVP/GC)</td><td>2026-05-18 &amp; 06-16</td><td>Sales 8,467 sh total</td><td>$2.36M</td><td><span class="tag w">Discretionary (no plan, per 6/17 Form 4)</span></td></tr>
+</table>
+<p>The big Chambers sale and the officer sales into the rally are mostly pre-scheduled — normal after a 12× move. The <b>discretionary sales by the Chief Accounting Officer and the General Counsel</b> are worth noting (executives choosing to sell at these prices), though the amounts are modest. CEO KR Sridhar's May filing shows an 80,000-share transaction without stated type in the summary feed — not classifiable from this data.</p>
+<p><b>Ownership:</b> insiders 5.8%; institutions 87.8% (93.3% of float, 1,312 holders). Top holders (2026-03-31): BlackRock 8.8% (<span class="up">+3.7%</span>), Ameriprise 8.1% (<span class="down">trimmed −20%</span>), Vanguard entities ~8.7% combined (new/restructured positions), Goldman Sachs 3.2% (<span class="up">+350%</span>), Morgan Stanley 2.7% (<span class="down">−18%</span>). Big money is mostly adding.</p>
+<div class="zh"><b>中文摘要：</b>内部人近期全是卖出、无公开市场买入。Chambers（董事，$1,640 万）、Joshi、Chitoori 的卖出均为 10b5-1 预设计划（例行）；但首席会计官 Kurzymski 和法务总监 Soderberg 的卖出为<b>非计划的自主卖出</b>（信号较强，金额不大）。机构持股 87.8%（占流通盘 93.3%），BlackRock、Goldman、Vanguard 一季度均在加仓，Ameriprise 减持 20%。</div>
+</section>
+
+<!-- 14 CAPITAL RETURN -->
+<section>
+<h2>14. Dividends &amp; capital return</h2>
+<p><b>No common dividend has ever been paid, and there are no buybacks.</b> Capital flows the other way:</p>
+<table>
+<tr><th>Fiscal year</th><th>Diluted avg shares</th><th>Change</th></tr>
+<tr><td>FY2022</td><td>185.9M</td><td>—</td></tr>
+<tr><td>FY2023</td><td>212.7M</td><td class="down">+14.4%</td></tr>
+<tr><td>FY2024</td><td>227.4M</td><td class="down">+6.9%</td></tr>
+<tr><td>FY2025</td><td>240.4M</td><td class="down">+5.7%</td></tr>
+</table>
+<p>Shares outstanding now stand at 284.4M — dilution continues via stock compensation ($139M in FY2025, ~7% of revenue) and the FY2025 $2.5B convertible issuance (future dilution if converted). This is a growth-funding capital structure; shareholders are paying for the ramp.</p>
+<div class="zh"><b>中文摘要：</b>从未派发普通股股息，也无回购。稀释持续：摊薄股数从 FY2022 的 1.859 亿增至 FY2025 的 2.404 亿（+29%），目前流通股 2.844 亿；FY2025 股权激励费用 $1.39 亿（约占收入 7%），另有 $25 亿可转债构成未来潜在稀释。</div>
+</section>
+
+<!-- 15 NEWS -->
+<section>
+<h2>15. Recent news &amp; indicators</h2>
+<ul>
+<li><b>2026-06-30 / 07-01 — Brookfield partnership expanded 5× to $25B</b> (from the Nov 2025 $5B framework), under Brookfield's $100B AI Infrastructure Fund, to "build and finance rapid power for AI infrastructure." The single biggest driver of the latest leg up. (Bloom IR, TheStreet, Motley Fool)</li>
+<li><b>2026-07-04 — AEP joins the expansion</b> — American Electric Power tied into Bloom's data-center power push; Bloom has already deployed hundreds of MW via AEP, Equinix and Oracle. (Simply Wall St / Zacks)</li>
+<li><b>2026-07-06 — Stock rallied again</b>, +8.9% on the day to $295.05; IBD grouped BE with AI leaders rebounding. (Motley Fool, IBD)</li>
+<li><b>2026-07-06 — Stocktwits: "BE trading at a massive premium to peers"</b> while retail bulls target a ~4× rally — a sentiment red flag worth logging.</li>
+<li><b>2026-06-17 — 8-K filed</b> (and 8-Ks on 5/27, 4/28, 4/13, 3/26) — a busy filing cadence consistent with financing and partnership activity.</li>
+<li><b>Indicators:</b> short interest 12.0% of float (elevated — squeeze fuel and crash fuel); institutional ownership 87.8%; next earnings 2026-07-30; recent analyst moves are target-raises without upgrades (UBS $350, Evercore $350, Jefferies $246).</li>
+</ul>
+<div class="zh"><b>中文摘要：</b>近期要闻：Brookfield 合作框架扩大 5 倍至 $250 亿（6/30）；AEP 加入数据中心扩张（7/4）；7/6 单日再涨 8.9%；Stocktwits 提示"相对同行估值溢价巨大"但散户情绪极度乐观。做空比例 12%，机构持股 87.8%，下次财报 7/30。分析师普遍上调目标价但未上调评级。</div>
+</section>
+
+<!-- 16 RED FLAGS -->
+<section>
+<h2>16. Red-flags check</h2>
+<ul>
+<li><b>Receivables vs revenue:</b> FY2025 receivables +15% vs revenue +37% — <span class="up">clean</span>.</li>
+<li><b>Inventory:</b> +18% vs revenue +37% — <span class="up">clean</span> (building for the ramp, not piling up).</li>
+<li><b>Stock-based compensation:</b> $139.4M in FY2025, ~6.9% of revenue and rising from $82.4M — <span class="tag n">moderate flag</span>; it's why GAAP and non-GAAP EPS diverge.</li>
+<li><b>Goodwill:</b> none on the balance sheet — <span class="up">clean</span>.</li>
+<li><b>Debt structure:</b> $2.5B convertible issuance in FY2025 — funds the ramp but embeds dilution — <span class="tag n">watch</span>.</li>
+<li><b>Unusual items:</b> ~$99M special charges + $40M equity-method losses drove the FY2025 GAAP loss despite positive operating income — <span class="tag n">watch</span> whether these recur.</li>
+<li><b>Auditor changes / going-concern language:</b> none noted in retrieved filings.</li>
+</ul>
+<div class="zh"><b>中文摘要：</b>会计质量总体干净：应收账款和存货增速均低于收入增速，无商誉。需留意两点：股权激励费用 $1.39 亿（占收入约 7%）且逐年上升，是 GAAP 与非 GAAP 利润差异的主因；FY2025 约 $9,900 万特殊费用及 $4,000 万权益法投资亏损导致 GAAP 仍亏损，需观察是否重复发生。未发现审计师变更或持续经营疑虑。</div>
+</section>
+
+<!-- 17 RISKS -->
+<section>
+<h2>17. Risks</h2>
+<ol>
+<li><b>Valuation/expectation risk (dominant):</b> at 34× sales, even strong results can disappoint a market pricing perfection; the base-case scenario grid implies downside.</li>
+<li><b>Framework-conversion risk:</b> the $25B Brookfield figure is a financing envelope; slow conversion to firm MW orders would deflate the story.</li>
+<li><b>Fuel-cost & competition risk:</b> sustained high natural-gas prices erode customer economics; when gas-turbine supply normalizes (or SMRs arrive ~2030+), Bloom's scarcity premium fades.</li>
+<li><b>Customer concentration:</b> historically reliant on large single relationships (SK ecoplant in Korea; now Brookfield/AEP/Oracle) — a stumble at one partner matters (10-K risk factor).</li>
+<li><b>Dilution & leverage:</b> converts + SBC keep growing the share count; 12% short interest amplifies volatility in both directions.</li>
+</ol>
+<div class="zh"><b>中文摘要：</b>主要风险：①估值风险最大——34 倍市销率下即使业绩强劲也可能不及市场预期；②$25B 框架转化为实际订单可能缓慢；③天然气价格高企侵蚀客户经济性，轮机供应恢复后稀缺溢价消退；④客户集中度高（SK ecoplant、Brookfield、Oracle 等大客户依赖）；⑤可转债与股权激励持续稀释，12% 做空比例放大双向波动。</div>
+</section>
+
+<!-- 18 TRIPWIRES -->
+<section>
+<h2>18. Tripwires — what would change this thesis</h2>
+<table>
+<tr><th>#</th><th>Trigger</th><th>Why it matters</th><th>Where to check</th></tr>
+<tr><td>1</td><td><b>Q2 FY2026 (2026-07-30): revenue &lt; $813M consensus or EPS &lt; $0.39</b>, or YoY growth decelerates below ~80%</td><td>First miss after six beats would break the "estimates too low" pattern that fuels the rally</td><td>Earnings release / next report's earnings-history table</td></tr>
+<tr><td>2</td><td><b>Gross margin &lt; 28% for two consecutive quarters</b> (from ~30%)</td><td>Would signal gas-cost pressure or pricing concessions to win the Brookfield pipeline</td><td>Quarterly financials (10-Q)</td></tr>
+<tr><td>3</td><td><b>No concrete Brookfield project awards (named sites/MW) announced by 2026-12-31</b></td><td>Converts the $25B from narrative to numbers; silence would suggest the framework is aspirational</td><td>Bloom IR press releases, 8-K filings</td></tr>
+<tr><td>4</td><td><b>Discretionary (non-10b5-1) selling spreads to CEO Sridhar or CFO Edwards</b></td><td>CAO and GC already sold without plans; C-suite joining would be a strong signal</td><td>Form 4 filings — check the 10b5-1 checkbox</td></tr>
+<tr><td>5</td><td><b>Short interest rises above 15% of float</b> (now 12.0%)</td><td>Growing informed skepticism; also raises crash amplitude if the story cracks</td><td>get_quote / exchange short-interest reports</td></tr>
+<tr><td>6</td><td><b>Close below the 200-day average (~$165, will rise)</b></td><td>Momentum is a stated pillar of this thesis; losing the long-term trend line ends it</td><td>Any chart; get_quote twoHundredDayAverage</td></tr>
+</table>
+<div class="zh"><b>中文摘要：</b>监控清单：①7/30 财报收入低于 $8.13 亿或 EPS 低于 $0.39（六连超预期被打破）；②毛利率连续两季低于 28%；③2026 年底前 Brookfield 框架无具体项目/兆瓦订单落地；④CEO 或 CFO 出现非 10b5-1 计划的自主卖出；⑤做空比例升破 15%；⑥跌破 200 日均线（当前约 $165）。任一触发即需重新审视本报告结论。</div>
+</section>
+
+<!-- 19 SIMILAR -->
+<section>
+<h2>19. Similar stocks to consider</h2>
+<ul>
+<li><b>GEV — GE Vernova:</b> the profitable, cash-gushing way to own the same "power for AI" theme at a quarter of the sales multiple.</li>
+<li><b>VRT — Vertiv:</b> data-center power & cooling infrastructure — same capex wave, different layer of the stack.</li>
+<li><b>CEG — Constellation Energy:</b> nuclear baseload contracted to hyperscalers; the utility-grade expression of AI power scarcity.</li>
+<li><b>OKLO — Oklo:</b> small modular reactors for data centers — the 2030s version of Bloom's bridge-power story (far more speculative).</li>
+<li><b>FCEL — FuelCell Energy:</b> the small-cap SOFC/carbonate pure play — a high-risk catch-up trade if fuel-cell adoption broadens beyond Bloom.</li>
+</ul>
+<div class="zh"><b>中文摘要：</b>同主题备选：GEV（同一"AI 电力"主题、盈利且现金流充沛、估值仅为 BE 的四分之一）；VRT（数据中心电力与散热基础设施）；CEG（核电基荷、与超大规模数据中心签约）；OKLO（小型模块化反应堆，更投机）；FCEL（小市值燃料电池补涨标的，风险高）。</div>
+</section>
+
+<!-- 20 SOURCES -->
+<section>
+<h2>20. Sources</h2>
+<p class="small"><b>stock-data MCP tools (all data retrieved 2026-07-07):</b> get_quote (BE, FCEL, PLUG, BLDP, GEV, CMI), get_financials, get_quarterly_financials, get_analyst_data, get_news, get_price_history (BE 1y & 5y; SPY/QQQ/SOXX 1y), get_sec_facts, get_earnings_history, get_insider_transactions, get_form4_insider_detail, get_dividends_and_buybacks, get_major_holders (holder data as of 2026-03-31).</p>
+<p class="small"><b>SEC EDGAR filings (Bloom Energy, CIK 0001664703):</b>
+<a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm">10-K FY2025 (filed 2026-02-09)</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026028021/be-20260331.htm">10-Q Q1 2026 (filed 2026-04-29)</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1664703/000119312526274388/d100413d8k.htm">8-K 2026-06-17</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026038451/be-20260521.htm">8-K 2026-05-27</a> ·
+<a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026027913/be-20260428.htm">8-K 2026-04-28</a> ·
+Form 4 filings linked in Section 13.</p>
+<p class="small"><b>Web sources:</b>
+<a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Brookfield-and-Bloom-Energy-Expand-AI-Infrastructure-Partnership-to-25-Billion-Fivefold-Increase-to-Build-and-Finance-Rapid-Power-for-AI-Infrastructure/default.aspx">Bloom IR — Brookfield $25B expansion (2026-06-30)</a> ·
+<a href="https://www.thestreet.com/investing/stocks/bloom-energys-25b-partnership-targets-ais-next-bottleneck">TheStreet — $25B partnership</a> ·
+<a href="https://www.fool.com/investing/2026/07/01/brookfield-and-bloom-energy-expanded-their-ai-power-partnership-to-25-billion-heres-what-investors-need-to-know/">Motley Fool — partnership analysis</a> ·
+<a href="https://www.rystadenergy.com/news/data-center-fuel-cell-power-demand">Rystad Energy — 10.4 GW / $30B fuel-cell forecast</a> ·
+<a href="https://www.goldmansachs.com/insights/articles/fuel-cells-could-help-meet-the-power-demand-from-data-centers">Goldman Sachs — fuel cells for data centers</a> ·
+<a href="https://techcrunch.com/2026/04/27/data-center-demand-drives-66-surge-in-natural-gas-power-plant-costs/">TechCrunch — gas plant cost surge (2026-04-27)</a> ·
+<a href="https://www.persistencemarketresearch.com/market-research/fuel-cell-for-data-center-market.asp">Persistence — SOFC ~48% share</a> ·
+<a href="https://stocktwits.com/news-articles/markets/equity/be-stock-is-trading-at-a-massive-premium-to-peers/cZmKyuMR7kV">Stocktwits — premium to peers (2026-07-06)</a> ·
+<a href="https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260617.htm">Federal Reserve — June 2026 FOMC projections</a> ·
+<a href="https://www.forbes.com/sites/simonmoore/2026/03/30/energy-shock-raises-odds-fed-holds-rates-through-2026/">Forbes — energy shock & Fed (2026-03-30)</a> ·
+<a href="https://www.goldmansachs.com/insights/articles/why-the-fed-is-unlikely-to-cut-rates-this-year">Goldman Sachs — Fed outlook</a></p>
+</section>
+
+<div class="disc">
+<b>Research compiled from public sources (Yahoo Finance, SEC EDGAR, web). Not financial advice — verify before investing.</b><br>
+本研究内容来自公开来源（Yahoo Finance、SEC EDGAR、网络），不构成投资建议，投资前请自行核实。
+</div>
+</div>
+</body>
+</html>

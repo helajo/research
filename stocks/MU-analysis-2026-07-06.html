@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micron Technology (MU) — Deep-Dive Analysis — 2026-07-06</title>
+<style>
+  :root {
+    --strong:#1a7f37; --neutral:#b58900; --weak:#c62828;
+    --accent:#1a3c6e; --bg-zh:#f0f4fa; --border-zh:#1a3c6e;
+  }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+         margin:0; color:#222; line-height:1.6; background:#fafafa; }
+  .wrap { max-width:900px; margin:0 auto; padding:0 24px 60px; }
+  header.bar { background:var(--accent); color:#fff; padding:28px 24px; margin-bottom:8px; }
+  header.bar .inner { max-width:900px; margin:0 auto; }
+  header.bar h1 { margin:0 0 4px; font-size:1.7em; }
+  header.bar p { margin:0; opacity:.85; }
+  section { background:#fff; border:1px solid #e3e3e3; border-radius:8px; padding:20px 28px; margin:22px 0; }
+  h2 { color:var(--accent); font-size:1.25em; margin-top:0; border-bottom:2px solid #eef2f7; padding-bottom:8px; }
+  table { border-collapse:collapse; width:100%; margin:14px 0; font-size:.95em; }
+  th { background:var(--accent); color:#fff; text-align:left; padding:8px 10px; }
+  td { padding:8px 10px; border-bottom:1px solid #eee; }
+  tr:nth-child(even) td { background:#f6f8fb; }
+  .rate { font-weight:700; }
+  .strong { color:var(--strong); } .neutral { color:var(--neutral); } .weak { color:var(--weak); }
+  .zh { background:var(--bg-zh); border-left:4px solid var(--border-zh); padding:12px 16px; margin-top:16px; border-radius:0 6px 6px 0; }
+  .zh .label { font-weight:700; color:var(--accent); display:block; margin-bottom:4px; }
+  .note { color:#666; font-size:.9em; }
+  .disclaimer { background:#fff8e6; border:1px solid #e6cf8b; border-radius:8px; padding:16px 22px; margin-top:26px; font-style:italic; }
+  ul { margin:8px 0; padding-left:22px; }
+  .up { color:var(--strong); font-weight:600; } .down { color:var(--weak); font-weight:600; }
+</style>
+</head>
+<body>
+<header class="bar"><div class="inner">
+  <h1>Micron Technology, Inc. (MU)</h1>
+  <p>US Stock Deep-Dive Analysis · NASDAQ · Semiconductors · Report date: July 6, 2026 · Price data as of 2026-07-06</p>
+</div></header>
+<div class="wrap">
+
+<section>
+<h2>1. Scorecard</h2>
+<table>
+<tr><th>Dimension</th><th>Rating</th><th>Reason</th></tr>
+<tr><td>Financial health</td><td class="rate strong">Strong</td><td>FY25 net income $8.5B on $37.4B revenue; $26.0B cash vs $6.4B debt (latest quarter); operating cash flow $25.4B in FQ3-26 alone</td></tr>
+<tr><td>Valuation</td><td class="rate strong">Strong</td><td>Forward P/E ~6.5 vs peers at 15–77x — cheapest large-cap AI name, with the cyclical caveat below</td></tr>
+<tr><td>Growth</td><td class="rate strong">Strong</td><td>Latest quarter revenue +346% YoY; Cloud Memory unit revenue quadrupled YoY ($3.4B → $13.8B)</td></tr>
+<tr><td>Industry tailwind</td><td class="rate strong">Strong</td><td>AI memory demand exceeds industry supply; HBM structurally undersupplied beyond 2026</td></tr>
+<tr><td>Momentum</td><td class="rate neutral">Neutral</td><td>+721% in 12 months and far above moving averages, but 22% off the $1,255 high — parabolic run now cooling</td></tr>
+<tr><td>Earnings track record</td><td class="rate strong">Strong</td><td>8 consecutive beats; average surprise ~+15%, last quarter +21%</td></tr>
+<tr><td>Capital return</td><td class="rate weak">Weak</td><td>Dividend frozen at $0.46/yr (0.05% yield), zero FY25 buybacks, share count slowly diluting — all cash goes to capex</td></tr>
+</table>
+<p><strong>Overall take:</strong> Micron is the purest large-cap way to own the AI memory shortage, and the numbers behind the 721% run are real — record revenue, 80% operating margins, and multi-year supply agreements. The tension is classic memory-cycle physics: the P/E always looks cheapest near the top of the cycle. This is a strong business at a genuinely reasonable forward price, but with cycle risk and a beta of 2.1, position size matters more than usual.</p>
+<div class="zh"><span class="label">中文摘要</span>
+美光（MU）在七个评估维度中获得五项「强」：财务健康、估值、增长、行业顺风与盈利记录均表现突出；动能因股价一年上涨721%后回调而评为「中性」；资本回报（股息与回购）是唯一弱项。总体判断：美光是AI内存短缺行情中最纯粹的大盘股标的，基本面支撑真实，但内存行业周期性强，需注意仓位控制。</div>
+</section>
+
+<section>
+<h2>2. Snapshot</h2>
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Ticker / Exchange</td><td>MU / NASDAQ</td></tr>
+<tr><td>Sector / Industry</td><td>Technology / Semiconductors (memory &amp; storage)</td></tr>
+<tr><td>Price (2026-07-06)</td><td>$975.56 (previous close $1,032.28)</td></tr>
+<tr><td>Market cap</td><td>$1.10 trillion</td></tr>
+<tr><td>52-week range</td><td>$103.38 – $1,255.00 (currently 22% below high)</td></tr>
+<tr><td>P/E</td><td>22.1 trailing / 6.5 forward</td></tr>
+<tr><td>Dividend yield</td><td>0.05% ($0.46/yr; ex-dividend 2026-07-06, payable 2026-07-21)</td></tr>
+<tr><td>1-year return</td><td class="up">+720.9% (Aug 2025 – Jul 2026)</td></tr>
+<tr><td>Beta</td><td>2.14 (highly volatile)</td></tr>
+</table>
+<div class="zh"><span class="label">中文摘要</span>
+美光现价 $975.56（2026年7月6日），市值1.10万亿美元，一年回报率高达 +720.9%。追踪市盈率22.1倍，但预期市盈率仅6.5倍。股息率极低（0.05%），Beta值2.14，波动性远高于大盘。目前股价较52周高点 $1,255 回落约22%。</div>
+</section>
+
+<section>
+<h2>3. Business Overview</h2>
+<p>Micron designs, manufactures, and sells memory and storage semiconductors — one of only three companies in the world (with Samsung and SK Hynix) that can produce leading-edge DRAM at scale. It sells under the <em>Micron</em> and <em>Crucial</em> brands and reports four segments:</p>
+<ul>
+<li><strong>Cloud Memory Business Unit</strong> — HBM (high-bandwidth memory feeding AI accelerators), data-center DRAM, CXL memory. The growth engine: FQ3-26 revenue of $13.77B, up from $3.39B a year earlier, at 83% gross margin (per the June 24, 2026 8-K).</li>
+<li><strong>Core Data Center</strong> — data-center SSDs and managed NAND.</li>
+<li><strong>Mobile and Client</strong> — LPDDR for smartphones, client SSDs, graphics memory.</li>
+<li><strong>Automotive and Embedded</strong> — auto/industrial memory and storage.</li>
+</ul>
+<p>Headquartered in Boise, Idaho, with fabs in the US, Taiwan, Japan, and Singapore, and a major US expansion underway. Micron has been redirecting capacity from consumer RAM toward high-margin HBM for AI servers.</p>
+<div class="zh"><span class="label">中文摘要</span>
+美光是全球仅有的三家能大规模生产尖端DRAM的公司之一（另两家为三星和SK海力士），业务分四个部门。其中云内存部门（含AI加速器所需的HBM高带宽内存）是核心增长引擎：FQ3-26收入达137.7亿美元，同比增长约三倍，毛利率高达83%。公司总部位于爱达荷州博伊西，正将产能从消费级内存转向高利润的AI服务器HBM。</div>
+</section>
+
+<section>
+<h2>4. Financial Health</h2>
+<p><strong>Figures verified against SEC filings</strong> — Yahoo Finance annual revenue, net income, and diluted EPS match SEC EDGAR exactly for FY2022–FY2025.</p>
+<table>
+<tr><th>Fiscal year (ends late Aug)</th><th>Revenue</th><th>Net income</th><th>Diluted EPS</th></tr>
+<tr><td>FY2023</td><td>$15.54B</td><td class="down">-$5.83B</td><td class="down">-$5.34</td></tr>
+<tr><td>FY2024</td><td>$25.11B</td><td>$0.78B</td><td>$0.70</td></tr>
+<tr><td>FY2025</td><td>$37.38B</td><td>$8.54B</td><td>$7.59</td></tr>
+<tr><td>Trailing 12 months (as of FQ3-26)</td><td>~$90B implied by 12.2x P/S</td><td>55.9% net margin</td><td>$44.19</td></tr>
+</table>
+<ul>
+<li><strong>Margins (TTM):</strong> gross 72.6%, operating 80.4%, net 55.9% — extraordinary levels driven by AI memory pricing.</li>
+<li><strong>Balance sheet (latest quarter):</strong> $26.0B cash vs $6.4B total debt — net cash position after paying down debt (FY25 balance sheet showed $15.3B debt; the June 2026 10-Q reflects the improvement).</li>
+<li><strong>Cash flow:</strong> FQ3-26 operating cash flow was $25.4B (vs $4.6B a year earlier). FY25 free cash flow was only $1.7B because capex hit $15.9B — Micron is reinvesting nearly everything into capacity.</li>
+</ul>
+<p class="note">The jump from FY25 EPS of $7.59 to trailing EPS of $44.19 shows how violently earnings have ramped within FY2026 — this is both the bull case and the cycle-peak warning.</p>
+<h3>Quarterly trend — where the inflection actually is</h3>
+<table>
+<tr><th>Quarter ended</th><th>Revenue</th><th>Gross margin</th><th>Net income</th><th>Diluted EPS</th></tr>
+<tr><td>2025-05 (FQ3-25)</td><td>$9.30B</td><td>37.7%</td><td>$1.89B</td><td>$1.68</td></tr>
+<tr><td>2025-08 (FQ4-25)</td><td>$11.32B</td><td>44.7%</td><td>$3.20B</td><td>$2.83</td></tr>
+<tr><td>2025-11 (FQ1-26)</td><td>$13.64B</td><td>56.0%</td><td>$5.24B</td><td>$4.60</td></tr>
+<tr><td>2026-02 (FQ2-26)</td><td>$23.86B</td><td>74.4%</td><td>$13.79B</td><td>$12.07</td></tr>
+<tr><td>2026-05 (FQ3-26)</td><td>$41.46B</td><td>84.6%</td><td>$28.24B</td><td>$24.67</td></tr>
+</table>
+<p><strong>Reading: still accelerating, and violently</strong> — revenue more than quadrupled in five quarters while gross margin climbed from 38% to 85%, and the quarter-over-quarter growth rate is itself increasing. Nothing in the reported numbers suggests rollover yet; that's what the September 23 report has to keep proving.</p>
+<div class="zh"><span class="label">中文摘要</span>
+财务数据已与SEC官方文件核对一致。美光从FY2023亏损58.3亿美元完成剧烈周期反转，资产负债表呈净现金状态。季度趋势显示拐点所在：五个季度内收入从93亿美元增至415亿美元（翻四倍以上），毛利率从37.7%升至84.6%，且环比增速仍在加快——目前尚无见顶迹象，9月23日财报需继续验证这一势头。</div>
+</section>
+
+<section>
+<h2>5. Earnings Track Record</h2>
+<table>
+<tr><th>Quarter reported</th><th>EPS estimate</th><th>EPS actual</th><th>Surprise</th></tr>
+<tr><td>2026-06-24 (FQ3-26)</td><td>$20.71</td><td>$25.11</td><td class="up">+21.3%</td></tr>
+<tr><td>2026-03-18 (FQ2-26)</td><td>$9.16</td><td>$12.20</td><td class="up">+33.2%</td></tr>
+<tr><td>2025-12-17 (FQ1-26)</td><td>$3.96</td><td>$4.78</td><td class="up">+20.6%</td></tr>
+<tr><td>2025-09-23 (FQ4-25)</td><td>$2.86</td><td>$3.03</td><td class="up">+5.9%</td></tr>
+<tr><td>2025-06-25 (FQ3-25)</td><td>$1.59</td><td>$1.91</td><td class="up">+19.8%</td></tr>
+<tr><td>2025-03-20 (FQ2-25)</td><td>$1.42</td><td>$1.56</td><td class="up">+9.5%</td></tr>
+<tr><td>2024-12-18 (FQ1-25)</td><td>$1.77</td><td>$1.79</td><td class="up">+1.4%</td></tr>
+<tr><td>2024-09-25 (FQ4-24)</td><td>$1.11</td><td>$1.18</td><td class="up">+5.9%</td></tr>
+</table>
+<p><strong>Pattern: 8 consecutive beats</strong>, with surprises accelerating (three of the last four beats exceeded +20%). Analysts keep underestimating the pricing power. <strong>Next earnings: September 23, 2026</strong> — consensus EPS $31.28 (range $28.04–$37.44) and consensus quarterly revenue around $50.8B, which would exceed all of FY2025's revenue in a single quarter.</p>
+<div class="zh"><span class="label">中文摘要</span>
+美光连续8个季度盈利超预期，且超出幅度不断扩大（最近四个季度中有三次超出20%以上），说明分析师持续低估其定价能力。下次财报日为2026年9月23日，市场预期每股收益$31.28、单季收入约508亿美元——相当于一个季度就超过FY2025全年收入。</div>
+</section>
+
+<section>
+<h2>6. Valuation Verdict</h2>
+<ul>
+<li><strong>Trailing P/E 22.1</strong> — near the historical <em>high</em> end for a memory maker (they typically trade at single-digit P/Es at cycle peaks precisely because the market distrusts peak earnings).</li>
+<li><strong>Forward P/E 6.5</strong> on consensus forward EPS of ~$149.64 — the market is pricing in another tripling of earnings and still isn't paying up for it.</li>
+<li><strong>P/S 12.2</strong> — far above Micron's own history (typically 2–5x), reflecting the new margin structure.</li>
+<li><strong>Vs peers:</strong> NVDA trades at 15.3x forward, AVGO 18.6x, AMD 39.3x, INTC 77x. Micron at 6.5x forward is the cheapest AI-infrastructure large cap by a wide margin.</li>
+</ul>
+<p><strong>Verdict: looks cheap</strong> — <em>if</em> the forward estimates hold. The 6.5x forward multiple embeds analyst confidence in multi-year Strategic Customer Agreements and structural HBM undersupply. The honest caveat: memory P/Es always look cheapest right before the cycle turns, and trailing EPS has already ramped 6x within one fiscal year. Cheap on the numbers, but with much wider error bars than the multiple suggests.</p>
+<h3>Scenario grid — what the stock is worth under different futures</h3>
+<p class="note">Illustrative assumptions anchored in real data, not forecasts. Current price: $975.56. Bear EPS sits between trailing ($44) and consensus, reflecting a partial cycle turn; base EPS is the analyst consensus (~$150); bull assumes the beat streak continues (~25% above consensus). Multiples span memory-cyclical (8x) to quality-semi (12x). For reference: the Street's lowest target ($361) ≈ bear EPS at a trough multiple of 6x; the highest ($2,200) sits beyond the bull column.</p>
+<table>
+<tr><th>Scenario (FY27 EPS)</th><th>× 8</th><th>× 10</th><th>× 12</th><th>What it requires</th></tr>
+<tr><td><strong>Bear — $60</strong></td><td class="weak">$480 (−51%)</td><td class="weak">$600 (−38%)</td><td class="weak">$720 (−26%)</td><td>HBM supply catches up, pricing rolls over, margins normalize</td></tr>
+<tr><td><strong>Base — $150</strong></td><td>$1,200 (+23%)</td><td>$1,500 (+54%)</td><td>$1,800 (+85%)</td><td>Consensus plays out; supply agreements hold pricing through FY27</td></tr>
+<tr><td><strong>Bull — $190</strong></td><td class="strong">$1,520 (+56%)</td><td class="strong">$1,900 (+95%)</td><td class="strong">$2,280 (+134%)</td><td>Beat streak continues; undersupply persists; multiple re-rates as "structural"</td></tr>
+</table>
+<p>The takeaway: at today's price the base case already pays well, but the bear case is a genuine −40–50% — this is a favorable but wide distribution, which is exactly what the low multiple is compensating for.</p>
+<div class="zh"><span class="label">中文摘要</span>
+估值结论：<strong>偏便宜</strong>（预期市盈率6.5倍，为AI基建大盘股中最低），但内存股市盈率在周期顶部往往显得最便宜。情景分析（示意性假设）：熊市情形（FY27每股收益$60）对应股价约$480–720（下跌26–51%）；基准情形（$150，即分析师共识）对应$1,200–1,800（上涨23–85%）；牛市情形（$190）对应$1,520–2,280（上涨56–134%）。当前价格下基准情形回报可观，但熊市情形跌幅达四至五成——低估值正是对这种宽分布风险的补偿。</div>
+</section>
+
+<section>
+<h2>7. Industry Analysis</h2>
+<p>The semiconductor market is forecast to surpass <strong>$1 trillion in 2026</strong>, driven by what IDC calls the "AI supercycle." Within it, memory is the tightest segment:</p>
+<ul>
+<li><strong>Demand:</strong> AI data-center buildouts are consuming HBM and high-capacity DRAM faster than the industry can add supply; Micron's own June 2026 press release states demand is growing "at a rate greater than the industry's ability to increase supply."</li>
+<li><strong>Supply discipline:</strong> all three DRAM makers (Samsung, SK Hynix, Micron) have shifted capacity from consumer RAM to HBM, keeping conventional DRAM tight too. Industry analyses expect the structural imbalance to persist beyond 2026.</li>
+<li><strong>Bottlenecks:</strong> advanced packaging (CoWoS, HBM stacking) is running near full utilization industry-wide.</li>
+<li><strong>Position:</strong> Micron is the #3 DRAM player globally and the only US-headquartered one — a leader (not a niche player) in HBM, where it claims technology leadership with its 1γ-class DRAM and G9 NAND.</li>
+<li><strong>Headwinds:</strong> tariffs are raising the cost of imported fab equipment and materials; consumer segments (mobile, PC, auto) remain soft under high rates and energy prices.</li>
+</ul>
+<div class="zh"><span class="label">中文摘要</span>
+2026年半导体市场规模预计突破1万亿美元，其中内存是供需最紧张的环节。AI数据中心对HBM的需求增速超过全行业扩产能力，三大DRAM厂商（三星、SK海力士、美光）均将产能转向HBM，供应失衡预计持续到2026年之后。美光是全球第三大DRAM厂商、唯一的美国本土厂商，在HBM领域处于领先地位。不利因素：关税推高设备成本，消费电子（手机、PC、汽车）需求仍疲软。</div>
+</section>
+
+<section>
+<h2>8. Peer Comparison</h2>
+<p class="note">All peer numbers are live quotes from 2026-07-06, not from memory. Micron's true head-to-head competitors (Samsung Electronics, SK Hynix) are Korea-listed and excluded from the table; SK Hynix is reportedly planning a $29B Nasdaq listing.</p>
+<table>
+<tr><th>Company</th><th>Market cap</th><th>Fwd P/E</th><th>Revenue growth (latest Q, YoY)</th><th>Note</th></tr>
+<tr><td><strong>MU (subject)</strong></td><td>$1.10T</td><td><strong>6.5</strong></td><td class="up">+345.7%</td><td>Memory pure play; fastest growth, lowest multiple</td></tr>
+<tr><td>NVDA</td><td>$4.72T</td><td>15.3</td><td class="up">+85.2%</td><td>AI compute leader; Micron's biggest indirect customer ecosystem</td></tr>
+<tr><td>AVGO</td><td>$1.71T</td><td>18.6</td><td class="up">+47.9%</td><td>Custom AI ASICs + networking + software; steadier model</td></tr>
+<tr><td>AMD</td><td>$844B</td><td>39.3</td><td class="up">+37.8%</td><td>AI accelerator challenger; buys HBM (customer as much as peer)</td></tr>
+<tr><td>INTC</td><td>$605B</td><td>77.1</td><td>+7.2%</td><td>Turnaround story; unprofitable TTM, negative FCF</td></tr>
+</table>
+<p>Micron is simultaneously the fastest-growing and cheapest name on this table. The discount reflects one thing: memory is a commodity business with a brutal cycle history, while NVDA/AVGO earn structural moats. The market is paying Micron for this cycle, not for permanence — which is exactly where the debate (Section 11) lives.</p>
+<div class="zh"><span class="label">中文摘要</span>
+在美国上市同业中，美光同时是增长最快（最近季度收入同比+345.7%）且估值最低（预期市盈率6.5倍）的公司。折价原因在于内存属于周期性大宗商品业务，而英伟达、博通拥有结构性护城河。真正的直接竞争对手三星和SK海力士在韩国上市（SK海力士据报道计划在纳斯达克进行290亿美元上市）。</div>
+</section>
+
+<section>
+<h2>9. Technical, Momentum &amp; What Holding It Feels Like</h2>
+<ul>
+<li><strong>Price $975.56 vs 50-day avg $852 (+14.5% above) and 200-day avg $444 (+120% above)</strong> — an extremely extended uptrend.</li>
+<li><strong>22.3% below the 52-week high</strong> of $1,255; 9.4x the 52-week low of $103.38.</li>
+<li>Short interest is modest at 3.7% of float — few are betting against it.</li>
+</ul>
+<svg viewBox="0 0 820 270" role="img" aria-label="MU monthly closing price, Aug 2025 to Jul 2026" style="width:100%;height:auto;background:#fbfcfe;border:1px solid #e8ecf2;border-radius:6px;">
+  <g stroke="#e3e8f0" stroke-width="1">
+    <line x1="60" y1="191.5" x2="760" y2="191.5"/><line x1="60" y1="153.1" x2="760" y2="153.1"/>
+    <line x1="60" y1="114.6" x2="760" y2="114.6"/><line x1="60" y1="76.2" x2="760" y2="76.2"/>
+    <line x1="60" y1="37.7" x2="760" y2="37.7"/><line x1="60" y1="230" x2="760" y2="230" stroke="#c8cfd9"/>
+  </g>
+  <g font-size="11" fill="#8a93a3" text-anchor="end">
+    <text x="54" y="195">$250</text><text x="54" y="157">$500</text><text x="54" y="118">$750</text>
+    <text x="54" y="80">$1,000</text><text x="54" y="41">$1,250</text>
+  </g>
+  <polyline fill="none" stroke="#1a3c6e" stroke-width="2.5" stroke-linejoin="round"
+    points="60,211.7 123.6,204.3 187.3,195.6 250.9,193.7 314.5,186.1 378.2,166.2 441.8,166.6 505.5,178.0 569.1,150.4 632.7,80.6 696.4,52.4 760,79.9"/>
+  <circle cx="696.4" cy="52.4" r="4" fill="#1a7f37"/>
+  <text x="640" y="35" font-size="11" fill="#1a7f37">Jun close $1,154</text>
+  <circle cx="760" cy="79.9" r="4" fill="#c62828"/>
+  <text x="705" y="103" font-size="11" fill="#c62828">Now $976</text>
+  <g font-size="11" fill="#8a93a3" text-anchor="middle">
+    <text x="60" y="248">Aug '25</text><text x="250.9" y="248">Nov '25</text>
+    <text x="441.8" y="248">Feb '26</text><text x="632.7" y="248">May '26</text><text x="760" y="248">Jul '26</text>
+  </g>
+  <text x="410" y="264" font-size="10" fill="#a8b0bd" text-anchor="middle">Monthly closes; intramonth 52-week high $1,255 / low $103.38 not shown</text>
+</svg>
+<h3>Against the benchmarks (1-year return)</h3>
+<table>
+<tr><th>MU</th><th>SOXX (semis)</th><th>QQQ (Nasdaq-100)</th><th>SPY (S&amp;P 500)</th></tr>
+<tr><td class="up">+720.9%</td><td class="up">+143.8%</td><td>+27.7%</td><td>+17.6%</td></tr>
+</table>
+<p>MU didn't just ride the AI trade — it outran its own sector index by ~5x. That is the re-rating; it has largely happened.</p>
+<h3>What holding it feels like</h3>
+<p>Worst peak-to-trough drop in the past 5 years: <strong>−46%</strong> (Dec 2021 → Sep 2022, monthly-close basis — intramonth it was deeper), and the stock is already −15% from June's close and −22% from the intramonth high in the current pullback. With a beta of 2.14, drawdowns of this scale are the admission price for owning a memory cyclical, even inside a supercycle. Position sizing should assume another one happens.</p>
+<p><strong>Conclusion:</strong> the market has been aggressively buying this story all year, but the last two weeks show real profit-taking after a parabolic move. Momentum is intact on any medium-term view (price far above both moving averages) yet clearly hot short-term — this is a pullback within an uptrend, not a broken trend, as of today's data.</p>
+<div class="zh"><span class="label">中文摘要</span>
+股价 $975.56 高于50日均线14.5%、高于200日均线120%，趋势强劲但已过度延伸（见图）。对比基准：一年回报 +720.9%，远超半导体指数SOXX（+143.8%）、QQQ（+27.7%）和标普500（+17.6%）——估值重估已大部分完成。持有体验提示：过去5年最大回撤为 −46%（2021年12月至2022年9月），当前已从6月高点回落22%，Beta值2.14——此等级别的回撤是持有内存周期股的「入场代价」，仓位应据此设定。结论：中期上升趋势完好，短期过热，目前属上升趋势中的回调。</div>
+</section>
+
+<section>
+<h2>10. Expected Future Trends</h2>
+<p><strong>Company guidance (reported):</strong> Micron guided to an "even stronger" FQ4-26 in its June 24 press release, citing AI demand outpacing supply, record investment in technology and capacity, and multi-year Strategic Customer Agreements designed to make results more durable and predictable.</p>
+<p><strong>Analyst opinion:</strong></p>
+<ul>
+<li>Consensus target: <strong>mean $1,486 / median $1,550</strong> (range $361–$2,200) vs price $975.56 — mean implies <span class="up">+52% upside</span>.</li>
+<li>Ratings: 9 Strong Buy, 31 Buy, 5 Hold, 0 Sell.</li>
+<li>After the June 24 earnings, at least 14 firms raised targets in four days — Barclays $1,175→$2,000, Cantor Fitzgerald $1,500→$2,000, DA Davidson $1,500→$2,000, Susquehanna $1,750→$2,000, Wells Fargo $1,220→$1,525, RBC $1,200→$1,500. Even the most cautious major (Goldman Sachs, Neutral) went $900→$1,100.</li>
+</ul>
+<p><strong>Catalysts:</strong> FQ4-26 earnings September 23; SK Hynix's planned Nasdaq listing (could re-rate the whole memory group); Fed minutes this week (high-beta stock); ongoing HBM4 qualification cycle at AI accelerator vendors.</p>
+<p><strong>My synthesis:</strong> the setup into September earnings is favorable given the 8-beat streak, but expectations are now enormous (consensus wants ~$50.8B in one quarter). The easy part of the re-rating has happened; from here the stock needs estimate momentum, not just multiple expansion.</p>
+<div class="zh"><span class="label">中文摘要</span>
+公司指引：FQ4-26业绩将「更加强劲」，多年期战略客户协议将提升业绩的持续性。分析师方面：45位分析师中40位给予买入或强烈买入评级，平均目标价 $1,486（隐含52%上涨空间）；6月24日财报后四天内至少14家机构上调目标价，最高至 $2,200。关键催化剂：9月23日财报、SK海力士纳斯达克上市、美联储会议纪要。综合判断：估值重估的容易阶段已过，后续上涨需依赖盈利预期继续上修。</div>
+</section>
+
+<section>
+<h2>11. Bull Case vs Bear Case</h2>
+<p><strong>Bull case — why it goes up:</strong></p>
+<ul>
+<li>Demand is verifiably outrunning supply: Cloud Memory revenue quadrupled YoY at 83% gross margin, and management says the industry cannot add supply fast enough.</li>
+<li>At 6.5x forward earnings, a mere market-average multiple on delivered estimates implies a much higher stock; the mean analyst target (+52%) doesn't require heroic assumptions.</li>
+<li>Multi-year Strategic Customer Agreements — effectively pre-sold capacity — directly attack the "it's just a cycle" discount; if believed, the multiple re-rates structurally.</li>
+<li>Only three companies on earth can make this product, and Micron is the only American one, in a decade of chip nationalism.</li>
+<li>Eight consecutive beats with accelerating surprise magnitude — estimate momentum is still rising, not rolling over.</li>
+</ul>
+<p><strong>Bear case — why it goes down:</strong></p>
+<ul>
+<li>Every memory supercycle in history ended with oversupply and a crash — Micron lost $5.8B as recently as FY2023. Trailing EPS ramping 6x in a year is what cycle peaks look like.</li>
+<li>"AI bubble fears" are already in the headlines (today's news cycle); if hyperscaler capex plans get cut, memory pricing unwinds fastest.</li>
+<li>Samsung and SK Hynix are adding HBM capacity aggressively; the moment supply catches up, 80% operating margins are unsustainable for a commodity product.</li>
+<li>Insider selling is broad: the CEO's $106M+ was pre-scheduled (10b5-1 plans), but ~$27M by the Chief Business Officer, sales chief, and two directors was discretionary — and zero buybacks means the company itself isn't buying either.</li>
+<li>Beta 2.14 and a parabolic chart: in any broad market or AI-sentiment correction, MU falls roughly twice as hard.</li>
+</ul>
+<div class="zh"><span class="label">中文摘要</span>
+看多理由：需求确实超过供给（云内存收入同比翻四倍、毛利率83%）；预期市盈率仅6.5倍；多年期客户协议削弱周期性折价；全球仅三家厂商能生产该产品且美光是唯一美国厂商；连续8季超预期。看空理由：历史上每轮内存超级周期都以供过于求崩盘告终（FY2023刚亏损58亿美元）；「AI泡沫」担忧已见诸报端；三星和SK海力士正大举扩产HBM；包括CEO在内的高管持续大额减持（5月以来超1亿美元）；Beta值2.14，市场回调时跌幅约为大盘两倍。</div>
+</section>
+
+<section>
+<h2>12. Macro Sensitivity</h2>
+<ul>
+<li><strong>AI capex cycle (dominant exposure):</strong> Micron's results now live and die with hyperscaler data-center budgets. This currently cuts strongly in its favor — but concentration risk on a handful of buyers is high.</li>
+<li><strong>Interest rates:</strong> beta 2.14 makes MU one of the most rate-sensitive large caps; this week's Fed minutes are a live catalyst. Consumer segments (mobile/PC/auto) also stay soft while rates and energy costs are high.</li>
+<li><strong>Tariffs/trade:</strong> tariffs are raising the cost of fab equipment and materials industry-wide; Micron's record capex program makes it more exposed to equipment inflation than peers. China previously restricted Micron products from critical infrastructure (2023), and fab concentration in Taiwan and Japan carries geopolitical tail risk.</li>
+<li><strong>FX:</strong> costs in NT$, ¥, and S$ against US$ revenue — a strong dollar mildly helps costs.</li>
+</ul>
+<p>Net: today's macro (AI capex boom, chip nationalism favoring the sole US memory maker) is a tailwind, but MU carries far-above-average sensitivity to any turn in rates or AI sentiment.</p>
+<div class="zh"><span class="label">中文摘要</span>
+美光目前最大的宏观敞口是AI资本开支周期——业绩高度依赖少数几家超大规模云厂商的预算。利率方面，Beta值2.14使其对美联储政策极为敏感，本周公布的会议纪要是即时催化剂。关税推高设备成本，而美光正处于创纪录的资本开支期，受影响大于同业；此外中国曾于2023年限制美光产品，台湾和日本的晶圆厂布局带有地缘政治尾部风险。总体而言，当前宏观环境（AI热潮+芯片本土化政策）对其有利，但敏感度远高于平均水平。</div>
+</section>
+
+<section>
+<h2>13. Insider &amp; Ownership</h2>
+<p><strong>Insiders are heavy net sellers — but the Form 4 filings split the signal in two.</strong> Each sale below is classified using the official Rule 10b5-1 checkbox on the SEC Form 4: <em>routine</em> = pre-scheduled trading plan set up in advance; <em>discretionary</em> = the insider chose to sell now (the stronger signal). No open-market purchases by any insider in the recent record.</p>
+<table>
+<tr><th>Insider</th><th>Role</th><th>Sales (filed Jan–Jul 2026)</th><th>Classification</th></tr>
+<tr><td>Sanjay Mehrotra</td><td>President &amp; CEO</td><td>~$106M (May–Jun)</td><td class="strong">Routine — all under 10b5-1 plans</td></tr>
+<tr><td>April Arnzen</td><td>EVP, Chief People Officer</td><td>~$13.9M (Apr)</td><td class="strong">Routine — 10b5-1 plan</td></tr>
+<tr><td>Michael Ray</td><td>SVP, Chief Legal Officer</td><td>~$9.1M (Jan, May)</td><td class="strong">Routine — 10b5-1 plans</td></tr>
+<tr><td>Sumit Sadana</td><td>EVP, Chief Business Officer</td><td>~$20.9M (Feb, Apr)</td><td class="weak">Discretionary — no plan</td></tr>
+<tr><td>Michael Cordano</td><td>EVP, Worldwide Sales</td><td>~$2.9M (Apr)</td><td class="weak">Discretionary — no plan</td></tr>
+<tr><td>Steven Gomo</td><td>Director</td><td>~$1.6M (May)</td><td class="weak">Discretionary — no plan</td></tr>
+<tr><td>Lynn Dugle</td><td>Director</td><td>~$1.5M (Jun 30)</td><td class="weak">Discretionary — no plan</td></tr>
+</table>
+<p><strong>Reading:</strong> the headline-grabbing CEO sales (~$106M) were all pre-scheduled plan executions — much weaker as a signal than they look. The more meaningful item is roughly <strong>$27M of discretionary selling</strong>, notably by the Chief Business Officer (who runs the customer relationships behind the Strategic Customer Agreements) and the head of Worldwide Sales, plus two directors — the most commercially informed insiders chose to take profits without a plan. Not damning on its own, but combined with zero buybacks, no one inside is adding at these prices.</p>
+<p><strong>Ownership:</strong> insiders hold just 0.25%; institutions hold 81.4% (3,956 institutions). Top holders as of 2026-03-31: BlackRock 9.1% (added +2.4%), Vanguard 6.5% (new/restructured position), State Street 4.6% (-1.0%), Capital World 3.7% (<span class="down">trimmed -27.8%</span>), Fidelity/FMR 2.8% (<span class="down">trimmed -19.1%</span>), JPMorgan +19.9%, Geode +5.5%, Primecap -11.8%. Mixed picture: index giants added, several active managers took profits.</p>
+<div class="zh"><span class="label">中文摘要</span>
+根据SEC Form 4文件的 Rule 10b5-1 标记，内部人减持可分为两类：CEO Mehrotra 约1.06亿美元的减持全部属于预先设定的交易计划（例行操作，信号较弱）；而首席商务官 Sadana（约2,090万美元）、全球销售主管 Cordano 及两位董事合计约2,700万美元的减持为「自主决定」卖出（无预设计划，信号更强）——最了解客户情况的高管选择主动获利了结。全程无任何内部人公开市场买入。机构持股占81.4%：贝莱德和摩根大通增持，Capital World（-27.8%）和富达（-19.1%）明显减仓。</div>
+</section>
+
+<section>
+<h2>14. Dividends &amp; Capital Return</h2>
+<table>
+<tr><th>Year</th><th>2021</th><th>2022</th><th>2023</th><th>2024</th><th>2025</th></tr>
+<tr><td>Dividends per share</td><td>$0.20</td><td>$0.445</td><td>$0.46</td><td>$0.46</td><td>$0.46</td></tr>
+</table>
+<ul>
+<li><strong>Dividend:</strong> initiated 2021, but frozen at $0.46 since 2023 — no growth streak. Payout ratio is a trivial 1.1% of earnings; yield 0.05%. Next payment July 21, 2026 (ex-div today, July 6).</li>
+<li><strong>Buybacks:</strong> $2.43B in FY22, shrinking to $425M (FY23), $300M (FY24), and <strong>zero in FY25</strong>.</li>
+<li><strong>Share count:</strong> diluted shares drifted from 1.093B (FY23) to 1.125B (FY25) — mild ongoing dilution from stock comp, no longer offset by repurchases.</li>
+</ul>
+<p>Capital return is clearly management's lowest priority: essentially all cash is going into the $15.9B/yr (and rising) capex program to capture AI demand. Rational at this point in the cycle, but income investors should look elsewhere.</p>
+<div class="zh"><span class="label">中文摘要</span>
+资本回报是美光的明显弱项：股息自2023年起冻结在每年$0.46（收益率仅0.05%），回购从FY22的24.3亿美元逐年缩减至FY25的零，股本还因股权激励轻微稀释。管理层将几乎全部现金投入每年159亿美元以上的资本开支以抢占AI需求——在周期当前阶段属合理选择，但不适合追求股息收入的投资者。</div>
+</section>
+
+<section>
+<h2>15. Recent News &amp; Indicators</h2>
+<ul>
+<li><strong>2026-06-24 — Record FQ3-26 earnings (8-K):</strong> EPS $25.11 vs $20.71 est.; operating cash flow $25.4B; Cloud Memory revenue $13.8B at 83% GM; "even stronger" Q4 outlook; multi-year Strategic Customer Agreements announced.</li>
+<li><strong>2026-06-25 to 06-29 — Target-raise wave:</strong> 14+ firms raised price targets; four now at $2,000+ (Barclays, Cantor, DA Davidson, Susquehanna).</li>
+<li><strong>2026-07-06 — Memory stocks rebound:</strong> MU and Sandisk bouncing pre-market as analysts call the pullback "an attractive entry point" (IBD, Investing.com) after the late-June profit-taking.</li>
+<li><strong>2026-07-06 — SK Hynix $29B Nasdaq listing report</strong> (GuruFocus): would put Micron's closest comp on US exchanges and could reshape how the AI memory trade is valued.</li>
+<li><strong>2026-07-06 — "AI bubble fears" commentary</strong> (24/7 Wall St. and others): hyperscaler capex sustainability is now a mainstream debate — the key sentiment risk for MU.</li>
+<li><strong>Indicators:</strong> short interest 3.7% of float (low); institutional ownership 81.4%; ex-dividend today; Fed minutes due this week.</li>
+</ul>
+<div class="zh"><span class="label">中文摘要</span>
+近期要闻：6月24日创纪录财报引发14家以上机构上调目标价（四家给出$2,000以上）；7月6日内存股反弹，分析师称回调是「有吸引力的入场点」；SK海力士据报道计划290亿美元纳斯达克上市，或重塑AI内存板块估值；同时「AI泡沫」担忧已成为主流讨论，是最主要的情绪风险。空头占比仅3.7%，机构持股81.4%，本周将公布美联储会议纪要。</div>
+</section>
+
+<section>
+<h2>16. Red-Flags Check</h2>
+<ul>
+<li><strong>Receivables vs revenue:</strong> FY25 receivables $9.27B, +40% YoY vs revenue +49% — in line, not a flag.</li>
+<li><strong>Stock-based compensation:</strong> $972M in FY25, ~2.6% of revenue — modest for a tech company.</li>
+<li><strong>Goodwill:</strong> flat at $1.15B for three years — no acquisition-inflation risk.</li>
+<li><strong>Auditor/going concern:</strong> no auditor change or going-concern language in recent filings' 8-Ks reviewed.</li>
+<li><strong>Inventory:</strong> $8.36B, actually down slightly YoY while revenue surged — healthy (inventory building would be the classic memory-cycle warning sign to watch each quarter).</li>
+</ul>
+<p><strong>Accounting quality: none noted.</strong> The risks here are cyclical and strategic, not accounting-related.</p>
+<div class="zh"><span class="label">中文摘要</span>
+会计质量检查未发现异常：应收账款增速与收入相符，股权激励占收入仅2.6%，商誉三年持平，无审计师变更或持续经营疑虑，库存在收入激增的同时反而略降（库存堆积是内存周期见顶的经典信号，后续每季度值得跟踪）。美光的风险在于周期与战略层面，而非财务造假。</div>
+</section>
+
+<section>
+<h2>17. Risks</h2>
+<ol>
+<li><strong>Memory-cycle reversal</strong> — the sector's defining risk: when supply catches demand, pricing collapses fast. Micron went from +$8.7B (FY22) to -$5.8B (FY23) in one year.</li>
+<li><strong>AI capex concentration</strong> — a handful of hyperscalers drive the Cloud Memory unit that is now most of the profit; any capex digestion period hits MU disproportionately.</li>
+<li><strong>Competitive capacity additions</strong> — Samsung and SK Hynix are racing to add HBM supply; Micron's 80% operating margins are the industry's invitation to overbuild.</li>
+<li><strong>Geopolitics</strong> — China restrictions on Micron (since 2023), Taiwan/Japan fab concentration, and tariff-driven equipment cost inflation during a record capex program.</li>
+<li><strong>Valuation-on-peak-earnings</strong> — if FY27 estimates ($149 EPS) prove to be cycle-peak numbers, the "cheap" 6.5x forward P/E is an illusion; high beta (2.14) amplifies any disappointment.</li>
+</ol>
+<div class="zh"><span class="label">中文摘要</span>
+五大风险：(1) 内存周期反转——供给追上需求后价格崩跌，美光曾在一年内从盈利87亿美元变为亏损58亿美元；(2) AI资本开支集中于少数云厂商；(3) 三星和SK海力士竞相扩产HBM，80%的营业利润率会招致行业过度扩产；(4) 地缘政治（中国限制、台日晶圆厂集中、关税）；(5) 若当前盈利预期实为周期顶部，6.5倍的「便宜」估值便是假象，且高Beta会放大跌幅。</div>
+</section>
+
+<section>
+<h2>18. Tripwires — What Would Change This Thesis</h2>
+<p>Specific, checkable triggers. If one fires, re-run the analysis before acting on the old conclusion.</p>
+<table>
+<tr><th>#</th><th>Trigger</th><th>Why it matters</th><th>Where to check</th></tr>
+<tr><td>1</td><td><strong>Inventory rises QoQ</strong> in the FQ4 report (Sep 23) — currently $8.36B and falling</td><td>Inventory build is the classic memory-cycle-top signal, historically preceding price cuts</td><td>Balance sheet in the 10-K / get_financials</td></tr>
+<tr><td>2</td><td><strong>FQ4 revenue or guidance below consensus</strong> (~$50.8B revenue / $31.28 EPS) on Sep 23</td><td>First miss after 8 beats would break the estimate-momentum engine driving the re-rating</td><td>Earnings release (8-K) / get_earnings_history</td></tr>
+<tr><td>3</td><td><strong>Discretionary insider selling spreads</strong> — new non-10b5-1 sales, especially another by CBO Sadana; conversely, any open-market <em>buy</em> is a positive tripwire</td><td>The commercially informed insiders' unplanned trades are the strongest insider signal</td><td>Form 4 filings / get_form4_insider_detail</td></tr>
+<tr><td>4</td><td><strong>Samsung or SK Hynix announce major HBM capacity additions or price concessions</strong> — SK Hynix's Nasdaq listing prospectus will disclose capacity plans</td><td>Supply catching demand is the bear case; 80% margins invite overbuild</td><td>News; SK Hynix F-1/prospectus when filed</td></tr>
+<tr><td>5</td><td><strong>Short interest climbs above ~6% of float</strong> (now 3.7%)</td><td>Informed money starting to bet on the cycle turn</td><td>get_quote (shortPercentOfFloat)</td></tr>
+<tr><td>6</td><td><strong>Price closes below the 50-day average</strong> (~$852, rising)</td><td>First objective sign the pullback is becoming a trend change rather than profit-taking</td><td>get_quote (fiftyDayAverage)</td></tr>
+</table>
+<div class="zh"><span class="label">中文摘要</span>
+六条「触发线」——任何一条触发即应重新分析：(1) 9月23日财报中库存环比上升（内存周期见顶的经典信号，目前83.6亿美元且在下降）；(2) FQ4收入或指引低于共识（约508亿美元/每股$31.28）；(3) 无预设计划的内部人减持蔓延（尤其首席商务官再次减持；反之任何公开市场买入为积极信号）；(4) 三星或SK海力士宣布大幅扩产HBM或降价；(5) 空头占比升破约6%（现为3.7%）；(6) 股价收于50日均线（约$852）之下。</div>
+</section>
+
+<section>
+<h2>19. Similar Stocks to Consider</h2>
+<ul>
+<li><strong>SNDK (Sandisk)</strong> — the NAND pure play; moves with the same memory-pricing wave (bounced alongside MU today).</li>
+<li><strong>WDC (Western Digital)</strong> — storage/HDD exposure to the same data-center buildout at a lower profile.</li>
+<li><strong>SK Hynix</strong> — the closest true comp (HBM #1/#2); currently Korea-listed but reportedly heading for a $29B Nasdaq listing — the direct alternative once available.</li>
+<li><strong>LRCX (Lam Research)</strong> — the picks-and-shovels play: memory makers' record capex is Lam's revenue; less pricing-cycle risk, same demand driver.</li>
+<li><strong>STX (Seagate)</strong> — mass-capacity storage riding AI data growth with a real dividend, for a lower-volatility angle on the same theme.</li>
+</ul>
+<div class="zh"><span class="label">中文摘要</span>
+如果看好美光，可同时关注：Sandisk（SNDK，NAND纯标的）、西部数据（WDC，数据中心存储）、SK海力士（最接近的直接对标，据报道即将在纳斯达克上市）、拉姆研究（LRCX，「卖铲人」——内存厂商的创纪录资本开支就是其收入来源）、希捷（STX，波动较低且有实际股息的存储标的）。</div>
+</section>
+
+<section>
+<h2>20. Sources</h2>
+<ul>
+<li><strong>stock-data MCP tools</strong> (all retrieved 2026-07-06): get_quote, get_financials, get_quarterly_financials, get_analyst_data, get_news, get_price_history (1y and 5y), get_sec_facts, get_earnings_history, get_insider_transactions, get_form4_insider_detail (SEC Form 4 XML incl. Rule 10b5-1 flags), get_dividends_and_buybacks, get_major_holders — for MU; get_quote for NVDA, AVGO, AMD, INTC; get_price_history (1y) for SPY, QQQ, SOXX.</li>
+<li><strong>SEC EDGAR filings:</strong>
+  <ul>
+  <li><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312526000015/mu-20260528.htm">10-Q filed 2026-06-25</a></li>
+  <li><a href="https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000013/a2026q3ex991-pressrelease.htm">FQ3-26 earnings press release (8-K ex-99.1, 2026-06-24)</a></li>
+  <li><a href="https://www.sec.gov/Archives/edgar/data/723125/000072312526000006/mu-20260226.htm">10-Q filed 2026-03-19</a></li>
+  <li><a href="https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000004/a2026q2ex991-pressrelease.htm">FQ2-26 earnings press release (8-K, 2026-03-18)</a></li>
+  </ul></li>
+<li><strong>Web (accessed 2026-07-06):</strong>
+  <ul>
+  <li><a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC — Semiconductor Market Forecast 2026: The AI Supercycle Arrives</a></li>
+  <li><a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte — 2026 Semiconductor Industry Outlook</a></li>
+  <li><a href="https://www.ftcelectronics.com/news/semiconductor-market-insights-q2-2026-ai-demand-memory-prices-supply-chain-trends">Semiconductor Market Insights Q2 2026 — memory prices &amp; supply constraints</a></li>
+  <li><a href="https://www.investors.com/market-trend/stock-market-today/dow-jones-sp500-nasdaq-micron-mu-stock-sandisk-sndk-stock/">IBD — Memory names Micron, Sandisk bounce higher (2026-07-06)</a></li>
+  <li><a href="https://finance.yahoo.com/technology/ai/articles/sk-hynixs-29-billion-nasdaq-122009714.html">GuruFocus — SK Hynix's $29B Nasdaq listing (2026-07-06)</a></li>
+  <li><a href="https://finance.yahoo.com/markets/stocks/articles/memory-stocks-rebound-analysts-flag-113241138.html">Investing.com — Memory stocks rebound, analysts flag buying opportunity (2026-07-06)</a></li>
+  <li><a href="https://www.fool.com/investing/2026/07/06/micron-soar-126-6th-largest-company-wall-street/">Motley Fool — Can Micron soar 126%? (2026-07-06)</a></li>
+  </ul></li>
+</ul>
+<div class="zh"><span class="label">中文摘要</span>
+数据来源：本地 stock-data MCP 工具（雅虎财经数据，2026年7月6日获取）、SEC EDGAR 官方文件（10-Q、8-K财报新闻稿）、以及IDC、德勤、IBD等网络来源。所有关键财务数字均与SEC官方文件交叉核对一致。</div>
+</section>
+
+<div class="disclaimer">
+Research compiled from public sources (Yahoo Finance, SEC EDGAR, web). Not financial advice — verify before investing.<br>
+本研究内容来自公开来源（Yahoo Finance、SEC EDGAR、网络），不构成投资建议，投资前请自行核实。
+</div>
+
+</div>
+</body>
+</html>
