@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second-Layer US Insider Signal Brief — 2026-07-07</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+
+.signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 14px; }
+.rank1 { border-left: 3px solid #185FA5; }
+.rank2 { border-left: 3px solid #1D9E75; }
+.rank3 { border-left: 3px solid #854F0B; }
+.sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+.sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sig-body { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 10px; }
+.sig-body strong { color: #1a1a1a; }
+
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-health   { background: #E1F5EE; color: #085041; }
+.s-realty   { background: #FAECE7; color: #712B13; }
+
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+
+.watch-list { list-style: none; padding: 0; }
+.watch-list li { display: flex; gap: 10px; padding: 11px 0; border-bottom: 1px solid #f0efe8; line-height: 1.5; }
+.watch-list li:last-child { border-bottom: none; }
+.watch-icon { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; margin-top: 2px; }
+.w-red    { background: #FCEBEB; color: #A32D2D; }
+.w-amber  { background: #FAEEDA; color: #854F0B; }
+.w-gray   { background: #f0efe8; color: #666; }
+.watch-content { display: block; flex: 1; }
+.watch-en { display: block; font-size: 13px; color: #333; }
+.watch-en strong { color: #111; }
+.watch-cn { display: block; font-size: 11px; color: #999; margin-top: 4px; line-height: 1.6; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-red   { background: #FCEBEB; border-color: #A32D2D; }
+.callout-gray  { background: #f0efe8; border-color: #bbb; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.data-table th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; letter-spacing: 0.04em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid #e8e8e0; vertical-align: top; }
+.data-table tr:nth-child(even) td { background: #f5f4f0; }
+
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.src-line { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+.src-line a { color: #185FA5; text-decoration: none; }
+
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+
+.mb16 { margin-bottom: 1.5rem; }
+
+.sources { font-size: 11px; color: #aaa; line-height: 2.0; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">SECOND-LAYER SIGNAL SCAN · 第二层信号扫描</div>
+  <div class="doc-title">US Insider-Buying Signals Not Yet Written Up by the Mainstream</div>
+  <div class="doc-title-cn">尚未被主流财经媒体报道的美股内部人买入信号</div>
+  <div class="doc-meta">Tuesday, July 7, 2026 · Source: SEC Form 4 via OpenInsider · Trading window: Jul 1, Jul 2, Jul 6 (Jul 3 market holiday)</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Signal quality 信号质量</span>
+  <span class="mood-text">A thin window: the largest CEO/CFO buys this cycle are entangled with public offerings and restructurings. Cleanest open-market conviction sits in a biotech reverse-merger (FTH) and a REIT inside a pending takeover (MDV).</span>
+  <span class="mood-pill mood-mixed">Mixed · 喜忧参半</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">本期窗口信号较为稀薄:本轮金额最大的 CEO/CFO 买入大多与公开增发或债务重组同时发生,难以判断是否为纯粹的公开市场买入。相对干净、且被主流媒体忽视的高信念买入集中在一家完成反向合并的生物科技公司(FTH)以及一家正处于被收购进程中的工业地产 REIT(MDV)。所有内容仅为研究线索,非投资建议。</div>
+  </div>
+
+<!-- ============ SECTION 1 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Top Candidates — Public but Under-Narrated</div>
+  <div class="section-title-cn">重点候选:信息已公开,但叙事尚未被书写</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Three names cleared the second-layer filter: the underlying SEC filings are public, but coverage of the <em>insider buying itself</em> is limited to auto-generated Form-4 posts (StockTitan, Investing.com, GuruFocus). Data is public; the narrative is unwritten. Each entry below traces to two independent secondary sources (the OpenInsider row plus at least one Form-4 reproduction). Primary EDGAR XML was not directly read this run — see Data Gaps.
+  </div>
+  <div class="cn-summary mb16">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">三只标的通过了第二层筛选:其 SEC 文件本身已公开,但针对<strong>内部人买入行为本身</strong>的报道仅限于自动生成的 Form 4 快讯(StockTitan、Investing.com、GuruFocus)。数据公开,叙事未写。以下每条均由两个独立的二手来源交叉验证(OpenInsider 记录 + 至少一份 Form 4 复述)。本次运行未直接读取 EDGAR 原始 XML,详见"数据缺口"部分。</div>
+  </div>
+
+  <!-- FTH -->
+  <div class="signal-card rank1">
+    <div class="sig-meta">
+      <span class="ticker-pill">FTH · NASDAQ</span>
+      <span class="sector-pill s-health">Biotech / Oncology</span>
+      <span class="score-pill">~$590M mkt cap</span>
+      <span class="score-pill">Open-market cluster</span>
+    </div>
+    <div class="sig-headline">Faeth Therapeutics: CFO buys open-market across four sessions while the ticker's identity is still mid-transition from Sensei Bio</div>
+    <div class="sig-headline-cn">Faeth Therapeutics:在代码尚处于由 Sensei Bio 转换的过渡期时,CFO 连续四个交易日在公开市场买入</div>
+    <div class="sig-body">
+      CFO <strong>Brian Stephenson</strong> (via revocable trust) bought across <strong>June 22–July 2</strong> at <strong>varying prices ($23.31–$25.65)</strong> — the price variation is the tell that these are genuine open-market trades, not a fixed-price placement. Two filings totaled roughly <strong>+$405k (Jun 22–24)</strong> and <strong>+$326k (filed Jul 1, trade Jun 29–Jul 2)</strong>. CEO <strong>Anand Parikh</strong> separately bought +$55k (Jun 22). The company is the former <strong>Sensei Biotherapeutics (SNSE)</strong>, which reverse-merged with cancer-metabolism startup Faeth in Feb 2026 (+$200M concurrent private placement) and only renamed to FTH in mid-June — an identity shift that helps explain why the buying is under-covered. Lead asset <strong>PIKTOR</strong> targets the PI3K/AKT/mTOR (PAM) pathway. Note: aggregators report unusually high short interest (~59% of shares), so insider buying sits against a heavily-shorted float.
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Signal 信号</div>
+        <div class="bull-text">Repeated open-market CFO buys at rising prices + CEO buy = multi-node conviction; ~$590M cap (not a micro-cap); heavy short interest could amplify moves.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">Caveat 警示</div>
+        <div class="bear-text">Clinical-stage biotech = binary trial risk; post-reverse-merger share structure is complex; no revenue, negative EPS.</div>
+      </div>
+    </div>
+    <div class="sig-body" style="margin-bottom:6px;">Verified via secondary reproduction (OpenInsider + StockTitan + Investing.com); primary document not directly read.</div>
+    <div class="src-line">Sources: <a href="http://openinsider.com/CREX">OpenInsider FTH rows</a> · <a href="https://www.stocktitan.net/sec-filings/FTH/">StockTitan FTH Form 4</a> · <a href="https://www.investing.com/news/insider-trading-news/faeth-therapeutics-cfo-stephenson-buys-326127-in-fth-stock-93CH-4772140">Investing.com</a> · <a href="https://stockanalysis.com/stocks/fth/market-cap/">StockAnalysis mkt cap</a> · <a href="https://endpoints.news/faeth-goes-public-in-merger-with-sensei-nets-200m-in-stock-sale/">Endpoints (merger)</a></div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CFO <strong>Brian Stephenson</strong>(通过可撤销信托)于 <strong>6月22日至7月2日</strong>以 <strong>不同价格($23.31–$25.65)</strong>买入——价格波动正说明这是真实的公开市场交易,而非固定价格的定向增发;两份文件合计约 <strong>+40.5万美元(6/22–24)</strong>与 <strong>+32.6万美元(7/1申报)</strong>。CEO <strong>Anand Parikh</strong>另买入 +5.5万美元。公司前身为 <strong>Sensei Biotherapeutics(SNSE)</strong>,2026年2月与癌症代谢初创 Faeth 反向合并(同步 2 亿美元私募),6月中旬才更名为 FTH——身份切换正是买入未被充分报道的原因之一。核心资产 <strong>PIKTOR</strong> 靶向 PI3K/AKT/mTOR(PAM)通路。注意:数据平台显示做空比例异常偏高(约占流通股 59%)。临床阶段生物科技,存在试验二元风险。经二手来源交叉验证,未直接读取原始文件。</div>
+    </div>
+  </div>
+
+  <!-- MDV -->
+  <div class="signal-card rank2">
+    <div class="sig-meta">
+      <span class="ticker-pill">MDV · NYSE</span>
+      <span class="sector-pill s-realty">Industrial Net-Lease REIT</span>
+      <span class="score-pill">~$17.4 price</span>
+      <span class="score-pill">CEO cluster (5-day)</span>
+    </div>
+    <div class="sig-headline">Modiv Industrial: CEO buys twice inside five trading days — but the buys sit inside a pending $535M all-stock takeover by Global Net Lease</div>
+    <div class="sig-headline-cn">Modiv Industrial:CEO 在五个交易日内两次买入——但买入发生在 Global Net Lease 5.35 亿美元全股票收购进行中</div>
+    <div class="sig-body">
+      CEO/President <strong>Aaron Halfacre</strong> bought <strong>5,766 shares @ ~$17.49 (+$100,859, Jun 26)</strong> and <strong>3,586 shares @ ~$17.34 (+$62,163, Jun 30)</strong> in open-market Class C trades (prices varied within each fill, confirming open-market). Two buys by one insider inside five sessions meets the cluster test. <strong>Critical context:</strong> on May 4, 2026 Global Net Lease (GNL) announced it will acquire Modiv in an all-stock deal at ~$535M enterprise value. So this is effectively a CEO buying into a merger spread — a bet on deal completion and on GNL's currency, not a standalone re-rating thesis. The deal is widely covered; the CEO's continued buying <em>through</em> it is only robo-covered.
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Signal 信号</div>
+        <div class="bull-text">CEO adding twice near $17.3–17.5 during a live all-stock deal signals confidence in close and in GNL equity; ~6.9% yield noted by aggregators below his cost.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">Caveat 警示</div>
+        <div class="bear-text">Merger-arb, not a clean signal — upside is capped by the exchange ratio; deal-break or GNL weakness is the real risk.</div>
+      </div>
+    </div>
+    <div class="sig-body" style="margin-bottom:6px;">Verified via secondary reproduction (OpenInsider + StockTitan + DividendChannel); primary document not directly read.</div>
+    <div class="src-line">Sources: <a href="https://www.stocktitan.net/sec-filings/MDV/form-4-modiv-industrial-inc-insider-trading-activity-67e1d2146394.html">StockTitan MDV Form 4</a> · <a href="https://www.dividendchannel.com/article/202607/modiv-industrial-stock-offers-a-6-9-yield-below-recent-insider-purchase-price-MDV07012026icross.htm/">DividendChannel</a> · <a href="https://www.globenewswire.com/news-release/2026/05/04/3286502/0/en/global-net-lease-to-acquire-modiv-industrial-in-535-million-transaction.html">GlobeNewswire (GNL deal)</a></div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO 兼总裁 <strong>Aaron Halfacre</strong> 以公开市场方式买入 <strong>5,766 股 @ 约$17.49(+10.09万美元,6/26)</strong> 及 <strong>3,586 股 @ 约$17.34(+6.22万美元,6/30)</strong>;单一内部人在五个交易日内两次买入,满足集群标准。<strong>关键背景:</strong>2026年5月4日,Global Net Lease(GNL)宣布以约 5.35 亿美元企业价值、全股票方式收购 Modiv。因此这实质上是 CEO 在"买入并购价差",押注交易完成及 GNL 股票价值,而非独立的重估逻辑。并购交易本身被广泛报道,但 CEO 在交易期间持续买入仅被机器人快讯覆盖。这属于并购套利,而非纯净信号,上行空间受换股比例约束。经二手来源交叉验证,未直接读取原始文件。</div>
+    </div>
+  </div>
+
+  <!-- GTLB -->
+  <div class="signal-card rank3">
+    <div class="sig-meta">
+      <span class="ticker-pill">GTLB · NASDAQ</span>
+      <span class="sector-pill s-tech">Software / DevSecOps + AI</span>
+      <span class="score-pill">~$5.4B mkt cap</span>
+      <span class="score-pill">Repeated CEO buy</span>
+    </div>
+    <div class="sig-headline">GitLab: CEO keeps buying the drawdown — open-market again at $29.36, extending a 2026 pattern as the stock sits ~38% below its 52-week high</div>
+    <div class="sig-headline-cn">GitLab:CEO 持续逢跌买入——再次以 $29.36 公开市场买入,延续 2026 年的买入模式,股价较 52 周高点低约 38%</div>
+    <div class="sig-body">
+      CEO <strong>William Staples</strong> bought <strong>4,188 Class A shares @ $29.36 (+$122,960, Jun 30)</strong>, open-market. This continues a 2026 pattern — he bought ~$124.7k in Jan and has purchased multiple times this year (~$253k+ cumulatively per aggregator tallies). GitLab trades ~$32.8 (Jul 5), a $5.4B cap, versus a 52-week range of $18.73–$52.38 — so the CEO is adding through a deep drawdown. <strong>Second-layer nuance:</strong> GitLab the company is heavily followed, so this is not an unknown name; what is under-narrated is the <em>sustained CEO buying through the decline</em>, which appears only in robo Form-4 posts, not in analyst or press narrative.
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Signal 信号</div>
+        <div class="bull-text">Sustained CEO open-market buying through a 38% drawdown; AI-adjacent DevSecOps platform; buys at progressively lower prices vs earlier 2026.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">Caveat 警示</div>
+        <div class="bear-text">Company is well-covered (weaker second-layer edge); dollar size is small relative to a $5.4B cap; growth-multiple compression is the overhang.</div>
+      </div>
+    </div>
+    <div class="sig-body" style="margin-bottom:6px;">Verified via secondary reproduction (OpenInsider + StockTitan + Investing.com); primary document not directly read.</div>
+    <div class="src-line">Sources: <a href="https://www.stocktitan.net/sec-filings/GTLB/form-4-gitlab-inc-insider-trading-activity-cca80a3752fa.html">StockTitan GTLB Form 4</a> · <a href="https://www.investing.com/news/insider-trading-news/gitlab-ceo-william-staples-buys-122959-of-gtlb-class-a-stock-93CH-4771881">Investing.com</a> · <a href="https://www.secform4.com/insider-trading/1653482.htm">SECForm4 (prior buys)</a> · <a href="https://www.macrotrends.net/stocks/charts/GTLB/gitlab/stock-price-history">Macrotrends (52-wk range)</a></div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO <strong>William Staples</strong> 以公开市场方式买入 <strong>4,188 股 A 类股 @ $29.36(+12.30万美元,6/30)</strong>。这延续了其 2026 年的买入模式——1月曾买入约 12.47 万美元,全年多次买入(据数据平台累计约 25.3 万美元以上)。GitLab 现价约 $32.8(7/5),市值约 54 亿美元,52 周区间为 $18.73–$52.38,即 CEO 在深度回撤中持续加仓。<strong>第二层要点:</strong>GitLab 本身受到广泛关注,并非无名标的;真正未被叙述的是<strong>CEO 在下跌途中持续买入</strong>这一行为,仅出现在机器人 Form 4 快讯中,而非分析师或媒体叙事里。公司覆盖充分,第二层优势较弱;买入金额相对 54 亿美元市值偏小。经二手来源交叉验证,未直接读取原始文件。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 2 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">High-Risk Watch — Micro-Cap / Thin Liquidity</div>
+  <div class="section-title-cn">高风险观察:微型股 / 流动性稀薄</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Buys that are real but sit in sub-$100M or very thin names — kept off the top list on purpose. Position sizing and liquidity risk dominate here.
+  </div>
+  <div class="cn-summary mb16">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">以下买入真实存在,但标的市值低于约 1 亿美元或流动性极薄,故刻意不列入重点名单。此处的核心风险是仓位管理与流动性。</div>
+  </div>
+
+  <ul class="watch-list">
+    <li>
+      <span class="watch-icon w-amber">YQ</span>
+      <span class="watch-content">
+        <span class="watch-en"><strong>17 Education &amp; Technology (YQ)</strong> — CEO &amp; 10% owner Liu Chang bought +$41,753 @ $2.20 (trade Jul 2, filed Jul 6). Chinese edtech ADR; market cap only ~$21–24M; 90-day avg volume ~14K shares (very thin). CEO's stake rose +458% off a tiny base. Under-$100M → watch only.</span>
+        <span class="watch-cn">中国教育科技 ADR,市值仅约 2,100–2,400 万美元,90 日均量约 1.4 万股,极为稀薄。CEO 兼 10% 股东买入 +4.17 万美元 @ $2.20。市值低于 1 亿美元,仅作观察。</span>
+      </span>
+    </li>
+    <li>
+      <span class="watch-icon w-amber">GRNQ</span>
+      <span class="watch-content">
+        <span class="watch-en"><strong>Greenpro Capital (GRNQ)</strong> — CEO &amp; 10% owner Lee Chong Kuang bought +$100,000 @ $1.52 (trade Jun 30, filed Jul 6). Asia-focused financial-consulting micro-cap (~$18M cap, ~$1.49 last). Insider is also a 10% holder, so ownership is concentrated. Under-$100M → watch only.</span>
+        <span class="watch-cn">聚焦亚洲的财务咨询微型股(市值约 1,800 万美元,最新价约 $1.49)。CEO 兼 10% 股东买入 +10 万美元 @ $1.52。内部人同时为 10% 大股东,持股集中。市值低于 1 亿美元,仅作观察。</span>
+      </span>
+    </li>
+    <li>
+      <span class="watch-icon w-red">GPUS</span>
+      <span class="watch-content">
+        <span class="watch-en"><strong>Hyperscale Data (GPUS)</strong> — CEO William Horne bought +$95,000 @ $19.00 (trade Jun 29, filed Jul 1). AI/data-center-themed, but a prior June buy printed at $0.17, implying a large reverse split and extreme volatility; this is the former Ault / BitNile distressed conglomerate. High-risk → watch only, treat price history with caution.</span>
+        <span class="watch-cn">AI/数据中心主题,但 6 月早前一笔买入价为 $0.17,暗示曾进行大比例反向拆股,波动极端;其前身为陷入困境的 Ault / BitNile 综合体。CEO 买入 +9.5 万美元 @ $19.00。高风险,仅作观察,价格历史需谨慎对待。</span>
+      </span>
+    </li>
+  </ul>
+</div>
+
+<!-- ============ SECTION 3 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Flagged / Unverified — Placement or Offering Entanglement</div>
+  <div class="section-title-cn">已标记 / 未证实:与增发或重组交织</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    These looked like large conviction buys but are entangled with capital raises. Per screening rules, a multi-insider cluster at one identical price is usually a placement, not open-market accumulation — presented as flags, never as fact.
+  </div>
+  <div class="cn-summary mb16">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">以下标的乍看是大额高信念买入,实则与融资交织。按筛选规则,多名内部人以同一固定价格买入通常是定向增发,而非公开市场吸筹——因此仅作"已标记"呈现,绝不作为事实陈述。</div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">CREX · Creative Realities — offering participation</div>
+    <div class="callout-text">CEO Richard Mills (+$700k) and CFO Tamra Koshewa (+$100k) both bought at an <strong>identical $3.50</strong> on Jun 30. That exactly matches Creative Realities' <strong>$12M underwritten public offering priced Jun 29 at $3.50/share</strong>, closing ~Jun 30. This is offering participation, <strong>not</strong> open-market accumulation — flagged and excluded from the top list. (Company is an AI-driven retail digital-signage name; separately facing an Alpha Modus patent suit — context only.)</div>
+    <div class="cn-summary" style="margin-top:8px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO(+70万)与 CFO(+10万)均以<strong>相同的 $3.50</strong> 于 6/30 买入,恰好对应公司 <strong>6/29 定价、每股 $3.50 的 1,200 万美元承销公开增发</strong>。这属于参与增发,<strong>而非</strong>公开市场吸筹,故标记并排除于重点名单。公司为 AI 驱动的零售数字标牌企业,另涉 Alpha Modus 专利诉讼(仅作背景)。</div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">WBX · Wallbox — buy amid court-approved restructuring</div>
+    <div class="callout-text">CEO Enric Asuncion's +$886,929 (325,885 shares @ $2.7216, Jun 30) is <strong>labeled open-market by the Form-4 reproduction</strong>, but it coincides with Wallbox completing a <strong>~€11.8M equity raise and court-approved restructuring</strong> that became final Jun 25. The $2.72 fill sits far below the ~$5.57 recent quote, consistent with a restructuring/raise price rather than a clean tape print. Signal cannot be cleanly separated from the distressed capital event → flagged.</div>
+    <div class="cn-summary" style="margin-top:8px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO Enric Asuncion 买入 +88.69 万美元(325,885 股 @ $2.7216,6/30),Form 4 复述<strong>标注为公开市场</strong>,但恰逢 Wallbox 完成<strong>约 1,180 万欧元股权融资及法院批准的重组</strong>(6/25 生效)。$2.72 的成交价远低于近期约 $5.57 报价,更像重组/融资价格而非普通盘面成交。信号无法与困境融资事件清晰分离,故标记。</div>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">NVCT · Nuvectis Pharma — buy at offering pricing, already ran +97%</div>
+    <div class="callout-text">CEO/10%-owner Ron Bentsur (+$250k @ flat $20) and 10%-owner Marlio Mosseri (+$50k) both dated Jun 30 — the same day Nuvectis priced a <strong>~$100M deeply-discounted public offering</strong>. The stock had already run <strong>+97%</strong> the prior week (NXP900 Phase 1b interest), then fell ~22% on the discounted raise. Flat $20 fills cannot be cleanly confirmed as open-market vs offering, and coverage is already saturated → flagged, not featured.</div>
+    <div class="cn-summary" style="margin-top:8px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO 兼 10% 股东 Ron Bentsur(+25万,统一价 $20)与 10% 股东 Marlio Mosseri(+5万)均记于 6/30,正是 Nuvectis 为 <strong>约 1 亿美元大幅折价公开增发</strong>定价当日。该股前一周已大涨 <strong>+97%</strong>(NXP900 一期 b 关注),随后因折价增发下跌约 22%。统一 $20 的成交无法清晰区分是公开市场还是增发,且报道已饱和,故标记而非重点推介。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 4 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Rejected — Coverage Saturated</div>
+  <div class="section-title-cn">已剔除:报道已饱和</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Ticker</th><th>Buy</th><th>Reason for rejection</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>YPF</strong></td>
+        <td>Chairman/CEO Marin +$131.6k @ $46.35; 2-insider cluster +$532.9k (Jul 2)</td>
+        <td>Large-cap Argentine oil major; saturated mainstream coverage (privatization / Milei-era headlines). No second-layer edge.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cn-summary mb16">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>YPF</strong>:董事长兼 CEO 买入 +13.16 万美元 @ $46.35,并有两名内部人集群买入 +53.29 万美元(7/2)。但其为阿根廷大型石油公司,主流报道已高度饱和(私有化 / 米莱时代新闻),不具备第二层信息优势,故剔除。</div>
+  </div>
+</div>
+
+<!-- ============ SECTION 5 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Data Gaps &amp; Method Notes</div>
+  <div class="section-title-cn">数据缺口与方法说明</div>
+  <div class="section-divider"></div>
+
+  <div class="callout callout-gray">
+    <div class="callout-label">Explicit limitations this run</div>
+    <div class="callout-text">
+      <strong>1. Officer-purchases screen not ingested.</strong> The <em>latest-officer-purchases-25k</em> page timed out (180s) and was not scraped. Non-CEO/CFO single-officer buys are captured only where they also appear on the CEO/CFO or cluster screens, so some officer-level buys in the window may be missing.<br><br>
+      <strong>2. EDGAR access route.</strong> Primary sec.gov Form-4 XML was <em>not</em> directly read this run (Chrome extension not confirmed connected; direct sec.gov fetches are known-unreliable via this fetcher). All filing details were verified via <strong>two independent secondary reproductions</strong> (OpenInsider rows + StockTitan / Investing.com / DividendChannel). Items are labeled accordingly.<br><br>
+      <strong>3. Prices &amp; market caps</strong> are from aggregators (StockAnalysis, MarketWatch, Yahoo, Robinhood), not primary filings — treat as indicative. Note: Macrotrends showed a stale ~$0.03B for FTH; corrected to ~$590M via three concurring sources (StockAnalysis, StockTitan, MarketWatch).<br><br>
+      <strong>4. Trading window.</strong> "Last 3 trading days" = Jul 1, Jul 2, Jul 6 (Jul 3 was the observed Independence Day market holiday). Filings dated Jul 1/2/6 were considered.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text"><strong>1. 高管买入页未抓取:</strong>latest-officer-purchases-25k 页面超时(180 秒)未能抓取。非 CEO/CFO 的单一高管买入仅在其同时出现于 CEO/CFO 或集群筛选时才被捕捉,窗口内部分高管层买入可能遗漏。<strong>2. EDGAR 访问方式:</strong>本次<strong>未</strong>直接读取 sec.gov 原始 Form 4 XML(未确认 Chrome 扩展连接;经此抓取器直连 sec.gov 已知不稳定)。所有文件细节均通过<strong>两个独立二手复述</strong>(OpenInsider + StockTitan / Investing.com / DividendChannel)交叉验证。<strong>3. 价格与市值</strong>来自数据聚合平台,非原始文件,仅供参考;Macrotrends 对 FTH 显示过时的约 0.03B,已据三方一致来源更正为约 5.9 亿美元。<strong>4. 交易窗口:</strong>"最近三个交易日"= 7/1、7/2、7/6(7/3 为独立日补假休市)。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 6 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Disclaimer</div>
+  <div class="section-title-cn">免责声明</div>
+  <div class="section-divider"></div>
+
+  <div class="callout callout-red">
+    <div class="callout-label">Read before acting</div>
+    <div class="callout-text">
+      This brief surfaces public SEC Form-4 insider-buying signals and their coverage status. It contains <strong>no trading actions, no orders, and no buy/sell recommendations</strong>. Insider buying is one weak signal among many and is frequently entangled with offerings, restructurings, 10b5-1 plans, and M&amp;A — as several entries here show. Facts are drawn from public web sources; primary documents were not directly read this run (see Data Gaps). Verify every claim against the primary filing before relying on it, and consider your own objectives and risk tolerance. Nothing here is legal, tax, or financial advice.
+    </div>
+    <div class="cn-summary" style="margin-top:10px;">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">本简报仅呈现公开的 SEC Form 4 内部人买入信号及其报道状态,<strong>不包含任何交易操作、下单或买卖建议</strong>。内部人买入只是众多弱信号之一,且常与增发、重组、10b5-1 计划及并购交织(本报告多条即为例证)。事实取自公开网络来源,本次未直接读取原始文件(见数据缺口)。在依赖任何结论前,请对照原始文件核实,并结合自身目标与风险承受能力。本文不构成法律、税务或财务建议。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SOURCES ============ -->
+<div class="section">
+  <div class="sources-label">Primary screens 主要数据源</div>
+  <div class="sources">
+    OpenInsider — <a href="http://openinsider.com/latest-ceo-cfo-purchases-25k">CEO/CFO purchases $25k+</a> · <a href="http://openinsider.com/latest-cluster-buys">Cluster buys</a><br>
+    Company filings / IR: <a href="https://investors.senseibio.com/">Faeth (ex-Sensei) IR</a> · <a href="https://modiv.com/news/">Modiv news</a> · <a href="https://ir.gitlab.com/stock-info/default.aspx">GitLab IR</a><br>
+    Form-4 reproductions: StockTitan, Investing.com, GuruFocus, DividendChannel, SECForm4 (linked inline above)
+  </div>
+</div>
+
+<div class="footer">
+  Generated Tuesday, July 7, 2026 · Second-layer US insider-signal pipeline · 第二层美股内部人信号流水线<br>
+  <strong>Research input, not investment advice. 仅供研究参考,不构成投资建议。</strong>
+</div>
+
+</body>
+</html>
