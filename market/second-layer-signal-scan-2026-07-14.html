@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second-Layer Signal Scan — July 14, 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f8f6;
+  color: #1a1a1a;
+  padding: 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.25rem; margin-bottom: 2rem; }
+.doc-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #185FA5; margin-bottom: 8px; }
+.doc-title { font-size: 26px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.doc-title-cn { font-size: 15px; color: #666; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.doc-meta { font-size: 12px; color: #888; }
+.mood-bar { display: flex; align-items: center; gap: 12px; background: #f0efe8; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.mood-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.mood-text { font-size: 14px; flex: 1; line-height: 1.4; }
+.mood-pill { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.mood-mixed   { background: #FAEEDA; color: #633806; }
+.section-num { font-size: 11px; font-weight: 700; color: #185FA5; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.section-title-cn { font-size: 13px; color: #888; margin-bottom: 16px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.section-divider { height: 2px; background: #e8e8e0; margin-bottom: 1.5rem; }
+.section { margin-bottom: 2.5rem; }
+.signal-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; margin-bottom: 14px; }
+.rank1 { border-left: 3px solid #185FA5; }
+.rank2 { border-left: 3px solid #1D9E75; }
+.rank3 { border-left: 3px solid #854F0B; }
+.sig-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.sig-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.ticker-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: #E6F1FB; color: #0C447C; }
+.score-pill { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f0efe8; color: #666; }
+.rank-num { font-size: 11px; font-weight: 600; color: #bbb; white-space: nowrap; }
+.sig-headline { font-size: 15px; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.sig-headline-cn { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 8px; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.sig-body { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+.sector-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.s-tech     { background: #E6F1FB; color: #0C447C; }
+.s-health   { background: #E1F5EE; color: #085041; }
+.s-energy   { background: #FAEEDA; color: #633806; }
+.s-macro    { background: #F1EFE8; color: #444441; }
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.case-box { border-radius: 8px; padding: 8px 10px; }
+.bull-box { background: #EAF3DE; }
+.bear-box { background: #FCEBEB; }
+.case-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+.bull-label { color: #27500A; }
+.bear-label { color: #791F1F; }
+.bull-text { font-size: 12px; line-height: 1.5; color: #27500A; }
+.bear-text { font-size: 12px; line-height: 1.5; color: #791F1F; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.metric-card { background: #fff; border: 1px solid #e8e8e0; border-radius: 10px; padding: 10px 12px; }
+.metric-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.metric-val { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+.metric-sub { font-size: 11px; color: #666; }
+.watch-list { list-style: none; padding: 0; }
+.watch-list li { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f0efe8; line-height: 1.5; }
+.watch-list li:last-child { border-bottom: none; }
+.watch-icon { width: 20px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; font-weight: 700; margin-top: 2px; }
+.w-amber  { background: #FAEEDA; color: #854F0B; }
+.w-gray   { background: #f0efe8; color: #666; }
+.watch-content { display: block; flex: 1; }
+.watch-en { display: block; font-size: 13px; color: #333; }
+.watch-cn { display: block; font-size: 11px; color: #999; margin-top: 3px; line-height: 1.6; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.callout { border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 14px; border-left: 3px solid; }
+.callout-amber { background: #FAEEDA; border-color: #854F0B; }
+.callout-red   { background: #FCEBEB; border-color: #A32D2D; }
+.callout-gray  { background: #f0efe8; border-color: #bbb; }
+.callout-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+.callout-text  { font-size: 13px; line-height: 1.7; color: #333; }
+.callout-text strong { color: #111; }
+.data-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+.data-table th { background: #1a1a1a; color: #fff; padding: 8px 12px; text-align: left; font-size: 11px; letter-spacing: 0.04em; }
+.data-table td { padding: 8px 12px; border-bottom: 1px solid #e8e8e0; vertical-align: top; }
+.data-table tr:nth-child(even) td { background: #f5f4f0; }
+.body-text { font-size: 14px; color: #333; line-height: 1.85; margin-bottom: 14px; }
+.body-text strong { color: #1a1a1a; }
+.src-line { font-size: 11px; color: #aaa; margin-bottom: 10px; }
+.src-line a { color: #185FA5; text-decoration: none; }
+.cn-summary { background: #f5f3ee; border-left: 3px solid #d8d5cc; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+.cn-label { font-size: 9px; font-weight: 700; color: #bbb; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+.cn-text { font-size: 13px; color: #666; line-height: 1.9; font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif; }
+.cn-text strong { color: #444; font-weight: 600; }
+.sources { font-size: 11px; color: #aaa; line-height: 2.2; }
+.sources a { color: #185FA5; text-decoration: none; }
+.sources-label { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
+.footer { font-size: 11px; color: #bbb; text-align: center; padding-top: 1rem; border-top: 1px solid #e8e8e0; margin-top: 1.5rem; line-height: 1.8; }
+.mb16 { margin-bottom: 1.5rem; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">SECOND-LAYER SIGNAL SCAN · 第二层信号扫描</div>
+  <div class="doc-title">US Insider-Buying Signals Not Yet Written Up by the Market</div>
+  <div class="doc-title-cn">尚未被主流财经媒体报道的美股内部人买入信号</div>
+  <div class="doc-meta">Tuesday, July 14, 2026 · Automated scheduled run · Sources: OpenInsider Form 4 screens + web verification · Tech/AI-weighted</div>
+</div>
+
+<div class="mood-bar">
+  <span class="mood-label">Signal read 信号解读</span>
+  <span class="mood-text">A thin but clean window — three genuine open-market conviction buys stand out; the largest-dollar clusters this cycle are placements or fund subscriptions, not conviction.</span>
+  <span class="mood-pill mood-mixed">Selective · 精选</span>
+</div>
+<div class="cn-summary mb16">
+  <div class="cn-label">中文摘要</div>
+  <div class="cn-text">本期为一个"薄但干净"的窗口。过去三个交易日（7/9–7/13 备案）中，真正意义上的公开市场高信念买入只有少数几笔，其中 <strong>IperionX（IPX）</strong>、<strong>ProQR（PRQR）</strong> 与 <strong>Commercial Metals（CMC）</strong> 最突出。本期金额最大的"集群买入"（GLOO、VII、EWSB）经核查多为增发/认购/信托，而非公开市场高信念买入，已被剔除或标注。仅供研究参考，不构成投资建议。</div>
+</div>
+
+<!-- ============ SECTION 1 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 1 · 第一节</div>
+  <div class="section-title">Top Candidates — Public, But the Narrative Is Unwritten</div>
+  <div class="section-title-cn">头部候选 — 数据已公开，但故事尚未被写出</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    Each candidate below is a Form 4 open-market purchase filed in the last three trading days, screened for officer/CEO/CFO conviction, verified for company identity and current price, and cross-checked for news coverage. All three currently carry only auto-generated ("robo") coverage of the insider buy itself — the data is public, but no analyst or journalist has written the thesis. Dollar figures and share counts are corroborated by at least two independent secondary reproductions (OpenInsider row + StockTitan / Investing.com / MarketBeat / QuiverQuant).
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">以下每个候选均为过去三个交易日内备案的 Form 4 公开市场买入，经过高管/CEO/CFO 信念度筛选、公司身份与现价核实、以及新闻覆盖度交叉检验。三者目前对该内部人买入本身仅有"机器人式"自动生成报道 —— 数据已公开，但尚无分析师或记者写出投资逻辑。金额与股数均由至少两个独立二手来源相互印证（OpenInsider + StockTitan / Investing.com / MarketBeat / QuiverQuant）。</div>
+  </div>
+
+  <!-- Candidate 1: IPX -->
+  <div class="signal-card rank1">
+    <div class="sig-top">
+      <div class="sig-meta">
+        <span class="ticker-pill">IPX · IperionX</span>
+        <span class="sector-pill s-tech">Titanium tech / defense supply chain</span>
+        <span class="score-pill">CEO + Chairman cluster</span>
+      </div>
+      <span class="rank-num">#1</span>
+    </div>
+    <div class="sig-headline">Founder-CEO and Executive Chairman bought the dip their own $50M raise created — open-market, on the ASX line, at ~US$3.58.</div>
+    <div class="sig-headline-cn">创始人 CEO 与执行主席在自家 5,000 万美元增发压低股价后，于 ASX 公开市场以约 3.58 美元回购。</div>
+    <div class="sig-body">
+      On July 10, 2026 (filed July 13), CEO Anastasios "Taso" Arima bought <strong>138,720 ordinary shares at $3.58 ≈ $497,228</strong>, lifting his direct stake to ~12.46M shares. A second insider (Executive Chairman Todd Hannigan) also bought, making it a 2-person cluster totalling ~$4.95M on the OpenInsider cluster screen. QuiverQuant tallies four Arima purchases (~728,520 shares, ~$2.78M). The key nuance: IperionX priced a <strong>$50M ADS public offering at $21.98/ADS, closing July 9</strong> — shares fell ~19% on the raise, and insiders stepped in the very next day on the open market. IperionX makes low-carbon titanium in South Boston, VA; U.S. Army testing of its titanium and a "first successful titanium furnace production run" are recent operating catalysts.
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-label">Market cap</div><div class="metric-val">~$0.90B</div><div class="metric-sub">Nasdaq ADS ~US$25 / ASX ~A$3.59</div></div>
+      <div class="metric-card"><div class="metric-label">CEO buy</div><div class="metric-val">$497K</div><div class="metric-sub">138,720 sh @ $3.58 · 07/10</div></div>
+      <div class="metric-card"><div class="metric-label">Coverage</div><div class="metric-val">Robo only</div><div class="metric-sub">insider buy not narrated</div></div>
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Why it's a signal</div>
+        <div class="bull-text">Insiders buying the post-raise dip on the open market — with their own cash, not the placement — is a textbook conviction tell. Defense/aerospace titanium reshoring is a durable theme; ~$900M cap keeps it off most desks.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">What could disqualify</div>
+        <div class="bear-text">Concurrent $50M dilution signals a cash need; a pre-revenue scale-up story. ASX-ordinary vs Nasdaq-ADS pricing must not be conflated. Buy is small vs. the raise.</div>
+      </div>
+    </div>
+    <div class="src-line">
+      Evidence: <a href="http://openinsider.com/latest-cluster-buys">OpenInsider cluster row</a> ·
+      <a href="https://www.sec.gov/Archives/edgar/data/1898601/000186424726000007/xslF345X03/primary_doc.xml">SEC Form 4 (Arima)</a> ·
+      <a href="https://www.stocktitan.net/sec-filings/IPX/form-4-iperionx-ltd-insider-trading-activity-47a6c2a87a69.html">StockTitan reproduction</a> ·
+      <a href="https://www.marketbeat.com/instant-alerts/insider-buying-iperionx-nasdaqipx-ceo-purchases-138720-shares-2026-07-13/">MarketBeat</a> ·
+      raise: <a href="https://www.fool.com.au/2026/07/08/iperionx-launches-us50m-capital-raise-for-titanium-expansion/">Motley Fool AU</a>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">2026 年 7 月 10 日（7/13 备案），CEO Arima 以 3.58 美元买入 <strong>138,720 股 ≈ 49.7 万美元</strong>；执行主席 Hannigan 亦买入，构成两人集群（总额约 495 万美元）。关键背景：公司刚于 7/9 完成 <strong>5,000 万美元 ADS 增发（21.98 美元/ADS）</strong>，股价因增发下跌约 19%，内部人次日即在公开市场逢低买入（用自有资金，而非参与增发）。IperionX 在弗吉尼亚州生产低碳钛，近期催化剂包括美国陆军对其钛材的测试及"首次成功钛炉生产"。市值约 9 亿美元，仅有机器人式报道。注意：ASX 普通股价格与 Nasdaq ADS 价格不可混淆。</div>
+    </div>
+  </div>
+
+  <!-- Candidate 2: PRQR -->
+  <div class="signal-card rank2">
+    <div class="sig-top">
+      <div class="sig-meta">
+        <span class="ticker-pill">PRQR · ProQR Therapeutics</span>
+        <span class="sector-pill s-health">RNA-editing biotech</span>
+        <span class="score-pill">CEO 2× buys in 5 days</span>
+      </div>
+      <span class="rank-num">#2</span>
+    </div>
+    <div class="sig-headline">Founder-CEO doubled, then doubled again — two open-market buys inside five trading days, taking his direct stake from zero to 300,000 shares.</div>
+    <div class="sig-headline-cn">创始人 CEO 五个交易日内两次公开市场买入，直接持股从 0 增至 30 万股。</div>
+    <div class="sig-body">
+      CEO Daniel de Boer made two open-market purchases of <strong>150,000 shares each</strong>: the first at $1.59 on July 7 (~$238,500, filed July 8), the second at $1.74 on July 9 (~$261,000, filed July 13). SimplyWall.st flags this as the largest insider purchase in the past three months; QuiverQuant shows a second insider ("Filius Bart") also buying, hinting at a small cluster. ProQR develops medicines on its proprietary <strong>Axiomer RNA-editing platform</strong>, with multiple clinical catalysts flagged for 2026 (AX-0810 Phase 1 target-engagement data already reported positive; AX-0811 and AX-0422 advancing). A ~$230M micro-cap where a founder buying at $1.59–1.74 is a meaningful personal commitment.
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-label">Market cap</div><div class="metric-val">~$230M</div><div class="metric-sub">micro-cap · ~$1.73</div></div>
+      <div class="metric-card"><div class="metric-label">CEO buys</div><div class="metric-val">~$500K</div><div class="metric-sub">2 × 150K sh · 07/07 + 07/09</div></div>
+      <div class="metric-card"><div class="metric-label">Coverage</div><div class="metric-val">Robo only</div><div class="metric-sub">GuruFocus / StockTitan feeds</div></div>
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Why it's a signal</div>
+        <div class="bull-text">Repeat founder buying into upcoming clinical readouts on a validated RNA-editing platform; new direct position built from zero. Classic pre-catalyst insider accumulation.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">What could disqualify</div>
+        <div class="bear-text">Clinical-stage biotech — binary readout risk, cash-burn dilution risk. "M" (multiple-transaction) filing flag warrants a footnote check on the primary XML. Micro-cap, thin float.</div>
+      </div>
+    </div>
+    <div class="src-line">
+      Evidence: <a href="http://openinsider.com/latest-ceo-cfo-purchases-25k">OpenInsider CEO/CFO rows</a> ·
+      <a href="https://www.sec.gov/Archives/edgar/data/1612940/000110465926081762/xslF345X03/tm2620064-1_4seq1.xml">SEC Form 4 ($1.59)</a> ·
+      <a href="https://www.stocktitan.net/sec-filings/PRQR/form-4-pro-qr-therapeutics-n-v-insider-trading-activity-d1b18a8a3dfe.html">StockTitan reproduction</a> ·
+      <a href="https://www.gurufocus.com/news/8950435/insider-buying-ceo-de-boer-daniel-anton-acquires-150000-shares-of-proqr-therapeutics-nv">GuruFocus</a>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">CEO Daniel de Boer 五个交易日内两次公开市场买入，各 <strong>15 万股</strong>：7/7 以 1.59 美元买入（约 23.85 万美元），7/9 以 1.74 美元买入（约 26.1 万美元），直接持股从 0 增至 30 万股。SimplyWall.st 称这是近三个月最大一笔内部人买入；QuiverQuant 显示另有一名内部人同期买入（疑似小型集群）。公司基于自有 <strong>Axiomer RNA 编辑平台</strong>研发药物，2026 年有多个临床催化剂（AX-0810 一期靶点结合数据已为阳性）。约 2.3 亿美元微型股。注意："M"（多笔交易）标记需核对原始 XML 脚注。仅供研究参考。</div>
+    </div>
+  </div>
+
+  <!-- Candidate 3: CMC -->
+  <div class="signal-card rank3">
+    <div class="sig-top">
+      <div class="sig-meta">
+        <span class="ticker-pill">CMC · Commercial Metals</span>
+        <span class="sector-pill s-energy">Steel / manufacturing</span>
+        <span class="score-pill">CEO buy after post-earnings dip</span>
+      </div>
+      <span class="rank-num">#3</span>
+    </div>
+    <div class="sig-headline">Large-cap CEO bought $504K of his own steelmaker two weeks after a post-earnings selloff — his first open-market buy on record here.</div>
+    <div class="sig-headline-cn">大盘钢企 CEO 在财报后回调两周后买入 50.4 万美元自家股票 —— 记录中首次公开市场买入。</div>
+    <div class="sig-body">
+      On July 10 (filed July 13), President & CEO Peter R. Matt bought <strong>8,230 shares at $61.30 ≈ $504,499</strong>, raising his direct stake to 181,522 shares (~$11.4M). Context: CMC fell ~5.6% in late June after a fiscal Q3 that <em>beat</em> on EPS ($1.73 vs $1.70) — the drop was tied to buyback completion and Russell index mechanics, not fundamentals. A CEO stepping in with half a million dollars after a technical dip on a ~$7B name is a straightforward alignment signal. This is the least "hidden" of the three (a Yahoo Finance markets article ran), so treat coverage as generic/decaying rather than truly unwritten.
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card"><div class="metric-label">Market cap</div><div class="metric-val">~$7B</div><div class="metric-sub">large-cap · ~$62.64</div></div>
+      <div class="metric-card"><div class="metric-label">CEO buy</div><div class="metric-val">$504K</div><div class="metric-sub">8,230 sh @ $61.30 · 07/10</div></div>
+      <div class="metric-card"><div class="metric-label">Coverage</div><div class="metric-val">Generic</div><div class="metric-sub">auto + Yahoo markets note</div></div>
+    </div>
+    <div class="cases">
+      <div class="case-box bull-box">
+        <div class="case-label bull-label">Why it's a signal</div>
+        <div class="bull-text">CEO buying a mechanical (buyback-end / index) dip after an earnings beat; adds to an already-large personal stake. Sentiment-vs-fundamentals gap is the thesis.</div>
+      </div>
+      <div class="case-box bear-box">
+        <div class="case-label bear-label">What could disqualify</div>
+        <div class="bear-text">$504K is small relative to a ~$7B cap. Already picked up by a Yahoo markets article — the second-layer edge is thinner and decaying fastest of the three.</div>
+      </div>
+    </div>
+    <div class="src-line">
+      Evidence: <a href="http://openinsider.com/latest-officer-purchases-25k">OpenInsider officer row</a> ·
+      <a href="http://www.sec.gov/Archives/edgar/data/22444/000181444326000004/xslF345X03/wk-form4_1783957790.xml">SEC Form 4</a> ·
+      <a href="https://www.stocktitan.net/sec-filings/CMC/form-4-commercial-metals-co-insider-trading-activity-47774c228883.html">StockTitan reproduction</a> ·
+      context: <a href="https://finance.yahoo.com/markets/stocks/articles/why-commercial-metals-cmc-down-050604471.html">Yahoo — why CMC fell</a>
+    </div>
+    <div class="cn-summary">
+      <div class="cn-label">中文摘要</div>
+      <div class="cn-text">7/10（7/13 备案），总裁兼 CEO Peter Matt 以 61.30 美元买入 <strong>8,230 股 ≈ 50.45 万美元</strong>，直接持股增至 181,522 股（约 1,140 万美元）。背景：CMC 6 月底在财季 EPS <em>超预期</em>（1.73 vs 1.70）后仍下跌约 5.6%，主因是回购结束与罗素指数调整机制，而非基本面。约 70 亿美元大盘股，CEO 在技术性回调后买入是明确的利益一致信号。但此笔已被 Yahoo 财经文章报道，覆盖度属"泛化/衰减中"，第二层优势最薄。仅供研究参考。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 2 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 2 · 第二节</div>
+  <div class="section-title">High-Risk Watch — Below the Line, Not for the Top List</div>
+  <div class="section-title-cn">高风险观察 — 门槛以下，不进入头部名单</div>
+  <div class="section-divider"></div>
+
+  <div class="body-text">
+    These are real officer open-market buys, but each fails a size or liquidity gate (sub-~$100M cap and/or thin volume), so they are logged as watch items only, never featured.
+  </div>
+
+  <ul class="watch-list">
+    <li>
+      <span class="watch-icon w-amber">AI</span>
+      <span class="watch-content">
+        <span class="watch-en"><strong>CNTM · ConnectM Technology Solutions</strong> — Principal Financial Officer Mahesh Choudhury added ~$31,766 (3,622 sh @ $8.77, trade 06/22, filed 07/13), on top of a ~$34,582 buy in June. AI-enabled hardware/software for the "modern energy economy" — squarely on theme — but market cap is only ~$28–42M and the stock is a former SPAC down from a $17+ 52-week high. Sub-$100M → watch only.</span>
+        <span class="watch-cn">首席财务官 Choudhury 追加约 3.18 万美元买入（3,622 股 @ $8.77，6/22 交易，7/13 备案），此前 6 月已买入约 3.46 万美元。公司为"现代能源经济"提供 AI 硬件/软件，主题契合，但市值仅约 2,800 万–4,200 万美元，且为跌破 17 美元高点的前 SPAC。低于 1 亿美元 → 仅观察。</span>
+      </span>
+    </li>
+    <li>
+      <span class="watch-icon w-gray">FN</span>
+      <span class="watch-content">
+        <span class="watch-en"><strong>VIRC · Virco Mfg</strong> — EVP Douglas Virtue bought 8,088 shares (~$48,504) at ~$6 across July 8–9 (filed 07/09), a 2-insider cluster on the screen. School/institutional furniture maker sitting right at a ~$100M cap with ~100K average daily volume — borderline size and thin liquidity → watch only.</span>
+        <span class="watch-cn">执行副总裁 Virtue 于 7 月 8–9 日以约 6 美元买入 8,088 股（约 4.85 万美元），为屏幕上的两人集群。学校/机构家具制造商，市值恰在约 1 亿美元、日均成交量约 10 万股 —— 规模临界且流动性偏薄 → 仅观察。</span>
+      </span>
+    </li>
+  </ul>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">以上为真实的高管公开市场买入，但因规模（低于约 1 亿美元）或流动性（成交量偏薄）不达标，仅作为观察项记录，不进入头部名单：<strong>CNTM</strong>（AI 能源硬件，前 SPAC，市值约 3,000 万–4,000 万美元）与 <strong>VIRC</strong>（家具，市值临界 1 亿美元，流动性薄）。</div>
+  </div>
+</div>
+
+<!-- ============ SECTION 3 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 3 · 第三节</div>
+  <div class="section-title">Flagged / Unverified — Big Dollars, Wrong Kind of Buy</div>
+  <div class="section-title-cn">已标注 / 未核实 — 金额巨大，但买入性质不对</div>
+  <div class="section-divider"></div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">GLOO · Gloo Holdings — likely placement, NOT open-market conviction</div>
+    <div class="callout-text">
+      The screen's biggest tech cluster (4 insiders, ~$9.5M at ~$3.35, +86% ownership change, "A"/"DM" flags) coincides with a <strong>proposed public offering Gloo announced ~July 5–6, 2026</strong> (FT/BusinessWire; underwriters' 30-day option for +1,050,000 shares). Flags plus a near-identical price plus a concurrent offering strongly indicate offering participation / placement, not open-market accumulation. <strong>Not featured.</strong> Primary Form 4 footnotes not directly read this run.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">GLOO 是本期最大的科技类集群（4 名内部人，约 950 万美元 @ 约 3.35 美元，持股变动 +86%，带"A/DM"标记），但恰逢公司 <strong>7 月 5–6 日宣布拟公开增发</strong>（FT/BusinessWire）。标记 + 近乎统一的价格 + 同期增发，强烈指向增发认购/配售，而非公开市场高信念买入。<strong>不予推荐。</strong>本次未直接读取原始 Form 4 脚注。</div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">VII · Viking Acquisition Corp II — SPAC trust, not conviction</div>
+    <div class="callout-text">
+      CEO/10%-owner bought $3.0M at a flat <strong>$10.00</strong> (07/06, filed 07/08). A round $10.00 SPAC price is a trust/founder-subscription pattern, not an open-market conviction buy. <strong>Excluded.</strong>
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">VII 的 CEO/10% 股东以统一 <strong>10.00 美元</strong>买入 300 万美元（7/6 交易，7/8 备案）。整数 10.00 美元是 SPAC 信托/发起人认购价，而非公开市场高信念买入。<strong>已排除。</strong></div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-label">EWSB · EWSB Bancorp — mutual-to-stock conversion subscription</div>
+    <div class="callout-text">
+      Multiple officers bought at a flat <strong>$10.00</strong> (amended Form 4/A filings), the classic thrift IPO/mutual-conversion subscription price — not open-market buying. <strong>Excluded.</strong> Closed-end-fund clusters on the same screens (FTECX, VFLEX, SWZ) are excluded by rule as funds.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">EWSB 多名高管以统一 <strong>10.00 美元</strong>买入（Form 4/A 修订备案），是典型的储蓄机构 IPO/互助转股认购价，而非公开市场买入。<strong>已排除。</strong>同屏的封闭式基金集群（FTECX、VFLEX、SWZ）按规则作为基金排除。</div>
+  </div>
+</div>
+
+<!-- ============ SECTION 4 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 4 · 第四节</div>
+  <div class="section-title">Rejected — Coverage Already Written</div>
+  <div class="section-title-cn">已剔除 — 报道已被写出</div>
+  <div class="section-divider"></div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Ticker</th><th>The buy</th><th>Why rejected</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>UUUU</strong><br>Energy Fuels</td>
+        <td>CEO Ross Bhappu +74,000 sh @ $13.08 (~$968K, 07/07); chairman Bruce Hansen +4,000 — a 2-insider cluster.</td>
+        <td>Uranium/rare-earth is a saturated, hot sector, and the buy already has <strong>dedicated write-ups (Motley Fool, Yahoo Finance markets article, TradingView/Stocktwits)</strong> — the second-layer edge is gone. ~$3.4B cap.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text"><strong>UUUU（Energy Fuels）</strong>：CEO Bhappu 以 13.08 美元买入 74,000 股（约 96.8 万美元，7/7），主席 Hansen 加 4,000 股，构成两人集群。但铀/稀土是过热且拥挤的板块，且该买入已有 <strong>专门报道（Motley Fool、Yahoo Finance、TradingView/Stocktwits）</strong>—— 第二层优势已消失。市值约 34 亿美元。<strong>已剔除。</strong></div>
+  </div>
+</div>
+
+<!-- ============ SECTION 5 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 5 · 第五节</div>
+  <div class="section-title">Data Gaps &amp; Method Notes</div>
+  <div class="section-title-cn">数据缺口与方法说明</div>
+  <div class="section-divider"></div>
+
+  <div class="callout callout-gray">
+    <div class="callout-label">EDGAR access route used this run</div>
+    <div class="callout-text">
+      This was an automated, non-interactive run. The Claude-in-Chrome route to read primary sec.gov Form 4 XML was <strong>not available</strong> (no confirmed browser connection), so per the pipeline's Stage-3 fallback, filing details were verified via <strong>secondary reproductions</strong> — OpenInsider rows cross-checked against StockTitan, Investing.com, MarketBeat, GuruFocus and QuiverQuant. Every featured figure agreed across ≥2 independent secondary sources. <strong>Primary Form 4 XML documents were not directly read this run</strong>, so footnote-level details (10b5-1 plans, exact "M"/multiple-transaction breakdowns) are inferred from OpenInsider flags + reproductions, not confirmed from source.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本次为自动化非交互运行。读取 sec.gov 原始 Form 4 XML 的 Claude-in-Chrome 路径<strong>不可用</strong>（无确认的浏览器连接），故按流程第三阶段的备用方案，通过<strong>二手复制来源</strong>核实（OpenInsider 与 StockTitan、Investing.com、MarketBeat、GuruFocus、QuiverQuant 交叉验证）。所有入选数据均在 ≥2 个独立二手来源间一致。<strong>本次未直接读取原始 Form 4 XML</strong>，故脚注级细节（10b5-1 计划、"M"多笔交易明细）系推断，未从原始文件确认。</div>
+  </div>
+
+  <div class="callout callout-gray">
+    <div class="callout-label">Other gaps</div>
+    <div class="callout-text">
+      (1) <strong>IPX pricing</strong>: the Form 4 reports ASX ordinary shares (~$3.58) while Nasdaq trades ADSs (~$25); the exact ADS-to-ordinary ratio was not independently confirmed from the primary filing — market-cap sources were used to reconcile. (2) <strong>PRQR / IPX cluster</strong>: a second insider is indicated by QuiverQuant but not independently confirmed per-name for every buy. (3) Window = filings dated 2026-07-09 to 07-13 (last 3 trading days; 07-11/07-12 weekend). (4) FMP financial-data tools were not used, per instructions.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">其他缺口：(1) <strong>IPX 定价</strong>：Form 4 报告的是 ASX 普通股（约 3.58 美元），而 Nasdaq 交易的是 ADS（约 25 美元）；ADS 与普通股的确切比例未从原始文件独立确认，已用市值来源对账。(2) <strong>PRQR / IPX 集群</strong>：QuiverQuant 显示存在第二名内部人，但未逐笔逐名独立确认。(3) 时间窗口 = 备案日 2026-07-09 至 07-13（最近三个交易日；7/11–7/12 为周末）。(4) 按指示未使用 FMP 财务数据工具。</div>
+  </div>
+</div>
+
+<!-- ============ SECTION 6 ============ -->
+<div class="section">
+  <div class="section-num">SECTION 6 · 第六节</div>
+  <div class="section-title">Disclaimer</div>
+  <div class="section-title-cn">免责声明</div>
+  <div class="section-divider"></div>
+
+  <div class="callout callout-red">
+    <div class="callout-label">Not investment advice</div>
+    <div class="callout-text">
+      This brief surfaces <strong>publicly filed SEC Form 4 insider-purchase signals and their evidence chains only</strong>. It contains no buy/sell recommendations, no price targets, and no trading actions of any kind. Insider buying is one data point among many and is frequently wrong; it can reflect signaling, tax, or personal-liquidity motives rather than a view on value. Micro-caps and clinical-stage biotech carry acute risk of permanent capital loss. Verify every figure against the primary SEC filing before acting, and consult a licensed professional. Insider-buying data was current as of the tool calls on July 14, 2026 and may have changed.
+    </div>
+  </div>
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">本简报仅呈现<strong>公开备案的 SEC Form 4 内部人买入信号及其证据链</strong>，不含任何买卖建议、目标价或交易操作。内部人买入只是众多数据点之一，且经常出错，可能出于信号释放、税务或个人流动性动机，而非对价值的判断。微型股与临床阶段生物科技存在永久性资本损失的重大风险。行动前请对照 SEC 原始文件核实每一项数据，并咨询持牌专业人士。内部人买入数据以 2026 年 7 月 14 日工具调用时为准，可能已发生变化。</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sources-label">Sources · 数据来源</div>
+  <div class="sources">
+    OpenInsider screens (Form 4 aggregation): <a href="http://openinsider.com/latest-officer-purchases-25k">officer purchases $25k+</a> ·
+    <a href="http://openinsider.com/latest-ceo-cfo-purchases-25k">CEO/CFO purchases $25k+</a> ·
+    <a href="http://openinsider.com/latest-cluster-buys">cluster buys</a><br>
+    Verification: StockTitan, Investing.com, MarketBeat, GuruFocus, QuiverQuant, Yahoo Finance, Macrotrends, CNN Markets, MarketWatch, Motley Fool (AU + US), FT/BusinessWire (GLOO offering) — retrieved via web search, July 14, 2026.
+  </div>
+</div>
+
+<div class="footer">
+  Second-Layer Signal Scan · 第二层信号扫描 · Automated run July 14, 2026<br>
+  Research input, not investment advice. 仅供研究参考，不构成投资建议。
+</div>
+
+</body>
+</html>
