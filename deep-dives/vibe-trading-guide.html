@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe-Trading 使用指南 · Capability & Command Guide</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --card: #ffffff; --ink: #1a2233; --muted: #5b6577;
+    --accent: #0f6fde; --accent-soft: #e8f1fd; --border: #e3e7ee;
+    --code-bg: #f0f2f6; --code-ink: #24344d; --zh-bg: #fdf6e9; --zh-border: #e8d5ad;
+    --warn-bg: #fdecec; --warn-border: #f2b8b8; --ok-bg: #e9f7ef; --ok-border: #b7e4c7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12151c; --card: #1a1f2a; --ink: #e8ecf4; --muted: #9aa5b8;
+      --accent: #5aa2f0; --accent-soft: #1d3149; --border: #2a3242;
+      --code-bg: #232a38; --code-ink: #d5deee; --zh-bg: #2a2417; --zh-border: #4d4023;
+      --warn-bg: #3a2020; --warn-border: #6b3535; --ok-bg: #1c3226; --ok-border: #2e5c42;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1rem; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 2.5rem; }
+  header h1 { font-size: 1.9rem; margin: 0 0 .4rem; }
+  header p { color: var(--muted); margin: .2rem 0; }
+  .badge {
+    display: inline-block; background: var(--accent-soft); color: var(--accent);
+    border-radius: 999px; padding: .15rem .8rem; font-size: .82rem; font-weight: 600; margin: .15rem;
+  }
+  section {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.4rem 1.6rem; margin-bottom: 1.4rem;
+  }
+  h2 { font-size: 1.25rem; margin: 0 0 .8rem; display: flex; align-items: center; gap: .5rem; }
+  h3 { font-size: 1.02rem; margin: 1.2rem 0 .4rem; color: var(--accent); }
+  .zh {
+    background: var(--zh-bg); border: 1px solid var(--zh-border); border-radius: 8px;
+    padding: .6rem .9rem; font-size: .92rem; margin: .6rem 0 1rem;
+  }
+  .zh b { margin-right: .4rem; }
+  pre {
+    background: var(--code-bg); color: var(--code-ink); border-radius: 8px;
+    padding: .8rem 1rem; overflow-x: auto; font-size: .85rem; line-height: 1.55;
+    border: 1px solid var(--border);
+  }
+  code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
+  p > code, li > code, td > code {
+    background: var(--code-bg); padding: .1rem .35rem; border-radius: 4px; font-size: .86em;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: .6rem 0; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; }
+  .table-scroll { overflow-x: auto; }
+  .callout { border-radius: 8px; padding: .7rem 1rem; margin: .8rem 0; font-size: .92rem; }
+  .warn { background: var(--warn-bg); border: 1px solid var(--warn-border); }
+  .ok { background: var(--ok-bg); border: 1px solid var(--ok-border); }
+  ul { margin: .4rem 0 .8rem; padding-left: 1.3rem; }
+  li { margin: .25rem 0; }
+  .muted { color: var(--muted); font-size: .88rem; }
+  footer { text-align: center; color: var(--muted); font-size: .84rem; margin-top: 2rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📈 Vibe-Trading 使用指南</h1>
+  <p>Capability &amp; Command Guide — installed 2026-07-14</p>
+  <div>
+    <span class="badge">v0.1.11</span>
+    <span class="badge">HKUDS/Vibe-Trading</span>
+    <span class="badge">LLM: Gemini 3.5 Pro</span>
+    <span class="badge">Research-only · 仅研究模式</span>
+  </div>
+</header>
+
+<section>
+  <h2>🔧 Your Setup · 安装状态</h2>
+  <div class="zh"><b>中文摘要:</b>已通过 pip 安装在独立虚拟环境中,配置使用 Gemini 3.5 Pro,仅启用市场研究功能,未连接任何券商。所有数据源免费,无需额外 API 密钥。</div>
+  <div class="table-scroll"><table>
+    <tr><th>Item</th><th>Value</th></tr>
+    <tr><td>Install location</td><td><code>~/Desktop/Claudecode/vibe-trading/.venv</code></td></tr>
+    <tr><td>Config file</td><td><code>~/.vibe-trading/.env</code> (provider: gemini · model: gemini-3.5-flash — the README's own recommended default; <code>gemini-3.5-pro</code> does not exist as a real model)</td></tr>
+    <tr><td>Market data</td><td>Free — yfinance (US/HK), AKShare &amp; mootdx (A股), OKX/CCXT (crypto); no keys needed</td></tr>
+    <tr><td>Broker connectors</td><td><b>None configured</b> — no live trading possible (intentional)</td></tr>
+  </table></div>
+  <p class="muted">Convenience alias (add once to <code>~/.zshrc</code>) — note it sources the .env first, working around a v0.1.11 bug where the CLI ignores <code>~/.vibe-trading/.env</code>:</p>
+  <pre><code>echo 'alias vibe-trading="set -a; source ~/.vibe-trading/.env; set +a; /Users/gladys/Desktop/Claudecode/vibe-trading/.venv/bin/vibe-trading"' >> ~/.zshrc && source ~/.zshrc</code></pre>
+  <div class="callout warn">⚠️ <b>Known bug (v0.1.11):</b> the CLI caches its config before reading <code>~/.vibe-trading/.env</code>, so settings there are silently ignored. The alias above works around it by exporting the variables into the shell first. 中文:v0.1.11 版本存在配置加载顺序缺陷,需先将 .env 导入 shell 环境再启动。</div>
+  <div class="callout ok">✅ MCP registered user-wide (<code>claude mcp get vibe-trading</code> → Connected) — available in all Claude Code projects.</div>
+  <div class="callout ok">✅ Smoke test passed 2026-07-14 — <code>vibe-trading run -p "Get the latest quote and 1-month trend for AAPL"</code> returned a full quote + trend report end-to-end (Gemini + yfinance both working).</div>
+</section>
+
+<section>
+  <h2>1️⃣ Natural-Language Backtesting · 自然语言回测</h2>
+  <div class="zh"><b>中文摘要:</b>用一句话描述交易策略,系统自动生成代码、拉取真实历史数据回测,输出夏普比率、最大回撤、收益率等指标。支持美股、港股、A股、加密货币、期货、外汇。</div>
+  <p>Describe any strategy in plain English — it writes the code, runs it on real historical data, and reports Sharpe ratio, max drawdown, and returns.</p>
+  <pre><code># Moving average crossover on US equities
+vibe-trading run -p "Backtest a 20/50-day moving average crossover on AAPL for the past year, show Sharpe ratio and max drawdown"
+
+# RSI mean-reversion on crypto
+vibe-trading run -p "Test RSI(14) mean-reversion on BTC-USDT: buy below 30, sell above 70, last 6 months"
+
+# Multi-factor strategy on A-shares
+vibe-trading run -p "Backtest a momentum + value + quality multi-factor strategy on CSI 300 constituents over 2 years"</code></pre>
+</section>
+
+<section>
+  <h2>2️⃣ Market Research Deep-Dives · 市场深度研究</h2>
+  <div class="zh"><b>中文摘要:</b>个股深度研究(财报趋势、分析师共识、期权流向、风险)、宏观分析(美联储利率路径、美元走势)、加密货币链上数据分析。</div>
+  <pre><code># Equity deep-dive
+vibe-trading run -p "Research NVDA: earnings trend, analyst consensus, option flow, and key risks for next quarter"
+
+# Macro analysis
+vibe-trading run -p "Analyze the current Fed rate path, USD strength, and impact on EM equities and gold"
+
+# Crypto on-chain
+vibe-trading run -p "Deep dive BTC on-chain: whale flows, exchange balances, miner activity, and funding rates"</code></pre>
+</section>
+
+<section>
+  <h2>3️⃣ Alpha Zoo — 461 Pre-Built Quant Factors · 预置量化因子库</h2>
+  <div class="zh"><b>中文摘要:</b>内置461个量化因子:alpha101(Kakushadze 论文)、gtja191(国泰君安191因子)、qlib158(微软 Qlib)、学术因子(Fama-French 等)。一行命令即可在指定股票池上测试因子表现(IC、IR 排名)。</div>
+  <pre><code>vibe-trading alpha list --zoo gtja191 --theme reversal --limit 10   # browse catalogue
+vibe-trading alpha show gtja191_171                                  # inspect one factor
+vibe-trading alpha bench --zoo gtja191 --universe csi300 --period 2018-2025 --top 20
+vibe-trading alpha compare gtja191_171 gtja191_111 gtja191_163 --sort ir
+vibe-trading alpha export-manifest                                   # export factor manifest</code></pre>
+</section>
+
+<section>
+  <h2>4️⃣ Multi-Agent Swarm Teams · 多智能体研究团队</h2>
+  <div class="zh"><b>中文摘要:</b>30个预设团队模拟投资委员会、量化策略台、加密交易台、宏观利率外汇台等,多个AI角色辩论并输出研究报告。<b>注意:消耗大量 token,Gemini 免费额度可能触发限流,建议少量使用。</b></div>
+  <pre><code>vibe-trading --swarm-presets                       # list all 30 team presets
+
+# Bull/bear debate on a stock
+vibe-trading --swarm-run investment_committee '{"topic": "Is TSLA a buy at current levels?"}'
+
+# Quant strategy from screening to backtest
+vibe-trading --swarm-run quant_strategy_desk '{"universe": "S&P 500", "horizon": "3 months"}'
+
+# Crypto desk: funding + liquidation + flow → risk manager
+vibe-trading --swarm-run crypto_trading_desk '{"asset": "ETH-USDT", "timeframe": "1w"}'
+
+# Global macro portfolio allocation
+vibe-trading --swarm-run macro_rates_fx_desk '{"focus": "Fed pivot impact on EM bonds"}'</code></pre>
+</section>
+
+<section>
+  <h2>5️⃣ Strategy Export · 策略导出</h2>
+  <div class="zh"><b>中文摘要:</b>回测后可将策略一键导出为 TradingView Pine Script v6、通达信/同花顺/东方财富公式、MetaTrader 5 (MQL5) 格式。</div>
+  <pre><code>vibe-trading --pine &lt;run_id&gt;      # export to TradingView + TDX + MT5
+vibe-trading --code &lt;run_id&gt;      # view generated strategy Python code</code></pre>
+</section>
+
+<section>
+  <h2>6️⃣ Trade Journal + Shadow Account · 交易日志分析与影子账户</h2>
+  <div class="zh"><b>中文摘要:</b>上传券商交易记录(同花顺/东财/富途/通用CSV),自动分析交易行为(胜率、持仓周期、盈亏比)并诊断行为偏差(处置效应、过度交易、追涨、锚定)。影子账户功能回测"纪律版的你",量化违规操作和提前止盈损失了多少收益。完全本地只读,无需连接账户。</div>
+  <pre><code>vibe-trading --upload trades_export.csv
+vibe-trading run -p "Profile my trading behavior and identify any biases"
+vibe-trading run -p "Extract my strategy rules and run a shadow backtest — show what rule violations cost me"</code></pre>
+</section>
+
+<section>
+  <h2>7️⃣ Document Analysis · 文档分析</h2>
+  <div class="zh"><b>中文摘要:</b>上传财报 PDF、研究报告、Excel、Word、图片(OCR)等 40+ 种格式,自动解读关键风险与业绩超预期/不及预期项。</div>
+  <pre><code>vibe-trading --upload NVDA_Q1_earnings.pdf
+vibe-trading run -p "Summarize the key risks and beats/misses from this earnings report"</code></pre>
+</section>
+
+<section>
+  <h2>8️⃣ Persistent Memory · 跨会话记忆</h2>
+  <div class="zh"><b>中文摘要:</b>告诉它一次你的偏好(如"偏好RSI策略、最大回撤10%、持仓5-20天"),之后的会话自动记住并应用。可用 memory 子命令查看/搜索/删除记忆。</div>
+  <pre><code>vibe-trading run -p "Remember: I prefer RSI-based strategies, max 10% drawdown, hold period 5-20 days"
+vibe-trading run -p "Build a crypto strategy that fits my risk profile"   # recalls automatically
+
+vibe-trading memory list / show / search / forget</code></pre>
+</section>
+
+<section>
+  <h2>📖 Full Command Reference · 完整命令参考</h2>
+  <div class="zh"><b>中文摘要:</b>三种使用方式:①交互式终端界面(直接输入 <code>vibe-trading</code>);②单次命令(<code>run -p</code>);③注册 MCP 后在 Claude Code 里直接对话调用。下表列出全部命令与 TUI 内斜杠命令。</div>
+
+  <h3>Core commands</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>vibe-trading</code></td><td>Interactive TUI (banner, live activity rail, markdown rendering)</td></tr>
+    <tr><td><code>vibe-trading run -p "..."</code></td><td>Single research run from a prompt</td></tr>
+    <tr><td><code>vibe-trading run -f strategy.txt</code></td><td>Run a prompt from a file</td></tr>
+    <tr><td><code>vibe-trading run -p "..." --json</code></td><td>Machine-readable JSON output</td></tr>
+    <tr><td><code>vibe-trading chat</code></td><td>Interactive chat mode</td></tr>
+    <tr><td><code>vibe-trading serve --port 8899</code></td><td>Launch the web UI / API server (open http://localhost:8899)</td></tr>
+    <tr><td><code>vibe-trading init</code></td><td>Interactive .env setup (provider/API key)</td></tr>
+    <tr><td><code>vibe-trading-mcp</code></td><td>Start the MCP server (stdio; add <code>--transport sse</code> for web clients)</td></tr>
+  </table></div>
+
+  <h3>Runs &amp; results</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>vibe-trading --list</code></td><td>Recent runs</td></tr>
+    <tr><td><code>vibe-trading --show &lt;run_id&gt;</code></td><td>Run details + metrics</td></tr>
+    <tr><td><code>vibe-trading --code &lt;run_id&gt;</code></td><td>Generated strategy code</td></tr>
+    <tr><td><code>vibe-trading --pine &lt;run_id&gt;</code></td><td>Export indicators (TradingView + TDX + MT5)</td></tr>
+    <tr><td><code>vibe-trading --trace &lt;run_id&gt;</code></td><td>Full execution replay</td></tr>
+    <tr><td><code>vibe-trading --continue &lt;run_id&gt; "refine..."</code></td><td>Continue a run with new instructions</td></tr>
+    <tr><td><code>vibe-trading --upload &lt;file&gt;</code></td><td>Upload a document/CSV for analysis</td></tr>
+    <tr><td><code>vibe-trading --skills</code></td><td>List all 87 finance skills</td></tr>
+    <tr><td><code>vibe-trading --sessions</code></td><td>List chat sessions</td></tr>
+    <tr><td><code>vibe-trading resume &lt;session-id&gt;</code></td><td>Reopen a past session</td></tr>
+  </table></div>
+
+  <h3>Swarm (multi-agent)</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>vibe-trading --swarm-presets</code></td><td>List 30 team presets</td></tr>
+    <tr><td><code>vibe-trading --swarm-inspect &lt;preset&gt;</code></td><td>Inspect a preset's workers</td></tr>
+    <tr><td><code>vibe-trading --swarm-run &lt;preset&gt; '{...}'</code></td><td>Run a team with variables</td></tr>
+    <tr><td><code>vibe-trading --swarm-list</code></td><td>Swarm run history</td></tr>
+    <tr><td><code>vibe-trading --swarm-show &lt;run_id&gt;</code></td><td>Swarm run details</td></tr>
+    <tr><td><code>vibe-trading --swarm-cancel &lt;run_id&gt;</code></td><td>Cancel a running swarm</td></tr>
+  </table></div>
+
+  <h3>Alpha Zoo &amp; research spine</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>vibe-trading alpha list [--zoo --theme --limit]</code></td><td>Browse 461 factors</td></tr>
+    <tr><td><code>vibe-trading alpha show &lt;id&gt;</code></td><td>Factor detail</td></tr>
+    <tr><td><code>vibe-trading alpha bench --zoo ... --universe ... --period ...</code></td><td>Bench a zoo on a universe</td></tr>
+    <tr><td><code>vibe-trading alpha compare &lt;id1&gt; &lt;id2&gt; ... --sort ir</code></td><td>Head-to-head factor comparison</td></tr>
+    <tr><td><code>vibe-trading hypothesis list / show &lt;id&gt; / invalidate &lt;id&gt;</code></td><td>Hypothesis registry</td></tr>
+    <tr><td><code>vibe-trading memory list / show / search / forget</code></td><td>Inspect persistent memory</td></tr>
+  </table></div>
+
+  <h3>Utilities &amp; diagnostics</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>vibe-trading provider doctor</code></td><td>Redacted provider/proxy diagnostics (first stop if runs hang)</td></tr>
+    <tr><td><code>vibe-trading provider login &lt;name&gt;</code></td><td>OAuth login (Codex etc. — not needed for Gemini)</td></tr>
+    <tr><td><code>vibe-trading data mode free|paid</code></td><td>Data routing mode (keep <b>free</b>)</td></tr>
+    <tr><td><code>vibe-trading channels status --local</code></td><td>IM channel adapter config (Telegram/Slack/微信 delivery — optional)</td></tr>
+    <tr><td><code>vibe-trading --version</code></td><td>Version check</td></tr>
+  </table></div>
+
+  <h3>Slash commands inside the TUI</h3>
+  <div class="table-scroll"><table>
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td><code>/help</code></td><td>Show all commands</td></tr>
+    <tr><td><code>/skills</code></td><td>List all 87 finance skills</td></tr>
+    <tr><td><code>/swarm</code> · <code>/swarm run &lt;preset&gt;</code> · <code>/swarm list|show|cancel</code></td><td>Swarm teams</td></tr>
+    <tr><td><code>/list</code> · <code>/show &lt;id&gt;</code> · <code>/code &lt;id&gt;</code> · <code>/pine &lt;id&gt;</code> · <code>/trace &lt;id&gt;</code></td><td>Runs &amp; exports</td></tr>
+    <tr><td><code>/continue &lt;id&gt; &lt;prompt&gt;</code></td><td>Continue a run</td></tr>
+    <tr><td><code>/sessions</code> · <code>/settings</code> · <code>/clear</code> · <code>/quit</code></td><td>Session &amp; UI</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>💡 Suggestions · 建议</h2>
+  <div class="zh"><b>中文摘要:</b>先做一次小测试验证配置;注册 MCP 后可与现有 /stock 报告流程结合;蜂群模式耗 token 需节制;远离 connector(券商连接)命令保持纯研究模式。</div>
+  <ul>
+    <li><b>Smoke test first:</b> <code>vibe-trading run -p "Get the latest quote and 1-month trend for AAPL"</code> — verifies the Gemini key + data pipeline cheaply.</li>
+    <li><b>Register MCP</b> (command in the Setup section above) so Claude Code can combine vibe-trading backtests with your existing <code>/stock</code> HTML reports.</li>
+    <li><b>Swarms are token-hungry</b> — many LLM calls per run; watch Gemini rate limits.</li>
+    <li><b>Try Shadow Account</b> if you can export real trade history — the most unique feature, fully local/read-only.</li>
+    <li><b>Avoid <code>connector</code> commands</b> — they wire up live brokers. Everything above works without them.</li>
+  </ul>
+  <div class="callout ok">✅ Safe by default: no broker connected, free data only, nothing can place trades.</div>
+</section>
+
+<footer>
+  Generated 2026-07-14 · Source: <a href="https://github.com/HKUDS/Vibe-Trading">github.com/HKUDS/Vibe-Trading</a> v0.1.11 · Docs: <a href="https://vibetrading.wiki/docs/">vibetrading.wiki</a>
+</footer>
+
+</div>
+</body>
+</html>
