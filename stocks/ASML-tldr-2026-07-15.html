@@ -1,0 +1,376 @@
+<title>ASML — Initiating Coverage TLDR</title>
+<style>
+  :root {
+    --paper: #F6F4EF;
+    --paper-raised: #FFFFFF;
+    --ink: #181B20;
+    --ink-soft: #4B5160;
+    --line: #DAD5C9;
+    --navy: #1B2A44;
+    --navy-soft: #33456A;
+    --copper: #B85C22;
+    --copper-soft: #F1E0CD;
+    --teal: #2F7A76;
+    --teal-soft: #DCEBE9;
+    --positive: #2F7D4A;
+    --positive-soft: #DEEBE1;
+    --negative: #A93E3E;
+    --negative-soft: #F3E1DF;
+    --shadow: 0 1px 2px rgba(27,42,68,0.06), 0 8px 24px -12px rgba(27,42,68,0.18);
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #12151B;
+    --paper-raised: #191D25;
+    --ink: #EAE7DE;
+    --ink-soft: #A6ACB9;
+    --line: #2C313C;
+    --navy: #7C93BE;
+    --navy-soft: #96AAD0;
+    --copper: #E29A5C;
+    --copper-soft: #33291E;
+    --teal: #6FBBB5;
+    --teal-soft: #1B2E2C;
+    --positive: #6FBD86;
+    --positive-soft: #17251C;
+    --negative: #E08787;
+    --negative-soft: #2B1B1B;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12151B;
+      --paper-raised: #191D25;
+      --ink: #EAE7DE;
+      --ink-soft: #A6ACB9;
+      --line: #2C313C;
+      --navy: #7C93BE;
+      --navy-soft: #96AAD0;
+      --copper: #E29A5C;
+      --copper-soft: #33291E;
+      --teal: #6FBBB5;
+      --teal-soft: #1B2E2C;
+      --positive: #6FBD86;
+      --positive-soft: #17251C;
+      --negative: #E08787;
+      --negative-soft: #2B1B1B;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: linear-gradient(155deg, var(--navy) 0%, #24365A 62%, var(--navy) 100%);
+    color: #F3F1EA;
+    margin: 0 0 -40px;
+    padding: 40px 24px 72px;
+  }
+  :root[data-theme="dark"] .hero, @media (prefers-color-scheme: dark) { }
+  .hero-inner { max-width: 860px; margin: 0 auto; }
+  .eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: #C8CEDC; margin-bottom: 18px; font-weight: 600;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--copper); }
+  .hero-title {
+    font-size: 40px; font-weight: 600; color: #FBFAF6; line-height: 1.08;
+  }
+  .hero-sub {
+    font-family: "Iowan Old Style", Palatino, Georgia, serif;
+    font-style: italic; color: var(--copper); font-size: 18px; margin-top: 10px;
+  }
+
+  .rating-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px;
+    margin-top: 30px;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--positive); color: #0D1B12;
+    font-weight: 700; font-size: 13px; letter-spacing: 0.04em;
+    padding: 7px 16px; border-radius: 100px;
+  }
+  .rating-stat { display: flex; flex-direction: column; gap: 2px; }
+  .rating-stat .label { font-size: 11.5px; color: #B7BECE; text-transform: uppercase; letter-spacing: 0.07em; }
+  .rating-stat .val { font-size: 21px; font-weight: 600; color: #FBFAF6; }
+  .rating-stat .val.copper { color: var(--copper); }
+  .rating-stat .val.up { color: #8FD6A4; }
+
+  /* ---------- Stat card grid ---------- */
+  .stats {
+    position: relative;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .stat {
+    background: var(--paper-raised); padding: 18px 16px;
+  }
+  .stat .label { font-size: 11.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .stat .num { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .stat .sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; }
+
+  /* ---------- Sections ---------- */
+  section { margin-top: 56px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px;
+    border-bottom: 2px solid var(--navy); padding-bottom: 10px;
+  }
+  :root[data-theme="dark"] .section-head, @media (prefers-color-scheme: dark) { }
+  .section-head h2 { font-size: 24px; color: var(--navy); flex: 1; }
+  .section-num { font-family: ui-monospace, monospace; font-size: 13px; color: var(--copper); font-weight: 600; }
+
+  p { margin: 0 0 14px; color: var(--ink); }
+  p:last-child { margin-bottom: 0; }
+  .lede { font-size: 17px; color: var(--ink); }
+
+  .pillars { display: grid; gap: 14px; margin-top: 4px; }
+  .pillar {
+    background: var(--paper-raised); border: 1px solid var(--line); border-left: 3px solid var(--copper);
+    border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .pillar h3 { font-size: 15.5px; color: var(--ink); margin-bottom: 5px; }
+  .pillar p { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- Football field ---------- */
+  .ff { margin: 18px 0 8px; }
+  .ff-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .ff-label { font-size: 13px; color: var(--ink-soft); text-align: right; }
+  .ff-track { position: relative; height: 26px; background: var(--paper); border-radius: 6px; }
+  .ff-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 5px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-size: 11.5px; font-weight: 600; color: #fff; }
+  .ff-axis { display: grid; grid-template-columns: 130px 1fr; margin-top: 4px; }
+  .ff-axis-line { position: relative; height: 16px; }
+  .ff-axis-line span { position: absolute; font-size: 10.5px; color: var(--ink-soft); transform: translateX(-50%); }
+  .ff-marker { position: absolute; top: -3px; bottom: -3px; width: 2px; }
+  .ff-marker-label { position: absolute; top: -18px; font-size: 10.5px; font-weight: 700; white-space: nowrap; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+  th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { background: var(--navy); color: #F3F1EA; font-weight: 600; font-size: 12.5px; letter-spacing: 0.03em; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(odd) { background: var(--paper-raised); }
+  tbody tr:nth-child(even) { background: var(--paper); }
+  td.hi { font-weight: 700; color: var(--navy-soft); }
+
+  .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin-top: 4px; }
+  .risk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+  .risk .sev { flex: none; width: 8px; height: 8px; border-radius: 50%; margin-top: 6px; }
+  .risk .sev.high { background: var(--negative); }
+  .risk .sev.med { background: var(--copper); }
+  .risk b { display: block; font-size: 14px; }
+  .risk span.d { color: var(--ink-soft); font-size: 13px; }
+
+  .cat-list { display: grid; gap: 8px; margin-top: 4px; }
+  .cat { display: flex; gap: 12px; align-items: baseline; font-size: 14.5px; background: var(--teal-soft); border-radius: 8px; padding: 10px 14px; }
+  .cat .when { flex: none; font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--teal); font-weight: 700; width: 78px; }
+
+  /* ---------- Mandarin summary box ---------- */
+  .zh {
+    margin-top: 18px;
+    background: var(--copper-soft);
+    border: 1px solid color-mix(in srgb, var(--copper) 35%, var(--line));
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+  .zh .zh-tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 6px;
+  }
+  .zh p {
+    font-family: "Songti SC", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+    font-size: 14.5px; line-height: 1.85; color: var(--ink); margin: 0;
+  }
+
+  footer {
+    margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .hero-title { font-size: 30px; }
+    .risk-grid { grid-template-columns: 1fr; }
+    .ff-row, .ff-axis { grid-template-columns: 90px 1fr; }
+  }
+</style>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span>INITIATING COVERAGE · TL;DR · JULY 14, 2026</div>
+    <h1 class="hero-title">ASML Holding N.V.</h1>
+    <div class="hero-sub">The indispensable bottleneck: EUV monopoly meets the AI capex supercycle</div>
+    <div class="rating-row">
+      <span class="pill">● BUY</span>
+      <div class="rating-stat"><span class="label">Price</span><span class="val mono">$1,726.04</span></div>
+      <div class="rating-stat"><span class="label">Target (12mo)</span><span class="val copper mono">$1,860</span></div>
+      <div class="rating-stat"><span class="label">Upside</span><span class="val up mono">+7.8%</span></div>
+      <div class="rating-stat"><span class="label">Market Cap</span><span class="val mono">$665B</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="stats">
+    <div class="stat"><div class="label">2025A Revenue</div><div class="num mono">€32.7B</div><div class="sub">+15.6% YoY</div></div>
+    <div class="stat"><div class="label">2025A EBITDA Margin</div><div class="num mono">37.7%</div><div class="sub">vs. 33.5% in 2022A</div></div>
+    <div class="stat"><div class="label">EUV Market Share</div><div class="num mono">~100%</div><div class="sub">sole global supplier</div></div>
+    <div class="stat"><div class="label">Order Backlog</div><div class="num mono">€38.8B</div><div class="sub">18–24mo visibility</div></div>
+  </div>
+
+  <section>
+    <div class="section-head"><span class="section-num">01</span><h2>The Thesis</h2></div>
+    <p class="lede">ASML is the sole global supplier of EUV lithography — the technology every advanced logic and memory chip must pass through — riding an AI-driven capex supercycle that just made memory customers larger than logic customers for the first time in company history.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <h3>EUV monopoly, not a market-share story</h3>
+        <p>~94% overall lithography share, ~100% in EUV. 15–20 year engineering head start, exclusive Zeiss optics relationship, owned Cymer light sources. No credible competitor within a decade.</p>
+      </div>
+      <div class="pillar">
+        <h3>Memory now exceeds logic for the first time</h3>
+        <p>Q1 2026: 51% memory vs. 49% logic system sales, as SK hynix, Samsung and Micron race to build HBM capacity for AI accelerators. Guidance raised twice in H1 2026, to €36–40B.</p>
+      </div>
+      <div class="pillar">
+        <h3>High-NA EUV roughly doubles ASP</h3>
+        <p>$350–380M per High-NA system vs. ~$183–200M standard EUV. Modeled to grow from €1.2B (2025A) to €11.65B (2030E) — the single biggest driver of margin expansion toward management's 56–60% 2030 target.</p>
+      </div>
+      <div class="pillar">
+        <h3>The DCF says "expensive" — we think that's the wrong lens</h3>
+        <p>A standard 5-year DCF yields just $583–790/share, far below the current price. That's a known limitation of DCF for multi-decade monopolies, not a red flag — so our target leans 75% on trading comps, only 10% on DCF.</p>
+      </div>
+    </div>
+    <div class="zh">
+      <span class="zh-tag">摘要</span>
+      <p>ASML 是全球唯一的 EUV 光刻机供应商，市场份额接近 100%，短期内没有真正的竞争对手。受 AI 资本开支热潮推动，2026 年第一季度存储芯片客户的系统销售额首次超过逻辑芯片客户。High-NA EUV 新一代设备单价约为普通 EUV 的两倍，是未来毛利率提升的最大驱动力。传统五年期现金流折现模型（DCF）给出的估值远低于当前股价，但我们认为这是该模型在评估长期垄断型公司时的固有局限，而非基本面警示信号，因此估值权重更偏向可比公司交易倍数（75%）而非 DCF（10%）。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">02</span><h2>Valuation — Football Field</h2></div>
+    <p>Weighted blend: DCF 10% · Trading Comps 75% · Precedent Transactions 15% → <b>$1,860 price target</b>.</p>
+    <div class="ff">
+      <div class="ff-row">
+        <div class="ff-label">Precedent Txns</div>
+        <div class="ff-track"><div class="ff-bar" style="left:12.7%; width:5%; background:var(--copper);"><span>$750</span><span>$850</span></div></div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-label">Trading Comps</div>
+        <div class="ff-track"><div class="ff-bar" style="left:66.8%; width:24.9%; background:var(--teal);"><span>$1,837</span><span>$2,344</span></div></div>
+      </div>
+      <div class="ff-row">
+        <div class="ff-label">DCF Analysis</div>
+        <div class="ff-track"><div class="ff-bar" style="left:4.1%; width:10.1%; background:var(--navy-soft);"><span>$583</span><span>$790</span></div></div>
+      </div>
+      <div class="ff-axis">
+        <div></div>
+        <div class="ff-axis-line">
+          <span style="left:0%;">$500</span>
+          <span style="left:23.4%;">$1,000</span>
+          <span style="left:46.8%;">$1,500</span>
+          <span style="left:70.2%;">$2,000</span>
+          <span style="left:93.6%;">$2,500</span>
+          <div class="ff-marker" style="left:60.7%; background:var(--negative);"></div>
+          <div class="ff-marker-label" style="left:60.7%; color:var(--negative); transform:translateX(-100%);">Current $1,726</div>
+          <div class="ff-marker" style="left:67.4%; background:var(--ink);"></div>
+          <div class="ff-marker-label" style="left:67.4%; color:var(--ink);">Target $1,860</div>
+        </div>
+      </div>
+    </div>
+    <div class="zh">
+      <span class="zh-tag">摘要</span>
+      <p>目标价 1,860 美元，综合三种估值方法加权得出：现金流折现法（DCF，权重 10%，估值区间 583–790 美元）、可比公司交易倍数法（权重 75%，估值区间 1,837–2,344 美元）以及并购先例交易法（权重 15%，约 798 美元）。DCF 权重刻意调低，因为该方法难以充分反映 ASML 这类具有数十年竞争壁垒的垄断型公司的长期价值；可比公司交易倍数更能反映市场当前愿意为同类 AI 半导体设备资产支付的溢价。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">03</span><h2>Financial Trajectory</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>EUR millions</th><th>2024A</th><th>2025A</th><th>2026E</th><th>2028E</th><th>2030E</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue</td><td class="mono">28,263</td><td class="mono">32,667</td><td class="mono">38,500</td><td class="mono">47,500</td><td class="mono hi">54,000</td></tr>
+          <tr><td>Gross Margin</td><td class="mono">51.3%</td><td class="mono">52.8%</td><td class="mono">54.0%</td><td class="mono">56.0%</td><td class="mono hi">57.0%</td></tr>
+          <tr><td>EBITDA Margin</td><td class="mono">35.2%</td><td class="mono">37.7%</td><td class="mono">38.9%</td><td class="mono">41.1%</td><td class="mono hi">41.7%</td></tr>
+          <tr><td>Diluted EPS (€)</td><td class="mono">19.24</td><td class="mono">24.71</td><td class="mono">30.39</td><td class="mono">40.56</td><td class="mono hi">48.40</td></tr>
+          <tr><td>Free Cash Flow</td><td class="mono">8,633</td><td class="mono">10,233</td><td class="mono">12,231</td><td class="mono">15,033</td><td class="mono hi">17,279</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px; font-size:13.5px; color:var(--ink-soft);">Base case: 10.6% revenue CAGR 2025A–2030E, squarely within management's own €44–60B 2030 guidance range. Bull case reaches €62B (13.5% CAGR); Bear case falls to €40B (4.1% CAGR) on an AI-capex digestion cycle plus deeper export-control curbs.</p>
+    <div class="zh">
+      <span class="zh-tag">摘要</span>
+      <p>基准情形下，ASML 收入将从 2025 年的 327 亿欧元增长到 2030 年的 540 亿欧元，年复合增长率 10.6%，处于管理层官方指引区间（440–600 亿欧元）之内。毛利率预计从 52.8% 提升至 57.0%，主要受益于 EUV（尤其是 High-NA EUV）产品结构占比提升。乐观情形下 2030 年收入可达 620 亿欧元；悲观情形下若 AI 资本开支放缓叠加对华出口管制进一步收紧，收入可能降至 400 亿欧元。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">04</span><h2>Key Risks</h2></div>
+    <div class="risk-grid">
+      <div class="risk"><span class="sev high"></span><div><b>Single-source suppliers</b><span class="d">100% of EUV optics from Zeiss; Cymer is the sole light-source maker. No viable dual-source.</span></div></div>
+      <div class="risk"><span class="sev high"></span><div><b>China export controls</b><span class="d">China system-sales share fell from 36% to ~19% in one year; June 2026 US probe into a possible breach is unresolved.</span></div></div>
+      <div class="risk"><span class="sev med"></span><div><b>High-NA execution risk</b><span class="d">Unproven at volume; a delay pushes ASP-accretive revenue and margin expansion to the right.</span></div></div>
+      <div class="risk"><span class="sev med"></span><div><b>AI capex digestion cycle</b><span class="d">Every prior semi capex cycle has eventually corrected; a pause would hit order intake and comps multiples together.</span></div></div>
+      <div class="risk"><span class="sev med"></span><div><b>Customer concentration</b><span class="d">TSMC + Samsung ≈ 38% of 2025A sales; fewer than 10 customers &gt;80% of revenue.</span></div></div>
+      <div class="risk"><span class="sev high"></span><div><b>Multiple compression</b><span class="d">Trades at 46.9x EV/EBITDA — our own DCF gap means the stock is unusually sensitive to any AI-infrastructure de-rating.</span></div></div>
+    </div>
+    <div class="zh">
+      <span class="zh-tag">摘要</span>
+      <p>主要风险包括：核心供应商高度集中（光学元件 100% 依赖蔡司 Zeiss，光源仅自有的 Cymer 一家）；对华出口管制持续收紧，中国区收入占比一年内从 36% 降至约 19%，且面临美国新一轮调查；High-NA EUV 量产爬坡存在执行风险；AI 资本开支若进入消化期将同时压制订单与估值倍数；大客户集中度高（台积电与三星合计占 2025 年销售额约 38%）；当前 46.9 倍 EV/EBITDA 的估值使股价对板块估值回调较为敏感。</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="section-num">05</span><h2>Catalysts to Watch</h2></div>
+    <div class="cat-list">
+      <div class="cat"><span class="when">Q2–Q3 2026</span><span>Third consecutive 2026 guidance raise would extend the pattern of upside surprises.</span></div>
+      <div class="cat"><span class="when">2026–2027E</span><span>High-NA qualification progress at TSMC and Samsung for sub-2nm nodes.</span></div>
+      <div class="cat"><span class="when">Ongoing</span><span>Quarterly HBM capacity disclosures from SK hynix, Samsung, Micron as an order-intake leading indicator.</span></div>
+      <div class="cat"><span class="when">2026–2027E</span><span>Resolution of the pending US export-control investigation without material new restrictions.</span></div>
+    </div>
+    <div class="zh">
+      <span class="zh-tag">摘要</span>
+      <p>值得关注的催化剂包括：2026 年第二、三季度可能出现的第三次上调全年指引；台积电与三星在 2nm 以下制程上对 High-NA EUV 的验证进展；SK 海力士、三星、美光每季度公布的 HBM 产能扩张情况（可作为订单先行指标）；以及美国正在进行的出口管制调查能否在不施加新限制的情况下了结。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Full 51-page initiation report + financial model available in ASML_Initiation_Coverage/</span>
+    <span>Not investment advice · Claude equity research workflow, Jul 14 2026</span>
+  </footer>
+
+</div>
