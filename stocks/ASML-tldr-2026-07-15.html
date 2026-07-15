@@ -170,7 +170,9 @@
   .ff-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 14px; margin-bottom: 10px; }
   .ff-label { font-size: 13px; color: var(--ink-soft); text-align: right; }
   .ff-track { position: relative; height: 26px; background: var(--paper); border-radius: 6px; }
-  .ff-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 5px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-size: 11.5px; font-weight: 600; color: #fff; }
+  .ff-bar { position: absolute; top: 3px; bottom: 3px; border-radius: 5px; min-width: 3px; }
+  .ff-val { position: absolute; top: 50%; transform: translate(-100%, -50%); font-size: 11px; font-weight: 700; white-space: nowrap; padding-right: 7px; }
+  .ff-val.end { transform: translate(0, -50%); padding-right: 0; padding-left: 7px; }
   .ff-axis { display: grid; grid-template-columns: 130px 1fr; margin-top: 4px; }
   .ff-axis-line { position: relative; height: 16px; }
   .ff-axis-line span { position: absolute; font-size: 10.5px; color: var(--ink-soft); transform: translateX(-50%); }
@@ -286,15 +288,27 @@
     <div class="ff">
       <div class="ff-row">
         <div class="ff-label">Precedent Txns</div>
-        <div class="ff-track"><div class="ff-bar" style="left:12.7%; width:5%; background:var(--copper);"><span>$750</span><span>$850</span></div></div>
+        <div class="ff-track">
+          <div class="ff-bar" style="left:12.7%; width:5%; background:var(--copper);"></div>
+          <span class="ff-val" style="left:12.7%; color:var(--copper);">$750</span>
+          <span class="ff-val end" style="left:17.7%; color:var(--copper);">$850</span>
+        </div>
       </div>
       <div class="ff-row">
         <div class="ff-label">Trading Comps</div>
-        <div class="ff-track"><div class="ff-bar" style="left:66.8%; width:24.9%; background:var(--teal);"><span>$1,837</span><span>$2,344</span></div></div>
+        <div class="ff-track">
+          <div class="ff-bar" style="left:66.8%; width:24.9%; background:var(--teal);"></div>
+          <span class="ff-val" style="left:66.8%; color:var(--teal);">$1,837</span>
+          <span class="ff-val end" style="left:91.7%; color:var(--teal);">$2,344</span>
+        </div>
       </div>
       <div class="ff-row">
         <div class="ff-label">DCF Analysis</div>
-        <div class="ff-track"><div class="ff-bar" style="left:4.1%; width:10.1%; background:var(--navy-soft);"><span>$583</span><span>$790</span></div></div>
+        <div class="ff-track">
+          <div class="ff-bar" style="left:4.1%; width:10.1%; background:var(--navy-soft);"></div>
+          <span class="ff-val" style="left:4.1%; color:var(--navy-soft);">$583</span>
+          <span class="ff-val end" style="left:14.2%; color:var(--navy-soft);">$790</span>
+        </div>
       </div>
       <div class="ff-axis">
         <div></div>
