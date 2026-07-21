@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coherent Corp. (COHR) — Financial Model Output Summary</title>
+<style>
+  :root{
+    --ink:#1a2332; --muted:#5b6b7f; --accent:#0e5fd8; --accent2:#0a3d91;
+    --bg:#f6f8fb; --card:#ffffff; --line:#dde5ee;
+    --zh-bg:#eef4ff; --zh-border:#0e5fd8;
+    --warn-bg:#fff7e8; --warn-border:#d97706;
+    --good:#0a7d4f; --bad:#b42318;
+  }
+  *{box-sizing:border-box}
+  body{font-family:"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.55}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 24px 64px}
+  header.hero{background:linear-gradient(135deg,#0a3d91,#0e5fd8);color:#fff;border-radius:14px;padding:28px 32px;margin-bottom:28px}
+  header.hero h1{margin:0 0 6px;font-size:24px}
+  header.hero .sub{opacity:.9;font-size:14px}
+  .badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:2px 12px;font-size:12px;margin-top:10px;margin-right:8px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:22px}
+  h2{font-size:19px;color:var(--accent2);border-bottom:2px solid var(--line);padding-bottom:8px;margin-top:0}
+  h3{font-size:14px;margin-bottom:6px;color:var(--accent2)}
+  p,li{font-size:14px}
+  table{border-collapse:collapse;width:100%;font-size:12px;margin:10px 0}
+  th{background:#eef2f8;color:var(--accent2);text-align:right;padding:6px 8px;border:1px solid var(--line);white-space:nowrap}
+  th:first-child{text-align:left}
+  td{padding:5px 8px;border:1px solid var(--line);text-align:right;white-space:nowrap}
+  td:first-child{text-align:left;white-space:normal}
+  tr:nth-child(even) td{background:#fafcfe}
+  tr.total td{font-weight:700;background:#eef2f8}
+  .zh{background:var(--zh-bg);border-left:4px solid var(--zh-border);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:16px;font-size:14px}
+  .zh .zh-label{font-weight:700;color:var(--accent2);display:block;margin-bottom:4px;font-size:13px}
+  .warn{background:var(--warn-bg);border-left:4px solid var(--warn-border);border-radius:0 8px 8px 0;padding:12px 16px;font-size:13.5px}
+  .ok{color:var(--good);font-weight:700}
+  .check{color:var(--bad);font-weight:700}
+  .proj{background:#f7fbff}
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <h1>Coherent Corp. (NYSE: COHR) — Financial Model Output Summary</h1>
+  <div class="sub">财务模型输出摘要 · Task 2 of 5, Equity Research Initiating Coverage workflow · Prepared July 7, 2026</div>
+  <span class="badge">6-tab model, formula-driven & balance-verified</span>
+  <span class="badge">Static snapshot — live formulas in the .xlsx</span>
+</header>
+
+<section>
+  <h2>0. What This Document Is</h2>
+  <div class="warn">
+    This HTML is a <b>read-only snapshot</b> of the computed outputs from <code>Coherent_Financial_Model_2026-07-07.xlsx</code> — the actual deliverable for Task 2 of the initiating-coverage skill. HTML cannot hold live spreadsheet formulas, so <b>the .xlsx remains the working model</b> (all 6 required tabs: Revenue Model, Income Statement, Cash Flow Statement, Balance Sheet, Scenarios, DCF Inputs). This page exists purely for quick, readable review of the numbers.<br><br>
+    <b>Verification performed:</b> the workbook was fully recalculated with a Python formula-evaluation engine (not just visually inspected). That process surfaced and fixed three real bugs — a missing Other Current Liabilities line, a data-entry error in an Other Current Assets assumption, and an inconsistent Minority Interest roll-forward — plus a formula syntax bug in the Scenarios tab. After fixes, <b>the Balance Sheet ties exactly for all 5 projected years (FY2026E–FY2030E)</b>; two historical years carry an immaterial rounding gap (&lt;0.1% of total assets) documented in the model's Notes tab.
+  </div>
+  <div class="zh"><span class="zh-label">中文摘要 · 本文档说明</span>
+  本HTML是 <code>Coherent_Financial_Model_2026-07-07.xlsx</code>（Task 2 真正交付物）计算结果的只读快照。HTML无法保留电子表格的实时公式，因此<b>xlsx文件才是真正可用的模型</b>（含6个必需标签页）。本页仅供快速查阅数字。<b>已完成的验证：</b>使用Python公式计算引擎对整个工作簿进行了完整重算（而非仅目测检查），过程中发现并修复了三个真实错误（缺失的"其他流动负债"行、"其他流动资产"假设的数据录入错误、少数股东权益结转逻辑不一致）以及Scenarios标签页的一个公式语法错误。修复后，<b>资产负债表在全部5个预测年度（2026–2030财年）完全平衡</b>；两个历史年度存在可忽略的舍入误差（低于总资产的0.1%），已在模型Notes标签页中说明。</div>
+</section>
+
+<!-- ================= REVENUE ================= -->
+<section>
+  <h2>1. Revenue Model — Segment Summary ($M)</h2>
+  <table>
+    <tr><th>Segment</th><th>FY22A</th><th>FY23A</th><th>FY24A</th><th>FY25A</th><th class="proj">FY26E</th><th class="proj">FY27E</th><th class="proj">FY28E</th><th class="proj">FY29E</th><th class="proj">FY30E</th></tr>
+    <tr><td>Networking</td><td>1,937</td><td>2,986</td><td>2,296</td><td>3,421</td><td class="proj">4,618</td><td class="proj">5,773</td><td class="proj">6,928</td><td class="proj">7,967</td><td class="proj">8,923</td></tr>
+    <tr><td>Materials</td><td>820</td><td>1,088</td><td>1,015</td><td>954</td><td class="proj">1,002</td><td class="proj">1,082</td><td class="proj">1,168</td><td class="proj">1,250</td><td class="proj">1,325</td></tr>
+    <tr><td>Lasers</td><td>560</td><td>1,086</td><td>1,393</td><td>1,435</td><td class="proj">1,492</td><td class="proj">1,552</td><td class="proj">1,614</td><td class="proj">1,679</td><td class="proj">1,746</td></tr>
+    <tr class="total"><td>Total Revenue</td><td>3,317</td><td>5,160</td><td>4,704</td><td>5,810</td><td class="proj">7,112</td><td class="proj">8,407</td><td class="proj">9,710</td><td class="proj">10,896</td><td class="proj">11,994</td></tr>
+    <tr><td>Networking % of Total</td><td>58%</td><td>58%</td><td>49%</td><td>59%</td><td class="proj">65%</td><td class="proj">69%</td><td class="proj">71%</td><td class="proj">73%</td><td class="proj">74%</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)">FY2025A segment splits per 10-K disclosure (Networking +49%, Materials −6%, Lasers residual +3%). FY2026E–FY2030E project decelerating Networking growth (35%→12%) as the AI-optics market matures, per the Revenue Model tab's assumption-driven build.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 营收模型</span>
+  网络板块占比将从2025财年的59%持续提升至2030财年的74%，成为绝对主导；总营收从2025财年的58.1亿美元增长至2030财年预测的约120亿美元。材料和激光板块保持个位数低速增长，起到分散周期风险的压舱石作用。</div>
+</section>
+
+<!-- ================= INCOME STATEMENT ================= -->
+<section>
+  <h2>2. Income Statement — Key Lines ($M except per-share)</h2>
+  <table>
+    <tr><th>Line</th><th>FY22A</th><th>FY23A</th><th>FY24A</th><th>FY25A</th><th class="proj">FY26E</th><th class="proj">FY27E</th><th class="proj">FY28E</th><th class="proj">FY29E</th><th class="proj">FY30E</th></tr>
+    <tr><td>Gross Profit</td><td>1,265</td><td>1,618</td><td>1,455</td><td>2,043</td><td class="proj">2,703</td><td class="proj">3,363</td><td class="proj">3,981</td><td class="proj">4,576</td><td class="proj">5,157</td></tr>
+    <tr><td>Gross Margin %</td><td>38%</td><td>31%</td><td>31%</td><td>35%</td><td class="proj">38%</td><td class="proj">40%</td><td class="proj">41%</td><td class="proj">42%</td><td class="proj">43%</td></tr>
+    <tr><td>EBIT (Operating Income)</td><td>414</td><td>82</td><td>123</td><td>535</td><td class="proj">960</td><td class="proj">1,412</td><td class="proj">1,826</td><td class="proj">2,255</td><td class="proj">2,699</td></tr>
+    <tr><td>EBIT Margin %</td><td>12%</td><td>2%</td><td>3%</td><td>9%</td><td class="proj">14%</td><td class="proj">17%</td><td class="proj">19%</td><td class="proj">21%</td><td class="proj">22%</td></tr>
+    <tr><td>EBITDA</td><td>701</td><td>764</td><td>683</td><td>1,088</td><td class="proj">1,586</td><td class="proj">2,102</td><td class="proj">2,583</td><td class="proj">3,062</td><td class="proj">3,550</td></tr>
+    <tr><td>EBITDA Margin %</td><td>21%</td><td>15%</td><td>15%</td><td>19%</td><td class="proj">22%</td><td class="proj">25%</td><td class="proj">27%</td><td class="proj">28%</td><td class="proj">30%</td></tr>
+    <tr><td>Net Income Avail. to Common</td><td>167</td><td>−404</td><td>−284</td><td>−120</td><td class="proj">431</td><td class="proj">893</td><td class="proj">1,318</td><td class="proj">1,692</td><td class="proj">2,073</td></tr>
+    <tr class="total"><td>Diluted EPS (GAAP)</td><td>$1.43</td><td>−$2.94</td><td>−$1.87</td><td>−$0.77</td><td class="proj">$2.26</td><td class="proj">$4.33</td><td class="proj">$6.31</td><td class="proj">$7.98</td><td class="proj">$9.64</td></tr>
+    <tr><td>Indicative Non-GAAP Diluted EPS (memo)</td><td>$2.42</td><td>−$0.26</td><td>−$0.25</td><td>$1.92</td><td class="proj">$3.82</td><td class="proj">$5.79</td><td class="proj">$7.82</td><td class="proj">$9.54</td><td class="proj">$11.26</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)">EBIT = Gross Profit − R&D − SG&A (verified to reconcile exactly to reported Pretax Income for all 4 historical years via Pretax = EBIT − Net Interest Expense + Other Income). GAAP net income turns positive in FY2026E as the preferred dividend burden eases and operating leverage builds; the "Indicative Non-GAAP EPS" memo row adds back amortization of acquired intangibles and restructuring — closer to what the Street actually tracks.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 利润表关键数据</span>
+  毛利率预计从2025财年的35%逐步提升至2030财年的43%；GAAP净利润在经历三年亏损后于2026财年转正，摊薄每股收益从2025财年的-0.77美元提升至2030财年预测的9.64美元。EBIT计算口径（毛利-研发-销管费用）已与四个历史年度的实际税前利润精确对账验证。表中另附"非GAAP每股收益"参考行（加回收购无形资产摊销及重组费用），更贴近市场实际关注的口径。</div>
+</section>
+
+<!-- ================= BALANCE SHEET ================= -->
+<section>
+  <h2>3. Balance Sheet — Summary & Balance Check ($M)</h2>
+  <table>
+    <tr><th>Line</th><th>FY22A</th><th>FY23A</th><th>FY24A</th><th>FY25A</th><th class="proj">FY26E</th><th class="proj">FY27E</th><th class="proj">FY28E</th><th class="proj">FY29E</th><th class="proj">FY30E</th></tr>
+    <tr><td>Cash & Equivalents</td><td>2,582</td><td>821</td><td>926</td><td>909</td><td class="proj">3,197</td><td class="proj">3,686</td><td class="proj">4,536</td><td class="proj">5,795</td><td class="proj">7,497</td></tr>
+    <tr><td>Total Assets</td><td>7,844</td><td>13,717</td><td>14,483</td><td>14,907</td><td class="proj">17,992</td><td class="proj">19,205</td><td class="proj">20,723</td><td class="proj">22,542</td><td class="proj">24,680</td></tr>
+    <tr><td>Total Liabilities</td><td>3,460</td><td>6,483</td><td>6,546</td><td>6,426</td><td class="proj">6,873</td><td class="proj">6,963</td><td class="proj">6,909</td><td class="proj">6,766</td><td class="proj">6,550</td></tr>
+    <tr><td>&nbsp;&nbsp;of which Total Debt (current+LT)</td><td>2,438</td><td>4,489</td><td>4,303</td><td>3,894</td><td class="proj">3,900</td><td class="proj">3,600</td><td class="proj">3,200</td><td class="proj">2,800</td><td class="proj">2,400</td></tr>
+    <tr><td>Total Equity</td><td>4,383</td><td>7,229</td><td>7,946</td><td>8,481</td><td class="proj">11,119</td><td class="proj">12,243</td><td class="proj">13,814</td><td class="proj">15,776</td><td class="proj">18,131</td></tr>
+    <tr class="total"><td>Balance Check (Assets = Liab. + Equity)</td>
+      <td class="ok">OK</td><td class="check">CHECK*</td><td class="check">CHECK*</td><td class="ok">OK</td>
+      <td class="proj ok">OK</td><td class="proj ok">OK</td><td class="proj ok">OK</td><td class="proj ok">OK</td><td class="proj ok">OK</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)">*FY2023A/FY2024A show a rounding gap of ~$5–9M (&lt;0.1% of total assets) from reconstructing sub-line detail (e.g., Other Current Assets) not separately disclosed in summary filing data — cosmetic, does not affect the mechanical tie-out. All 5 projected years balance exactly by construction (the Cash Flow Statement's working-capital deltas are formula-linked to the Balance Sheet, not independently assumed).</p>
+  <p style="font-size:12px;color:var(--muted)">Debt declines from ~$3.9B (FY25A) to ~$2.4B (FY30E) as free cash flow funds paydown alongside the NVIDIA-funded capacity buildout; the 5.25% mandatory convertible preferred stock ($2.48B) is modeled converting to common equity at the start of FY2027E.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 资产负债表摘要与平衡校验</span>
+  <b>全部5个预测年度（2026–2030财年）资产负债表均完全平衡</b>（"OK"），这是通过将现金流量表的营运资金变动与资产负债表逐项挂钩公式实现的机制性平衡，而非简单填数凑数。两个历史年度存在低于总资产0.1%的舍入误差，属于外部披露数据颗粒度不足导致，不影响前瞻性模型的可靠性。总债务预计从2025财年的约39亿美元降至2030财年的约24亿美元，5.25%强制可转换优先股（24.8亿美元）假设于2027财年初转换为普通股权益。</div>
+</section>
+
+<!-- ================= CASH FLOW ================= -->
+<section>
+  <h2>4. Cash Flow Statement — Summary ($M)</h2>
+  <table>
+    <tr><th>Line</th><th>FY22A</th><th>FY23A</th><th>FY24A</th><th>FY25A</th><th class="proj">FY26E</th><th class="proj">FY27E</th><th class="proj">FY28E</th><th class="proj">FY29E</th><th class="proj">FY30E</th></tr>
+    <tr><td>Cash from Operations</td><td>413</td><td>634</td><td>546</td><td>634</td><td class="proj">1,052</td><td class="proj">1,627</td><td class="proj">2,086</td><td class="proj">2,531</td><td class="proj">3,001</td></tr>
+    <tr class="total"><td>Free Cash Flow (CFO − CapEx)</td><td>99</td><td>198</td><td>199</td><td>193</td><td class="proj">411</td><td class="proj">854</td><td class="proj">1,251</td><td class="proj">1,659</td><td class="proj">2,102</td></tr>
+    <tr><td>FCF Margin %</td><td>3%</td><td>4%</td><td>4%</td><td>3%</td><td class="proj">6%</td><td class="proj">10%</td><td class="proj">13%</td><td class="proj">15%</td><td class="proj">18%</td></tr>
+    <tr><td>Ending Cash Balance</td><td>2,582</td><td>821</td><td>926</td><td>909</td><td class="proj">3,197</td><td class="proj">3,686</td><td class="proj">4,536</td><td class="proj">5,795</td><td class="proj">7,497</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)">FY2023A investing activities include the ~$5.5B Coherent Inc. acquisition (excluded from the FCF metric, which is defined as CFO − CapEx only). FY2026E cash jumps in part on NVIDIA's $2B strategic investment. FCF margin more than doubles from ~3% (FY25A) to ~18% (FY30E) as capex intensity normalizes after the FY2026E–FY2027E capacity-buildout peak (~9–9.2% of revenue) back toward ~7.5% by FY2030E.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 现金流量表摘要</span>
+  自由现金流利润率预计从2025财年的约3%大幅提升至2030财年的约18%，因资本开支强度在2026–2027财年产能扩张高峰（占营收约9–9.2%）后逐步回落至约7.5%。2026财年现金余额跃升部分得益于英伟达20亿美元战略投资；2023财年投资活动包含约55亿美元的Coherent Inc并购支出（不计入自由现金流指标，该指标仅定义为经营现金流减资本开支）。</div>
+</section>
+
+<!-- ================= SCENARIOS ================= -->
+<section>
+  <h2>5. Scenario Analysis — FY2029E Outputs</h2>
+  <table>
+    <tr><th>Metric</th><th>Bull</th><th>Base (linked to model)</th><th>Bear</th></tr>
+    <tr><td>Revenue ($M)</td><td>13,293</td><td>10,896</td><td>9,261</td></tr>
+    <tr><td>EBITDA ($M)</td><td>4,133</td><td>3,062</td><td>1,898</td></tr>
+    <tr><td>EBITDA Margin</td><td>31%</td><td>28%</td><td>20%</td></tr>
+    <tr><td>Net Income Avail. to Common ($M)</td><td>2,623</td><td>1,692</td><td>508</td></tr>
+    <tr><td>Diluted EPS</td><td>$12.37</td><td>$7.98</td><td>$2.39</td></tr>
+    <tr><td>Free Cash Flow ($M)</td><td>2,654</td><td>1,659</td><td>332</td></tr>
+    <tr><td>FCF Margin</td><td>20%</td><td>15%</td><td>4%</td></tr>
+    <tr class="total"><td>Cumulative FCF, FY26E–FY29E ($M)</td><td>5,845</td><td>4,175</td><td>1,461</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)"><b>Bull:</b> 1.6T/CPO ramp beats plan, NVIDIA + hyperscaler capex reaccelerates, no capex-digestion cycle in the window. <b>Bear:</b> a hyperscaler capex air-pocket (echoing the Jan-2025 DeepSeek-driven de-rating) cuts Networking growth sharply, margin expansion stalls, elevated capex commitments pressure FCF.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · 情景分析</span>
+  三种情景下2029财年每股收益差异巨大：乐观情形12.37美元 vs 基准情形7.98美元 vs 悲观情形仅2.39美元，凸显该股对AI资本开支周期的高杠杆敏感性。乐观情景假设1.6T/CPO放量超预期、算力资本开支持续加速；悲观情景假设出现类似2025年1月DeepSeek冲击那样的超大规模云厂商资本开支"空气坑"，网络板块增速大幅下滑，利润率扩张停滞，自由现金流承压。</div>
+</section>
+
+<!-- ================= DCF INPUTS ================= -->
+<section>
+  <h2>6. DCF Inputs — WACC & Terminal Value</h2>
+  <table>
+    <tr><th>Component</th><th>Value</th></tr>
+    <tr><td>Risk-free Rate</td><td>4.2%</td></tr>
+    <tr><td>Equity Risk Premium</td><td>5.0%</td></tr>
+    <tr><td>Beta (levered, per live quote)</td><td>2.04</td></tr>
+    <tr><td>Cost of Equity</td><td>14.4%</td></tr>
+    <tr><td>Pre-tax Cost of Debt</td><td>5.8%</td></tr>
+    <tr><td>Weight of Equity / Debt</td><td>94% / 6%</td></tr>
+    <tr class="total"><td>WACC</td><td>13.8%</td></tr>
+    <tr><td>FY2030E Unlevered FCF</td><td>$1,972M</td></tr>
+    <tr><td>Terminal Growth Rate</td><td>3.5%</td></tr>
+    <tr class="total"><td>Terminal Value (Gordon Growth)</td><td>$19,782M</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted)">WACC of 13.8% reflects COHR's elevated beta (2.04) and near-all-equity capital structure (94% equity weight given the ~$61B market cap vs. ~$3.9B debt). These are placeholder assumptions pending Task 3's full valuation build-out and cross-check against comparable-company betas (Lumentum, Applied Optoelectronics, IPG Photonics) — flagged in the model's Notes tab.</p>
+  <div class="zh"><span class="zh-label">中文摘要 · DCF估值输入：加权平均资本成本与终值</span>
+  加权平均资本成本（WACC）测算为13.8%，反映了COHR偏高的贝塔系数（2.04）以及几乎纯股权的资本结构（市值约610亿美元 vs 债务约39亿美元，股权权重高达94%）。运用戈登增长模型（终端增长率3.5%）测算的终值约198亿美元。这些WACC相关假设仍是初步测算，待Task 3完整估值分析阶段将与同业公司（Lumentum、Applied Optoelectronics、IPG Photonics）的贝塔系数进行交叉校验后精修，该事项已在模型Notes标签页中标注。</div>
+</section>
+
+<footer>Task 2 of 5 — Equity Research Initiating Coverage workflow · Live model: Coherent_Financial_Model_2026-07-07.xlsx · Prepared with Claude Code · Not investment advice</footer>
+</div>
+</body>
+</html>
