@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphabet Inc. (GOOGL/GOOG) — Investment Research Report</title>
+<style>
+:root{
+  --bg:#f8f8f6; --surface:#ffffff; --surface-2:#f5f3ee;
+  --text:#1a1a1a; --text-dim:#555555; --text-faint:#888888; --text-ghost:#bbbbbb;
+  --border:#e8e8e0; --border-strong:#d8d5cc;
+  --accent:#185FA5; --accent-soft:#E6F1FB; --accent-soft-text:#0C447C;
+  --green-bg:#EAF3DE; --green-text:#27500A;
+  --amber-bg:#FAEEDA; --amber-text:#633806;
+  --red-bg:#FCEBEB; --red-text:#791F1F;
+  --up:#0F6E56; --dn:#A32D2D; --flat:#888888;
+  --star-on:#185FA5; --star-off:#d8d5cc;
+  --code-bg:#eeece4;
+}
+:root[data-theme="dark"]{
+  --bg:#15161a; --surface:#1c1e23; --surface-2:#20221f;
+  --text:#e9e7e0; --text-dim:#a8a6a0; --text-faint:#82807c; --text-ghost:#5c5b58;
+  --border:#302f2f; --border-strong:#3c3a36;
+  --accent:#6BA3E0; --accent-soft:#1b2c3d; --accent-soft-text:#9cc4ee;
+  --green-bg:#1b2b16; --green-text:#8fd16b;
+  --amber-bg:#2f2410; --amber-text:#e5b768;
+  --red-bg:#2e1717; --red-text:#e89494;
+  --up:#5fbfa0; --dn:#e08787; --flat:#918f8a;
+  --star-on:#6BA3E0; --star-off:#3c3a36;
+  --code-bg:#232420;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15161a; --surface:#1c1e23; --surface-2:#20221f;
+    --text:#e9e7e0; --text-dim:#a8a6a0; --text-faint:#82807c; --text-ghost:#5c5b58;
+    --border:#302f2f; --border-strong:#3c3a36;
+    --accent:#6BA3E0; --accent-soft:#1b2c3d; --accent-soft-text:#9cc4ee;
+    --green-bg:#1b2b16; --green-text:#8fd16b;
+    --amber-bg:#2f2410; --amber-text:#e5b768;
+    --red-bg:#2e1717; --red-text:#e89494;
+    --up:#5fbfa0; --dn:#e08787; --flat:#918f8a;
+    --star-on:#6BA3E0; --star-off:#3c3a36;
+    --code-bg:#232420;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg); color:var(--text);
+  padding:2rem 1.25rem 4rem; max-width:960px; margin:0 auto;
+  font-variant-numeric:tabular-nums;
+}
+::selection{background:var(--accent-soft);color:var(--accent-soft-text);}
+
+.doc-header{border-bottom:2px solid var(--text);padding-bottom:1.25rem;margin-bottom:1.5rem;}
+.doc-tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.doc-title{font-size:clamp(22px,4vw,30px);font-weight:700;line-height:1.25;margin-bottom:6px;text-wrap:balance;}
+.doc-meta{font-size:12.5px;color:var(--text-faint);line-height:1.7;}
+.doc-meta b{color:var(--text-dim);font-weight:600;}
+
+/* table of contents */
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:2rem;}
+.toc-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:4px 20px;}
+.toc-grid a{font-size:13px;color:var(--text-dim);text-decoration:none;padding:3px 0;display:flex;gap:8px;border-radius:4px;}
+.toc-grid a:hover,.toc-grid a:focus-visible{color:var(--accent);outline:none;}
+.toc-num{color:var(--accent);font-weight:700;min-width:1.4em;}
+
+.section{margin-bottom:2.75rem;scroll-margin-top:1rem;}
+.section-num{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.section-title{font-size:21px;font-weight:700;margin-bottom:4px;line-height:1.3;text-wrap:balance;}
+.section-sub{font-size:13px;color:var(--text-faint);margin-bottom:14px;}
+.section-divider{height:2px;background:var(--border);margin-bottom:1.4rem;}
+
+.rating{display:inline-block;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin:0 6px 10px 0;}
+.rating-green{background:var(--green-bg);color:var(--green-text);}
+.rating-amber{background:var(--amber-bg);color:var(--amber-text);}
+.rating-blue{background:var(--accent-soft);color:var(--accent-soft-text);}
+.rating-red{background:var(--red-bg);color:var(--red-text);}
+
+.body-text{font-size:14.5px;line-height:1.72;color:var(--text-dim);margin-bottom:10px;max-width:68ch;}
+.body-text strong{color:var(--text);}
+.lede{font-size:15.5px;line-height:1.75;color:var(--text);background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 18px;margin:10px 0 16px;max-width:none;}
+
+.bullets{list-style:none;margin:10px 0 16px;padding:0;}
+.bullets li{font-size:13.8px;line-height:1.65;color:var(--text-dim);padding:5px 0 5px 18px;position:relative;max-width:70ch;}
+.bullets li::before{content:"—";position:absolute;left:0;color:var(--accent);font-weight:700;}
+.bullets li strong{color:var(--text);}
+
+.tbl-wrap{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--border);border-radius:10px;}
+table{border-collapse:collapse;width:100%;font-size:12.8px;background:var(--surface);}
+th,td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;}
+td.wrap,th.wrap{white-space:normal;}
+thead th{background:var(--surface-2);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text-faint);font-weight:700;border-bottom:1px solid var(--border-strong);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--surface-2);}
+td.num{text-align:right;font-variant-numeric:tabular-nums;}
+
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 18px;}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.metric-label{font-size:9.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.metric-val{font-size:17px;font-weight:700;margin-bottom:2px;line-height:1.2;}
+.metric-sub{font-size:11px;color:var(--text-faint);}
+.up{color:var(--up);} .dn{color:var(--dn);} .flat{color:var(--flat);}
+
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 16px;}
+@media (max-width:600px){.cases{grid-template-columns:1fr;}}
+.case-box{border-radius:10px;padding:12px 14px;}
+.bull-box{background:var(--green-bg);}
+.bear-box{background:var(--red-bg);}
+.case-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.bull-label{color:var(--green-text);} .bear-label{color:var(--red-text);}
+.bull-text{font-size:12.8px;line-height:1.62;color:var(--green-text);}
+.bear-text{font-size:12.8px;line-height:1.62;color:var(--red-text);}
+
+.stars{letter-spacing:1px;font-size:13px;}
+.stars .on{color:var(--star-on);} .stars .off{color:var(--star-off);}
+
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px;}
+@media (max-width:640px){.scenario-grid{grid-template-columns:1fr;}}
+.scenario-card{border-radius:12px;padding:16px;border:1px solid var(--border);}
+.scenario-card.bull{background:var(--green-bg);border-color:transparent;}
+.scenario-card.base{background:var(--accent-soft);border-color:transparent;}
+.scenario-card.bear{background:var(--red-bg);border-color:transparent;}
+.scenario-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.scenario-card.bull .scenario-name{color:var(--green-text);}
+.scenario-card.base .scenario-name{color:var(--accent-soft-text);}
+.scenario-card.bear .scenario-name{color:var(--red-text);}
+.scenario-price{font-size:24px;font-weight:700;margin-bottom:2px;}
+.scenario-card.bull .scenario-price{color:var(--green-text);}
+.scenario-card.base .scenario-price{color:var(--accent-soft-text);}
+.scenario-card.bear .scenario-price{color:var(--red-text);}
+.scenario-chg{font-size:13px;font-weight:700;margin-bottom:10px;}
+.scenario-note{font-size:11.5px;line-height:1.55;opacity:.85;}
+.scenario-card.bull .scenario-chg,.scenario-card.bull .scenario-note{color:var(--green-text);}
+.scenario-card.base .scenario-chg,.scenario-card.base .scenario-note{color:var(--accent-soft-text);}
+.scenario-card.bear .scenario-chg,.scenario-card.bear .scenario-note{color:var(--red-text);}
+
+.quote{border-left:3px solid var(--accent);background:var(--surface);border-radius:0 10px 10px 0;padding:14px 18px;margin:10px 0 16px;}
+.quote-who{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+.quote-text{font-size:13.8px;line-height:1.65;color:var(--text-dim);font-style:italic;}
+
+.q-ask{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border-strong);}
+.q-ask-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-ghost);margin-bottom:6px;}
+.q-ask-text{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;}
+
+.cn-summary{background:var(--surface-2);border-left:3px solid var(--border-strong);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:6px;}
+.cn-label{font-size:9px;font-weight:700;color:var(--text-ghost);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.cn-text{font-size:13px;color:var(--text-faint);line-height:1.9;font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;}
+.cn-text strong{color:var(--text-dim);font-weight:600;}
+
+.callout{background:var(--surface);border:1px solid var(--border-strong);border-radius:10px;padding:14px 16px;margin:12px 0 16px;font-size:13px;line-height:1.6;color:var(--text-dim);}
+.callout b{color:var(--text);}
+code{background:var(--code-bg);padding:1px 6px;border-radius:4px;font-size:12px;}
+
+.divider{height:1px;background:var(--border);margin:2rem 0;}
+.footer{font-size:11px;color:var(--text-ghost);text-align:center;padding-top:1.2rem;border-top:1px solid var(--border);margin-top:2rem;line-height:1.9;}
+.footer code{font-size:10.5px;}
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="doc-tag">Investment Research Report · 投资研究报告</div>
+  <div class="doc-title">Alphabet Inc. (NASDAQ: GOOGL / GOOG)</div>
+  <div class="doc-meta">
+    Research date <b>2026-07-20</b> · Price GOOGL <b>$356.49</b> / GOOG <b>$356.19</b> (intraday; last close 2026-07-17 $346.77) ·
+    Market cap <b>≈$4.32T</b> (tool-verified) · Q2 2026 earnings due <b>Wed 2026-07-22</b>, after this report's data cutoff<br>
+    Framework: Buffett · Munger · Duan Yongping · Li Lu — four-lens synthesis
+  </div>
+</div>
+
+<div class="toc">
+  <div class="toc-label">On this page</div>
+  <div class="toc-grid">
+    <a href="#bias"><span class="toc-num">00</span>AI Research Bias Self-Check</a>
+    <a href="#data"><span class="toc-num">01</span>Core Data Overview</a>
+    <a href="#business"><span class="toc-num">02</span>Nature of the Business</a>
+    <a href="#moat"><span class="toc-num">03</span>Moat Assessment</a>
+    <a href="#risk"><span class="toc-num">04</span>Inversion &amp; Risk</a>
+    <a href="#mgmt"><span class="toc-num">05</span>Management Assessment</a>
+    <a href="#civ"><span class="toc-num">06</span>Industry &amp; Civilizational Trend</a>
+    <a href="#val"><span class="toc-num">07</span>Valuation &amp; Margin of Safety</a>
+    <a href="#decision"><span class="toc-num">08</span>Synthesis — Decision Memo</a>
+    <a href="#limits"><span class="toc-num">—</span>AI Research Limitations</a>
+  </div>
+</div>
+
+<!-- ============ 00 BIAS ============ -->
+<div class="section" id="bias">
+  <div class="section-num">Pre-Step</div>
+  <div class="section-title">AI Research Bias Self-Check</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-blue">Information richness: Grade A — abundant</span>
+
+  <p class="body-text">Alphabet has been public for over 20 years, carries dense sell-side coverage (34–64+ analysts), and is one of the most-written-about companies in the world. Every angle of the bull and bear case has already been argued publicly, repeatedly.</p>
+  <p class="body-text"><strong>AI research trap:</strong> with this much consensus material available, an AI-generated analysis tends to converge on the same narrative the market has already priced in — "search moat is deep," "AI transition is ahead of peers," "Cloud is compounding." All true, and already reflected in a $4.3T valuation. The alpha in reproducing consensus is roughly zero.</p>
+  <p class="body-text"><strong>Mitigation used in this report:</strong> weighted deliberately toward inversion — what would have to be true for a smart investor to pass or short this name; what changed materially in the four weeks since the prior version of this report (2026-06-23); and where the two governing antitrust cases remain genuinely unresolved rather than "already decided," as casual coverage sometimes implies.</p>
+
+  <ul class="bullets">
+    <li><strong>Does "certainty" come from data volume or business quality?</strong> Data volume is very high; this report treats the two as separate axes, not proxies for each other.</li>
+    <li><strong>Does the output resemble sell-side consensus?</strong> Yes, largely — on most dimensions the facts genuinely support it. Divergence is flagged explicitly (ad-tech case, buyback pause, FY2026 FCF trough).</li>
+    <li><strong>Is there any actual information edge?</strong> Essentially none. This report's value, if any, is rigor and even-handedness — not original discovery.</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>信息丰富度评级：A级（信息充裕）。</strong>Alphabet 已上市20余年，覆盖分析师34-64+人，多空双方论点早已被反复论证。信息量越大，AI分析越容易与市场已定价的共识趋同——"搜索护城河深"、"AI转型领先"——这些判断都对，但也都已反映在4.3万亿美元的市值里，复述共识的超额收益接近于零。本报告的应对策略：刻意向"逆向思考"倾斜——聪明投资者为何会回避或做空这只股票？过去四周（相较2026-06-23版本）究竟发生了什么实质变化？两起反垄断诉讼是否真的已经"尘埃落定"（并未）？本报告的价值在于严谨与均衡，而非信息优势。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 01 DATA ============ -->
+<div class="section" id="data">
+  <div class="section-num">Step 1</div>
+  <div class="section-title">Core Data Overview</div>
+  <div class="section-divider"></div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Revenue</div>
+      <div class="metric-val">$402.8B</div>
+      <div class="metric-sub up">+15.1% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2025 Net Income</div>
+      <div class="metric-val">$132.2B</div>
+      <div class="metric-sub">32.0% operating margin</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Revenue</div>
+      <div class="metric-val">$109.9B</div>
+      <div class="metric-sub up">+21.8% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Free Cash Flow</div>
+      <div class="metric-val dn">$10.1B</div>
+      <div class="metric-sub dn">−47% YoY</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">FY2026 Capex Guidance</div>
+      <div class="metric-val">$180–190B</div>
+      <div class="metric-sub">≈1.4× FY2025 net income</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Q1 2026 Buybacks</div>
+      <div class="metric-val dn">$0</div>
+      <div class="metric-sub dn">vs. $15.1B in Q1 2025</div>
+    </div>
+  </div>
+
+  <h4 style="font-size:13px;margin-bottom:8px;color:var(--text-dim);">Revenue by segment (FY2023–FY2025, $M)</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Segment</th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">YoY</th><th class="num">FY2025</th><th class="num">YoY</th></tr></thead>
+    <tbody>
+      <tr><td>Google Search &amp; other</td><td class="num">175,033</td><td class="num">198,084</td><td class="num up">+13.2%</td><td class="num">224,532</td><td class="num up">+13.4%</td></tr>
+      <tr><td>YouTube ads</td><td class="num">31,510</td><td class="num">36,147</td><td class="num up">+14.7%</td><td class="num">40,367</td><td class="num up">+11.7%</td></tr>
+      <tr><td>Google Network</td><td class="num">31,310</td><td class="num">30,359</td><td class="num dn">−3.0%</td><td class="num">29,792</td><td class="num dn">−1.9%</td></tr>
+      <tr><td>Subscriptions, platforms &amp; devices</td><td class="num">34,689</td><td class="num">40,340</td><td class="num up">+16.3%</td><td class="num">48,030</td><td class="num up">+19.1%</td></tr>
+      <tr><td>Google Cloud</td><td class="num">33,088</td><td class="num">43,229</td><td class="num up">+30.7%</td><td class="num">58,708</td><td class="num up">+35.8%</td></tr>
+      <tr><td>Other Bets</td><td class="num">1,527</td><td class="num">1,650</td><td class="num up">+8.1%</td><td class="num">1,480</td><td class="num dn">−10.3%</td></tr>
+      <tr><td><strong>Total revenue</strong></td><td class="num"><strong>307,394</strong></td><td class="num"><strong>350,018</strong></td><td class="num up"><strong>+13.9%</strong></td><td class="num"><strong>402,836</strong></td><td class="num up"><strong>+15.1%</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="body-text" style="font-size:12px;color:var(--text-faint);">Source: SEC 8-K exhibits, cross-checked against 10-K segment notes; sub-segments reconcile to totals within 0.02–0.08%.</p>
+
+  <div class="callout">
+    <b>Q1 2026 (ended Mar 31 2026):</b> Search &amp; other $60.4B (+19%) · YouTube ads $9.9B (+11%) · Google Cloud $20.0B (+63%) · Total $109.9B (+21.8%). <b>Q2 2026 has not yet been reported</b> — Alphabet reports Wed 2026-07-22, two days after this report's data cutoff. Consensus expects $116.8–120.2B revenue (+21%) and EPS $2.86–2.95. Every figure in this report is pre-Q2-earnings.
+  </div>
+
+  <h4 style="font-size:13px;margin-bottom:8px;color:var(--text-dim);">Current valuation — tool-verified via <code>financial_rigor.py</code></h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Metric</th><th class="num">Value</th><th class="wrap">Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Market cap</td><td class="num">$4.32T</td><td class="wrap">vs. $4.35T live aggregator — 0.71% deviation ✅</td></tr>
+      <tr><td>FY2025 GAAP P/E</td><td class="num"><strong>32.98x</strong></td><td class="wrap">price $356.49 / FY2025 EPS $10.81</td></tr>
+      <tr><td>"TTM" P/E as commonly quoted</td><td class="num">~27–28x</td><td class="wrap">⚠️ distorted — see caveat below</td></tr>
+      <tr><td>Forward P/E (consensus FY26 EPS ~$14.28)</td><td class="num">~25x</td><td class="wrap">consensus-based, not tool-verified</td></tr>
+      <tr><td>P/B</td><td class="num">9.02x</td><td class="wrap">tool-verified</td></tr>
+      <tr><td>ROE (approx.)</td><td class="num">27.4%</td><td class="wrap">tool-verified</td></tr>
+      <tr><td>P/FCF (FY2025 basis)</td><td class="num">59.5x</td><td class="wrap">tool-verified</td></tr>
+      <tr><td>Dividend yield</td><td class="num">0.25%</td><td class="wrap">tool-verified</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout">
+    <b>Caveat on the widely-quoted "TTM P/E ≈27x":</b> Q1 2026 EPS of $5.11 included a ~$37.7B unrealized gain on equity investments — a large, non-operating, non-recurring GAAP item. This inflates trailing EPS to ~$13.10, making aggregator-reported TTM P/E read <i>lower</i> than the FY2025 GAAP P/E of 32.98x — even though the stock is higher today than at FY2025-end. Two "correct" P/E numbers tell opposite stories about valuation direction; the gap is a one-off mark-to-market gain, not a genuine earnings re-rating. This report treats FY2025 GAAP P/E (32.98x) and forward P/E (~25x) as the decision-useful figures.
+  </div>
+
+  <p class="body-text" style="font-size:12px;color:var(--text-faint);"><b>Data-quality flag, explicitly excluded:</b> macrotrends' "Shares Outstanding" chart shows 13,079M for FY2025 — 6.9% higher than the SEC-reported diluted count (12,230M). This report uses SEC filings and stockanalysis.com for all share-count figures instead.</p>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      FY2025营收4028亿美元（+15.1%），净利润1322亿美元，经营利润率32.0%。Q1 2026总营收同比增长21.8%，其中云业务+63%；但同期自由现金流同比骤降47%至101亿美元，回购归零（去年同期151亿美元）。2026年资本支出指引上调至1800-1900亿美元，约为FY2025净利润的1.4倍。<strong>关键提醒：</strong>市场常引用的"TTM市盈率约27倍"具有误导性——Q1 2026每股收益中含约377亿美元非经常性股权投资浮盈，人为压低了该数字。本报告采用FY2025 GAAP市盈率（32.98倍）与远期市盈率（约25倍）作为更具决策价值的指标。市值4.32万亿美元已通过工具验算，偏差0.71%。Q2 2026财报将于7月22日（本报告数据截止日之后）发布。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 02 BUSINESS ============ -->
+<div class="section" id="business">
+  <div class="section-num">Step 2 · Duan Yongping Lens</div>
+  <div class="section-title">Nature of the Business — "The Right Business"</div>
+  <div class="section-divider"></div>
+
+  <div class="lede">Alphabet monetizes the world's largest pool of human attention (Search, YouTube, Android, Gmail) by selling access to it as precisely-targeted advertising, and is now attempting to re-platform that same attention pool — plus a second, enterprise-facing business (Cloud) — around generative AI.</div>
+
+  <ul class="bullets">
+    <li><strong>Core engine — advertising (~76% of FY2025 revenue):</strong> classic two-sided platform flywheel — more users → more advertiser demand → more first-party data → better targeting → more users. Still intact, still the dominant profit source.</li>
+    <li><strong>Growth engine — Google Cloud (~14.6% of revenue, +35.8% YoY FY25, +63% Q1'26):</strong> backlog nearly doubled QoQ to &gt;$460B in Q1 2026 — a large forward signal, though conversion timing and margin at this scale remain unproven.</li>
+    <li><strong>Frontier/defensive engine — Gemini (900M MAU, May 2026, up from 400M a year prior):</strong> both a defense of Search (AI Overviews embedded) and a new surface competing directly with ChatGPT.</li>
+    <li><strong>Option asset — Waymo ($126B post-money, Feb 2026):</strong> real operating scale (~400–450K paid rides/week, 6 US metros) but still capital-consumptive, sitting inside a segment ("Other Bets") that has lost money every year in this dataset.</li>
+  </ul>
+
+  <p class="body-text">Gross margin expanded 55.4%→59.7% (2022–2025); operating margin 26.5%→32.0% over the same period — genuine operating leverage. <strong>The counter-fact that must sit next to this:</strong> FY2025 capex was $91.4B (+74% YoY), FY2026 guidance is $180–190B — roughly 1.4× FY2025 net income. Free cash flow fell from $73.3B (FY2025 full year) to just $10.1B in Q1 2026 alone. If unit economics are structurally improving, this capex eventually shows up as revenue/FCF growth; if it's a defensive arms race with lower returns, the last five years of operating leverage may not extrapolate. <strong>The data as of Q1 2026 supports both readings and does not yet resolve which is correct.</strong></p>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Duan Yongping's question</div>
+    <div class="q-ask-text">这门生意好在哪，一句话是什么？What's good about this business — and is it widening or narrowing?</div>
+    <p class="body-text">Alphabet controls the largest attention funnel ever built and monetizes it near zero marginal cost per query. Search revenue is growing faster than it has in years (+19% YoY, Q1 2026) — arguing against near-term narrowing — but the mechanism (AI Overviews driving more queries, not necessarily more ad clicks per query) differs from the prior two decades' mechanism, and hasn't been tested through a full cycle.</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>一句话定义：</strong>Alphabet 通过搜索、YouTube、安卓等产品垄断全球最大的注意力池，将其变现为精准广告，目前正尝试用生成式AI重新平台化这一注意力池，并拓展企业云业务作为第二增长引擎。广告业务（约占FY2025营收76%）飞轮效应仍然完整；云业务（占比约14.6%，Q1 2026同比+63%）积压订单环比翻倍至4600亿美元以上；Gemini月活跃用户达9亿（一年前为4亿）；Waymo估值1260亿美元但仍处于烧钱阶段。毛利率从55.4%升至59.7%，经营杠杆显著——但2026年资本支出指引（1800-1900亿美元）约为净利润的1.4倍，这笔投入究竟是创造性投资还是防御性军备竞赛，目前数据无法判断。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 03 MOAT ============ -->
+<div class="section" id="moat">
+  <div class="section-num">Step 3 · Buffett Lens</div>
+  <div class="section-title">Moat Assessment — "Economic Moat"</div>
+  <div class="section-divider"></div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th class="wrap">Moat type</th><th class="wrap">Assessment</th><th>Strength</th><th class="wrap">Trend</th></tr></thead>
+    <tbody>
+      <tr><td>Brand / pricing power</td><td class="wrap">Search ROI most measurable in digital ads. Global search share 89.85%→91.27% (Mar–Jun'26), but YoY erosion ~1.5pp is the largest since 2009.</td><td><span class="stars"><span class="on">★★★★★</span></span></td><td class="wrap">Stable, erosion signal worth tracking</td></tr>
+      <tr><td>Switching costs</td><td class="wrap">User: near-zero. Ecosystem (Gmail+Drive+Photos+Android+Workspace): meaningfully higher, habit-based not contractual.</td><td><span class="stars"><span class="on">★★★</span><span class="off">☆☆</span></span></td><td class="wrap">Stable</td></tr>
+      <tr><td>Network effects</td><td class="wrap">Ad-side flywheel functioning; YouTube's creator-viewer network among strongest in media.</td><td><span class="stars"><span class="on">★★★★★</span></span></td><td class="wrap">Stable</td></tr>
+      <tr><td>Scale effects</td><td class="wrap">Largest full-stack AI compute/data-center footprint; self-designed TPUs (7th gen) reduce per-unit training/inference cost vs. GPU-only rivals.</td><td><span class="stars"><span class="on">★★★★★</span></span></td><td class="wrap">Strengthening, contingent on capex ROI</td></tr>
+      <tr><td>Technology / IP barriers</td><td class="wrap">Originated Transformer architecture; owns DeepMind. <strong>Partially offset:</strong> Shazeer (Gemini co-lead) → OpenAI, Jumper (AlphaFold, Nobel laureate) → Anthropic, both June 2026, days apart — triggered a 7% single-day decline (~$250B market cap, worst day in a year).</td><td><span class="stars"><span class="on">★★★★</span><span class="off">☆</span></span></td><td class="wrap">Ambiguous — new crack this cycle</td></tr>
+    </tbody>
+  </table></div>
+
+  <span class="rating rating-blue">Composite moat score: 4.4 / 5 — very wide, one new crack worth monitoring</span>
+
+  <p class="body-text"><strong>Past 5 years: widened.</strong> Cloud went from persistent losses to full-year profitability; Gemini shipped at genuine scale (900M MAU); YouTube added a real subscription layer.</p>
+
+  <p class="body-text"><strong>Next 5 years — search is genuinely two-sided in the data:</strong></p>
+  <div class="cases">
+    <div class="case-box bull-box">
+      <div class="case-label bull-label">Widening case</div>
+      <div class="bull-text">Search &amp; Other revenue +19% YoY (Q1'26, fastest in years), paid clicks +13%, CPC +5% — AI Overviews appear to be adding query volume without cannibalizing ad-serving so far. Google still gets 87.6% of referral traffic among clicks that leave search (Cloudflare Radar); the whole AI-chatbot cohort combined sends only 0.29%.</div>
+    </div>
+    <div class="case-box bear-box">
+      <div class="case-label bear-label">Narrowing case</div>
+      <div class="bear-text">SparkToro/Datos: 68% of Google searches now end with zero clicks (rising). Publisher-side traffic from Google down ~22% YoY in aggregate; small publishers (&lt;10K daily pageviews) down ~60% over two years. Global search share eroding at its fastest YoY pace since 2009.</div>
+    </div>
+  </div>
+  <p class="body-text">Both data sets are true simultaneously and describe different things: Google's share of the (shrinking) referral pie is intact; the pie itself, and the publisher ecosystem downstream, is shrinking. Whether that feeds back into Google's own ad economics is not yet resolved.</p>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Buffett's question</div>
+    <div class="q-ask-text">10年后这条护城河还在吗？Will this moat still be here in 10 years? What could destroy it?</div>
+    <p class="body-text">More likely to change form than be destroyed — from "ads on a results page" to "recommendations in an AI conversation." The real threat: a device maker (Apple, most obviously) replacing Google as the default retrieval surface, combined with DOJ remedies that now cap <i>any</i> default-placement deal (including for Gemini) at one year with forced annual re-bidding — already in effect since the Sept 2025 ruling (finalized Dec 2025).</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      综合护城河评分 <strong>4.4/5</strong>——品牌定价权、网络效应、规模效应均为五星；技术/专利壁垒因两位核心研究员离职（Shazeer 赴 OpenAI、Jumper 赴 Anthropic，均发生于2026年6月，间隔仅数日）出现新裂痕，触发单日股价重挫7%（约2500亿美元市值蒸发，为一年多以来最差单日表现）。搜索护城河呈现两面性：Q1 2026搜索收入同比增长19%（近年最快），付费点击+13%，单次点击价格+5%——AI Overviews 目前看是在增加查询量而非蚕食广告点击；但 SparkToro 数据显示68%的谷歌搜索现已"零点击"结束，出版商流量同比下滑约22%，全球搜索份额正以2009年以来最快速度被侵蚀。两组数据同时为真，只是描述不同的东西：谷歌在（正在萎缩的）引荐流量蛋糕中份额稳固，但蛋糕本身在变小。这是否会反噬谷歌自身广告经济学，目前尚无定论。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 04 RISK ============ -->
+<div class="section" id="risk">
+  <div class="section-num">Step 4 · Munger Lens</div>
+  <div class="section-title">Inversion &amp; Risk Checklist — "Invert, Always Invert"</div>
+  <div class="section-divider"></div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th class="wrap">Failure path</th><th>Probability (est.)</th><th>Impact</th><th class="wrap">Notes</th></tr></thead>
+    <tbody>
+      <tr><td class="wrap">Antitrust — structural breakup on appeal</td><td>Low-mod. (~15–20%)</td><td>Very high</td><td class="wrap">DOJ + 38 state AGs cross-appealed (Feb 2026) seeking the Chrome/Android divestiture the district court rejected. Google's own appeal (Jan 2026) challenges data-sharing/oversight terms. <strong>Not resolved</strong> — oral arguments not expected before late 2026/early 2027.</td></tr>
+      <tr><td class="wrap">Ad-tech case — forced AdX/DFP divestiture</td><td>Moderate (~25–30%)</td><td class="wrap">High, under-covered</td><td class="wrap">Separate case (Judge Brinkema): Google already found guilty (Apr 2025) of illegally monopolizing publisher ad-server/exchange markets. Remedies trial closed Nov 2025; <strong>no ruling as of 2026-07-20</strong>, past an earlier expected end-Q1'26 deadline.</td></tr>
+      <tr><td class="wrap">AI capex return shortfall</td><td>Moderate (~25–30%)</td><td>High</td><td class="wrap">$180-190B FY26 guidance vs. $132B FY25 net income. Q1'26 FCF already −47% YoY. SemiAnalysis CEO: FCF "will hit zero" in 2026; Barchart counters this is a trough. <strong>Data can't distinguish these yet.</strong></td></tr>
+      <tr><td class="wrap">Search cannibalized by AI-native rivals</td><td class="wrap">Low-mod., falling (~15%)</td><td>High if realized</td><td class="wrap">Not shown up in Q1'26 data (Search +19% YoY) — but Google's own AI products are the main driver of zero-click behavior, i.e. possible self-cannibalization even while defending query volume.</td></tr>
+      <tr><td class="wrap">Meta overtakes Google in digital ad revenue</td><td>High (~70–80%)</td><td>Moderate</td><td class="wrap">eMarketer 2026: Meta ($243.5B, 26.8% share) overtaking Google ($239.5B, 26.4%) for the first time — a relative-growth story (Meta +24.1% vs. Google +11.9%), not absolute decline. Largely priced in.</td></tr>
+      <tr><td class="wrap">Research-talent attrition</td><td class="wrap">Realized, ongoing</td><td>Mod-high</td><td class="wrap">Shazeer→OpenAI, Jumper→Anthropic, June 2026. Not a probability — already happened once; open question is whether it's a pattern.</td></tr>
+      <tr><td class="wrap">Founder-control governance risk</td><td>Structural</td><td>Moderate</td><td class="wrap">Page+Brin hold 52.7% voting power on ~6.2% economic interest (Step 5) — unchecked control regardless of other votes.</td></tr>
+      <tr><td class="wrap">Google Cloud growth deceleration</td><td>Low-mod. (~20%)</td><td>Moderate</td><td class="wrap">Still smallest of Big Three (14% vs. AWS 28%, Azure 21%). $460B+ backlog is positive, but conversion economics at this scale unproven.</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="body-text"><strong>Historical analogy — Microsoft in the 2000s:</strong> dominant, cash-generative incumbent facing simultaneous antitrust pressure and a paradigm shift (mobile then, AI now). Microsoft's resolution: mild antitrust outcome + a "lost decade" in mobile, re-rated a decade later once Azure proved out. The difference: Alphabet is not a laggard in AI — it originated the Transformer architecture and owns DeepMind; its risk is closer to "self-cannibalizing a highly profitable legacy business" than "missing the shift entirely."</p>
+
+  <p class="body-text"><strong>Bear case, stated plainly:</strong></p>
+  <ul class="bullets">
+    <li><strong>Not cheap on the metric that matters:</strong> FY2025 GAAP P/E of 32.98x is above both the 10-year (~27x) and 5-year (~24-26x) average; the commonly-cited "TTM P/E ~27x" understates this due to a one-off equity gain.</li>
+    <li><strong>Two antitrust cases genuinely open:</strong> search case on appeal both directions; ad-tech remedies ruling outstanding, could force AdX/DFP divestiture — less press attention, comparable structural risk.</li>
+    <li><strong>FCF already visibly deteriorated</strong> (−47% YoY, Q1'26) ahead of the full FY2026 capex spend, with buybacks paused entirely the same quarter.</li>
+    <li><strong>Two marquee AI researchers left for direct competitors</strong> in the same month — hard to reconcile with a pure "Google is winning the AI talent war" narrative.</li>
+  </ul>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Munger's question</div>
+    <div class="q-ask-text">我最可能在哪里犯错？Where am I most likely to be wrong?</div>
+    <p class="body-text">Most likely error: under-weighting the ad-tech case. Coverage of "Google's antitrust risk" overwhelmingly focuses on the search case (already a relatively favorable no-breakup district-court outcome). The ad-tech case is a second, independent proceeding where liability is already established and the remedy — a forced AdX divestiture — remains undecided. The market's relief over "Chrome survived" may not price in a case most retail-facing coverage barely mentions.</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      最容易被低估的风险是<strong>广告技术反垄断案</strong>（Brinkema法官，弗吉尼亚东区）——该案已于2025年4月裁定谷歌非法垄断广告服务器和广告交易市场，救济方案（可能强制剥离AdX甚至DFP）截至2026年7月20日仍未下达，比原定一季度末的预期已经晚了。该案的公众关注度远低于搜索案，但结构性风险不相上下。搜索案本身也未完全落地：谷歌与司法部/38个州总检察长均已就该案提起交叉上诉，预计2026年底至2027年初才会有口头辩论。此外，AI资本支出的回报尚无法验证（自由现金流Q1同比降47%，存在"降至零"与"仅为阶段性低谷"两种对立解读），两位核心AI研究员同月离职加入直接竞对，也很难与"谷歌正在赢得AI人才战争"的叙事完全吻合。历史类比：Alphabet 目前处境类似2000年代的微软——面临反垄断压力与技术范式转移的双重考验，但与微软"错失移动互联网"不同，Alphabet 是Transformer架构的原创者，并非追赶者。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 05 MANAGEMENT ============ -->
+<div class="section" id="mgmt">
+  <div class="section-num">Step 5 · Duan Yongping + Buffett Lens</div>
+  <div class="section-title">Management Assessment — "Right People" + Integrity</div>
+  <div class="section-divider"></div>
+
+  <h4 style="font-size:13px;margin-bottom:8px;color:var(--text-dim);">CEO Sundar Pichai — key decision review</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Time</th><th class="wrap">Decision</th><th class="wrap">Outcome</th><th>Rating</th></tr></thead>
+    <tbody>
+      <tr><td>2016</td><td class="wrap">Declared "AI-first" strategy, published TPU roadmap</td><td class="wrap">Positioned AI infra years before the ChatGPT-driven boom</td><td><span class="stars"><span class="on">★★★★★</span></span></td></tr>
+      <tr><td>2019</td><td class="wrap">Kept DeepMind integrated rather than spun out</td><td class="wrap">Went on to produce AlphaFold and Gemini within Google</td><td><span class="stars"><span class="on">★★★★★</span></span></td></tr>
+      <tr><td>Feb 2023</td><td class="wrap">Rushed Bard to market</td><td class="wrap">Public demo error, ~$100B single-day market-cap loss</td><td><span class="stars"><span class="on">★★</span><span class="off">☆☆☆</span></span></td></tr>
+      <tr><td>Dec 2023</td><td class="wrap">Relaunched as Gemini, integrated with DeepMind</td><td class="wrap">Reached 900M MAU by May 2026</td><td><span class="stars"><span class="on">★★★★</span><span class="off">☆</span></span></td></tr>
+      <tr><td>2024–26</td><td class="wrap">Raised AI capex $32B→$180-190B guided</td><td class="wrap">Cloud +63% YoY suggests early payoff, but FCF fell sharply</td><td><span class="stars"><span class="on">★★★</span><span class="off">☆☆</span></span> <span style="font-size:11px;color:var(--text-faint);">(live bet)</span></td></tr>
+      <tr><td>2025–26</td><td class="wrap">Navigated DOJ search remedies ruling &amp; appeals</td><td class="wrap">Avoided harshest remedy at district level; not final, both sides appealed</td><td><span class="stars"><span class="on">★★★</span><span class="off">☆☆</span></span></td></tr>
+      <tr><td>Jun 2026</td><td class="wrap">Talent retention amid Shazeer/Jumper departures</td><td class="wrap">Two senior researchers left for OpenAI/Anthropic days apart; no public counter-narrative</td><td><span class="stars"><span class="on">★★</span><span class="off">☆☆☆</span></span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="callout">
+    <b>New CEO pay package (approved 2026-03-04):</b> up to <b>$692M</b> across 2026-2028 — up to $252M in TSR-linked PSUs, $84M time-based RSUs, and notably <b>up to $130M tied to Waymo</b> and <b>$45M to Wing</b> tracking-unit equity. Tying $175M of pay to two not-yet-profitable units rather than core Search/Cloud/Ads is unusual — a governance data point worth flagging, not automatically a red flag.
+  </div>
+
+  <h4 style="font-size:13px;margin:16px 0 8px;color:var(--text-dim);">Founder control — the single most important governance fact in this report</h4>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th></th><th class="num">Class B shares</th><th class="num">Voting power</th><th class="num">Economic interest</th></tr></thead>
+    <tbody>
+      <tr><td>Larry Page</td><td class="num">389,051,160</td><td class="num">27.4%</td><td class="num">3.2%</td></tr>
+      <tr><td>Sergey Brin</td><td class="num">358,939,978</td><td class="num">25.3%</td><td class="num">3.0%</td></tr>
+      <tr><td><strong>Combined</strong></td><td class="num"><strong>747,991,138</strong></td><td class="num"><strong>52.7%</strong></td><td class="num"><strong>~6.2%</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p class="body-text">Per the April 2026 proxy (independently recomputed, internally consistent). Page and Brin together hold an outright, unilateral majority of voting power while holding only ~6.2% of the economic interest — <strong>roughly a 9× leverage ratio between control and ownership</strong>, a mechanical result of Class B's 10-votes-per-share structure (vs. 1 for Class A/GOOGL, 0 for Class C/GOOG). No outside shareholder vote, however unified, can override this bloc — both 2026 proxy shareholder proposals on AI governance were structurally symbolic.</p>
+  <p class="body-text">A new Risk &amp; Compliance Committee formed Oct 2025, tied to a $500M derivative-litigation settlement (Jun 2025) requiring a 10-year rebuild of compliance infrastructure — a material governance development since the prior report.</p>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Duan Yongping's question</div>
+    <div class="q-ask-text">如果CEO退休，公司还能保持竞争力吗？If Pichai retired tomorrow, would this business remain competitive?</div>
+    <p class="body-text">Most likely yes — the competitive position rests on systemic, accumulated technical assets more than any single executive's irreplaceable judgment. The people whose departure would matter more are researchers like Demis Hassabis (still at Google) — and June 2026's Shazeer/Jumper exits show that kind of loss is not merely hypothetical.</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      CEO Pichai 决策记录整体优秀（2016年"AI优先"战略、2019年保留DeepMind内部整合均为满分决策），但2023年仓促推出Bard导致单日蒸发约1000亿美元市值，评分仅2星。新批准的CEO薪酬方案（2026年3月4日）三年总价值最高达6.92亿美元，其中1.75亿美元与尚未盈利的 Waymo、Wing 业务挂钩——这一结构并不常见，值得记录但未必是负面信号。<strong>本报告最重要的治理事实：</strong>Page 和 Brin 合计持有52.7%投票权，但经济权益仅约6.2%——杠杆比例约9倍，源于B类股每股10票的结构。任何外部股东投票，无论多么一致，都无法推翻这一表决权集团；2026年股东提案中两项关于AI治理的提案在结构上形同虚设。2025年10月新设风险与合规委员会，源于一项5亿美元的股东代表诉讼和解（2025年6月），要求用十年时间重建合规体系——这是相较上一版报告的实质性治理新变化。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 06 CIVILIZATIONAL ============ -->
+<div class="section" id="civ">
+  <div class="section-num">Step 6 · Li Lu Lens</div>
+  <div class="section-title">Industry &amp; Civilizational Trend</div>
+  <div class="section-divider"></div>
+
+  <p class="body-text">Alphabet sits at the center of the AI civilizational paradigm shift, alongside steam power, electrification, and the internet as prior general-purpose-technology transitions — with genuine coverage across the full stack: <strong>infrastructure</strong> (7th-gen TPUs, one of the largest data-center footprints), <strong>model</strong> (Gemini 900M MAU, DeepMind frontier research), <strong>application</strong> (Search AI Overviews, Cloud AI, Waymo), and <strong>data</strong> (search corpus, YouTube corpus, Android usage data).</p>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Historical analogy</th><th class="wrap">Similarity</th><th class="wrap">Difference</th></tr></thead>
+    <tbody>
+      <tr><td>Standard Oil</td><td class="wrap">Controlled critical infrastructure; drew antitrust action at peak dominance</td><td class="wrap">Oil was depleting; attention/data is renewable and grows with usage</td></tr>
+      <tr><td>IBM</td><td class="wrap">Tech leader that lost paradigm-setting position in a platform shift</td><td class="wrap">Alphabet's AI positioning is offensive — it originated Transformers, not reacting to a rival's breakthrough</td></tr>
+      <tr><td>Microsoft</td><td class="wrap">Simultaneous antitrust pressure + paradigm-shift risk</td><td class="wrap">Alphabet isn't "missing" AI the way Microsoft missed mobile — its risk is defending a legacy cash cow, not catching up</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Market</th><th class="wrap">2025 size (est.)</th><th class="wrap">Alphabet's position</th></tr></thead>
+    <tbody>
+      <tr><td>Digital advertising</td><td class="wrap">~$750B, →~$1.1-1.2T by 2030 (est.)</td><td class="wrap">26.4% share (2026), being overtaken by Meta (26.8%) for the first time</td></tr>
+      <tr><td>Cloud (IaaS/PaaS)</td><td class="wrap">~$129B/quarter run-rate, +35% YoY</td><td class="wrap">14% share, 3rd of Big Three, fastest-growing</td></tr>
+      <tr><td>Autonomous ride-hailing</td><td class="wrap">Nascent</td><td class="wrap">Waymo $126B valuation (Feb'26); vs. Tesla Robotaxi, Amazon Zoox</td></tr>
+      <tr><td>Consumer AI assistants</td><td class="wrap">ChatGPT 53.9% / Gemini 27.9% / Claude 9.2% of chatbot traffic (May'26)</td><td class="wrap">Gemini grew 5.4%→27.9% share since Jan'25 — fastest sustained gain tracked; ChatGPT fell below 50% for the first time (Mar'26)</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="body-text">Alphabet is one of few companies with genuine full-stack coverage — chip (TPU) → model (Gemini) → application (Search/YouTube/Cloud) → distribution (Android/Chrome). Nvidia dominates chips but not applications; OpenAI leads models but depends on Microsoft's infrastructure; Meta is strong in application/distribution but has no cloud business and open-sources its models; Apple is strong in distribution but weak in model/cloud layers.</p>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Li Lu's question</div>
+    <div class="q-ask-text">20年后回看，这是标准石油还是昙花一现的3Com？Standard Oil of the AI era, or a passing 3Com?</div>
+    <p class="body-text">Data supports "more likely the former" with more confidence than the reverse — full-stack positioning, three durable consumer-scale assets, financial capacity to fund decades-long bets without external financing pressure. The more precise risk isn't disappearance but <strong>transition from "high-margin growth compounder" to "large, slower-growing utility-like franchise"</strong> — closer to AT&amp;T's fate than 3Com's.</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      Alphabet 处于AI文明级范式转移的中心，与蒸汽机、电力、互联网并列为通用技术革命，并在芯片(TPU)—模型(Gemini)—应用(搜索/YouTube/云)—分发(安卓/Chrome)全栈均有布局，同类公司中鲜有匹敌者。与 IBM 当年在计算范式转移中"由盛转衰"不同，Alphabet 在AI领域是 Transformer 架构的原创者而非追赶者，处境更接近攻势而非守势。数字广告市场份额（26.4%）首次被 Meta（26.8%）反超，但这是相对增速差异（Meta +24.1% vs 谷歌 +11.9%），并非绝对下滑；Gemini 消费级AI助手份额从2025年初的5.4%升至2026年5月的27.9%，是有记录以来最快的持续份额增长，ChatGPT份额则首次跌破50%。<strong>更精确的风险并非"公司消失"，而是从"高利润增长复合体"转变为"体量庞大但增速放缓的公用事业型企业"</strong>——命运更接近AT&T，而非3Com。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 07 VALUATION ============ -->
+<div class="section" id="val">
+  <div class="section-num">Step 7 · Buffett + Duan Yongping Lens</div>
+  <div class="section-title">Valuation &amp; Margin of Safety</div>
+  <div class="section-divider"></div>
+
+  <p class="body-text">At $356.49 and a FY2025 GAAP P/E of 32.98x, the market prices in continued double-digit EPS growth for several years at a premium multiple — not extreme given Q1 2026 revenue growth (+21.8%), but it leaves relatively little room for the AI-capex bet to underperform, either antitrust case to resolve unfavorably, or the FY2026 FCF trough to persist, without a multiple compression.</p>
+
+  <h4 style="font-size:13px;margin-bottom:8px;color:var(--text-dim);">Three-scenario valuation — tool-computed (<code>financial_rigor.py three-scenario</code>), 3-year horizon, base FY2025 EPS $10.81</h4>
+  <div class="scenario-grid">
+    <div class="scenario-card bear">
+      <div class="scenario-name">Bear · 8% growth, 18x</div>
+      <div class="scenario-price">$245.1</div>
+      <div class="scenario-chg">−31.2%</div>
+      <div class="scenario-note">AI-native search cannibalizes click ads faster than volume offsets; $180-190B+ capex fails to generate commensurate returns; D.C. Circuit reinstates structural remedy, or ad-tech case forces AdX/DFP divestiture, or both.</div>
+    </div>
+    <div class="scenario-card base">
+      <div class="scenario-name">Base · 15% growth, 24x</div>
+      <div class="scenario-price">$394.6</div>
+      <div class="scenario-chg">+10.7%</div>
+      <div class="scenario-note">Search growth normalizes to low-double-digits; Cloud decelerates 60%+→25-30%; capex ROI moderate, FCF depressed through 2026-27; search remedies stand, ad-tech gets a negotiated behavioral remedy.</div>
+    </div>
+    <div class="scenario-card bull">
+      <div class="scenario-name">Bull · 22% growth, 28x</div>
+      <div class="scenario-price">$549.6</div>
+      <div class="scenario-chg">+54.2%</div>
+      <div class="scenario-note">AI capex converts to Cloud/Search revenue at scale by 2027-28; Cloud sustains 35%+ off its $460B+ backlog; both antitrust cases resolve without structural divestiture.</div>
+    </div>
+  </div>
+  <p class="body-text" style="font-size:12px;color:var(--text-faint);">Scenarios are deliberately more conservative on the bull end and more severe on the bear end than the prior (2026-06-23) version of this report, reflecting newly-confirmed FCF compression, the unresolved ad-tech case, and live cross-appeal risk — all raising outcome variance even though point-estimate business quality hasn't obviously changed.</p>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Company</th><th class="num">Mkt cap</th><th class="num">TTM P/E</th><th class="num">Fwd P/E</th><th class="wrap">Recent revenue growth</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Alphabet</strong></td><td class="num">$4.32T</td><td class="num">32.98x / ~27x*</td><td class="num">~25x</td><td class="wrap">Q1'26 +21.8%; Cloud +63%</td></tr>
+      <tr><td>Nvidia</td><td class="num">~$4.74T</td><td class="num">31.1x</td><td class="num">~20-23x</td><td class="wrap">+65.5%</td></tr>
+      <tr><td>Apple</td><td class="num">~$4.3-4.5T</td><td class="num">38.0x</td><td class="num">32-34x</td><td class="wrap">+12.8%</td></tr>
+      <tr><td>Microsoft</td><td class="num">~$2.83T</td><td class="num">23.9x</td><td class="num">20.3-22x</td><td class="wrap">+17.9%</td></tr>
+      <tr><td>Amazon</td><td class="num">~$2.57T</td><td class="num">29.4-29.9x</td><td class="num">27.8-29.9x</td><td class="wrap">+14.2%</td></tr>
+      <tr><td>Meta</td><td class="num">~$1.48T</td><td class="num">24.2x</td><td class="num">~20.3x</td><td class="wrap">~+33%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="body-text" style="font-size:12px;color:var(--text-faint);">*GAAP FY25 / distorted TTM — see Step 1 caveat. On forward P/E, Alphabet trades below Apple/Amazon, roughly in line with Microsoft/Meta, above Nvidia. On PEG (~1.77), Alphabet is priced more richly per unit of growth than Meta (~0.99) or Nvidia (~0.46).</p>
+
+  <div class="callout">
+    <b>External reference points (context only, not used as inputs):</b> Simply Wall St's DCF ($345) implies modest undervaluation; GuruFocus's GF Value (~$231-235) implies ~50% overvaluation despite a 92/100 quality score. This spread shows how sensitive any single DCF is to the AI-capex-payback growth assumption — no external "fair value" should be taken as authoritative.
+  </div>
+
+  <div class="q-ask">
+    <div class="q-ask-label">Duan Yongping's question</div>
+    <div class="q-ask-text">如果股市明天关闭5年，你愿意以这个价格持有吗？Comfortable holding this price if markets closed for 5 years?</div>
+    <p class="body-text">Genuinely mixed. $356.49 isn't obviously irrational, but embeds little room for several concrete, unresolved uncertainties (two antitrust appeals, an FCF trough of uncertain duration, an unproven capex bet, no external governance check) to resolve unfavorably. A price in the <strong>$260-300 range</strong> (≈22-26x FY2025 GAAP EPS, closer to the 5-year average multiple) would leave materially more room for those uncertainties without requiring a permanent capital loss — a safety-margin observation, not a price target.</p>
+  </div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      GAAP市盈率32.98倍，高于自身5年均值（24-26倍）与10年均值（约27倍）。三情景估值（工具计算，3年周期）：<strong>乐观情景</strong>（增速22%，目标市盈率28倍）目标价549.6美元，+54.2%；<strong>中性情景</strong>（增速15%，24倍）394.6美元，+10.7%；<strong>悲观情景</strong>（增速8%，18倍）245.1美元，-31.2%。相较同为"科技七巨头"的同业，Alphabet 远期市盈率低于苹果、亚马逊，与微软、Meta 大致持平，高于英伟达；但按 PEG 计算（约1.77），Alphabet 相对增长预期的估值高于 Meta（约0.99）和英伟达（约0.46）。外部公允价值测算严重分歧：Simply Wall St 认为略被低估（345美元），GuruFocus 认为高估约50%（231-235美元）——这一分歧本身说明任何单一DCF模型对AI资本支出回报假设都极为敏感。<strong>若回调至260-300美元区间</strong>（约22-26倍市盈率，接近自身5年历史均值），安全边际将显著改善，且无需改变生意质量判断。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ 08 DECISION ============ -->
+<div class="section" id="decision">
+  <div class="section-num">Step 8</div>
+  <div class="section-title">Synthesis — Decision Memo</div>
+  <div class="section-divider"></div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Dimension</th><th class="wrap">Conclusion</th><th>Confidence</th></tr></thead>
+    <tbody>
+      <tr><td>Business quality<br><span style="color:var(--text-faint);font-size:11px;">(Duan Yongping)</span></td><td class="wrap">Excellent — largest attention funnel in the world, rising margins, genuine network effects. Open question: does AI-mediated search preserve the same unit economics?</td><td>High (85%)</td></tr>
+      <tr><td>Moat<br><span style="color:var(--text-faint);font-size:11px;">(Buffett)</span></td><td class="wrap">Very wide (4.4/5) across 4 of 5 categories; tech/IP shows a new, real crack (June 2026 departures).</td><td>High (80%)</td></tr>
+      <tr><td>Management<br><span style="color:var(--text-faint);font-size:11px;">(Duan Yongping + Buffett)</span></td><td class="wrap">Capable, long-horizon operator, offset by a rushed Bard launch and unresolved AI-capex discipline questions. Founder-control (52.7% votes / 6.2% economic interest) is structural, non-negotiable risk.</td><td>Mod-high (70%)</td></tr>
+      <tr><td>Largest risk<br><span style="color:var(--text-faint);font-size:11px;">(Munger)</span></td><td class="wrap">Two separate, unresolved antitrust proceedings carry more combined structural risk than casual coverage — focused mostly on search — implies.</td><td>Moderate (55%)</td></tr>
+      <tr><td>Civilizational trend<br><span style="color:var(--text-faint);font-size:11px;">(Li Lu)</span></td><td class="wrap">Positioned at the center of the AI paradigm shift with full-stack coverage unmatched by any single peer.</td><td>High (85%)</td></tr>
+      <tr><td>Valuation<br><span style="color:var(--text-faint);font-size:11px;">(Buffett + Duan Yongping)</span></td><td class="wrap">FY2025 GAAP P/E of 32.98x above both 5- and 10-year averages. Not expensive vs. AI-exposed Mag7 on forward basis, but limited margin for multiple unresolved risks.</td><td>Mod-high (70%)</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Position</th><th class="wrap">Recommendation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Non-holder</strong></td><td class="wrap"><strong>Watch, not buy, at $356.49.</strong> Business quality is strong and largely uncontested; price doesn't yet offer clear margin of safety against catalogued uncertainties. A pullback to $260-300 would materially improve risk/reward without requiring the thesis to change.</td></tr>
+      <tr><td><strong>Holder</strong></td><td class="wrap"><strong>Hold.</strong> Nothing here changes the business-quality or moat assessment materially. New information since the prior report raises outcome <em>variance</em> without clearly shifting expected value downward — reason for closer monitoring, not automatic selling.</td></tr>
+      <tr><td><strong>Sell signal</strong></td><td class="wrap">(1) Two consecutive quarters of clearly disappointing AI capex ROI; (2) Search &amp; Other revenue growth turns negative YoY; (3) D.C. Circuit reinstates structural breakup, or ad-tech case forces AdX/DFP divestiture; (4) GAAP P/E sustained above ~35-38x without accelerating earnings.</td></tr>
+      <tr><td><strong>Add signal</strong></td><td class="wrap">(1) Price pulls back to $260-300 without narrative change; (2) Cloud sustains 45%+ growth with visible backlog conversion and improving margin; (3) FCF trough stabilizes/reverses without further capex raises; (4) buybacks resume.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4 style="font-size:13px;margin:18px 0 10px;color:var(--text-dim);">Simulated commentary — four lenses</h4>
+
+  <div class="quote">
+    <div class="quote-who">Business-model lens — Duan Yongping</div>
+    <div class="quote-text">This remains one of the best businesses ever built — a genuinely global, near-zero-marginal-cost distribution of human attention. What should give any owner pause is not the business's quality but its transformation: a company that used to spend lightly and print cash is now spending $180-190B a year, more than its own net income, to defend and extend that position. Good businesses do not usually need to spend at that rate simply to stay good — either this capex is building something durably better, or it is buying time. The data available today does not yet tell us which.</div>
+  </div>
+  <div class="quote">
+    <div class="quote-who">Inversion lens — Munger</div>
+    <div class="quote-text">Invert — under what conditions does this investment lose money? Not through a technology failure, and not through obvious management incompetence. The more plausible failure paths are structural and legal: a D.C. Circuit reversal reinstating the Chrome/Android breakup, or a forced AdX divestiture in a second antitrust case that gets a fraction of the attention the search case receives. Both are live, both are unresolved, and neither shows up in the "TTM P/E ~27x, cheap relative to Mag7" framing that dominates casual coverage.</div>
+  </div>
+  <div class="quote">
+    <div class="quote-who">Management &amp; values lens — Buffett + Duan Yongping</div>
+    <div class="quote-text">Pichai's best decision on record is arguably the 2019 choice to keep DeepMind inside Google — a choice that now underwrites Gemini's 900M-user product. But the dual-class structure giving Page and Brin 52.7% of votes against 6.2% of economic ownership remains the least "shareholder is buying a person you'd trust with unchecked power" governance arrangement in this coverage universe — it is not a hypothetical risk, it is the literal legal structure of the company today.</div>
+  </div>
+  <div class="quote">
+    <div class="quote-who">Civilizational lens — Li Lu</div>
+    <div class="quote-text">Twenty years from now, Alphabet most likely remains one of the handful of companies that mattered in the AI transition — it controls three durable digital-era assets that AI is reshaping in form but has not yet displaced in substance. The open question worth revisiting every year, not answering once: is the current capex the price of staying the standard-bearer of this era, or is it a tell that the standard-bearer already senses the ground shifting under it?</div>
+  </div>
+
+  <h4 style="font-size:13px;margin:18px 0 10px;color:var(--text-dim);">Mirror test — five sentences, buy or not, at $356.49 today</h4>
+  <ul class="bullets">
+    <li><strong>A genuinely excellent business:</strong> the world's largest attention funnel, monetized at high and still-rising margins, with real network effects on advertising and video.</li>
+    <li><strong>Uniquely positioned in AI, not catching up:</strong> full-stack coverage from custom silicon to frontier models to distribution that no single peer matches.</li>
+    <li><strong>But not cheap, and newly more uncertain than four weeks ago:</strong> GAAP P/E 32.98x above historical average; Q1'26 FCF −47% YoY; buybacks paused; two senior AI researchers left for direct rivals in the same month.</li>
+    <li><strong>Carrying two live, unresolved legal risks most coverage under-weights:</strong> search remedies on appeal both directions; a second, separate ad-tech case could force structural divestiture, ruling still pending.</li>
+    <li><strong>Conclusion:</strong> a strong business, correctly and richly priced for a scenario where the AI capex bet pays off and both legal cases resolve favorably — worth owning if already held, worth watching rather than initiating at the current price, with $260-300 the level that would meaningfully improve risk/reward.</li>
+  </ul>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>空仓者：</strong>观望，当前356.49美元尚未提供足够安全边际以应对本报告列出的具体不确定性（两起未决反垄断上诉、时长未知的自由现金流低谷、尚未验证的AI资本支出回报）；若回调至260-300美元，风险回报比将显著改善，且无需改变核心判断。<strong>持仓者：</strong>持有——本次更新未实质改变生意质量或护城河判断；相较上一版报告的新信息（人才流失、回购暂停、自由现金流压缩、广告技术案进展）提高了结果的<em>方差</em>，但未明显下调预期价值，这是加强监控的理由，而非自动卖出的信号。<strong>卖出信号：</strong>连续两季AI资本支出回报明显令人失望；搜索营收同比转负；上诉法院恢复结构性拆分裁决或广告技术案被强制剥离；GAAP市盈率持续高于35-38倍且盈利增速未加快。<strong>加仓信号：</strong>股价回调至260-300美元且叙事未变；云业务维持45%以上增速且利润率改善；自由现金流低谷企稳或反转且资本支出指引未进一步上调；回购重启。
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ============ LIMITATIONS ============ -->
+<div class="section" id="limits">
+  <div class="section-num">Disclosure</div>
+  <div class="section-title">AI Research Limitations</div>
+  <div class="section-divider"></div>
+
+  <span class="rating rating-blue">AI analysis confidence: High (Grade A — abundant information)</span>
+
+  <ul class="bullets">
+    <li><strong>Financial data:</strong> high confidence — multi-source cross-validated via <code>financial_rigor.py</code>, all sampled deviations at or near 0%.</li>
+    <li><strong>Competitive landscape:</strong> high confidence — extensive public data (Synergy, eMarketer, StatCounter, Similarweb).</li>
+    <li><strong>Valuation:</strong> moderate-high confidence — mechanically precise given the inputs, but the inputs (growth assumptions, terminal multiples) are inherently judgment; this report flags a specific, quantified TTM-vs-GAAP P/E distortion a less careful analysis would miss.</li>
+    <li><strong>Management assessment:</strong> moderate confidence — based on public filings and reporting; cannot assess non-public board deliberation or the internal reasoning behind the Q1 2026 buyback pause beyond stated generalities.</li>
+    <li><strong>Antitrust outcome forecasting:</strong> low confidence — both cases genuinely undecided; probability estimates in Step 4 are this analyst's estimates, not market-implied or legally-informed, and should be treated as such.</li>
+    <li><strong>AI capex ROI:</strong> low confidence — a new investment regime with no directly comparable precedent; FY2026-27 actuals, not argument, will resolve it.</li>
+  </ul>
+
+  <div class="lede">The distinction between AI-analysis confidence and investment certainty: this report's "AI confidence" is high mainly because Alphabet's data availability is unusually complete — a statement about data volume, not about how predictable the underlying business outcome is. <strong>High AI confidence does not imply high investment certainty.</strong> The core investment question — whether $180-190B/year of AI capex converts into durable revenue and margin, and whether either antitrust case produces a structural remedy — will not be resolved by more research today. It will be resolved by 2026-2027 operating results and court rulings that have not yet happened.</div>
+
+  <div class="cn-summary">
+    <div class="cn-label">中文摘要</div>
+    <div class="cn-text">
+      <strong>AI分析置信度</strong>与<strong>投资确定性</strong>是两回事：本报告"AI置信度高"主要是因为 Alphabet 的数据可得性异常完整——这是关于数据量的陈述，而非关于业务结果可预测程度的陈述。<strong>AI置信度高，不代表投资确定性高。</strong>财务数据置信度高（已通过工具多源交叉验证，抽检偏差接近0%）；竞争格局置信度高（公开数据充分）；估值部分置信度中高（计算精确，但增长假设本身是判断）；管理层评估置信度中等（仅基于公开信息，无法评估非公开董事会决议）；反垄断结果预测置信度低（两案均未判决，概率为分析师估计而非法律专业预测）；AI资本支出回报置信度低（全新投资周期，无直接历史先例可比）。核心投资问题——1800-1900亿美元的年度AI资本支出能否转化为持久的营收与利润率，两起反垄断案是否会产生结构性救济——不会因为今天做更多研究而得到解决，只会由2026-2027年的实际经营数据和法院判决来解答。
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Data sources: SEC EDGAR (10-K/10-Q/8-K/DEF 14A), macrotrends.net, stockanalysis.com, Synergy Research Group, eMarketer, StatCounter, Similarweb, SparkToro/Datos, Cloudflare Radar (via secondary reporting), Bloomberg, CNBC, Fortune, TipRanks, GuruFocus, Simply Wall St, and other sources cited inline in the source report.<br>
+  All calculations (market-cap verification, cross-validation, valuation multiples, three-scenario model) computed via <code>tools/financial_rigor.py</code> for auditable reproducibility.<br>
+  This report passed the project's mandatory data-audit gate (<code>tools/report_audit.py</code>) prior to publication.<br><br>
+  Source: <code>reports/Google/Google-research-20260715.md</code> (English) · <code>-zh.md</code> (Chinese, full parity) — this page is an English-primary, Chinese-summary presentation layer.
+</div>
+
+</body>
+</html>

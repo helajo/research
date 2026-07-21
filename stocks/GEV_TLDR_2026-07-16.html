@@ -1,0 +1,479 @@
+<title>GE Vernova (GEV) — Initiation TL;DR</title>
+<style>
+:root {
+  --navy: #1B2A4A;
+  --navy-soft: #2C3E63;
+  --steel: #4A6FA5;
+  --gold: #B8863E;
+  --red: #A8362A;
+  --green: #1E7A50;
+  --paper: #F6F7FA;
+  --card: #FFFFFF;
+  --ink: #1C2230;
+  --ink-soft: #545F76;
+  --line: #DFE3EC;
+  --line-soft: #EBEEF4;
+  --shade-red: #FBEDEA;
+  --shade-green: #E9F5EF;
+  --shade-gold: #FBF3E4;
+}
+:root[data-theme="dark"] {
+  --navy: #A9BBE0;
+  --navy-soft: #C3D0EA;
+  --steel: #8FB0E6;
+  --gold: #E0B368;
+  --red: #E28A7C;
+  --green: #6FCBA0;
+  --paper: #10141C;
+  --card: #171C27;
+  --ink: #E7EAF2;
+  --ink-soft: #A2ACC2;
+  --line: #2B3244;
+  --line-soft: #232938;
+  --shade-red: #2C1D1D;
+  --shade-green: #17281F;
+  --shade-gold: #2B2416;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy: #A9BBE0;
+    --navy-soft: #C3D0EA;
+    --steel: #8FB0E6;
+    --gold: #E0B368;
+    --red: #E28A7C;
+    --green: #6FCBA0;
+    --paper: #10141C;
+    --card: #171C27;
+    --ink: #E7EAF2;
+    --ink-soft: #A2ACC2;
+    --line: #2B3244;
+    --line-soft: #232938;
+    --shade-red: #2C1D1D;
+    --shade-green: #17281F;
+    --shade-gold: #2B2416;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+  padding: 48px 20px 80px;
+}
+
+.sheet {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+  margin-bottom: 22px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.eyebrow span:last-child { font-weight: 500; letter-spacing: 0.02em; }
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 6px;
+}
+.masthead h1 {
+  font-family: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.2;
+}
+.ticker {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 13px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  padding-top: 4px;
+}
+
+.thesis {
+  font-family: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--navy-soft);
+  text-wrap: balance;
+  margin: 18px 0 28px;
+  padding-left: 16px;
+  border-left: 3px solid var(--gold);
+}
+
+/* Rating strip */
+.rating-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 34px;
+}
+.rating-strip > div {
+  background: var(--card);
+  padding: 14px 16px;
+}
+.rating-strip .label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 5px;
+}
+.rating-strip .value {
+  font-family: ui-serif, Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+.rating-strip .value.rating { color: var(--red); font-size: 15px; letter-spacing: 0.01em; }
+.rating-strip .value.target { color: var(--gold); }
+.rating-strip .value.down { color: var(--red); }
+
+section { margin-bottom: 34px; }
+h2 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin: 0 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* Metrics grid */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.metric .k {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.metric .v {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.metric .v.pos { color: var(--green); }
+.metric .v.neg { color: var(--red); }
+.metric .sub { font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+
+/* Football field */
+.field { display: flex; flex-direction: column; gap: 12px; }
+.field-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 12px; }
+.field-row .fname { font-size: 12px; color: var(--ink-soft); }
+.field-track {
+  position: relative;
+  height: 22px;
+  background: var(--line-soft);
+  border-radius: 2px;
+}
+.field-bar {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-radius: 2px;
+  background: var(--steel);
+  opacity: 0.85;
+}
+.field-bar.precedent { background: var(--gold); opacity: 0.55; }
+.field-marker {
+  position: absolute;
+  top: -4px; bottom: -4px;
+  width: 2px;
+}
+.field-marker.current { background: var(--red); }
+.field-marker.target { background: var(--navy); }
+.field-axis { display: grid; grid-template-columns: 92px 1fr; gap: 12px; }
+.field-axis .scale {
+  position: relative;
+  height: 16px;
+  font-size: 10px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.field-axis .scale span { position: absolute; transform: translateX(-50%); }
+.field-legend {
+  display: flex; gap: 18px; margin-top: 8px; font-size: 11px; color: var(--ink-soft);
+  flex-wrap: wrap;
+}
+.field-legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 1px; margin-right: 5px; vertical-align: middle; }
+
+/* Bull / Bear */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.split .col h3 {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+.split .col.bull h3 { color: var(--green); }
+.split .col.bear h3 { color: var(--red); }
+.split ul { margin: 0; padding-left: 18px; }
+.split li { margin-bottom: 9px; font-size: 13px; color: var(--ink); }
+.split li b { color: var(--navy); }
+
+/* Two-col lists */
+.pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.pairs ol { margin: 0; padding-left: 20px; }
+.pairs li { margin-bottom: 9px; font-size: 13px; }
+.pairs h3 {
+  font-size: 12.5px; font-weight: 700; color: var(--navy); margin: 0 0 10px;
+}
+
+/* Summary card */
+.summary-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--navy);
+  border-radius: 3px;
+  padding: 18px 20px;
+}
+.summary-card p { margin: 0 0 10px; font-size: 13.5px; }
+.summary-card p:last-child { margin-bottom: 0; }
+.summary-card .zh {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+@media (max-width: 620px) {
+  .rating-strip { grid-template-columns: repeat(2, 1fr); }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .split, .pairs { grid-template-columns: 1fr; gap: 22px; }
+  .masthead { flex-direction: column; gap: 4px; }
+  .field-row { grid-template-columns: 70px 1fr; }
+  .field-axis { grid-template-columns: 70px 1fr; }
+}
+</style>
+
+<div class="sheet">
+
+  <div class="eyebrow">
+    <span>Daloopa Equity Research — Initiating Coverage</span>
+    <span>July 16, 2026 · TL;DR</span>
+  </div>
+
+  <div class="masthead">
+    <h1>GE Vernova Inc.</h1>
+    <div class="ticker">NYSE: GEV&nbsp;&nbsp;·&nbsp;&nbsp;$1,068.18</div>
+  </div>
+
+  <p class="thesis">
+    The market's purest AI-power proxy is priced for a supercycle it hasn't earned yet. Gas Power backlog, Prolec&nbsp;GE, and BWRX-300 are real — but at 70–88x NTM EV/EBITDA against a ~20x peer median, GEV's price already assumes more than a disciplined DCF or its own competitors' multiples support.
+  </p>
+
+  <div class="rating-strip">
+    <div>
+      <div class="label">Rating</div>
+      <div class="value rating">SELL / UNDERWEIGHT</div>
+    </div>
+    <div>
+      <div class="label">12-Mo. Price Target</div>
+      <div class="value target">$290</div>
+    </div>
+    <div>
+      <div class="label">Current Price</div>
+      <div class="value">$1,068.18</div>
+    </div>
+    <div>
+      <div class="label">Implied Downside</div>
+      <div class="value down">(73%)</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Snapshot</h2>
+    <div class="metrics">
+      <div class="metric">
+        <div class="k">Market Cap</div>
+        <div class="v">$287bn</div>
+      </div>
+      <div class="metric">
+        <div class="k">Enterprise Value</div>
+        <div class="v">$281bn</div>
+      </div>
+      <div class="metric">
+        <div class="k">2025A Revenue</div>
+        <div class="v">$38.1bn</div>
+        <div class="sub">+9% YoY</div>
+      </div>
+      <div class="metric">
+        <div class="k">2030E Revenue</div>
+        <div class="v">$60.9bn</div>
+        <div class="sub">10.8% CAGR, base case</div>
+      </div>
+      <div class="metric">
+        <div class="k">2025A Adj. EBITDA Margin</div>
+        <div class="v">8.4%</div>
+      </div>
+      <div class="metric">
+        <div class="k">2030E Adj. EBITDA Margin</div>
+        <div class="v pos">14.0%</div>
+      </div>
+      <div class="metric">
+        <div class="k">NTM / LTM EV/EBITDA</div>
+        <div class="v neg">~70–88x</div>
+        <div class="sub">peer median ~20x</div>
+      </div>
+      <div class="metric">
+        <div class="k">52-Week Range</div>
+        <div class="v" style="font-size:14px;">$530 – $1,196</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Valuation — Football Field</h2>
+    <div class="field">
+      <div class="field-row">
+        <div class="fname">DCF Analysis</div>
+        <div class="field-track">
+          <div class="field-bar" style="left:18.5%; width:9.9%;"></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="fname">Trading Comps</div>
+        <div class="field-track">
+          <div class="field-bar" style="left:19.9%; width:6.2%;"></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="fname">Precedent Txns<br><span style="font-size:10px;">(0% weight)</span></div>
+        <div class="field-track">
+          <div class="field-bar precedent" style="left:34.6%; width:11.4%;"></div>
+        </div>
+      </div>
+      <div class="field-row" style="position:relative;">
+        <div></div>
+        <div class="field-track" style="background:transparent; height:0;">
+          <div class="field-marker target" style="left:23.6%;"></div>
+          <div class="field-marker current" style="left:92%;"></div>
+        </div>
+      </div>
+      <div class="field-axis">
+        <div></div>
+        <div class="scale">
+          <span style="left:0%;">$0</span>
+          <span style="left:18.5%;">$231</span>
+          <span style="left:23.6%;">$290 target</span>
+          <span style="left:46%;">$540</span>
+          <span style="left:92%;">$1,068 current</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-legend">
+      <span><i class="dot" style="background:var(--steel);"></i>DCF / Comps range</span>
+      <span><i class="dot" style="background:var(--gold); opacity:.55;"></i>Precedent (context only)</span>
+      <span><i class="dot" style="background:var(--navy);"></i>Blended target $290</span>
+      <span><i class="dot" style="background:var(--red);"></i>Current $1,068</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>The Debate</h2>
+    <div class="split">
+      <div class="col bull">
+        <h3>What's real</h3>
+        <ul>
+          <li><b>Gas Power backlog:</b> 83→100GW in Q1'26, targeting 110GW by YE26; orders +71% organic.</li>
+          <li><b>Electrification + Prolec&nbsp;GE:</b> fastest-growing segment, 16% 5-yr CAGR, transformer scarcity pricing.</li>
+          <li><b>BWRX-300 SMR:</b> genuine first-mover Western SMR, construction underway at Darlington.</li>
+        </ul>
+      </div>
+      <div class="col bear">
+        <h3>What's already priced in</h3>
+        <ul>
+          <li><b>Valuation gap:</b> 3.5–4.5x EV/EBITDA premium to closest peers, unexplained by growth edge alone.</li>
+          <li><b>Wind still bleeding:</b> -6.6% EBITDA margin, Vineyard Wind&nbsp;1 dispute &gt;$300mm unpaid.</li>
+          <li><b>Two methods agree:</b> DCF ($268) and comps ($272) independently land near the same number.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Catalysts &amp; Risks</h2>
+    <div class="pairs">
+      <div>
+        <h3 style="color:var(--green);">Upside Catalysts</h3>
+        <ol>
+          <li>Backlog conversion outpaces 110GW target</li>
+          <li>BWRX-300 clears NRC / OPG milestones on schedule</li>
+          <li>Wind turns EBITDA-positive ahead of 2029E</li>
+          <li>More hyperscaler JVs beyond Chevron</li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="color:var(--red);">Downside Risks</h3>
+        <ol>
+          <li>AI capex digestion slows gas turbine orders</li>
+          <li>Siemens Energy / Mitsubishi Power capacity compresses pricing, 2027–28</li>
+          <li>Further offshore wind losses or disputes</li>
+          <li>Prolec&nbsp;GE integration missteps ($5.25bn, largest deal to date)</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-bottom: 24px;">
+    <h2>Bottom Line</h2>
+    <div class="summary-card">
+      <p>Both a bottom-up five-year DCF ($268/share base case) and an eight-peer trading-comps cross-check ($272/share median) land in the same neighborhood — roughly 73% below today's $1,068 price. This isn't a call that the AI/electrification thesis is wrong; Gas Power, Prolec&nbsp;GE, and BWRX-300 are genuine structural drivers. It's a call that the price already assumes an unusually complete, prolonged realization of that thesis, with a Wind segment still bleeding and little margin of safety if execution slips anywhere across the three-segment portfolio.</p>
+      <p class="zh">两种独立方法——自下而上的五年期 DCF（基础情形每股 $268）与八家同业可比公司交叉验证（中位数每股 $272）——得出相近结论：较当前 $1,068 股价有约73%的下行空间。这并非否定 AI／电气化逻辑本身（Gas Power、Prolec GE、BWRX-300 均为真实的结构性驱动因素），而是判断股价已经计入了这一逻辑异常完整且持久的兑现路径，在 Wind 分部仍在亏损的情况下，安全边际十分有限。评级：SELL / UNDERWEIGHT，目标价 $290。</p>
+    </div>
+  </section>
+
+  <footer>
+    Prepared by Daloopa Equity Research · Condensed from the full 57-page initiation report (GEV_Initiation_Report_2026-07-16.docx).
+    Figures sourced from SEC EDGAR and Yahoo Finance; peer market data via web search — Daloopa/Bloomberg/CapIQ/FactSet were not authenticated this session. Reconcile against a licensed data terminal before external distribution. Not investment advice.
+  </footer>
+
+</div>
