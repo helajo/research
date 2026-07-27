@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arista Networks — Initiation TL;DR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eeece6;
+    --paper-raised: #f6f4ef;
+    --ink: #1b1d1f;
+    --ink-soft: #34363a;
+    --muted: #6b6459;
+    --line: #d8d3c8;
+    --accent: #9b2e28;
+    --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0;
+    --steel: #2e4257;
+    --steel-soft: #5c7690;
+    --steel-wash: #e2e8ed;
+    --gold: #a4772f;
+    --gold-wash: #ede2cc;
+    --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15171a;
+      --paper-raised: #1c1f23;
+      --ink: #e9e7e1;
+      --ink-soft: #c7c4bc;
+      --muted: #93897a;
+      --line: #33363b;
+      --accent: #d9645c;
+      --accent-soft: #a8433c;
+      --accent-wash: #2c1c1b;
+      --steel: #8fb0cc;
+      --steel-soft: #5c7690;
+      --steel-wash: #1c2a35;
+      --gold: #d1a862;
+      --gold-wash: #2e2716;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15171a; --paper-raised: #1c1f23; --ink: #e9e7e1; --ink-soft: #c7c4bc;
+    --muted: #93897a; --line: #33363b; --accent: #d9645c; --accent-soft: #a8433c;
+    --accent-wash: #2c1c1b; --steel: #8fb0cc; --steel-soft: #5c7690; --steel-wash: #1c2a35;
+    --gold: #d1a862; --gold-wash: #2e2716; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --paper: #eeece6; --paper-raised: #f6f4ef; --ink: #1b1d1f; --ink-soft: #34363a;
+    --muted: #6b6459; --line: #d8d3c8; --accent: #9b2e28; --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0; --steel: #2e4257; --steel-soft: #5c7690; --steel-wash: #e2e8ed;
+    --gold: #a4772f; --gold-wash: #ede2cc; --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .mono { font-family: 'IBM Plex Mono', 'SF Mono', Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in { animation: fadeIn 0.5s ease-out both; }
+    .fade-in:nth-child(2) { animation-delay: 0.06s; }
+    .fade-in:nth-child(3) { animation-delay: 0.12s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .kicker strong { color: var(--ink-soft); }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+  h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 2.35rem;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0.9rem 0 0.15rem;
+    color: var(--ink);
+  }
+  .ticker-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--steel);
+    margin-bottom: 1.4rem;
+  }
+
+  .thesis {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.28rem;
+    line-height: 1.42;
+    color: var(--ink-soft);
+    text-wrap: balance;
+    margin: 0 0 1.9rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* ---------- Rating ticket ---------- */
+  .ticket {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 2.2rem;
+  }
+  .ticket > div {
+    padding: 0.85rem 0.9rem;
+    border-right: 1px solid var(--line);
+  }
+  .ticket > div:last-child { border-right: none; }
+  .ticket .rating-cell { background: var(--steel); }
+  .t-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .ticket .rating-cell .t-label { color: rgba(255,255,255,0.75); }
+  .t-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.28rem; font-weight: 600; color: var(--ink); }
+  .ticket .rating-cell .t-value { color: #fff; letter-spacing: 0.02em; }
+  .t-value.down { color: var(--accent); }
+  @media (max-width: 560px) {
+    .ticket { grid-template-columns: repeat(2, 1fr); }
+    .ticket > div:nth-child(2) { border-right: none; }
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { margin-bottom: 2.6rem; }
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  p { margin: 0 0 0.9rem; color: var(--ink-soft); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- Stat grid ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .stats div { background: var(--paper-raised); padding: 0.75rem 0.9rem; }
+  .stats .s-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+  .stats .s-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.02rem; font-weight: 600; color: var(--ink); }
+  @media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Thesis pillars ---------- */
+  .pillar { display: flex; gap: 0.9rem; margin-bottom: 1.35rem; }
+  .pillar:last-child { margin-bottom: 0; }
+  .p-num {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--steel-soft);
+    line-height: 1.25;
+    flex: 0 0 auto;
+    width: 1.7rem;
+  }
+  .p-body h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+  }
+  .p-body p { font-size: 0.95rem; margin: 0; }
+
+  /* ---------- Football field (CSS bars) ---------- */
+  .field { position: relative; padding: 0.5rem 0 0.25rem; }
+  .field-row { display: grid; grid-template-columns: 108px 1fr; align-items: center; gap: 0.7rem; margin-bottom: 0.85rem; }
+  .field-row .f-label { font-size: 0.78rem; color: var(--muted); text-align: right; }
+  .f-track { position: relative; height: 22px; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 2px; }
+  .f-bar { position: absolute; top: 0; bottom: 0; background: var(--steel-wash); border-left: 2px solid var(--steel); border-right: 2px solid var(--steel); }
+  .f-bar span { position: absolute; top: 50%; transform: translateY(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--steel); white-space: nowrap; }
+  .f-bar span.lo { right: calc(100% + 6px); }
+  .f-bar span.hi { left: calc(100% + 6px); }
+  .f-marker { position: absolute; top: -5px; bottom: -5px; width: 2px; }
+  .f-marker.current { background: var(--muted); }
+  .f-marker.target { background: var(--accent); }
+  .f-marker::after {
+    content: attr(data-label);
+    position: absolute; top: -1.15rem; left: 50%; transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; white-space: nowrap; color: inherit;
+  }
+  .f-axis { display: grid; grid-template-columns: 108px 1fr; margin-top: 0.2rem; }
+  .f-axis-ticks { position: relative; height: 14px; }
+  .f-axis-ticks span { position: absolute; top: 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); transform: translateX(-50%); }
+
+  /* ---------- Pull quote (reverse-DCF) ---------- */
+  .pullquote {
+    background: var(--gold-wash);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+    padding: 1.1rem 1.3rem;
+    margin-top: 1.4rem;
+  }
+  .pullquote .pq-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+  .pullquote p { font-size: 0.94rem; margin: 0; color: var(--ink-soft); }
+  .pullquote .pq-num { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--ink); }
+
+  /* ---------- Two-column risk/catalyst ---------- */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  @media (max-width: 620px) { .twocol { grid-template-columns: 1fr; } }
+  .col-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem; }
+  .col-head .swatch { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+  .swatch.risk { background: var(--accent); }
+  .swatch.cat { background: var(--steel); }
+  .col-head h3 { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.88rem; margin: 0; color: var(--ink); }
+  ul.compact { list-style: none; margin: 0; padding: 0; }
+  ul.compact li {
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--line);
+  }
+  ul.compact li:first-child { border-top: none; padding-top: 0; }
+  ul.compact li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Chinese summary blocks ---------- */
+  .zh {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.86rem;
+    line-height: 1.85;
+    color: var(--muted);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+  }
+  .zh .zh-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--steel-soft);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  .zh strong { color: var(--ink-soft); }
+
+  /* ---------- Footer / package list ---------- */
+  footer { border-top: 2px solid var(--ink); padding-top: 1.3rem; }
+  .pkg { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.6rem; }
+  .pkg-item { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--line); }
+  .pkg-item .pkg-name { color: var(--ink-soft); font-weight: 500; }
+  .pkg-item .pkg-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--muted); }
+  .disclaimer { font-size: 0.76rem; color: var(--muted); line-height: 1.6; }
+  .disclaimer + .disclaimer { margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead fade-in">
+    <span class="kicker">Equity Research <strong>·</strong> Initiating Coverage</span>
+    <span class="date-stamp">24 JUL 2026</span>
+  </div>
+
+  <h1 class="fade-in">Arista Networks — the TL;DR</h1>
+  <div class="ticker-line fade-in">NYSE: ANET &nbsp;·&nbsp; Communication Equipment — AI / Cloud Networking</div>
+
+  <p class="thesis fade-in">A best-in-class AI networking franchise — and the market has already paid for it. DCF, growth-adjusted comps, and precedent transactions land independently at $137. The stock trades at $177.36.</p>
+
+  <div class="ticket fade-in">
+    <div class="rating-cell"><span class="t-label">Rating</span><span class="t-value">HOLD</span></div>
+    <div><span class="t-label">Price Target</span><span class="t-value">$137.00</span></div>
+    <div><span class="t-label">Current Price</span><span class="t-value">$177.36</span></div>
+    <div><span class="t-label">Downside</span><span class="t-value down">(22.8)%</span></div>
+  </div>
+
+  <section>
+    <h2>Snapshot</h2>
+    <div class="stats">
+      <div><span class="s-label">Market Cap</span><span class="s-value">$223.3bn</span></div>
+      <div><span class="s-label">Enterprise Value</span><span class="s-value">$212.6bn</span></div>
+      <div><span class="s-label">52-Week Range</span><span class="s-value">$112.80–$189.82</span></div>
+      <div><span class="s-label">FY25A Revenue</span><span class="s-value">$9.01bn</span></div>
+      <div><span class="s-label">FY25A Diluted EPS</span><span class="s-value">$2.75</span></div>
+      <div><span class="s-label">Beta (5yr)</span><span class="s-value">1.60</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Hold</h2>
+
+    <div class="pillar">
+      <div class="p-num">1</div>
+      <div class="p-body">
+        <h3>The AI networking growth story is real — and already in the price</h3>
+        <p>Arista's AI networking revenue guide doubled in a year ($1.5bn FY25A → $3.5bn FY26E target), and management's TAM has doubled to $105bn by 2029E. But at <strong>19.6x</strong> EV/NTM-revenue, ANET already trades in line with our growth-adjusted "fair" multiple of 20.25x — the premium is earned, not excessive, but it leaves little room for further re-rating.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">2</div>
+      <div class="p-body">
+        <h3>The best balance sheet and the longest-tenured team in the group</h3>
+        <p>Zero debt, $12.3bn of cash, GAAP-profitable every year since before the 2014 IPO, one CEO since 2008. This lowers execution risk relative to newer AI-infrastructure names — it doesn't create upside from current levels on its own.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">3</div>
+      <div class="p-body">
+        <h3>Three independent methods diverge sharply — and converge below today's price</h3>
+        <p>DCF ($49–$79), growth-adjusted comps ($77–$197), and precedent transactions ($19–$49) — built separately, none reverse-engineered to a target — blend to <strong>$137</strong> at 25/65/10 weights. Comps gets the most weight deliberately: DCF structurally understates a name whose value depends on growth well past a 5-year window.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">4</div>
+      <div class="p-body">
+        <h3>Nvidia and customer concentration are the swing factors</h3>
+        <p>Microsoft and Meta are <strong>~40%</strong> of revenue. Nvidia's Spectrum-X has already overtaken Arista and Cisco combined in overall datacenter Ethernet switching share (IDC, 1Q26) — the single biggest threat to the open-Ethernet thesis this report is built on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Valuation — Three Methods, One Verdict</h2>
+    <div class="field">
+      <div class="field-row">
+        <span class="f-label">DCF</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:21.8%; width:13.4%;"><span class="lo">$49</span><span class="hi">$79</span></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="f-label">Trading Comps</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:34.4%; width:53.1%;"><span class="lo">$77</span><span class="hi">$197</span></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="f-label">Precedent Deals</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:8.2%; width:13.4%;"><span class="lo">$19</span><span class="hi">$49</span></div>
+          <div class="f-marker target" data-label="Target $137" style="left:60.9%; color:var(--accent);"></div>
+          <div class="f-marker current" data-label="Current $177" style="left:78.8%; color:var(--muted);"></div>
+        </div>
+      </div>
+      <div class="f-axis">
+        <span></span>
+        <div class="f-axis-ticks">
+          <span style="left:0%;">$0</span>
+          <span style="left:33.3%;">$75</span>
+          <span style="left:66.7%;">$150</span>
+          <span style="left:100%; transform: translateX(-100%);">$225</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote">
+      <span class="pq-label">Sensitivity check</span>
+      <p>Even at the most bullish corner of our DCF sensitivity grid — <span class="pq-num">10.2%</span> WACC and <span class="pq-num">4.0%</span> terminal growth — fair value tops out at <span class="pq-num">$79</span>, still 55% below today's price. Closing that gap requires either a WACC below what a beta-1.6 name should carry, or a growth runway extending well past our 5-year explicit window. Read correctly: the market is pricing durable AI-networking share gains into the early 2030s, not just the next five years.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Risk / Catalyst Map</h2>
+    <div class="twocol">
+      <div>
+        <div class="col-head"><span class="swatch risk"></span><h3>Biggest risks to the HOLD (upside)</h3></div>
+        <ul class="compact">
+          <li><strong>Beat-and-raise continues.</strong> The $3.5bn FY26E AI networking target has already been raised once — a repeat would keep pushing estimates up.</li>
+          <li><strong>Campus/VeloCloud outperforms.</strong> HPE-Juniper integration friction could hand Arista faster-than-modeled enterprise share.</li>
+          <li><strong>Open Ethernet wins decisively.</strong> A major hyperscaler publicly standardizing away from Spectrum-X would remove the top competitive risk.</li>
+          <li><strong>Premium multiples persist.</strong> Comparable compounders (PANW, FTNT) have held rich valuations for years — the DCF gap can close via growth, not just price.</li>
+          <li><strong>Capital return accelerates.</strong> $12.3bn cash, zero debt — buybacks already stepped up 4x YoY in FY25A.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-head"><span class="swatch cat"></span><h3>Watch next</h3></div>
+        <ul class="compact">
+          <li><strong>Aug 5, 2026 — Q2 FY26 earnings.</strong> Next read on whether the raised AI networking guide holds.</li>
+          <li><strong>Microsoft &amp; Meta capex commentary.</strong> ~40% of revenue rides on these two budgets.</li>
+          <li><strong>IDC quarterly Ethernet share tracker.</strong> Watch whether Nvidia's lead over Arista+Cisco widens or narrows.</li>
+          <li><strong>Campus/VeloCloud disclosure.</strong> Any segment-level detail is the tell on the second growth engine.</li>
+          <li><strong>Broadcom Tomahawk/Jericho roadmap.</strong> Arista's silicon cadence is not fully its own to control.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      我们对 Arista Networks（NYSE: ANET）首次覆盖给予<strong>「持有」（HOLD）</strong>评级，12个月目标价<strong>$137.00</strong>，较现价 $177.36 隐含下行空间<strong>(22.8)%</strong>。这并非对基本面的否定——Arista 在高速数据中心 Ethernet switching 领域保持领先，AI networking 收入指引一年内翻倍，资产负债表零负债、现金达 $12.3bn——而是纯粹的估值判断：DCF（$49–$79）、growth-adjusted comps（$77–$197）、precedent transactions（$19–$49）三种独立方法结果分化明显，按 25/65/10 加权后仍低于现价。核心风险在于：若 AI networking beat-and-raise 持续、或估值倍数维持溢价的时间比 DCF 隐含的更久，该判断可能被证明保守；而 Nvidia Spectrum-X 份额侵蚀与 Microsoft/Meta 客户集中度（合计约40%收入）则是下行验证的关键变量。
+    </div>
+  </section>
+
+  <footer>
+    <h2 style="border:none; padding:0; margin-bottom:0.8rem;">Full Research Package</h2>
+    <div class="pkg">
+      <div class="pkg-item"><span class="pkg-name">Initiation Report (EN) — 51pp, 15,211 words, 30 charts</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">首次覆盖报告（中文全译版）— 58页</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Company Research Document — ~8,600 words</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Valuation Analysis — DCF, comps, precedent, sanity checks</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Financial Model — 11 tabs, fully linked</span><span class="pkg-tag">.XLSX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Chart Pack — 30 figures, 300 DPI</span><span class="pkg-tag">.ZIP</span></div>
+    </div>
+    <p class="disclaimer">Base case reflects analyst estimates built on company-disclosed FY2022A–FY2025A actuals (SEC EDGAR); several revenue sub-category splits (AI Networking, Campus, Routing, CloudVision, VeloCloud) are estimated allocations of disclosed totals, not company-reported figures — see the full research document for sourcing detail on every number. Peer set: CSCO, HPE, EXTR, CIEN, FFIV, FTNT, PANW, MRVL. Market data as of July 23–24, 2026.</p>
+    <p class="disclaimer">This is independent research prepared for internal use, not investment advice. Prepared by the Equity Research initiating-coverage team.</p>
+  </footer>
+
+</div>
+</body>
+</html>
