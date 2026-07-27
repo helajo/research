@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandisk Corporation — Initiation TL;DR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eeece6;
+    --paper-raised: #f6f4ef;
+    --ink: #1b1d1f;
+    --ink-soft: #34363a;
+    --muted: #6b6459;
+    --line: #d8d3c8;
+    --accent: #9b2e28;
+    --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0;
+    --steel: #2e4257;
+    --steel-soft: #5c7690;
+    --steel-wash: #e2e8ed;
+    --gold: #a4772f;
+    --gold-wash: #ede2cc;
+    --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15171a;
+      --paper-raised: #1c1f23;
+      --ink: #e9e7e1;
+      --ink-soft: #c7c4bc;
+      --muted: #93897a;
+      --line: #33363b;
+      --accent: #d9645c;
+      --accent-soft: #a8433c;
+      --accent-wash: #2c1c1b;
+      --steel: #8fb0cc;
+      --steel-soft: #5c7690;
+      --steel-wash: #1c2a35;
+      --gold: #d1a862;
+      --gold-wash: #2e2716;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15171a; --paper-raised: #1c1f23; --ink: #e9e7e1; --ink-soft: #c7c4bc;
+    --muted: #93897a; --line: #33363b; --accent: #d9645c; --accent-soft: #a8433c;
+    --accent-wash: #2c1c1b; --steel: #8fb0cc; --steel-soft: #5c7690; --steel-wash: #1c2a35;
+    --gold: #d1a862; --gold-wash: #2e2716; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --paper: #eeece6; --paper-raised: #f6f4ef; --ink: #1b1d1f; --ink-soft: #34363a;
+    --muted: #6b6459; --line: #d8d3c8; --accent: #9b2e28; --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0; --steel: #2e4257; --steel-soft: #5c7690; --steel-wash: #e2e8ed;
+    --gold: #a4772f; --gold-wash: #ede2cc; --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .mono { font-family: 'IBM Plex Mono', 'SF Mono', Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in { animation: fadeIn 0.5s ease-out both; }
+    .fade-in:nth-child(2) { animation-delay: 0.06s; }
+    .fade-in:nth-child(3) { animation-delay: 0.12s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .kicker strong { color: var(--ink-soft); }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+  h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 2.35rem;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0.9rem 0 0.15rem;
+    color: var(--ink);
+  }
+  .ticker-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--steel);
+    margin-bottom: 1.4rem;
+  }
+
+  .thesis {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.28rem;
+    line-height: 1.42;
+    color: var(--ink-soft);
+    text-wrap: balance;
+    margin: 0 0 1.9rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+  }
+
+  /* ---------- Rating ticket ---------- */
+  .ticket {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 2.2rem;
+  }
+  .ticket > div {
+    padding: 0.85rem 0.9rem;
+    border-right: 1px solid var(--line);
+  }
+  .ticket > div:last-child { border-right: none; }
+  .ticket .rating-cell { background: var(--accent); }
+  .t-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .ticket .rating-cell .t-label { color: rgba(255,255,255,0.75); }
+  .t-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.28rem; font-weight: 600; color: var(--ink); }
+  .ticket .rating-cell .t-value { color: #fff; letter-spacing: 0.02em; }
+  .t-value.down { color: var(--accent); }
+  @media (max-width: 560px) {
+    .ticket { grid-template-columns: repeat(2, 1fr); }
+    .ticket > div:nth-child(2) { border-right: none; }
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { margin-bottom: 2.6rem; }
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  p { margin: 0 0 0.9rem; color: var(--ink-soft); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- Stat grid ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .stats div { background: var(--paper-raised); padding: 0.75rem 0.9rem; }
+  .stats .s-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+  .stats .s-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.02rem; font-weight: 600; color: var(--ink); }
+  @media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Thesis pillars ---------- */
+  .pillar { display: flex; gap: 0.9rem; margin-bottom: 1.35rem; }
+  .pillar:last-child { margin-bottom: 0; }
+  .p-num {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--accent-soft);
+    line-height: 1.25;
+    flex: 0 0 auto;
+    width: 1.7rem;
+  }
+  .p-body h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+  }
+  .p-body p { font-size: 0.95rem; margin: 0; }
+
+  /* ---------- Football field (CSS bars) ---------- */
+  .field { position: relative; padding: 0.5rem 0 0.25rem; }
+  .field-row { display: grid; grid-template-columns: 108px 1fr; align-items: center; gap: 0.7rem; margin-bottom: 0.85rem; }
+  .field-row .f-label { font-size: 0.78rem; color: var(--muted); text-align: right; }
+  .f-track { position: relative; height: 22px; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 2px; }
+  .f-bar { position: absolute; top: 0; bottom: 0; background: var(--steel-wash); border-left: 2px solid var(--steel); border-right: 2px solid var(--steel); }
+  .f-bar span { position: absolute; top: 50%; transform: translateY(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--steel); white-space: nowrap; }
+  .f-bar span.lo { right: calc(100% + 6px); }
+  .f-bar span.hi { left: calc(100% + 6px); }
+  .f-marker { position: absolute; top: -5px; bottom: -5px; width: 2px; }
+  .f-marker.current { background: var(--muted); }
+  .f-marker.target { background: var(--accent); }
+  .f-marker::after {
+    content: attr(data-label);
+    position: absolute; top: -1.15rem; left: 50%; transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; white-space: nowrap; color: inherit;
+  }
+  .f-axis { display: grid; grid-template-columns: 108px 1fr; margin-top: 0.2rem; }
+  .f-axis-ticks { position: relative; height: 14px; }
+  .f-axis-ticks span { position: absolute; top: 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); transform: translateX(-50%); }
+
+  /* ---------- Pull quote (reverse DCF) ---------- */
+  .pullquote {
+    background: var(--gold-wash);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+    padding: 1.1rem 1.3rem;
+    margin-top: 1.4rem;
+  }
+  .pullquote .pq-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+  .pullquote p { font-size: 0.94rem; margin: 0; color: var(--ink-soft); }
+  .pullquote .pq-num { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--ink); }
+
+  /* ---------- Two-column risk/catalyst ---------- */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  @media (max-width: 620px) { .twocol { grid-template-columns: 1fr; } }
+  .col-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem; }
+  .col-head .swatch { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+  .swatch.risk { background: var(--accent); }
+  .swatch.cat { background: var(--steel); }
+  .col-head h3 { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.88rem; margin: 0; color: var(--ink); }
+  ul.compact { list-style: none; margin: 0; padding: 0; }
+  ul.compact li {
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--line);
+  }
+  ul.compact li:first-child { border-top: none; padding-top: 0; }
+  ul.compact li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Chinese summary blocks ---------- */
+  .zh {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.86rem;
+    line-height: 1.85;
+    color: var(--muted);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+  }
+  .zh .zh-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--steel-soft);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  .zh strong { color: var(--ink-soft); }
+
+  /* ---------- Footer / package list ---------- */
+  footer { border-top: 2px solid var(--ink); padding-top: 1.3rem; }
+  .pkg { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.6rem; }
+  .pkg-item { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--line); }
+  .pkg-item .pkg-name { color: var(--ink-soft); font-weight: 500; }
+  .pkg-item .pkg-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--muted); }
+  .disclaimer { font-size: 0.76rem; color: var(--muted); line-height: 1.6; }
+  .disclaimer + .disclaimer { margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead fade-in">
+    <span class="kicker">Equity Research <strong>·</strong> Initiating Coverage</span>
+    <span class="date-stamp">24 JUL 2026</span>
+  </div>
+
+  <h1 class="fade-in">Sandisk — the TL;DR</h1>
+  <div class="ticker-line fade-in">NASDAQ: SNDK &nbsp;·&nbsp; Semiconductors — NAND Flash Memory &amp; Storage</div>
+
+  <p class="thesis fade-in">Priced for a supercycle that has never lasted. DCF, trading comps, and a precedent transaction — three methods, built separately — all land well below the tape. The stock trades at $1,610.33.</p>
+
+  <div class="ticket fade-in">
+    <div class="rating-cell"><span class="t-label">Rating</span><span class="t-value">SELL</span></div>
+    <div><span class="t-label">Price Target</span><span class="t-value">$600.00</span></div>
+    <div><span class="t-label">Current Price</span><span class="t-value">$1,610.33</span></div>
+    <div><span class="t-label">Downside</span><span class="t-value down">(62.7)%</span></div>
+  </div>
+
+  <section>
+    <h2>Snapshot</h2>
+    <div class="stats">
+      <div><span class="s-label">Market Cap</span><span class="s-value">$238.5bn</span></div>
+      <div><span class="s-label">Enterprise Value</span><span class="s-value">$239.0bn</span></div>
+      <div><span class="s-label">52-Week Range</span><span class="s-value">$40–$2,354</span></div>
+      <div><span class="s-label">FY25A Revenue</span><span class="s-value">$7.36bn</span></div>
+      <div><span class="s-label">FY25A GAAP EPS</span><span class="s-value">$(11.32)</span></div>
+      <div><span class="s-label">Beta (peer avg.)</span><span class="s-value">2.10</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Sell</h2>
+
+    <div class="pillar">
+      <div class="p-num">1</div>
+      <div class="p-body">
+        <h3>A cycle-normalized DCF shows material downside — even in the Bull Case</h3>
+        <p>Discounting our own modeled FY26E–FY30E unlevered FCF at a peer-informed <strong>16.0% WACC</strong> gives a Base Case DCF of <strong>$465.65/share</strong>. Even the Bull Case — more NBM deals, HBF succeeds, the cycle stays tight — tops out at <strong>$738</strong>, still 54% below the tape.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">2</div>
+      <div class="p-body">
+        <h3>The Street's own memory peers are pricing this as temporary</h3>
+        <p>Micron, SK Hynix, and Samsung — Sandisk's closest fundamental comps — trade at just <strong>3.8x–6.4x</strong> forward P/E, compressed precisely because the market expects a huge near-term earnings ramp that can't repeat every year. Applying that same range to a generous blended NTM EPS of $141.79 yields <strong>$539–$907/share</strong>.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">3</div>
+      <div class="p-body">
+        <h3>The $42bn NBM book is real — and already priced several times over</h3>
+        <p>Five long-term supply deals, ~$42bn of remaining performance obligations, &gt;$11bn of guarantees, covering &gt;1/3 of FY27E bit production. Genuine structural improvement — reflected in our Base Case's 40.3% FY30E EBITDA margin — but not, in our view, worth <strong>~3x</strong> our comps-implied fair value for that visibility.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">4</div>
+      <div class="p-body">
+        <h3>History says every NAND supercycle ends the same way</h3>
+        <p>Every prior cycle — most recently 2023–2024 — ended when producer capacity responses outran the demand that created the shortage. That response is already underway: Kioxia/Sandisk JV capex is up <strong>41% YoY</strong> to $4.5bn, matched by Samsung, SK Hynix, and Micron.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Valuation — Three Methods, One Direction</h2>
+    <div class="field">
+      <div class="field-row">
+        <span class="f-label">DCF</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:19.4%; width:17.5%;"><span class="lo">$388</span><span class="hi">$738</span></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="f-label">Trading Comps</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:26.95%; width:18.4%;"><span class="lo">$539</span><span class="hi">$907</span></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="f-label">Precedent Deal</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:25.0%; width:5.0%;"><span class="lo">$500</span><span class="hi">$600</span></div>
+          <div class="f-marker target" data-label="Target $600" style="left:30.0%; color:var(--accent);"></div>
+          <div class="f-marker current" data-label="Current $1,610" style="left:80.5%; color:var(--muted);"></div>
+        </div>
+      </div>
+      <div class="f-axis">
+        <span></span>
+        <div class="f-axis-ticks">
+          <span style="left:0%;">$0</span>
+          <span style="left:25%;">$500</span>
+          <span style="left:50%;">$1,000</span>
+          <span style="left:75%;">$1,500</span>
+          <span style="left:100%; transform: translateX(-100%);">$2,000</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem; color:var(--muted); margin-top:0.6rem;">The current price sits well above the high end of every method's individual range — DCF, comps, and precedent all top out at $907 or below.</p>
+
+    <div class="pullquote">
+      <span class="pq-label">Reverse-DCF check</span>
+      <p>Solving for the perpetual growth rate the current price implies, at our 16.0% base-case WACC, returns roughly <span class="pq-num">13.8%</span> — far above any sustainable long-run input to a Gordon Growth model (nominal GDP growth runs ~2.5%). Read correctly: the market is pricing in near-full delivery of the Bull Case indefinitely, not a cycle that ever normalizes.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Risk / Catalyst Map</h2>
+    <div class="twocol">
+      <div>
+        <div class="col-head"><span class="swatch risk"></span><h3>Biggest risks to the SELL</h3></div>
+        <ul class="compact">
+          <li><strong>More NBM deals land.</strong> Beyond the current five, each additional agreement pushes revenue visibility — and possibly the discount rate — further our way.</li>
+          <li><strong>HBF wins a real design-in.</strong> A confirmed Nvidia/AMD/custom-silicon slot validates a wholly new demand category, not captured in legacy NAND TAM.</li>
+          <li><strong>Pricing strength extends into FY27E.</strong> If AI capex keeps outrunning industry capacity, the historical bust gets delayed or muted.</li>
+          <li><strong>BiCS10 ramps ahead of plan.</strong> Faster Kioxia JV yield ramp extends the cost-leadership window past our Base Case.</li>
+          <li><strong>Street stays right.</strong> 18 of 23 analysts rate it Buy/Strong Buy, avg. target $2,197 — well above the tape, and moving up all year.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-head"><span class="swatch cat"></span><h3>Watch next</h3></div>
+        <ul class="compact">
+          <li><strong>Aug 6, 2026 — FQ4 2026 earnings.</strong> First full read on whether the 79–81% GM guide held.</li>
+          <li><strong>Any new NBM agreements announced.</strong> Five signed so far; pace of the next ones is the single biggest swing factor.</li>
+          <li><strong>HBF customer/product news.</strong> Named design wins vs. continued "pipeline" language.</li>
+          <li><strong>2026 industry capex data.</strong> Samsung / SK Hynix / Micron capacity adds — the historical precursor to every prior downcycle.</li>
+          <li><strong>Spot NAND pricing trend.</strong> First sign of consumer/retail pricing cracking would front-run the Edge/Consumer normalization already in our model.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      我们对 Sandisk Corporation（纳斯达克代码：SNDK）首次覆盖给予<strong>"卖出"</strong>评级，12个月目标价<strong>$600.00</strong>，较当前股价 $1,610.33 隐含下行空间<strong>(62.7)%</strong>。这并非否定公司基本面——NBM 长期合同与 HBF 项目都是真实的结构性改善——而是纯粹的估值判断：以16.0%的同业隐含 WACC 构建的 DCF、trading comps 与先例交易三种独立方法，估值区间均落在 $388 至 $907 之间，全部低于当前股价；反向 DCF 显示当前股价隐含约13.8%的永续增长率，远超可持续水平。核心风险在于：23位分析师中有18位给予 Buy 评级，若 NBM 合同持续扩张、HBF 顺利放量、或本轮 AI 驱动的 supercycle 确实有别于以往，我们的判断可能被证明为时过早。
+    </div>
+  </section>
+
+  <footer>
+    <h2 style="border:none; padding:0; margin-bottom:0.8rem;">Full Research Package</h2>
+    <div class="pkg">
+      <div class="pkg-item"><span class="pkg-name">Initiation Report (EN) — 46pp, ~14,060 words, 30 charts</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">首次覆盖报告（中文全译版）— 51页</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Company Research Document — ~7,900 words</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Valuation Analysis — DCF, comps, precedent, sanity checks</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Financial Model — 10 tabs, fully linked, BS balances to $0</span><span class="pkg-tag">.XLSX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Chart Pack — 30 figures, 300 DPI</span><span class="pkg-tag">.ZIP</span></div>
+    </div>
+    <p class="disclaimer">Base case reflects analyst estimates built on company-disclosed FY2023A–FY2025A actuals (SEC EDGAR) plus three reported FY2026 quarters and management's FQ4 guidance; segment sub-category splits are estimated allocations of disclosed totals, not company-reported figures — see the full research document for sourcing detail on every number. Peer set: MU, 000660.KS (SK Hynix), 005930.KS (Samsung), WDC, STX. Market data as of July 24, 2026.</p>
+    <p class="disclaimer">This is independent research prepared for internal use, not investment advice. Prepared by the Equity Research initiating-coverage team.</p>
+  </footer>
+
+</div>
+</body>
+</html>
