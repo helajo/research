@@ -1,0 +1,240 @@
+<title>Life Lab Resources — Financial Deep-Dive</title>
+<style>
+:root{
+  --bg:#F2F1E9;
+  --bg-alt:#E7E6DB;
+  --card:#FBFAF5;
+  --ink:#232821;
+  --ink-soft:#5B6058;
+  --accent:#4B6B4A;
+  --accent-deep:#33482F;
+  --rust:#AD5429;
+  --amber:#8A6A1F;
+  --line:#D3D1C3;
+  --font-head:Palatino,"Palatino Linotype","Iowan Old Style",Georgia,serif;
+  --font-body:-apple-system,"Segoe UI",system-ui,sans-serif;
+  --font-cjk:"PingFang SC","Microsoft YaHei",var(--font-body);
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#171B15; --bg-alt:#1F241C; --card:#1C2118; --ink:#E7E5D9; --ink-soft:#A6AA9C;
+    --accent:#8FB489; --accent-deep:#B7D3AF; --rust:#E08557; --amber:#D9B863; --line:#333B2F;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171B15; --bg-alt:#1F241C; --card:#1C2118; --ink:#E7E5D9; --ink-soft:#A6AA9C;
+  --accent:#8FB489; --accent-deep:#B7D3AF; --rust:#E08557; --amber:#D9B863; --line:#333B2F;
+}
+:root[data-theme="light"]{
+  --bg:#F2F1E9; --bg-alt:#E7E6DB; --card:#FBFAF5; --ink:#232821; --ink-soft:#5B6058;
+  --accent:#4B6B4A; --accent-deep:#33482F; --rust:#AD5429; --amber:#8A6A1F; --line:#D3D1C3;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+.page{max-width:820px; margin:0 auto; padding:56px 24px 100px;}
+.eyebrow{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-deep); font-weight:600;}
+h1{font-family:var(--font-head); font-weight:600; font-size:clamp(28px,4vw,38px); line-height:1.15; margin:10px 0 6px; text-wrap:balance;}
+.subtitle{color:var(--ink-soft); font-size:15.5px; margin-bottom:28px;}
+.meta-row{display:flex; flex-wrap:wrap; gap:6px 18px; font-family:var(--font-mono); font-size:12.5px; color:var(--ink-soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px 0; margin-bottom:36px;}
+.meta-row b{color:var(--ink); font-weight:600;}
+
+.verdict{background:var(--accent-deep); color:#F2F1E9; border-radius:3px; padding:24px 26px; margin:0 0 36px;}
+.verdict .eyebrow{color:#c9dcc4;}
+.verdict p{margin:8px 0 0; font-family:var(--font-head); font-size:19px; line-height:1.5; text-wrap:balance;}
+
+section{margin:44px 0;}
+section h2{font-family:var(--font-head); font-size:23px; font-weight:600; margin:0 0 4px;}
+section .lens{color:var(--ink-soft); font-size:13.5px; margin-bottom:16px; font-style:italic;}
+section p{margin:0 0 14px; font-size:15.5px;}
+section ul, section ol{margin:0 0 14px; padding-left:22px; font-size:15.5px;}
+section li{margin-bottom:6px;}
+h3.subhead{font-family:var(--font-head); font-size:16.5px; font-weight:600; margin:22px 0 8px;}
+
+table{width:100%; border-collapse:collapse; font-size:14px; margin:6px 0 18px;}
+.table-wrap{overflow-x:auto; margin-bottom:18px;}
+th{text-align:left; font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); font-weight:600; padding:8px 12px; border-bottom:1px solid var(--line);}
+td{padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+td.num{font-variant-numeric:tabular-nums; font-family:var(--font-mono); font-size:13px; text-align:right;}
+th.num{text-align:right;}
+tr.hl td{background:color-mix(in srgb, var(--amber) 12%, transparent); font-weight:600;}
+tr.bad td{background:color-mix(in srgb, var(--rust) 10%, transparent);}
+tr.good td{background:color-mix(in srgb, var(--accent) 10%, transparent);}
+
+.stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0;}
+@media (max-width:640px){.stat-grid{grid-template-columns:1fr;}}
+.stat{background:var(--card); border:1px solid var(--line); border-radius:3px; padding:16px 18px;}
+.stat .label{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:6px;}
+.stat .value{font-family:var(--font-head); font-size:26px; font-weight:600; font-variant-numeric:tabular-nums;}
+.stat .sub{font-size:12.5px; color:var(--ink-soft); margin-top:4px;}
+.stat.flag .value{color:var(--rust);}
+.stat.ok .value{color:var(--accent-deep);}
+
+.callout{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--rust); border-radius:0 3px 3px 0; padding:14px 18px; margin:16px 0; font-size:14.5px;}
+.callout.good{border-left-color:var(--accent);}
+.callout b{color:var(--rust);}
+.callout.good b{color:var(--accent-deep);}
+
+.zh{background:var(--bg-alt); border-left:3px solid var(--accent); padding:14px 18px; border-radius:0 3px 3px 0; margin-top:16px; font-family:var(--font-cjk); font-size:14.5px; line-height:1.85;}
+.zh .zh-label{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.1em; color:var(--accent-deep); text-transform:uppercase; display:block; margin-bottom:6px; font-weight:700;}
+
+.methodology{background:var(--card); border:1px solid var(--line); border-radius:3px; padding:16px 20px; font-size:13.5px; color:var(--ink-soft);}
+.methodology h4{margin:0 0 8px; font-family:var(--font-head); font-size:14px; color:var(--ink); font-weight:600;}
+
+footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-soft); font-family:var(--font-mono);}
+a{color:var(--accent-deep);}
+</style>
+
+<div class="page">
+
+  <div class="eyebrow">Financial Deep-Dive · Companion to the Data Room Review</div>
+  <h1>Life Lab Resources Pte Ltd</h1>
+  <div class="subtitle">A quantitative pass through the FY2023–FY2025 audited financial statements — computed ratios, not just narrative</div>
+  <div class="meta-row">
+    <span><b>UEN</b> 202243209E</span>
+    <span><b>Prepared</b> 06 Aug 2026</span>
+    <span><b>Source data</b> Audited financial statements (LinKz Assurance PAC), FY2023–FY2025</span>
+  </div>
+
+  <div class="verdict">
+    <div class="eyebrow">The Headline</div>
+    <p>The company's first profitable year came with its entire working-capital cycle stretching out at once — not just receivables. Both what customers owe Life Lab and what Life Lab owes its own suppliers ballooned in days-outstanding terms in the same year, and the gap between the two nearly 6x'd. That's a more specific, more testable question than "why did receivables spike" — and it's answerable with one document: an aged listing of both receivables and payables by counterparty.</p>
+  </div>
+
+  <section>
+    <h2>1. Profitability — real, but the margin story has two distinct chapters</h2>
+    <div class="lens">FY2023 (13-month stub) → FY2024 → FY2025</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>S$</th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">FY2025</th></tr>
+        <tr><td>Revenue</td><td class="num">889,418</td><td class="num">2,109,203</td><td class="num">2,113,873</td></tr>
+        <tr><td>Gross profit</td><td class="num">266,618</td><td class="num">439,832</td><td class="num">451,435</td></tr>
+        <tr><td>Gross margin</td><td class="num">30.0%</td><td class="num">20.9%</td><td class="num">21.4%</td></tr>
+        <tr><td>Net profit/(loss)</td><td class="num">(26,250)</td><td class="num">(81,235)</td><td class="num">30,021</td></tr>
+        <tr><td>Net margin</td><td class="num">(3.0%)</td><td class="num">(3.9%)</td><td class="num">1.4%</td></tr>
+      </table>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Revenue growth FY23→24</div><div class="value">+137%</div><div class="sub">13-month stub vs. full year, so not fully like-for-like</div></div>
+      <div class="stat flag"><div class="label">Revenue growth FY24→25</div><div class="value">+0.2%</div><div class="sub">effectively flat</div></div>
+      <div class="stat flag"><div class="label">Margin compression FY23→24</div><div class="value">−30%</div><div class="sub">relative cut to the margin itself, not just points</div></div>
+    </div>
+    <p>The 9-percentage-point drop in gross margin (30.0% → 20.9%) between FY2023 and FY2024 sounds modest stated as points, but it's actually a <b>30% relative cut to the margin itself</b> — a much bigger deal for unit economics than the headline suggests. The good news: margin then stabilized (20.9% → 21.4%, essentially flat) through FY2025, so whatever drove the FY2024 compression — mix shift toward lower-margin machine resale, a pricing change, input cost inflation — didn't continue to deteriorate.</p>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      收入增长分两个阶段：FY2023到FY2024增长137%（但FY2023只有13个月，不是完全可比的整年数据），FY2024到FY2025几乎零增长（+0.2%）。毛利率从FY2023的30.0%降到FY2024的20.9%，看起来只是9个百分点，但换算成相对跌幅其实是毛利率本身被砍掉了30%——这比"跌了9个点"听起来严重得多。好消息是FY2024到FY2025毛利率企稳（20.9%→21.4%），没有继续恶化。
+    </div>
+  </section>
+
+  <section>
+    <h2>2. The core finding — the whole cash-conversion cycle stretched out, not just receivables</h2>
+    <div class="lens">This is the single most important number in this deep-dive</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th></th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">FY2025</th></tr>
+        <tr><td>Days Sales Outstanding (DSO)</td><td class="num">204</td><td class="num">44</td><td class="num">256</td></tr>
+        <tr><td>Days Payable Outstanding (DPO)</td><td class="num">n/a*</td><td class="num">16</td><td class="num">94</td></tr>
+        <tr class="hl"><td>Net working-capital days (DSO − DPO)</td><td class="num">—</td><td class="num">28</td><td class="num">161</td></tr>
+      </table>
+    </div>
+    <p class="lens" style="margin-top:-10px">*FY2023's payables note wasn't broken out into pure trade payables vs. other items in the extract reviewed, so DPO isn't computable for that year on a like-for-like basis.</p>
+    <p><b>DSO didn't just spike from a stable baseline — it swung.</b> FY2023 was already elevated at 204 days, dropped sharply to 44 days in FY2024 (an unusually good collections year, or a smaller, different customer mix), then jumped to 256 days in FY2025. Treating 44 days as "normal" and 256 as "the anomaly" — which is the easy read — understates how volatile this line actually is across all three years.</p>
+    <p><b>Payables moved the same way, at nearly the same magnitude.</b> DPO went from 16 days to 94 days — a <b>5.9x</b> increase, almost identical in scale to receivables' 5.8x increase (formally, the Days-Sales-in-Receivables Index, a standard forensic-accounting ratio, computes to <b>5.78x</b> for FY2024→FY2025 — values well above 1.0 are a textbook flag for either revenue-recognition risk or genuine collections deterioration).</p>
+    <div class="callout"><b>What this means in practice:</b> the net gap between when Life Lab gets paid and when it pays its own suppliers widened from 28 days to 161 days in a single year. That 133-day widening is the single biggest driver of why a company reporting its first profit still needed to draw S$600,000 in new bank debt. This isn't necessarily bad-faith accounting — it could simply be the mechanics of scaling into larger corporate customers with slower payment cycles while also stretching supplier terms to compensate — but it's a specific, testable claim, not a vague "cash flow was weak" observation.</div>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      这是整份深度分析里最重要的发现：不只是应收账款出问题，而是整个现金周转周期在FY2025同时被拉长了。应收账款周转天数（DSO）并非从稳定基线突然跳升——FY2023已经是204天的高位，FY2024罕见地降到44天，FY2025又跳到256天，波动本身就不正常。更关键的是，应付账款周转天数（DPO）也以几乎相同的倍数变化：从16天涨到94天（5.9倍），与应收账款5.8倍的涨幅几乎同步。用标准的法务会计比率衡量（应收账款销售指数DSRI），FY2024到FY2025的数值是5.78倍——远高于1.0的水平在这个框架里通常会被视为收入确认风险或真实收款恶化的信号。实际影响是：公司收款和付款之间的净差距天数从28天扩大到161天，这133天的扩大很可能就是公司明明报告首次盈利、却还要新借60万新元银行贷款的主要原因。这不一定意味着有意造假，也可能只是规模扩张时被大客户拖慢账期、同时拉长对供应商的付款周期来补偿——但这是一个具体、可核实的说法，而不是笼统的"现金流偏弱"。
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Payables composition — one line item grew 77x</h2>
+    <div class="lens">Note 12 breakdown, FY2024 vs FY2025</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>S$</th><th class="num">FY2024</th><th class="num">FY2025</th><th class="num">Multiple</th></tr>
+        <tr><td>Trade payables (pure)</td><td class="num">73,714</td><td class="num">428,340</td><td class="num">5.8x</td></tr>
+        <tr><td>Customer deposits</td><td class="num">69,750</td><td class="num">42,550</td><td class="num">0.6x</td></tr>
+        <tr><td>GST payables</td><td class="num">9,609</td><td class="num">136,468</td><td class="num">14.2x</td></tr>
+        <tr class="bad"><td>Accrued expenses</td><td class="num">6,000</td><td class="num">463,610</td><td class="num">77.3x</td></tr>
+        <tr><td>Convertible loan (related party)</td><td class="num">605,000</td><td class="num">605,000</td><td class="num">1.0x</td></tr>
+        <tr><td>Amount due to a director</td><td class="num">—</td><td class="num">20</td><td class="num">—</td></tr>
+      </table>
+    </div>
+    <p><b>Accrued expenses jumping from S$6,000 to S$463,610</b> is the single largest percentage move of any line item in the entire balance sheet — a 77x increase. This is worth a direct question: what's actually accrued in there? Plausible, benign explanations include professional fees for this fundraising round (legal, audit, valuation work), accrued bonuses tied to the first profitable year, or accrued interest/costs on the new bank facilities — but at this size relative to the company's overall scale, it deserves a specific answer rather than an assumption.</p>
+    <p>GST payables growing 14.2x, against revenue that grew only 0.2%, is also disproportionate — worth checking whether this reflects a genuine timing difference (e.g. GST collected on year-end invoices not yet remitted) or something that needs explaining.</p>
+    <p>Customer deposits are the one line that <i>fell</i> (−39%) — consistent with fewer large new-equipment orders requiring upfront deposits in FY2025, which lines up with the finding elsewhere that machine/equipment sales revenue itself declined slightly that year.</p>
+    <p class="lens" style="margin-top:8px">One data point from FY2023: total payables that year were S$1,465,001, of which S$605,000 is explained by the newly-issued convertible note. The residual — S$860,001 — represents <b>97% of that entire year's revenue</b> sitting in trade/other payables in the company's first (stub) year of operation. That's a striking figure for a company that young, though without FY2023's granular Note 12 breakdown it's not possible to say how much of it is ordinary trade credit vs. something else.</p>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      应付账款科目里有一项暴涨了77倍：应计费用从6,000新元涨到463,610新元，是整张资产负债表里涨幅最大的单一项目，值得直接问清楚里面到底计提了什么——可能是本轮融资的专业服务费（律师、审计、估值），也可能是首次盈利年度的计提奖金，或新增银行贷款的应计利息，但以公司目前的体量来看，这个涨幅需要一个具体答案，不能想当然。消费税（GST）应付款涨了14.2倍，而同期收入只涨了0.2%，涨幅也不成比例，值得核实是不是年末开票但尚未缴纳消费税的正常时间差。客户预付款是唯一下降的项目（-39%），与同期设备销售收入本身小幅下滑的情况相符（新设备大单减少，需要预付款的订单也相应减少）。另外，FY2023全年应付款总额145万新元中，60.5万可以用当年新发行的可转换票据解释，剩余的86万新元占了当年全部收入的97%，对一家刚成立的公司来说是个相当惊人的数字，但由于缺少FY2023的应付款明细，无法判断这里面有多少是正常的贸易信用。
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Cash flow quality — how much of the "profit" is real cash</h2>
+    <div class="lens">Accrual vs. cash reality</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>S$</th><th class="num">FY2024</th><th class="num">FY2025</th></tr>
+        <tr><td>Net profit/(loss)</td><td class="num">(81,235)</td><td class="num">30,021</td></tr>
+        <tr><td>Operating cash flow</td><td class="num">(216,534)</td><td class="num">(189,170)</td></tr>
+        <tr class="hl"><td>Cash-vs-accrual gap</td><td class="num">(135,299)</td><td class="num">(219,191)</td></tr>
+      </table>
+    </div>
+    <p>FY2025's headline result — the company's first-ever profitable year — came alongside operating cash flow that was <i>more</i> negative in dollar terms than the accounting profit was positive: a <b>S$219,191 gap</b> between what the P&amp;L reports and what actually happened to cash. That gap is larger than FY2024's, even though FY2024 was a reported loss. In plain terms: the "profit" is genuine under accounting rules (revenue was earned, costs were incurred), but essentially none of it showed up as cash in the bank that year — it's sitting in the receivables and payables movements covered above.</p>
+    <div class="stat-grid">
+      <div class="stat flag"><div class="label">FY2025 cash runway at current burn</div><div class="value">~2.8 yrs</div><div class="sub">S$521,282 cash ÷ ~S$15,764/month operating burn, excluding any new financing</div></div>
+      <div class="stat"><div class="label">FY2025 ECL allowance / receivables</div><div class="value">0.6%</div><div class="sub">down from 3.3% in FY2024, despite receivables growing 6x</div></div>
+      <div class="stat"><div class="label">Bank borrowings, FY2025</div><div class="value">S$606K</div><div class="sub">funded most of the year's cash increase</div></div>
+    </div>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      FY2025公司首次实现账面盈利，但同期经营性现金流的负值（-189,170新元）在绝对金额上比这笔盈利（30,021新元）还要大——账面数字和实际现金之间有219,191新元的缺口，甚至比FY2025的亏损年份FY2024的缺口（135,299新元）还大。换句话说，这笔"利润"在会计规则下是真实的（收入已确认、成本已发生），但当年几乎没有转化为实际到账的现金，全都沉淀在前面提到的应收应付变动里了。按FY2025的经营性现金消耗速度（约每月15,764新元）计算，账上52.1万新元现金大约还能撑2.8年（前提是没有本轮融资和其他新借款）。另外，坏账拨备占应收账款的比例从FY2024的3.3%降到FY2025的0.6%，而同期应收账款规模涨了6倍——拨备比例不升反降。
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Balance-sheet solvency — trending better in relative terms than the raw numbers suggest</h2>
+    <div class="lens">Total liabilities vs. total assets</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th></th><th class="num">FY2023</th><th class="num">FY2024</th><th class="num">FY2025</th></tr>
+        <tr><td>Total assets</td><td class="num">1,488,751</td><td class="num">706,588</td><td class="num">2,254,736</td></tr>
+        <tr><td>Total liabilities</td><td class="num">1,465,001</td><td class="num">764,073</td><td class="num">2,282,200</td></tr>
+        <tr><td>Shareholders' equity</td><td class="num">23,750</td><td class="num">(57,485)</td><td class="num">(27,464)</td></tr>
+        <tr class="hl"><td>Liabilities / Assets</td><td class="num">98.4%</td><td class="num">108.1%</td><td class="num">101.2%</td></tr>
+      </table>
+    </div>
+    <p>Shareholders' equity has been negative for two straight years, which sounds like a worsening trend if you only look at the raw equity figures (−S$57,485 → −S$27,464 looks like modest improvement, but easy to misread at a glance). Normalized against the balance sheet's actual size, though, <b>FY2024 was the most balance-sheet-stressed year</b> (liabilities exceeded assets by 8.1%), and FY2025 improved to just 1.2% over — the company has been growing its way toward balance, not away from it, even though it hasn't crossed back to positive equity yet. The auditor issued an unqualified opinion with no going-concern qualification in every year reviewed, which is a real, independent signal, even though it doesn't resolve the underlying cash-timing questions above.</p>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      股东权益已经连续两年为负，单看绝对数字（-57,485→-27,464）容易被误读为在改善。但把负债和资产的相对规模放在一起看，其实FY2024才是资产负债表压力最大的一年（负债超出资产8.1%），FY2025已经收窄到只超出1.2%——公司是在朝着资产负债平衡的方向改善，只是还没转正。三年审计意见都是无保留意见，没有"持续经营"警示，这是一个真实的、独立的正面信号，但并不能替代对上面现金时点问题的进一步核实。
+    </div>
+  </section>
+
+  <section>
+    <h2>Questions this deep-dive raises, specifically</h2>
+    <ol>
+      <li>Request an <b>aged receivables listing by customer</b> and an <b>aged payables listing by supplier</b> for FY2025 — this single document would resolve most of the questions above: whether the DSO/DPO stretch is concentrated in one or two large counterparties (e.g. a slow-paying government/institutional client, or a specific supplier negotiation) versus broad-based.</li>
+      <li>What specifically is in the S$463,610 accrued expenses balance — a breakdown by category (professional fees, bonuses, interest, other) would settle whether the 77x jump is benign (one-off costs tied to this raise) or something requiring more scrutiny.</li>
+      <li>Why did GST payables grow 14.2x against 0.2% revenue growth — timing difference or something else?</li>
+      <li>Is the FY2025 receivables/payables stretch a one-time event tied to specific large contracts (e.g. the Frasers rollout or new institutional customers), or a structural feature of scaling into larger corporate customers that will recur every year going forward?</li>
+    </ol>
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      建议追问：（1）索要FY2025按客户拆分的应收账龄表和按供应商拆分的应付账龄表——这一份文件基本能回答上面大部分疑问，判断DSO/DPO的拉长是集中在一两个大客户/供应商身上，还是普遍现象；（2）463,610新元的应计费用具体构成是什么（专业服务费、奖金、利息还是其他）——分类明细能判断这77倍的暴涨是本轮融资相关的一次性费用（问题不大），还是需要进一步关注；（3）消费税应付款为何暴涨14.2倍，而同期收入只涨0.2%，是正常的时间差还是另有原因；（4）FY2025应收应付的拉长是不是与特定大合同（如星狮地产的推广或新机构客户）相关的一次性事件，还是未来每年都会重演的规模化结构性特征。
+    </div>
+  </section>
+
+  <div class="methodology">
+    <h4>Methodology note</h4>
+    <p>All figures sourced directly from Life Lab Resources' audited financial statements (LinKz Assurance PAC) for FY2023 (13-month stub period), FY2024, and FY2025, as included in the AC S323 data room. Ratios (DSO, DPO, GMI, DSRI) computed independently from the reported line items, not taken from any company-provided analysis. DSRI (Days-Sales-in-Receivables Index) and GMI (Gross Margin Index) are standard forensic-accounting ratios from the academic earnings-quality literature (Beneish), used here individually as diagnostic flags — this is not a full Beneish M-Score, which requires several additional inputs (asset quality, depreciation, SG&amp;A, and total-accruals indices) not fully available from the documents reviewed. This is a document-based analysis, not an audit or independent verification of the underlying figures.</p>
+  </div>
+
+  <footer>
+    Companion document to the main Life Lab Resources data room review. Source: FY2023–FY2025 audited financial statements (LinKz Assurance PAC), Notes 4, 10, 12, 13 and the primary statements.
+  </footer>
+
+</div>
