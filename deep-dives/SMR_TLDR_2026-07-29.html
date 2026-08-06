@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NuScale Power — Initiation TL;DR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eeece6;
+    --paper-raised: #f6f4ef;
+    --ink: #1b1d1f;
+    --ink-soft: #34363a;
+    --muted: #6b6459;
+    --line: #d8d3c8;
+    --accent: #9b2e28;
+    --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0;
+    --steel: #2e4257;
+    --steel-soft: #5c7690;
+    --steel-wash: #e2e8ed;
+    --gold: #a4772f;
+    --gold-wash: #ede2cc;
+    --neutral: #8a6d1f;
+    --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #15171a;
+      --paper-raised: #1c1f23;
+      --ink: #e9e7e1;
+      --ink-soft: #c7c4bc;
+      --muted: #93897a;
+      --line: #33363b;
+      --accent: #d9645c;
+      --accent-soft: #a8433c;
+      --accent-wash: #2c1c1b;
+      --steel: #8fb0cc;
+      --steel-soft: #5c7690;
+      --steel-wash: #1c2a35;
+      --gold: #d1a862;
+      --gold-wash: #2e2716;
+      --neutral: #d1a862;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #15171a; --paper-raised: #1c1f23; --ink: #e9e7e1; --ink-soft: #c7c4bc;
+    --muted: #93897a; --line: #33363b; --accent: #d9645c; --accent-soft: #a8433c;
+    --accent-wash: #2c1c1b; --steel: #8fb0cc; --steel-soft: #5c7690; --steel-wash: #1c2a35;
+    --gold: #d1a862; --gold-wash: #2e2716; --neutral: #d1a862; --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    --paper: #eeece6; --paper-raised: #f6f4ef; --ink: #1b1d1f; --ink-soft: #34363a;
+    --muted: #6b6459; --line: #d8d3c8; --accent: #9b2e28; --accent-soft: #c8756f;
+    --accent-wash: #f3e2e0; --steel: #2e4257; --steel-soft: #5c7690; --steel-wash: #e2e8ed;
+    --gold: #a4772f; --gold-wash: #ede2cc; --neutral: #8a6d1f; --shadow: 0 1px 2px rgba(27,29,31,0.06), 0 8px 24px rgba(27,29,31,0.05);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .mono { font-family: 'IBM Plex Mono', 'SF Mono', Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.75rem 1.5rem 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in { animation: fadeIn 0.5s ease-out both; }
+    .fade-in:nth-child(2) { animation-delay: 0.06s; }
+    .fade-in:nth-child(3) { animation-delay: 0.12s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .kicker strong { color: var(--ink-soft); }
+  .date-stamp { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+
+  h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    font-size: 2.35rem;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0.9rem 0 0.15rem;
+    color: var(--ink);
+  }
+  .ticker-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--steel);
+    margin-bottom: 1.4rem;
+  }
+
+  .thesis {
+    font-family: 'Newsreader', Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.28rem;
+    line-height: 1.42;
+    color: var(--ink-soft);
+    text-wrap: balance;
+    margin: 0 0 1.9rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--neutral);
+  }
+
+  /* ---------- Rating ticket ---------- */
+  .ticket {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 2.2rem;
+  }
+  .ticket > div {
+    padding: 0.85rem 0.9rem;
+    border-right: 1px solid var(--line);
+  }
+  .ticket > div:last-child { border-right: none; }
+  .ticket .rating-cell { background: var(--neutral); }
+  .t-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .ticket .rating-cell .t-label { color: rgba(255,255,255,0.75); }
+  .t-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.28rem; font-weight: 600; color: var(--ink); }
+  .ticket .rating-cell .t-value { color: #fff; letter-spacing: 0.02em; }
+  .t-value.down { color: var(--accent); }
+  @media (max-width: 560px) {
+    .ticket { grid-template-columns: repeat(2, 1fr); }
+    .ticket > div:nth-child(2) { border-right: none; }
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { margin-bottom: 2.6rem; }
+  h2 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+    margin: 0 0 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  p { margin: 0 0 0.9rem; color: var(--ink-soft); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ---------- Stat grid ---------- */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .stats div { background: var(--paper-raised); padding: 0.75rem 0.9rem; }
+  .stats .s-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+  .stats .s-value { font-family: 'IBM Plex Mono', monospace; font-size: 1.02rem; font-weight: 600; color: var(--ink); }
+  @media (max-width: 560px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Thesis pillars ---------- */
+  .pillar { display: flex; gap: 0.9rem; margin-bottom: 1.35rem; }
+  .pillar:last-child { margin-bottom: 0; }
+  .p-num {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1.25;
+    flex: 0 0 auto;
+    width: 1.7rem;
+  }
+  .p-body h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0 0 0.3rem;
+    color: var(--ink);
+  }
+  .p-body p { font-size: 0.95rem; margin: 0; }
+
+  /* ---------- Football field (CSS bars) ---------- */
+  .field { position: relative; padding: 0.5rem 0 0.25rem; }
+  .field-row { display: grid; grid-template-columns: 108px 1fr; align-items: center; gap: 0.7rem; margin-bottom: 0.85rem; }
+  .field-row .f-label { font-size: 0.78rem; color: var(--muted); text-align: right; }
+  .f-track { position: relative; height: 22px; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 2px; }
+  .f-bar { position: absolute; top: 0; bottom: 0; background: var(--steel-wash); border-left: 2px solid var(--steel); border-right: 2px solid var(--steel); }
+  .f-bar span { position: absolute; top: 50%; transform: translateY(-50%); font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--steel); white-space: nowrap; }
+  .f-bar span.lo { right: calc(100% + 6px); }
+  .f-bar span.hi { left: calc(100% + 6px); }
+  .f-marker { position: absolute; top: -5px; bottom: -5px; width: 2px; }
+  .f-marker.current { background: var(--muted); }
+  .f-marker.target { background: var(--neutral); }
+  .f-axis { display: grid; grid-template-columns: 108px 1fr; margin-top: 0.2rem; }
+  .f-axis-ticks { position: relative; height: 14px; }
+  .f-axis-ticks span { position: absolute; top: 0; font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; color: var(--muted); transform: translateX(-50%); }
+  .field-legend { display: flex; gap: 1.4rem; margin-top: 0.6rem; padding-left: 108px; }
+  .field-legend span { display: flex; align-items: center; gap: 0.4rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--ink-soft); }
+  .field-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ---------- Pull quote (reverse DCF) ---------- */
+  .pullquote {
+    background: var(--gold-wash);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+    padding: 1.1rem 1.3rem;
+    margin-top: 1.4rem;
+  }
+  .pullquote .pq-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.5rem; }
+  .pullquote p { font-size: 0.94rem; margin: 0; color: var(--ink-soft); }
+  .pullquote .pq-num { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--ink); }
+
+  /* ---------- Two-column risk/catalyst ---------- */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+  @media (max-width: 620px) { .twocol { grid-template-columns: 1fr; } }
+  .col-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.7rem; }
+  .col-head .swatch { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+  .swatch.risk { background: var(--accent); }
+  .swatch.cat { background: var(--steel); }
+  .col-head h3 { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; font-size: 0.88rem; margin: 0; color: var(--ink); }
+  ul.compact { list-style: none; margin: 0; padding: 0; }
+  ul.compact li {
+    font-size: 0.87rem;
+    color: var(--ink-soft);
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--line);
+  }
+  ul.compact li:first-child { border-top: none; padding-top: 0; }
+  ul.compact li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Chinese summary blocks ---------- */
+  .zh {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.86rem;
+    line-height: 1.85;
+    color: var(--muted);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+  }
+  .zh .zh-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: var(--steel-soft);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+  .zh strong { color: var(--ink-soft); }
+
+  /* ---------- Footer / package list ---------- */
+  footer { border-top: 2px solid var(--ink); padding-top: 1.3rem; }
+  .pkg { display: flex; flex-direction: column; gap: 0.5rem; margin: 1rem 0 1.6rem; }
+  .pkg-item { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px dashed var(--line); }
+  .pkg-item .pkg-name { color: var(--ink-soft); font-weight: 500; }
+  .pkg-item .pkg-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.66rem; color: var(--muted); }
+  .disclaimer { font-size: 0.76rem; color: var(--muted); line-height: 1.6; }
+  .disclaimer + .disclaimer { margin-top: 0.6rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead fade-in">
+    <span class="kicker">Equity Research <strong>·</strong> Initiating Coverage</span>
+    <span class="date-stamp">29 JUL 2026</span>
+  </div>
+
+  <h1 class="fade-in">NuScale Power — the TL;DR</h1>
+  <div class="ticker-line fade-in">NYSE: SMR &nbsp;·&nbsp; Industrials — Specialty Industrial Machinery / Small Modular Reactors</div>
+
+  <p class="thesis fade-in">First-mover regulatory moat, but fundamentals don't yet support the price — initiating at HOLD ahead of a binary year-end 2026 PPA catalyst. The stock trades at $7.59.</p>
+
+  <div class="ticket fade-in">
+    <div class="rating-cell"><span class="t-label">Rating</span><span class="t-value">HOLD</span></div>
+    <div><span class="t-label">Price Target</span><span class="t-value">$7.00</span></div>
+    <div><span class="t-label">Current Price</span><span class="t-value">$7.59</span></div>
+    <div><span class="t-label">Downside</span><span class="t-value down">(7.8)%</span></div>
+  </div>
+
+  <section>
+    <h2>Snapshot</h2>
+    <div class="stats">
+      <div><span class="s-label">Market Cap</span><span class="s-value">$2.6bn</span></div>
+      <div><span class="s-label">Enterprise Value</span><span class="s-value">$1.7bn</span></div>
+      <div><span class="s-label">52-Week Range</span><span class="s-value">$7.21–$57.42</span></div>
+      <div><span class="s-label">FY26E Revenue</span><span class="s-value">$38.0m (+20.7% YoY)</span></div>
+      <div><span class="s-label">Q1 2026 Revenue</span><span class="s-value">$0.565m (–96% YoY)</span></div>
+      <div><span class="s-label">Beta (raw, trailing)</span><span class="s-value">2.25</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why Hold</h2>
+
+    <div class="pillar">
+      <div class="p-num">1</div>
+      <div class="p-body">
+        <h3>Only NRC-certified SMR design, but the regulatory moat hasn't converted into revenue</h3>
+        <p>NuScale is the sole small modular reactor developer with a completed U.S. NRC design certification — first at 50 MWe (2023), again at an uprated 77 MWe (2025). Trailing-twelve-month revenue is just <strong>$18.7 million</strong> against a <strong>$2.6 billion</strong> market cap, and Q1 2026 revenue collapsed to <strong>$565,000</strong> (from $13.4 million a year earlier) as RoPower Romania engineering work rolled off.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">2</div>
+      <div class="p-body">
+        <h3>Binding PPA conversion by year-end 2026 is the single most important catalyst — in either direction</h3>
+        <p>The ENTRA1-TVA (up to 6 GW) and Standard Power (1,848 MWe) frameworks remain explicitly non-binding today. Our Base Case assumes a one-year slip (TVA converts 2027E); Bull (25% probability) has both converting on schedule in H2 2026; Bear (25%) has neither converting by 2030E — a real possibility given NuScale's only prior flagship relationship (UAMPS/Carbon Free Power Project) was cancelled in Nov 2023.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">3</div>
+      <div class="p-body">
+        <h3>Rigorous DCF and trading comps land well below the tape — even after an explicit optionality premium</h3>
+        <p>Scenario-weighted DCF: <strong>$2.38/share</strong>. Forward trading comps (peer median 5.42x EV/Revenue): <strong>$3.42–$3.84/share</strong>. We only reach our <strong>$7.00</strong> target after layering on a separately disclosed <strong>$4.07/share</strong> discretionary premium for sector-wide regulatory optionality — the same logic that gives Oklo a ~$4.2bn EV on zero revenue.</p>
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="p-num">4</div>
+      <div class="p-body">
+        <h3>A $1.25bn cash cushion buys time — at the cost of ~5x dilution and an active fraud suit</h3>
+        <p>Diluted shares have grown from 69 million (2022) to 346 million (2026); Class A authorization doubled to 662 million in Dec 2025. A Q3 2025 disclosure that a <strong>$507.4 million</strong> ENTRA1 milestone payment drove G&amp;A up &gt;3,000% YoY triggered a pending securities-fraud class action. Even in our Base Case, cash falls to <strong>$357 million</strong> by 2030E.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Valuation — Two Methods, One Tension</h2>
+    <div class="field">
+      <div class="field-row">
+        <span class="f-label">DCF (Bear/Base/Bull)</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:17.9%; width:35.6%;"><span class="lo">$1.43</span><span class="hi">$4.28</span></div>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="f-label">Trading Comps</span>
+        <div class="f-track">
+          <div class="f-bar" style="left:42.8%; width:5.3%;"><span class="lo">$3.42</span><span class="hi">$3.84</span></div>
+          <div class="f-marker target" style="left:87.5%; color:var(--neutral);"></div>
+          <div class="f-marker current" style="left:94.9%; color:var(--muted);"></div>
+        </div>
+      </div>
+      <div class="f-axis">
+        <span></span>
+        <div class="f-axis-ticks">
+          <span style="left:0%;">$0</span>
+          <span style="left:25%;">$2</span>
+          <span style="left:50%;">$4</span>
+          <span style="left:75%;">$6</span>
+          <span style="left:100%; transform: translateX(-100%);">$8</span>
+        </div>
+      </div>
+    </div>
+    <div class="field-legend">
+      <span><i style="background:var(--neutral);"></i>Target $7.00</span>
+      <span><i style="background:var(--muted);"></i>Current $7.59</span>
+    </div>
+    <p style="font-size:0.82rem; color:var(--muted); margin-top:0.6rem;">DCF and trading comps agree with each other (both land $2–4/share) but both sit far below the tape. We weight DCF 50% / Comps 40% / Precedent Transaction 10% to a mechanical $2.93/share fundamental value, then add a separately disclosed $4.07/share sector-optionality overlay to reach the $7.00 target — a deliberately transparent split between rigorous analysis and analyst judgment.</p>
+
+    <div class="pullquote">
+      <span class="pq-label">Reverse sensitivity check</span>
+      <p>Even an aggressive <span class="pq-num">65% five-year revenue CAGR</span> combined with a <span class="pq-num">6.5x exit multiple</span> — above every individual peer's actual trading multiple — produces only <span class="pq-num">$3.03/share</span> on a pure DCF basis. Closing the gap to the current $7.59 price requires the market to keep paying for regulatory optionality the way it does for Oklo, not a change in the fundamental math.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Risk / Catalyst Map</h2>
+    <div class="twocol">
+      <div>
+        <div class="col-head"><span class="swatch risk"></span><h3>Biggest risks to the rating</h3></div>
+        <ul class="compact">
+          <li><strong>ENTRA1-TVA/Standard Power fail to convert by year-end 2026.</strong> Echoes the 2023 cancellation of the UAMPS/Carbon Free Power Project, NuScale's only prior flagship relationship.</li>
+          <li><strong>Continued shareholder dilution.</strong> Dec-2025 authorization doubled Class A shares to 662 million; five-year share count growth already ~5x.</li>
+          <li><strong>Adverse outcome in the pending securities-fraud litigation</strong> tied to the ENTRA1/TVA milestone-payment disclosure.</li>
+          <li><strong>Cash burn accelerates beyond model assumptions,</strong> forcing an earlier capital raise at a depressed share price.</li>
+          <li><strong>Sector-wide re-rating either direction</strong> as AI/data-center power narratives evolve — the whole peer cohort trades on sentiment, not fundamentals.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-head"><span class="swatch cat"></span><h3>Watch next</h3></div>
+        <ul class="compact">
+          <li><strong>Binding PPA execution — ENTRA1/TVA or Standard Power.</strong> Management's own year-end-2026 target; the single most important event for the stock.</li>
+          <li><strong>RoPower Romania de-risking.</strong> Continued progress toward Doicești construction following the Final Investment Decision already reached.</li>
+          <li><strong>Additional hyperscale/data-center offtake announcements</strong> extending the Standard Power precedent to new counterparties.</li>
+          <li><strong>NRC reform / 400 GW-by-2050 policy developments</strong> under the current administration's nuclear agenda.</li>
+          <li><strong>Resolution of the pending ENTRA1-related securities litigation</strong> on terms that don't materially impair the balance sheet.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="zh">
+      <span class="zh-label">中文摘要</span>
+      我们对 NuScale Power Corporation（纽交所代码：SMR）首次覆盖给予<strong>"持有"（HOLD/Neutral）</strong>评级，12个月目标价<strong>$7.00</strong>，较当前股价 $7.59 隐含下行空间<strong>(7.8)%</strong>。NuScale 是唯一取得美国 NRC 完整设计认证的小型模块化反应堆（SMR）开发商，但这一监管护城河尚未转化为收入——过去12个月收入仅 1,870万美元，2026年第一季度更骤降至 56.5万美元。核心矛盾在于：严谨的 DCF（$2.38/股）与前瞻可比公司交易分析（$3.42-$3.84/股）均大幅低于现价，我们的 $7.00 目标价是在机械加权基本面价值 $2.93/股 之上，单独叠加 $4.07/股 的行业期权价值自由裁量溢价才得出的——这一溢价反映市场对监管期权价值的普遍支付意愿（Oklo 零收入仍有约42亿美元企业价值）。ENTRA1-TVA（最高6 GW）与 Standard Power（1,848 MWe）框架能否在2026年底前转化为具有约束力的 PPA，是股价走向的最重要二元催化剂；NuScale 此前唯一的旗舰客户关系（UAMPS）已于2023年被取消，这一先例是我们给予中性评级而非直接买入或卖出的核心原因。
+    </div>
+  </section>
+
+  <footer>
+    <h2 style="border:none; padding:0; margin-bottom:0.8rem;">Full Research Package</h2>
+    <div class="pkg">
+      <div class="pkg-item"><span class="pkg-name">Initiation Report (EN) — 63pp, ~18,700 words, 30 charts</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">首次覆盖报告（中文全译版）— 73页</span><span class="pkg-tag">.DOCX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Company Research Document — ~6,223 words</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Valuation Analysis — DCF, comps, precedent transaction</span><span class="pkg-tag">.MD</span></div>
+      <div class="pkg-item"><span class="pkg-name">Financial Model — 10 tabs, fully linked, BS balances to $0</span><span class="pkg-tag">.XLSX</span></div>
+      <div class="pkg-item"><span class="pkg-name">Chart Pack — 30 figures, 300 DPI</span><span class="pkg-tag">.ZIP</span></div>
+    </div>
+    <p class="disclaimer">Base case reflects a model built on company-disclosed FY2022A–FY2025A actuals (SEC EDGAR) plus reported Q1 2026 results; NuScale does not disclose formal segment or geographic revenue, so all product/geography category splits are analyst-modeled allocations, not company-reported figures — see the full research document for sourcing detail on every number. Peer set: OKLO, NANO Nuclear Energy (NNE), BWX Technologies (BWXT), GE Vernova (GEV), Cameco (CCJ), Centrus Energy (LEU), Constellation Energy (CEG). Market data as of July 29, 2026.</p>
+    <p class="disclaimer">This is independent research prepared for internal use, not investment advice. Prepared by the Equity Research initiating-coverage team.</p>
+  </footer>
+
+</div>
+</body>
+</html>
