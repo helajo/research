@@ -1,0 +1,501 @@
+<meta charset="utf-8" />
+<title>Bloom Energy (BE) — Initiating Coverage One-Pager</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --paper: #f4f5f8;
+    --paper-raised: #ffffff;
+    --ink: #131c2e;
+    --ink-soft: #4c5568;
+    --ink-faint: #7c8598;
+    --accent: #1f3864;
+    --accent-2: #3a5ba0;
+    --rating: #a82420;
+    --rating-tint: #fbe9e8;
+    --rule: #d7dbe3;
+    --tint: #edf1f8;
+    --tint-strong: #dde5f3;
+    --pos: #3f6b3a;
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0f141f;
+      --paper-raised: #161d2c;
+      --ink: #e8ebf1;
+      --ink-soft: #a7b0c2;
+      --ink-faint: #77809633;
+      --ink-faint: #7e879b;
+      --accent: #7fa0da;
+      --accent-2: #9db4e3;
+      --rating: #e2857f;
+      --rating-tint: #3a2020;
+      --rule: #2a3346;
+      --tint: #1a2233;
+      --tint-strong: #212c42;
+      --pos: #8fbf87;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0f141f;
+    --paper-raised: #161d2c;
+    --ink: #e8ebf1;
+    --ink-soft: #a7b0c2;
+    --ink-faint: #7e879b;
+    --accent: #7fa0da;
+    --accent-2: #9db4e3;
+    --rating: #e2857f;
+    --rating-tint: #3a2020;
+    --rule: #2a3346;
+    --tint: #1a2233;
+    --tint-strong: #212c42;
+    --pos: #8fbf87;
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f5f8;
+    --paper-raised: #ffffff;
+    --ink: #131c2e;
+    --ink-soft: #4c5568;
+    --ink-faint: #7c8598;
+    --accent: #1f3864;
+    --accent-2: #3a5ba0;
+    --rating: #a82420;
+    --rating-tint: #fbe9e8;
+    --rule: #d7dbe3;
+    --tint: #edf1f8;
+    --tint-strong: #dde5f3;
+    --pos: #3f6b3a;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+  body {
+    padding: 28px 20px 60px;
+  }
+  .sheet {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 34px 40px 30px;
+  }
+  ::selection { background: var(--tint-strong); }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    border-bottom: 2.5px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 6px;
+  }
+  .eyebrow .zh {
+    font-weight: 500;
+    color: var(--ink-faint);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-left: 8px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: 27px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.15;
+    text-wrap: balance;
+    letter-spacing: -0.005em;
+  }
+  h1 .ticker {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 0.7em;
+  }
+  .masthead-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .report-date {
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin: 0 0 8px;
+  }
+  .rating-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .rating-badge .r {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--rating);
+    letter-spacing: 0.01em;
+  }
+  .rating-badge .sub {
+    font-size: 10px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .thesis-line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15.5px;
+    color: var(--accent);
+    margin: 12px 0 22px;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+
+  /* ---------- metrics strip ---------- */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 26px;
+  }
+  .metric {
+    padding: 11px 12px;
+    border-left: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .metric:first-child { border-left: none; }
+  .metric .label {
+    font-size: 9.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .metric .value {
+    font-size: 17px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .metric .value.rating { color: var(--rating); }
+  .metric .value small {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- body grid ---------- */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1.32fr 1fr;
+    gap: 30px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h2 .zh {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+    color: var(--ink-faint);
+    font-size: 10.5px;
+    margin-left: 6px;
+  }
+
+  .thesis-list { display: flex; flex-direction: column; gap: 11px; }
+  .thesis-item { font-size: 12.6px; line-height: 1.52; color: var(--ink-soft); }
+  .thesis-item b { color: var(--ink); font-weight: 700; }
+  .thesis-item .num {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--accent-2);
+    margin-right: 2px;
+  }
+  .zh-note {
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.55;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+  }
+
+  /* ---------- side column ---------- */
+  .side-block { margin-bottom: 22px; }
+  .side-block:last-child { margin-bottom: 0; }
+
+  .chart-caption {
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    margin: 6px 0 0;
+    line-height: 1.4;
+  }
+  .chart-caption .zh { display: block; color: var(--ink-faint); margin-top: 1px; }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .price-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+  .price-area { fill: var(--accent); opacity: 0.08; }
+  .price-dot { fill: var(--accent); }
+  .price-dot-end { fill: var(--rating); }
+  .grid-line { stroke: var(--rule); stroke-width: 1; }
+  .ref-line { stroke: var(--ink-faint); stroke-width: 1; stroke-dasharray: 2.5 2.5; }
+  .svg-label { font-family: var(--font-sans); font-size: 9px; fill: var(--ink-faint); }
+  .svg-label-strong { font-family: var(--font-sans); font-size: 9.5px; font-weight: 700; }
+
+  .ff-bar-bg { fill: var(--tint); }
+  .ff-bar { }
+  .ff-track { fill: var(--tint); }
+
+  /* ---------- fin table ---------- */
+  table.fin {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  table.fin th, table.fin td {
+    padding: 6px 8px;
+    text-align: right;
+    border-bottom: 1px solid var(--rule);
+  }
+  table.fin th:first-child, table.fin td:first-child {
+    text-align: left;
+    color: var(--ink-soft);
+  }
+  table.fin thead th {
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  table.fin tbody tr:last-child td { border-bottom: none; }
+  table.fin td.strong, table.fin th.strong-row { font-weight: 700; color: var(--ink); }
+  .table-wrap { overflow-x: auto; }
+
+  /* ---------- footer strip ---------- */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+    padding-top: 18px;
+    margin-top: 6px;
+    border-top: 1px solid var(--rule);
+  }
+  .foot-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .foot-list li {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    padding-left: 13px;
+    position: relative;
+  }
+  .foot-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+  .foot-list.cat li::before { background: var(--pos); }
+  .foot-list.risk li::before { background: var(--rating); }
+
+  .disclaimer {
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+  .disclaimer .zh { display: block; margin-top: 3px; }
+
+  @media (max-width: 720px) {
+    .metrics { grid-template-columns: repeat(3, 1fr); }
+    .metric:nth-child(4) { border-left: none; }
+    .body-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .sheet { padding: 24px 18px; }
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .sheet { border: none; padding: 14px 6px; max-width: none; }
+  }
+</style>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div>
+      <p class="eyebrow">Equity Research · Initiating Coverage <span class="zh">股票研究报告 · 首次覆盖</span></p>
+      <h1>Bloom Energy Corporation <span class="ticker">NYSE: BE</span></h1>
+    </div>
+    <div class="masthead-right">
+      <p class="report-date">July 21, 2026</p>
+      <div class="rating-badge">
+        <span class="r">SELL</span>
+        <span class="sub">Underperform · 卖出</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="thesis-line">"Priced for a decade of backlog conversion the model doesn't yet support." — every valuation method we can construct lands 60&ndash;80% below the current quote.</p>
+
+  <div class="metrics">
+    <div class="metric">
+      <span class="label">Price Target</span>
+      <span class="value">$58.00</span>
+    </div>
+    <div class="metric">
+      <span class="label">Current Price</span>
+      <span class="value">$197.06</span>
+    </div>
+    <div class="metric">
+      <span class="label">Downside</span>
+      <span class="value rating">(70.6%)</span>
+    </div>
+    <div class="metric">
+      <span class="label">Market Cap</span>
+      <span class="value">$56.1B</span>
+    </div>
+    <div class="metric">
+      <span class="label">Enterprise Value</span>
+      <span class="value">$56.5B</span>
+    </div>
+    <div class="metric">
+      <span class="label">52-Wk Range</span>
+      <span class="value"><small>$24.39–</small>$351</span>
+    </div>
+  </div>
+
+  <div class="body-grid">
+    <div>
+      <h2>Investment Thesis <span class="zh">投资逻辑</span></h2>
+      <div class="thesis-list">
+        <div class="thesis-item"><span class="num">1</span><b>The AI-power pivot is real.</b> Q1 2026 revenue +130% YoY; ~$20B backlog anchored by Oracle (up to 2.8GW) and the Brookfield Fund JV (expanded to ~$25B). Our own model independently lands at $3.6B FY2026E revenue &mdash; right at management's guidance midpoint.</div>
+        <div class="thesis-item"><span class="num">2</span><b>It just isn't big enough yet to support $197.</b> DCF fair value $48.74 (full sensitivity range $42&ndash;$65). Peer EV/Revenue comps imply $48&ndash;$86. Even our Bull Case tops out near $61&ndash;77 &mdash; still &gt;60% downside.</div>
+        <div class="thesis-item"><span class="num">3</span><b>The gap to Street ($283 mean) is methodology, not fundamentals.</b> Bull models likely assume a lower cost of equity (beta ~1.0&ndash;1.2 vs. our already-discounted 1.70) and today's rich AI-infra multiples holding indefinitely rather than normalizing.</div>
+        <div class="thesis-item"><span class="num">4</span><b>Risk concentration compounds the downside.</b> 44% of FY25 revenue from related-party Brookfield JVs (Bloom holds 9.9&ndash;15% equity in them); July 2026 Hunterbrook short report alleges premature revenue recognition and undisclosed China-sourced scandium supply; debt/equity ~311%; CFO three months into the job.</div>
+      </div>
+      <p class="zh-note">核心逻辑：博通能源的AI电力业务拐点真实存在（一季度收入同比增长130%，积压订单约200亿美元），但公司当前规模尚不足以支撑197美元的股价——我们的DCF与可比公司分析均独立指向每股48至86美元的合理区间。目标价与市场一致预期（283美元）的差距，主要源于折现率与终值倍数假设的不同，而非基本面分歧。叠加关联方收入集中、做空指控及高杠杆等风险，我们给予「卖出」评级，12个月目标价58.00美元。</p>
+    </div>
+
+    <div>
+      <div class="side-block">
+        <h2>12-Mo Price vs. Target <span class="zh">股价走势</span></h2>
+        <svg viewBox="0 0 400 118" preserveAspectRatio="none">
+          <line class="grid-line" x1="10" y1="10" x2="390" y2="10"></line>
+          <line class="grid-line" x1="10" y1="60" x2="390" y2="60"></line>
+          <line class="ref-line" x1="10" y1="103.6" x2="390" y2="103.6"></line>
+          <text class="svg-label" x="12" y="101.8">Target $58</text>
+          <polygon class="price-area" points="10,105.4 44.5,94.1 79.1,77.1 113.6,85.3 148.2,93.3 182.7,70.2 217.3,68.7 251.8,75.9 286.4,23.1 320.9,22.5 355.5,16.2 390,53.9 390,110 10,110"></polygon>
+          <polyline class="price-line" points="10,105.4 44.5,94.1 79.1,77.1 113.6,85.3 148.2,93.3 182.7,70.2 217.3,68.7 251.8,75.9 286.4,23.1 320.9,22.5 355.5,16.2 390,53.9"></polyline>
+          <circle class="price-dot" cx="286.4" cy="23.1" r="2"></circle>
+          <circle class="price-dot-end" cx="390" cy="53.9" r="3"></circle>
+          <text class="svg-label-strong" x="345" y="46" fill="var(--rating)">$197</text>
+          <text class="svg-label" x="10" y="20">$351 peak (Jun-26)</text>
+        </svg>
+        <p class="chart-caption">Aug 2025–Jul 2026 monthly close. +272% trailing 12-month return before the July pullback.<span class="zh">近12个月月度收盘价；股价在7月回落前累计上涨272%。</span></p>
+      </div>
+
+      <div class="side-block">
+        <h2>Valuation Gap <span class="zh">估值差距</span></h2>
+        <svg viewBox="0 0 400 88" preserveAspectRatio="none">
+          <rect class="ff-track" x="60" y="14" width="330" height="16" rx="2"></rect>
+          <rect class="ff-bar" x="123" y="14" width="34" height="16" rx="2" fill="var(--accent)"></rect>
+          <text class="svg-label" x="55" y="25" text-anchor="end">DCF</text>
+          <rect class="ff-track" x="60" y="42" width="330" height="16" rx="2"></rect>
+          <rect class="ff-bar" x="132" y="42" width="57" height="16" rx="2" fill="var(--accent-2)"></rect>
+          <text class="svg-label" x="55" y="53" text-anchor="end">Comps</text>
+          <line x1="147" y1="6" x2="147" y2="64" stroke="var(--ink)" stroke-width="1.5"></line>
+          <text class="svg-label-strong" x="147" y="76" text-anchor="middle">Target $58</text>
+          <line x1="356" y1="6" x2="356" y2="64" stroke="var(--rating)" stroke-width="1.5" stroke-dasharray="3 2"></line>
+          <text class="svg-label-strong" x="356" y="76" text-anchor="middle" fill="var(--rating)">Current $197</text>
+        </svg>
+        <p class="chart-caption">DCF $42&ndash;65 · Comps $48&ndash;86, both far below the current quote (line extends off the productive range).<span class="zh">DCF区间42-65美元，可比公司区间48-86美元，现价远超两种方法的估值上限。</span></p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Financial Snapshot <span class="zh">财务摘要（单位：百万美元，每股数据除外）</span></h2>
+  <div class="table-wrap">
+    <table class="fin">
+      <thead>
+        <tr>
+          <th>$M except per-share</th>
+          <th>2025A</th>
+          <th>2026E</th>
+          <th>2027E</th>
+          <th>2028E</th>
+          <th>2029E</th>
+          <th>2030E</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Revenue</td><td>2,024</td><td>3,600</td><td>5,040</td><td>6,451</td><td>7,741</td><td class="strong">8,903</td></tr>
+        <tr><td>YoY Growth</td><td>37.3%</td><td>77.9%</td><td>40.0%</td><td>28.0%</td><td>20.0%</td><td>15.0%</td></tr>
+        <tr><td>EBITDA Margin</td><td>6.1%</td><td>12.8%</td><td>17.0%</td><td>20.8%</td><td>24.1%</td><td class="strong">26.8%</td></tr>
+        <tr><td>Diluted EPS</td><td>$(0.36)</td><td>$1.28</td><td>$2.65</td><td>$4.16</td><td>$5.60</td><td class="strong">$6.90</td></tr>
+        <tr><td>Free Cash Flow</td><td>(24)</td><td>46</td><td>514</td><td>1,017</td><td>1,477</td><td class="strong">1,908</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-grid">
+    <div>
+      <h2>Key Catalysts <span class="zh">关键催化剂</span></h2>
+      <ul class="foot-list cat">
+        <li>Q2 2026 earnings, Jul 29 — consensus EPS $1.43, revenue ~$3.38B; backlog-conversion pace is the swing factor.</li>
+        <li>Resolution of the Hunterbrook allegations, either direction — likely within 2&ndash;3 quarters.</li>
+        <li>Oracle "Project Jupiter" execution after the July 2026 New Mexico pipeline/permitting setback.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Key Risks <span class="zh">关键风险</span></h2>
+      <ul class="foot-list risk">
+        <li>Related-party concentration: 44% of FY25 revenue (74% of Q4) from Brookfield JVs Bloom itself part-owns.</li>
+        <li>Scandium/China supply-chain disclosure allegations vs. CEO's repeated public denials.</li>
+        <li>Debt/equity ~311%; amplifies downside if backlog conversion disappoints vs. our already-aggressive base case.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="disclaimer">Source: company filings, SEC EDGAR, Yahoo Finance market data (accessed 2026-07-21), and our proprietary financial model. Full analysis, 30-chart package, and fully-linked Excel model available in the companion initiation report. For informational purposes only; not a solicitation to buy or sell any security.
+  <span class="zh">资料来源：公司公开文件、美国证监会EDGAR系统、雅虎财经市场数据（截至2026年7月21日）及我们的专有财务模型。完整分析、30张图表及Excel模型详见配套的启动覆盖报告。本报告仅供参考，不构成买卖任何证券的要约。</span></p>
+
+</div>
