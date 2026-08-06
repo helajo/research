@@ -1,0 +1,228 @@
+<meta charset="utf-8" />
+<title>Bloom Energy (BE) — Q2 FY2026 Post-Earnings Update</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --paper: #faf8f4;
+    --ink: #1c1b19;
+    --ink-soft: #4a463f;
+    --accent: #8a2a1f;      /* brick red — same family as SELL rating on the one-pager */
+    --accent-2: #1f4d3a;    /* deep green — used for "beat" / positive deltas */
+    --rule: #ddd6c8;
+    --tint: #f1ece0;
+    --zh-bg: #f4efe2;
+    --zh-border: #c9a86a;
+    --warn: #9a6a00;
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #171613;
+      --ink: #ece8de;
+      --ink-soft: #b8b2a2;
+      --accent: #e08a76;
+      --accent-2: #6fbf9a;
+      --rule: #3a362c;
+      --tint: #221f19;
+      --zh-bg: #241f16;
+      --zh-border: #8a6a2e;
+      --warn: #d6a53a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #171613; --ink: #ece8de; --ink-soft: #b8b2a2; --accent: #e08a76;
+    --accent-2: #6fbf9a; --rule: #3a362c; --tint: #221f19; --zh-bg: #241f16;
+    --zh-border: #8a6a2e; --warn: #d6a53a;
+  }
+  :root[data-theme="light"] {
+    --paper: #faf8f4; --ink: #1c1b19; --ink-soft: #4a463f; --accent: #8a2a1f;
+    --accent-2: #1f4d3a; --rule: #ddd6c8; --tint: #f1ece0; --zh-bg: #f4efe2;
+    --zh-border: #c9a86a; --warn: #9a6a00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans);
+    max-width: 880px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem;
+    line-height: 1.55;
+  }
+  .masthead { border-bottom: 3px double var(--rule); padding-bottom: 1rem; margin-bottom: 1.75rem; }
+  .masthead .kicker { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); }
+  .masthead h1 { font-family: var(--font-display); font-size: 2.1rem; margin: 0.2rem 0 0.3rem; text-wrap: balance; }
+  .masthead .sub { color: var(--ink-soft); font-size: 0.95rem; }
+  .badges { display: flex; gap: 0.6rem; margin-top: 0.7rem; flex-wrap: wrap; }
+  .badge { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.65rem; border-radius: 3px; font-weight: 600; }
+  .badge.rating { background: var(--accent); color: var(--paper); }
+  .badge.status { background: var(--tint); border: 1px solid var(--rule); color: var(--ink-soft); }
+  .badge.beat { background: var(--accent-2); color: var(--paper); }
+
+  section { margin: 2.2rem 0; }
+  h2 { font-family: var(--font-display); font-size: 1.35rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.35rem; margin-bottom: 0.9rem; }
+  h2 .zh { font-size: 0.85rem; color: var(--ink-soft); font-weight: 400; margin-left: 0.5rem; }
+  p { margin: 0.6rem 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 0.8rem 0; font-variant-numeric: tabular-nums; }
+  caption { text-align: left; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 0.3rem; }
+  th, td { padding: 0.5rem 0.7rem; border-bottom: 1px solid var(--rule); text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-soft); font-weight: 600; }
+  td.pos { color: var(--accent-2); font-weight: 600; }
+  td.flag { color: var(--warn); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+
+  ul.bullets { padding-left: 1.2rem; margin: 0.6rem 0; }
+  ul.bullets li { margin: 0.45rem 0; }
+
+  .zh-note {
+    background: var(--zh-bg); border-left: 3px solid var(--zh-border);
+    padding: 0.75rem 1rem; margin-top: 0.9rem; border-radius: 0 4px 4px 0;
+    font-size: 0.92rem; color: var(--ink-soft);
+  }
+  .zh-note .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--zh-border); display: block; margin-bottom: 0.3rem; font-weight: 600; }
+
+  .callout {
+    border: 1px solid var(--accent); background: var(--tint);
+    padding: 1rem 1.1rem; border-radius: 4px; margin: 1rem 0;
+  }
+  .callout .label { color: var(--accent); font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.4rem; }
+
+  .sources { font-size: 0.85rem; color: var(--ink-soft); }
+  .sources ol { padding-left: 1.2rem; }
+  .sources a { color: var(--accent); }
+  .disclaimer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-soft); }
+</style>
+
+<div class="masthead">
+  <div class="kicker">Equity Research — Post-Earnings Update</div>
+  <h1>Bloom Energy Corporation (NYSE: BE)</h1>
+  <div class="sub">Q2 FY2026 Results, reported 29 Jul 2026 · Note published 6 Aug 2026 · 博隆能源 2026财年第二季度业绩点评</div>
+  <div class="badges">
+    <span class="badge rating">Rating: SELL (under review)</span>
+    <span class="badge beat">Result: Beat &amp; Raise</span>
+    <span class="badge status">Current price: $234.33 vs. $58.00 PT</span>
+  </div>
+</div>
+
+<section>
+  <h2>Headline <span class="zh">核心结论</span></h2>
+  <p>Bloom Energy delivered a large beat-and-raise quarter that directly challenges the core pillars of our SELL thesis. Q2 FY2026 revenue reached <strong>$1.065B, +166% YoY and +42% QoQ</strong> — an acceleration versus the +130% YoY growth rate we cited as already-elevated in our initiation report, not the deceleration our bear case assumed. Non-GAAP EPS of <strong>$0.78</strong> beat consensus of $0.40 by $0.38 (~95%). Management <strong>raised</strong> full-year guidance across revenue, EPS, and operating income. This is the single most consequential data point since our 21 Jul 2026 initiation and requires us to flag our $58.00 price target and FY2026 model estimates as stale pending a full refresh.</p>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    Bloom Energy第二季度业绩大幅超预期并上调全年指引，直接冲击了我们SELL评级的核心逻辑支柱。营收10.65亿美元，同比增长166%，环比增长42%——增速不降反升，与我们看空逻辑中假设的增长放缓相反。Non-GAAP每股收益0.78美元，超市场一致预期0.40美元近95%。管理层上调了营收、每股收益和营业利润的全年指引。这是自7月21日首次覆盖报告发布以来最重大的信息，我们必须明确指出：58美元的目标价及2026财年模型估计已经过时，需要全面更新。
+  </div>
+</section>
+
+<section>
+  <h2>Q2 FY2026 Results vs. Prior Year <span class="zh">第二季度业绩对比</span></h2>
+  <div class="table-wrap">
+    <table>
+      <caption>$M except per-share data. Source: company earnings release, 29 Jul 2026 (see Sources).</caption>
+      <thead><tr><th>Metric</th><th>Q2 FY2026</th><th>Q2 FY2025</th><th>YoY</th></tr></thead>
+      <tbody>
+        <tr><td>Total revenue</td><td>1,065</td><td>~400</td><td class="pos">+166%</td></tr>
+        <tr><td>Product revenue</td><td>935</td><td>~297</td><td class="pos">+215%</td></tr>
+        <tr><td>Gross margin (non-GAAP)</td><td>34.3%</td><td>lower (n/a, base effect)</td><td class="pos">expanded</td></tr>
+        <tr><td>Operating income</td><td>240</td><td>much smaller base</td><td class="pos">expanded</td></tr>
+        <tr><td>Non-GAAP diluted EPS</td><td>$0.78</td><td>n/a</td><td class="pos">beat cons. $0.40 by $0.38</td></tr>
+        <tr><td>GAAP diluted EPS</td><td>$0.62</td><td>$(0.18)</td><td class="pos">swung to profit</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    第二季度总营收10.65亿美元，同比增长166%；产品收入9.35亿美元，同比增长215%。Non-GAAP毛利率34.3%，营业利润2.40亿美元。Non-GAAP每股收益0.78美元，大幅超出市场一致预期的0.40美元；GAAP每股收益0.62美元，相比去年同期每股亏损0.18美元实现扭亏为盈。
+  </div>
+</section>
+
+<section>
+  <h2>FY2026 Guidance — Raised, Not Maintained <span class="zh">2026财年指引：上调</span></h2>
+  <div class="table-wrap">
+    <table>
+      <caption>Our FY2026E model estimates (from BloomEnergy_Financial_Model_2026-07-21.xlsx) vs. new company guidance.</caption>
+      <thead><tr><th>Metric</th><th>Our FY26E (pre-earnings)</th><th>New company guidance</th><th>Gap</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>$3,600M</td><td>$3,900M – $4,200M</td><td class="flag">our estimate is low</td></tr>
+        <tr><td>Diluted EPS (non-GAAP basis)</td><td>$1.28</td><td>$2.55 – $2.85</td><td class="flag">our estimate is ~2x low</td></tr>
+        <tr><td>Non-GAAP operating income</td><td>n/a in one-pager summary</td><td>$800M – $900M</td><td class="flag">needs model rebuild</td></tr>
+        <tr><td>Non-GAAP gross margin</td><td>n/a in one-pager summary</td><td>~34%</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <span class="label">Model implication</span>
+    Both the revenue and EPS lines of our FY2026E model sit materially below the new guidance range — not within a normal forecast-error band. The backlog-conversion pace we flagged in the initiation report as "the swing factor" evidently converted faster than our base case assumed. We have not yet rebuilt the DCF/comps valuation with these inputs; treating $58.00 as an unchanged target would misrepresent the strength of this print. A full model and valuation refresh is the recommended immediate next step, not a mechanical reaffirmation of the existing PT.
+  </div>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    公司将2026财年营收指引上调至39–42亿美元，Non-GAAP每股收益指引上调至2.55–2.85美元，均远高于我们此前模型中的36亿美元营收和1.28美元每股收益估计——差距不在正常预测误差范围内，我们此前标记为"关键摆动因素"的订单转化速度明显快于我们基准假设。我们尚未用新指引重新构建DCF和可比公司估值模型；在未更新模型前继续维持58美元目标价将无法真实反映本季度业绩的强度。建议下一步优先进行模型与估值的全面更新，而非机械维持原目标价。
+  </div>
+</section>
+
+<section>
+  <h2>Oracle Deal &amp; Backlog <span class="zh">甲骨文合作与订单储备</span></h2>
+  <ul class="bullets">
+    <li>Management reported delivering power to an Oracle data center within 55 days of first engagement, and cited validation from additional major hyperscalers plus more than a dozen neoclouds, AI labs, and colocation operators.</li>
+    <li>Press coverage citing company disclosures references backlog figures in the $20B range with continued expansion tied to the Oracle relationship, though exact backlog composition and the split between the original and expanded Oracle commitments is not fully disaggregated in earnings-release-level disclosure we reviewed — flagged as a data point needing 10-Q-level verification, not yet independently confirmed to the same standard as our initiation report.</li>
+  </ul>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    管理层表示已在与甲骨文首次接触后的55天内为其数据中心供电，并获得其他大型云服务商及十余家新兴云厂商、AI实验室和数据中心托管商的验证。媒体报道援引公司披露称订单储备规模在200亿美元左右，但具体构成及原始与扩展后甲骨文承诺的拆分未在财报层面充分披露，仍需通过10-Q文件做进一步核实。
+  </div>
+</section>
+
+<section>
+  <h2>Hunterbrook Litigation — Unresolved Overhang <span class="zh">Hunterbrook诉讼：尚未解决的风险</span></h2>
+  <ul class="bullets">
+    <li>On 8 Jul 2026, Hunterbrook Media (a self-disclosed short position holder) published allegations that Bloom sourced scandium oxide from China via intermediary countries while publicly denying China dependence, with follow-on allegations of hardware degradation and Oracle project delays. The stock fell as much as 12% intraday, closing down 5.7%.</li>
+    <li>A securities class action was filed 30 Jul 2026 in the U.S. District Court for the Northern District of California, covering purchasers from 27 Feb 2025 through 8 Jul 2026.</li>
+    <li>Bloom has categorically denied the claims, stating its scandium oxide supply is sufficient for current backlog and demand and is not dependent on China.</li>
+    <li><strong>This risk is unresolved</strong> and sits outside our original SELL thesis, which was built on valuation and related-party/leverage concerns, not disclosure-fraud risk. It is a genuine addition to the risk register, not a confirmation of our existing bear case.</li>
+  </ul>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    2026年7月8日，做空机构Hunterbrook Media发布报告，指控Bloom通过中间国采购中国产钪同时公开否认对中国的依赖，并追加指控硬件性能衰退及甲骨文项目延迟。股价盘中一度下跌12%，收盘跌5.7%。2026年7月30日，一项证券集体诉讼在加州北区联邦地方法院提起，涵盖2025年2月27日至2026年7月8日期间的买入者。Bloom已明确否认相关指控。这一风险尚未解决，且不属于我们最初SELL评级逻辑（基于估值和关联方/杠杆担忧）所涵盖的范畴，是风险清单中真正的新增项，而非对既有看空逻辑的验证。
+  </div>
+</section>
+
+<section>
+  <h2>Thesis Impact &amp; Recommended Next Step <span class="zh">对论文的影响与下一步建议</span></h2>
+  <p>This print is a significant negative data point for our SELL thesis on fundamentals: growth accelerated rather than decelerated, and guidance was raised rather than held or cut — the opposite of what a "backlog-conversion disappoints" bear case requires. At the same time, none of the valuation, leverage (debt/equity remains elevated), or related-party-concentration concerns from our initiation report have been resolved, and a new, material, unresolved risk (the Hunterbrook litigation) has emerged that argues for caution independent of the operating beat.</p>
+  <p><strong>We are not issuing a revised rating or price target in this note.</strong> Doing so without rebuilding the DCF and comps model against the new guidance — and without more clarity on the Hunterbrook litigation outcome — would not meet the standard we held ourselves to in the initiation report. The next deliverable should be a full model refresh incorporating the raised guidance, followed by a re-underwritten valuation and an explicit rating decision.</p>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    从基本面角度看，本季度业绩对我们的SELL评级逻辑构成显著负面冲击：增长不降反升，指引不降反升——这与"订单转化不及预期"的看空逻辑假设正好相反。与此同时，我们首次覆盖报告中提出的估值、杠杆（负债权益比仍处高位）及关联方集中度担忧均未得到解决，且新出现了尚未解决的重大风险（Hunterbrook诉讼），这本身也构成独立于本季度经营超预期之外的谨慎理由。本次点评不给出修订后的评级或目标价——在未用新指引重建DCF及可比公司模型、且Hunterbrook诉讼结果尚不明朗的情况下给出评级调整，将无法达到我们在首次覆盖报告中为自己设定的标准。下一步交付物应为纳入上调后指引的完整模型更新，随后进行重新估值并明确给出评级决定。
+  </div>
+</section>
+
+<section>
+  <h2>What We're Watching Next <span class="zh">后续关注要点</span></h2>
+  <ul class="bullets">
+    <li>Resolution (either direction) of the Hunterbrook allegations and the N.D. Cal. securities class action.</li>
+    <li>10-Q-level detail on backlog composition, Oracle contract terms, and scandium/China supply-chain disclosure.</li>
+    <li>Q3 FY2026 print, and whether the raised guidance range holds.</li>
+    <li>Whether the stock's failure to sustainably re-rate above pre-Hunterbrook levels despite the beat-and-raise reflects the market pricing the litigation risk as material.</li>
+  </ul>
+  <div class="zh-note">
+    <span class="label">中文摘要</span>
+    后续重点关注：Hunterbrook指控及加州北区证券集体诉讼的最终结果；10-Q文件中关于订单构成、甲骨文合同条款及钪/中国供应链披露的细节；2026财年第三季度业绩及上调后指引能否兑现；股价在业绩超预期上调指引后仍未能持续重新回到Hunterbrook事件前水平，是否反映市场将该诉讼风险定价为实质性风险。
+  </div>
+</section>
+
+<section class="sources">
+  <h2>Sources <span class="zh">资料来源</span></h2>
+  <ol>
+    <li><a href="https://www.investing.com/news/transcripts/earnings-call-transcript-bloom-energy-tops-q2-2026-forecasts-shares-jump-after-hours-93CH-4818294" target="_blank" rel="noopener">Earnings call transcript: Bloom Energy tops Q2 2026 forecasts — Investing.com</a></li>
+    <li><a href="https://247wallst.com/investing/2026/07/29/bloom-energy-soars-11-on-record-1-07b-q2-revenue-raised-2026-guidance/" target="_blank" rel="noopener">Bloom Energy Q2 2026 record revenue, raised guidance — 24/7 Wall St.</a></li>
+    <li><a href="https://www.stocktitan.net/sec-filings/BE/8-k-bloom-energy-corp-reports-material-event-11a3a4a289c4.html" target="_blank" rel="noopener">Bloom Energy 8-K, Q2 2026 results — StockTitan / SEC filing</a></li>
+    <li><a href="https://www.tipranks.com/news/class-action/bloom-energy-lawsuit-focuses-on-alleged-china-supply-chain-disclosures-after-be-stock-drop" target="_blank" rel="noopener">Bloom Energy securities class action, China supply-chain disclosure allegations — TipRanks</a></li>
+    <li><a href="https://www.stocktitan.net/sec-filings/BE/8-k-bloom-energy-corp-reports-material-event-fcbd2d56d6b6.html" target="_blank" rel="noopener">Bloom Energy rebuts Hunterbrook report, scandium oxide supply detail — 8-K / StockTitan</a></li>
+    <li><a href="https://www.dandodiary.com/2026/08/articles/geopolitical-risk/geopolitical-issues-lead-to-securities-suit-against-fuel-cell-company/" target="_blank" rel="noopener">Securities suit filing detail — The D&amp;O Diary</a></li>
+    <li>Current quote data: internal stock-data tool, accessed 6 Aug 2026 (price $234.33, close of prior session $228.11).</li>
+    <li>Prior estimates: <em>BloomEnergy_Financial_Model_2026-07-21.xlsx</em> and <em>BloomEnergy_Valuation_Analysis_2026-07-21.md</em>, this firm's own initiation-coverage work product, 21 Jul 2026.</li>
+  </ol>
+</section>
+
+<div class="disclaimer">
+  For informational purposes only; not a solicitation to buy or sell any security. This note updates but does not replace the 21 Jul 2026 initiation report; the $58.00 price target referenced above is flagged as under review, not reaffirmed. 本报告仅供参考，不构成买卖任何证券的要约。本报告更新但不取代2026年7月21日发布的首次覆盖报告；文中提及的58美元目标价已标注为"待重新评估"，并非维持不变的结论。
+</div>
