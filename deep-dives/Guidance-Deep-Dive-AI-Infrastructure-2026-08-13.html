@@ -78,6 +78,12 @@
     color: var(--accent); text-decoration: none; font-weight: 600;
   }
   .summary-table a:hover { text-decoration: underline; }
+  .eps-beat, .eps-miss, .eps-inline {
+    font-weight: 700; white-space: nowrap;
+  }
+  .eps-beat { color: var(--beat); }
+  .eps-miss { color: var(--miss); }
+  .eps-inline { color: var(--muted); }
 </style>
 </head>
 <body>
@@ -102,25 +108,26 @@
   <a href="#takeaway">3. Restated takeaway</a>
 </div>
 
+<p style="font-size:0.8rem;color:var(--muted);margin:0 0 6px;"><span class="eps-beat">beat</span> = EPS Actual above consensus &nbsp;&nbsp; <span class="eps-miss">miss</span> = EPS Actual below consensus</p>
 <div style="overflow-x:auto;">
 <table class="summary-table">
 <tr><th>Mech.</th><th>Company</th><th>EPS Est.</th><th>EPS Actual</th><th>Guidance Change</th><th>t0 Reaction</th></tr>
-<tr><td><a href="#a">A</a></td><td><a href="#a">GOOGL</a></td><td>$2.90</td><td>$9.11</td><td>2026 capex raised to $195-205B (from $180-190B)</td><td><span class="neg">-7.1%</span></td></tr>
-<tr><td><a href="#a">A</a></td><td><a href="#a">META</a></td><td>$7.22</td><td>$6.18</td><td>2026 capex raised to $130-145B (from $125-145B)</td><td><span class="neg">-8.0%</span></td></tr>
-<tr><td><a href="#a">A</a></td><td><a href="#a">AMZN</a></td><td>$1.83</td><td>$5.75</td><td>2026 capex raised to $220B (from $200B)</td><td><span class="pos">+15.3%</span></td></tr>
-<tr><td><a href="#a">A</a></td><td><a href="#a">MSFT</a></td><td>$4.24</td><td>$4.74</td><td>CY2026 capex <strong>CUT</strong> to ~$175B (from ~$190B)</td><td><span class="pos">+15.5%</span></td></tr>
-<tr><td><a href="#b">B</a></td><td><a href="#b">GLW</a></td><td>$0.75</td><td>$0.78</td><td>Q3 guide at/below consensus (guide-down)</td><td><span class="neg">-12.1%</span></td></tr>
-<tr><td><a href="#c">C</a></td><td><a href="#c">VRT</a></td><td>$1.43</td><td>$1.52</td><td>FY EPS raised to $6.65-6.75, revenue to $13.8-14.2B (both above consensus)</td><td><span class="neg">-17.3%</span></td></tr>
-<tr><td><a href="#d">D</a></td><td><a href="#d">OKLO</a></td><td>-$0.16</td><td>-$0.28</td><td>FY cash flow raised to $120-150M (from $80-100M)</td><td><span class="pos">+14.8%</span></td></tr>
-<tr><td><a href="#d">D</a></td><td><a href="#d">VST</a></td><td>$1.63</td><td>$0.76</td><td>FY guidance reaffirmed (adj. EBITDA +31% YoY actual)</td><td><span class="pos">+1.6%</span></td></tr>
-<tr><td><a href="#d">D</a></td><td><a href="#d">TLN</a></td><td>$3.39</td><td>$2.37</td><td>EBITDA raised to $2.025-2.225B, FCF to $1.2-1.35B</td><td><span class="pos">+2.6%</span></td></tr>
-<tr><td><a href="#e">E</a></td><td><a href="#e">NBIS</a></td><td>-$0.86</td><td>-$0.68</td><td>Power capacity guide raised to 5GW (from ~4GW)</td><td><span class="pos">+34.1%</span></td></tr>
-<tr><td><a href="#f">F</a></td><td><a href="#f">BE</a></td><td>$0.41</td><td>$0.78</td><td>FY revenue raised to $3.9-4.2B (from $3.4-3.8B)</td><td>-1.9%</td></tr>
-<tr><td><a href="#g">G</a></td><td><a href="#g">CORZ</a></td><td>-$0.06</td><td>-$0.04*</td><td>No formal EPS/revenue guide; AMD deal up to 2.5GW / $14B+ potential revenue</td><td>+0.02% &rarr; <span class="neg">-12.65%</span> (t+1)</td></tr>
-<tr><td><a href="#h">H</a></td><td><a href="#h">ARM</a></td><td>$0.40</td><td>$0.45</td><td>Q2 FY27 guide raised to $1.38B rev / $0.47 EPS (both above ~$1.34B / $0.43 consensus)</td><td><span class="pos">+7.4%</span> &rarr; <span class="pos">+18.7%</span> (t+20)</td></tr>
-<tr><td><a href="#i">I</a></td><td><a href="#i">INTC</a></td><td>$0.22</td><td>$0.42</td><td>2026 capex raised to $20B+ (from ~$18B)</td><td><span class="neg">-7.9%</span></td></tr>
-<tr><td><a href="#j">J</a></td><td><a href="#j">COHR</a></td><td>$1.62</td><td>$1.74</td><td>Q1 revenue raised to as much as $2.4B; gross margin guided to 40.5%</td><td><span class="neg">-8.0%</span></td></tr>
-<tr><td><a href="#j">J</a></td><td><a href="#j">LITE</a></td><td>$2.97</td><td>$3.23</td><td>Q1 EPS raised to $4.05-4.35, revenue to $1.23-1.27B (both well above consensus)</td><td><span class="pos">+13.6%</span></td></tr>
+<tr><td><a href="#a">A</a></td><td><a href="#a">GOOGL</a></td><td>$2.90</td><td><span class="eps-beat">$9.11</span></td><td>2026 capex raised to $195-205B (from $180-190B)</td><td><span class="neg">-7.1%</span></td></tr>
+<tr><td><a href="#a">A</a></td><td><a href="#a">META</a></td><td>$7.22</td><td><span class="eps-miss">$6.18</span></td><td>2026 capex raised to $130-145B (from $125-145B)</td><td><span class="neg">-8.0%</span></td></tr>
+<tr><td><a href="#a">A</a></td><td><a href="#a">AMZN</a></td><td>$1.83</td><td><span class="eps-beat">$5.75</span></td><td>2026 capex raised to $220B (from $200B)</td><td><span class="pos">+15.3%</span></td></tr>
+<tr><td><a href="#a">A</a></td><td><a href="#a">MSFT</a></td><td>$4.24</td><td><span class="eps-beat">$4.74</span></td><td>CY2026 capex <strong>CUT</strong> to ~$175B (from ~$190B)</td><td><span class="pos">+15.5%</span></td></tr>
+<tr><td><a href="#b">B</a></td><td><a href="#b">GLW</a></td><td>$0.75</td><td><span class="eps-beat">$0.78</span></td><td>Q3 guide at/below consensus (guide-down)</td><td><span class="neg">-12.1%</span></td></tr>
+<tr><td><a href="#c">C</a></td><td><a href="#c">VRT</a></td><td>$1.43</td><td><span class="eps-beat">$1.52</span></td><td>FY EPS raised to $6.65-6.75, revenue to $13.8-14.2B (both above consensus)</td><td><span class="neg">-17.3%</span></td></tr>
+<tr><td><a href="#d">D</a></td><td><a href="#d">OKLO</a></td><td>-$0.16</td><td><span class="eps-miss">-$0.28</span></td><td>FY cash flow raised to $120-150M (from $80-100M)</td><td><span class="pos">+14.8%</span></td></tr>
+<tr><td><a href="#d">D</a></td><td><a href="#d">VST</a></td><td>$1.63</td><td><span class="eps-miss">$0.76</span></td><td>FY guidance reaffirmed (adj. EBITDA +31% YoY actual)</td><td><span class="pos">+1.6%</span></td></tr>
+<tr><td><a href="#d">D</a></td><td><a href="#d">TLN</a></td><td>$3.39</td><td><span class="eps-miss">$2.37</span></td><td>EBITDA raised to $2.025-2.225B, FCF to $1.2-1.35B</td><td><span class="pos">+2.6%</span></td></tr>
+<tr><td><a href="#e">E</a></td><td><a href="#e">NBIS</a></td><td>-$0.86</td><td><span class="eps-beat">-$0.68</span></td><td>Power capacity guide raised to 5GW (from ~4GW)</td><td><span class="pos">+34.1%</span></td></tr>
+<tr><td><a href="#f">F</a></td><td><a href="#f">BE</a></td><td>$0.41</td><td><span class="eps-beat">$0.78</span></td><td>FY revenue raised to $3.9-4.2B (from $3.4-3.8B)</td><td>-1.9%</td></tr>
+<tr><td><a href="#g">G</a></td><td><a href="#g">CORZ</a></td><td>-$0.06</td><td><span class="eps-beat">-$0.04*</span></td><td>No formal EPS/revenue guide; AMD deal up to 2.5GW / $14B+ potential revenue</td><td>+0.02% &rarr; <span class="neg">-12.65%</span> (t+1)</td></tr>
+<tr><td><a href="#h">H</a></td><td><a href="#h">ARM</a></td><td>$0.40</td><td><span class="eps-beat">$0.45</span></td><td>Q2 FY27 guide raised to $1.38B rev / $0.47 EPS (both above ~$1.34B / $0.43 consensus)</td><td><span class="pos">+7.4%</span> &rarr; <span class="pos">+18.7%</span> (t+20)</td></tr>
+<tr><td><a href="#i">I</a></td><td><a href="#i">INTC</a></td><td>$0.22</td><td><span class="eps-beat">$0.42</span></td><td>2026 capex raised to $20B+ (from ~$18B)</td><td><span class="neg">-7.9%</span></td></tr>
+<tr><td><a href="#j">J</a></td><td><a href="#j">COHR</a></td><td>$1.62</td><td><span class="eps-beat">$1.74</span></td><td>Q1 revenue raised to as much as $2.4B; gross margin guided to 40.5%</td><td><span class="neg">-8.0%</span></td></tr>
+<tr><td><a href="#j">J</a></td><td><a href="#j">LITE</a></td><td>$2.97</td><td><span class="eps-beat">$3.23</span></td><td>Q1 EPS raised to $4.05-4.35, revenue to $1.23-1.27B (both well above consensus)</td><td><span class="pos">+13.6%</span></td></tr>
 </table>
 </div>
 <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">*CORZ's -$0.04 is the adjusted/non-GAAP figure yfinance uses for consensus comparison; GAAP EPS was a $3.32 loss, mostly a non-cash warrant revaluation &mdash; see Section 2G.</p>
