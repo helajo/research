@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CBRS: Most Recent Earnings Reaction, Mechanism by Mechanism</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #5b6472; --border: #e2e5ea;
+    --card: #f7f8fa; --accent: #2563eb; --beat: #16a34a; --miss: #dc2626;
+    --cn-bg: #f0f4ff; --cn-border: #c7d5fb; --cbrs: #2563eb; --soxx: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px 24px 80px;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  h2 { font-size: 1.22rem; margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+  .meta { color: var(--muted); font-size: 0.85rem; }
+  .cn {
+    background: var(--cn-bg); border: 1px solid var(--cn-border); border-radius: 8px;
+    padding: 14px 18px; margin: 14px 0 24px; font-size: 0.92rem; color: #2a3550;
+  }
+  .cn::before {
+    content: "中文摘要"; display: block; font-weight: 600; font-size: 0.78rem;
+    color: var(--accent); margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .callout {
+    background: var(--card); border-left: 3px solid var(--accent); border-radius: 6px;
+    padding: 14px 18px; margin: 16px 0; font-size: 0.95rem;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin: 14px 0; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.74rem; text-transform: uppercase; }
+  .metrics { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .metric { background: var(--card); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; flex: 1; min-width: 130px; }
+  .metric .v { font-weight: 700; font-size: 1.05rem; }
+  .metric .l { color: var(--muted); font-size: 0.72rem; margin-top: 2px; }
+  .beat { color: var(--beat); }
+  .miss { color: var(--miss); }
+  .sources { font-size: 0.8rem; color: var(--muted); }
+  figure { margin: 20px 0; padding: 20px 18px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+  figcaption { margin-top: 10px; font-size: 0.84rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>CBRS: Most Recent Earnings Reaction, Mechanism by Mechanism</h1>
+<div class="subtitle">The August 12, 2026 print — a GAAP headline miss dominated by a one-time IPO-vesting charge, a near-breakeven core business, and a stock that fell, nearly fully recovered on unrelated news, then kept grinding to new lows for a week and a half.</div>
+<div class="meta">Price data through 2026-08-24 &nbsp;|&nbsp; Most recent reported quarter: 2026-08-12 (AMC) &nbsp;|&nbsp; Next print: 2026-11-10, not yet reported</div>
+
+<div class="cn">
+本报告聚焦Cerebras Systems（CBRS）最近一次财报（2026年8月12日）后的股价反应机制，价格数据更新至2026年8月24日。GAAP每股亏损大幅不及预期（主要为一次性IPO归属股权激励费用所致，核心经营业绩接近盈亏平衡），股价当日收跌11.85%，此后走势颇为曲折：先因OpenAI相关消息几乎完全收复失地，随后又再度下跌，到第七个交易日（8月24日）累计跌幅已扩大至29.23%，远差于财报当日的表现。财报当日（8月13日）的下跌几乎完全是Cerebras自身问题（板块仅涨0.76%），但接下来一周半的走势并非如此单纯——8月18日和8月24日半导体板块本身都出现了系统性抛售（分别下跌约5%和2.7%），8月21日又叠加了公司CTO一笔约1.53亿美元的减持申报，与公司自身的消息面因素交织在一起。报告末尾另辟一节，分析同期10-Q揭示的结构性问题：资本开支已达收入的147%、约29亿美元合约租赁义务中逾七成不在资产负债表内、以及最大客户同时充当贷款人的循环融资安排。
+</div>
+
+<h2 id="setup">The Setup Going In</h2>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-$2.98 GAAP EPS</div><div class="l">vs. ~-$0.18 consensus</div></div>
+  <div class="metric"><div class="v beat">+42.42%</div><div class="l">Pre-print run-up (t-20 to t-1)</div></div>
+  <div class="metric"><div class="v">$262.06</div><div class="l">t-1 close (pre-print)</div></div>
+</div>
+<p>CBRS walked into this print having run up <strong>+42.42%</strong> over the prior 20 sessions — an extremely high bar, recovering hard from its first (June) earnings crash and then some. On a GAAP basis, EPS missed badly (-$2.98 vs. roughly -$0.18 consensus), but that headline number is almost entirely a one-time accounting artifact: $377.0M of stock-based compensation in the quarter, almost certainly IPO-vesting acceleration, not an ongoing burn-rate increase. Strip that out (plus warrant-asset amortization and IPO-related payroll tax) and core net loss was just -$6.9M — close to breakeven, in line with the company's own near-breakeven Q1. Core revenue also beat consensus ($209.9M vs. ~$198M), with cloud/inference revenue up a standout 287% YoY.</p>
+<p>The real disappointment was guidance, not the P&amp;L: Q3 core revenue was guided to just <strong>+2.4% sequential growth</strong> at the midpoint — a sharp deceleration signal even against huge year-over-year comps — alongside another core-margin guide-down to 38-40%.</p>
+
+<h2 id="runup">What Drove the Run-Up</h2>
+<div class="metrics">
+  <div class="metric"><div class="v beat">+42.42%</div><div class="l">CBRS, t-20 to t-1</div></div>
+  <div class="metric"><div class="v miss">-3.75%</div><div class="l">SOXX, same window</div></div>
+  <div class="metric"><div class="v beat">~+46pp</div><div class="l">CBRS-specific component</div></div>
+</div>
+<p>Running the same sector-decomposition check on the run-up itself: SOXX was actually <em>down</em> -3.75% over the same July 15&ndash;August 12 window CBRS gained +42.42% in. This wasn't a rising tide lifting CBRS along with chip stocks generally — it was close to entirely idiosyncratic, built on a cluster of real contract announcements landing on top of an oversold base.</p>
+<p>CBRS had cratered to a 52-week low of $160.81 after its first (June) print spooked the market with weak margin guidance, then drifted through a broader AI-chip sector selloff in early-to-mid July that pulled it down to a fresh low of $169 by July 29. From there, a string of deal announcements landed in quick succession:</p>
+<table>
+<tr><th>Date</th><th>1-day move</th><th>Catalyst</th></tr>
+<tr><td>Jul 21</td><td class="beat">+17.92%</td><td>Flex manufacturing partnership — ~7x expansion of CS-3 supercomputer production capacity through 2026.</td></tr>
+<tr><td>Jul 23</td><td class="beat">+4.86%</td><td>AMD partnership — a "disaggregated inference" system pairing AMD's Helios racks with Cerebras' Wafer-Scale Engine, unveiled at AMD's Advancing AI 2026 event.</td></tr>
+<tr><td>Jul 29</td><td class="miss">-12.11%</td><td>CleanCore Solutions signed a 10-year, ~$800M AI colocation deal for a dedicated Minnesota data center campus (announced same day, priced in the next session) — potential to exceed $3B including renewals.</td></tr>
+<tr><td>Jul 30</td><td class="beat">+19.88%</td><td>Stock's single biggest day of the run-up, on the heels of the CleanCore news.</td></tr>
+<tr><td>Aug 3&ndash;11</td><td class="beat">steady grind higher</td><td>Continued bullish Wall Street coverage of the AMD/AWS/CleanCore deal stack, plus ordinary pre-earnings anticipation buying building into the Aug 12 print.</td></tr>
+<tr><td>Aug 12</td><td class="beat">+11.63%</td><td>Final pre-print session — the classic "run into the print" pattern for a hot, high-attention name, immediately before the print that triggered the t0 reaction above.</td></tr>
+</table>
+<figure>
+<svg viewBox="0 0 780 240" role="img" aria-label="Sparkline of CBRS closing price from July 15 to August 12, 2026, climbing from $184 to a peak of $262, with callouts marking the Flex deal on July 21, a low of $169 on July 29 followed by the CleanCore deal announcement, the resulting rally on July 30, and the pre-print peak on August 12.">
+  <polyline points="20.0,152.5 57.0,157.0 94.0,166.4 131.0,161.4 168.0,121.9 205.0,120.4 242.0,107.7 279.0,133.7 316.0,146.8 353.0,141.7 390.0,170.8 427.0,128.8 464.0,134.2 501.0,107.7 538.0,98.8 575.0,114.8 612.0,118.5 649.0,99.3 686.0,95.2 723.0,89.3 760.0,55.2" fill="none" stroke="var(--cbrs)" stroke-width="2.5"/>
+  <circle cx="20.0" cy="152.5" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="57.0" cy="157.0" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="94.0" cy="166.4" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="131.0" cy="161.4" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="168.0" cy="121.9" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="205.0" cy="120.4" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="242.0" cy="107.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="279.0" cy="133.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="316.0" cy="146.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="353.0" cy="141.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="390.0" cy="170.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="427.0" cy="128.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="464.0" cy="134.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="501.0" cy="107.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="538.0" cy="98.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="575.0" cy="114.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="612.0" cy="118.5" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="649.0" cy="99.3" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="686.0" cy="95.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="723.0" cy="89.3" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="760.0" cy="55.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="20.0" cy="152.5" r="4.5" fill="var(--muted)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="20.0" y1="152.5" x2="20.0" y2="138.5" stroke="var(--muted)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="20.0" y="134.5" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-weight="600">$184</text>
+  <text x="20.0" y="146.5" text-anchor="middle" font-size="9.5" fill="var(--muted)">Jul 15 &middot; window start</text>
+  <circle cx="168.0" cy="121.9" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="168.0" y1="121.9" x2="168.0" y2="107.9" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="168.0" y="103.9" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$209</text>
+  <text x="168.0" y="115.9" text-anchor="middle" font-size="9.5" fill="var(--muted)">Jul 21 &middot; Flex deal</text>
+  <circle cx="390.0" cy="170.8" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="390.0" y1="170.8" x2="390.0" y2="196.8" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="390.0" y="198.8" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$169</text>
+  <text x="390.0" y="210.8" text-anchor="middle" font-size="9.5" fill="var(--muted)">Jul 29 &middot; low, CleanCore signed</text>
+  <circle cx="427.0" cy="128.8" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="427.0" y1="128.8" x2="427.0" y2="114.8" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="427.0" y="110.8" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$203</text>
+  <text x="427.0" y="122.8" text-anchor="middle" font-size="9.5" fill="var(--muted)">Jul 30 &middot; CleanCore pops stock</text>
+  <circle cx="760.0" cy="55.2" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="760.0" y1="55.2" x2="760.0" y2="41.2" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="760.0" y="37.2" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$262</text>
+  <text x="760.0" y="49.2" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 12 &middot; pre-print peak</text>
+</svg>
+<figcaption>CBRS closing price, July 15&ndash;August 12, 2026 (t-20 to t-1). The climb from $169 to $262 in two weeks was almost entirely deal-driven, not sector beta &mdash; SOXX was flat-to-down over this same span.</figcaption>
+</figure>
+<p>The throughline connects directly to the reaction itself: the market bid CBRS up 42% on a real wave of new customer and capacity wins, which raised the bar high enough that "core beat, but only +2.4% sequential guidance" read as a letdown relative to that momentum — not because the guidance was bad in isolation, but because it didn't confirm the acceleration story the run-up had already priced in.</p>
+<div class="cn">对财报前的抢跑涨幅做同样的板块归因检验：在CBRS上涨42.42%的同一时间窗口（7月15日至8月12日），SOXX半导体板块指数实际下跌3.75%——这并非板块普涨带动，而几乎完全是CBRS自身的消息面驱动，建立在一系列真实合同公告叠加超跌基础之上。CBRS在首次（6月）财报因毛利率指引疲软吓退市场后跌至52周新低160.81美元，随后在7月上中旬又经历了一轮波及整个AI芯片板块的抛售，跌至7月29日的169美元新低。此后一系列合同消息接连落地：7月21日Flex制造合作伙伴关系（CS-3超级计算机产能计划扩大约7倍）当日大涨17.92%；7月23日与AMD合作的"解耦式推理"系统发布；7月29日CleanCore签署为期10年、约8亿美元的明尼苏达AI数据中心租赁协议（含续约潜力超30亿美元），次日（7月30日）股价大涨19.88%，是本轮涨幅中单日涨幅最大的一天；8月3日至11日持续温和上涨，叠加华尔街对AMD/AWS/CleanCore合作组合的看多评论，以及财报前常见的抢跑买盘；8月12日财报当天盘中再涨11.63%，是典型的"财报前抢跑"行情，随即迎来财报后的下跌。这条脉络与财报后的下跌直接相连：市场基于一系列真实的新客户和产能合作将股价推高42%，这抬高了预期门槛，使得"核心业务超预期，但环比指引仅2.4%"被解读为不及预期——不是因为指引本身差，而是因为它未能确认抢跑涨幅已经计入的加速故事。</div>
+
+<h2 id="reaction">What the Tape Did</h2>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-16.05%</div><div class="l">Gap (prior close &rarr; t0 open)</div></div>
+  <div class="metric"><div class="v beat">+5.00%</div><div class="l">Intraday fade (open &rarr; close)</div></div>
+  <div class="metric"><div class="v miss">-11.85%</div><div class="l">t0 total, close-to-close</div></div>
+  <div class="metric"><div class="v">1.43x</div><div class="l">Multiple of baseline daily vol</div></div>
+</div>
+<p>The gap here (-16.05%) was the single biggest one-day reaction of CBRS's short public life — but unlike its first earnings print, sellers didn't control the whole session: the stock clawed back +5.00% intraday, likely once the "core beat, cloud +287%" detail had time to circulate, trimming the close-to-close damage to -11.85%. That's still a real move, 1.43x the stock's own (already extreme) baseline daily volatility.</p>
+<p>What happened over the following week is the more interesting part — not a clean recovery, and not a clean continuation either, but both in sequence:</p>
+<table>
+<tr><th>Session</th><th>Cumulative return from t-1</th><th>What happened</th></tr>
+<tr><td>t0 (2026-08-13)</td><td class="miss">-11.85%</td><td>Initial reaction to the print itself</td></tr>
+<tr><td>t+1 (2026-08-14)</td><td class="miss">-16.44%</td><td>Continued drifting down</td></tr>
+<tr><td>t+2 (2026-08-17)</td><td class="miss">-3.85%</td><td>Sharp rally — OpenAI/Wedbush deal-progression news, unrelated to the print</td></tr>
+<tr><td>t+3 (2026-08-18)</td><td class="miss">-16.05%</td><td>Nearly all of the rally reversed in a single session</td></tr>
+<tr><td>t+4 (2026-08-19)</td><td class="miss">-17.69%</td><td>Continued lower</td></tr>
+<tr><td>t+5 (2026-08-20)</td><td class="miss">-19.92%</td><td>New low for the move — worse than the original t0 reaction</td></tr>
+<tr><td>t+6 (2026-08-21)</td><td class="miss">-25.15%</td><td>New low again — CTO files to sell ~$153M of stock</td></tr>
+<tr><td>t+7 (2026-08-24)</td><td class="miss">-29.23%</td><td>New low again — broad chip-sector selloff ahead of NVDA's Aug 26 print</td></tr>
+</table>
+<figure>
+<svg viewBox="0 0 780 240" role="img" aria-label="Sparkline of CBRS closing price from August 12 to August 24, 2026, dropping from a peak of $262 to $231 on the earnings reaction day, rallying to $252 on August 17 on OpenAI-related news, then falling to new lows through $220 on August 18, $196 on August 21, and $185 on August 24.">
+  <polyline points="20.0,55.2 112.5,102.0 205.0,120.2 297.5,70.4 390.0,118.6 482.5,125.1 575.0,133.9 667.5,154.6 760.0,170.8" fill="none" stroke="var(--cbrs)" stroke-width="2.5"/>
+  <line x1="66.2" y1="46" x2="66.2" y2="180" stroke="var(--muted)" stroke-dasharray="4,3" stroke-opacity="0.6"/>
+  <circle cx="20.0" cy="55.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="112.5" cy="102.0" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="205.0" cy="120.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="297.5" cy="70.4" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="390.0" cy="118.6" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="482.5" cy="125.1" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="575.0" cy="133.9" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="667.5" cy="154.6" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="760.0" cy="170.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="20.0" cy="55.2" r="4.5" fill="var(--muted)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="20.0" y1="55.2" x2="20.0" y2="41.2" stroke="var(--muted)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="20.0" y="37.2" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-weight="600">$262</text>
+  <text x="20.0" y="49.2" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 12 &middot; t-1 (pre-print)</text>
+  <circle cx="112.5" cy="102.0" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="112.5" y1="102.0" x2="112.5" y2="128.0" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="112.5" y="130.0" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$231</text>
+  <text x="112.5" y="142.0" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 13 &middot; t0, guidance miss</text>
+  <circle cx="297.5" cy="70.4" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="297.5" y1="70.4" x2="297.5" y2="56.4" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="297.5" y="52.4" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$252</text>
+  <text x="297.5" y="64.4" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 17 &middot; OpenAI/Wedbush rally</text>
+  <circle cx="390.0" cy="118.6" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="390.0" y1="118.6" x2="390.0" y2="144.6" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="390.0" y="146.6" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$220</text>
+  <text x="390.0" y="158.6" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 18 &middot; Supernova + sector selloff</text>
+  <circle cx="667.5" cy="154.6" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="667.5" y1="154.6" x2="667.5" y2="180.6" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="667.5" y="182.6" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$196</text>
+  <text x="667.5" y="194.6" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 21 &middot; CTO files $153M sale</text>
+  <circle cx="760.0" cy="170.8" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="760.0" y1="170.8" x2="760.0" y2="156.8" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="760.0" y="152.8" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$185</text>
+  <text x="760.0" y="164.8" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 24 &middot; new low, NVDA-week selloff</text>
+</svg>
+<figcaption>CBRS closing price, August 12&ndash;24, 2026 (t-1 through t+7). The dashed line marks the earnings print itself. Two of the six post-print sessions (Aug 18, Aug 24) coincided with genuine broad chip-sector selloffs, not CBRS-specific news &mdash; see the sector-attribution table below.</figcaption>
+</figure>
+<p>By t+7, CBRS was down nearly 30% from its pre-print close — well over double the size of the initial t0 reaction, and still making new lows a week and a half later. The t+2 spike is a clean illustration of why a single day's move can be badly misleading: an investor checking the stock two days after the print would have seen it "almost fully recovered" (-3.85%) and drawn the wrong conclusion. That recovery had nothing to do with the earnings print — it was driven entirely by separate news about the OpenAI relationship — and it not only failed to hold, the stock kept grinding to fresh lows for six more sessions after it reversed.</p>
+<div class="cn">跳空幅度（-16.05%）是Cerebras上市以来单日最大跌幅，但与首次财报不同，盘中出现买盘支撑，收盘跌幅收窄至-11.85%，相当于自身基准日波动率的1.43倍。此后近两周走势曲折：次日继续下探至-16.44%，第三个交易日（8月17日）因OpenAI相关消息大幅反弹至-3.85%（几乎收复全部跌幅），但第四个交易日几乎将反弹全部吐回，第五个交易日累计跌幅扩大至-19.92%，第六个交易日（8月21日）再创新低至-25.15%（恰逢公司CTO申报减持约1.53亿美元股票），第七个交易日（8月24日）跌幅进一步扩大至-29.23%（当天半导体板块因英伟达8月26日财报前的普遍避险情绪而系统性下跌）。这一"假反弹"提醒：仅看财报后一两天的股价表现可能得出错误结论——8月17日的反弹与财报本身无关，而是由独立的OpenAI相关消息驱动，不仅未能持续，此后股价还连续多日创出新低。</div>
+
+<h2 id="market">CBRS-Specific, Not Sector-Wide</h2>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-11.85%</div><div class="l">CBRS t0 reaction</div></div>
+  <div class="metric"><div class="v">+0.76%</div><div class="l">SOXX (semis sector) same day</div></div>
+  <div class="metric"><div class="v miss">-12.60%</div><div class="l">CBRS-specific component</div></div>
+</div>
+<figure>
+<svg viewBox="0 0 400 160" role="img" aria-label="Bar chart comparing CBRS's negative 11.85 percent reaction against SOXX's slightly positive 0.76 percent same-day move, illustrating that CBRS fell sharply while the broader semiconductor sector was roughly flat.">
+  <line x1="20" y1="100" x2="380" y2="100" stroke="currentColor" stroke-opacity="0.35"/>
+  <rect x="90" y="100" width="60" height="55" fill="var(--cbrs)" rx="3"/>
+  <text x="120" y="170" text-anchor="middle" font-size="12" fill="var(--miss)">CBRS -11.85%</text>
+  <rect x="250" y="96" width="60" height="4" fill="var(--soxx)" rx="2"/>
+  <text x="280" y="86" text-anchor="middle" font-size="12" fill="var(--beat)">SOXX +0.76%</text>
+</svg>
+<figcaption>The sector was essentially flat the day CBRS fell almost 12%. This wasn't a bad day for chip stocks broadly — it was specific to CBRS's own print.</figcaption>
+</figure>
+<p>SOXX moved less than a percent either way on August 13 — nowhere close to explaining an 11.85% single-stock move. Nearly the entire reaction (-12.60% of it, once the tiny sector tailwind is backed out) came from inside CBRS's own release: the sequential-growth-deceleration and margin guidance discussed above, not systematic semiconductor selling.</p>
+<div class="cn">8月13日当天，SOXX半导体板块指数几乎持平（+0.76%），远不足以解释CBRS当日近12%的跌幅。剔除板块的微弱正向影响后，几乎全部跌幅（-12.60%）都来自CBRS自身财报内容——即上文提到的环比增速放缓和毛利率指引下调，而非半导体板块系统性抛售。</div>
+
+<h2 id="extending">Why the Slide Kept Extending Past t0</h2>
+<p>The sector check above only covers the earnings day itself. Running the same CBRS-vs-SOXX split for every session through t+7 tells a different story for the back half of the move — part of the later decline wasn't about CBRS at all:</p>
+<table>
+<tr><th>Session</th><th>CBRS (1-day)</th><th>SOXX (1-day)</th><th>CBRS-specific</th><th>Driver</th></tr>
+<tr><td>t0 (8/13)</td><td class="miss">-11.85%</td><td>+0.76%</td><td class="miss">~-12.6%</td><td>Guidance deceleration + margin guide-down. Citi cut its target $340&rarr;$320 (kept Buy) same day; Wedbush and Morgan Stanley actually raised theirs — analysts weren't uniformly bearish even as the stock fell.</td></tr>
+<tr><td>t+1 (8/14)</td><td class="miss">-5.21%</td><td>-0.06%</td><td class="miss">~-5.15%</td><td>No specific headline found — reads as continued digestion of the guidance print, sector flat.</td></tr>
+<tr><td>t+2 (8/17)</td><td class="beat">+15.07%</td><td>+1.58%</td><td class="beat">~+13.5%</td><td>OpenAI deal-progression news, amplified by bullish Wedbush commentary &mdash; unpacked below the table.</td></tr>
+<tr><td>t+3 (8/18)</td><td class="miss">-12.69%</td><td class="miss">-4.96%</td><td class="miss">~-7.7%</td><td>Two things stacked same day: a genuine broad semiconductor/AI-stock selloff (Nasdaq 100 -1.7%, memory names and TSMC hit hard on AI-capex valuation anxiety), plus Cerebras' own "Supernova Day" product launch (new CS-4 accelerator) — positive news that still drew a sell-the-news reaction, re-surfacing margin/infrastructure-cost concerns. A CTO stock sale (~$4.7M, pre-arranged 10b5-1 plan) also landed this day.</td></tr>
+<tr><td>t+4 (8/19)</td><td class="miss">-1.96%</td><td class="miss">-2.21%</td><td class="beat">~+0.24%</td><td>CBRS actually outperformed the sector — this day's move was almost entirely systemic chip-sector weakness continuing, not CBRS-specific news.</td></tr>
+<tr><td>t+5 (8/20)</td><td class="miss">-2.71%</td><td>+0.52%</td><td class="miss">~-3.2%</td><td>Renewed CBRS-specific weakness, no single new headline found — consistent with continued digestion and lingering customer-concentration concern (the 10-Q discloses three anonymized customers at 49%, 20% and 10% of H1 revenue, two of which are disclosed as related parties to each other).</td></tr>
+<tr><td>t+6 (8/21)</td><td class="miss">-6.54%</td><td>-0.44%</td><td class="miss">~-6.1%</td><td>Almost entirely CBRS-specific. Cerebras' CTO filed a Form 144 the same day to sell roughly 710,000 shares (~$153M) — unpacked below the table.</td></tr>
+<tr><td>t+7 (8/24)</td><td class="miss">-5.46%</td><td class="miss">-2.67%</td><td class="miss">~-2.8%</td><td>Roughly half sector, half CBRS-specific. A fresh broad chip-sector selloff hit that Monday — SOXX -2.67%, Nasdaq 100 down almost 1% — driven by AI-infrastructure-financing worries and rising China-competition concerns, two trading days ahead of NVDA's Aug 26 print. No CBRS-specific headline found for the residual.</td></tr>
+</table>
+<p>Net read: the guidance deceleration explains t0 cleanly and on its own. t+3, t+4, and t+7 — three of the four worst sessions in the move — were meaningfully driven by a broad semiconductor-sector rotation rather than a CBRS-specific verdict: real, but not about this print, and in t+7's case tied to nervousness ahead of a different company's earnings entirely. t+1 and t+5 look like plain continued repricing with no fresh catalyst behind them. t+6 is CBRS-specific again, with a concrete, dated reason: a large insider share-sale filing landing right as the stock was already near its post-print lows.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">The two events worth unpacking</h3>
+<p><strong>The Aug 17 rally wasn't a new deal — it was proof the existing one was shipping.</strong> Cerebras announced that its Wafer-Scale Engine chips were powering OpenAI's newly launched GPT-5.6 "Sol Ultrafast" tier, a service level delivering up to 750 output tokens per second, roughly 14x standard inference speed. Wedbush picked this up as evidence the $20B OpenAI agreement was converting from signed backlog into a live, revenue-generating deployment. That reframing — paper contract becoming working product — is what moved the stock ~15% that session. No contract terms changed; what changed was the market's confidence that the backlog was real and executing.</p>
+<p><strong>The Aug 21 CTO filing is more structural than it first appears — in both directions.</strong> Several mechanical details cut against reading it as a panic sale: it's a <em>Form 144</em>, a notice of intent to sell up to that amount over the following 90 days, not a completed transaction; the shares came from performance stock units that vested in June 2026, so it's compensation converting to tradable stock rather than a discretionary position being dumped; and it executes under a <em>10b5-1 plan adopted the previous month</em>, a pre-committed schedule specifically designed so insiders cannot be accused of trading on non-public information. Once adopted, such a plan runs on its own timetable regardless of where the stock is that week. What still makes it market-moving is scale, not intent: ~$153M dwarfs the routine five-and six-figure "sell to cover taxes" transactions other executives filed earlier that week, and it lands as a visible supply overhang while the stock is already near its post-print lows.</p>
+<div class="cn">这两个事件值得展开说明。8月17日的大涨并非新签合同，而是既有合同"开始交付"的证明：Cerebras宣布其晶圆级引擎芯片已为OpenAI新推出的GPT-5.6 "Sol Ultrafast"服务层级提供算力，该层级可实现每秒最高750个输出token，约为标准推理速度的14倍。Wedbush据此认为，价值200亿美元的OpenAI协议正从"已签订单"转化为"实际产生收入的部署"。合同条款并未改变，改变的是市场对订单真实性和执行力的信心。8月21日CTO的减持申报则更为结构性，且两面性都需说明：几个机制细节表明这并非恐慌性抛售——这是Form 144，即未来90天内计划出售的意向通知，而非已完成的交易；股份来源于2026年6月归属的业绩股票单位（PSU），属于薪酬转化为可交易股票，而非主动减持既有仓位；且执行依据是上月已订立的10b5-1计划，这是一种预先承诺的交易安排，专门设计用于避免内部人被指控利用未公开信息交易，一旦订立便按既定时间表执行，与当期股价无关。真正产生市场影响的是规模而非意图：约1.53亿美元远超同期其他高管为缴纳税款而进行的例行小额减持，且恰好在股价已处于财报后低位时形成明显的供给压力。</div>
+<div class="cn">上文的板块对比仅覆盖财报当天。若将CBRS与SOXX的每日对比延伸到财报后第七个交易日，这段时期的走势明显不是单一叙事：8月18日SOXX半导体板块本身下跌近5%（同期纳斯达克100指数跌1.7%，台积电跌7%，存储芯片股普跌，反映市场对AI资本开支的估值担忧），当天恰逢Cerebras自身的"Supernova Day"新品发布会（新一代CS-4芯片）——利好消息却引发"利好出尽"式抛售，同时CTO进行了一笔约470万美元的既定10b5-1计划减持。8月19日CBRS跌幅（-1.96%）实际上略好于板块跌幅（-2.21%），说明当天几乎完全是系统性因素，与公司自身无关。8月21日CBRS再度大幅落后于板块（板块仅跌0.44%），当天CTO申报计划出售约71万股（约1.53亿美元）——规模明显大于此前几位高管出于纳税义务的例行小额减持，是一个真实、具体的减持信号。8月24日（周一）半导体板块再度普跌2.67%（纳斯达克100指数跌近1%），市场担忧AI基础设施融资模式及中国厂商竞争加剧，且正值英伟达8月26日财报前两个交易日的避险情绪升温，CBRS当日跌幅中约一半可归因于板块因素，另一半未找到公司自身的具体消息面诱因。综合来看：财报当日的下跌可以完全用指引减速来解释；四个跌幅最深的交易日中有三天（8/18、8/19、8/24）在相当程度上是半导体板块整体调整，而非市场对这份财报本身的进一步否定；8/14和8/20则更像是没有新催化剂的持续消化；8/21的再创新低有明确诱因——CTO的大额减持申报。</div>
+
+<h2 id="whisper">Consensus vs. Whisper, for This Print Specifically</h2>
+<p>The published GAAP EPS consensus (-$0.18) was missed badly on paper (-$2.98), but that comparison was never the real question for a usage-based infrastructure story stock — and the underlying core business was, if anything, in line with expectations (near-breakeven, consistent with Q1). The real whisper question here was set by the <strong>+42.42% run-up</strong> going in: a stock that had run that hard needed an unambiguous signal that growth was still accelerating to justify holding the gain. It got the opposite — a sequential-growth guide of just +2.4% against still-huge year-over-year comps, which reads as deceleration regardless of how the trailing quarter's own numbers came in.</p>
+<div class="callout">The whisper number here was never about the EPS line, and arguably wasn't even about this quarter's results — it was "prove the run-up was justified by showing growth is still accelerating." Guidance said the opposite, and the market spent a week and a half (with one convincing-looking but unrelated detour, a large insider-sale filing, and a broader chip-sector selloff layered on top) repricing for that.</div>
+<div class="cn">公开GAAP每股收益一致预期（-0.18美元）在账面上被严重不及预期（实际-2.98美元），但对这只基于用量的基础设施成长股而言，这从来不是真正的问题所在——剔除一次性项目后的核心业务其实与预期基本一致（接近盈亏平衡，与第一季度相符）。真正的"whisper门槛"由财报前42.42%的抢跑涨幅设定：涨了这么多，就需要明确的信号证明增长仍在加速，才能守住涨幅。但公司给出的信号恰恰相反——尽管同比基数已经很高，环比增速指引仅为2.4%，这无论如何解读都是减速信号。市场用了一周半时间来消化这一点，其间还夹杂着一次看似令人信服、实则与财报无关的反弹、一笔大额内部人减持申报，以及半导体板块的整体调整。</div>
+
+<h2 id="balance-sheet">Beneath the Print: Capex and the Financing Structure</h2>
+<p>The price analysis above stops at what the tape did. But the same 10-Q that carried the guidance also carries the structural story the market has been circling — and it explains why "margin guide-down" and "AI-infrastructure-financing worries" kept recurring as themes on the down days. Three things stand out.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">1. Capex has gone vertical, and now exceeds revenue</h3>
+<div class="metrics">
+  <div class="metric"><div class="v">$23.4M</div><div class="l">FY2024 capex</div></div>
+  <div class="metric"><div class="v">$382.7M</div><div class="l">FY2025 capex (16x YoY)</div></div>
+  <div class="metric"><div class="v miss">$548.9M</div><div class="l">H1 2026 capex alone</div></div>
+  <div class="metric"><div class="v miss">147%</div><div class="l">H1 2026 capex &divide; H1 revenue</div></div>
+</div>
+<figure>
+<svg viewBox="0 0 780 320" role="img" aria-label="Grouped bar chart comparing Cerebras revenue against capital expenditure for fiscal years 2022 through 2025 and the first half of 2026. Capex stays under 10 percent of revenue in FY2023 and FY2024, then jumps to 75 percent of revenue in FY2025 and 147 percent in the first half of 2026, when capex of 549 million dollars exceeds revenue of 374 million dollars.">
+  <line x1="52" y1="254.0" x2="758" y2="254.0" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="257.5" text-anchor="end" font-size="9.5" fill="var(--muted)">$0M</text>
+  <line x1="52" y1="216.1" x2="758" y2="216.1" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="219.6" text-anchor="end" font-size="9.5" fill="var(--muted)">$100M</text>
+  <line x1="52" y1="178.3" x2="758" y2="178.3" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="181.8" text-anchor="end" font-size="9.5" fill="var(--muted)">$200M</text>
+  <line x1="52" y1="140.4" x2="758" y2="140.4" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="143.9" text-anchor="end" font-size="9.5" fill="var(--muted)">$300M</text>
+  <line x1="52" y1="102.6" x2="758" y2="102.6" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="106.1" text-anchor="end" font-size="9.5" fill="var(--muted)">$400M</text>
+  <line x1="52" y1="64.7" x2="758" y2="64.7" stroke="var(--border)" stroke-width="1"/>
+  <text x="44" y="68.2" text-anchor="end" font-size="9.5" fill="var(--muted)">$500M</text>
+  <rect x="79.6" y="244.7" width="40" height="9.3" fill="var(--soxx)" rx="2"/>
+  <rect x="125.6" y="250.0" width="40" height="4.0" fill="var(--cbrs)" rx="2"/>
+  <text x="99.6" y="239.7" text-anchor="middle" font-size="9" fill="var(--soxx)" font-weight="600">25</text>
+  <text x="145.6" y="245.0" text-anchor="middle" font-size="9" fill="var(--cbrs)" font-weight="600">10</text>
+  <text x="122.6" y="272.0" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="600">FY2022</text>
+  <text x="122.6" y="288.0" text-anchor="middle" font-size="10" fill="var(--muted)" font-weight="600">42%</text>
+  <rect x="220.8" y="224.2" width="40" height="29.8" fill="var(--soxx)" rx="2"/>
+  <rect x="266.8" y="251.5" width="40" height="2.5" fill="var(--cbrs)" rx="2"/>
+  <text x="240.8" y="219.2" text-anchor="middle" font-size="9" fill="var(--soxx)" font-weight="600">79</text>
+  <text x="286.8" y="246.5" text-anchor="middle" font-size="9" fill="var(--cbrs)" font-weight="600">7</text>
+  <text x="263.8" y="272.0" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="600">FY2023</text>
+  <text x="263.8" y="288.0" text-anchor="middle" font-size="10" fill="var(--muted)" font-weight="600">8%</text>
+  <rect x="362.0" y="144.1" width="40" height="109.9" fill="var(--soxx)" rx="2"/>
+  <rect x="408.0" y="245.1" width="40" height="8.9" fill="var(--cbrs)" rx="2"/>
+  <text x="382.0" y="139.1" text-anchor="middle" font-size="9" fill="var(--soxx)" font-weight="600">290</text>
+  <text x="428.0" y="240.1" text-anchor="middle" font-size="9" fill="var(--cbrs)" font-weight="600">23</text>
+  <text x="405.0" y="272.0" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="600">FY2024</text>
+  <text x="405.0" y="288.0" text-anchor="middle" font-size="10" fill="var(--muted)" font-weight="600">8%</text>
+  <rect x="503.2" y="60.9" width="40" height="193.1" fill="var(--soxx)" rx="2"/>
+  <rect x="549.2" y="109.1" width="40" height="144.9" fill="var(--cbrs)" rx="2"/>
+  <text x="523.2" y="55.9" text-anchor="middle" font-size="9" fill="var(--soxx)" font-weight="600">510</text>
+  <text x="569.2" y="104.1" text-anchor="middle" font-size="9" fill="var(--cbrs)" font-weight="600">383</text>
+  <text x="546.2" y="272.0" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="600">FY2025</text>
+  <text x="546.2" y="288.0" text-anchor="middle" font-size="10" fill="var(--miss)" font-weight="600">75%</text>
+  <rect x="644.4" y="112.6" width="40" height="141.4" fill="var(--soxx)" rx="2"/>
+  <rect x="690.4" y="46.2" width="40" height="207.8" fill="var(--cbrs)" rx="2"/>
+  <text x="664.4" y="107.6" text-anchor="middle" font-size="9" fill="var(--soxx)" font-weight="600">374</text>
+  <text x="710.4" y="41.2" text-anchor="middle" font-size="9" fill="var(--cbrs)" font-weight="600">549</text>
+  <text x="687.4" y="272.0" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="600">H1 2026</text>
+  <text x="687.4" y="288.0" text-anchor="middle" font-size="10" fill="var(--miss)" font-weight="600">147%</text>
+  <text x="405.0" y="306.0" text-anchor="middle" font-size="9.5" fill="var(--muted)">capex as % of revenue</text>
+  <rect x="52" y="14" width="11" height="11" fill="var(--soxx)" rx="2"/><text x="69" y="23.5" font-size="10.5" fill="var(--muted)">Revenue</text>
+  <rect x="144" y="14" width="11" height="11" fill="var(--cbrs)" rx="2"/><text x="161" y="23.5" font-size="10.5" fill="var(--muted)">Capital expenditure</text>
+</svg>
+<figcaption>Revenue vs. capital expenditure, FY2022&ndash;H1 2026 ($M). Capex sat below 10% of revenue through FY2023&ndash;FY2024 &mdash; the profile of a capital-light hardware designer. It crosses over in FY2025 and inverts in H1 2026, when capex ($549M) exceeds revenue ($374M) for the first time. H1 2026 is a six-month figure shown against four full years, so the level is not directly comparable &mdash; the ratio underneath each pair is.</figcaption>
+</figure>
+<p>Cerebras spent more on property and equipment in the first six months of 2026 ($548.9M) than in all of 2025 ($382.7M), against H1 revenue of roughly $373.5M. Capex is running at about <strong>147% of revenue</strong> — the company is spending more building capacity than it collects from selling it. FY2025 already showed the inflection: net PP&amp;E went from $79.7M to $686.3M in a single year, with construction-in-progress alone jumping from $7.8M to $163.5M. Free cash flow was <strong>-$392.8M</strong> in FY2025 even though operating cash flow was near breakeven, because essentially the entire gap is capex.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">Is capex exceeding revenue actually bad?</h3>
+<p>Not on its own — and it would be a mistake to read the chart above as a straightforward warning sign. Spending ahead of revenue is the <em>normal and necessary</em> shape of an infrastructure buildout: data centers, telcos and utilities all sink capital years before the associated revenue arrives, and a company that refused to do so while demand was visible would be destroying value, not protecting it. Three things specifically argue in Cerebras' favor here:</p>
+<ul style="font-size:0.94rem;">
+<li><strong>The capacity is substantially pre-sold, not speculative.</strong> There is $25.4B of contracted remaining performance obligations behind this build. That is a materially different risk profile from building on spec and hoping demand shows up.</li>
+<li><strong>It is funded.</strong> ~$8.6B of liquidity, plus an undrawn $850M revolver. This is not a company stretching to finance the build.</li>
+<li><strong>The capacity is being consumed.</strong> Cloud/inference revenue grew 287% year-over-year — the utilization is real, not theoretical.</li>
+</ul>
+<p>What genuinely changes, though, is the <em>kind of company</em> being valued. A fabless chip designer earning 60%+ gross margins on an asset-light model deserves a very different multiple from a capital-intensive operator running 38-40% margins with a large depreciating asset base. The capex line is the mechanism by which one becomes the other, and much of the post-print repricing looks like the market working through that re-rating rather than reacting to any single quarter's numbers.</p>
+<p>The real risks are narrower and more specific than "capex is high":</p>
+<ul style="font-size:0.94rem;">
+<li><strong>Duration mismatch.</strong> The lease obligations are fixed, non-cancelable and long-dated (5.5-year weighted-average term), while only ~22% of the backlog converts to revenue within 24 months. The costs commence on a schedule; the revenue arrives on a different one.</li>
+<li><strong>Concentration meets irreversibility.</strong> Pre-sold capacity is only as good as the counterparty, and roughly 79% of H1 revenue sits in three customers. If the anchor customer's plans change, the assets and the leases do not.</li>
+<li><strong>Obsolescence.</strong> AI compute hardware depreciates fast against a fast-moving architectural frontier. Multi-year commitments to a specific generation of infrastructure carry real technology risk.</li>
+<li><strong>Unproven returns.</strong> There is no track record yet of what this asset base earns. Return on invested capital, not capex intensity, is the number that eventually settles the question — and it will take several quarters of the new margin structure to become visible.</li>
+</ul>
+<div class="callout">The honest read: capex exceeding revenue is not itself the problem, and given a $25.4B contracted backlog it is arguably the correct decision. The open question is narrower — whether an asset base this large, this concentrated in one counterparty, and this exposed to hardware obsolescence will earn a return above its cost of capital. That question cannot be answered from this print, and won't be answerable for several quarters.</div>
+<div class="cn">资本开支超过收入本身是坏事吗？单看这一点并不是，将上图直接解读为警示信号是一种误读。在收入到来之前先行投入，正是基础设施建设的正常且必要的形态——数据中心、电信、公用事业均是如此；在需求明确可见时拒绝投入，反而是在毁灭价值。三点对Cerebras有利：一是产能在很大程度上已预售而非投机性建设，背后有254亿美元的合约在手订单；二是资金充足，约86亿美元流动性外加8.5亿美元未动用循环额度；三是产能确实在被消耗，云端推理收入同比增长287%。真正改变的是"所估值的公司类型"：一家轻资产、毛利率60%以上的无晶圆厂芯片设计公司，与一家重资产、毛利率38-40%、拥有大量折旧资产的运营商，理应享有截然不同的估值倍数。资本开支正是从前者变为后者的机制，财报后的大部分重新定价，看起来更像市场在消化这一"估值体系切换"，而非对某一季度数字的反应。真正的风险比"资本开支高"更为具体：其一，期限错配——租赁义务固定、不可撤销且期限较长（加权平均5.5年），而在手订单中仅约22%在24个月内转化为收入，成本按一个时间表发生，收入按另一个时间表到来；其二，集中度叠加不可逆性——预售产能的价值取决于对手方，而上半年约79%的收入集中于三家客户，若核心客户计划生变，资产和租赁义务并不会随之改变；其三，技术过时风险——AI算力硬件在快速演进的架构前沿面前折旧很快，对特定世代基础设施的多年期承诺存在实质性技术风险；其四，回报未经验证——这批资产的实际回报尚无记录可循，最终解答此问题的是投入资本回报率而非资本开支强度，而这需要在新的毛利率结构下经历数个季度才能显现。</div>
+<p>This is the mechanical reason the margin guide-down matters more than it would at a fabless chip designer. Cerebras is no longer only selling systems; it is building and operating data centers, which converts a capital-light hardware model into a capital-intensive infrastructure model. Depreciation on that asset base lands in cost of revenue and structurally caps gross margin — which is exactly what the 38-40% core-margin guide is describing.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">2. The off-balance-sheet lease commitments are larger than the on-balance-sheet ones</h3>
+<table>
+<tr><th>Commitment</th><th>Amount</th><th>On the June 30 balance sheet?</th></tr>
+<tr><td>Future payments on existing operating leases (5.5-yr weighted-avg term)</td><td>$690.3M</td><td>Yes — recognized as lease liability</td></tr>
+<tr><td>Non-cancelable data center leases signed but <em>not yet commenced</em></td><td class="miss">~$1.5B</td><td class="miss">No — disclosed in footnotes only</td></tr>
+<tr><td>Additional leases signed <em>after</em> quarter-end</td><td class="miss">~$753.4M</td><td class="miss">No — subsequent event</td></tr>
+<tr><td><strong>Total contracted lease obligations</strong></td><td><strong>~$2.94B</strong></td><td>Roughly 77% of it off-balance-sheet</td></tr>
+</table>
+<p>This is not an accounting irregularity — under current lease accounting, a signed lease does not become a balance-sheet liability until the lease actually commences, and companies disclose the not-yet-commenced portion in the footnotes. But the practical effect is that an investor reading only the balance sheet sees $690.3M of lease obligations, while the company has contractually committed to roughly <strong>$2.94B</strong> in total. Those obligations are fixed and non-cancelable; the revenue meant to service them is not.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">3. The largest customer is also a lender and a warrant holder</h3>
+<div class="metrics">
+  <div class="metric"><div class="v">$918.2M</div><div class="l">Working capital loan outstanding (6%)</div></div>
+  <div class="metric"><div class="v">$850M</div><div class="l">Revolving credit facility (undrawn)</div></div>
+  <div class="metric"><div class="v">~$8.6B</div><div class="l">Total liquidity (cash + restricted + investments)</div></div>
+  <div class="metric"><div class="v">$25.4B</div><div class="l">Remaining performance obligations</div></div>
+</div>
+<p>The $918.2M working capital loan on the balance sheet ($736.0M current, $182.2M long-term, 6% interest) originated as a ~$1B facility extended by <strong>OpenAI</strong> — the same counterparty explicitly named as the anchor of the $20B+ compute agreement and, per the 10-Q, the party the $25.4B backlog is "heavily concentrated" in. Cerebras can repay the loan in cash or in delivered products and services. OpenAI additionally holds warrants for up to 33.4 million non-voting Class N shares, vesting in full only if it purchases 2 gigawatts of compute. That warrant is the source of the $44.3M of warrant-asset amortization sitting in this quarter's GAAP-to-core bridge.</p>
+<p>So a single named counterparty is simultaneously a lender and a prospective shareholder, layered on top of being the dominant name behind the backlog. The 10-Q separately discloses H1 2026 <em>revenue</em> concentration by anonymized letter rather than by name — <strong>Customer A: 49%, Customer B: 20%, Customer D: 10%</strong> — and does not state which letter, if any, is OpenAI; the filing links OpenAI by name only to the backlog and financing disclosures, not the revenue table. One detail worth flagging on its own: Customer A and Customer D are disclosed as <strong>related parties to each other under ASC 850</strong> — so two of the three named revenue concentrations may sit inside a single affiliated group, which would put effective concentration in that group closer to 59%, not 49%. None of this is hidden or improper, and vendor-financing a supplier's buildout is a rational way to secure capacity fast. But between the named financing relationship and the anonymized-but-related revenue concentration, the filing describes a customer base that is narrower, and more interconnected, than three independent names — which is close to what analysts mean when they say concentration "rotated rather than went away." Backlog recognition is also back-loaded: only about 22% of the $25.4B converts within 24 months, with 43% falling in months 25-48.</p>
+<div class="callout">Set against the price action: the market did not sell CBRS purely on a 2.4% sequential guide. It sold a company whose capex now exceeds its revenue, whose contracted lease obligations are roughly 4x what the balance sheet shows, and whose largest customer is also its lender — and then did so again, harder, on a day when the whole sector was re-pricing exactly those AI-infrastructure-financing questions. Liquidity is genuinely strong at ~$8.6B, so this is a question about returns on an enormous capital build, not near-term solvency.</div>
+<div class="cn">财报本身之外，同一份10-Q揭示的结构性问题，正是下跌期间反复出现的"毛利率下调"和"AI基础设施融资担忧"两个主题的根源。其一，资本开支已经垂直上升并超过收入：2026年上半年资本开支5.489亿美元，超过2025年全年的3.827亿美元（后者已是2024年2340万美元的16倍），而上半年收入约3.735亿美元，资本开支已达收入的147%——公司建设产能的花费超过了销售产能的收入。2025年自由现金流为-3.928亿美元，缺口几乎全部来自资本开支。这也解释了为何毛利率指引下调对Cerebras的意义大于对无晶圆厂芯片设计公司：公司已从销售系统转向自建自营数据中心，资产折旧计入营业成本，结构性压低毛利率，这正是38-40%核心毛利率指引所描述的情形。其二，表外租赁承诺规模大于表内：截至6月30日，已生效经营租赁的未来付款额为6.903亿美元（已确认为负债），但已签署尚未起租的不可撤销数据中心租赁约15亿美元、季末后新签约7.534亿美元，均仅在附注披露而不计入资产负债表，合计约29.4亿美元的合约义务中约77%在表外。这并非违规——按现行租赁会计准则，租赁在起租前不确认负债——但仅看资产负债表的投资者只会看到6.903亿美元。其三，一家被明确点名的客户同时是债权人和认股权持有人：资产负债表上9.182亿美元的营运资金贷款（利率6%）源自OpenAI提供的约10亿美元融资，10-Q明确将OpenAI列为200多亿美元算力协议及254亿美元在手订单"高度集中"的对手方，且OpenAI持有最多3340万股无投票权N类股认股权证（须采购2吉瓦算力方能全额归属，本季GAAP调节表中4430万美元的认股权证资产摊销即来源于此）。10-Q另行以匿名字母披露上半年收入集中度——A客户49%、B客户20%、D客户10%——并未说明其中哪一位（如有）即为OpenAI；OpenAI仅在在手订单与融资披露部分被点名，未出现在收入集中度表格中。另有一个值得单独指出的细节：A客户与D客户根据ASC 850被披露为彼此的关联方，若这一关联关系成立，两者合计的实际集中度可能接近59%而非49%。以上安排均属合规，且是快速扶持供应商产能建设的合理做法，但将"被点名的融资关系"与"匿名但可能关联的收入集中度"合并来看，反映出的客户基础比三个独立名称所显示的更为狭窄、更为盘根错节——这接近分析师所称"集中度只是转移而非消失"的含义。此外在手订单确认节奏后置：254亿美元中仅约22%在24个月内确认，43%落在第25至48个月。综合来看：市场卖出的并不只是2.4%的环比指引，而是一家资本开支已超过收入、合约租赁义务约为表内数字4倍、且最大客户同时充当其贷款人的公司；而在整个板块正在重新定价这类AI基础设施融资问题的当天，抛压尤其明显。需要说明的是，公司流动性依然充裕（约86亿美元），因此这是关于巨额资本投入回报率的问题，而非短期偿债能力问题。</div>
+
+<h2 id="caveats">What This Is and Isn't</h2>
+<ul style="font-size:0.92rem;">
+<li>Scoped to CBRS's single most recent reported print (2026-08-12) — not a multi-quarter study. The June 2026 first print is referenced only for context (the size of the recovery run-up into this one).</li>
+<li>"CBRS-specific" uses a simple one-index (SOXX) decomposition, not a rigorous factor model — applied session-by-session through t+7, not just on t0.</li>
+<li>The t+2 OpenAI-news rally and the t+3 Supernova Day product launch are real, separately documented events, not derived from this print — included because they're part of the honest price path, not because they were caused by the earnings release.</li>
+<li>Analyst commentary, the product-launch date, the insider-sale detail, and the run-up deal announcements are drawn from third-party financial news coverage, not from this project's own pipeline data.</li>
+<li>The capex and financing section is structural context from the balance sheet, cash flow statement and 10-Q disclosures — it is not derived from the price action, and it is offered as an explanation of what the recurring "margin" and "AI-financing" themes refer to, not as proof of what any individual trading day was caused by.</li>
+<li>Lease obligations described as "off-balance-sheet" are properly disclosed in the filing's footnotes and follow standard lease accounting — the point is the gap between the recognized liability and the total contracted commitment, not any impropriety.</li>
+<li>CBRS's next print is 2026-11-10 — not yet reported; nothing here predicts that outcome.</li>
+</ul>
+
+<p class="sources">Sources: yfinance daily price history (CBRS and SOXX) and earnings_dates. Annual balance sheet and cash flow figures (FY2022&ndash;FY2025 capex, PP&amp;E, free cash flow) via the Yahoo Finance financials feed; Q2 2026 10-Q detail (H1 capex, lease commitments, working capital loan, revolver, liquidity, remaining performance obligations, customer concentration) filed 2026-08-12, accessed via StockTitan's filing summary. GAAP/core reconciliation from Cerebras' own Q2 2026 press release/8-K. Day-by-day sector attribution and event details from Motley Fool, MarketBeat, GuruFocus, TradingKey, StockTitan (SEC Form 144/Form 4 filings, CleanCore 8-K), SiliconANGLE, StocksToTrade, Yahoo Finance, TechCrunch, and Bloomberg/Morningstar coverage published 2026-07-21 through 2026-08-24.</p>
+
+</body>
+</html>
