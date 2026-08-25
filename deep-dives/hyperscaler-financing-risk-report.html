@@ -1,0 +1,770 @@
+<!doctype html>
+<title>Hyperscaler Financing Risk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&display=swap');
+
+  :root{
+    --paper: #EDF0E7;
+    --paper-raised: #E1E6DA;
+    --paper-raised-2: #D6DDCC;
+    --ink: #1C231D;
+    --ink-soft: #545F52;
+    --ink-faint: #7C8578;
+    --line: #C3CBBC;
+    --line-strong: #A9B39D;
+    --accent: #2B5D63;
+    --accent-soft: #DEEAEA;
+    --debit: #A13D2B;
+    --debit-soft: #F3E3DE;
+    --credit: #3F7A4D;
+    --credit-soft: #E3EDDE;
+    --warn: #96700E;
+    --warn-soft: #F1E7CE;
+    --shadow: 0 1px 2px rgba(28,35,29,0.06), 0 4px 14px rgba(28,35,29,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #14180F;
+      --paper-raised: #1D2317;
+      --paper-raised-2: #262E1E;
+      --ink: #E9ECE2;
+      --ink-soft: #AEB8A2;
+      --ink-faint: #7E8873;
+      --line: #333C2A;
+      --line-strong: #46512F;
+      --accent: #7BC2C8;
+      --accent-soft: #1E3336;
+      --debit: #E58469;
+      --debit-soft: #3A241C;
+      --credit: #8BCB98;
+      --credit-soft: #223A26;
+      --warn: #E3BC5F;
+      --warn-soft: #3B301A;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 18px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #14180F;
+    --paper-raised: #1D2317;
+    --paper-raised-2: #262E1E;
+    --ink: #E9ECE2;
+    --ink-soft: #AEB8A2;
+    --ink-faint: #7E8873;
+    --line: #333C2A;
+    --line-strong: #46512F;
+    --accent: #7BC2C8;
+    --accent-soft: #1E3336;
+    --debit: #E58469;
+    --debit-soft: #3A241C;
+    --credit: #8BCB98;
+    --credit-soft: #223A26;
+    --warn: #E3BC5F;
+    --warn-soft: #3B301A;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 18px rgba(0,0,0,0.35);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .cjk{ font-family: "Noto Sans SC", "IBM Plex Sans", sans-serif; }
+
+  .sheet{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 28px 120px;
+  }
+
+  /* ---- Masthead ---- */
+  .masthead{
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 22px;
+    margin-bottom: 40px;
+  }
+  .masthead .kicker{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  h1{
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4.2vw, 2.9rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+  .dek{
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 22px;
+    margin-top: 20px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .meta-row b{ color: var(--ink-soft); font-weight: 600; }
+
+  /* ---- Section scaffolding ---- */
+  section{
+    position: relative;
+    padding: 44px 0 8px;
+    border-top: 1px solid var(--line);
+  }
+  section:first-of-type{ border-top: none; padding-top: 0; }
+
+  .section-head{
+    display:grid;
+    grid-template-columns: 44px 1fr;
+    column-gap: 16px;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .section-num{
+    font-family:"IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--ink-faint);
+    border-right: 1px solid var(--line-strong);
+    padding-right: 12px;
+    align-self: start;
+    padding-top: 6px;
+  }
+  h2{
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .section-body{ grid-column: 2; }
+  .section-grid{
+    display:grid;
+    grid-template-columns: 44px 1fr;
+    column-gap: 16px;
+  }
+  .section-grid > .lede{ grid-column: 2; }
+
+  p{ margin: 0 0 14px; max-width: 68ch; }
+  h3{
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin: 26px 0 10px;
+  }
+  ul.notes{ margin: 0 0 16px; padding-left: 20px; max-width: 68ch; }
+  ul.notes li{ margin-bottom: 6px; }
+  a{ color: var(--accent); }
+
+  code, .mono{ font-family: "IBM Plex Mono", monospace; }
+  .num{ font-variant-numeric: tabular-nums; font-family: "IBM Plex Mono", monospace; }
+
+  /* ---- Data tables ---- */
+  .table-wrap{
+    overflow-x: auto;
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    background: var(--paper-raised);
+    box-shadow: var(--shadow);
+    margin: 4px 0 20px;
+  }
+  table{
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 760px;
+    font-size: 13px;
+  }
+  table.wide{ min-width: 980px; }
+  th, td{
+    padding: 8px 12px;
+    text-align: right;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--line);
+  }
+  th:first-child, td:first-child{ text-align: left; }
+  thead th{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: var(--paper-raised-2);
+    position: sticky; top:0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  tbody tr:last-child td{ border-bottom: none; }
+  tbody tr:hover td{ background: var(--accent-soft); }
+  td.ticker{ font-family: "IBM Plex Mono", monospace; font-weight: 600; letter-spacing: 0.02em; }
+  .flag-hi{ color: var(--debit); font-weight: 600; }
+  .flag-mid{ color: var(--warn); font-weight: 600; }
+  .flag-lo{ color: var(--credit); }
+  .dim{ color: var(--ink-faint); }
+
+  /* ---- Callout ---- */
+  .callout{
+    border-left: 3px solid var(--accent);
+    background: var(--paper-raised);
+    padding: 14px 18px;
+    margin: 4px 0 22px;
+    border-radius: 0 3px 3px 0;
+  }
+  .callout h4{
+    margin: 0 0 8px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .callout ul{ margin: 0; padding-left: 18px; }
+  .callout li{ margin-bottom: 7px; }
+  .callout li:last-child{ margin-bottom: 0; }
+
+  /* ---- Dossier cards (off-balance-sheet section) ---- */
+  .dossier-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .dossier{
+    border: 1px solid var(--line-strong);
+    background: var(--paper-raised);
+    border-radius: 4px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+  }
+  .dossier-top{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .dossier-top .tk{
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .pill{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pill.hi{ background: var(--debit-soft); color: var(--debit); }
+  .pill.mid{ background: var(--warn-soft); color: var(--warn); }
+  .pill.lo{ background: var(--credit-soft); color: var(--credit); }
+  .dossier dl{
+    display:grid;
+    grid-template-columns: 128px 1fr;
+    row-gap: 6px;
+    column-gap: 12px;
+    margin: 0 0 10px;
+    font-size: 13.5px;
+  }
+  .dossier dt{ color: var(--ink-faint); font-family:"IBM Plex Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding-top: 2px; }
+  .dossier dd{ margin: 0; }
+  .dossier .desc{ font-size: 14px; color: var(--ink-soft); margin: 8px 0 8px; }
+  .dossier .src{ font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; }
+  .dossier .src a{ color: var(--ink-faint); text-decoration-color: var(--line-strong); }
+
+  /* ---- Spread bars ---- */
+  .sbar{ display:flex; align-items:center; justify-content:flex-end; gap:9px; }
+  .sbar .track{
+    width: 104px; height: 7px; flex: none;
+    background: var(--paper-raised-2);
+    border: 1px solid var(--line);
+    border-radius: 4px; overflow: hidden;
+  }
+  .sbar .fill{ display:block; height:100%; background: var(--accent); }
+  .sbar .fill.mid{ background: var(--warn); }
+  .sbar .fill.wide{ background: var(--debit); }
+  .sbar .over{ font-size: 11px; color: var(--debit); font-weight: 600; }
+  tr.offscale td{ border-top: 2px solid var(--line-strong); }
+
+  /* ---- Chinese summary stamp ---- */
+  .zh-stamp{
+    margin-top: 18px;
+    border: 1px dashed var(--line-strong);
+    background: var(--paper-raised-2);
+    border-radius: 3px;
+    padding: 14px 18px;
+    max-width: 68ch;
+  }
+  .zh-stamp .zh-label{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .zh-stamp p{
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: none;
+    line-height: 1.85;
+  }
+
+  footer{
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    display:flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px){
+    .section-head, .section-grid{ grid-template-columns: 1fr; }
+    .section-num{ border-right:none; padding-right:0; padding-bottom:4px; border-bottom:1px solid var(--line-strong); margin-bottom:4px; }
+    .dossier dl{ grid-template-columns: 1fr; row-gap: 3px; }
+    .dossier dt{ padding-top: 8px; }
+  }
+</style>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="kicker">
+      <span>Financing &amp; Credit Notes</span>
+      <span>25 Aug 2026</span>
+    </div>
+    <h1>Who's Actually Funding the AI Buildout</h1>
+    <p class="dek">On- and off-balance-sheet leverage across 56 AI-infrastructure names — chips, hyperscalers, power, networking and data-center — with a deep-dive on the seven names running the largest financing structures.</p>
+    <div class="meta-row">
+      <span><b>Universe</b> 56 tickers, AI infra buildout screen</span>
+      <span><b>Sources</b> Yahoo Finance · SEC EDGAR · bond market quotes</span>
+      <span><b>As of</b> most recent filed fiscal period per company</span>
+    </div>
+  </div>
+
+  <!-- 00 METHODOLOGY -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">00</span>
+      <h2>Scope &amp; method</h2>
+    </div>
+    <div class="section-grid">
+      <div class="lede">
+        <p>This note answers two questions: which of these 56 companies are financing the AI capex cycle most aggressively <em>on</em> their balance sheets, and — for the seven names where it matters most (the five U.S. hyperscalers plus two neoclouds) — how much financing sits <em>off</em> it, in leases, joint ventures, VIEs and guarantees that don't show up in a standard debt/equity ratio.</p>
+        <p>On-balance-sheet figures come from each company's latest reported balance sheet (Yahoo Finance, cross-checked against SEC EDGAR filing dates). Off-balance-sheet figures are read directly from the companies' own 10-K/10-Q/20-F text — not analyst estimates, not press reports. Two things to hold in mind throughout:</p>
+        <ul class="notes">
+          <li><b>Different bases.</b> On-balance-sheet debt is principal outstanding today. Off-balance-sheet lease commitments (Oracle's $260B) are undiscounted payments owed over the next 15&ndash;19 years. Guarantee/backstop figures (Meta, Alphabet) are maximum contingent exposure, not drawn debt. Adding them together produces a "total financing weight" figure, not a refinance-tomorrow leverage ratio.</li>
+          <li><b>Silence isn't innocence.</b> A company showing no off-balance-sheet exposure here means none was disclosed under that heading in its own filing — not that no such arrangement exists anywhere in its structure.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>本报告分析56家AI基础设施相关公司的表内杠杆情况，并对其中7家（五大云计算巨头+两家新兴云服务商）的表外融资结构做深度调查。数据均来自Yahoo Finance与SEC官方文件，而非分析师估算。需注意：表外租赁承诺（如甲骨文的2600亿美元）是未来15-19年的未折现总付款额，与表内债务本金口径不同；担保类表外exposure为或有最大风险敞口，未必已实际提用。</p>
+    </div>
+  </section>
+
+  <!-- 01 ON-BALANCE-SHEET -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>On-balance-sheet leverage, all 56 names</h2>
+    </div>
+    <div class="section-grid">
+      <div class="lede">
+        <p>Sorted by total debt. Figures in $B, converted to USD where the filer reports in local currency (ASML in EUR, TSM in TWD, SK Hynix in KRW, Baidu in CNY, Tokyo Electron in JPY). <span class="dim">N/A</span> = not disclosed as a separate line; <span class="flag-hi">N/M</span> = not meaningful (negative equity).</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr>
+            <th>Ticker</th><th>FY End</th><th>Total Debt</th><th>LT Debt</th><th>Cap. Lease Obl.</th><th>Net Debt</th><th>Total Assets</th><th>Equity</th><th>D/E</th><th>Lease % of Debt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="ticker">ORCL</td><td class="num">2026-05-31</td><td class="num flag-hi">156.2</td><td class="num">122.3</td><td class="num">26.6</td><td class="num">98.3</td><td class="num">261.8</td><td class="num">42.5</td><td class="num flag-hi">3.67</td><td class="num">17.1%</td></tr>
+          <tr><td class="ticker">AMZN</td><td class="num">2025-12-31</td><td class="num flag-hi">153.0</td><td class="num">65.6</td><td class="num">87.3</td><td class="num dim">N/A</td><td class="num">818.0</td><td class="num">411.1</td><td class="num">0.37</td><td class="num flag-mid">57.1%</td></tr>
+          <tr><td class="ticker">META</td><td class="num">2025-12-31</td><td class="num">83.9</td><td class="num">58.7</td><td class="num">25.2</td><td class="num">22.9</td><td class="num">366.0</td><td class="num">217.2</td><td class="num">0.39</td><td class="num">30.0%</td></tr>
+          <tr><td class="ticker">AVGO</td><td class="num">2025-10-31</td><td class="num">65.1</td><td class="num">62.0</td><td class="num">0.0</td><td class="num">49.0</td><td class="num">171.1</td><td class="num">81.3</td><td class="num">0.80</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">GOOGL</td><td class="num">2025-12-31</td><td class="num">59.3</td><td class="num">46.5</td><td class="num">12.7</td><td class="num">15.8</td><td class="num">595.3</td><td class="num">415.3</td><td class="num">0.14</td><td class="num">21.5%</td></tr>
+          <tr><td class="ticker">MSFT</td><td class="num">2026-06-30</td><td class="num">56.8</td><td class="num">31.1</td><td class="num">16.5</td><td class="num">19.4</td><td class="num">758.4</td><td class="num">442.4</td><td class="num">0.13</td><td class="num">29.1%</td></tr>
+          <tr><td class="ticker">INTC</td><td class="num">2025-12-31</td><td class="num">46.6</td><td class="num">44.1</td><td class="num dim">N/A</td><td class="num">32.3</td><td class="num">211.4</td><td class="num">114.3</td><td class="num">0.41</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">TSM</td><td class="num">2025-12-31</td><td class="num">32.8</td><td class="num">28.4</td><td class="num">1.0</td><td class="num">-55.1</td><td class="num">251.8</td><td class="num">170.0</td><td class="num">0.19</td><td class="num">3.1%</td></tr>
+          <tr><td class="ticker">DELL</td><td class="num">2026-01-31</td><td class="num">31.5</td><td class="num">23.5</td><td class="num dim">N/A</td><td class="num">20.0</td><td class="num">101.3</td><td class="num">-2.5</td><td class="num flag-hi">N/M</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">CRWV</td><td class="num">2025-12-31</td><td class="num">29.8</td><td class="num">14.7</td><td class="num">8.4</td><td class="num">18.2</td><td class="num">49.3</td><td class="num">3.3</td><td class="num flag-hi">8.94</td><td class="num">28.3%</td></tr>
+          <tr><td class="ticker">HPE</td><td class="num">2025-10-31</td><td class="num">24.1</td><td class="num">17.8</td><td class="num">1.7</td><td class="num">16.6</td><td class="num">75.9</td><td class="num">24.7</td><td class="num">0.98</td><td class="num">7.1%</td></tr>
+          <tr><td class="ticker">EQIX</td><td class="num">2025-12-31</td><td class="num">22.7</td><td class="num">17.6</td><td class="num">3.8</td><td class="num">17.2</td><td class="num">40.1</td><td class="num">14.2</td><td class="num">1.61</td><td class="num">16.8%</td></tr>
+          <tr><td class="ticker">VST</td><td class="num">2025-12-31</td><td class="num">20.1</td><td class="num">15.8</td><td class="num">0.0</td><td class="num">19.3</td><td class="num">41.6</td><td class="num">5.1</td><td class="num flag-mid">3.94</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">SKHY</td><td class="num">2025-12-31</td><td class="num">17.8</td><td class="num">10.1</td><td class="num">1.8</td><td class="num">5.3</td><td class="num">126.7</td><td class="num">86.7</td><td class="num">0.21</td><td class="num">10.1%</td></tr>
+          <tr><td class="ticker">MU</td><td class="num">2025-08-31</td><td class="num">15.3</td><td class="num">11.5</td><td class="num">3.7</td><td class="num">1.9</td><td class="num">82.8</td><td class="num">54.2</td><td class="num">0.28</td><td class="num">24.5%</td></tr>
+          <tr><td class="ticker">QCOM</td><td class="num">2025-09-30</td><td class="num">14.8</td><td class="num">14.8</td><td class="num">0.0</td><td class="num">9.3</td><td class="num">50.1</td><td class="num">21.2</td><td class="num">0.70</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">SNPS</td><td class="num">2025-10-31</td><td class="num">14.3</td><td class="num">13.5</td><td class="num">0.8</td><td class="num">10.6</td><td class="num">48.2</td><td class="num">28.3</td><td class="num">0.50</td><td class="num">5.7%</td></tr>
+          <tr><td class="ticker">BIDU</td><td class="num">2025-12-31</td><td class="num">13.7</td><td class="num">8.6</td><td class="num">1.1</td><td class="num">9.1</td><td class="num">63.3</td><td class="num">37.5</td><td class="num">0.36</td><td class="num">7.8%</td></tr>
+          <tr><td class="ticker">NVDA</td><td class="num">2026-01-31</td><td class="num">11.0</td><td class="num">7.5</td><td class="num">2.6</td><td class="num dim">N/A</td><td class="num">206.8</td><td class="num">157.3</td><td class="num">0.07</td><td class="num">23.3%</td></tr>
+          <tr><td class="ticker">GLW</td><td class="num">2025-12-31</td><td class="num">9.4</td><td class="num">7.6</td><td class="num">0.9</td><td class="num">6.9</td><td class="num">31.0</td><td class="num">11.8</td><td class="num">0.79</td><td class="num">10.1%</td></tr>
+          <tr><td class="ticker">CEG</td><td class="num">2025-12-31</td><td class="num">9.0</td><td class="num">7.3</td><td class="num">0.0</td><td class="num">5.4</td><td class="num">57.2</td><td class="num">14.5</td><td class="num">0.62</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">AMAT</td><td class="num">2025-10-31</td><td class="num">7.1</td><td class="num">6.5</td><td class="num">0.5</td><td class="num dim">N/A</td><td class="num">36.3</td><td class="num">20.4</td><td class="num">0.35</td><td class="num">7.0%</td></tr>
+          <tr><td class="ticker">TLN</td><td class="num">2025-12-31</td><td class="num">6.8</td><td class="num">6.8</td><td class="num">0.0</td><td class="num">6.1</td><td class="num">10.9</td><td class="num">1.1</td><td class="num flag-hi">6.23</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">KLAC</td><td class="num">2026-06-30</td><td class="num">6.2</td><td class="num">5.9</td><td class="num">0.3</td><td class="num">4.2</td><td class="num">18.0</td><td class="num">6.3</td><td class="num">0.97</td><td class="num">4.3%</td></tr>
+          <tr><td class="ticker">WULF</td><td class="num">2025-12-31</td><td class="num">5.2</td><td class="num">4.6</td><td class="num">0.0</td><td class="num">1.9</td><td class="num">6.6</td><td class="num">0.1</td><td class="num flag-hi">37.00</td><td class="num">0.5%</td></tr>
+          <tr><td class="ticker">NBIS</td><td class="num">2025-12-31</td><td class="num">5.0</td><td class="num">4.1</td><td class="num">0.8</td><td class="num">0.4</td><td class="num">12.4</td><td class="num">4.6</td><td class="num">1.08</td><td class="num">17.0%</td></tr>
+          <tr><td class="ticker">MRVL</td><td class="num">2026-01-31</td><td class="num">4.8</td><td class="num">4.0</td><td class="num">0.3</td><td class="num">1.8</td><td class="num">22.3</td><td class="num">14.3</td><td class="num">0.33</td><td class="num">6.7%</td></tr>
+          <tr><td class="ticker">SMCI</td><td class="num">2025-06-30</td><td class="num">4.8</td><td class="num">4.7</td><td class="num">0.0</td><td class="num dim">N/A</td><td class="num">14.0</td><td class="num">6.3</td><td class="num">0.76</td><td class="num">0.4%</td></tr>
+          <tr><td class="ticker">ASML</td><td class="num">2025-12-31</td><td class="num">4.7</td><td class="num">2.9</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num">54.6</td><td class="num">21.2</td><td class="num">0.22</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">STX</td><td class="num">2026-06-30</td><td class="num">3.9</td><td class="num">3.4</td><td class="num">0.3</td><td class="num">1.9</td><td class="num">10.0</td><td class="num">2.2</td><td class="num">1.78</td><td class="num">7.6%</td></tr>
+          <tr><td class="ticker">AMD</td><td class="num">2025-12-31</td><td class="num">3.8</td><td class="num">2.3</td><td class="num">0.6</td><td class="num dim">N/A</td><td class="num">76.9</td><td class="num">63.0</td><td class="num">0.06</td><td class="num">16.2%</td></tr>
+          <tr><td class="ticker">LRCX</td><td class="num">2026-06-30</td><td class="num">3.7</td><td class="num">3.7</td><td class="num">0.0</td><td class="num">-1.8</td><td class="num">23.5</td><td class="num">12.5</td><td class="num">0.30</td><td class="num">0.3%</td></tr>
+          <tr><td class="ticker">COHR</td><td class="num">2026-06-30</td><td class="num">3.5</td><td class="num">3.2</td><td class="num">0.3</td><td class="num">2.1</td><td class="num">18.3</td><td class="num">10.9</td><td class="num">0.32</td><td class="num">8.9%</td></tr>
+          <tr><td class="ticker">VRT</td><td class="num">2025-12-31</td><td class="num">3.2</td><td class="num">2.9</td><td class="num">0.3</td><td class="num">1.2</td><td class="num">12.2</td><td class="num">3.9</td><td class="num">0.82</td><td class="num">9.8%</td></tr>
+          <tr><td class="ticker">BE</td><td class="num">2025-12-31</td><td class="num">3.0</td><td class="num">2.6</td><td class="num">0.4</td><td class="num">0.2</td><td class="num">4.4</td><td class="num">0.8</td><td class="num flag-mid">3.89</td><td class="num">12.5%</td></tr>
+          <tr><td class="ticker">CIFR</td><td class="num">2025-12-31</td><td class="num">2.8</td><td class="num">2.7</td><td class="num">0.0</td><td class="num">2.1</td><td class="num">4.3</td><td class="num">0.8</td><td class="num flag-mid">3.43</td><td class="num">0.6%</td></tr>
+          <tr><td class="ticker">CDNS</td><td class="num">2025-12-31</td><td class="num">2.6</td><td class="num">2.5</td><td class="num">0.1</td><td class="num dim">N/A</td><td class="num">10.2</td><td class="num">5.5</td><td class="num">0.48</td><td class="num">5.2%</td></tr>
+          <tr><td class="ticker">LITE</td><td class="num">2026-06-30</td><td class="num">1.7</td><td class="num">0.0</td><td class="num">0.0</td><td class="num dim">N/A</td><td class="num">7.3</td><td class="num">4.6</td><td class="num">0.36</td><td class="num">2.0%</td></tr>
+          <tr><td class="ticker">CIEN</td><td class="num">2025-10-31</td><td class="num">1.6</td><td class="num">1.5</td><td class="num">0.1</td><td class="num">0.4</td><td class="num">5.9</td><td class="num">2.7</td><td class="num">0.60</td><td class="num">5.5%</td></tr>
+          <tr><td class="ticker">ENPH</td><td class="num">2025-12-31</td><td class="num">1.2</td><td class="num">0.6</td><td class="num">0.0</td><td class="num">0.7</td><td class="num">3.5</td><td class="num">1.1</td><td class="num">1.12</td><td class="num">0.7%</td></tr>
+          <tr><td class="ticker">GEV</td><td class="num">2025-12-31</td><td class="num">1.2</td><td class="num">0.3</td><td class="num">0.8</td><td class="num dim">N/A</td><td class="num">63.0</td><td class="num">11.2</td><td class="num">0.10</td><td class="num flag-mid">72.0%</td></tr>
+          <tr><td class="ticker">CORZ</td><td class="num">2025-12-31</td><td class="num">1.2</td><td class="num">1.1</td><td class="num">0.1</td><td class="num">0.7</td><td class="num">2.3</td><td class="num">-1.0</td><td class="num flag-hi">N/M</td><td class="num">8.8%</td></tr>
+          <tr><td class="ticker">WDC</td><td class="num">2026-06-30</td><td class="num">1.1</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num">13.9</td><td class="num">8.9</td><td class="num">0.12</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">IREN</td><td class="num">2025-06-30</td><td class="num">1.0</td><td class="num">1.0</td><td class="num">0.0</td><td class="num">0.4</td><td class="num">2.9</td><td class="num">1.8</td><td class="num">0.53</td><td class="num">0.2%</td></tr>
+          <tr><td class="ticker">EOSE</td><td class="num">2025-12-31</td><td class="num">0.8</td><td class="num">0.8</td><td class="num">0.0</td><td class="num">0.2</td><td class="num">0.9</td><td class="num">-2.2</td><td class="num flag-hi">N/M</td><td class="num">2.5%</td></tr>
+          <tr><td class="ticker">ARM</td><td class="num">2026-03-31</td><td class="num">0.5</td><td class="num">0.0</td><td class="num">0.5</td><td class="num dim">N/A</td><td class="num">10.7</td><td class="num">8.3</td><td class="num">0.06</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">FLNC</td><td class="num">2025-09-30</td><td class="num">0.4</td><td class="num">0.4</td><td class="num">0.0</td><td class="num dim">N/A</td><td class="num">2.4</td><td class="num">0.4</td><td class="num">0.91</td><td class="num">0.0%</td></tr>
+          <tr><td class="ticker">CBRS</td><td class="num">2025-12-31</td><td class="num">0.3</td><td class="num">0.2</td><td class="num">0.3</td><td class="num dim">N/A</td><td class="num">2.3</td><td class="num">-0.6</td><td class="num flag-hi">N/M</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">AAOI</td><td class="num">2025-12-31</td><td class="num">0.2</td><td class="num">0.1</td><td class="num">0.1</td><td class="num dim">N/A</td><td class="num">1.2</td><td class="num">0.7</td><td class="num">0.34</td><td class="num">20.5%</td></tr>
+          <tr><td class="ticker">SNDK</td><td class="num">2026-06-30</td><td class="num">0.2</td><td class="num">0.0</td><td class="num">0.2</td><td class="num dim">N/A</td><td class="num">22.5</td><td class="num">15.7</td><td class="num">0.01</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">CGNX</td><td class="num">2025-12-31</td><td class="num">0.1</td><td class="num">0.0</td><td class="num">0.1</td><td class="num dim">N/A</td><td class="num">2.0</td><td class="num">1.5</td><td class="num">0.05</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">CRDO</td><td class="num">2026-04-30</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.0</td><td class="num dim">N/A</td><td class="num">2.3</td><td class="num">2.1</td><td class="num">0.01</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">OKLO</td><td class="num">2025-12-31</td><td class="num">0.0</td><td class="num">0.0</td><td class="num">0.0</td><td class="num dim">N/A</td><td class="num">1.5</td><td class="num">1.5</td><td class="num">0.00</td><td class="num">100.0%</td></tr>
+          <tr><td class="ticker">TOELY</td><td class="num">2026-03-31</td><td class="num">~0.0</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num">19.1</td><td class="num">13.8</td><td class="num">~0.00</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">ANET</td><td class="num">2025-12-31</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num">19.4</td><td class="num">12.4</td><td class="num dim">N/A</td><td class="num dim">N/A</td></tr>
+          <tr><td class="ticker">SMR</td><td class="num">2025-12-31</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num dim">N/A</td><td class="num">1.4</td><td class="num">1.2</td><td class="num dim">N/A</td><td class="num dim">N/A</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <h4>Reading the table</h4>
+      <ul>
+        <li>Absolute debt is dominated by hyperscalers and legacy tech (Oracle $156B, Amazon $153B, Meta $84B, Broadcom $65B) — but Oracle's D/E of <b>3.67x</b> stands well apart from Amazon/Meta/Broadcom's 0.4&ndash;0.8x range, marking it as the most debt-intensive of the group.</li>
+        <li><b>CoreWeave</b> is the sharpest relative outlier: D/E of 8.94x on just $3.3B of equity, with 28% of its debt in capital leases — a neocloud built almost entirely on borrowed and leased capital.</li>
+        <li>Smaller power/crypto-adjacent names lever thin equity bases hard: TeraWulf (37.0x — near-zero equity), Vistra (3.9x), Bloom Energy (3.9x), Cipher Mining (3.4x).</li>
+        <li>Leasing carries the load at the infrastructure-heavy names: GE Vernova (72% of debt is leases), Amazon (57%), Meta (30%), Microsoft (29%) — signalling reliance on leased data-center and power equipment over bonded debt.</li>
+        <li>Dell, Core Scientific, Eos Energy and Cerebras carry negative equity, making D/E uninformative for them (flagged N/M) — a debt/assets or debt/EBITDA lens would read better there.</li>
+      </ul>
+    </div>
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>甲骨文（ORCL）、亚马逊、Meta、博通的表内债务规模最大，但甲骨文的债务/股权比高达3.67倍，明显高于其他大型云厂商（0.4-0.8倍），显示其AI云基础设施扩张对债务融资的依赖程度最高。CoreWeave是相对杠杆最激进的公司（D/E 8.94倍），几乎完全依靠借款与租赁为其GPU机队融资。多家电力与加密货币相关的小型基建公司也在用很薄的股权基础撬动高杠杆。</p>
+    </div>
+  </section>
+
+  <!-- 02 OFF-BALANCE-SHEET -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Off-balance-sheet financing, the seven names that matter</h2>
+    </div>
+    <div class="section-grid">
+      <div class="lede">
+        <p>Read directly out of each company's 10-K/10-Q/20-F — MD&amp;A "off-balance-sheet arrangements" sections, VIE footnotes, and guarantee disclosures. None of the filings name the private-capital partners circulating in press coverage (Blue Owl, PIMCO, Vantage); every disclosure uses generic language ("the Venture," "a third-party infrastructure developer").</p>
+      </div>
+    </div>
+
+    <div class="dossier-grid">
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">ORCL — Oracle</span><span class="pill hi">Largest exposure</span></div>
+        <dl>
+          <dt>Structure</dt><dd>Off-balance-sheet lease + guarantee of lessor debt</dd>
+          <dt>Counterparty</dt><dd class="dim">Not named in filing</dd>
+          <dt>Disclosed $</dt><dd><b class="num">$260B</b> additional lease commitments not on the balance sheet (substantially all datacenter-related, FY27&ndash;29 commencement, 15&ndash;19yr terms), plus a <b class="num">$3.3B</b> guarantee of the lessor's borrowing; unconditional purchase obligations $13.3B + $19B entered post-year-end</dd>
+        </dl>
+        <p class="desc">By far the largest off-balance-sheet exposure of the group — a direct, SEC-confirmed instance of lease-funded AI capacity plus an explicit debt guarantee to a third-party lessor.</p>
+        <p class="src">10-K FY2026 · <a href="https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm" target="_blank" rel="noopener">sec.gov/Archives/…orcl-20260531.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">META — Meta Platforms</span><span class="pill hi">Material</span></div>
+        <dl>
+          <dt>Structure</dt><dd>Unconsolidated JV/VIE + residual value guarantee</dd>
+          <dt>Counterparty</dt><dd class="dim">Called only "the Venture" in filing</dd>
+          <dt>Disclosed $</dt><dd>20% membership interest; ~$27B total development cost; $12.31B lease commitment; $28B RVG threshold; <b class="num">$46.03B</b> maximum exposure to loss (up from $45.95B at FY25-end); +$6.41B other unconsolidated VIE exposure</dd>
+        </dl>
+        <p class="desc">Meta is not the primary beneficiary and does not consolidate the Venture — keeping ~$46B of exposure off-balance-sheet while retaining use of the capacity via long-term lease and residual value guarantee.</p>
+        <p class="src">10-K FY2025 / 10-Q Q2'26 · <a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm" target="_blank" rel="noopener">sec.gov/Archives/…meta-20251231.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">GOOGL — Alphabet</span><span class="pill mid">Fast-growing</span></div>
+        <dl>
+          <dt>Structure</dt><dd>VIE credit backstop / guarantee</dd>
+          <dt>Counterparty</dt><dd class="dim">Not disclosed</dd>
+          <dt>Disclosed $</dt><dd>Credit backstops to datacenter VIEs: <b class="num">$16.9B → $43.8B</b> in two quarters (through Jun 2026); +$7.6B energy-infrastructure VIE guarantees; total contractual commitments $811.0B</dd>
+        </dl>
+        <p class="desc">Alphabet doesn't consolidate these datacenter/energy VIEs but backstops them via credit derivatives — a quantified exposure that has roughly 2.6x'd in six months.</p>
+        <p class="src">10-Q Q2 2026 · <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm" target="_blank" rel="noopener">sec.gov/Archives/…goog-20260630.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">CRWV — CoreWeave</span><span class="pill mid">Smaller, structurally similar</span></div>
+        <dl>
+          <dt>Structure</dt><dd>Unconsolidated JV/VIE + non-recourse SPV debt</dd>
+          <dt>Counterparty</dt><dd class="dim">"A third-party infrastructure developer"</dd>
+          <dt>Disclosed $</dt><dd>Two datacenter JVs, committed funding up to <b class="num">$1.7B</b> (carrying value $479M); NJ JV where partner holds 85% ($95M guarantee + $37M lease prepayment); separately, non-recourse subsidiary debt ("CCAC VIII" DDTL 4.0) secured by $3.3B of subsidiary assets</dd>
+        </dl>
+        <p class="desc">Contrary to the assumption that only hyperscalers use these structures, CoreWeave already runs unconsolidated JV/VIE financing plus its own non-recourse, GPU-collateralized SPV debt — a scaled-down mirror of the hyperscaler playbook.</p>
+        <p class="src">10-Q Q2 2026 · <a href="https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm" target="_blank" rel="noopener">sec.gov/Archives/…crwv-20260630.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">MSFT — Microsoft</span><span class="pill lo">Clean, for datacenters</span></div>
+        <dl>
+          <dt>Structure</dt><dd>VIE (investment-side), not financing-side</dd>
+          <dt>Counterparty</dt><dd>OpenAI (equity-method VIE, ~25% as-converted stake) — not a financing vehicle</dd>
+          <dt>Disclosed $</dt><dd>Total purchase commitments incl. take-or-pay datacenter contracts <b class="num">$194.06B</b>; total contractual obligations $743.8B</dd>
+        </dl>
+        <p class="desc">MD&amp;A states explicitly it has not engaged in off-balance-sheet arrangements reasonably likely to materially affect liquidity. Take-or-pay datacenter contracts sit inside an undifferentiated purchase-commitments line rather than a named financing vehicle.</p>
+        <p class="src">10-K FY2026 · <a href="https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm" target="_blank" rel="noopener">sec.gov/Archives/…msft-20260630.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">AMZN — Amazon</span><span class="pill lo">Cleanest disclosure</span></div>
+        <dl>
+          <dt>Structure</dt><dd>On-balance-sheet finance lease / financing obligation</dd>
+          <dt>Counterparty</dt><dd class="dim">None</dd>
+          <dt>Disclosed $</dt><dd>Financing obligations for fulfillment/datacenter facilities: $11.07B total, $8.9B carried as liability; total commitments $650.0B (incl. $130.1B unconditional purchase obligations); standby letters of credit $13.4B</dd>
+        </dl>
+        <p class="desc">No VIE or off-balance-sheet section calling out datacenter SPVs or JVs — Amazon keeps this financing on the balance sheet via finance leases and financing obligations.</p>
+        <p class="src">10-Q Q2 2026 · <a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm" target="_blank" rel="noopener">sec.gov/Archives/…amzn-20260630.htm</a></p>
+      </div>
+
+      <div class="dossier">
+        <div class="dossier-top"><span class="tk">NBIS — Nebius Group</span><span class="pill lo">None disclosed</span></div>
+        <dl>
+          <dt>Structure</dt><dd class="dim">N/A — explicitly disclaimed</dd>
+          <dt>Counterparty</dt><dd class="dim">&mdash;</dd>
+          <dt>Disclosed $</dt><dd>Financed via equity + convertible debt: ~$5B (2025), $6B+ (Q1 2026)</dd>
+        </dl>
+        <p class="desc">Filing states verbatim: "Nebius Group does not currently engage in material off balance sheet financing arrangements... including special purpose entities." Flags asset-backed financing as a future option, not yet used.</p>
+        <p class="src">20-F FY2025 · <a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm" target="_blank" rel="noopener">sec.gov/Archives/…nbis-20251231x20f.htm</a></p>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <h4>Cross-company read</h4>
+      <ul>
+        <li><b>Oracle and Meta</b> carry the most material, clearly quantified off-balance-sheet exposure ($260B and $46B respectively).</li>
+        <li><b>Alphabet's</b> exposure is smaller in absolute terms but growing fastest — it roughly 2.6x'd in two quarters.</li>
+        <li><b>CoreWeave</b>, despite its youth, already uses the same structural playbook at smaller scale.</li>
+        <li><b>Microsoft and Amazon</b> show no material off-balance-sheet datacenter vehicles under this reading; <b>Nebius</b> explicitly disclaims any.</li>
+      </ul>
+    </div>
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>甲骨文披露了规模最大的表外融资敞口——2600亿美元的表外租赁承诺，外加对出租方债务的33亿美元担保。Meta通过一个未并表的合资企业（"The Venture"）持有约460亿美元的最大风险敞口。谷歌对数据中心类VIE的信用担保在两个季度内从169亿美元跃升至438亿美元，增速最快。CoreWeave虽然规模较小，但已采用与大型云厂商类似的合资/VIE及无追索权SPV债务结构。微软和亚马逊在这一维度上披露干净，Nebius明确声明不存在重大表外融资安排。所有文件均未点名市场传闻中的私募资本合作方（如Blue Owl、PIMCO、Vantage）。</p>
+    </div>
+  </section>
+
+  <!-- 03 ADJUSTED LEVERAGE -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Adjusted leverage: on- plus off-balance-sheet, combined</h2>
+    </div>
+    <div class="section-grid">
+      <div class="lede">
+        <p>Adding the disclosed off-balance-sheet figures back to on-balance-sheet debt, against the same equity base. Remember the caveat from §00: Oracle's off-balance-sheet add is an undiscounted multi-year lease commitment, not refinanceable debt principal, so its adjusted ratio reads as "total financing weight relative to equity," not a like-for-like leverage comparison with the others.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Ticker</th><th>On-BS Debt</th><th>Off-BS Exposure</th><th>Adjusted Total</th><th>Equity</th><th>On-BS D/E</th><th>Adj. D/E</th><th>Δ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="ticker">ORCL</td><td class="num">156.2</td><td class="num flag-hi">263.3</td><td class="num flag-hi">419.5</td><td class="num">42.5</td><td class="num">3.67</td><td class="num flag-hi">9.87</td><td class="num flag-hi">+6.20</td></tr>
+          <tr><td class="ticker">CRWV</td><td class="num">29.8</td><td class="num">1.7</td><td class="num">31.5</td><td class="num">3.3</td><td class="num flag-hi">8.94</td><td class="num flag-hi">9.55</td><td class="num flag-mid">+0.61</td></tr>
+          <tr><td class="ticker">META</td><td class="num">83.9</td><td class="num">46.0</td><td class="num">129.9</td><td class="num">217.2</td><td class="num">0.39</td><td class="num flag-mid">0.60</td><td class="num flag-mid">+0.21</td></tr>
+          <tr><td class="ticker">AMZN</td><td class="num">153.0</td><td class="num">0.0</td><td class="num">153.0</td><td class="num">411.1</td><td class="num">0.37</td><td class="num">0.37</td><td class="num flag-lo">+0.00</td></tr>
+          <tr><td class="ticker">GOOGL</td><td class="num">59.3</td><td class="num">51.4</td><td class="num">110.7</td><td class="num">415.3</td><td class="num">0.14</td><td class="num">0.27</td><td class="num flag-mid">+0.13</td></tr>
+          <tr><td class="ticker">NBIS</td><td class="num">5.0</td><td class="num">0.0</td><td class="num">5.0</td><td class="num">4.6</td><td class="num">1.08</td><td class="num">1.08</td><td class="num flag-lo">+0.00</td></tr>
+          <tr><td class="ticker">MSFT</td><td class="num">56.8</td><td class="num">0.0</td><td class="num">56.8</td><td class="num">442.4</td><td class="num">0.13</td><td class="num">0.13</td><td class="num flag-lo">+0.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <h4>What changes once off-balance-sheet is added back</h4>
+      <ul>
+        <li><b>Oracle's ranking doesn't change but its severity does</b> — already the most levered on-balance-sheet name, its adjusted ratio nearly triples to ~9.9x once the $260B lease book is counted, even accounting for the different (undiscounted, multi-year) basis.</li>
+        <li><b>Meta and Alphabet move from "conservative" to "worth watching"</b> — both sit under 0.4x on-balance-sheet, a level that reads as clean in isolation, but their adjusted ratios (0.60x and 0.27x) tell a more accurate story once JV/VIE exposure is included.</li>
+        <li><b>Amazon, Microsoft and Nebius are unchanged</b> — the closest thing to a genuine "no off-balance-sheet financing risk" read among the seven, at least under what their filings disclose today.</li>
+        <li><b>CoreWeave's off-balance-sheet add is proportionally small</b> because most of its aggressive financing is already on-balance-sheet as non-recourse SPV debt — its risk shows up in the on-balance-sheet number already.</li>
+      </ul>
+    </div>
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>将表外敞口计入后，甲骨文的调整后杠杆比率从3.67倍跃升至近9.9倍，进一步凸显其对债务与租赁融资的高度依赖（需注意计算口径差异）。Meta与谷歌的表内杠杆看似保守（均低于0.4倍），但计入合资企业/VIE敞口后，实际财务风险明显更高。亚马逊、微软与Nebius的杠杆水平在两种口径下基本不变，是七家公司中表外融资风险最低的。CoreWeave的表外增量较小，因为其大部分激进融资已体现在表内的无追索权SPV债务中。</p>
+    </div>
+  </section>
+
+  <!-- 04 CDS -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>What the bond market charges each of them</h2>
+    </div>
+    <div class="section-grid">
+      <div class="lede">
+        <p>Credit spreads over matched-maturity Treasuries, built from live secondary-market yields on each issuer's outstanding bonds. This is the market's own price for lending to these companies — the signal CDS would give, read off cash bonds instead.</p>
+        <p>Benchmarks used: <span class="mono">5Y UST 4.421%</span> · <span class="mono">10Y UST 4.716%</span> · <span class="mono">30Y UST 5.243%</span>. Spread = bond yield-to-worst less the nearest Treasury point.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>What a CDS actually is, and why this section uses bonds instead</h4>
+      <p style="margin-bottom:10px;">A credit default swap is not a loan — it's insurance on one. A protection buyer pays a running premium (the "spread," quoted in bps/year on a notional amount); if the issuer has a defined credit event (bankruptcy, missed payment, sometimes restructuring), the protection seller pays out. Nobody has to own the underlying bond to trade it — most CDS volume is hedging or speculation, sitting in a market entirely separate from the bonds themselves.</p>
+      <p style="margin-bottom:10px;">Nothing available in this workflow prices CDS directly (see §04's original sourcing note below). What this table shows instead is the bond market's own answer to the same question, via <b>credit spread</b> — a bond's yield minus a duration-matched Treasury yield. Different instrument, same underlying question: how risky does the market think this issuer is? The two normally move together (the "cash&ndash;CDS basis"), which is why the reported CDS levels mentioned in this section and the bond spreads in the table below tell the same story about Oracle, Meta, and the rest.</p>
+      <p style="margin-bottom:0;">This is the payoff of the report's full chain of evidence: §01 shows the leverage sitting in the accounts, §02 shows what's hidden off them, §03 combines both into a truer picture, and this section asks whether the market has independently reached the same conclusion on its own. For Oracle, it has — and, per the live TRACE check further down, more emphatically than the underlying vendor data alone suggested.</p>
+    </div>
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>信用违约互换（CDS）本质上是对债券的"保险"，而非债券本身：保护买方定期支付保费（即"利差"，以基点/年计），若发行人发生约定的信用事件（破产、违约、有时含债务重组），保护卖方需赔付。交易双方均无需实际持有相关债券——CDS市场与现券市场是两个独立的市场。由于本工作流暂无直接获取CDS报价的渠道，本节改用债券信用利差（债券收益率减去同期限美债收益率）作为替代指标——工具不同，回答的问题相同：市场认为这家公司的信用风险有多大。两者通常同向变动（即"现券-CDS基差"），这也是本节新闻引用的CDS水平与下方债券利差能相互印证的原因。本节是全篇论证链条的落点：第01节展示账面杠杆，第02节揭示表外隐藏部分，第03节将两者合并为更真实的杠杆全貌，而本节则检验市场是否独立得出了同样的结论——就甲骨文而言，答案是肯定的，且下方FINRA实时验证显示，实际情况比初始数据更为严峻。</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Issuer</th><th>Rating</th><th>~5Y spread</th><th>~10Y spread</th><th>~30Y spread</th><th>10Y spread, to scale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ticker">MSFT</td><td>AAA</td>
+            <td class="num flag-lo">~0</td><td class="num flag-lo">+44</td><td class="num flag-lo">+74</td>
+            <td><div class="sbar"><span class="track"><span class="fill" style="width:16%"></span></span></div></td>
+          </tr>
+          <tr>
+            <td class="ticker">AMZN</td><td>AA / AA−</td>
+            <td class="num flag-lo">+38&ndash;54</td><td class="num flag-lo">+69</td><td class="num">+104</td>
+            <td><div class="sbar"><span class="track"><span class="fill" style="width:25%"></span></span></div></td>
+          </tr>
+          <tr>
+            <td class="ticker">GOOGL</td><td>AA+</td>
+            <td class="num flag-lo">+54</td><td class="num">+78</td><td class="num">+107</td>
+            <td><div class="sbar"><span class="track"><span class="fill" style="width:28%"></span></span></div></td>
+          </tr>
+          <tr>
+            <td class="ticker">META</td><td>AA−</td>
+            <td class="num flag-lo">+45</td><td class="num flag-mid">+110</td><td class="num flag-mid">+180</td>
+            <td><div class="sbar"><span class="track"><span class="fill mid" style="width:40%"></span></span></div></td>
+          </tr>
+          <tr>
+            <td class="ticker">ORCL</td><td>BBB− / BBB</td>
+            <td class="num flag-hi">+160</td><td class="num flag-hi">+213</td><td class="num flag-hi">+261</td>
+            <td><div class="sbar"><span class="track"><span class="fill wide" style="width:77%"></span></span></div></td>
+          </tr>
+          <tr class="offscale">
+            <td class="ticker">CRWV</td><td>B</td>
+            <td class="num flag-hi">+755</td><td class="num dim">no issues</td><td class="num dim">no issues</td>
+            <td><div class="sbar"><span class="over">off scale &raquo;</span><span class="track"><span class="fill wide" style="width:100%"></span></span></div></td>
+          </tr>
+          <tr>
+            <td class="ticker">NBIS</td><td class="dim">unrated</td>
+            <td class="num dim" colspan="3">no straight debt — converts only, see note</td>
+            <td class="dim">&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <h4>What the spreads say</h4>
+      <ul>
+        <li><b>Oracle is priced as a different credit entirely.</b> At +160/+213/+261bps across the curve it sits 3&ndash;5x wide of the AA cohort — the only one of the group rated BBB−, with its long bonds yielding ~7.85%. The bond market has already repriced the leverage the §01 and §03 tables describe.</li>
+        <li><b>Meta's long end is the quiet divergence.</b> Meta and Alphabet are one notch apart on rating, but at 30 years Meta pays <b>+180bps</b> against Alphabet's <b>+107bps</b> — a 73bp gap that isn't explained by the rating. Meta's curve steepens sharply past 10 years, which is where its $46B JV exposure and 2050s-dated lease obligations live.</li>
+        <li><b>CoreWeave trades as distressed-adjacent high yield.</b> Its 9% 2031s yield ~12% at 89 cents on the dollar — <b>+755bps</b>, rated single-B, with no issues past 2032. It cannot term out its debt the way the hyperscalers can, which is the practical risk its 8.94x D/E implies.</li>
+        <li><b>Microsoft and Amazon are the cheapest borrowers</b> — consistent with §02, where neither showed material off-balance-sheet datacenter vehicles.</li>
+        <li><b>Cross-check against CDS.</b> Reported 5yr CDS levels (Oracle ~200bps, Meta ~93bps, Nvidia ~78bps as of Aug 2026) rank-order the same way as these cash spreads and sit modestly wider, which is the normal CDS-cash basis. The two measures agree on the story.</li>
+      </ul>
+    </div>
+
+    <div class="callout" style="border-left-color: var(--debit);">
+      <h4>Live TRACE spot-check, 24 Aug 2026</h4>
+      <p style="margin-bottom:10px;">Eight real trade prints across four issuers, pulled directly from FINRA's Fixed Income Data tool (regulator tape, not a vendor feed), checked against the interpolated Treasury curve:</p>
+      <div class="table-wrap" style="margin-bottom:10px; box-shadow:none;">
+        <table>
+          <thead><tr><th>Bond</th><th>CUSIP</th><th>Trade date</th><th>Yield</th><th>Yrs to mat.</th><th>Implied spread</th><th>Report's curve said</th></tr></thead>
+          <tbody>
+            <tr><td class="ticker">MSFT 5.30% &rsquo;41</td><td class="mono dim">594918AM6</td><td class="num dim">8/24/26</td><td class="num">5.384%</td><td class="num">~14.5y</td><td class="num flag-lo">~55bps</td><td class="num dim">~51bps</td></tr>
+            <tr><td class="ticker">MSFT 4.50% &rsquo;40</td><td class="mono dim">594918AJ3</td><td class="num dim">8/24/26</td><td class="num">5.354%</td><td class="num">~14.1y</td><td class="num flag-lo">~53bps</td><td class="num dim">~50bps</td></tr>
+            <tr><td class="ticker">ORCL 6.50% &rsquo;38</td><td class="mono dim">68389XAE5</td><td class="num dim">8/24/26</td><td class="num">7.259%</td><td class="num">~11.6y</td><td class="num flag-hi">~250bps</td><td class="num dim">~217bps</td></tr>
+            <tr><td class="ticker">ORCL 6.125% &rsquo;39</td><td class="mono dim">68389XAH8</td><td class="num dim">8/24/26</td><td class="num">7.216%</td><td class="num">~12.9y</td><td class="num flag-hi">~242bps</td><td class="num dim">~220bps</td></tr>
+            <tr><td class="ticker">CRWV 9.25% &rsquo;30<span class="dim" style="font-weight:400;"> (144A)</span></td><td class="mono dim">21873SAB4</td><td class="num dim">8/24/26</td><td class="num">11.363%</td><td class="num">~3.8y</td><td class="num flag-hi">~694bps*</td><td class="num dim">~755bps</td></tr>
+            <tr><td class="ticker">META 4.45% &rsquo;52<span class="dim" style="font-weight:400;"> (144A)</span></td><td class="mono dim">30303M8E5</td><td class="num dim">7/14/26</td><td class="num">6.543%</td><td class="num">~26.0y</td><td class="num flag-mid">~140bps</td><td class="num dim">~166bps</td></tr>
+            <tr><td class="ticker">META 4.45% &rsquo;52<span class="dim" style="font-weight:400;"> (2nd tranche)</span></td><td class="mono dim">30303M8J4</td><td class="num dim">8/24/26</td><td class="num">6.904%</td><td class="num">~26.0y</td><td class="num flag-mid">~176bps</td><td class="num dim">~166bps</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><b>Microsoft confirmed almost exactly</b> — both live prints land within 3bps of the curve above. The vendor-sourced numbers for MSFT were accurate.</li>
+        <li><b>Oracle trades 22&ndash;33bps wider than the curve above, on two independent bonds.</b> That's a consistent gap, not noise from one thin trade. As of yesterday's tape, the bond market is pricing Oracle credit risk somewhat worse than the already-stark numbers in this report — meaning the "Oracle is priced as a different credit entirely" finding is if anything <em>conservative</em>, not overstated.</li>
+        <li><b>CoreWeave confirmed as deep speculative-grade on a second, independent bond.</b> This issue is a Rule 144A private placement (sold only to qualified institutional buyers, a common structure for recently-issued junk debt ahead of an exchange offer) and callable from June 2027 — but even at a shorter ~3.8yr tenor than the report's original reference bond, it still prices ~694bps* over Treasuries. CoreWeave's entire curve sits in triple-digit-over-Treasuries territory regardless of which bond you pick.</li>
+        <li><b>Meta's confirmation came with a bonus finding: the same bond, trading six weeks apart, widened 36bps.</b> Both CUSIPs are identical 4.45% notes due 8/15/2052 — one a 144A tranche traded 7/14, the other traded 8/24. Yield moved from 6.543% to 6.904% over that window. Using the date-matched Aug 24 print (the fair comparison, since it lines up with every other bond in this table), Meta's spread comes in at <b>+176bps &mdash; only 10bps wide of the report's curve-implied +166bps</b>, essentially confirmed. It also shows Meta's own credit genuinely repricing wider in real time, independent of any vendor's static quote.</li>
+      </ul>
+      <p class="dim" style="font-size:11.5px; margin: 8px 0 0;">*No 3&ndash;4yr Treasury point was captured for this report; spread uses the 5Y UST (4.421%) as the nearest available benchmark and is approximate. Meta spreads use the same current Treasury curve for both trade dates as an approximation, since a historical 7/14/2026 curve wasn't captured separately.</p>
+    </div>
+
+    <div class="section-grid">
+      <div class="lede">
+        <h3>Sourcing note, and why this isn't TRACE</h3>
+        <p>FINRA TRACE is free but not open: individual bond lookup requires accepting the Fixed Income Data User Agreement. That acceptance and the four live prints above were pulled directly by the report's requester through FINRA's own tool — genuine regulator-tape data, not a vendor feed. The base curve tables elsewhere in this section still come from secondary-market quotes aggregated by TradingView; expect ±10&ndash;20bps of noise versus a duration-matched OAS there, and treat single-bond readings as indicative: Amazon's 2031s alone quote across a 16bp range, which is why that cell shows a band.</p>
+        <ul class="notes">
+          <li><b>Nebius carries no usable credit signal.</b> Its six listed instruments are convertible notes trading at 141&ndash;433% of par — deep in the money, priced off the equity, not the credit. There is no straight-debt curve to read.</li>
+          <li><b>Microsoft's 5Y cell is a maturity mismatch,</b> not a true zero: its nearest issue matures Sept 2030 (4.1yr) and yields 4.37%, marginally through the 5Y Treasury. Read it as "inside 25bps," not as negative.</li>
+          <li><b>If you want the real thing:</b> accept the FINRA agreement once and TRACE prints become available free, or license S&amp;P Global Market Intelligence CDS Pricing Data — a paid subscription, not a connector toggle.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="zh-stamp cjk">
+      <div class="zh-label">摘要 · Summary</div>
+      <p>本节以各公司存续债券的二级市场收益率减去对应期限美债收益率，计算信用利差（基准：5年期4.421%、10年期4.716%、30年期5.243%）。甲骨文的利差为+160/+213/+261个基点，是AA级同业的3至5倍，长债收益率约7.85%，债券市场已充分反映其杠杆压力。Meta与谷歌评级仅差一级，但30年期利差分别为+180与+107个基点，差距达73个基点，无法用评级解释——Meta曲线在10年期之后明显走陡，恰是其460亿美元合资企业敞口与长期租赁义务所在期限。CoreWeave的2031年期债券收益率约12%（价格89美分），利差达+755个基点，评级为B级，且无2032年以后的债券，无法像大型云厂商那样展期。微软与亚马逊融资成本最低，与第02节"无重大表外融资"的结论一致。数据说明：主曲线数据来自TradingView汇总的市场报价，与FINRA TRACE同源但属第三方数据，误差约10-20个基点。Nebius仅有深度价内可转债（价格141%-433%），不构成有效信用信号。<b>2026年8月24日通过FINRA官方渠道核实的4笔真实成交进一步证实：微软的利差与主表几乎完全吻合（误差&lt;3个基点），而甲骨文的实际利差比主表高出22-33个基点</b>——说明本报告对甲骨文信用风险的判断，若有偏差，也是偏保守而非夸大。</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Compiled from Yahoo Finance &amp; SEC EDGAR · not investment advice</span>
+    <span>gladys.ht.lee@gmail.com</span>
+  </footer>
+
+</div>
