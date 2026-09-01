@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Infrastructure: Circular Financing &amp; Bubble Risk</title>
+<style>
+  :root {
+    --bg: #faf8f4;
+    --paper: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a48;
+    --rule: #ddd6c8;
+    --accent: #8a3324;
+    --accent-soft: #b5563f;
+    --fact: #1f5c3a;
+    --view: #7a4a12;
+    --tag-bg: #f1ece0;
+    --quote-bg: #f6f1e6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Songti SC", serif;
+    line-height: 1.7;
+  }
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 32px 96px;
+  }
+  header.title-block {
+    text-align: center;
+    border-bottom: 3px double var(--accent);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .kicker {
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--accent-soft);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    margin-bottom: 14px;
+  }
+  h1.report-title {
+    font-size: 34px;
+    margin: 0 0 10px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-size: 17px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+  .meta-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .meta-row span strong { color: var(--ink); }
+
+  section { margin-bottom: 44px; }
+  h2.section-title {
+    font-size: 21px;
+    color: var(--accent);
+    border-left: 4px solid var(--accent);
+    padding-left: 14px;
+    margin: 0 0 18px;
+  }
+  h3.sub-title {
+    font-size: 16.5px;
+    color: var(--ink);
+    margin: 26px 0 10px;
+    font-weight: 700;
+  }
+  p { margin: 0 0 14px; color: var(--ink); }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; }
+
+  .exec-summary {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 22px 26px;
+  }
+  .exec-summary p:last-child { margin-bottom: 0; }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 14.5px;
+    background: var(--paper);
+  }
+  table.data-table th, table.data-table td {
+    border: 1px solid var(--rule);
+    padding: 9px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.data-table th {
+    background: var(--tag-bg);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+  table.data-table td.num { font-variant-numeric: tabular-nums; }
+
+  .tag {
+    display: inline-block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-right: 6px;
+    font-style: normal;
+  }
+  .tag-fact { background: #e4f0e8; color: var(--fact); }
+  .tag-view { background: #f4e9d8; color: var(--view); }
+
+  blockquote.master {
+    background: var(--quote-bg);
+    border-left: 4px solid var(--accent-soft);
+    margin: 18px 0;
+    padding: 14px 20px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  blockquote.master footer {
+    margin-top: 8px;
+    font-style: normal;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 18px 0;
+  }
+  .col-box {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .col-box h4 {
+    margin: 0 0 10px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .col-box.bear h4 { color: var(--accent); }
+  .col-box.bull h4 { color: var(--fact); }
+  .col-box ul { margin-bottom: 0; padding-left: 18px; }
+  .col-box li { font-size: 14.5px; margin-bottom: 7px; }
+
+  .stars { color: var(--accent); letter-spacing: 2px; font-size: 16px; }
+
+  .mechanism-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 18px 0 26px;
+  }
+  .mech-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 20px;
+    border-top: 4px solid var(--rule);
+  }
+  .mech-card.risk-lowmed { border-top-color: var(--fact); }
+  .mech-card.risk-medhigh { border-top-color: var(--view); }
+  .mech-card.risk-high { border-top-color: var(--accent); }
+  .mech-card.risk-unresolved { border-top-color: var(--ink-soft); }
+  .mech-card .mech-num {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .mech-card h4 { margin: 4px 0 8px; font-size: 15.5px; }
+  .mech-card p { font-size: 13.5px; margin-bottom: 10px; }
+  .mech-card p:last-child { margin-bottom: 0; }
+  .risk-badge {
+    display: inline-block;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .risk-badge.lowmed { background: #e4f0e8; color: var(--fact); }
+  .risk-badge.medhigh { background: #f4e9d8; color: var(--view); }
+  .risk-badge.high { background: #f3ded9; color: var(--accent); }
+  .risk-badge.unresolved { background: #ece9e2; color: var(--ink-soft); }
+  @media (max-width: 640px) { .mechanism-grid { grid-template-columns: 1fr; } }
+
+  .verdict-box {
+    background: var(--tag-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 24px;
+  }
+  .verdict-box h3 { margin-top: 0; }
+
+  .flow-diagram {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 22px;
+    text-align: center;
+    margin: 18px 0 22px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+  .flow-diagram svg { max-width: 100%; height: auto; }
+
+  footer.report-footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  .sources {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .sources li { margin-bottom: 6px; }
+  .sources a { color: var(--accent-soft); text-decoration: none; border-bottom: 1px dotted var(--accent-soft); }
+  .sources a:hover { color: var(--accent); }
+
+  .disclaimer {
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-style: italic;
+    border: 1px dashed var(--rule);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-top: 30px;
+  }
+
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+    h1.report-title { font-size: 26px; }
+    .page { padding: 32px 18px 64px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { max-width: 100%; padding: 0 12mm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="title-block">
+    <div class="kicker">AI Berkshire &middot; Industry Research</div>
+    <h1 class="report-title">AI Infrastructure: Circular Financing &amp; Bubble Risk</h1>
+    <div class="subtitle">A cross-sourced look at the deal structures, leverage, and depreciation debates now moving AI infrastructure stock prices</div>
+    <div class="meta-row">
+      <span>Date: <strong>2026-09-01</strong></span>
+      <span>Scope: <strong>AI Infrastructure Theme</strong></span>
+      <span>Type: <strong>Industry / Thematic Briefing</strong></span>
+    </div>
+  </header>
+
+  <section class="exec-summary">
+    <h2 class="section-title" style="margin-top:0;">Executive Summary</h2>
+    <p><span class="tag tag-fact">FACT</span> A documented circular-financing structure links Nvidia, OpenAI, Oracle, Microsoft, and CoreWeave: capital invested by chipmakers and cloud platforms flows back to them as revenue after passing through one or two AI labs. OpenAI's disclosed infrastructure commitments total well over $1 trillion, against $13.07B of actual FY2025 revenue and a current disclosed run-rate above $40B ahead of a reported IPO.</p>
+    <p><span class="tag tag-fact">FACT</span> Hyperscaler depreciation schedules for GPUs have lengthened (4&rarr;6 years at Microsoft; 5.5 years at Meta) in the same period Nvidia's product refresh cycle has shortened to roughly annual &mdash; a mismatch Michael Burry estimates understates depreciation expense by ~$176B from 2026&ndash;2028.</p>
+    <p><span class="tag tag-fact">FACT</span> Off-balance-sheet lease and SPV-based debt at the five largest US hyperscalers ($969B in undiscounted future lease commitments, of which $662B has not yet commenced) now exceeds their combined on-balance-sheet debt. The IMF flagged AI-related asset risk in July 2026 as among the highest in three decades, with leverage &mdash; not valuation alone &mdash; cited as the primary concern.</p>
+    <p><span class="tag tag-view">VIEW</span> Whether this constitutes a "bubble" is a forecast, not a fact. Bears (Burry, IMF) point to leverage, opaque financing, and questionable ROI. Bulls point to real profitability, earnings-funded capex, and materially lower valuation multiples than the dot-com peak. This report lays out both sides on their own evidence rather than adjudicating between them.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">1. The Circular Deal Structure</h2>
+    <p><span class="tag tag-fact">FACT</span> The mechanism repeatedly documented in financial press: Nvidia invests in OpenAI &rarr; OpenAI buys cloud compute from Oracle &rarr; Oracle buys chips from Nvidia &rarr; Nvidia holds an equity stake in CoreWeave &rarr; CoreWeave supplies AI infrastructure back to OpenAI. Cash leaves a chipmaker's balance sheet labeled "investment" and returns to its income statement labeled "revenue" after circulating through the loop.</p>
+
+    <div class="flow-diagram">
+      <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circular financing diagram: Nvidia invests equity in OpenAI; OpenAI pays CoreWeave and Oracle for compute; CoreWeave and Oracle buy GPUs from Nvidia, closing two loops">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#8a3324" />
+          </marker>
+          <marker id="arrow-eq" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#1f5c3a" />
+          </marker>
+        </defs>
+        <style>
+          .node-box { fill: #ffffff; stroke: #8a3324; stroke-width: 1.5; rx: 8; }
+          .node-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 13.5px; fill: #1a1a1a; font-weight: 700; text-anchor: middle; }
+          .edge-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5px; fill: #4a4a48; text-anchor: middle; }
+          .edge { stroke: #8a3324; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+          .edge-eq { stroke: #1f5c3a; stroke-width: 1.5; stroke-dasharray: 5,4; fill: none; marker-end: url(#arrow-eq); }
+          .lgd { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5px; fill: #4a4a48; }
+        </style>
+
+        <!-- money OUT of Nvidia as equity -->
+        <path class="edge-eq" d="M360,62 L360,246"/>
+        <rect x="292" y="144" width="136" height="17" fill="#ffffff"/>
+        <text class="edge-label" x="360" y="157">equity: up to $100B</text>
+
+        <path class="edge-eq" d="M300,62 C256,92 204,118 163,138"/>
+        <text class="edge-label" x="252" y="120">equity: ~11-13%</text>
+
+        <!-- OpenAI pays the clouds -->
+        <path class="edge" d="M288,278 C222,274 152,238 124,192"/>
+        <text class="edge-label" x="176" y="264">$22.4B compute</text>
+
+        <path class="edge" d="M432,278 C498,274 568,238 596,192"/>
+        <text class="edge-label" x="546" y="264">$300B cloud</text>
+
+        <!-- clouds buy chips: the loop closes back at Nvidia -->
+        <path class="edge" d="M88,138 C50,68 160,26 286,34"/>
+        <text class="edge-label" x="122" y="50">buys GPUs</text>
+
+        <path class="edge" d="M632,138 C670,68 560,26 434,34"/>
+        <text class="edge-label" x="600" y="50">buys GPUs</text>
+
+        <!-- nodes -->
+        <rect class="node-box" x="290" y="14" width="140" height="48"/>
+        <text class="node-label" x="360" y="43">NVIDIA</text>
+
+        <rect class="node-box" x="30" y="138" width="150" height="48"/>
+        <text class="node-label" x="105" y="167">CoreWeave</text>
+
+        <rect class="node-box" x="540" y="138" width="150" height="48"/>
+        <text class="node-label" x="615" y="167">Oracle</text>
+
+        <rect class="node-box" x="290" y="246" width="140" height="48"/>
+        <text class="node-label" x="360" y="275">OpenAI</text>
+
+        <!-- legend -->
+        <rect x="20" y="310" width="680" height="42" fill="#f6f1e6" stroke="#ddd6c8" rx="4"/>
+        <line x1="40" y1="325" x2="76" y2="325" class="edge"/>
+        <text class="lgd" x="86" y="329">Cash paid for compute / chips (revenue to the receiver)</text>
+        <line x1="40" y1="343" x2="76" y2="343" class="edge-eq"/>
+        <text class="lgd" x="86" y="347">Equity investment or stake</text>
+      </svg>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">Figure: two loops, both closing at Nvidia. Nvidia puts equity into OpenAI (and into CoreWeave); OpenAI pays CoreWeave and Oracle for compute; CoreWeave and Oracle spend that revenue buying Nvidia GPUs. Cash that left Nvidia labelled "investment" returns labelled "revenue." Note that Oracle's own leg is <em>not</em> circular in isolation &mdash; Oracle neither invests in nor receives investment from OpenAI (its exposure is borrowing risk, Section 4). The circularity involving Oracle exists only because Nvidia's capital passes <em>through</em> OpenAI and returns to Nvidia as a chip order.</p>
+    </div>
+
+    <h3 class="sub-title">Sizing the Node at the Centre</h3>
+    <p><span class="tag tag-fact">FACT</span> Because every loop above closes at Nvidia, its scale sets the scale of the whole question. In Q2 FY2027 (quarter ended 2026-07-26) Nvidia reported revenue of <strong>$96.2B, up 106% year over year</strong>, of which <strong>Data Center was $89.0B, up 117%</strong>; GAAP gross margin was 75.0%, and guidance for the following quarter was approximately <strong>$108B</strong>. Full fiscal 2026 revenue was $216B with roughly $97B of free cash flow. Nvidia also discloses that <strong>four direct customers each exceed 10% of revenue and together account for 61%</strong> of it &mdash; without naming them.</p>
+    <p><span class="tag tag-view">VIEW</span> That last disclosure is the single most important limit on any outside analysis of the loop, including this one. It is granular enough to prove the concentration exists but too coarse to trace a specific hyperscaler's spending decision through to a specific dollar of Nvidia revenue. Every attempt to quantify contagion from Microsoft or Oracle through Nvidia to the second tier runs into this wall &mdash; a point the stress test in Section 8 makes explicit rather than papering over.</p>
+
+    <h3 class="sub-title">Concrete Deal Examples</h3>
+    <p><span class="tag tag-fact">FACT</span> The diagram below maps ten of the most-cited named transactions across the loop. NVIDIA and OpenAI sit at the center because they are the only two entities appearing on <em>both</em> sides of multiple deals &mdash; as investor and investee, and as supplier and customer, simultaneously.</p>
+
+    <div class="flow-diagram">
+      <svg viewBox="0 0 900 770" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network diagram of named circular financing deals across NVIDIA, OpenAI, Microsoft, Oracle, AMD, Anthropic, xAI, SpaceX, CoreWeave, Broadcom, SoftBank, and MGX">
+        <defs>
+          <marker id="arrow2" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#8a3324" />
+          </marker>
+          <marker id="arrow2-green" markerWidth="9" markerHeight="9" refX="7.5" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#1f5c3a" />
+          </marker>
+        </defs>
+        <style>
+          .hub-node { fill: #8a3324; stroke: #5c2013; stroke-width: 1.5; }
+          .hub-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 14px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+          .sat-node { fill: #ffffff; stroke: #8a3324; stroke-width: 1.3; }
+          .sat-label { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5px; font-weight: 600; fill: #1a1a1a; text-anchor: middle; }
+          .edge-solid2 { stroke: #8a3324; stroke-width: 1.6; fill: none; marker-end: url(#arrow2); }
+          .edge-dashed2 { stroke: #1f5c3a; stroke-width: 1.6; stroke-dasharray: 5,4; fill: none; marker-end: url(#arrow2-green); }
+          .edge-lbl2 { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 9.5px; fill: #4a4a48; text-anchor: middle; }
+          .legend-lbl { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; fill: #4a4a48; }
+        </style>
+
+        <!-- edges (drawn first, nodes on top) -->
+        <path class="edge-solid2" d="M342,368 L558,368"/>
+        <text class="edge-lbl2" x="450" y="358">10GW GPUs</text>
+        <path class="edge-dashed2" d="M342,392 L558,392"/>
+        <text class="edge-lbl2" x="450" y="410">$100B equity</text>
+
+        <path class="edge-solid2" d="M455,118 L570,348"/>
+        <text class="edge-lbl2" x="486" y="248">$250B Azure</text>
+        <path class="edge-dashed2" d="M477,107 L592,337"/>
+        <text class="edge-lbl2" x="560" y="200">~27% equity</text>
+
+        <path class="edge-solid2" d="M721,190 L623,345"/>
+        <text class="edge-lbl2" x="700" y="272">$300B cloud</text>
+
+        <path class="edge-solid2" d="M338,361 L708,176"/>
+        <text class="edge-lbl2" x="500" y="230">GPU supply</text>
+
+        <path class="edge-solid2" d="M784,368 L642,368"/>
+        <text class="edge-lbl2" x="713" y="358">6GW GPUs</text>
+        <path class="edge-dashed2" d="M784,392 L642,392"/>
+        <text class="edge-lbl2" x="713" y="410">&le;10% warrant</text>
+
+        <path class="edge-dashed2" d="M337,399 L708,593"/>
+        <text class="edge-lbl2" x="545" y="480">$10B equity</text>
+
+        <path class="edge-dashed2" d="M318,418 L434,658"/>
+        <text class="edge-lbl2" x="356" y="545">$10B&rarr;$20B</text>
+
+        <path class="edge-dashed2" d="M278,416 L179,579"/>
+        <text class="edge-lbl2" x="208" y="490">~11% equity</text>
+
+        <path class="edge-solid2" d="M192,593 L563,399"/>
+        <text class="edge-lbl2" x="360" y="465">$22.4B compute</text>
+
+        <path class="edge-solid2" d="M115,473 L559,388"/>
+        <text class="edge-lbl2" x="330" y="415">$10B silicon</text>
+
+        <path class="edge-dashed2" d="M192,176 L563,361"/>
+        <text class="edge-lbl2" x="370" y="245">~$25B Stargate</text>
+
+        <!-- hub nodes -->
+        <circle class="hub-node" cx="300" cy="380" r="42"/>
+        <text class="hub-label" x="300" y="385">NVIDIA</text>
+        <circle class="hub-node" cx="600" cy="380" r="42"/>
+        <text class="hub-label" x="600" y="385">OpenAI</text>
+
+        <!-- satellite nodes -->
+        <circle class="sat-node" cx="450" cy="80" r="36"/>
+        <text class="sat-label" x="450" y="84">Microsoft</text>
+
+        <circle class="sat-node" cx="740" cy="160" r="36"/>
+        <text class="sat-label" x="740" y="164">Oracle</text>
+
+        <circle class="sat-node" cx="820" cy="380" r="36"/>
+        <text class="sat-label" x="820" y="384">AMD</text>
+
+        <circle class="sat-node" cx="740" cy="610" r="36"/>
+        <text class="sat-label" x="740" y="614">Anthropic</text>
+
+        <circle class="sat-node" cx="450" cy="690" r="36"/>
+        <text class="sat-label" x="450" y="688">xAI /</text>
+        <text class="sat-label" x="450" y="700">SpaceX</text>
+
+        <circle class="sat-node" cx="160" cy="610" r="36"/>
+        <text class="sat-label" x="160" y="614">CoreWeave</text>
+
+        <circle class="sat-node" cx="80" cy="480" r="36"/>
+        <text class="sat-label" x="80" y="484">Broadcom</text>
+
+        <circle class="sat-node" cx="160" cy="160" r="38"/>
+        <text class="sat-label" x="160" y="156">SoftBank</text>
+        <text class="sat-label" x="160" y="168">&amp; MGX</text>
+
+        <!-- legend -->
+        <rect x="20" y="715" width="860" height="45" fill="#f6f1e6" stroke="#ddd6c8" rx="4"/>
+        <line x1="40" y1="730" x2="80" y2="730" class="edge-solid2"/>
+        <text class="legend-lbl" x="90" y="734">Compute / cloud supply commitment</text>
+        <line x1="40" y1="748" x2="80" y2="748" class="edge-dashed2"/>
+        <text class="legend-lbl" x="90" y="752">Equity investment / stake</text>
+        <circle cx="530" cy="730" r="9" class="hub-node"/>
+        <text class="legend-lbl" x="546" y="734">Hub (chip supplier / lab)</text>
+        <circle cx="530" cy="748" r="9" class="sat-node"/>
+        <text class="legend-lbl" x="546" y="752">Counterparty in the loop</text>
+      </svg>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">Figure: solid orange arrows = compute/cloud supply commitments; dashed green arrows = equity investments or stakes. NVIDIA and OpenAI are the most-connected nodes, appearing on both sides of several deals at once.</p>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Deal</th><th>Date</th><th>Amount</th><th>Type</th><th>Circularity mechanism</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Nvidia &harr; OpenAI</td>
+          <td>Sep 23, 2025</td>
+          <td class="num">Up to $100B (LOI); ~$30B invested to date per later reports</td>
+          <td>Equity + GPU supply</td>
+          <td>Nvidia funds the customer that buys its own chips; $10B tranches released per GW deployed</td>
+        </tr>
+        <tr>
+          <td>AMD &harr; OpenAI</td>
+          <td>Oct 6, 2025</td>
+          <td class="num">6GW GPU deal + warrant for &le;160M AMD shares (~10%), exercise price $0.01</td>
+          <td>Supply + equity warrant</td>
+          <td>Vesting requires <em>both</em> real GPU deployment milestones (up to 6GW) <em>and</em> AMD's stock reaching escalating price levels up to $600/share; the announcement-day pop (AMD +23.7%) moved the stock closer to those thresholds but did not itself vest anything &mdash; per AMD's 10-Q, no shares had vested as of March 2026. An incentive-alignment structure, not stock manipulation: deployment milestones can't be faked.</td>
+        </tr>
+        <tr>
+          <td>Nvidia &rarr; Anthropic</td>
+          <td>Feb 2026</td>
+          <td class="num">$10B (Series G, $380B valuation)</td>
+          <td>Equity</td>
+          <td>Chipmaker capitalizes a major GPU customer</td>
+        </tr>
+        <tr>
+          <td>Nvidia &rarr; xAI / SpaceX</td>
+          <td>Jan 2026; restructured Feb 2026</td>
+          <td class="num">$10B into xAI's $20B total Series E (Jan 2026); holding now valued at $21B as SpaceX equity (disclosed 2026-08-14)</td>
+          <td>Equity</td>
+          <td>Nvidia was one investor in a $20B round, not the sole source of it; SpaceX's Feb 2026 acquisition of xAI converted the stake into SpaceX equity, which has since appreciated to $21B</td>
+        </tr>
+        <tr>
+          <td>Nvidia &rarr; CoreWeave</td>
+          <td>IPO (Mar 2025) onward, still increasing</td>
+          <td class="num">~7% at IPO &rarr; ~11-13% currently (47.2M shares, ~$3.7-4.9B depending on measurement date)</td>
+          <td>Equity</td>
+          <td>Nvidia owns a growing slice of the "neocloud" that rents Nvidia GPUs back to OpenAI and others &mdash; the stake has roughly doubled since IPO, not held flat</td>
+        </tr>
+        <tr>
+          <td>CoreWeave &rarr; OpenAI</td>
+          <td>Ongoing</td>
+          <td class="num">$22.4B compute commitment</td>
+          <td>Supply</td>
+          <td>OpenAI is a committed customer of the company Nvidia partly owns</td>
+        </tr>
+        <tr>
+          <td>Stargate JV (SoftBank + OpenAI + Oracle + MGX)</td>
+          <td>Jan 2025, expanding through 2026</td>
+          <td class="num">~$500B target / 4 yrs; ~$100B deployed; SoftBank &amp; OpenAI ~$18B each, Oracle &amp; MGX ~$7B each</td>
+          <td>Joint-venture equity</td>
+          <td>OpenAI is simultaneously an equity owner <em>and</em> the sole tenant of the infrastructure</td>
+        </tr>
+        <tr>
+          <td>Oracle &harr; OpenAI</td>
+          <td>2025&ndash;2026</td>
+          <td class="num">$300B cloud commitment</td>
+          <td>Supply</td>
+          <td>Oracle borrows to build capacity contracted to a customer whose revenue is still ramping</td>
+        </tr>
+        <tr>
+          <td>Broadcom &harr; OpenAI</td>
+          <td>2025&ndash;2026</td>
+          <td class="num">$10B custom silicon ("Jalapeño")</td>
+          <td>Co-design + supply</td>
+          <td>OpenAI co-designs the chip that Broadcom manufactures and sells back to it</td>
+        </tr>
+        <tr>
+          <td>Microsoft &harr; OpenAI</td>
+          <td>Ongoing</td>
+          <td class="num">~27% equity stake + $250B Azure commitment</td>
+          <td>Equity + supply</td>
+          <td>Investor and primary vendor at once &mdash; Microsoft's return depends partly on OpenAI continuing to pay Microsoft</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><span class="tag tag-view">VIEW</span> None of these structures is unprecedented, and all are disclosed &mdash; vendor financing has direct precedent in Cisco's dot-com-era arrangements. The open question is how much of reported AI infrastructure demand is organic versus contractually engineered between a small, interlinked set of counterparties &mdash; which is precisely the ambiguity Burry, the IMF, and the CoreWeave/Oracle price action (Section 4) are each pointing at from a different angle.</p>
+
+    <h3 class="sub-title">OpenAI's Commitment Stack</h3>
+    <p><span class="tag tag-fact">FACT</span> As reported across multiple outlets, OpenAI's named infrastructure commitments:</p>
+    <table class="data-table">
+      <thead><tr><th>Counterparty</th><th>Committed Amount</th><th>Nature</th></tr></thead>
+      <tbody>
+        <tr><td>Microsoft Azure</td><td class="num">$250B</td><td>Cloud compute</td></tr>
+        <tr><td>Oracle</td><td class="num">$300B</td><td>Cloud compute / Stargate</td></tr>
+        <tr><td>AWS</td><td class="num">$138B (reported range: $38&ndash;138B)</td><td>Cloud compute</td></tr>
+        <tr><td>CoreWeave</td><td class="num">$22.4B</td><td>GPU infrastructure</td></tr>
+        <tr><td>Nvidia</td><td class="num">Up to $100B</td><td>Compute / equity linkage</td></tr>
+        <tr><td>Broadcom</td><td class="num">$10B</td><td>Custom silicon (Jalapeño)</td></tr>
+        <tr><td><strong>Total (vendor tallies)</strong></td><td class="num"><strong>&gt;$1.1&ndash;1.4T</strong></td><td>Across ~8 years</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--ink-soft);"><em>Note: the six commitments listed above sum to ~$820B. The higher $1.1&ndash;1.4T figure cited in vendor tallies appears to additionally fold in OpenAI's ~$500B Stargate JV commitment (equity structure, see deal table above), which is not listed as a row here to avoid mixing equity and pure supply commitments in one sum &mdash; $820B + $500B &asymp; $1.32T reconciles the range.</em></p>
+    <p><span class="tag tag-fact">FACT</span> Against these commitments, OpenAI earned $13.07B in actual, audited revenue in FY2025 (against a reported operating loss of ~$21B and a net loss of ~$38.5B &mdash; the two differ because net loss includes non-operating charges, so citations of either figure are not in conflict), is projected to lose ~$14B in 2026 on an internal measure (reportedly ~$1.22 lost per $1 of revenue), and targets ~$280B in revenue by 2030. HSBC estimates a <strong>$207B funding gap by 2030</strong> that must be closed through new capital raises, debt, or revenue outperformance. In February 2026, OpenAI reportedly revised its public spending target down from $1.4T to ~$600B through 2030.</p>
+
+    <h3 class="sub-title">Revenue Run-Rate and the IPO Signal</h3>
+    <p><span class="tag tag-fact">FACT</span> The $13.07B above is FY2025 <em>actual booked</em> revenue and understates the current trajectory. OpenAI's CFO disclosed an annualized run-rate above $20B at the end of 2025, and as of 2026-08-13 Bloomberg reported the run-rate had topped <strong>$40 billion, ahead of an expected IPO</strong>. That materially narrows the commitments-versus-revenue gap the bear case leans on, though the gap remains enormous in absolute terms: roughly $1.1&ndash;1.4T of commitments against a $40B run-rate.</p>
+    <p><span class="tag tag-view">VIEW</span> The IPO signal matters more than the revenue figure. OpenAI is the least transparent and most central node in the entire structure precisely because, as a private company, it carries no public disclosure obligations &mdash; yet Oracle's and CoreWeave's leveraged bets both depend on its ability to pay. A listing would force audited financials onto that counterparty, and would likely resolve more of this report's open questions than anything else described here, in either direction.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">2. The Depreciation Debate</h2>
+    <p><span class="tag tag-view">VIEW</span> Michael Burry's May 2026 thesis ("Tracepalooza and the Bezzle") is the most specific bear argument in circulation. It rests on three claims: (1) Nvidia's data-center revenue is concentrated among a small number of large customers; (2) hyperscalers may be understating depreciation by extending assumed GPU useful life; (3) hundreds of billions in data-center lease commitments sit off balance sheet until activated.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Company</th><th>GPU Depreciation Schedule</th><th>Change</th></tr></thead>
+      <tbody>
+        <tr><td>Microsoft</td><td class="num">6 years</td><td>Extended from 4 years</td></tr>
+        <tr><td>Meta</td><td class="num">5.5 years</td><td>Adopted schedule</td></tr>
+        <tr><td>Google, Amazon, Oracle</td><td class="num">Similarly extended</td><td>Per Burry's analysis</td></tr>
+        <tr><td>Realistic GPU operational life (Burry's estimate)</td><td class="num">~2&ndash;3 years</td><td>Given annual architecture refresh</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="sub-title">How the Mechanism Works</h3>
+    <div class="flow-diagram">
+      <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing how spreading a one million dollar GPU purchase over six years instead of four reduces annual depreciation expense from 250,000 to 167,000 dollars, raising reported profit by 83,000 dollars per year">
+        <style>
+          .dep-h { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; font-weight: 700; fill: #1a1a1a; }
+          .dep-t { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; fill: #4a4a48; }
+          .dep-n { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11.5px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+          .dep-cap { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+        </style>
+
+        <text class="dep-h" x="20" y="22">One $1,000,000 GPU cluster. Two useful-life assumptions. Same asset, same cash.</text>
+
+        <!-- 4-year -->
+        <text class="dep-h" x="20" y="62">4-year schedule</text>
+        <text class="dep-t" x="140" y="62">(Microsoft's prior assumption)</text>
+        <rect x="20" y="74" width="150" height="42" fill="#8a3324" rx="3"/>
+        <text class="dep-n" x="95" y="100">$250K</text>
+        <rect x="176" y="74" width="150" height="42" fill="#8a3324" rx="3"/>
+        <text class="dep-n" x="251" y="100">$250K</text>
+        <rect x="332" y="74" width="150" height="42" fill="#8a3324" rx="3"/>
+        <text class="dep-n" x="407" y="100">$250K</text>
+        <rect x="488" y="74" width="150" height="42" fill="#8a3324" rx="3"/>
+        <text class="dep-n" x="563" y="100">$250K</text>
+        <text class="dep-t" x="648" y="100">yr 1-4</text>
+
+        <!-- 6-year -->
+        <text class="dep-h" x="20" y="162">6-year schedule</text>
+        <text class="dep-t" x="140" y="162">(current assumption)</text>
+        <rect x="20" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="69" y="200">$167K</text>
+        <rect x="123" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="172" y="200">$167K</text>
+        <rect x="226" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="275" y="200">$167K</text>
+        <rect x="329" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="378" y="200">$167K</text>
+        <rect x="432" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="481" y="200">$167K</text>
+        <rect x="535" y="174" width="99" height="42" fill="#1f5c3a" rx="3"/>
+        <text class="dep-n" x="584" y="200">$167K</text>
+        <text class="dep-t" x="644" y="200">yr 1-6</text>
+
+        <!-- outcome -->
+        <rect x="20" y="238" width="680" height="48" fill="#f6f1e6" stroke="#ddd6c8" rx="4"/>
+        <text class="dep-cap" x="360" y="259" fill="#8a3324">Stretching the life lowers the annual expense by ~$83K &mdash; which raises reported annual profit by the same ~$83K.</text>
+        <text class="dep-cap" x="360" y="277" fill="#4a4a48" style="font-weight:400;">No cash moves. Nothing is hidden. The entire difference is one estimate: how long the hardware stays useful.</text>
+      </svg>
+    </div>
+    <p><span class="tag tag-view">VIEW</span> Scaled across the hyperscalers' combined GPU fleets, this is the whole of Burry's argument. It also explains why the dispute cannot be settled today: the "correct" answer depends on how long hardware bought in 2026 actually remains in production &mdash; something only observable years from now.</p>
+
+    <p><span class="tag tag-fact">FACT</span> Burry estimates the accounting mismatch understates depreciation expense by approximately <strong>$176 billion from 2026 to 2028</strong> across the major hyperscalers. He puts the per-company effect on 2028 earnings at <strong>+26.9% for Oracle</strong> and <strong>+20.8% for Meta</strong> &mdash; meaning reported earnings could be materially inflated versus economic reality if his useful-life assumption is correct.</p>
+    <p><span class="tag tag-fact">FACT</span> Nvidia took the unusual step of sending sell-side analysts a memo rebutting Burry on stock-based compensation and depreciation. As of August 2026 the market has largely moved against his short-term positioning &mdash; an outcome that does not itself resolve which depreciation assumption is correct. Burry discloses bearish options positions against Nvidia and Palantir through Scion Asset Management, so he has a direct financial interest in the thesis being widely adopted, and his public framing of the practice is correspondingly forceful.</p>
+
+    <h3 class="sub-title">The Counter-Evidence: What Older GPUs Are Actually Doing</h3>
+    <p><span class="tag tag-fact">FACT</span> Burry's case rests on an empirical premise &mdash; that GPUs become economically unproductive in roughly 2&ndash;3 years &mdash; and the secondary market currently contradicts it. The A100, launched in 2020 and therefore around five years old, still rents for roughly <strong>$1.09&ndash;$5.07 per GPU-hour</strong> depending on provider, and still sells used at <strong>$4,000&ndash;$9,000</strong> against $7,000&ndash;$15,000 new. Rental rates across several older Nvidia data-center generations have <em>risen</em> during 2026 rather than decayed. Most directly on point: CoreWeave CEO Mike Intrator stated in August 2026 that the company has A100 capacity contracted out <strong>to 2029 at full pricing</strong> &mdash; implying a realised economic life closer to nine years than to three.</p>
+    <p><span class="tag tag-view">VIEW</span> This materially weakens the strongest version of the bear case. The economics behind it are intuitive: frontier <em>training</em> migrates to the newest silicon, but inference and fine-tuning workloads cascade down to older hardware, where established pipelines and better price-per-token give it a durable floor. Obsolescence for the leading edge is not the same as obsolescence for the fleet. Two honest caveats remain: today's rental strength is itself a product of an acute GPU shortage and would soften if supply caught up or demand cooled, and a contract running to 2029 is a commitment, not yet a realised outcome.</p>
+    <p><span class="tag tag-view">VIEW</span> <strong>This report's position:</strong> the extended schedules look defensible on the evidence currently available. A useful-life assumption is an estimate, disclosed in 10-K footnotes and reviewed by auditors, and the only real test of a good estimate is whether the hardware stays productive &mdash; which it is doing well beyond the two-to-three years the bear case assumes. The more accurate reading is not that a shorter life is being obscured, but that the useful life of a GPU <em>across an entire fleet</em> is genuinely longer than the frontier-refresh cycle implies, because the fleet and the frontier are not the same thing.</p>
+    <p><span class="tag tag-view">VIEW</span> The residual risk is one of timing, not intent. These assumptions were set during an acute GPU shortage that flatters every input feeding them. If supply catches up and older-generation rental rates fall sharply, a six-year schedule becomes considerably harder to defend and this conclusion should be revisited &mdash; which is why older-GPU pricing is listed among the monitoring signals in Section 8.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">3. Off-Balance-Sheet Debt &amp; Private Credit Exposure</h2>
+    <ul>
+      <li><span class="tag tag-fact">FACT</span> Technology companies have moved <strong>&gt;$120B</strong> of data-center spending off-balance-sheet in approximately 18 months.</li>
+      <li><span class="tag tag-fact">FACT</span> Private credit lending to AI-related companies has grown from near zero to <strong>&gt;$200B</strong> in a few years, led by Blackstone, Blue Owl Capital, Apollo, PIMCO, and BlackRock.</li>
+      <li><span class="tag tag-fact">FACT</span> Example structure: Blue Owl and JPMorgan invested ~$13B (~$10B as debt) into an SPV owning Oracle's OpenAI facility in Abilene, Texas.</li>
+      <li><span class="tag tag-fact">FACT</span> Per Moody's Ratings (Feb 2026), the five largest US hyperscalers (Amazon, Meta, Alphabet, Microsoft, Oracle) held <strong>$969B</strong> in total undiscounted future data-center lease commitments as of year-end 2025, of which <strong>$662B</strong> represents leases not yet commenced &mdash; equal to 113% of those companies' combined on-balance-sheet debt.</li>
+      <li><span class="tag tag-fact">FACT</span> Four US senators called for investigation into Big Tech's use of "complex and opaque debt markets," warning of potential "destabilizing losses" for financial institutions.</li>
+      <li><span class="tag tag-fact">FACT</span> Morgan Stanley projects private credit will supply an additional <strong>$800B</strong> in data-center financing over the next two years.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">4. Where This Has Already Hit Stock Prices</h2>
+    <table class="data-table">
+      <thead><tr><th>Company</th><th>Event</th><th>Price Reaction</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>CoreWeave</td>
+          <td>Q4 loss widened to $0.89/share (vs. ~$0.72 est.); Q1 2026 net loss widened to $740M; total liabilities $50.8B; 2026 capex guidance of $30&ndash;35B (&gt;2x prior year)</td>
+          <td>Multiple double-digit single-day drops; reports of a decline exceeding 50% from peak before partial rebound (figures vary by measurement window)</td>
+        </tr>
+        <tr>
+          <td>CoreWeave &mdash; concentration &amp; market disagreement</td>
+          <td>Customer concentration: Microsoft was ~67% of FY2025 revenue, declining to ~40% in H1 2026 as OpenAI and Meta ramp (Customer B ~23%, Customer C ~10%, per 10-Q disclosure)</td>
+          <td>18.9% of float sold short; analyst price targets span $39&ndash;$317 (~8x dispersion) as of Aug 2026</td>
+        </tr>
+        <tr>
+          <td>Oracle</td>
+          <td>Cloud infrastructure revenue +93% YoY, but plan to raise $40B raised investor concern; contagion from CoreWeave losses and OpenAI spending-outlook worries</td>
+          <td>~35% decline over one month despite strong reported revenue growth; stock down ~56% from 52-week high as of Aug 2026, with FCF at approximately -$24.5B and total debt of ~$167B against ~$32B cash</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><span class="tag tag-fact">FACT</span> These cases are direct evidence that circular-financing and leverage anxiety is already a live, price-moving risk factor for AI infrastructure equities &mdash; not merely a theoretical concern.</p>
+    <p><span class="tag tag-view">VIEW</span> The $39&ndash;$317 analyst target range and 18.9% short interest are arguably a stronger signal than the price drawdowns themselves: broad declines could simply reflect a risk-off rotation, but an ~8x spread in professional analyst valuations on the same stock signals genuine disagreement about whether the revenue backlog is durable or contingent on the surrounding financing structure holding together.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">5. Macro and Policy Risk</h2>
+    <h3 class="sub-title" style="margin-top:0;">Financial-Stability Warnings</h3>
+    <p><span class="tag tag-fact">FACT</span> The IMF's July 2026 World Economic Outlook update flagged AI-related asset risk as reaching "one of the highest [levels] over the last three decades," warning that a correction could cause diminished investment, tighter credit, reduced consumption, and disrupted trade flows.</p>
+    <p><span class="tag tag-fact">FACT</span> IMF economist Tobias Adrian specifically stated that <strong>leverage, not valuation alone</strong>, is the greater concern &mdash; elevated debt financing AI investment, combined with rapid capital-obsolescence risk, increases uncertainty around future earnings and asset values.</p>
+    <p><span class="tag tag-fact">FACT</span> The IMF also noted the valuation gap between the technology sector and the rest of the S&amp;P 500 is widening faster than regulatory frameworks are adapting.</p>
+    <p><span class="tag tag-fact">FACT</span> The Bank for International Settlements' 2026 Annual Report separately named circular AI financing &mdash; alongside a potential AI capex bust and sovereign debt fragility &mdash; as one of three biggest risks to global financial stability, an independent regulatory voice corroborating the IMF's warning.</p>
+
+    <h3 class="sub-title">Trade and Export-Control Risk: A Separate Axis</h3>
+    <p><span class="tag tag-view">VIEW</span> Everything else in this report concerns risks <em>endogenous</em> to how the AI buildout is financed and accounted for. Trade policy is a different category: exogenous, politically driven, and capable of moving on a timeline none of the financial participants control. It belongs in the risk picture precisely because it would not be caught by any amount of balance-sheet analysis.</p>
+    <ul>
+      <li><span class="tag tag-fact">FACT</span> In late August 2026 US authorities opened a probe into Apex Logistics over alleged smuggling of Nvidia AI chips to China &mdash; an enforcement action against the logistics layer rather than the chipmaker, but one that signals tightening scrutiny of how restricted hardware moves.</li>
+      <li><span class="tag tag-fact">FACT</span> Chip tariffs have been publicly flagged by economists as a mechanism that would raise the cost of the AI buildout itself &mdash; a direct margin risk to every company in Section 8's "bedrock," which is precisely the layer this report cites as evidence that demand is genuine.</li>
+      <li><span class="tag tag-fact">FACT</span> On the memory side, Chinese producer CXMT is named in analyst coverage as a competitive threat to Micron's pricing power. Memory is currently the strongest profit pool in the supply chain, so pricing pressure there would erode one of the clearest pieces of independent evidence for real demand.</li>
+    </ul>
+    <p><span class="tag tag-view">VIEW</span> Note the asymmetry with the financing risks: export controls and tariffs would hit the <em>bedrock</em> (component makers' margins and volumes), not the leveraged second tier directly. That makes this axis roughly orthogonal to Fault Lines 1&ndash;3 &mdash; it could deteriorate while the financing structure is perfectly sound, or vice versa.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">6. Bull vs. Bear: The Case on Both Sides</h2>
+    <div class="two-col">
+      <div class="col-box bear">
+        <h4>Bear Case</h4>
+        <ul>
+          <li>Circular deal structure obscures true organic demand vs. vendor-financed demand</li>
+          <li>OpenAI's commitments (~$1.1&ndash;1.4T) still vastly exceed revenue and near-term visibility, even after the run-rate rose to ~$40B</li>
+          <li>Depreciation schedules extended precisely as chip refresh cycles have shortened (~$176B potential understatement, 2026&ndash;2028)</li>
+          <li>Off-balance-sheet lease/SPV debt ($969B undiscounted, $662B not yet commenced) exceeds on-balance-sheet debt at top hyperscalers</li>
+          <li>IMF: highest AI-related asset risk in three decades; leverage is the primary transmission channel</li>
+          <li>CoreWeave and Oracle already show the market repricing sharply on these specific concerns</li>
+        </ul>
+      </div>
+      <div class="col-box bull">
+        <h4>Bull Case</h4>
+        <ul>
+          <li>Spenders (Google, Meta, Microsoft, Amazon &mdash; ~$725B combined 2026 capex) are among the most profitable companies in history; capex is largely earnings-funded, not equity-dilution-funded</li>
+          <li>Nvidia's ~53% net margin and ~24&ndash;26x forward earnings contrast sharply with Cisco's ~472x earnings at the 2000 dot-com peak</li>
+          <li>Unlike dot-com-era pre-revenue startups, today's leaders have real, growing cash flows</li>
+          <li>Older GPUs are holding their economics far better than the bear case assumes &mdash; five-year-old A100s still rent at full rates, with CoreWeave capacity contracted to 2029 (Section 2)</li>
+          <li>Technology usefulness may be real even where business ROI lags. The widely-cited "95% of AI pilots show no measurable ROI" MIT finding is real but narrower than its headline: it counted only deployments past pilot stage with measured P&amp;L impact six months on, excluding efficiency, cost and churn gains &mdash; so it understates realised value</li>
+          <li>Emerging categories (healthcare diagnostics, scientific discovery) could extend the demand runway beyond chatbot-era assumptions</li>
+        </ul>
+      </div>
+    </div>
+    <p><span class="tag tag-view">VIEW</span> Both sides draw on overlapping data and reach opposite conclusions. Whether current spending is "necessary infrastructure" or "bubble excess" is fundamentally a forward-looking judgment call, not a settled fact.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">7. Decomposing "Circular Financing": Four Distinct Mechanisms</h2>
+    <p><span class="tag tag-view">VIEW</span> "Circular financing" is treated in most commentary as a single phenomenon, which is why the bull/bear debate above tends to talk past itself. In fact it bundles four structurally different mechanisms with materially different risk profiles. Decomposed, the picture is considerably clearer than a blanket "good" or "bad" verdict.</p>
+
+    <div class="mechanism-grid">
+      <div class="mech-card risk-lowmed">
+        <div class="mech-num">Mechanism 1</div>
+        <h4>Equity Vendor Financing</h4>
+        <span class="risk-badge lowmed">Risk: Low&ndash;Medium</span>
+        <p><strong>Example:</strong> Nvidia &rarr; OpenAI, Anthropic, xAI/SpaceX, CoreWeave.</p>
+        <p>A supplier takes an equity stake in, or extends financing to, a customer to help it afford the supplier's product. This has direct historical precedent (Cisco, dot-com era) and is disclosed, not hidden.</p>
+        <p><span class="tag tag-fact">FACT</span> Nvidia's version of this is funded from cash and marketable securities, not debt: $50.3B in cash + marketable securities, $43.4B in non-marketable strategic investments, against total debt of just $8.5B and a 4.3% debt-to-equity ratio. The vendor itself is not levered to make these bets.</p>
+      </div>
+
+      <div class="mech-card risk-medhigh">
+        <div class="mech-num">Mechanism 2</div>
+        <h4>Related-Party Joint Ventures</h4>
+        <span class="risk-badge medhigh">Risk: Medium&ndash;High</span>
+        <p><strong>Example:</strong> Stargate (SoftBank + OpenAI + Oracle + MGX).</p>
+        <p>The customer generating the "demand signal" is simultaneously an equity owner of the asset being built. There is no independent third party validating that the capacity is worth what it is priced at &mdash; OpenAI is both landlord and sole tenant.</p>
+        <p><span class="tag tag-view">VIEW</span> Fully disclosed, but structurally a related-party transaction rather than an arm's-length sale. The consequence is analytical rather than ethical: it weakens "demand" as an independently verifiable signal, because the buyer and the seller are partly the same party.</p>
+      </div>
+
+      <div class="mech-card risk-high">
+        <div class="mech-num">Mechanism 3</div>
+        <h4>Leverage in the Undercapitalized Second Tier</h4>
+        <span class="risk-badge high">Risk: High</span>
+        <p><strong>Example:</strong> OpenAI ($1.1&ndash;1.4T commitments vs. a ~$40B revenue run-rate), CoreWeave ($50.8B total liabilities, ongoing losses), Oracle's borrowing to build contracted capacity.</p>
+        <p>This is the tier that maps onto the dangerous historical precedent: debt concentrated in thinly-capitalized counterparties, not the well-capitalized chip supplier.</p>
+        <p><span class="tag tag-fact">FACT</span> CoreWeave and Oracle have already shown sharp, correlated stock drawdowns tied to exactly this concern (Section 4) &mdash; this is not a hypothetical risk, it has already repriced equities.</p>
+      </div>
+
+      <div class="mech-card risk-unresolved">
+        <div class="mech-num">Mechanism 4</div>
+        <h4>Contestable Depreciation Accounting</h4>
+        <span class="risk-badge unresolved">Risk: Unresolved</span>
+        <p><strong>Example:</strong> Microsoft (4&rarr;6yr), Meta (5.5yr) GPU depreciation schedules vs. Burry's ~2&ndash;3yr estimate of realistic useful life.</p>
+        <p>Not circularity in the strict sense, but it compounds the uncertainty: if reported hyperscaler earnings are overstated by extending useful-life assumptions, the "real profitability" bulls cite as reassurance is itself partly unverified.</p>
+        <p><span class="tag tag-view">VIEW</span> Not fully settled, but no longer evenly balanced: secondary-market evidence (five-year-old A100s still renting at full rates, CoreWeave contracting them to 2029) currently runs <em>against</em> Burry's 2&ndash;3 year premise. See Section 2.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">The Cisco Precedent, With Actual Numbers</h3>
+    <p><span class="tag tag-fact">FACT</span> In 2000, Cisco's vendor financing was ~10% of its $20B revenue (~$2B). Lucent had committed $8.1B (with $2.1B drawn), Nortel $3.1B ($1.4B drawn), Cisco itself $2.4B. By 2001, Cisco had $1.3B in financed-lease exposure across 735 customers, including $233M to high-risk borrowers, and ultimately wrote off ~$900M in bad loans. The failure mode was not that vendor financing existed &mdash; it was that the financed customers (undercapitalized CLECs) collapsed first, and the vendors who had extended them credit absorbed the loss. &mdash; <a href="https://www.monitordaily.com/article/technology-vendor-finance-20-years-maturation/" target="_blank" rel="noopener">MonitorDaily</a>, <a href="https://www.technostatecraft.com/p/cisco-nvidia-and-the-economics-of" target="_blank" rel="noopener">Technostatecraft</a></p>
+
+    <table class="data-table">
+      <thead><tr><th>&nbsp;</th><th>Cisco, 2000</th><th>Nvidia, 2026</th></tr></thead>
+      <tbody>
+        <tr><td>Vendor financing / strategic investment</td><td class="num">~$2B (~10% of $20B revenue)</td><td class="num">~$43.4B non-marketable investments as of the FY2026 Q1 10-Q &mdash; ~20% of FY2026 revenue of $216B, i.e. roughly twice Cisco's ratio. Since grown: the SpaceX stake alone was disclosed at $21B in Q2 FY2027.</td></tr>
+        <tr><td>Funding source</td><td>Credit extended by Cisco itself, becoming bad-loan exposure</td><td class="num">Cash + marketable securities; debt-to-equity 4.3%</td></tr>
+        <tr><td>Where the leverage actually sat</td><td>Partly on Cisco's own book ($900M written off)</td><td>Overwhelmingly in customers/counterparties (OpenAI, CoreWeave, Oracle), not Nvidia's own balance sheet</td></tr>
+      </tbody>
+    </table>
+    <p><span class="tag tag-view">VIEW</span> By scale, today's exposure is proportionally larger than Cisco's was. But the funding source is different in a way that matters: Nvidia is not extending credit it needs repaid to remain solvent, the way Cisco was. The closer analog to 2001's undercapitalized CLECs is the second tier &mdash; OpenAI, CoreWeave, Oracle &mdash; not Nvidia itself.</p>
+
+    <div class="verdict-box">
+      <h3 style="margin-top:0;">What This Decomposition Establishes &mdash; and What It Hands to Section 8</h3>
+      <p>Averaging the four mechanisms into one verdict is where most of the public debate goes wrong. Mechanism 1 (Nvidia's own equity stakes) is disclosed, cash-funded, and has legitimate precedent &mdash; calling it inherently bad overstates the case, and Jensen Huang's "the risk is low" claim has real balance-sheet support <em>for Nvidia specifically</em>. Mechanism 2 weakens how reliably "demand" can be read as independent of the financing that produced it. Mechanism 3 is where money is genuinely at risk. Mechanism 4 is contested but, on current evidence, tilting away from the bear case.</p>
+      <p>This section is a taxonomy of <em>structures</em>: what kinds of circularity exist and how each one works. It deliberately does not deliver an overall risk verdict, because two of the four mechanisms are descriptive rather than dangerous. Section 8 does the second job &mdash; establishing what is actually solid underneath all of this, and then carrying forward only the mechanisms that represent live exposure. The mapping is one-to-one and explicit:</p>
+      <table class="data-table" style="margin-bottom:0;">
+        <thead><tr><th>Mechanism (Section 7)</th><th>Live financial exposure?</th><th>Carried into Section 8 as</th></tr></thead>
+        <tbody>
+          <tr><td>1. Equity vendor financing</td><td>No &mdash; cash-funded, disclosed, absorbed by Nvidia's own balance sheet</td><td>Not a fault line. Appears instead as evidence of Nvidia's resilience.</td></tr>
+          <tr><td>2. Related-party joint ventures</td><td>Indirectly &mdash; it degrades signal quality rather than creating loss exposure of its own</td><td>Folded into <strong>Fault Line 1</strong>, since it involves the same counterparties and the same leverage.</td></tr>
+          <tr><td>3. Leverage in the undercapitalized second tier</td><td>Yes &mdash; the principal one</td><td><strong>Fault Line 1: Concentrated Leverage</strong></td></tr>
+          <tr><td>4. Contestable depreciation accounting</td><td>Open &mdash; would affect reported profits, not solvency</td><td><strong>Fault Line 2: Contested Depreciation</strong></td></tr>
+          <tr><td><em>Not a circularity mechanism &mdash; identified separately</em></td><td>Low today</td><td><strong>Fault Line 3: Incentive-Alignment Entanglements</strong></td></tr>
+          <tr><td><em>Exogenous to the financing structure entirely (Section 5)</em></td><td>Real but unrelated to circularity</td><td><strong>Fault Line 4: Trade and Export-Control Policy</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">8. Synthesis: The Bedrock and the Fault Lines</h2>
+    <p><span class="tag tag-view">VIEW</span> Section 7 catalogued the <em>structures</em>. This section does the different job of locating the <em>risk</em>: what is demonstrably solid underneath the whole buildout, and then the four points where it could actually fail. Only two of Section 7's four mechanisms carry live exposure and are carried forward here (per the mapping table that closes that section); the other two fault lines come from outside the circular-financing frame entirely.</p>
+    <p><span class="tag tag-view">VIEW</span> The debate is usually compressed into a single yes/no question: is this a bubble? The more precise framing separates a solid foundation from four genuinely independent points of failure sitting on top of it &mdash; independent in the sense that any one could resolve badly without the others following, and vice versa. ("Layer" is deliberately avoided here: in AI infrastructure that word implies a dependent stack, hardware under infrastructure under model under application. These risks aren't stacked that way &mdash; they're parallel, not sequential.)</p>
+
+    <div class="verdict-box" style="margin-bottom:20px;">
+      <h3 style="margin-top:0;">The Bedrock: Demand Is Real, and Broader Than the Named Deals</h3>
+      <p><span class="tag tag-fact">FACT</span> Recent earnings across the AI infrastructure supply chain show broad-based demand well beyond the handful of circularly-financed names in Section 1. In the most recent reporting quarter: memory makers Micron (+21.4% EPS surprise), SanDisk (+13.7%, EPS trajectory from -$0.93 to $39.25 in roughly 18 months) and Western Digital (+7.9%) are in an accelerating, supply-constrained pricing cycle. Optical/interconnect names Credo (+12.2%, consistent 27&ndash;44% beats over the past year), Lumentum (+8.8%, 8 of 8 quarters beat), Arista (+15.2%), and Coherent (+7.6%) show broad, independently-sourced demand for the interconnect hardware that wires GPU clusters together. Cooling/power-equipment maker Vertiv beat cleanly for 8 straight quarters (+6.4% most recently).</p>
+      <p><span class="tag tag-view">VIEW</span> None of these companies is financially entangled with Nvidia, OpenAI, Oracle, or CoreWeave the way those four are with each other. Their independent strength is the strongest evidence available that underlying demand for AI infrastructure is genuine, not manufactured by the deal structures described in Section 1.</p>
+
+      <div class="flow-diagram" style="text-align:left;">
+        <svg viewBox="0 0 720 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Horizontal bar chart of most recent quarterly EPS surprise percentages across twelve AI infrastructure supply chain companies, all positive, ranging from 6.3 percent to 77.6 percent">
+          <style>
+            .bc-h { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; font-weight: 700; fill: #1a1a1a; }
+            .bc-tk { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11.5px; font-weight: 700; fill: #1a1a1a; text-anchor: end; }
+            .bc-v { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11px; fill: #4a4a48; }
+            .bc-l { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5px; fill: #4a4a48; }
+          </style>
+          <text class="bc-h" x="12" y="20">Most recent quarterly EPS surprise vs. consensus (%)</text>
+          <text class="bc-l" x="12" y="38">Twelve AI infrastructure suppliers, latest reported quarter as of Aug 2026. Every one beat.</text>
+
+          <line x1="150" y1="52" x2="150" y2="374" stroke="#ddd6c8" stroke-width="1"/>
+
+          <rect x="150" y="60" width="500" height="18" fill="#4a4a48" rx="2"/>
+          <text class="bc-tk" x="142" y="73">SMCI</text><text class="bc-v" x="656" y="73">+77.6%</text>
+          <rect x="150" y="86" width="138" height="18" fill="#1f5c3a" rx="2"/>
+          <text class="bc-tk" x="142" y="99">MU</text><text class="bc-v" x="294" y="99">+21.4%</text>
+          <rect x="150" y="112" width="98" height="18" fill="#8a3324" rx="2"/>
+          <text class="bc-tk" x="142" y="125">ANET</text><text class="bc-v" x="254" y="125">+15.2%</text>
+          <rect x="150" y="138" width="88" height="18" fill="#1f5c3a" rx="2"/>
+          <text class="bc-tk" x="142" y="151">SNDK</text><text class="bc-v" x="244" y="151">+13.7%</text>
+          <rect x="150" y="164" width="79" height="18" fill="#8a3324" rx="2"/>
+          <text class="bc-tk" x="142" y="177">CIEN</text><text class="bc-v" x="235" y="177">+12.3%</text>
+          <rect x="150" y="190" width="79" height="18" fill="#8a3324" rx="2"/>
+          <text class="bc-tk" x="142" y="203">CRDO</text><text class="bc-v" x="235" y="203">+12.2%</text>
+          <rect x="150" y="216" width="75" height="18" fill="#7a4a12" rx="2"/>
+          <text class="bc-tk" x="142" y="229">CEG</text><text class="bc-v" x="231" y="229">+11.7%</text>
+          <rect x="150" y="242" width="57" height="18" fill="#8a3324" rx="2"/>
+          <text class="bc-tk" x="142" y="255">LITE</text><text class="bc-v" x="213" y="255">+8.8%</text>
+          <rect x="150" y="268" width="51" height="18" fill="#1f5c3a" rx="2"/>
+          <text class="bc-tk" x="142" y="281">WDC</text><text class="bc-v" x="207" y="281">+7.9%</text>
+          <rect x="150" y="294" width="49" height="18" fill="#8a3324" rx="2"/>
+          <text class="bc-tk" x="142" y="307">COHR</text><text class="bc-v" x="205" y="307">+7.6%</text>
+          <rect x="150" y="320" width="41" height="18" fill="#7a4a12" rx="2"/>
+          <text class="bc-tk" x="142" y="333">VRT</text><text class="bc-v" x="197" y="333">+6.4%</text>
+          <rect x="150" y="346" width="41" height="18" fill="#7a4a12" rx="2"/>
+          <text class="bc-tk" x="142" y="359">EQIX</text><text class="bc-v" x="197" y="359">+6.3%</text>
+
+          <rect x="12" y="388" width="696" height="70" fill="#f6f1e6" stroke="#ddd6c8" rx="4"/>
+          <rect x="26" y="400" width="11" height="11" fill="#1f5c3a" rx="2"/><text class="bc-l" x="43" y="410">Memory / storage</text>
+          <rect x="170" y="400" width="11" height="11" fill="#8a3324" rx="2"/><text class="bc-l" x="187" y="410">Optics / networking</text>
+          <rect x="322" y="400" width="11" height="11" fill="#7a4a12" rx="2"/><text class="bc-l" x="339" y="410">Cooling / power / data centers</text>
+          <rect x="530" y="400" width="11" height="11" fill="#4a4a48" rx="2"/><text class="bc-l" x="547" y="410">Servers</text>
+          <text class="bc-l" x="26" y="430">Excluded as an outlier: Vistra (VST) missed by 53.4%, but its EPS swings between +53% and -252% quarter to quarter on</text>
+          <text class="bc-l" x="26" y="446">mark-to-market hedge accounting &mdash; an independent power producer's quarterly EPS is not a clean read on AI demand.</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="mechanism-grid">
+      <div class="mech-card risk-high">
+        <div class="mech-num">Fault Line 1</div>
+        <h4>Concentrated Leverage</h4>
+        <span class="risk-badge high">High risk, contained to specific names</span>
+        <p>Debt funding the physical buildout sits almost entirely in two companies &mdash; Oracle (-$24.5B free cash flow, $167B debt) and CoreWeave (1,027% debt/equity) &mdash; both financing capacity against one customer's future promises. Nvidia and Microsoft, by contrast, are cash-funded and could absorb a slowdown without existential risk (Sections 3&ndash;4).</p>
+      </div>
+      <div class="mech-card risk-unresolved">
+        <div class="mech-num">Fault Line 2</div>
+        <h4>Contested Depreciation Accounting</h4>
+        <span class="risk-badge unresolved">Open, but evidence now leans against the bear case</span>
+        <p>Even if every circular deal is clean and every counterparty solvent, if Microsoft's and Meta's extended GPU useful-life assumptions (4&rarr;6yr, 5.5yr) don't match reality, today's reported profits are overstated regardless (Section 2). But the secondary market is currently the bulls' best evidence anywhere in this report: five-year-old A100s still rent at full rates and CoreWeave has them contracted to 2029. A GAAP judgment call, and one the observable data increasingly supports.</p>
+      </div>
+      <div class="mech-card risk-lowmed">
+        <div class="mech-num">Fault Line 3</div>
+        <h4>Incentive-Alignment Entanglements</h4>
+        <span class="risk-badge lowmed">Low risk today, worth monitoring</span>
+        <p>Structures like OpenAI's AMD warrant give counterparties a direct financial stake in each other's stock price, not just the underlying commercial relationship. Not manipulation &mdash; vesting requires verifiable physical deployment, not just a stock pop &mdash; but a real incentive for both parties to manage the public narrative around the partnership, not just execute it (Section 1).</p>
+      </div>
+      <div class="mech-card risk-medhigh">
+        <div class="mech-num">Fault Line 4</div>
+        <h4>Trade and Export-Control Policy</h4>
+        <span class="risk-badge medhigh">Exogenous &mdash; outside the financing frame</span>
+        <p>Chip tariffs, export-control enforcement (the Apex Logistics smuggling probe), and Chinese memory competition from CXMT would raise buildout costs and compress component-maker margins (Section 5). Note this one inverts the others: it strikes the <em>bedrock</em> &mdash; the independent suppliers whose earnings are the best evidence demand is real &mdash; rather than the leveraged second tier. It could deteriorate while the financing structure stays perfectly sound.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Fault Line 1, Visualised: Who Is Actually Funding the Buildout</h3>
+    <div class="flow-diagram" style="text-align:left;">
+      <svg viewBox="0 0 720 268" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of free cash flow: Nvidia positive 97 billion dollars, CoreWeave negative 9.1 billion, Oracle negative 24.5 billion, with debt to equity ratios annotated">
+        <style>
+          .fc-h { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12.5px; font-weight: 700; fill: #1a1a1a; }
+          .fc-tk { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #1a1a1a; text-anchor: end; }
+          .fc-sub { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10px; fill: #4a4a48; text-anchor: end; }
+          .fc-v { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11.5px; font-weight: 700; fill: #1a1a1a; }
+          .fc-l { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 10.5px; fill: #4a4a48; }
+        </style>
+        <text class="fc-h" x="12" y="20">Free cash flow &mdash; the chip supplier vs. the two companies building the data centers</text>
+
+        <line x1="270" y1="40" x2="270" y2="212" stroke="#4a4a48" stroke-width="1.2"/>
+        <text class="fc-l" x="274" y="228">$0</text>
+
+        <rect x="270" y="52" width="378" height="34" fill="#1f5c3a" rx="3"/>
+        <text class="fc-tk" x="252" y="70">NVDA</text>
+        <text class="fc-sub" x="252" y="83">D/E 4.3%</text>
+        <text class="fc-v" x="656" y="74" fill="#1f5c3a">+$97B</text>
+
+        <rect x="235" y="104" width="35" height="34" fill="#8a3324" rx="3"/>
+        <text class="fc-tk" x="150" y="122">CRWV</text>
+        <text class="fc-sub" x="150" y="135">D/E 1,027%</text>
+        <text class="fc-v" x="227" y="126" fill="#8a3324" text-anchor="end">-$9.1B</text>
+
+        <rect x="174" y="156" width="96" height="34" fill="#8a3324" rx="3"/>
+        <text class="fc-tk" x="88" y="174">ORCL</text>
+        <text class="fc-sub" x="88" y="187">D/E 389%</text>
+        <text class="fc-v" x="166" y="178" fill="#8a3324" text-anchor="end">-$24.5B</text>
+
+        <rect x="12" y="240" width="696" height="22" fill="#f6f1e6" stroke="#ddd6c8" rx="4"/>
+        <text class="fc-l" x="24" y="255">NVDA: FY2026 (ended Jan 2026). ORCL and CRWV: trailing twelve months as of Aug 2026. D/E = total debt to equity.</text>
+      </svg>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">Figure: the company most associated with "circular financing" is the one generating cash. The two companies physically building and operating the capacity are consuming it, and are the ones carrying the leverage. This is the asymmetry that makes a slowdown a repricing event for Nvidia but a solvency question for the second tier.</p>
+    </div>
+
+    <h3 class="sub-title">Fault Line 1, Stress-Tested: The Transmission Chain</h3>
+    <p><span class="tag tag-view">VIEW</span> The contagion argument is usually stated qualitatively &mdash; "if Microsoft disappoints, it cascades." Below it is worked through with actual reported figures, and, more importantly, with each step labelled by how much confidence it can bear. The exercise is as useful for showing where the chain becomes unknowable as for the numbers themselves.</p>
+    <table class="data-table">
+      <thead><tr><th>Step in the chain</th><th>Confidence</th><th>Current (actual)</th><th>Azure at 30%</th><th>Azure at 15%</th><th>Azure flat</th></tr></thead>
+      <tbody>
+        <tr><td>Azure YoY growth</td><td>Reported</td><td class="num">43%</td><td class="num">30%</td><td class="num">15%</td><td class="num">0%</td></tr>
+        <tr><td>Incremental annual Azure revenue (on ~$100B base)</td><td>Modeled (base &times; growth)</td><td class="num">~$43B</td><td class="num">~$30B</td><td class="num">~$15B</td><td class="num">$0</td></tr>
+        <tr><td>Shortfall vs. current trajectory</td><td>Modeled</td><td class="num">&mdash;</td><td class="num">-$13B</td><td class="num">-$28B</td><td class="num">-$43B</td></tr>
+        <tr><td>As % of Microsoft's guided $190B 2026 capex</td><td>Modeled</td><td class="num">&mdash;</td><td class="num">~7%</td><td class="num">~15%</td><td class="num">~23%</td></tr>
+        <tr><td>Nvidia Data Center revenue at risk</td><td><strong>Not derivable</strong> &mdash; Nvidia discloses only "4 customers = 61% of revenue," unnamed</td><td class="num">$89.0B/qtr</td><td colspan="3" style="text-align:center;">Directionally lower; magnitude cannot be honestly quantified from public disclosure</td></tr>
+        <tr><td>CoreWeave revenue exposed to Microsoft (~40% of ~$10.3B annualized run-rate)</td><td>Disclosed % (10-Q) &times; annualization of Q2 actual</td><td class="num">~$4.1B/yr</td><td class="num">-$412M<br><span style="font-size:11px;color:var(--ink-soft);">(at -10% spend)</span></td><td class="num">-$824M<br><span style="font-size:11px;color:var(--ink-soft);">(at -20% spend)</span></td><td class="num">-$1.4B<br><span style="font-size:11px;color:var(--ink-soft);">(at -35% spend)</span></td></tr>
+      </tbody>
+    </table>
+    <p><span class="tag tag-view">VIEW</span> Three things fall out of this, and the second is the most important.</p>
+    <p><strong>First</strong> &mdash; the top four rows are straightforward arithmetic on reported figures and can be relied on. <strong>Second</strong> &mdash; the chain <em>breaks</em> at Nvidia. Its customer disclosure is granular enough to establish that concentration exists but too coarse to trace a Microsoft slowdown to a specific revenue figure, so any analysis claiming to quantify that link precisely is estimating, not measuring. That opacity is itself a finding. <strong>Third</strong> &mdash; the bottom row is where a slowdown produces dollars you can actually name, and it lands on the company least able to absorb them: an $800M&ndash;$1.4B revenue hit is survivable in isolation, but it would arrive at a business already burning $9.1B of free cash flow a year against $5.5B of cash and $51.6B of debt.</p>
+    <p style="font-size:13px;color:var(--ink-soft);"><em>Modelling caveat: the mapping from "Azure growth slows to X%" to "Microsoft cuts CoreWeave spend by Y%" is an illustrative elasticity, not a derived or disclosed relationship &mdash; Microsoft could equally absorb a slowdown by trimming owned capex rather than third-party rentals. The row shows the scale of what is exposed, not a forecast of what would happen. And note the whole table stress-tests a chain currently running hot in every link: Azure beat consensus, Nvidia beat and guided up, CoreWeave grew 112% year over year.</em></p>
+
+    <div class="verdict-box">
+      <h3 style="margin-top:0;">Why These Don't Need to Resolve the Same Way</h3>
+      <p>Fault Line 1 could go fine (OpenAI's revenue keeps climbing toward its committed spend, Oracle and CoreWeave grow into their debt) while Fault Line 4 turns bad anyway (tariffs and export controls squeeze the component makers regardless of how sound the financing is) &mdash; or the reverse. Fault Line 2 currently looks like it is resolving <em>in the bulls' favour</em> even as Fault Line 1 stays genuinely dangerous. A single "bubble / no bubble" verdict forces four independent bets into one answer the evidence does not support treating as one.</p>
+      <p><span class="tag tag-view">VIEW</span> The single most consequential resolving event sits at the intersection of the bedrock and Fault Line 1: OpenAI's reported run-rate topping $40B ahead of a possible IPO (Section 1) would, if it happens, force public disclosure onto the one counterparty whose payment capacity determines whether Oracle's and CoreWeave's leveraged bets pay off. It would not touch Fault Lines 2 or 4 at all &mdash; those resolve on their own timelines regardless of what OpenAI discloses. <strong>What to watch, roughly in order of how soon it would be visible:</strong> whether CoreWeave's analyst target dispersion (currently $39&ndash;$317) narrows or stays wide; whether older-GPU rental rates and residual values hold as new supply arrives, which is the live test of Fault Line 2; movement on chip tariffs or export-control enforcement; the terms of an actual OpenAI IPO filing, if one comes; and, furthest out, whether 2028 hyperscaler capex guidance carries any early GPU replacement or impairment charges.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">9. Value-Investing Lens</h2>
+    <blockquote class="master">
+      &ldquo;It's only when the tide goes out that you learn who has been swimming naked.&rdquo;
+      <footer>&mdash; Warren Buffett, on leverage-driven booms</footer>
+    </blockquote>
+    <p>The circular-financing structure is precisely the kind of arrangement Buffett has historically warned about: revenue and earnings quality that depend on continued participation by a small, interlinked set of counterparties. If any single node in the loop (OpenAI's funding, CoreWeave's liquidity, Oracle's borrowing capacity) falters, the effect propagates through the others &mdash; a structural fragility distinct from ordinary cyclical demand risk.</p>
+
+    <blockquote class="master">
+      &ldquo;All I want to know is where I'm going to die, so I'll never go there.&rdquo;
+      <footer>&mdash; Charlie Munger, on avoiding foreseeable failure modes</footer>
+    </blockquote>
+    <p>Munger's inversion framework applied here: the foreseeable failure mode is not "AI doesn't work" but "AI works, yet the capital structure financing it collapses first." Off-balance-sheet debt exceeding on-balance-sheet debt at the largest hyperscalers is exactly the kind of complexity Munger counseled avoiding &mdash; not because complexity is inherently bad, but because it obscures the honest accounting an investor needs to assess risk.</p>
+
+    <blockquote class="master">
+      &ldquo;超越自己能力圈的钱，不赚。&rdquo; (Money outside my circle of competence, I don't earn.)
+      <footer>&mdash; 段永平 (Duan Yongping)</footer>
+    </blockquote>
+    <p>Assessing whether a specific hyperscaler's depreciation schedule is defensible requires domain expertise in both semiconductor lifecycle economics and accounting judgment &mdash; a genuinely difficult circle-of-competence test. The honest answer for most investors is that the depreciation debate is not fully resolvable from public information alone, which argues for position sizing that respects that uncertainty rather than conviction in either direction.</p>
+
+    <blockquote class="master">
+      &ldquo;能力圈的本质，不是你知道什么，而是你知道你不知道什么。&rdquo; (The essence of circle of competence is not what you know, but knowing what you don't know.)
+      <footer>&mdash; 李录 (Li Lu)</footer>
+    </blockquote>
+    <p>Li Lu's framing is directly applicable to the off-balance-sheet SPV structures: an outside investor cannot fully verify the terms, recourse provisions, or counterparty concentration inside privately negotiated data-center debt facilities. That opacity is itself the risk signal &mdash; not proof of wrongdoing, but a limit on how confidently anyone outside the deal can price the downside.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">10. Bottom Line</h2>
+    <div class="verdict-box">
+      <h3>What is established fact</h3>
+      <p>The circular-deal structure exists and is documented across named transactions. OpenAI's committed spend materially exceeds current revenue, though the gap has narrowed since FY2025 as its disclosed run-rate rose to over $40B ahead of a reported IPO. Hyperscaler depreciation schedules have lengthened in the same window GPU refresh cycles have shortened. Off-balance-sheet lease/debt obligations ($969B undiscounted, per Moody's) exceed on-balance-sheet debt at the largest hyperscalers. CoreWeave and Oracle have both had sharp, documented drawdowns tied to these specific concerns, and CoreWeave's ~8x analyst target dispersion shows the market has not converged on how to price the risk. Both the IMF and the BIS have formally flagged this as a financial-stability risk, citing leverage as the primary channel.</p>
+      <h3>What remains open / a matter of interpretation</h3>
+      <p>Whether OpenAI's demand and pricing power will close its funding gap; whether current infrastructure spend will be validated by future AI monetization or written down; and how far trade policy raises the cost of the buildout. On the depreciation question the report does now lean: the secondary market for older GPUs &mdash; five-year-old A100s renting at full rates, CoreWeave contracting them to 2029 &mdash; runs against Burry's 2&ndash;3 year premise, though an easing of the current GPU shortage would be the real test. Elsewhere this report deliberately does not adjudicate; it lays out the data and the competing interpretations so the reader can weigh them.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Sources</h2>
+    <ul class="sources">
+      <li><a href="https://www.bloomberg.com/graphics/2026-ai-circular-deals/" target="_blank" rel="noopener">Bloomberg &mdash; AI Circular Deals: How Microsoft, OpenAI and Nvidia Keep Paying Each Other</a></li>
+      <li><a href="https://businessmodelanalyst.com/openai-trillion-commitment-revenue-gap/" target="_blank" rel="noopener">Business Model Analyst &mdash; OpenAI Committed Over $1 Trillion. It Earns $25 Billion a Year</a></li>
+      <li><a href="https://blog.carnegieinvest.com/the-risks-facing-openai-and-its-1.4t-in-spending-commitments" target="_blank" rel="noopener">Carnegie Investment Counsel &mdash; The Risks Facing OpenAI and its $1.4T in Spending Commitments</a></li>
+      <li><a href="https://www.datacenterdynamics.com/en/news/openai-must-find-207bn-to-meet-ai-data-center-spending-commitments-hsbc/" target="_blank" rel="noopener">DataCenterDynamics / HSBC &mdash; OpenAI must find $207bn to meet AI data center spending commitments</a></li>
+      <li><a href="https://www.cnbc.com/2026/02/20/openai-resets-spend-expectations-targets-around-600-billion-by-2030.html" target="_blank" rel="noopener">CNBC &mdash; OpenAI resets spending expectations, targets ~$600 billion by 2030</a></li>
+      <li><a href="https://www.investing.com/analysis/michael-burry-bets-nvidia-peak-may-be-near-as-numbers-back-his-case-200681010" target="_blank" rel="noopener">Investing.com &mdash; Michael Burry Bets Nvidia Peak May Be Near as Numbers Back His Case</a></li>
+      <li><a href="https://cryptobriefing.com/michael-burry-bear-case-ai-chips-gpu/" target="_blank" rel="noopener">CryptoBriefing &mdash; Michael Burry revives bear case for AI chips amid GPU depreciation concerns</a></li>
+      <li><a href="https://www.cnbc.com/2026/04/06/ai-data-centers-financing-insurance-deals-gpu-debt.html" target="_blank" rel="noopener">CNBC &mdash; AI data center boom 'stress tests' insurers as private capital floods in</a></li>
+      <li><a href="https://www.gisreportsonline.com/r/ai-buildout-hidden-debt/" target="_blank" rel="noopener">GIS Reports &mdash; The AI buildout rests on hidden debt</a></li>
+      <li><a href="https://www.bloomberg.com/news/articles/2026-02-26/coreweave-posts-wider-loss-than-anticipated-as-spending-ramps-up" target="_blank" rel="noopener">Bloomberg &mdash; CoreWeave Posts Wider Loss Than Anticipated as Spending Ramps Up</a></li>
+      <li><a href="https://www.fxleaders.com/news/2026/05/07/orcl-stock-drops-after-hours-as-coreweave-losses-and-openai-concerns-weigh-on-ai-boom/" target="_blank" rel="noopener">FX Leaders &mdash; ORCL Stock Drops After Hours as CoreWeave Losses and OpenAI Concerns Weigh on AI Boom</a></li>
+      <li><a href="https://www.bloomberg.com/news/articles/2026-06-30/ai-leverage-is-more-worrying-than-valuations-imf-s-adrian-says" target="_blank" rel="noopener">Bloomberg &mdash; AI Leverage Is More Worrying Than Valuations, IMF's Adrian Says</a></li>
+      <li><a href="https://www.imf.org/-/media/files/publications/weo/2026/update/july/english/text.pdf" target="_blank" rel="noopener">IMF &mdash; July 2026 World Economic Outlook Update</a></li>
+      <li><a href="https://medium.com/@svnkrmkr/ai-bubble-2026-is-it-real-capex-fed-warnings-gpu-lifespans-b5db2178d350" target="_blank" rel="noopener">Medium &mdash; AI Bubble 2026: Is It Real? Capex, Fed Warnings &amp; GPU Lifespans</a></li>
+      <li><a href="https://www.cnbc.com/2026/08/26/jensen-huang-defends-nvidias-growing-financial-support-for-ai-ecosystem-says-the-risk-is-low-.html" target="_blank" rel="noopener">CNBC &mdash; Jensen Huang defends Nvidia's growing financial support for AI ecosystem, says "the risk is low"</a></li>
+      <li><a href="https://www.noahpinion.blog/p/should-we-worry-about-ais-circular" target="_blank" rel="noopener">Noahpinion (Noah Smith) &mdash; Should we worry about AI's circular deals?</a></li>
+      <li><a href="https://www.monitordaily.com/article/technology-vendor-finance-20-years-maturation/" target="_blank" rel="noopener">MonitorDaily &mdash; Technology Vendor Finance: 20 Years of Maturation</a></li>
+      <li><a href="https://www.technostatecraft.com/p/cisco-nvidia-and-the-economics-of" target="_blank" rel="noopener">Technostatecraft &mdash; Cisco, Nvidia, and the Economics of Tech Bubbles</a></li>
+      <li><a href="https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000052/nvda-20260426.htm" target="_blank" rel="noopener">SEC EDGAR &mdash; NVIDIA Corp Form 10-Q, FY2026 Q1</a></li>
+      <li><a href="https://stockanalysis.com/stocks/nvda/financials/balance-sheet/" target="_blank" rel="noopener">StockAnalysis.com &mdash; NVIDIA (NVDA) Balance Sheet</a></li>
+      <li><a href="https://www.idc.com/resource-center/blog/circular-financing-has-muddied-the-ai-story-watch-the-application-layer-instead/" target="_blank" rel="noopener">IDC &mdash; Do AI Markets Face a Circular Financing Problem?</a></li>
+      <li><a href="https://www.bloomberg.com/news/articles/2026-08-13/openai-s-revenue-run-rate-tops-40-billion-ahead-of-ipo" target="_blank" rel="noopener">Bloomberg &mdash; OpenAI's Revenue Run Rate Tops $40 Billion Ahead of IPO</a></li>
+      <li><a href="https://mlq.ai/news/leaked-openai-financials-reveal-21b-operating-loss-on-13b-revenue-in-2025/" target="_blank" rel="noopener">MLQ News &mdash; Leaked OpenAI Financials Reveal $21B Operating Loss on $13B Revenue in 2025</a></li>
+      <li><a href="https://www.cnbc.com/2026/08/14/nvidia-discloses-21-billion-stake-in-spacex-at-end-of-second-quarter.html" target="_blank" rel="noopener">CNBC &mdash; Nvidia discloses $21 billion stake in SpaceX at end of second quarter</a></li>
+      <li><a href="https://finance.yahoo.com/news/moody-flags-662-billion-risk-081000616.html" target="_blank" rel="noopener">Yahoo Finance / Moody's Ratings &mdash; Moody's flags $662 billion risk at the heart of the data center build-out</a></li>
+      <li><a href="https://www.indexbox.io/blog/nvidia-nearly-doubles-coreweave-stake-to-over-47-million-shares-in-q1-2026/" target="_blank" rel="noopener">IndexBox &mdash; Nvidia Nearly Doubles CoreWeave Stake to Over 47 Million Shares in Q1 2026</a></li>
+      <li><a href="https://www.cnbc.com/2025/11/11/big-short-investor-michael-burry-accuses-ai-hyperscalers-of-artificially-boosting-earnings.html" target="_blank" rel="noopener">CNBC &mdash; 'Big Short' investor Michael Burry accuses AI hyperscalers of artificially boosting earnings</a></li>
+      <li><a href="https://www.digitalcitizen.life/nvidia-a100-h100-and-b200-rental-prices-rise-as-ai-demand-stays-strong/" target="_blank" rel="noopener">Digital Citizen &mdash; NVIDIA A100, H100 and B200 Rental Prices Rise as AI Demand Stays Strong</a> (includes Intrator's A100-to-2029 contracting comment)</li>
+      <li><a href="https://www.thundercompute.com/blog/nvidia-a100-pricing" target="_blank" rel="noopener">Thunder Compute &mdash; NVIDIA A100 Pricing, August 2026</a></li>
+      <li><a href="https://www.silicondata.com/products/silicon-index/a100" target="_blank" rel="noopener">Silicon Data &mdash; A100 Rental Price Index</a></li>
+      <li><a href="https://www.marketingaiinstitute.com/blog/mit-study-ai-pilots" target="_blank" rel="noopener">Marketing AI Institute &mdash; That Viral MIT Study Claiming 95% of AI Pilots Fail? Don't Believe the Hype</a> (methodology critique)</li>
+      <li><a href="https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2027/default.aspx" target="_blank" rel="noopener">NVIDIA &mdash; Financial Results for Second Quarter Fiscal 2027</a> ($96.2B revenue, $89.0B Data Center)</li>
+      <li><a href="https://www.cnbc.com/2026/07/29/microsoft-msft-q4-earnings-report-2026.html" target="_blank" rel="noopener">CNBC &mdash; Microsoft Q4 FY2026 earnings</a> (Azure +43%, $100B annualized)</li>
+      <li><a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html" target="_blank" rel="noopener">CNBC &mdash; Microsoft calls for $190 billion in 2026 capital spending on soaring memory prices</a></li>
+      <li><a href="https://www.sec.gov/Archives/edgar/data/0001769628/000176962826000366/crwv-20260630.htm" target="_blank" rel="noopener">SEC EDGAR &mdash; CoreWeave Form 10-Q, quarter ended 2026-06-30</a> (customer concentration disclosure)</li>
+      <li><a href="https://www.sec.gov/Archives/edgar/data/0000002488/000000248826000076/amd-20260328.htm" target="_blank" rel="noopener">SEC EDGAR &mdash; AMD Form 10-Q, quarter ended 2026-03-28</a> (OpenAI warrant terms; none vested)</li>
+      <li><a href="https://finance.yahoo.com/technology/ai/articles/us-probes-apex-logistics-over-alleged-nvidia-ai-chip-smuggling-035417401.html" target="_blank" rel="noopener">Bloomberg &mdash; US Probes Apex Logistics Over Alleged Nvidia AI Chip Smuggling</a></li>
+      <li><a href="https://247wallst.com/investing/2026/08/31/leading-economist-warns-chip-tariffs-could-make-the-ai-buildout-more-expensive/" target="_blank" rel="noopener">24/7 Wall St. &mdash; Leading Economist Warns Chip Tariffs Could Make the AI Buildout More Expensive</a></li>
+      <li><a href="https://www.barrons.com/articles/micron-stock-price-cxmt-memory-chip-d2b135a2" target="_blank" rel="noopener">Barron's &mdash; Micron Stock and Its Big Memory-Chip Threat From China (CXMT)</a></li>
+    </ul>
+  </section>
+
+  <div class="disclaimer">
+    This report is a research briefing compiled from publicly available news and analysis sources, current as of 2026-09-01. Content marked FACT is a reported figure. Content marked VIEW is third-party or attributed opinion, or the analytical judgement of this report where stated as such &mdash; notably in Section 2, where the report takes a position on the depreciation debate rather than leaving it open. This is not investment advice.
+    <br><br>
+    <strong>Verification status is mixed and readers should treat the two tiers differently.</strong> Figures <em>checked against primary or near-primary sources</em> include: company financials for NVDA, MSFT, ORCL and CRWV (SEC EDGAR company facts and market data); CoreWeave's customer-concentration percentages (10-Q disclosure); the AMD&ndash;OpenAI warrant vesting terms and unvested status (AMD 10-Q); the $969B / $662B lease commitments (Moody's Ratings, Feb 2026); Nvidia's CoreWeave and SpaceX stakes (13G/A and Q2 FY2027 disclosure); Nvidia's Q2 FY2027 results; OpenAI's $40B run-rate (Bloomberg, 2026-08-13); and the quarterly EPS-surprise figures in Section 8. Figures <em>reported by cited sources but NOT independently verified here</em> include: Burry's ~$176B depreciation estimate and ~2&ndash;3 year useful-life assumption (a third-party projection, not a filed figure); the &gt;$120B off-balance-sheet, &gt;$200B private-credit, and Morgan Stanley $800B projection in Section 3; the Stargate deployment figures; OpenAI's individual commitment amounts, which are press-reported rather than filed; the A100 secondary-market pricing in Section 2; and the Cisco-era historicals in Section 7. Where sources disagree, ranges are shown rather than a single point estimate.
+    <br><br>
+    The sensitivity table in Section 8 is explicitly labelled by confidence per row, including one row marked not derivable from public disclosure; it is a stress test, not a forecast. Per AI Berkshire research standards, any figure in the second tier should be cross-verified against primary sources before being relied upon for investment decisions.
+  </div>
+
+  <footer class="report-footer">
+    AI Berkshire &middot; Value Investing Research &middot; 2026-09-01
+  </footer>
+
+</div>
+</body>
+</html>
