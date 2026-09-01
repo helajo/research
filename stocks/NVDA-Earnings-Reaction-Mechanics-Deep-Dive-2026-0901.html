@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NVDA: The Aug 26 Print, Setup Through Reaction</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #5b6472; --border: #e2e5ea;
+    --card: #f7f8fa; --accent: #2563eb; --beat: #16a34a; --miss: #dc2626;
+    --cn-bg: #f0f4ff; --cn-border: #c7d5fb; --nvda: #2563eb; --soxx: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 40px 24px 80px;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: 4px; }
+  h2 { font-size: 1.22rem; margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+  .meta { color: var(--muted); font-size: 0.85rem; }
+  .cn {
+    background: var(--cn-bg); border: 1px solid var(--cn-border); border-radius: 8px;
+    padding: 14px 18px; margin: 14px 0 24px; font-size: 0.92rem; color: #2a3550;
+  }
+  .cn::before {
+    content: "中文摘要"; display: block; font-weight: 600; font-size: 0.78rem;
+    color: var(--accent); margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .callout {
+    background: var(--card); border-left: 3px solid var(--accent); border-radius: 6px;
+    padding: 14px 18px; margin: 16px 0; font-size: 0.95rem;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 0.87rem; margin: 14px 0; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: 0.74rem; text-transform: uppercase; }
+  .metrics { display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0; }
+  .metric { background: var(--card); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; flex: 1; min-width: 130px; }
+  .metric .v { font-weight: 700; font-size: 1.05rem; }
+  .metric .l { color: var(--muted); font-size: 0.72rem; margin-top: 2px; }
+  .beat { color: var(--beat); }
+  .miss { color: var(--miss); }
+  .sources { font-size: 0.8rem; color: var(--muted); }
+  figure { margin: 20px 0; padding: 20px 18px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; }
+  figcaption { margin-top: 10px; font-size: 0.84rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>NVDA: The Aug 26 Print, Setup Through Reaction</h1>
+<div class="subtitle">A clean beat on every line and a t0 reaction that extended instead of fading &mdash; then gave back more than half of that gain the very next session, mostly on a broad chip-sector selloff rather than a reversal of sentiment on the print itself. By the next trading day after that, the stock had steadied comfortably above both the pre-print close and its prior peak.</div>
+<div class="meta">Earnings date 2026-08-26 (AMC) &nbsp;|&nbsp; t0: 2026-08-27, t+1: 2026-08-28, t+2: 2026-08-31, all closed &nbsp;|&nbsp; Next print: 2026-11-17</div>
+
+<div class="cn">
+英伟达8月26日盘后公布财报：营收962亿美元、每股收益2.22美元，均超预期（每股收益超预期6.16%），第三季度指引1080亿美元同样超过市场预期的1042亿美元，环比增长12.3%，是加速而非减速信号。次日（8月27日，t0）反应剧烈：跳空高开6.16%，盘中不仅未回落反而进一步走高，收盘上涨8.74%，创下近期新高，完全抹平了财报前两周7.5%的跌幅。但第三日（8月28日，t+1）大幅回落4.57%，其中大部分（板块同日下跌3.20%）是半导体板块普跌所致，并非市场对财报本身改变看法。两个交易日累计，英伟达较财报前收盘价仍上涨3.76%——一个真实、正面的净反应，但幅度远小于财报次日单看时的印象。这次的走势与5月那次财报仍然形成对比——当时同样干净超预期，但股价当日即下跌，此后两周持续下跌至-8.11%；这次至少在两个交易日后仍守住了正面反应。
+</div>
+
+<h2 id="setup">The Setup Going In</h2>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-6.2%</div><div class="l">Pullback, Aug 13 peak to Aug 26 close (pre-print)</div></div>
+  <div class="metric"><div class="v">$2.09</div><div class="l">Consensus EPS estimate</div></div>
+  <div class="metric"><div class="v">3.5&ndash;5.5%</div><div class="l">NVDA's beat range, prior 4 quarters</div></div>
+</div>
+<p>NVDA walked into this print already down, not up. The stock ran from a recent peak of $225.30 on Aug 13 to a low of $208.48 on Aug 24, then drifted to $209.66 at the Aug 26 close (the last print before the report) &mdash; still 6.2% off the peak. That pullback was layered on top of a broader chip-sector selloff (SOXX fell roughly 5% on Aug 18 and another 2.7% on Aug 24). There was no "priced-for-perfection" run-up to unwind here, and no cushion of recent gains either.</p>
+<p>Consensus sat at $2.09 EPS. NVDA had beaten every quarter for years, and over the four quarters immediately before this one the beat had settled into a tight 3.5&ndash;5.5% range &mdash; well down from the double-digit beats of the 2023&ndash;24 AI-boom peak. With a beat rate that close to automatic, the real question wasn't "will it beat," it was whether the beat stayed in that recent range (confirmation, not news) and what guidance said about the quarter after this one.</p>
+<figure>
+<svg viewBox="0 0 760 260" role="img" aria-label="Bar chart of NVIDIA EPS surprise percentage across ten quarters from May 2024 to August 2026. Values range from 3.46 to 9.74 percent. The four quarters before this print, from August 2025 to May 2026, sat in a tight 3.5 to 5.5 percent range, shaded. The August 2026 print at 6.16 percent is the highest in five quarters but below the 8.02 and 8.52 percent readings of 2025 and 2024.">
+  <line x1="54" y1="216.0" x2="742" y2="216.0" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="219.5" text-anchor="end" font-size="9" fill="var(--muted)">0%</text>
+  <line x1="54" y1="182.9" x2="742" y2="182.9" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="186.4" text-anchor="end" font-size="9" fill="var(--muted)">2%</text>
+  <line x1="54" y1="149.8" x2="742" y2="149.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="153.3" text-anchor="end" font-size="9" fill="var(--muted)">4%</text>
+  <line x1="54" y1="116.7" x2="742" y2="116.7" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="120.2" text-anchor="end" font-size="9" fill="var(--muted)">6%</text>
+  <line x1="54" y1="83.6" x2="742" y2="83.6" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="87.1" text-anchor="end" font-size="9" fill="var(--muted)">8%</text>
+  <line x1="54" y1="50.5" x2="742" y2="50.5" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="54.0" text-anchor="end" font-size="9" fill="var(--muted)">10%</text>
+  <rect x="414.2" y="116.7" width="273.3" height="49.6" fill="var(--nvda)" fill-opacity="0.10"/>
+  <text x="550.9" y="109.7" text-anchor="middle" font-size="9.5" fill="var(--nvda)" font-weight="600">the tight stretch: 4 quarters, 3.5&#8211;5.5%</text>
+  <rect x="37.0" y="54.8" width="34" height="161.2" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="54.0" y="49.8" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">9.74</text>
+  <rect x="113.4" y="122.4" width="34" height="93.6" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="130.4" y="117.4" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">5.66</text>
+  <rect x="189.9" y="75.0" width="34" height="141.0" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="206.9" y="70.0" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">8.52</text>
+  <rect x="266.3" y="129.1" width="34" height="86.9" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="283.3" y="124.1" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">5.25</text>
+  <rect x="342.8" y="83.3" width="34" height="132.7" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="359.8" y="78.3" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">8.02</text>
+  <rect x="419.2" y="148.2" width="34" height="67.8" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="436.2" y="143.2" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">4.10</text>
+  <rect x="495.7" y="158.8" width="34" height="57.2" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="512.7" y="153.8" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">3.46</text>
+  <rect x="572.1" y="128.0" width="34" height="88.0" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="589.1" y="123.0" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">5.32</text>
+  <rect x="648.6" y="124.3" width="34" height="91.7" rx="3" fill="var(--muted)" fill-opacity="0.55"/>
+  <text x="665.6" y="119.3" text-anchor="middle" font-size="9" fill="var(--muted)" font-weight="600">5.54</text>
+  <rect x="725.0" y="114.1" width="34" height="101.9" rx="3" fill="var(--beat)" fill-opacity="1"/>
+  <text x="742.0" y="109.1" text-anchor="middle" font-size="9" fill="var(--beat)" font-weight="700">6.16</text>
+  <text x="54" y="20" font-size="10.5" fill="var(--muted)">how much NVDA beat consensus EPS by, each quarter</text>
+  <text x="54.0" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">May '24</text>
+  <text x="130.4" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Aug '24</text>
+  <text x="206.9" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Nov '24</text>
+  <text x="283.3" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Feb '25</text>
+  <text x="359.8" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">May '25</text>
+  <text x="436.2" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Aug '25</text>
+  <text x="512.7" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Nov '25</text>
+  <text x="589.1" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">Feb '26</text>
+  <text x="665.6" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">May '26</text>
+  <text x="742.0" y="232.0" text-anchor="middle" font-size="8.5" fill="var(--fg)" font-weight="700">Aug '26</text>
+  </svg>
+<figcaption>NVDA's EPS beat by quarter. The shaded stretch is the tight four-quarter range going into this print. Worth noting honestly: the 6.16% this quarter is the biggest beat in five quarters and above that recent range, but it is <em>not</em> unprecedented &mdash; 8.02% (May 2025) and 8.52% (Nov 2024) were both larger.</figcaption>
+</figure>
+<div class="callout"><strong>The base rate this print was tested against:</strong> NVDA's prior print (May 20, 2026) beat cleanly by 5.54% &mdash; squarely inside the usual band &mdash; and the stock still closed down 1.90% that day, then kept sliding to <strong>-8.11% by ten trading days out</strong>, even though the sector itself was roughly flat-to-up that same session. A clean beat had not reliably meant a positive reaction recently. As the next section shows, this print broke that pattern.</div>
+
+<h2 id="results">The Results</h2>
+<div class="metrics">
+  <div class="metric"><div class="v beat">$2.22</div><div class="l">Reported EPS (vs. $2.09 est.)</div></div>
+  <div class="metric"><div class="v beat">+6.16%</div><div class="l">EPS surprise</div></div>
+  <div class="metric"><div class="v beat">$96.2B</div><div class="l">Revenue (vs. ~$92&ndash;93.5B est.)</div></div>
+  <div class="metric"><div class="v beat">$108B</div><div class="l">Q3 guidance (vs. $104.2B est.)</div></div>
+</div>
+<p>A beat on every line the market was watching. EPS came in at $2.22 against $2.09 consensus, a <strong>6.16% surprise</strong> &mdash; the largest beat in five quarters and above the tight 3.5&ndash;5.5% range of the prior four, though not beyond anything NVDA had printed before (see the beat-history chart above). Revenue was $96.2B against roughly $92&ndash;93.5B consensus (data-center revenue $89B vs. $85.7B expected). Guidance for Q3 came in at $108B versus $104.2B expected &mdash; a real beat on the forward number too, and a sequential acceleration (+12.3% QoQ from this quarter's $96.2B), not the deceleration signal that has punished other names in this project's coverage this earnings season.</p>
+<div class="callout">This is precisely the test the base-rate caution above was set up to check: last time, a clean beat inside the usual band still produced a losing two weeks because guidance and margin tone disappointed. This time the beat came in above that recent range <em>and</em> guidance beat too. Both of the ingredients that were missing in May were present this time.</div>
+<p style="font-size:0.92rem;">Quick note on GAAP vs. non-GAAP: GAAP diluted EPS was actually <em>higher</em> this quarter, at <strong>$2.46</strong>, versus the <strong>$2.22</strong> non-GAAP figure everyone is quoting (and the one consensus is measured against). The gap is almost entirely a <strong>$7.77B unrealized gain on NVIDIA's equity investment holdings</strong> that flows into GAAP net income but gets excluded from non-GAAP as non-operating. That's the less common direction for a GAAP/non-GAAP gap to run &mdash; usually a one-time <em>charge</em> depresses GAAP below adjusted; here a one-time investment <em>gain</em> inflates GAAP above it. The $2.22 non-GAAP number is the more honest read of the actual chip business, and it's also the more conservative of the two this quarter.</p>
+<figure>
+<svg viewBox="0 0 760 250" role="img" aria-label="Bridge chart showing NVIDIA GAAP diluted EPS of 2.46 dollars stepping down by 26 cents from excluded equity investment gains and up 2 cents from other adjustments, arriving at non-GAAP EPS of 2.22 dollars.">
+  <line x1="54" y1="190.4" x2="742" y2="190.4" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="193.9" text-anchor="end" font-size="9" fill="var(--muted)">$2.1</text>
+  <line x1="54" y1="159.1" x2="742" y2="159.1" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="162.6" text-anchor="end" font-size="9" fill="var(--muted)">$2.2</text>
+  <line x1="54" y1="127.8" x2="742" y2="127.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="131.3" text-anchor="end" font-size="9" fill="var(--muted)">$2.3</text>
+  <line x1="54" y1="96.5" x2="742" y2="96.5" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="100.0" text-anchor="end" font-size="9" fill="var(--muted)">$2.4</text>
+  <line x1="54" y1="65.3" x2="742" y2="65.3" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="68.8" text-anchor="end" font-size="9" fill="var(--muted)">$2.5</text>
+  <rect x="76.0" y="77.8" width="96" height="128.2" rx="4" fill="var(--nvda)"/>
+  <text x="124" y="69.8" text-anchor="middle" font-size="13" fill="var(--nvda)" font-weight="700">$2.46</text>
+  <text x="124" y="222" text-anchor="middle" font-size="10" fill="var(--fg)" font-weight="600">GAAP EPS</text>
+  <text x="124" y="235" text-anchor="middle" font-size="8.5" fill="var(--muted)">as legally reported</text>
+  <rect x="256.0" y="77.8" width="96" height="81.3" rx="4" fill="var(--miss)" fill-opacity="0.75"/>
+  <text x="304" y="118.4" text-anchor="middle" font-size="12" fill="var(--bg)" font-weight="700">&#8722;$0.26</text>
+  <text x="304" y="222" text-anchor="middle" font-size="10" fill="var(--miss)" font-weight="600">strip out investment gains</text>
+  <text x="304" y="235" text-anchor="middle" font-size="8.5" fill="var(--muted)">$7.77B paper gain, not chip sales</text>
+  <rect x="436.0" y="152.8" width="96" height="6.3" rx="2" fill="var(--soxx)" fill-opacity="0.8"/>
+  <text x="484" y="174.1" text-anchor="middle" font-size="11" fill="var(--soxx)" font-weight="700">+$0.02</text>
+  <text x="484" y="222" text-anchor="middle" font-size="10" fill="var(--soxx)" font-weight="600">other adjustments</text>
+  <rect x="606.0" y="152.8" width="96" height="53.2" rx="4" fill="var(--beat)"/>
+  <text x="654" y="144.8" text-anchor="middle" font-size="13" fill="var(--beat)" font-weight="700">$2.22</text>
+  <text x="654" y="222" text-anchor="middle" font-size="10" fill="var(--fg)" font-weight="600">non-GAAP EPS</text>
+  <text x="654" y="235" text-anchor="middle" font-size="8.5" fill="var(--muted)">what consensus is measured against</text>
+  <line x1="172.0" y1="77.8" x2="256.0" y2="77.8" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="352.0" y1="159.1" x2="436.0" y2="159.1" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="532.0" y1="152.8" x2="606.0" y2="152.8" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="54" y="20" font-size="10.5" fill="var(--muted)">why the two headline EPS numbers differ &#8212; and why the lower one is the honest read</text>
+  </svg>
+<figcaption>The $0.24 gap between the two headline EPS figures is almost entirely one item: a large paper gain on investments NVIDIA holds, which flows into GAAP profit but has nothing to do with selling chips.</figcaption>
+</figure>
+
+<h2 id="behind-numbers">Behind the Numbers: What Management Said</h2>
+<p>Four things from the earnings call itself explain <em>why</em> the beat and the guidance were so strong &mdash; each one in plain terms.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">1. NVIDIA can't build chips fast enough &mdash; it's not a demand problem</h3>
+<p>Most companies worry about whether customers will buy enough of what they make. NVIDIA's problem right now is the opposite: management said its supply chain can support roughly <strong>70% growth</strong>, but <strong>customer demand is higher than that</strong>. In plain terms: NVIDIA is sold out. The $108B guidance for next quarter isn't "as much as customers want" &mdash; it's "as much as NVIDIA can currently produce." That matters because it means the ceiling on near-term growth is a factory/supply-chain limit, not a sign that AI spending is cooling off.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">2. Each new chip generation is worth more money per data center, not just more units</h3>
+<div class="metrics">
+  <div class="metric"><div class="v">$18B</div><div class="l">Revenue per gigawatt &mdash; Hopper (prior generation)</div></div>
+  <div class="metric"><div class="v">$25B</div><div class="l">Revenue per gigawatt &mdash; Blackwell (current)</div></div>
+  <div class="metric"><div class="v beat">$40B</div><div class="l">Revenue per gigawatt &mdash; Vera Rubin (next, shipping Q3)</div></div>
+</div>
+<figure>
+<svg viewBox="0 0 760 240" role="img" aria-label="Bar chart of NVIDIA revenue per gigawatt of data center capacity by chip generation: 18 billion dollars for Hopper, 25 billion for Blackwell, and 40 billion for Vera Rubin, more than doubling across three generations.">
+  <line x1="54" y1="184.0" x2="742" y2="184.0" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="187.5" text-anchor="end" font-size="9" fill="var(--muted)">$0B</text>
+  <line x1="54" y1="152.7" x2="742" y2="152.7" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="156.2" text-anchor="end" font-size="9" fill="var(--muted)">$10B</text>
+  <line x1="54" y1="121.4" x2="742" y2="121.4" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="124.9" text-anchor="end" font-size="9" fill="var(--muted)">$20B</text>
+  <line x1="54" y1="90.1" x2="742" y2="90.1" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="93.6" text-anchor="end" font-size="9" fill="var(--muted)">$30B</text>
+  <line x1="54" y1="58.8" x2="742" y2="58.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="47" y="62.3" text-anchor="end" font-size="9" fill="var(--muted)">$40B</text>
+  <rect x="118.8" y="127.7" width="118" height="56.3" rx="5" fill="var(--muted)" fill-opacity="0.85"/>
+  <text x="177.8" y="118.7" text-anchor="middle" font-size="15" fill="var(--muted)" font-weight="700">$18B</text>
+  <text x="177.8" y="201.0" text-anchor="middle" font-size="11" fill="var(--fg)" font-weight="600">Hopper</text>
+  <text x="177.8" y="215.0" text-anchor="middle" font-size="9" fill="var(--muted)">previous generation</text>
+  <rect x="339.0" y="105.7" width="118" height="78.3" rx="5" fill="var(--nvda)" fill-opacity="0.85"/>
+  <text x="398.0" y="96.7" text-anchor="middle" font-size="15" fill="var(--nvda)" font-weight="700">$25B</text>
+  <text x="398.0" y="201.0" text-anchor="middle" font-size="11" fill="var(--fg)" font-weight="600">Blackwell</text>
+  <text x="398.0" y="215.0" text-anchor="middle" font-size="9" fill="var(--muted)">shipping now</text>
+  <rect x="559.2" y="58.8" width="118" height="125.2" rx="5" fill="var(--beat)" fill-opacity="0.85"/>
+  <text x="618.2" y="49.8" text-anchor="middle" font-size="15" fill="var(--beat)" font-weight="700">$40B</text>
+  <text x="618.2" y="201.0" text-anchor="middle" font-size="11" fill="var(--fg)" font-weight="600">Vera Rubin</text>
+  <text x="618.2" y="215.0" text-anchor="middle" font-size="9" fill="var(--muted)">starts this quarter</text>
+  <text x="398.0" y="26.0" text-anchor="middle" font-size="10.5" fill="var(--muted)">revenue NVIDIA earns per gigawatt of data-center capacity built</text>
+  <line x1="244.8" y1="103.7" x2="551.2" y2="103.7" stroke="var(--beat)" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="398.0" y="98.7" text-anchor="middle" font-size="10" fill="var(--beat)" font-weight="600">same physical build, 2.2x the revenue</text>
+  </svg>
+<figcaption>Each generation earns more from the same amount of physical data-center capacity.</figcaption>
+</figure>
+<p>Think of a "gigawatt" as roughly one large data center's worth of power capacity. NVIDIA disclosed how much revenue it earns for every gigawatt of data center built with its chips, across three chip generations: about $18B with the old generation (Hopper), $25B with the current one (Blackwell), and an estimated $40B with the next one (Vera Rubin, starting to ship this quarter). Each new generation isn't just selling more chips into the same-size data center &mdash; it's earning more dollars for the exact same amount of physical infrastructure. That's a business getting more valuable per customer, not just bigger.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">3. The growth is spreading beyond the handful of giant customers</h3>
+<div class="metrics">
+  <div class="metric"><div class="v">+18%</div><div class="l">Total data-center revenue, QoQ</div></div>
+  <div class="metric"><div class="v">+13%</div><div class="l">Revenue from the largest cloud customers, QoQ</div></div>
+  <div class="metric"><div class="v beat">8GW</div><div class="l">Smaller "neocloud" partners' capacity by year-end (from ~3GW a year ago)</div></div>
+</div>
+<p>Total data-center revenue grew 18% from the prior quarter, but revenue from NVIDIA's largest cloud customers (Microsoft, Google, Amazon, Meta and similar) only grew 13%. That gap means the <em>rest</em> of NVIDIA's customer base &mdash; smaller specialized AI-compute providers, enterprises, and governments &mdash; is growing even faster than the giants. One concrete data point: smaller partners building data centers on NVIDIA's designs are on track to nearly triple their capacity this year (3GW to 8GW). This is a healthier growth pattern than depending on 3-4 mega-customers, since no single customer pulling back would hurt as much.</p>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">4. China is currently worth $0 to NVIDIA &mdash; and the reason is more interesting than "US export ban"</h3>
+<p>Two chip names matter here. <strong>H20</strong> was a deliberately watered-down chip NVIDIA built specifically to comply with earlier US export rules &mdash; legal to sell to China, but weaker than NVIDIA's mainstream products. <strong>H200</strong> is different: it's NVIDIA's actual full-power flagship chip (an upgraded H100, with more and faster memory), sold worldwide, not a China-specific cut-down variant.</p>
+<p>The timeline: in April 2025, the US government blocked H20 exports to China entirely, costing NVIDIA a $4.5&ndash;5.5B charge on unsellable inventory. Then in <strong>December 2025, the US reversed course</strong> &mdash; it began allowing the full-power H200 (not just the watered-down H20) to ship to approved Chinese customers, on the condition that <strong>25% of that China revenue goes to the US government</strong>. NVIDIA actually received its export license under this arrangement in February 2026. So by this quarter, <strong>the US side of the door was open.</strong></p>
+<p>The surprise is who closed it from the other side: <strong>China's own government</strong>. Reporting describes Beijing telling Chinese tech companies to pause their H200 orders &mdash; even though the US now permits the sale &mdash; reportedly to protect the case for China's own domestic chipmakers (like Huawei) and to keep negotiating leverage in the broader US-China tech relationship, rather than accept access on Washington's terms (including that 25% cut). The result: NVIDIA sold <strong>literally nothing</strong> to China this quarter (down from a token ~$60M the quarter before, under an earlier limited license). Management said this cost roughly <strong>$8B of orders</strong> this quarter alone, against a Chinese AI-chip market it estimates at around <strong>$50B</strong> a year.</p>
+<div class="callout">The important shift: this is no longer a simple "waiting on US policy" story. It's a <strong>two-sided unlock</strong> &mdash; the US has already opened its side (with a revenue-share tax attached), but China's own government is currently the one keeping the door shut on its companies. This quarter's strong beat happened with none of that resolved, so today's numbers don't depend on either side changing its mind. But it also means the eventual catalyst, if it comes, requires both Washington <em>and</em> Beijing to move, not just one.</div>
+<div class="cn">这里涉及两款芯片名称。H20是英伟达专门为符合早期美国出口管制而"降规格"打造的芯片——合法卖给中国，但性能弱于英伟达的主流产品。H200则不同：它是英伟达真正的旗舰满血芯片（H100的升级版，内存更大更快），面向全球销售，并非针对中国的阉割版本。时间线是：2025年4月，美国政府全面禁止H20出口中国，导致英伟达产生45-55亿美元的库存减值损失；随后2025年12月，美国政策反转——开始允许满血版H200（而非阉割版H20）在满足条件下出口给经批准的中国客户，条件是中国销售额的25%需上缴美国政府；英伟达已于2026年2月依此安排取得出口许可。也就是说，截至本季度，美国这一侧的大门已经打开。真正的意外在于：是中国自己的政府从另一侧把门关上了。据报道，北京要求中国科技企业暂停H200订单——即便美国已经批准销售——据信部分原因是为保护本土芯片厂商（如华为）的发展空间，以及在中美科技博弈中保留谈判筹码，而非在华盛顿设定的条件（包括那25%的抽成）下被动接受准入。结果是英伟达本季度对中国的销售额实际上为零（上一季度在早期有限许可下也仅约6000万美元）。管理层表示仅本季度就因此损失约80亿美元订单，而中国AI芯片市场规模预计约500亿美元。重要的转变在于：这已不再是简单的"等待美国政策"的故事，而是一个"双向解锁"——美国已经打开了自己这一侧的门（并附带25%的抽成），但目前是中国政府自己把本国企业挡在门外。这次强劲的业绩在这两个问题都未解决的情况下取得，说明当前数字不依赖任何一方改变立场；但这也意味着，未来若要真正解锁这一机会，需要华盛顿和北京双方同时松动，而非仅靠一方。</div>
+<div class="callout">Put together, these four points explain why the beat and the raise both happened at once: NVIDIA is supply-constrained (not demand-constrained), each new chip generation earns more per data center, growth is broadening beyond the handful of giant cloud customers, and none of it currently includes China. That's a meaningfully more resilient growth story than "one big number beat expectations."</div>
+<div class="cn">财报电话会议透露的四点信息，用大白话解释了这次超预期和上调指引的原因。其一，英伟达目前不是"卖不出去"，而是"造不出来"——公司表示供应链最多能支撑约70%的增长，但客户需求比这更高，也就是说下季度1080亿美元的指引不是"客户想买多少"，而是"公司目前最多能生产多少"，这说明近期增长的天花板来自产能限制，而非AI支出降温。其二，每一代新芯片在同样规模的数据中心里能赚更多钱：旧一代（Hopper）每吉瓦发电能力对应约180亿美元收入，当前一代（Blackwell）约250亿美元，下一代（Vera Rubin，本季度开始出货）预计约400亿美元——不是简单地卖更多芯片，而是同样的基础设施规模能创造更多收入。其三，增长正在从少数几个巨头客户向外扩散：整体数据中心收入环比增长18%，但来自最大几家云计算客户的收入只增长13%，说明其余客户（较小的专业AI算力提供商、企业、政府）增长更快；一个具体数据是，使用英伟达设计方案的中小型合作伙伴的产能今年将从3吉瓦增至8吉瓦，接近三倍——依赖客户更分散，比只依赖三四个巨头更健康。其四，中国市场目前对英伟达贡献为零，且背后是美中双方各自的政策博弈，详见上文。综合来看，这四点解释了为何这次能同时实现超预期和上调指引：供应不足而非需求不足、每代芯片单位经济效益提升、客户基础从巨头向外扩散、且完全未计入中国市场——这是比"单一数字超预期"更具韧性的增长故事。</div>
+
+<h2 id="reaction">What the Tape Did</h2>
+<div class="metrics">
+  <div class="metric"><div class="v beat">+6.16%</div><div class="l">Gap (prior close &rarr; t0 open)</div></div>
+  <div class="metric"><div class="v beat">+2.42%</div><div class="l">Intraday continuation (open &rarr; close)</div></div>
+  <div class="metric"><div class="v beat">+8.74%</div><div class="l">t0 total, close-to-close</div></div>
+  <div class="metric"><div class="v">3.48x</div><div class="l">Multiple of baseline daily vol</div></div>
+</div>
+<p>The stock gapped up 6.16% at the open &mdash; almost exactly matching the 5.74% one-day move the options market had priced in that morning. What happened next is the real story: in May, a positive open (+0.63%) faded all session into a loss. This time the gap <em>extended</em>: NVDA added another 2.42% intraday, closing at $227.98, up <strong>8.74%</strong> on the day. That's 3.48x NVDA's own trailing ~90-session baseline daily volatility &mdash; a genuinely large move by the stock's own standards, and roughly 1.5x the size of what the options market had priced in (8.74% realized vs. 5.74% implied going in). The close also cleared NVDA's own Aug 13 pre-selloff peak ($225.30) &mdash; the entire two-week pullback was erased in one session, with room to spare.</p>
+
+<figure>
+<svg viewBox="0 0 780 260" role="img" aria-label="Sparkline of NVDA closing price from August 13 to August 31, 2026, falling from a peak of 225 dollars to a low of 208 dollars on August 24, surging to a new high of 228 dollars on August 27 following the earnings report, falling back to 218 dollars on August 28, then steadying near 221 dollars on August 31, with a dashed line marking the earnings print.">
+  <polyline points="20.0,72.2 81.7,73.0 143.3,73.9 205.0,103.5 266.7,115.8 328.3,119.8 390.0,131.7 451.7,166.8 513.3,141.1 575.0,160.2 636.7,57.2 698.3,115.8 760.0,97.7" fill="none" stroke="var(--nvda)" stroke-width="2.5"/>
+  <line x1="605.8" y1="44" x2="605.8" y2="180" stroke="var(--muted)" stroke-dasharray="4,3" stroke-opacity="0.6"/>
+  <circle cx="20.0" cy="72.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="81.7" cy="73.0" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="143.3" cy="73.9" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="205.0" cy="103.5" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="266.7" cy="115.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="328.3" cy="119.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="390.0" cy="131.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="451.7" cy="166.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="513.3" cy="141.1" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="575.0" cy="160.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="636.7" cy="57.2" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="698.3" cy="115.8" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="760.0" cy="97.7" r="2" fill="var(--muted)" fill-opacity="0.5"/>
+  <circle cx="20.0" cy="72.2" r="4.5" fill="var(--muted)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="20.0" y1="72.2" x2="20.0" y2="58.2" stroke="var(--muted)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="20.0" y="54.2" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-weight="600">$225</text>
+  <text x="20.0" y="66.2" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 13 &middot; prior peak</text>
+  <circle cx="451.7" cy="166.8" r="4.5" fill="var(--miss)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="451.7" y1="166.8" x2="451.7" y2="192.8" stroke="var(--miss)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="451.7" y="194.8" text-anchor="middle" font-size="10.5" fill="var(--miss)" font-weight="600">$208</text>
+  <text x="451.7" y="206.8" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 24 &middot; low, -7.5% off peak</text>
+  <circle cx="636.7" cy="57.2" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="636.7" y1="57.2" x2="636.7" y2="43.2" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="636.7" y="39.2" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$228</text>
+  <text x="636.7" y="51.2" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 27 &middot; +8.74% reaction, new high</text>
+  <circle cx="760.0" cy="97.7" r="4.5" fill="var(--beat)" stroke="var(--bg)" stroke-width="1.5"/>
+  <line x1="760.0" y1="97.7" x2="760.0" y2="123.7" stroke="var(--beat)" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="760.0" y="125.7" text-anchor="middle" font-size="10.5" fill="var(--beat)" font-weight="600">$221</text>
+  <text x="760.0" y="137.7" text-anchor="middle" font-size="9.5" fill="var(--muted)">Aug 31 &middot; steadying, +5.3% cumulative</text>
+</svg>
+<figcaption>NVDA closing price, Aug 13&ndash;31, 2026. The dashed line marks the Aug 26 print itself. Two weeks of pre-print pullback were erased and exceeded in the t0 reaction session (Aug 27), a chunk of that gain came back out the next day (Aug 28, not separately labeled here &mdash; see the t+1 discussion below), and by Aug 31 the stock had steadied around $220&ndash;221, still comfortably above both the pre-print close and the Aug 13 peak.</figcaption>
+</figure>
+
+<h3 style="font-size:1.02rem; margin-top:28px;">t+1 and t+2: a real fade, then steadying &mdash; mostly not about NVDA either way</h3>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-4.57%</div><div class="l">NVDA, Aug 28 (t+1, 1-day)</div></div>
+  <div class="metric"><div class="v miss">-3.20%</div><div class="l">SOXX, Aug 28 (1-day)</div></div>
+  <div class="metric"><div class="v beat">+1.49%</div><div class="l">NVDA, Aug 31 (t+2, 1-day)</div></div>
+  <div class="metric"><div class="v beat">+5.30%</div><div class="l">NVDA cumulative, pre-earnings close &rarr; Aug 31</div></div>
+</div>
+<p>The day after the reaction, NVDA gave back a large chunk of its gain: Aug 28 opened near the prior close ($227.33), pushed to a fresh intraday high ($229.26), then reversed hard to close at $217.55, down <strong>4.57%</strong> on the day. Against a two-week pullback that had just been fully erased in one session, that's a meaningful re-pricing. But the sector fell almost as hard the same day &mdash; SOXX was down 3.20% on Aug 28 &mdash; so only a small piece of NVDA's t+1 move (roughly 1.4 of the 4.57 points) looks NVDA-specific; most of it rode a broad chip-sector selloff that hit the same day, not a reversal of sentiment on the print itself.</p>
+<p>The next session (Aug 31, t+2) NVDA recovered some of that ground, closing at $220.78, up <strong>1.49%</strong> &mdash; and again this tracked the sector rather than diverging from it (SOXX was up a similar ~0.5% the same day). Cumulatively, from the pre-earnings close ($209.66) through Aug 31, NVDA is up <strong>+5.30%</strong> &mdash; a real, positive net reaction to the print, comfortably ahead of where it started, just a much more moderate and choppier path than the t0 close alone suggested.</p>
+<div class="callout">This is exactly the kind of thing a single day's close can hide, the same pattern this project has flagged before in other names: check the reaction more than one session out before concluding a beat "worked." Here, the print itself still reads as a genuine positive outcome (guidance beat, sequential acceleration, no fade traceable to the release), but the size of the win by t0 alone (+8.74%) overstated where the stock actually settled &mdash; two sessions later it was sitting at +3.76%, and a third session after that, +5.30%. Most of the day-to-day swings in between tracked the broader chip sector rather than reflecting a change of mind about NVDA specifically.</div>
+
+<h2 id="sector">NVDA-Specific, Not Just a Sector Rally (t0)</h2>
+<div class="metrics">
+  <div class="metric"><div class="v beat">+8.74%</div><div class="l">NVDA t0 reaction (Aug 27)</div></div>
+  <div class="metric"><div class="v beat">+1.95%</div><div class="l">SOXX (semis sector) same day</div></div>
+  <div class="metric"><div class="v beat">~+6.8%</div><div class="l">NVDA-specific component</div></div>
+</div>
+<figure>
+<svg viewBox="0 0 400 160" role="img" aria-label="Bar chart comparing NVDA's positive 8.74 percent reaction against SOXX's smaller positive 1.95 percent same-day move, illustrating that most of NVDA's gain was specific to its own print, not the broader semiconductor sector.">
+  <line x1="20" y1="120" x2="380" y2="120" stroke="currentColor" stroke-opacity="0.35"/>
+  <rect x="90" y="54.5" width="60" height="65.5" fill="var(--nvda)" rx="3"/>
+  <text x="120" y="46.5" text-anchor="middle" font-size="12" fill="var(--beat)">NVDA +8.74%</text>
+  <rect x="250" y="105.4" width="60" height="14.6" fill="var(--soxx)" rx="3"/>
+  <text x="280" y="97.4" text-anchor="middle" font-size="12" fill="var(--beat)">SOXX +1.95%</text>
+</svg>
+<figcaption>The sector was up too, but nowhere near enough to explain NVDA's move. Once the ~2% sector tailwind is backed out, roughly 6.8 of the 8.74 points came from inside NVDA's own release.</figcaption>
+</figure>
+<p>The semiconductor sector rallied alongside NVDA (SOXX +1.95%, likely partly a read-through from NVDA's own numbers, since NVDA is a large SOXX constituent), but that's not close to enough to explain an 8.74% single-stock move. This reads as a genuine, idiosyncratic re-rating on NVDA's own results and guidance, not a sector-wide risk-on day that happened to lift NVDA along with everything else.</p>
+
+<h2 id="volread">What Options Were Pricing Going In</h2>
+<p>This comes from eight consecutive nightly snapshots captured by the tracking pipeline &mdash; 2026-08-19 through the morning of 2026-08-26, a few hours before the after-close print itself. Each of the four readings below is a different question the options market was answering, so each gets its own plain-language explanation, its own chart, and an honest "how did it hold up" verdict.</p>
+<table>
+<tr><th>Captured</th><th>Spot</th><th>Implied move</th><th>vs. history</th><th>Front IV</th><th>Back IV</th><th>Spread</th><th>25&Delta; skew</th><th>P/C volume</th></tr>
+<tr><td>08-19</td><td>$219.19</td><td>6.24%</td><td>1.95x</td><td>50.2%</td><td>40.7%</td><td>9.5pp</td><td>&minus;0.043</td><td>0.29</td></tr>
+<tr><td>08-20</td><td>$217.59</td><td>6.38%</td><td>1.99x</td><td>54.0%</td><td>42.2%</td><td>11.8pp</td><td>&minus;0.036</td><td>0.56</td></tr>
+<tr><td>08-21</td><td>$216.41</td><td>6.22%</td><td>1.94x</td><td>53.5%</td><td>41.4%</td><td>12.1pp</td><td>&minus;0.021</td><td>0.65</td></tr>
+<tr><td>08-22</td><td>$214.72</td><td>6.11%</td><td>1.91x</td><td>56.2%</td><td>41.7%</td><td>14.5pp</td><td>&minus;0.023</td><td>0.66</td></tr>
+<tr><td>08-23</td><td>$214.72</td><td>6.11%</td><td>1.91x</td><td>60.6%</td><td>42.4%</td><td>18.2pp</td><td>&minus;0.024</td><td>0.66</td></tr>
+<tr><td>08-24</td><td>$209.87</td><td>5.98%</td><td>1.87x</td><td>61.9%</td><td>41.5%</td><td>20.4pp</td><td>+0.022</td><td>0.54</td></tr>
+<tr><td>08-25</td><td>$211.23</td><td>5.69%</td><td>1.78x</td><td>68.7%</td><td>42.4%</td><td>26.3pp</td><td>&minus;0.025</td><td>0.38</td></tr>
+<tr><td><strong>08-26</strong></td><td><strong>$210.99</strong></td><td><strong>5.74%</strong></td><td><strong>1.79x</strong></td><td><strong>77.7%</strong></td><td><strong>42.0%</strong></td><td><strong>35.7pp</strong></td><td><strong>&minus;0.009</strong></td><td><strong>0.59</strong></td></tr>
+</table>
+<p style="font-size:0.9rem;color:var(--muted);">The bolded final row was captured on the morning of the print itself (roughly 11:30am ET, about four and a half hours before the after-close release) &mdash; it is the last and most informed pre-print read, and it is the one the tracking pipeline uses as the basis for its implied-vs-realized comparison.</p>
+
+<h3 style="font-size:1.05rem; margin-top:34px;">Item 1 &mdash; The Bet: how big a move was priced in?</h3>
+<p><strong>What it measures, plainly.</strong> Options traders were effectively taking a position on how far the stock would move the day after the report &mdash; up or down, direction not specified. That expected size is the "implied move." A 5.74% implied move means the market was pricing in a swing of roughly that much in either direction.</p>
+<figure>
+<svg viewBox="0 0 760 250" role="img" aria-label="Line chart of NVIDIA implied one-day move across eight nightly snapshots from August 19 to 26, 2026, hovering between 5.7 and 6.4 percent, shown against two dashed reference lines: the actual next-day move of 8.74 percent well above it, and the expiry-window move of 3.76 percent well below it.">
+  <line x1="52" y1="176.8" x2="742" y2="176.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="180.3" text-anchor="end" font-size="9" fill="var(--muted)">4%</text>
+  <line x1="52" y1="149.6" x2="742" y2="149.6" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="153.1" text-anchor="end" font-size="9" fill="var(--muted)">5%</text>
+  <line x1="52" y1="122.4" x2="742" y2="122.4" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="125.9" text-anchor="end" font-size="9" fill="var(--muted)">6%</text>
+  <line x1="52" y1="95.2" x2="742" y2="95.2" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="98.8" text-anchor="end" font-size="9" fill="var(--muted)">7%</text>
+  <line x1="52" y1="68.1" x2="742" y2="68.1" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="71.6" text-anchor="end" font-size="9" fill="var(--muted)">8%</text>
+  <line x1="52" y1="40.9" x2="742" y2="40.9" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="44.4" text-anchor="end" font-size="9" fill="var(--muted)">9%</text>
+  <line x1="52" y1="47.9" x2="742" y2="47.9" stroke="var(--beat)" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="738" y="40.9" text-anchor="end" font-size="10.5" fill="var(--beat)" font-weight="600">what actually happened next day: +8.74%</text>
+  <line x1="52" y1="183.3" x2="742" y2="183.3" stroke="var(--soxx)" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="738" y="197.3" text-anchor="end" font-size="10.5" fill="var(--soxx)" font-weight="600">move by option expiry (Aug 28): +3.76%</text>
+  <polyline points="52.0,115.9 150.6,112.2 249.1,116.6 347.7,119.4 446.3,119.4 544.9,123.0 643.4,130.8 742.0,129.6" fill="none" stroke="var(--nvda)" stroke-width="2.5"/>
+  <circle cx="52.0" cy="115.9" r="2.6" fill="var(--nvda)"/>
+  <circle cx="150.6" cy="112.2" r="2.6" fill="var(--nvda)"/>
+  <circle cx="249.1" cy="116.6" r="2.6" fill="var(--nvda)"/>
+  <circle cx="347.7" cy="119.4" r="2.6" fill="var(--nvda)"/>
+  <circle cx="446.3" cy="119.4" r="2.6" fill="var(--nvda)"/>
+  <circle cx="544.9" cy="123.0" r="2.6" fill="var(--nvda)"/>
+  <circle cx="643.4" cy="130.8" r="2.6" fill="var(--nvda)"/>
+  <circle cx="742.0" cy="129.6" r="2.6" fill="var(--nvda)"/>
+  <text x="52.0" y="104.9" text-anchor="start" font-size="10" fill="var(--nvda)" font-weight="600">6.24%</text>
+  <text x="742.0" y="118.6" text-anchor="end" font-size="10" fill="var(--nvda)" font-weight="600">5.74%</text>
+  <text x="52" y="20" font-size="10.5" fill="var(--muted)">blue line = the size of move options were pricing in, each night</text>
+  <text x="52.0" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-19</text>
+  <text x="150.6" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-20</text>
+  <text x="249.1" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-21</text>
+  <text x="347.7" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-22</text>
+  <text x="446.3" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-23</text>
+  <text x="544.9" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-24</text>
+  <text x="643.4" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-25</text>
+  <text x="742.0" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--fg)" font-weight="600">08-26</text>
+  </svg>
+<figcaption>The blue line is what the options market expected. The two dashed lines are what actually happened &mdash; measured two different but equally legitimate ways.</figcaption>
+</figure>
+<p><strong>What happened.</strong> The expected move stayed in a narrow 5.7&ndash;6.4% band all week, drifting slightly down mid-week before ticking back up to <strong>5.74%</strong> on the morning of the print. Throughout, that was about 1.8&ndash;2.0x NVDA's own typical earnings-day move (3.2%) &mdash; so the market was consistently pricing this as a bigger-than-usual event, without ever getting dramatic about it.</p>
+<p><strong>How it held up &mdash; and why there are two answers.</strong> The stock jumped <strong>8.74%</strong> the next day. Against 5.74% priced in, that is a ratio of about <strong>1.52x</strong> &mdash; the options were too cheap, and anyone who bought volatility going in was rewarded. But measured the way this project's pipeline does it &mdash; all the way out to the expiry date of the option contract being quoted (Aug 28) rather than just the next day &mdash; the move was only <strong>+3.76%</strong>, a ratio of about <strong>0.66x</strong>, meaning the options were actually <em>too expensive</em>. Both numbers are correctly calculated; they answer different questions ("how did it react the next day" vs. "how did it do across the exact window the contract covered"). The entire difference is the Aug 28 pullback, which was mostly a sector-wide move rather than anything about NVDA's results.</p>
+<div class="callout">The practical lesson from Item 1: whether the options market "got it right" depends entirely on which day you check the scoreboard. A single day's close is not the whole verdict.</div>
+
+<h3 style="font-size:1.05rem; margin-top:34px;">Item 2 &mdash; The Premium: how much extra were people paying just because earnings were coming?</h3>
+<p><strong>What it measures, plainly.</strong> Compare two groups of options on the same stock: those expiring right after the earnings date ("front"), and those expiring later, well clear of it ("back"). Both carry a price tag reflecting expected movement (implied volatility). The back-month options price in ordinary, everyday movement. The front-month ones price in ordinary movement <em>plus</em> the earnings event. The gap between them is, in effect, the price of the earnings event by itself.</p>
+<figure>
+<svg viewBox="0 0 760 250" role="img" aria-label="Line chart comparing NVIDIA front-month implied volatility, which climbs steeply from 50 to 78 percent across eight nightly snapshots, against back-month implied volatility, which stays flat near 42 percent. The shaded gap between them widens from 9.5 to 35.7 percentage points.">
+  <line x1="52" y1="189.5" x2="742" y2="189.5" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="193.0" text-anchor="end" font-size="9" fill="var(--muted)">40%</text>
+  <line x1="52" y1="153.2" x2="742" y2="153.2" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="156.8" text-anchor="end" font-size="9" fill="var(--muted)">50%</text>
+  <line x1="52" y1="117.0" x2="742" y2="117.0" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="120.5" text-anchor="end" font-size="9" fill="var(--muted)">60%</text>
+  <line x1="52" y1="80.8" x2="742" y2="80.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="84.2" text-anchor="end" font-size="9" fill="var(--muted)">70%</text>
+  <line x1="52" y1="44.5" x2="742" y2="44.5" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="48.0" text-anchor="end" font-size="9" fill="var(--muted)">80%</text>
+  <polygon points="52.0,152.6 150.6,138.8 249.1,140.6 347.7,131.0 446.3,114.7 544.9,110.1 643.4,85.5 742.0,52.7 742.0,182.1 643.4,180.8 544.9,184.2 446.3,180.7 347.7,183.4 249.1,184.5 150.6,181.5 52.0,186.9" fill="var(--nvda)" fill-opacity="0.13"/>
+  <polyline points="52.0,152.6 150.6,138.8 249.1,140.6 347.7,131.0 446.3,114.7 544.9,110.1 643.4,85.5 742.0,52.7" fill="none" stroke="var(--nvda)" stroke-width="2.5"/>
+  <polyline points="52.0,186.9 150.6,181.5 249.1,184.5 347.7,183.4 446.3,180.7 544.9,184.2 643.4,180.8 742.0,182.1" fill="none" stroke="var(--soxx)" stroke-width="2.2"/>
+  <circle cx="52.0" cy="152.6" r="2.6" fill="var(--nvda)"/>
+  <circle cx="150.6" cy="138.8" r="2.6" fill="var(--nvda)"/>
+  <circle cx="249.1" cy="140.6" r="2.6" fill="var(--nvda)"/>
+  <circle cx="347.7" cy="131.0" r="2.6" fill="var(--nvda)"/>
+  <circle cx="446.3" cy="114.7" r="2.6" fill="var(--nvda)"/>
+  <circle cx="544.9" cy="110.1" r="2.6" fill="var(--nvda)"/>
+  <circle cx="643.4" cy="85.5" r="2.6" fill="var(--nvda)"/>
+  <circle cx="742.0" cy="52.7" r="2.6" fill="var(--nvda)"/>
+  <circle cx="52.0" cy="186.9" r="2.2" fill="var(--soxx)"/>
+  <circle cx="150.6" cy="181.5" r="2.2" fill="var(--soxx)"/>
+  <circle cx="249.1" cy="184.5" r="2.2" fill="var(--soxx)"/>
+  <circle cx="347.7" cy="183.4" r="2.2" fill="var(--soxx)"/>
+  <circle cx="446.3" cy="180.7" r="2.2" fill="var(--soxx)"/>
+  <circle cx="544.9" cy="184.2" r="2.2" fill="var(--soxx)"/>
+  <circle cx="643.4" cy="180.8" r="2.2" fill="var(--soxx)"/>
+  <circle cx="742.0" cy="182.1" r="2.2" fill="var(--soxx)"/>
+  <text x="742.0" y="42.7" text-anchor="end" font-size="10.5" fill="var(--nvda)" font-weight="600">front (covers earnings) 77.7%</text>
+  <text x="742.0" y="198.1" text-anchor="end" font-size="10.5" fill="var(--soxx)" font-weight="600">back (after earnings) 42.0%</text>
+  <text x="347.7" y="157.2" text-anchor="middle" font-size="10" fill="var(--muted)" font-style="italic">the gap = earnings premium</text>
+  <text x="52" y="20" font-size="10.5" fill="var(--muted)">gap widened every single night: 9.5pp &#8594; 35.7pp</text>
+  <text x="52.0" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-19</text>
+  <text x="150.6" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-20</text>
+  <text x="249.1" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-21</text>
+  <text x="347.7" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-22</text>
+  <text x="446.3" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-23</text>
+  <text x="544.9" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-24</text>
+  <text x="643.4" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-25</text>
+  <text x="742.0" y="220.0" text-anchor="middle" font-size="8.5" fill="var(--fg)" font-weight="600">08-26</text>
+  </svg>
+<figcaption>The shaded wedge is the earnings premium. It grew on every single one of the eight nights &mdash; and grew fastest on the last one.</figcaption>
+</figure>
+<p><strong>What happened.</strong> The gap widened relentlessly, from 9.5 points to <strong>35.7 points</strong> &mdash; nearly quadrupling. Front-month volatility climbed from 50.2% to 77.7% while back-month volatility barely moved at all (40.7% to 42.0%). The single largest jump (+9.1 points) landed on the morning of the print itself. Note what this means mechanically: the dollar cost of an earnings bet kept rising all week even while the expected <em>percentage</em> move from Item 1 was drifting slightly down.</p>
+<p><strong>How it held up.</strong> This was the most reliable signal of the week &mdash; the only one that moved in the same direction every single session, with no head-fakes. It correctly flagged "an unusually large event is coming" well before anyone could know the direction. Its one limitation is inherent: it says nothing at all about which way, and it still ended up understating how large the move would be.</p>
+
+<h3 style="font-size:1.05rem; margin-top:34px;">Item 3 &mdash; The Lean: were traders paying up for upside or for protection?</h3>
+<p><strong>What it measures, plainly.</strong> This compares the price of a moderately optimistic bet against a moderately pessimistic one, to see which side the crowd is paying up for. To keep it a fair comparison, both options are chosen to be roughly equally unlikely to pay off &mdash; about a 25% chance each &mdash; just in opposite directions. That is what "25-delta" means. The diagram below shows exactly how the number is built.</p>
+<figure>
+<svg viewBox="0 0 760 290" role="img" aria-label="Diagram explaining how 25-delta skew is measured. A horizontal price line shows the current NVIDIA price of 211 dollars in the middle, a 25-delta put struck below it with 67.58 percent implied volatility on the left, and a 25-delta call struck above it with 70.09 percent implied volatility on the right. Each has roughly a 25 percent chance of paying off. The skew formula subtracts the call volatility from the put volatility, giving minus 2.51 points, meaning calls are pricier.">
+  <line x1="70" y1="118" x2="690" y2="118" stroke="var(--border)" stroke-width="2"/>
+  <text x="380.0" y="160" text-anchor="middle" font-size="10" fill="var(--muted)">strike price &#8594;</text>
+  <line x1="380.0" y1="102" x2="380.0" y2="134" stroke="var(--fg)" stroke-width="2.5"/>
+  <text x="380.0" y="148" text-anchor="middle" font-size="10.5" fill="var(--fg)" font-weight="700">$211 today</text>
+  <rect x="70.0" y="14" width="250" height="96" rx="8" fill="var(--card)" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="195" y="33" text-anchor="middle" font-size="11.5" fill="var(--soxx)" font-weight="700">the 25-delta PUT</text>
+  <text x="195" y="50" text-anchor="middle" font-size="9.5" fill="var(--muted)">struck BELOW $211</text>
+  <text x="195" y="72" text-anchor="middle" font-size="17" fill="var(--soxx)" font-weight="700">67.58%</text>
+  <text x="195" y="87" text-anchor="middle" font-size="9" fill="var(--muted)">implied volatility</text>
+  <text x="195" y="104" text-anchor="middle" font-size="9.5" fill="var(--muted)">~25% chance it pays off</text>
+  <rect x="440.0" y="14" width="250" height="96" rx="8" fill="var(--card)" stroke="var(--border)" stroke-width="1.5"/>
+  <text x="565" y="33" text-anchor="middle" font-size="11.5" fill="var(--nvda)" font-weight="700">the 25-delta CALL</text>
+  <text x="565" y="50" text-anchor="middle" font-size="9.5" fill="var(--muted)">struck ABOVE $211</text>
+  <text x="565" y="72" text-anchor="middle" font-size="17" fill="var(--nvda)" font-weight="700">70.09%</text>
+  <text x="565" y="87" text-anchor="middle" font-size="9" fill="var(--muted)">implied volatility</text>
+  <text x="565" y="104" text-anchor="middle" font-size="9.5" fill="var(--muted)">~25% chance it pays off</text>
+  <line x1="195" y1="110" x2="195" y2="116" stroke="var(--soxx)" stroke-width="2"/>
+  <line x1="565" y1="110" x2="565" y2="116" stroke="var(--nvda)" stroke-width="2"/>
+  <rect x="70" y="180" width="620" height="86" rx="10" fill="var(--card)" stroke="var(--border)" stroke-width="1"/>
+  <text x="380.0" y="204" text-anchor="middle" font-size="11" fill="var(--muted)">skew = put IV &#8722; call IV &#160;(always this order)</text>
+  <text x="380.0" y="230" text-anchor="middle" font-size="15" fill="var(--fg)" font-weight="600"><tspan fill="var(--soxx)">67.58%</tspan> &#8722; <tspan fill="var(--nvda)">70.09%</tspan> = <tspan fill="var(--beat)" font-weight="700">&#8722;2.51 points</tspan></text>
+  <text x="380.0" y="252" text-anchor="middle" font-size="10.5" fill="var(--muted)">negative only means the call side won the price comparison &#8212; i.e. <tspan fill="var(--beat)" font-weight="600">calls were pricier</tspan></text>
+  </svg>
+<figcaption>How the skew number is constructed, using the Aug 25 reading as the worked example. The subtraction is always put minus call, which is why a negative result means the call side was pricier.</figcaption>
+</figure>
+<figure>
+<svg viewBox="0 0 760 230" role="img" aria-label="Line chart of NVIDIA 25-delta skew across eight nightly snapshots. The line sits below zero (calls pricier) for five nights, crosses above zero to plus 2.19 on August 24 (puts pricier), then flips back below zero for the final two nights.">
+  <line x1="52" y1="157.2" x2="742" y2="157.2" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="160.7" text-anchor="end" font-size="9" fill="var(--muted)">-4</text>
+  <line x1="52" y1="123.7" x2="742" y2="123.7" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="127.2" text-anchor="end" font-size="9" fill="var(--muted)">-2</text>
+  <line x1="52" y1="90.3" x2="742" y2="90.3" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="93.8" text-anchor="end" font-size="9" fill="var(--muted)">+0</text>
+  <line x1="52" y1="56.8" x2="742" y2="56.8" stroke="var(--border)" stroke-width="1"/>
+  <text x="45" y="60.3" text-anchor="end" font-size="9" fill="var(--muted)">+2</text>
+  <line x1="52" y1="90.3" x2="742" y2="90.3" stroke="var(--fg)" stroke-width="1.6" stroke-opacity="0.55"/>
+  <text x="55" y="84.3" font-size="9.5" fill="var(--miss)">above the line = puts pricier (bearish lean)</text>
+  <text x="55" y="104.3" font-size="9.5" fill="var(--beat)">below the line = calls pricier (bullish lean)</text>
+  <polyline points="52.0,162.6 150.6,150.0 249.1,125.1 347.7,129.1 446.3,129.8 544.9,53.6 643.4,132.3 742.0,105.5" fill="none" stroke="var(--nvda)" stroke-width="2.5"/>
+  <circle cx="52.0" cy="162.6" r="3.4" fill="var(--beat)"/>
+  <circle cx="150.6" cy="150.0" r="3.4" fill="var(--beat)"/>
+  <circle cx="249.1" cy="125.1" r="3.4" fill="var(--beat)"/>
+  <circle cx="347.7" cy="129.1" r="3.4" fill="var(--beat)"/>
+  <circle cx="446.3" cy="129.8" r="3.4" fill="var(--beat)"/>
+  <circle cx="544.9" cy="53.6" r="3.4" fill="var(--miss)"/>
+  <circle cx="643.4" cy="132.3" r="3.4" fill="var(--beat)"/>
+  <circle cx="742.0" cy="105.5" r="3.4" fill="var(--beat)"/>
+  <text x="544.9" y="42.6" text-anchor="middle" font-size="10" fill="var(--miss)" font-weight="600">+2.19 flip</text>
+  <text x="742.0" y="122.5" text-anchor="end" font-size="10" fill="var(--beat)" font-weight="600">back to &#8722;0.91</text>
+  <text x="52.0" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-19</text>
+  <text x="150.6" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-20</text>
+  <text x="249.1" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-21</text>
+  <text x="347.7" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-22</text>
+  <text x="446.3" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-23</text>
+  <text x="544.9" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-24</text>
+  <text x="643.4" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-25</text>
+  <text x="742.0" y="200.0" text-anchor="middle" font-size="8.5" fill="var(--fg)" font-weight="600">08-26</text>
+  </svg>
+<figcaption>The same calculation repeated each night. Below the line means calls were the pricier side (a bullish lean); above the line means puts were.</figcaption>
+</figure>
+<p><strong>What happened.</strong> Calls were the pricier side for five straight nights (a bullish lean), then on Aug 24 the reading flipped above the line to +2.19 &mdash; puts suddenly pricier, a genuine change of mood. It flipped straight back the very next night, and by the morning of the print it had settled at <strong>&minus;0.009</strong>: still a bullish lean, but almost exactly neutral.</p>
+<p><strong>How it held up.</strong> The final reading pointed the right way &mdash; NVDA did rally. But it is the weakest of the four signals precisely because it flip-flopped mid-week (bullish, then bearish, then bullish again) and finished so close to flat. Reading it as a directional forecast in real time would have meant reversing your view twice in three days. It only looks prescient with the benefit of knowing the ending.</p>
+
+<h3 style="font-size:1.05rem; margin-top:34px;">Item 4 &mdash; The Footprint: what were traders actually doing, not just paying?</h3>
+<p><strong>What it measures, plainly.</strong> Items 1&ndash;3 are all about <em>prices</em>. This one is about <em>activity</em> &mdash; how many put contracts changed hands relative to call contracts. The key reference point is <strong>1.0</strong>: at 1.0, puts and calls trade in equal numbers. Below 1.0 means calls outnumber puts; above 1.0 means puts outnumber calls. A reading of 0.59 means roughly 59 puts traded for every 100 calls.</p>
+<figure>
+<svg viewBox="0 0 760 272" role="img" aria-label="Line chart of NVIDIA put to call ratios across eight nightly snapshots, showing both trading volume and open interest. Both lines stay well below the 1.0 parity line for the entire period, meaning calls outnumbered puts throughout. Volume rises from 0.29 to about 0.66, dips to 0.38, and ends at 0.59.">
+  <line x1="54" y1="205.3" x2="742" y2="205.3" stroke="var(--border)" stroke-width="1" />
+  <text x="47" y="208.8" text-anchor="end" font-size="9" fill="var(--muted)" font-weight="400">0.2</text>
+  <line x1="54" y1="170.3" x2="742" y2="170.3" stroke="var(--border)" stroke-width="1" />
+  <text x="47" y="173.8" text-anchor="end" font-size="9" fill="var(--muted)" font-weight="400">0.4</text>
+  <line x1="54" y1="135.4" x2="742" y2="135.4" stroke="var(--border)" stroke-width="1" />
+  <text x="47" y="138.9" text-anchor="end" font-size="9" fill="var(--muted)" font-weight="400">0.6</text>
+  <line x1="54" y1="100.4" x2="742" y2="100.4" stroke="var(--border)" stroke-width="1" />
+  <text x="47" y="103.9" text-anchor="end" font-size="9" fill="var(--muted)" font-weight="400">0.8</text>
+  <line x1="54" y1="65.5" x2="742" y2="65.5" stroke="var(--miss)" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="47" y="69.0" text-anchor="end" font-size="9" fill="var(--miss)" font-weight="600">1.0</text>
+  <text x="738" y="57.5" text-anchor="end" font-size="10.5" fill="var(--miss)" font-weight="700">1.0 = equal puts and calls</text>
+  <text x="738" y="80.5" text-anchor="end" font-size="10" fill="var(--muted)">every reading sits below this line &#8212; calls dominated all week</text>
+  <polyline points="54.0,189.0 152.3,142.3 250.6,126.8 348.9,125.4 447.1,125.4 545.4,145.3 643.7,174.5 742.0,137.8" fill="none" stroke="var(--nvda)" stroke-width="2.5"/>
+  <polyline points="54.0,173.8 152.3,174.9 250.6,170.7 348.9,170.7 447.1,170.7 545.4,152.3 643.7,147.9 742.0,163.5" fill="none" stroke="var(--soxx)" stroke-width="2.2" stroke-dasharray="5,3"/>
+  <circle cx="54.0" cy="189.0" r="2.6" fill="var(--nvda)"/>
+  <circle cx="152.3" cy="142.3" r="2.6" fill="var(--nvda)"/>
+  <circle cx="250.6" cy="126.8" r="2.6" fill="var(--nvda)"/>
+  <circle cx="348.9" cy="125.4" r="2.6" fill="var(--nvda)"/>
+  <circle cx="447.1" cy="125.4" r="2.6" fill="var(--nvda)"/>
+  <circle cx="545.4" cy="145.3" r="2.6" fill="var(--nvda)"/>
+  <circle cx="643.7" cy="174.5" r="2.6" fill="var(--nvda)"/>
+  <circle cx="742.0" cy="137.8" r="2.6" fill="var(--nvda)"/>
+  <circle cx="54.0" cy="173.8" r="2.4" fill="var(--soxx)"/>
+  <circle cx="152.3" cy="174.9" r="2.4" fill="var(--soxx)"/>
+  <circle cx="250.6" cy="170.7" r="2.4" fill="var(--soxx)"/>
+  <circle cx="348.9" cy="170.7" r="2.4" fill="var(--soxx)"/>
+  <circle cx="447.1" cy="170.7" r="2.4" fill="var(--soxx)"/>
+  <circle cx="545.4" cy="152.3" r="2.4" fill="var(--soxx)"/>
+  <circle cx="643.7" cy="147.9" r="2.4" fill="var(--soxx)"/>
+  <circle cx="742.0" cy="163.5" r="2.4" fill="var(--soxx)"/>
+  <text x="348.9" y="115.4" text-anchor="middle" font-size="10" fill="var(--nvda)" font-weight="600">volume 0.66</text>
+  <text x="643.7" y="191.5" text-anchor="middle" font-size="10" fill="var(--nvda)" font-weight="600">0.38</text>
+  <text x="742.0" y="127.8" text-anchor="end" font-size="10" fill="var(--nvda)" font-weight="700">0.59</text>
+  <text x="152.3" y="191.9" text-anchor="middle" font-size="10" fill="var(--soxx)" font-weight="600">open interest</text>
+  <text x="54" y="20" font-size="10.5" fill="var(--muted)">put-to-call ratio: solid = daily trading volume, dashed = standing open positions</text>
+  <text x="54.0" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-19</text>
+  <text x="152.3" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-20</text>
+  <text x="250.6" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-21</text>
+  <text x="348.9" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-22</text>
+  <text x="447.1" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-23</text>
+  <text x="545.4" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-24</text>
+  <text x="643.7" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--muted)" font-weight="400">08-25</text>
+  <text x="742.0" y="230.0" text-anchor="middle" font-size="8.5" fill="var(--fg)" font-weight="700">08-26</text>
+  </svg>
+<figcaption>Both measures stayed well under the 1.0 parity line the entire week. The solid line is daily trading volume; the dashed line is open interest &mdash; the standing positions already on the books, which move more slowly.</figcaption>
+</figure>
+<p><strong>What happened.</strong> Every single reading, on both measures, sat below 1.0 &mdash; <strong>calls outnumbered puts throughout</strong>, never once close to parity. At the extreme (Aug 19) calls outnumbered puts more than three to one; at the most balanced point (Aug 22&ndash;23) still roughly three to two. Volume built from 0.29 to a plateau near 0.66, dipped to 0.38 on Aug 25, then finished at <strong>0.59</strong> on the morning of the print. Open interest told a quieter version of the same story, drifting from 0.38 up to 0.53 and back to 0.44.</p>
+<p><strong>How it held up.</strong> The persistent call-heavy skew of the flow is genuinely consistent with a bullish lean, and it did line up with the direction the stock ultimately went. But two honest caveats keep this from being a strong signal. First, the <em>shape</em> within the week was uninformative &mdash; it wandered up, down and back with no trend, and the tempting "calm confidence" read of the Aug 25 dip was undone by the very next reading. Second, and more important: large-cap US equities, and megacap tech especially, typically trade more calls than puts as a matter of course. Without NVDA's own longer-run baseline to compare against, a sub-1.0 ratio on its own does not establish that positioning was <em>unusually</em> bullish &mdash; only that it was call-tilted, as it usually is. The direction of the read is right; the strength of the evidence behind it is modest.</p>
+<div class="callout"><strong>Scoring the four, honestly.</strong> Item 2 (the premium) was the standout &mdash; a clean, monotonic, no-head-fake warning that a big event was coming, though silent on direction. Item 1 (the bet) was directionally useful but its verdict flips depending on the measurement window. Item 3 (the lean) ended up right but oscillated too much to have been trustworthy live. Item 4 (the footprint) said essentially nothing this time. Taken together they described the <em>magnitude</em> of what was coming well and the <em>direction</em> of it barely at all &mdash; which is roughly what options positioning should be expected to do.</div>
+<div class="cn">本节将四项期权指标逐一用通俗语言解释，并配图说明。数据来自财报前连续八个交易日的自动抓取快照（8月19日至8月26日当天上午，即盘后发布财报前约四个半小时），最后一行为财报前最完整的一次读数，也是本项目流水线用于计算"实际/隐含"比率的基准。<br><br><strong>其一"押注"</strong>：衡量期权市场预期财报次日股价的波动幅度（不区分方向）。全周维持在5.7%-6.4%的窄幅区间，财报当日上午为5.74%，约为英伟达自身财报日典型波动（3.2%）的1.8-2.0倍——即市场始终将其定价为"大于平常但不夸张"的事件。结果如何：次日实际波动8.74%，是隐含值的约1.52倍，说明期权定价偏便宜；但若按本项目流水线的口径（计算至期权合约到期日8月28日，而非仅次日），实际波动仅3.76%，约为隐含值的0.66倍，反而说明期权偏贵。两个数字都算得正确，只是回答了不同的问题；两者差异几乎全部来自8月28日的回落，而该回落主要是板块性因素。<br><br><strong>其二"溢价"</strong>：比较"财报后即到期"与"更晚到期"两类期权的定价差。远月期权只反映日常波动，近月期权则反映日常波动加上财报事件，两者之差即市场为财报事件本身支付的价格。该价差连续八晚扩大，从9.5个百分点升至35.7个百分点，近四倍；近月隐含波动率从50.2%升至77.7%，远月几乎不动（40.7%至42.0%），最大单日跳升（+9.1个百分点）恰好发生在财报当天上午。这也解释了为何期权的美元成本持续上升，而"其一"中的百分比预期反而略降。表现评价：这是全周最可靠的信号，唯一一个每个交易日都朝同一方向变动、没有反复的指标，提前明确提示"将有异常大的事件"，但它本质上无法提示方向，且仍低估了最终波动幅度。<br><br><strong>其三"方向倾向"</strong>：比较"适度看涨"与"适度看跌"两种押注的价格，看市场更愿为哪一侧付费。为保证可比，两者被选为各自约25%的兑现概率（即"25&Delta;"）。计算方式恒为"看跌隐含波动率减看涨隐含波动率"，因此负值代表看涨一侧更贵。本周走势：连续五晚为负（看涨更贵），8月24日翻转为+2.19（看跌更贵），次日又翻回，财报当日上午收于&minus;0.009，仍偏看涨但已接近中性。表现评价：最终方向正确，但因中途两次反复且最终接近零，是四项中最弱的信号——实时依赖它做方向判断意味着三天内两次调头。<br><br><strong>其四"足迹"</strong>：前三项衡量的都是"价格"，这一项衡量"成交活动"——看跌期权成交量相对看涨期权的比例。0.59即每100张看涨期权约对应59张看跌期权，数值越高代表防御性交易相对越多。本周从0.29升至0.65-0.66的平台，8月25日骤降至0.38，财报当日上午回升至0.59，接近全周均值。表现评价：这一项这次几乎没有提供有效信息——8月25日的低点看似暗示"财报前情绪平稳自信"，但次日读数即推翻该解读，最终数值平淡无奇，更像是常规的双向持仓，而非方向性信号。<br><br><strong>四项综合评分</strong>：其二（溢价）表现最佳，趋势干净、无反复，提前预警事件规模，但不指示方向；其一（押注）有参考价值，但结论随测量窗口而变；其三（方向倾向）最终正确却摆动过大，实时不可依赖；其四（足迹）本次基本无信息量。整体而言，四项指标较好地刻画了"幅度"，而对"方向"几乎无预测力——这大致也正是期权仓位数据应有的表现。</div>
+
+<h2 id="whisper">Consensus vs. Whisper, for This Print Specifically</h2>
+<p>Published consensus ($2.09 EPS) was cleared by 6.16% &mdash; but for a stock that beats nearly every quarter, "did it beat consensus" was never the real question. The more useful one is whether it beat the market's real, unstated expectation (the "whisper number"), which usually sits above the published figure. This project's framework for estimating the whisper gap without seeing it directly uses three tells: the pre-print run-up, the options-implied move, and the trend in recent beat magnitude. Unusually, all three point the same direction for this print &mdash; and it's a different direction than in most of this project's other coverage this earnings season.</p>
+<div class="metrics">
+  <div class="metric"><div class="v miss">-6.2%</div><div class="l">Tell 1 — pre-print run-up (negative, not positive)</div></div>
+  <div class="metric"><div class="v miss">5.74%</div><div class="l">Tell 2 — implied move, eased off its mid-week peak</div></div>
+  <div class="metric"><div class="v">3.5&ndash;5.5%</div><div class="l">Tell 3 — beat range compressed over prior 4 quarters</div></div>
+</div>
+<p><strong>Tell 1: the run-up.</strong> A stock that runs up hard into its print is telling you the market has quietly bid the whisper number well above consensus &mdash; raising the bar the actual results then have to clear. NVDA did the opposite: it walked in <strong>down 6.2%</strong> from its recent peak, on top of a broader sector selloff. That's not what a crowded, whisper-inflated setup looks like &mdash; if anything it suggests the market had gotten more cautious than consensus, not more excited.</p>
+<p><strong>Tell 2: the implied move.</strong> If the whisper number were running well ahead of consensus, you'd typically expect options positioning to reflect growing conviction as the print approached &mdash; a rising implied move, not a softening one. Instead the implied move <em>eased</em>, from a mid-week peak of 6.38% (Aug 20) down to 5.69% by Aug 25 and 5.74% on the morning of the print. The drift wasn't perfectly monotonic &mdash; it ticked up fractionally on the last read &mdash; but the direction across the week is clear: the market ended up pricing a slightly smaller expected swing than it had days earlier, consistent with expectations cooling rather than inflating.</p>
+<p><strong>Tell 3: the beat-range trend.</strong> The four quarters immediately before this print had compressed into a tight, unexciting 3.5&ndash;5.5% beat range &mdash; a stock the market had largely stopped expecting real surprises from. A well-behaved recent beat history is itself a sign the whisper number and consensus had converged, leaving little room for "everyone secretly expects more than this." This is the weakest of the three tells, though: four quarters is a short window, and NVDA had posted 8%-plus beats as recently as five quarters earlier, so the compression was a recent tendency rather than a firmly established pattern.</p>
+<div class="callout">All three tells point to a whisper number that was likely close to, or even below, published consensus &mdash; the opposite setup from a name running hot into its print. That's a plausible explanation for why the reaction was so clean: a 6.16% beat that broke a six-quarter pattern landed as a genuine surprise against a lowered bar, rather than "expected, already priced in" against an inflated one. This is the first name in this project's coverage this earnings season where the run-up, the options positioning, and the beat-rate trend all lined up in the same (favorable) direction going into the print, instead of setting up a trap the way a hot run-up followed by decelerating guidance has elsewhere.</div>
+<div class="cn">公开一致预期（每股收益2.09美元）被超预期6.16%——但对于一只几乎每季度都超预期的股票，"是否超过一致预期"从来不是真正的问题，更有意义的问题是它是否超过了市场真实但未公开的心理预期（即"whisper预期"，通常高于公开一致预期）。本项目用三个间接信号来估算这一预期缺口：财报前的抢跑涨幅、期权隐含波动率、以及近期超预期幅度的变化趋势。这次三个信号罕见地指向同一个方向，且与本项目本季度覆盖的其他大多数案例方向相反。信号一：抢跑涨幅——若股票在财报前大幅上涨，通常说明市场已经悄悄将whisper预期推高到远超公开一致预期的水平，抬高了实际业绩需要跨越的门槛；而英伟达这次恰恰相反，财报前较近期高点下跌6.2%，叠加板块整体走弱，这并非拥挤、whisper预期虚高的典型局面，反而说明市场比一致预期更谨慎，而非更亢奋。信号二：隐含波动率——如果whisper预期明显高于一致预期，通常会看到期权定价随财报临近而信心增强、隐含波动率上升；但实际情况相反，隐含单日波动预期从8月20日的高点6.38%回落至8月25日的5.69%、财报当日上午的5.74%。虽非严格单调下行（最后一次读数略有回升），但全周方向明确：市场最终定价的波动幅度小于数日之前，说明预期在财报前是降温而非升温。信号三：超预期幅度趋势——英伟达过去六个季度的超预期幅度收窄在3%-6%的狭窄区间内，市场已不再期待明显的意外，无论方向。超预期幅度趋于收窄、趋于"平淡"，本身就说明whisper预期与公开一致预期已经趋同，几乎没有"其实大家私下预期更高"的空间。综合三个信号：这次的whisper预期很可能接近甚至低于公开一致预期，与财报前抢跑上涨的典型局面相反。这可以解释为何这次市场反应如此干净——6.16%的超预期打破了六个季度的模式，是相对于一个被下调而非被推高的门槛而言的真正意外，而非"早已被消化"。这是本项目本季度覆盖中，抢跑涨幅、期权仓位与超预期趋势三者首次同时指向同一（正面）方向，而非像其他案例那样——抢跑上涨叠加指引减速，形成一个陷阱。</div>
+
+<h2 id="caveats">What This Is and Isn't</h2>
+<ul style="font-size:0.92rem;">
+<li>Covers the setup, the reported results, and three sessions of reaction (t0 Aug 27, t+1 Aug 28, t+2 Aug 31) &mdash; not a full multi-day drift study. Extended post-print drift (t+5, t+10) isn't in scope here; the base-rate comparison to the May print uses that print's own extended drift only as context, not as a claim about what happens next this time.</li>
+<li>The May 20, 2026 print is cited as a base-rate caution, not analyzed in detail here.</li>
+<li>"NVDA-specific" uses a simple one-index (SOXX) decomposition, not a rigorous factor model, and SOXX itself holds NVDA as a large constituent, so the sector figures may already be partly a read-through of NVDA's own move.</li>
+<li>The guidance/margin commentary content of the actual release (beyond the headline revenue guide) isn't independently verified here beyond what's cited from external reporting.</li>
+<li>Revenue and guidance figures are drawn from external news coverage published the day of the print, not from this project's own automated pipeline &mdash; the pipeline's own revenue-surprise field for this record was still catching up to yfinance's slower-updating fundamentals data as of this report.</li>
+<li>The +3.76% expiry-window figure (and its 0.66x ratio) is now the value this project's own tracking pipeline holds for this print, captured on Aug 31 once its expiry-plus-buffer gate opened. An earlier version of that stored value was wrong: the pipeline was picking the wrong session as the "pre-earnings" reference for after-close prints like this one, inflating the figure to 7.01%. That was fixed and the stored record corrected before this version of the report.</li>
+</ul>
+
+<p class="sources">Sources: nightly options-chain snapshots from this project's own <code>track_implied_vs_realized.py</code> pipeline (eight snapshots, 2026-08-19 through the morning of 2026-08-26, ATM straddle mid, 25-delta Black-Scholes skew, front/back IV term structure, put/call volume &amp; OI); yfinance daily closes (Aug 13&ndash;31, NVDA and SOXX) and earnings_dates for the price setup, reaction, and beat-band context; this project's own <code>track_earnings_outcomes.py</code> pipeline record (EPS actual/estimate/surprise); external news coverage (Fortune, CNBC) for revenue and Q3 guidance figures; earnings-call commentary (supply/demand balance, revenue-per-gigawatt by chip generation, hyperscaler vs. broader customer growth, China/export-control impact) via Yahoo Finance's earnings call highlights and S&amp;P Global's earnings coverage; analyst price-target reactions via Benzinga and TheStreet; H20/H200 export-policy timeline via NVIDIA's own SEC filings (8-K, 10-Q), Bloomberg, and Tom's Hardware.</p>
+
+</body>
+</html>
