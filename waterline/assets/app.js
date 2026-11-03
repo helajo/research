@@ -17,6 +17,8 @@ const S = {
   fu: { near: [], set: 'curated', q: '', cat: 'all', where: new Set(['lse', 'sgx', 'us_etf', 'us_mf', 'research']), win: '2015', ccy: 'USD', view: 'chart', sel: 'CSPX.L', sort: { col: 'ulcer', dir: 1 }, focus: -1 },
 };
 const ROLES = ['stocks', 'cash', 'treasuries', 'gold', 'trend'];
+/** A public copy (e.g. helajo.github.io) hides links to the private research repository: visitors could not open them. */
+const PUBLIC_COPY = /\.github\.io$/i.test(location.hostname);
 const VERSION_BLOCKS = {
   research: { stocks: 'SPY', cash: 'CASH', treasuries: 'IEF', gold: 'GLD', trend: 'TREND' },
   ibkr: { stocks: 'CSPX.L', cash: 'IB01.L', treasuries: 'CBU0.L', gold: 'IGLN.L', trend: 'DBMF' },
@@ -1524,7 +1526,8 @@ function renderMethod() {
     ['build_script', zh() ? '本页数据构建脚本（build_site_data.py）' : 'This page’s data builder (build_site_data.py)'],
     ['repo', zh() ? '代码仓库' : 'Repository'],
   ];
-  document.getElementById('links').innerHTML = items.map(([k, label]) => `<li><a href="${L[k]}">${esc(label)}</a>${zh() && k !== 'repo' ? '（英文）' : ''}</li>`).join('');
+  document.getElementById('links').innerHTML = PUBLIC_COPY ? `<li>${esc(t('links_private'))}</li>`
+    : items.map(([k, label]) => `<li><a href="${L[k]}">${esc(label)}</a>${zh() && k !== 'repo' ? '（英文）' : ''}</li>`).join('');
   const D = S.data.meta.disclaimer;
   document.getElementById('disc-text').textContent = zh() ? D.zh : D.en;
   document.getElementById('disc-approx').textContent = zh() ? D.approximate_zh : D.approximate_en;
@@ -1566,7 +1569,11 @@ function applyStatic() {
   document.querySelector('meta[name="description"]').setAttribute('content', t('meta_desc'));
   const vars = heroVars();
   document.querySelectorAll('[data-i18n]').forEach((n) => { n.textContent = t(n.dataset.i18n, vars); });
-  document.querySelectorAll('[data-i18n-html]').forEach((n) => { n.innerHTML = t(n.dataset.i18nHtml, vars); });
+  document.querySelectorAll('[data-i18n-html]').forEach((n) => {
+    let html = t(n.dataset.i18nHtml, vars);
+    if (PUBLIC_COPY) html = html.replace(/\s?[（(]<a href="[^"]*github\.com[^"]*">[^<]*<\/a>[）)]/g, '');
+    n.innerHTML = html;
+  });
   document.querySelectorAll('[data-i18n-aria]').forEach((n) => { n.setAttribute('aria-label', t(n.dataset.i18nAria)); });
   document.querySelectorAll('[data-i18n-rd]').forEach((n) => { n.setAttribute('aria-roledescription', t(n.dataset.i18nRd)); });
   document.querySelectorAll('[data-lang-btn]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.langBtn === S.lang ? 'true' : 'false'));
