@@ -883,3 +883,21 @@ html[lang^="zh"] .donts b { font-weight: 700; }
 .spy-guide line { stroke: var(--s-spy); stroke-width: 1; stroke-dasharray: 2 3; opacity: .7; pointer-events: none; }
 #bu-growth-t { margin-top: 18px; }
 #bu-dd-t { margin-top: 22px; }
+
+/* What happens in a panic */
+.panic { margin-top: 44px; }
+.panic__points { margin: 0 0 18px; padding-left: 1.2em; max-width: 75ch; color: var(--ink-2); display: grid; gap: 6px; }
+.panic__table td, .panic__table th { vertical-align: top; text-align: left; white-space: normal; }
+.panic__table td { min-width: 12rem; }
+.panic__table th[scope="row"] { min-width: 9rem; }
+.panic__dates { display: block; font: 400 .78rem/1.3 var(--f-mono); color: var(--muted); margin-top: 2px; }
+.panic__low { margin: 0 0 4px; font-weight: 600; color: var(--ink); }
+.panic__trade, .panic__none { margin: 0; font-size: .86rem; color: var(--ink-2); }
+@media (max-width: 640px) {
+  .panic__table thead { display: none; }
+  .panic__table, .panic__table tbody, .panic__table tr, .panic__table th, .panic__table td { display: block; min-width: 0; width: auto; }
+  .panic__table tr { padding: 10px 0; border-top: 1px solid var(--rule); }
+  .panic__table td { padding: 8px 0 0; border: 0; }
+  .panic__table td::before { content: attr(data-label); display: block; font: 500 .74rem/1.4 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  html[lang^="zh"] .panic__table td::before { font-family: var(--f-body); text-transform: none; letter-spacing: 0; }
+}
