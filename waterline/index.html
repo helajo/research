@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waterline: a low-drop portfolio for Singapore investors</title>
+<meta name="description" content="How a low-drop portfolio behaved against the S&amp;P 500 since 2008, for a Singapore investor on IBKR. Historical, with hindsight; not investment advice.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e2231'/%3E%3Cpath d='M4 13h24' stroke='%23e4edf3' stroke-width='2'/%3E%3Cpath d='M4 13c4 0 5 12 9 12s4-6 7-6 4 2 8 2' stroke='%23f07a45' stroke-width='2.4' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  // Theme and language before first paint (no flash). Storage can throw: wrapped.
+  (function () {
+    var d = document.documentElement, t = null, l = null;
+    try { t = localStorage.getItem('wl-theme'); l = localStorage.getItem('wl-lang'); } catch (e) {}
+    if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+    if (l !== 'en' && l !== 'zh') l = (navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    d.setAttribute('lang', l === 'zh' ? 'zh-Hans' : 'en');
+    d.setAttribute('data-lang', l);
+  })();
+</script>
+<script type="module" src="assets/app.js"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="masthead">
+  <div class="masthead__row">
+    <a class="brand" href="#top" aria-label="Waterline">
+      <svg class="brand__mark" viewBox="0 0 40 24" aria-hidden="true"><path class="brand__line" d="M1 7h38"/><path class="brand__dip" d="M1 7c5 0 6 14 11 14s5-8 9-8 5 3 18 3"/><path class="brand__calm" d="M1 7c8 0 9 4 15 4s7-2 23-1"/></svg>
+      <span class="brand__name" data-i18n="brand">Waterline</span>
+    </a>
+    <nav class="sections" aria-label="Sections" data-i18n-aria="nav_label">
+      <ol>
+        <li><a href="#falls" data-i18n="nav_falls">Each crash</a></li>
+        <li><a href="#test" data-i18n="nav_test">Was it tested?</a></li>
+        <li><a href="#hold" data-i18n="nav_hold">How to buy</a></li>
+        <li><a href="#drops" data-i18n="nav_drops">Explore</a></li>
+        <li><a href="#build" data-i18n="nav_build">Build</a></li>
+        <li><a href="#funds" data-i18n="nav_funds">Funds</a></li>
+        <li><a href="#caveats" data-i18n="nav_caveats">Cautions</a></li>
+        <li><a href="#method" data-i18n="nav_method">Method</a></li>
+      </ol>
+    </nav>
+    <div class="toggles">
+      <div class="lang" role="group" aria-label="Language / 语言">
+        <button type="button" data-lang-btn="en" lang="en" aria-pressed="true">EN</button><span aria-hidden="true">|</span><button type="button" data-lang-btn="zh" lang="zh-Hans" aria-pressed="false">中文</button>
+      </div>
+      <button type="button" class="theme" id="theme-btn" aria-label="Switch to dark theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="theme__sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="theme__moon"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow"><span class="eyebrow__tag" data-i18n="hero_tag">Sounding</span><span data-i18n="hero_q">Can a portfolio have smaller, fewer drops than the S&amp;P 500?</span></p>
+        <h1 id="hero-title" class="hero__title" data-i18n-html="hero_a">Yes: smaller, fewer drops, <em>for less return.</em></h1>
+        <p class="hero__lede" data-i18n-html="hero_lede"></p>
+      </div>
+      <dl class="soundings" id="hero-numbers"></dl>
+      <figure class="hero__fig" aria-labelledby="hero-cap">
+        <div class="hero__chart is-loading" id="hero-chart" role="img"></div>
+        <figcaption id="hero-cap" class="hero__cap" data-i18n-html="hero_cap"></figcaption>
+      </figure>
+    </div>
+    <div class="wrap">
+      <p class="hero__trade" data-i18n-html="hero_trade"></p>
+      <p class="hero__fine"><span data-i18n="hero_fine">Historical results, computed with hindsight. Not investment advice.</span> <a href="#disclaimer" data-i18n="read_disclaimer">Read the disclaimer</a></p>
+    </div>
+  </section>
+
+  <!-- 01 FALLS -->
+  <section class="section section--tint" id="falls" aria-labelledby="falls-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">01</p>
+        <h2 id="falls-h" data-i18n="falls_h">Fall by fall</h2>
+        <p class="lede" data-i18n-html="falls_lede"></p>
+      </header>
+      <div class="controls">
+        <div class="control">
+          <span class="control__label" id="fa-ccy-l" data-i18n="ctl_ccy">Currency</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fa-ccy-l" id="fa-ccy"></div>
+        </div>
+        <div class="control stepper">
+          <button type="button" class="btn btn--icon" id="fa-prev" data-i18n-aria="prev_fall" aria-label="Previous fall">&#8592;</button>
+          <span class="stepper__pos" id="fa-pos" aria-live="polite"></span>
+          <button type="button" class="btn btn--icon" id="fa-next" data-i18n-aria="next_fall" aria-label="Next fall">&#8594;</button>
+        </div>
+      </div>
+      <div class="seismo" id="fa-strip"></div>
+      <div class="fall-detail" id="fa-detail"></div>
+      <h3 class="sub" data-i18n="falls_matrix_h">Every fall at a glance</h3>
+      <p class="sub-lede" id="fa-takeaway"></p>
+      <p class="table-cap" id="fa-matrix-cap"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="fa-matrix-cap">
+        <table class="heat" id="fa-matrix" aria-labelledby="fa-matrix-cap"><thead></thead><tbody></tbody></table>
+      </div>
+      <p class="swipe-hint" data-i18n="swipe">Swipe the table sideways for more →</p>
+      <div class="legend-scale" id="fa-scale" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 02 TEST -->
+  <section class="section" id="test" aria-labelledby="test-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">02</p>
+        <h2 id="test-h" data-i18n="test_h">Tested once, out of sample</h2>
+        <p class="lede" data-i18n-html="test_lede"></p>
+      </header>
+      <div class="timeline" id="tl" role="img"></div>
+      <div class="test-grid">
+        <div>
+          <h3 class="sub" data-i18n="checks_h">The five checks, set in advance</h3>
+          <ul class="checks" id="tl-checks"></ul>
+        </div>
+        <div>
+          <h3 class="sub" id="result-h"></h3>
+          <div class="table-wrap" tabindex="0" role="region" aria-labelledby="tl-res-cap">
+            <table class="score score--compact" id="tl-result"><caption id="tl-res-cap" class="sr-only"></caption><thead></thead><tbody></tbody></table>
+          </div>
+        </div>
+      </div>
+      <h3 class="sub" data-i18n="caveats_test_h">Read this before trusting it</h3>
+      <ol class="caveats" id="tl-caveats"></ol>
+    </div>
+  </section>
+
+  <!-- 03 HOLD -->
+  <section class="section section--tint" id="hold" aria-labelledby="hold-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">03</p>
+        <h2 id="hold-h" data-i18n="hold_h">Three model portfolios, held from Singapore on IBKR</h2>
+        <p class="lede" data-i18n-html="hold_lede"></p>
+      </header>
+      <div class="tabs" role="tablist" id="mo-tabs" data-i18n-aria="models_tabs" aria-label="Model portfolios"></div>
+      <div class="model" id="mo-panel" role="tabpanel"></div>
+
+      <div class="howto">
+        <div class="howto__steps">
+          <h3 class="sub" data-i18n="steps_h">How to set it up</h3>
+          <ol class="steps" id="mo-steps"></ol>
+        </div>
+        <div class="howto__facts">
+          <div class="fact">
+            <h4 data-i18n="rebal_h">Rebalancing rule</h4>
+            <p data-i18n-html="rebal_p"></p>
+          </div>
+          <div class="fact">
+            <h4 data-i18n="wht_h">Dividend tax (approximate)</h4>
+            <div class="wht" id="mo-wht"></div>
+            <p data-i18n-html="wht_p"></p>
+          </div>
+          <div class="fact">
+            <h4 data-i18n="cost_h">Costs (approximate)</h4>
+            <p id="mo-costs"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 04 EXPLORER -->
+  <section class="section" id="drops" aria-labelledby="drops-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">04</p>
+        <h2 id="drops-h" data-i18n="drops_h">Growth and drops</h2>
+        <p class="lede" data-i18n-html="drops_lede"></p>
+      </header>
+
+      <div class="controls" id="ex-controls">
+        <fieldset class="control control--wide">
+          <legend data-i18n="ctl_portfolios">Portfolios</legend>
+          <div class="chips" id="ex-series"></div>
+        </fieldset>
+        <div class="control">
+          <span class="control__label" id="ex-win-l" data-i18n="ctl_window">Period</span>
+          <div class="seg" role="radiogroup" aria-labelledby="ex-win-l" id="ex-window"></div>
+        </div>
+        <div class="control">
+          <span class="control__label" id="ex-ccy-l" data-i18n="ctl_ccy">Currency</span>
+          <div class="seg" role="radiogroup" aria-labelledby="ex-ccy-l" id="ex-ccy"></div>
+        </div>
+        <div class="control">
+          <span class="control__label" id="ex-scale-l" data-i18n="ctl_scale">Growth scale</span>
+          <div class="seg" role="radiogroup" aria-labelledby="ex-scale-l" id="ex-scale"></div>
+        </div>
+      </div>
+      <p class="note" id="ex-note" aria-live="polite"></p>
+
+      <div class="explorer">
+        <div class="charts" id="ex-charts">
+          <div class="chart-block">
+            <h3 class="chart-title" id="ex-growth-t"></h3>
+            <div class="chart" id="ex-growth" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart" aria-describedby="ex-summary"></div>
+          </div>
+          <div class="chart-block chart-block--under">
+            <h3 class="chart-title" id="ex-dd-t"></h3>
+            <div class="chart chart--dd" id="ex-dd" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart" aria-describedby="ex-summary"></div>
+          </div>
+          <div class="tooltip" id="ex-tip" hidden></div>
+          <div class="brush-block">
+            <p class="brush-label" id="ex-brush-l" data-i18n="brush_label">Drag the handles to pick any period</p>
+            <div class="brush" id="ex-brush"></div>
+          </div>
+        </div>
+        <p class="sr-only" id="ex-summary" aria-live="polite"></p>
+      </div>
+
+      <p class="table-cap" id="ex-table-cap"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="ex-table-cap">
+        <table class="score" id="ex-table" aria-labelledby="ex-table-cap">
+          <thead></thead><tbody></tbody>
+        </table>
+      </div>
+      <p class="swipe-hint" data-i18n="swipe">Swipe the table sideways for more →</p>
+      <p class="under-table" id="ex-under"></p>
+      <p class="fineprint" data-i18n-html="ex_fine"></p>
+    </div>
+  </section>
+
+  <!-- 05 BUILD -->
+  <section class="section section--tint" id="build" aria-labelledby="build-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">05</p>
+        <h2 id="build-h" data-i18n="build_h">Build your own mix</h2>
+        <p class="lede" data-i18n-html="build_lede"></p>
+      </header>
+      <p class="warning" role="note"><span class="warning__tag" data-i18n="warn_tag">Hindsight</span><span data-i18n-html="build_warn"></span></p>
+      <div class="builder">
+        <div class="builder__controls">
+          <div class="control">
+            <span class="control__label" id="bu-pre-l" data-i18n="presets">Start from</span>
+            <div class="seg seg--wrap" role="group" aria-labelledby="bu-pre-l" id="bu-presets"></div>
+          </div>
+          <div class="weights" id="bu-weights"></div>
+          <div class="stackbar" id="bu-stack" aria-hidden="true"></div>
+          <p class="weights__total" id="bu-total"></p>
+          <div class="builder__row">
+            <div class="control">
+              <span class="control__label" id="bu-ver-l" data-i18n="ctl_version">Ingredients</span>
+              <div class="seg seg--stack" role="radiogroup" aria-labelledby="bu-ver-l" id="bu-version"></div>
+            </div>
+            <div class="control">
+              <span class="control__label" id="bu-win-l" data-i18n="ctl_window">Period</span>
+              <div class="seg" role="radiogroup" aria-labelledby="bu-win-l" id="bu-window"></div>
+            </div>
+            <div class="control">
+              <span class="control__label" id="bu-ccy-l" data-i18n="ctl_ccy">Currency</span>
+              <div class="seg" role="radiogroup" aria-labelledby="bu-ccy-l" id="bu-ccy"></div>
+            </div>
+          </div>
+        </div>
+        <div class="builder__out">
+          <p class="builder__status" id="bu-status" aria-live="polite"></p>
+          <dl class="tiles" id="bu-tiles"></dl>
+          <h3 class="chart-title" id="bu-growth-t"></h3>
+          <div class="chart chart--mini" id="bu-growth" role="img"></div>
+          <h3 class="chart-title" id="bu-dd-t"></h3>
+          <div class="chart chart--mini" id="bu-chart" role="img"></div>
+          <ul class="legend" id="bu-legend"></ul>
+          <p class="fineprint" id="bu-same"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 FUNDS -->
+  <section class="section" id="funds" aria-labelledby="funds-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">06</p>
+        <h2 id="funds-h" data-i18n="funds_h">Fund explorer</h2>
+        <p class="lede" data-i18n-html="funds_lede"></p>
+      </header>
+      <div class="controls">
+        <div class="control">
+          <span class="control__label" id="fu-set-l" data-i18n="set_label">Funds</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fu-set-l" id="fu-set"></div>
+        </div>
+        <div class="control">
+          <label class="control__label" for="fu-search" data-i18n="search">Search</label>
+          <input type="search" id="fu-search" class="input" autocomplete="off">
+        </div>
+        <div class="control">
+          <label class="control__label" for="fu-cat" data-i18n="category">Category</label>
+          <select id="fu-cat" class="input"></select>
+        </div>
+        <div class="control">
+          <span class="control__label" id="fu-win-l" data-i18n="ctl_window">Period</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fu-win-l" id="fu-window"></div>
+        </div>
+        <div class="control">
+          <span class="control__label" id="fu-ccy-l" data-i18n="ctl_ccy">Currency</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fu-ccy-l" id="fu-ccy"></div>
+        </div>
+        <fieldset class="control control--wide">
+          <legend data-i18n="where">Where it trades</legend>
+          <div class="chips" id="fu-where"></div>
+        </fieldset>
+        <div class="control">
+          <span class="control__label" id="fu-view-l" data-i18n="view">View</span>
+          <div class="seg" role="radiogroup" aria-labelledby="fu-view-l" id="fu-view"></div>
+        </div>
+      </div>
+      <p class="note" id="fu-count" aria-live="polite"></p>
+      <p class="fineprint" id="fu-wide-note"></p>
+      <div class="funds">
+        <div class="funds__main">
+          <div class="chart chart--scatter" id="fu-scatter" tabindex="0" role="group" aria-roledescription="scatter plot" data-i18n-rd="rd_scatter"></div>
+          <p class="note fu-off" id="fu-off" hidden><button type="button" class="btn btn--link" id="fu-off-btn"></button></p>
+          <ul class="legend" id="fu-legend"></ul>
+          <div class="tooltip" id="fu-tip" hidden></div>
+          <div class="table-wrap table-wrap--tall" id="fu-table-wrap" tabindex="0" role="region" aria-labelledby="fu-table-cap" hidden>
+            <table class="score score--funds" id="fu-table"><caption id="fu-table-cap" class="sr-only"></caption><thead></thead><tbody></tbody></table>
+          </div>
+        </div>
+        <aside class="fund-card" id="fu-card" aria-live="polite"></aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 CAVEATS -->
+  <section class="section section--tint" id="caveats" aria-labelledby="caveats-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">07</p>
+        <h2 id="caveats-h" data-i18n="caveats_h">What not to do</h2>
+        <p class="lede" data-i18n-html="caveats_lede"></p>
+      </header>
+      <ol class="donts" id="donts"></ol>
+    </div>
+  </section>
+
+  <!-- 08 METHOD -->
+  <section class="section" id="method" aria-labelledby="method-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">08</p>
+        <h2 id="method-h" data-i18n="method_h">Glossary and method</h2>
+      </header>
+      <div class="method">
+        <div class="method__gloss" id="glossary-box">
+          <h3 class="sub" data-i18n="glossary_h" id="glossary-h">Glossary</h3>
+          <dl class="glossary" id="glossary"></dl>
+        </div>
+        <div>
+          <h3 class="sub" data-i18n="method_sub">How the numbers are made</h3>
+          <ul class="method__list" id="method-list"></ul>
+          <div class="verify pending" id="verify" aria-live="polite"></div>
+        </div>
+        <div>
+          <h3 class="sub" data-i18n="sources_h">Sources and reports</h3>
+          <ul class="links" id="links"></ul>
+        </div>
+      </div>
+      <aside class="disclaimer" id="disclaimer" aria-labelledby="disc-h" tabindex="-1">
+        <h3 id="disc-h" data-i18n="disc_h">Disclaimer</h3>
+        <p id="disc-text"></p>
+        <p id="disc-approx"></p>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <p class="footer__brand"><span data-i18n="brand">Waterline</span> · <span id="ft-data"></span></p>
+    <p id="ft-disc" data-i18n="ft_disc"></p>
+    <p data-i18n-html="ft_licence"></p>
+    <p><a href="#top" data-i18n="back_top">Back to top</a></p>
+  </div>
+</footer>
+<div class="loading" id="loading" role="status"><span data-i18n="loading">Loading data…</span></div>
+<noscript><p class="noscript">This page needs JavaScript to draw its charts. 本页需要启用 JavaScript 才能显示图表。</p></noscript>
+</body>
+</html>
