@@ -887,6 +887,31 @@ function renderModels() {
   });
 }
 
+/* What the band rule did in each S&P 500 fall since 2020 (real IBKR funds, from build_site_data.py). */
+function renderPanic() {
+  const P = S.data.panic_rebalancing;
+  if (!P) { document.getElementById('panic').hidden = true; return; }
+  const ids = ['conservative', 'core', 'growth'];
+  const pts = (v) => `${v > 0 ? '+' : '−'}${Math.abs(v * 100).toFixed(1)}`;
+  const list = (o, sign) => Object.entries(o).filter(([, v]) => sign * v > 0.0049).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+    .map(([k, v]) => `${k} ${pts(v)}`).join(zh() ? '，' : ', ');
+  const head = `<tr><th scope="col">${esc(t('panic_th_fall'))}</th>${ids.map((m) => `<th scope="col">${esc(t(`model_${m}`))}</th>`).join('')}</tr>`;
+  const rows = P.falls.map((f) => {
+    const cells = ids.map((m) => {
+      const x = P.models[m].falls[f.id], tgt = P.models[m].target_stocks;
+      const band = x.rebalances.filter((r) => r.kind === 'band');
+      const lines = band.length ? band.map((r) => `<p class="panic__trade">${esc(t('panic_trade', { d: dLong(r.date), buys: list(r.trades, 1), sells: list(r.trades, -1) }))}</p>`).join('')
+        : `<p class="panic__none">${esc(t('panic_none'))}</p>`;
+      return `<td data-label="${esc(t(`model_${m}`))}"><p class="panic__low">${esc(t('panic_at_low', { v: pct(x.lowest_stocks, 1), t: pct(tgt, 0) }))}</p>${lines}</td>`;
+    }).join('');
+    return `<tr><th scope="row">${esc(fallName(f.low))}<span class="panic__dates">${esc(dLong(f.peak))} → ${esc(dLong(f.low))}</span></th>${cells}</tr>`;
+  }).join('');
+  const tb = document.getElementById('panic-table');
+  tb.querySelector('thead').innerHTML = head;
+  tb.querySelector('tbody').innerHTML = rows;
+  document.getElementById('panic-cap').textContent = t('panic_h');
+}
+
 /* ================================================================== BUILDER */
 const PRESETS = {
   conservative: { stocks: 20, cash: 35, treasuries: 15, gold: 15, trend: 15 },
@@ -1599,7 +1624,7 @@ function renderAll() {
   renderHero(); renderHeroNumbers();
   renderExControls(); renderExplorer();
   renderFalls();
-  renderModels();
+  renderModels(); renderPanic();
   renderBuilderControls(); renderBuilder();
   renderFundControls(); renderFunds();
   renderTest(); renderCaveats(); renderMethod();
