@@ -200,6 +200,7 @@ export const STR = {
     disc_h: 'Disclaimer',
     ft_data: 'Data to {d}',
     ft_disc: 'Not investment advice. Historical, computed with hindsight; past performance does not predict future returns. Consider an MAS-licensed financial adviser.',
+    links_private: 'The full research reports behind these numbers are kept in a private repository.',
     ft_licence: 'Built from the repo’s frozen prices (Yahoo Finance, dividend-adjusted) and audited reports (<a href="{repo}">source on GitHub</a>). The repository has no open-source licence file, so its content is not licensed for reuse; no third-party code is bundled. Charts drawn by hand in SVG; no tracking.',
     back_top: 'Back to top',
 
@@ -412,6 +413,7 @@ export const STR = {
     disc_h: '免责声明',
     ft_data: '数据截至{d}',
     ft_disc: '非投资建议。历史数据，带有后见之明；过往表现不代表未来回报。可咨询受新加坡金融管理局（MAS）监管的持牌财务顾问。',
+    links_private: '这些数字所依据的完整研究报告存放在私有代码仓库中。',
     ft_licence: '基于本项目冻结的价格数据（雅虎财经，经股息调整）和经审核的报告构建（<a href="{repo}">GitHub 源代码</a>）。代码仓库没有开源许可证文件，因此其内容未获授权转用；页面未捆绑任何第三方代码。图表用 SVG 手工绘制；不做任何追踪。',
     back_top: '回到顶部',
 
