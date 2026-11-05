@@ -41,6 +41,13 @@ CATEGORIES = {
 }
 
 
+# Interactive pages that live in their own folder (folder/index.html plus assets),
+# listed under a category. Add a line here when you add one.
+FOLDER_PAGES = {
+    "tqqq-hedge": "deep-dives",
+}
+
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def extract_meta(filepath: Path) -> dict:
@@ -115,6 +122,16 @@ def collect_reports(root: Path) -> list:
             info["meta"]     = meta
             info["url"]      = f"{folder}/{html_file.name}"
             reports.append(info)
+    for folder, category in FOLDER_PAGES.items():
+        page = root / folder / "index.html"
+        if not page.exists():
+            continue
+        info = extract_meta(page)
+        info["folder"]   = category
+        info["meta"]     = CATEGORIES[category]
+        info["url"]      = f"{folder}/"
+        info["filename"] = f"{folder}/"
+        reports.append(info)
     reports.sort(key=lambda r: r["date"] or "0000-00-00", reverse=True)
     return reports
 
