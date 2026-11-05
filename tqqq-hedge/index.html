@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shorting TQQQ through a perpetual: the verified deep dive</title>
+<meta name="date" content="2026-11-04">
+<meta name="description" content="What hedging spot QQQ with a short TQQQ perpetual really earned over 2010–2026, after five specialists and two verifiers re-ran every number. Descriptive only; not investment advice.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230e2231'/%3E%3Cpath d='M4 24L12 10l6 8 10-12' stroke='%23f07a45' stroke-width='2.4' fill='none'/%3E%3Cpath d='M4 17h24' stroke='%236cc0f0' stroke-width='2' stroke-dasharray='3 3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+  // Theme and language before first paint (no flash). Storage can throw: wrapped.
+  (function () {
+    var d = document.documentElement, t = null, l = null;
+    try { t = localStorage.getItem('th-theme'); l = localStorage.getItem('th-lang'); } catch (e) {}
+    if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
+    if (l !== 'en' && l !== 'zh') l = (navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    d.setAttribute('lang', l === 'zh' ? 'zh-Hans' : 'en');
+    d.setAttribute('data-lang', l);
+    // Opened from a file:// path the browser blocks the module script before any data is fetched: say so instead of "Loading".
+    if (location.protocol === 'file:') setTimeout(function () {
+      var el = document.getElementById('loading');
+      if (el && !el.hidden) { el.className += ' error'; el.textContent = 'Open this page over http(s): a file:// page cannot load its data. 请通过 http(s) 打开本页：file:// 方式无法加载数据。'; }
+    }, 3000);
+  })();
+</script>
+<script type="module" src="assets/app.js"></script>
+</head>
+<body id="top">
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="masthead">
+  <div class="masthead__row">
+    <a class="brand" href="#top" aria-label="TQQQ hedge">
+      <svg class="brand__mark" viewBox="0 0 40 24" aria-hidden="true"><path class="brand__line" d="M1 20h38"/><path class="brand__up" d="M2 19l9-11 7 8 10-13 10 9"/><path class="brand__flat" d="M1 12h38" stroke-dasharray="3 3"/></svg>
+      <span class="brand__name" data-i18n="brand">TQQQ hedge</span>
+    </a>
+    <nav class="sections" aria-label="Sections" data-i18n-aria="nav_label">
+      <ol>
+        <li><a href="#what" data-i18n="nav_what">The trade</a></li>
+        <li><a href="#explore" data-i18n="nav_explore">Explore</a></li>
+        <li><a href="#growth" data-i18n="nav_growth">Growth</a></li>
+        <li><a href="#funding" data-i18n="nav_funding">Funding</a></li>
+        <li><a href="#decay" data-i18n="nav_decay">Decay</a></li>
+        <li><a href="#years" data-i18n="nav_years">Years</a></li>
+        <li><a href="#recipes" data-i18n="nav_recipes">Recipes</a></li>
+        <li><a href="#caveats" data-i18n="nav_caveats">Caveats</a></li>
+      </ol>
+    </nav>
+    <div class="toggles">
+      <div class="lang" role="group" aria-label="Language / 语言">
+        <button type="button" data-lang-btn="en" lang="en" aria-pressed="true">EN</button><span aria-hidden="true">|</span><button type="button" data-lang-btn="zh" lang="zh-Hans" aria-pressed="false">中文</button>
+      </div>
+      <button type="button" class="theme" id="theme-btn" aria-label="Switch to dark theme">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="theme__sun"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="theme__moon"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div class="hero__text">
+        <p class="eyebrow"><span class="eyebrow__tag" data-i18n="hero_tag">The verified study</span><span data-i18n="hero_q"></span></p>
+        <h1 id="hero-title" class="hero__title" data-i18n-html="hero_title">At the venues’ real terms it earns about what T-bills pay; <em>one recipe is a wash.</em></h1>
+        <h2 class="five__h" data-i18n="five_h">The answer in five lines</h2>
+        <ol class="five" id="five"></ol>
+        <p class="hero__fine" data-i18n="hero_fine"></p>
+        <p class="hero__fine hero__lede" data-i18n="hero_lede"></p>
+        <p class="hero__meta"><span id="hero-data"></span> <a id="hero-repo" href="https://github.com/heyneww/GL-portfolio-exploration/tree/claude/exciting-bohr-etre25/reports/tqqq_short_hedge" data-i18n="hero_repo">The study, scripts and data on GitHub</a></p>
+      </div>
+      <div class="hero__side">
+        <dl class="soundings" id="hero-numbers"></dl>
+        <p class="soundings__note" id="hero-recipe-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 WHAT -->
+  <section class="section section--tint" id="what" aria-labelledby="what-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">01</p>
+        <h2 id="what-h" data-i18n="what_h">What the trade is</h2>
+        <p class="lede" data-i18n="what_lede"></p>
+      </header>
+      <div class="two-col">
+        <div class="prose">
+          <p data-i18n-html="what_p1_html"></p>
+          <p data-i18n-html="what_p2_html"></p>
+          <p data-i18n-html="what_p3_html"></p>
+        </div>
+        <figure class="diagram" aria-labelledby="dg-cap">
+          <div id="diagram" role="img" data-i18n-aria="dg_title"></div>
+          <figcaption id="dg-cap" class="note" data-i18n="dg_title"></figcaption>
+        </figure>
+      </div>
+      <h3 class="sub" data-i18n="assume_h">How the study models it</h3>
+      <dl class="deflist" id="assumptions"></dl>
+      <h3 class="sub" id="glossary-h" data-i18n="glossary_h">Glossary</h3>
+      <dl class="glossary" id="glossary"></dl>
+      <details class="more more--block fold gl-more"><summary id="gl-more-sum"></summary><dl class="glossary" id="glossary-more"></dl></details>
+    </div>
+  </section>
+
+  <!-- 02 EXPLORE -->
+  <section class="section" id="explore" aria-labelledby="explore-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">02</p>
+        <h2 id="explore-h" data-i18n="ex_h">Explore the settings</h2>
+        <p class="lede" id="ex-lede"></p>
+      </header>
+      <div class="ex-strip" id="ex-strip" aria-hidden="true"></div>
+      <div class="controls controls--ex">
+        <div class="control control--wide">
+          <span class="control__label" id="ex-pre-l" data-i18n="ctl_presets">Start from</span>
+          <div class="chips" id="ex-presets"></div>
+          <span class="control__hint" data-i18n="presets_note"></span>
+        </div>
+        <div class="control"><span class="control__label" id="ex-hedge-l" data-i18n="ctl_hedge">Hedge ratio</span><div class="seg" role="radiogroup" aria-labelledby="ex-hedge-l" aria-describedby="ex-hedge-h" id="ex-hedge"></div><span class="control__hint" id="ex-hedge-h" data-i18n="hint_hedge"></span></div>
+        <div class="control"><span class="control__label" id="ex-lev-l" data-i18n="ctl_lev">Margin leverage</span><div class="seg" role="radiogroup" aria-labelledby="ex-lev-l" aria-describedby="ex-lev-h" id="ex-lev"></div><span class="control__hint" id="ex-lev-h" data-i18n="hint_lev"></span></div>
+        <div class="control"><span class="control__label" id="ex-reset-l" data-i18n="ctl_reset">Reset</span><div class="seg" role="radiogroup" aria-labelledby="ex-reset-l" aria-describedby="ex-reset-h" id="ex-reset"></div><span class="control__hint" id="ex-reset-h" data-i18n="hint_reset"></span></div>
+        <div class="control"><span class="control__label" id="ex-fund-l" data-i18n="ctl_funding">Funding a year</span><div class="seg" role="radiogroup" aria-labelledby="ex-fund-l" aria-describedby="ex-fund-h" id="ex-funding"></div><span class="control__hint" id="ex-fund-h" data-i18n="hint_funding"></span></div>
+        <div class="control"><span class="control__label" id="ex-maint-l" data-i18n="ctl_maint">Maintenance margin</span><div class="seg" role="radiogroup" aria-labelledby="ex-maint-l" aria-describedby="ex-maint-h" id="ex-maint"></div><span class="control__hint" id="ex-maint-h" data-i18n="hint_maint"></span></div>
+      </div>
+      <dl class="tiles tiles--big" id="ex-tiles" aria-live="polite"></dl>
+      <p class="ex-sentence" id="ex-sentence"></p>
+      <p class="ex-formula" data-i18n="ex_formula"></p>
+      <dl class="tiles tiles--small" id="ex-tiles2"></dl>
+      <div class="ex-charts">
+        <div class="chart-block">
+          <h3 class="chart-title" data-i18n="ex_bar_title">Return a year, side by side</h3>
+          <div class="chart chart--bars" id="ex-bars" role="img"></div>
+        </div>
+        <div class="chart-block">
+          <h3 class="chart-title" data-i18n="ex_fund_title">The same setting at each funding rate</h3>
+          <div class="chart chart--fund" id="ex-fund" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+          <ul class="legend" id="ex-fund-leg"></ul>
+          <div class="tooltip" id="ex-fund-tip" hidden></div>
+        </div>
+      </div>
+      <p class="warning" role="note" data-i18n-html="ex_note_html"></p>
+    </div>
+  </section>
+
+  <!-- 03 GROWTH -->
+  <section class="section section--tint" id="growth" aria-labelledby="growth-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">03</p>
+        <h2 id="growth-h" data-i18n="gr_h">Growth and drawdown</h2>
+        <p class="lede" data-i18n="gr_lede"></p>
+      </header>
+      <div class="controls">
+        <div class="control"><span class="control__label" id="gr-win-l" data-i18n="ctl_period">Period</span><div class="seg" role="radiogroup" aria-labelledby="gr-win-l" id="gr-window"></div></div>
+        <fieldset class="control control--wide"><legend data-i18n="ctl_series">Portfolios</legend><div class="chips" id="gr-series"></div></fieldset>
+      </div>
+      <p class="note" id="gr-msg" aria-live="polite"></p>
+      <div class="charts" style="position:relative; margin-top:14px">
+        <div class="chart-block">
+          <h3 class="chart-title" data-i18n="growth_title">Growth of $1 (log scale)</h3>
+          <div class="chart chart--growth" id="gr-growth" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+        </div>
+        <div class="chart-block chart-block--under">
+          <h3 class="chart-title" data-i18n="dd_title">Fall below the previous high</h3>
+          <div class="chart chart--dd" id="gr-dd" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+        </div>
+        <div class="tooltip" id="gr-tip" hidden></div>
+        <p class="tip-hint" data-i18n="tip_hint"></p>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="growth-h">
+        <table class="score score--names" id="gr-table"><thead></thead><tbody></tbody></table>
+      </div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <p class="note" id="gr-note"></p>
+      <h3 class="sub" data-i18n="stress_h">The 1999–2010 stress</h3>
+      <p class="sub-lede" data-i18n="stress_s1"></p>
+      <div class="table-wrap table-wrap--tight" tabindex="0" role="region" aria-labelledby="growth-h"><table class="score score--names" id="stress-table"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <p class="note" data-i18n-html="stress_s2_html"></p>
+      <details class="more more--block"><summary data-i18n="stress_full"></summary><p class="prose" data-i18n="stress_p"></p></details>
+    </div>
+  </section>
+
+  <!-- 04 FUNDING -->
+  <section class="section" id="funding" aria-labelledby="funding-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">04</p>
+        <h2 id="funding-h" data-i18n="fu_h">What funding has really paid</h2>
+        <p class="lede" data-i18n="fu_lede"></p>
+      </header>
+      <h3 class="sub" data-i18n="venues_h">The contracts, venue by venue</h3>
+      <p class="prose" id="venues-intro"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="funding-h">
+        <table class="score score--wrap" id="venues-table"><thead></thead><tbody></tbody></table>
+      </div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <div class="prose" id="venues-paras" style="margin-top:18px"></div>
+      <details class="fineprint more"><summary data-i18n="sources_h"></summary><ul class="sources" id="venues-sources"></ul></details>
+
+      <div class="two-col" style="margin-top:36px">
+        <div class="chart-block">
+          <h3 class="sub" style="margin-top:0" data-i18n="fu_chart_h">Annualised funding by venue</h3>
+          <div class="chart chart--venues" id="fu-venues" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+          <ul class="legend" id="fu-venues-leg"></ul>
+          <div class="tooltip" id="fu-venues-tip" hidden></div>
+          <p class="note" data-i18n="fu_chart_note"></p>
+        </div>
+        <div class="chart-block">
+          <h3 class="sub" style="margin-top:0" data-i18n="fu_month_h">Funding collected each month, % of notional</h3>
+          <div class="chart chart--months" id="fu-months" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+          <ul class="legend" id="fu-months-leg"></ul>
+          <div class="tooltip" id="fu-months-tip" hidden></div>
+          <p class="note" data-i18n="fu_month_note"></p>
+        </div>
+      </div>
+
+      <h3 class="sub" data-i18n="fu_half_h"></h3>
+      <p class="prose" data-i18n="fu_half"></p>
+      <h3 class="sub" data-i18n="fu_points_h"></h3>
+      <ul class="points points--fold">
+        <li data-i18n-html="fu_b1_html"></li><li data-i18n-html="fu_b2_html"></li><li data-i18n-html="fu_b3_html"></li>
+        <li data-i18n-html="fu_b4_html"></li><li data-i18n-html="fu_b5_html"></li><li data-i18n-html="fu_b6_html"></li>
+      </ul>
+      <h3 class="sub" data-i18n="btc_h"></h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="funding-h">
+        <table class="score" id="btc-table"><thead></thead><tbody></tbody></table>
+      </div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <h3 class="sub" data-i18n="fu_data_notes_h"></h3>
+      <ul class="points"><li data-i18n="fu_n1"></li><li data-i18n="fu_n2"></li><li data-i18n="fu_n3"></li><li data-i18n="fu_n4"></li></ul>
+    </div>
+  </section>
+
+  <!-- 05 DECAY -->
+  <section class="section section--tint" id="decay" aria-labelledby="decay-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">05</p>
+        <h2 id="decay-h" data-i18n="de_h">What the “decay” really is</h2>
+        <p class="lede" data-i18n-html="de_lede_html"></p>
+      </header>
+      <div class="chart-block">
+        <h3 class="chart-title" data-i18n="de_chart_h"></h3>
+        <div class="chart chart--decay" id="de-chart" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+        <ul class="legend" id="de-leg"></ul>
+        <div class="tooltip" id="de-tip" hidden></div>
+        <p class="note" data-i18n="de_chart_note"></p>
+      </div>
+      <h3 class="sub" data-i18n="de_hold_h"></h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="decay-h"><table class="score" id="de-hold"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <p class="note" data-i18n="de_key"></p>
+      <h3 class="sub" data-i18n="de_table_h"></h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="decay-h"><table class="score" id="de-cuts"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <h3 class="sub" data-i18n="be_h"></h3>
+      <p class="sub-lede" data-i18n="be_note"></p>
+      <div class="table-wrap table-wrap--narrow" tabindex="0" role="region" aria-labelledby="decay-h"><table class="score" id="be-table"><thead></thead><tbody></tbody></table></div>
+      <p class="note" id="be-range"></p>
+      <h3 class="sub" data-i18n="de_points_h"></h3>
+      <ul class="points points--fold points--lead">
+        <li data-i18n-html="de_b1_html"></li><li data-i18n-html="de_b2_html"></li><li data-i18n-html="de_b3_html"></li><li data-i18n-html="de_b4_html"></li>
+        <li data-i18n-html="de_b5_html"></li><li data-i18n-html="de_b6_html"></li><li data-i18n-html="de_b7_html"></li>
+      </ul>
+      <h3 class="sub" data-i18n="liq_h"></h3>
+      <ul class="points points--fold">
+        <li data-i18n-html="liq_b1_html"></li><li data-i18n-html="liq_b2_html"></li><li data-i18n-html="liq_b3_html"></li><li data-i18n-html="liq_b4_html"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 06 YEARS -->
+  <section class="section" id="years" aria-labelledby="years-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">06</p>
+        <h2 id="years-h" data-i18n="yr_h">Year by year, and in each crash and rally</h2>
+        <p class="lede" data-i18n="yr_lede"></p>
+      </header>
+      <h3 class="sub" data-i18n="yr_table_h"></h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="years-h"><table class="score" id="yr-table"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <p class="note" data-i18n-html="yr_note_html"></p>
+      <h3 class="sub" data-i18n="ep_h"></h3>
+      <p class="sub-lede" data-i18n="ep_note"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="years-h"><table class="score score--ep" id="ep-main"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <h3 class="sub" data-i18n="ep_stress_h"></h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="years-h"><table class="score score--ep" id="ep-stress"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+    </div>
+  </section>
+
+  <!-- 07 RECIPES -->
+  <section class="section section--tint" id="recipes" aria-labelledby="recipes-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">07</p>
+        <h2 id="recipes-h" data-i18n="re_h">The recipes and what they give up</h2>
+        <p class="lede" data-i18n="re_lede"></p>
+      </header>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="recipes-h"><table class="score score--names score--re" id="re-table"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <ul class="points points--fold">
+        <li data-i18n-html="re_b1_html"></li><li data-i18n-html="re_b2_html"></li><li data-i18n-html="re_b3_html"></li>
+        <li data-i18n-html="re_b4_html"></li><li data-i18n-html="re_b5_html"></li><li data-i18n-html="re_b6_html"></li>
+      </ul>
+      <h3 class="sub" data-i18n="rc_h"></h3>
+      <p class="sub-lede" data-i18n="rc_intro"></p>
+      <div class="controls" style="margin-top:0">
+        <div class="control"><span class="control__label" id="rc-fund-l" data-i18n="ctl_rc_funding">Funding a year</span><div class="seg" role="radiogroup" aria-labelledby="rc-fund-l" id="rc-funding"></div></div>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="recipes-h"><table class="score score--rc" id="rc-table"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <p class="note" id="rc-note"></p>
+      <div class="prose" style="margin-top:18px">
+        <p data-i18n-html="rc_p3_html"></p>
+        <div class="rc-p2"><strong data-i18n="rc_p2_lead"></strong> <details class="more"><summary data-i18n="more_numbers"></summary><span data-i18n="rc_p2"></span></details></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 CAVEATS -->
+  <section class="section" id="caveats" aria-labelledby="caveats-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">08</p>
+        <h2 id="caveats-h" data-i18n="cv_h"></h2>
+        <p class="lede" data-i18n="cv_lede"></p>
+      </header>
+      <h3 class="sub" data-i18n="dr_h"></h3>
+      <ol class="points points--num points--fold" id="drawbacks"></ol>
+      <h3 class="sub" data-i18n="ns_h"></h3>
+      <details class="more more--block fold"><summary id="ns-sum"></summary>
+        <p class="sub-lede" id="ns-intro"></p>
+        <ul class="points points--x" id="ns-list"></ul>
+        <div class="disagree" id="ns-dis"></div>
+      </details>
+      <h3 class="sub" data-i18n="un_h"></h3>
+      <ul class="points points--q" id="unknowns"></ul>
+      <h3 class="sub" data-i18n="pg_h"></h3>
+      <details class="more more--block fold"><summary id="pg-sum"></summary>
+      <ul class="points" id="pg-list"><li data-i18n="pg_1"></li><li data-i18n="pg_2"></li><li data-i18n="pg_3"></li><li><span data-i18n="pg_4"></span> <details class="more"><summary data-i18n="pg_4_which"></summary><span data-i18n="pg_4_more"></span></details></li><li data-i18n="pg_5"></li><li data-i18n="pg_6"></li><li data-i18n="pg_7"></li><li data-i18n="pg_8"></li><li data-i18n="pg_9"></li></ul>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <p class="footer__brand"><span data-i18n="brand">TQQQ hedge</span> · <span id="ft-data"></span></p>
+    <p class="footer__disc"><span data-i18n="ft_disc_en" lang="en"></span><br><span data-i18n="ft_disc_zh" lang="zh-Hans"></span></p>
+    <p data-i18n-html="ft_source_html"></p>
+    <p><a href="../" data-i18n="ft_index">All research pages</a><br><a href="#top" data-i18n="back_top">Back to top</a></p>
+  </div>
+</footer>
+<div class="loading" id="loading" role="status"><span data-i18n="loading">Loading data…</span></div>
+<noscript><p class="noscript">This page needs JavaScript to draw its charts. 本页需要启用 JavaScript 才能显示图表。</p></noscript>
+</body>
+</html>
