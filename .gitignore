@@ -1,0 +1,5 @@
+# QA screenshots are working files, never published
+tqqq-hedge/_qa/
+
+# Python caches
+__pycache__/
