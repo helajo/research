@@ -1,0 +1,719 @@
+# 用永续合约做空 TQQQ 对冲现货：核查后的深度报告 · Shorting TQQQ through a perpetual: the verified deep dive
+
+写于 2026-11-04 · Written 2026-11-04. 数据截至 2026-10-27 · Data to 2026-10-27.
+
+五位专题研究者（资金费率、爆仓与保证金、磨损的市场状态、组合设计、代码审计）复查了 [README.md](README.md) 和
+[tables.md](tables.md) 的研究；两位独立核查者重算了每一个数字；一位评论者找出了遗漏和互相矛盾的地方；代码里被证实的
+缺陷已经修复，表格已经重新生成。脚本、数据和笔记在 `deep_dive/<专题>/` 和 `deep_dive/_verify/` 里。本文的每个数字都来自
+这些核查过的材料或重新生成的 tables.md。仅为描述，不构成投资建议。
+
+Five specialists (funding, liquidation and margin, decay regimes, portfolio design, code audit) re-examined the study in
+[README.md](README.md) and [tables.md](tables.md); two independent verifiers re-ran every number; a critic looked for gaps
+and contradictions; the confirmed code defects were fixed and the tables regenerated. Their scripts, data and notes are in
+`deep_dive/<slug>/` and `deep_dive/_verify/`. Every number here comes from that verified material or from the regenerated
+tables.md. Descriptive only; not investment advice.
+
+---
+
+# 中文版
+
+## 五行结论
+
+1. **按交易所实际给出的保证金和资金费率**（维持保证金 2.5%，如币安和 Bitget；资金费率年化约 +5%），1/3 对冲的年化收益
+   大约等于国库券（2010 到 2026 年 2.6% 到 2.9%），比"少拿一点 QQQ"的同波动率组合每年少 0.6 到 1.1 个点，最近三年
+   少 2 到 3 个点。原报告的基准（1/3 对冲、5 倍杠杆）在这个条件下亏钱：年化 −0.7%，比组合少 5.1 个点，每年爆仓 4.5 次。
+2. **唯一不明显输给"少拿 QQQ"的配方**：空头名义价值为现货的 0.20，2 倍逐仓保证金，每月重置。在 2.5% 维持保证金、+5%
+   资金费率下，2010 到 2026 年比同波动率的 QQQ 加国库券组合多 0.3 个点，最近三年少 0.5 个点，基本打平；只有资金费率维持在
+   +10% 左右才能多出约 1.3 个点，而这只在 2026 年 10 月中旬以后出现过。
+3. **全部超额收益来自资金费率。** 基金的"磨损"（固定仓位持有一个月，比 −3 倍 QQQ 每年多赚名义价值的 7.4%）大部分是基金自己的
+   管理费和融资成本（4.7 到 5.3 个点），按 1/3 对冲收到的钱和同样资金买国库券差不多；其余 2.0 到 2.7 个点是赌指数震荡，
+   201 个月中有 80 个月为负。5 倍杠杆的爆仓每年约少赚 1 个点，不是原报告说的"损失 5% 到 6% 的净值"。
+4. **如果还想做**：空头名义价值为现货的 0.20（或 0.25），2 倍逐仓保证金，每月重置，选在你的仓位大小下维持保证金不高于 2.5%
+   的交易所（币安、Bitget 10 万 USDT 以内、MEXC 2%、OKX 2%、Gate 1%）。TQQQ 要在一个月内从上次重置价涨约 46% 到 48%
+   才会爆仓（16.7 年里两次），5 倍杠杆是 17% 到 19%（每年三到四次）。不要在 KuCoin 的分档下做 5 倍：10 万美元的账户最多
+   4 倍，年化 −9.9%。
+5. **预期收益是国库券加上资金费率超过约 3% 的部分**（0.20 对冲、2 倍杠杆在 2010 到 2026 年的盈亏平衡点；按现在的利率是
+   6% 到 7%），并接受 2010 年的 1 美元只变成 4.72 美元，而 QQQ 变成 18.89 美元。交易所、自动减仓、下架、税务和托管问题
+   没有任何回测能定量，足以抹掉不到一个点的优势。
+
+## 1. 合约到底是什么
+
+TQQQ 永续合约至少在八家交易所交易，都是 2025 年 10 月以后上线的，所以资金费率的历史最多一年，多数只有四到七个月。
+所有合约每 8 小时结算一次资金费率。各家 API 在 2026-11-04 重新抓取，数字如下（第一档；分档随名义价值变化）：
+
+| 交易所 | 合约 | 上线（UTC） | 维持保证金 / 最大杠杆（第一档） | 资金费率每 8 小时上限 | 吃单手续费 | 备注 |
+|---|---|---|---|---|---|---|
+| Gate | TQQQX_USDT | 2025-10-25 | 1% / 50 倍，风险限额 20 万 USDT 以内（25 万以内 1.5%，30 万 2.3%，40 万 3%，50 万 4%） | ±0.02%（一年最多约 22%） | 0.075% | 指数是 xStocks 代币，不是纽交所价格；公告写 20 倍，API 现为 50 倍 |
+| Bitget | TQQQUSDT | 2026-03-30 | 2.5% / 20 倍，10 万 USDT 以内；4% / 15 倍到 50 万 | ±1% | 0.06% | 强平手续费 0.06%；利率分量未公开 |
+| KuCoin | TQQQUSDTM | 2026-05-18 | 5% / 10 倍，5 千 USDT 以内；6.3% / 8 倍到 8 千；8.4% / 6 倍到 1 万；10% / 5 倍 1 到 3 万；12.5% / 4 倍 3 到 5 万；16.7% / 3 倍 5 到 25 万 | ±2% | 0.06% | 利率分量 0 |
+| MEXC | TQQQ_USDT | 2026-06-16 | 2%，单一档到约 190 万美元 / 20 倍 | ±3% | 0.02% | 利率分量未公开 |
+| Bybit | TQQQUSDT | 2026-06-24 | 20 倍（分档表无法从本环境读取） | 2.5% | 不详 | API 有地区限制，只有公告 |
+| Aster | TQQQUSDT | 2026-06-29（06-27 起有为 0 的资金费率记录） | 不详 | 一位核查者读到 ±2%，另一位认为 API 未公开 | 不详 | 93% 的结算恰好为 0，盘口薄 |
+| 币安 | TQQQUSDT | 2026-06-29 | 2.5% / 20 倍 | ±2% | 不详 | 利率分量 0；强平手续费 1.5%；周末指数冻结 |
+| OKX | TQQQ-USDT-SWAP | 2026-07-02 | 2% / 10 倍，700 张以内（约 4.4 万美元） | ±1% | 不详 | 利率分量 0；触及上限时改为每小时结算 |
+| Hyperliquid | 无 | | | | | 11 个永续市场里都没有 TQQQ |
+
+**资金费率的机制。** 币安的公式是：资金费率 = 溢价指数 + clamp(利率 − 溢价指数, ±0.05%)。股票永续的利率分量设为 0，
+所以只要 8 小时平均溢价在 ±0.05% 以内，资金费率就恰好是 0：币安 TQQQ 上线以来 68% 的结算是 0；周末指数冻结，周末结算
+84% 到 85% 是 0，按结算时间算的周末均值约为 0（年化 −0.4%），但非零的周末结算和工作日一样大。这些机制在币安、OKX、Gate、
+KuCoin（以及一位核查者看到的 Aster）得到核实；Bitget、MEXC 不公开利率分量，Bybit 没有查到。
+
+**哪一个维持保证金是"真实的"没有定论**，而报告的标题数字取决于它：Gate 给 1%（但资金费率封顶 ±0.02%，指数是代币），
+MEXC 和 OKX 给 2%，币安和 Bitget 给 2.5%，KuCoin 5% 到 16.7%。所以本文按维持保证金分档给出结果，不选一个"现实"的值。
+
+**仓位能做多大。** Bitget 第一档（2.5%）对应 1/3 对冲约 30 万美元的账户、0.2 对冲约 50 万；Gate 的 1% 档约 60 万 /
+100 万；MEXC 的 2% 约 500 万；KuCoin 只在 5 千 USDT 名义价值以内允许 5 倍（约 1.5 万美元的账户）。没有人检查过持仓量，
+也没有人测过 10 万到 100 万美元的空头能否按报价手续费成交。
+
+来源：`deep_dive/funding/venues.csv`；Gate 分档 `https://api.gateio.ws/api/v4/futures/usdt/risk_limit_tiers?contract=TQQQX_USDT`；
+KuCoin 分档 `https://api-futures.kucoin.com/api/v1/contracts/risk-limit/TQQQUSDTM`；Bitget 分档
+`https://api.bitget.com/api/v2/mix/market/query-position-lever?symbol=TQQQUSDT&productType=USDT-FUTURES`；币安
+`fapi/v1/exchangeInfo`、`fapi/v1/fundingInfo`；OKX `api/v5/public/instruments`；MEXC `contract/detail`；Bybit 公告
+`announcements.bybit.com`（2026-06-24，20 倍，每 8 小时，上限 2.5%）；币安广场帖 314524912786802（利率 0%，±2%，8 小时固定，
+周末指数冻结）；币安资金费率 FAQ 360033525031（±0.05% 夹取）。Bitget 的标记价格文章（12560603845668）确认休市期间指数最多偏离
+上一个外部收盘价 10%，标记价格夹在指数的 5% 以内是对已列出的 34 个交易对（含 QQQUSDT）而言，TQQQUSDT 不在表上，
+通用文本写"通常 3%"。KuCoin 的股票永续夹取公式在 `kucoin.com/support/48142946141603`。
+
+## 2. 资金费率实际付了多少
+
+- **共同窗口 2026-08-06 到 11-04（三个月）**，年化均值（费率 × 3 × 365，不复利）：Gate 4.6%，币安 4.8%，MEXC 4.8%，
+  Bitget 5.9%，OKX 7.5%，KuCoin 5.2%（专题研究者的 6.7% 用的 CSV 少了 105 次结算，补齐后是 5.2%）。币安上线以来 4.0%。
+- **按月（币安）**：7 月 2.7%，8 月 −0.09%（整月；从 8 月 6 日起算 −0.06%），9 月 +0.11%，10 月 +0.82%（年化 9.6%）。
+  最近 15 天：币安 0.45%，MEXC 0.45%，Bitget 0.39%，OKX 0.82%；11 月头四天年化 30% 到 40%。最近 30 天年化：币安 13.1%，
+  MEXC 13.0%，OKX 16.2%，Bitget 9.5%。
+- **群里的"半个月 0.5%"**：年化是 12.2%（0.5% × 24 = 12.0%，复利 12.7%），不是 14%。它和最近 15 天相符，但不是上线以来
+  最好的两周：币安最好的 15 天是 10 月 9 日到 23 日的 0.685%，最近 15 天在 120 个滚动窗口里排第 14；0.5% 以上的两周只在
+  10 月中旬以后出现过，约三周，而四个月的平均水平是每两周 0.16% 到 0.20%。
+- **方向没有定论。** README 说"暴跌时资金费率转负"。BTC 永续确实如此：币安 BTC 在 2020 年 3 月 8 到 20 日的崩盘窗口年化
+  −21%（整月 −6.3%），FTX 两周（2022-11-07 到 21）−7.9%，但专题研究者的 7 个崩盘窗口里只有这两个为负，BTC 资金费率和
+  10 日涨幅的相关系数是 +0.39（涨得越多费率越高）。2026 年的股票永续到目前为止相反：币安 TQQQ 日资金费率和 QQQ 10 日涨幅
+  的相关系数 −0.29（83 到 88 个交易日，95% 区间 [−0.45, −0.09]，只有约 9 个独立窗口）；QQQ 跌 3% 到 7% 之后的十天付空头
+  年化 16%，涨 3% 到 7% 之后约 −2%；2026 年两次最大的 10 日 TQQQ 下跌（到 7 月 29 日 −22.4%，到 10 月 23 日 −18.4%）
+  付了 +5.9% 和 +16.5%。但"急涨时转负"主要靠 2026 年 4 月（币安 QQQ 永续上线当月，均值 −34%）：去掉 4 月，QQQ 永续的相关系数
+  只有 −0.05；而到 6 月 10 日的 −15.2% 下跌（币安上线前）KuCoin 年化 −26.6%，正是 README 担心的模式。样本是四到七个月的新
+  合约，两种模式都没有确立。
+- **只有水平重要，形状几乎无关。** 用研究的模拟器跑 2010 到 2026 年的逐日资金费率路径（常数情形精确复现）：任何重新定中到
+  10% 均值的路径（随行情变化、崩盘为负、急涨为负、按 BTC/ETH 形状）把 1/3 对冲的年化最多移动约 0.5 个点。按观察到的常数
+  3.8% 和 5.9%，1/3 对冲年化 1.9% 到 3.4%（5 倍 / 3 倍），都低于 3.6% 到 3.7% 的同波动率组合。
+- **实际收到的 2026 年窗口**（2026-06-25 到 10-27，87 个交易日，QQQ −0.15%）：用币安实际资金费率（按日历日正确计算）
+  1/3 对冲收益 +0.16%（5 倍）/ +0.74%（3 倍），国库券 +1.31%。专题研究者的 +0.34% / +0.90% 把工作日费率填到了周末，多算了
+  约 70%。但同一窗口按常数 10% 也只有 +0.84%（5 倍），因为一次爆仓花掉 1.31%，所以这个窗口说明不了资金费率的水平。
+- **BTC 的先例不支持"资金费率会逐年衰减"**：币安 BTC 年化 2020 年 17.2%，2021 年 30.6%，2022 年 4.2%，2023 年 7.9%，
+  2024 年 11.9%，2025 年 5.1%，2026 年 3.1%，是周期性的，2020 到 2026 年均值 11.6%。
+
+来源：`deep_dive/funding/`（`funding_stock_perps.csv`、`venue_stats.csv`、`scenarios.csv`、`analyze_funding.py`），
+`deep_dive/_verify/funding-*/`、`_verify/corrections-funding/`。
+
+## 3. 爆仓的真实成本（诚实的算法）
+
+- **"损失保证金"不是额外成本。** 模拟器在爆仓时把到爆仓价的价格损失计入"空头盈亏"，把 1% 的维持保证金残余计入"手续费"，
+  然后又把整笔被清零的保证金记进"损失保证金"。净值恒等式 净值变化 = 现货收益 + 利息 + 资金费率 + 空头盈亏 − 手续费 不含
+  这一项（残差 1e-15）。README 的"每年损失 5% 到 6% 的净值，磨损都花在续杯上"和分年表里的"损失保证金"列（2020 年 −17.0%）
+  都是重复计数。表格已改为备注列"Margin wiped (memo)"，不要再相加。
+- **爆仓规则的真实成本**：关掉爆仓（无限补仓，不可交易的反事实）后基准从 4.01% 升到 5.02%：5 倍杠杆每年约 1.0 个点，
+  3 倍 0.2，2 倍 0.1，10 倍 3.7 到 3.8，0.2 对冲加 5 倍 0.6。现金成本是 1% 的残余（期初净值的 1.48% / 年）加每次爆仓的两笔
+  吃单手续费（0.07% / 年）。可交易的比较是表里的 3 倍行：4.6% 对 4.0%，5 倍杠杆多付 0.6 个点。
+- **爆仓有多频繁**（1/3 对冲、每月重置、+10%、维持保证金 1%）：5 倍 16.7 年 50 次，分布在 47 个月，每年 3.0 次；静态的
+  18.8% 线在 200 个月里被 TQQQ 的月内最高价越过 56 次（28% 的月份，每年 3.4 次；模拟少一些是因为收到的资金费率把线抬到约
+  19.6%）；2020 年 8 次，2023 年 6 次；10 个交易日内成对出现的只有 3 次。3 倍的线是 32%，被越过 12 个月（每年 0.7 次）；
+  2 倍是 48.5%，16.7 年只有 2 次（2010-09-30、2026-04-24）。数字的口径每次都要说清：3.4 是静态线，3.0 是 +10% 模拟，
+  3.54 是资金费率 0，3.2 到 3.3 是 24 小时代理，4.1 到 4.5 是 2.5% 维持保证金。
+- **不是插针，是整月的累计涨幅。** 50 次爆仓里，从前一日收盘到爆仓价的中位数只有 2.8%，52%（26 次）当天收盘回到线下，
+  48% 收在线上（专题研究者把方向写反了），8 次（16%）开盘就已过线。但"一半是本可以撑到收盘的插针"不成立：这 26 次里有
+  23 次按收盘价计算也会在月底重置前爆仓（19 次就在下一个交易日），只有 3 次能撑到重置（2012-08-21、2022-03-29、2023-02-02）。
+  杀死仓位的是当月的累计上涨，不是当天的尖峰。
+- **维持保证金分档是最大的机械修正。** 用研究自己的模拟器改维持保证金：5 倍在 Bitget 的 2.5% 下，基准从 4.0% 跌到 1.3%
+  （比组合少 3.1 个点，每年 4.1 次爆仓）；3 倍从 4.6% 到 4.2%（+0.5）；2 倍 4.5% 到 4.4%。KuCoin 的分档下，10 万美元账户
+  1/3 对冲只能用 4 倍（12.5%）：按分档逐日变化模拟年化 −9.9%，最大回撤 −83%（固定在 12.5% 则是 −26%、−99%）；5 倍在任何
+  账户规模都亏钱，3 倍从约 3 万美元起亏（1 万美元的账户 3 倍还有 +2.4%，比组合少 2.0）。Gate 的 1% 档：10 万美元账户 5 倍
+  复现研究的基准（3.7%，含 0.075% 吃单费，和组合持平），50 万美元账户 2.8%（−1.2）；MEXC 的 2%：5 倍 2.45%（−1.7），
+  3 倍 4.6%（+1.0）。
+- **24 小时交易的低估不大。** 用纳斯达克 100 期货（NQ=F，约 23 小时，对 TQQQ 的贝塔 2.88，相关 0.977）的最高价乘 3 作为
+  全天候代理：5 倍从 3.0 升到 3.3 次 / 年（去掉两次换月假象后 3.2），年化 4.0% 到 3.8%，比组合 +0.3 变成约 0 到 −0.1；
+  3 倍不变（0.7）；2 倍从 2 次变 3 次。真实永续的小时 K 线（Bitget 151 个交易日，KuCoin 118 个）：盘外最高价高于当日纽交所
+  最高价的占 53% 到 55%，高出 2% 以上只有 25 天，而且其中 21 到 22 天是纽交所跳空低开日（永续还没跌下来）；最大的隔夜
+  涨幅是 2026-04-08 的 +11.3%（当日纽交所最高 +10.8%）；周末小时波幅中位数 0.2% 到 0.3%，最大 2.95%（Bitget）/ 6.95%
+  （KuCoin）。样本里没有崩盘，代理也不是标记价格。
+- **手续费和滑点只在 5 倍重要。** Bitget 公开的强平手续费 0.06% 让 5 倍基准从 4.01% 变 3.95%（+0.25 对组合）；每次续杯
+  0.5% 的滑点（假设，未测量）到 3.5%（−0.3）；0.5% 的压力强平费（公开费率的约八倍）到 3.1%，两者一起 2.4%（−1.7）。
+  3 倍在同样压力下仍有 4.4% 到 4.5%（比组合多 0.8 以上）。
+- **"等下次重置再开"看起来更好（5 倍 5.4% 对 4.0%）只因为 11% 的交易日没有对冲**：波动率 6.7% 对 2.4%，最大回撤 −12.8%
+  对 −2.4%，比它自己的同波动率组合少 2.0 个点；逐年差异从 +8.9（2021）到 −10.7（2026，十个月），符号由爆仓后 TQQQ 的走向决定。
+- **2020 年的 8 次爆仓**清零的保证金合计相当于前一日净值的 16.3%，但那是毛数（每笔里都含有现货抵消掉的空头亏损）；对冲组合
+  2020 年全年 +4.2%，2023 年 +3.5%。
+
+来源：`deep_dive/code_audit/`（`rederive.py`、`test_perp_hedge_audit.py`，19 个测试通过），`deep_dive/liquidation_margin/`
+（`sensitivity.py`、`thresholds.py`、`clusters.py`、`gaps.py`、`perp_hours.py`），`_verify/liquidation_margin-*/`、
+`_verify/code_audit-*/`。
+
+## 4. "磨损"到底是什么
+
+- **总量复现。** 固定仓位的 TQQQ 空头每月重置，2010-02 到 2026-10 比 −3 倍 QQQ 每年多赚名义价值的 7.40%（代码审计的
+  口径 7.35%）；2010 到 2019 年 3.95% 到 3.99%，2020 到 2026 年 12.28% 到 12.34%。
+- **怎么拆取决于定义。** README 的"4.8 个点费用和融资 + 2.6 个点复利"来自仓里重建基金的成本模型（`portfolio_lab/leveraged.py`：
+  管理费 0.84% + 2 × (国库券 1.49% + 拟合利差 0.51%) = 4.84% / 年），可以复现（4.82 + 2.53）。按真实基金逐日相对 3 倍 QQQ
+  的差额算是 5.32 + 2.03；按二阶公式 3(Σr² − R²) 是 4.69 + 2.66；按无成本的日度重置 3 倍基金算是 5.02 + 2.33。所以：
+  成本 4.7 到 5.3 个点，复利 2.0 到 2.7 个点。管理费 0.84% 是仓里的常数，ProShares 现在公布的是毛 0.94% / 净 0.78%。
+- **复利项不是稳定收入。** 它是每年 12.64% 的日度重置衰减减去 10.29% 的趋势回吐，201 个月里 80 个月为负（41%），
+  月均 +0.17%，t 值 1.7：点估计为正但和 0 分不开；去掉 2020 年 3 月降到 +1.5% / 年，去掉最大的三个月降到 +0.8%。
+  对带漂移的随机游走，它的期望约 −0.9% / 年。最差的月份是 2026 年 4 月（QQQ +15.7%，TQQQ +52.4%，空头损失名义价值的 5.4%）。
+- **持有期越长越少，但不是单调的**：每周重置 +1.45% / 年，每月 +2.35%，每季 −0.44%（按 README 的"总差额减模型成本"口径是
+  +0.40%），按日历年 −6.20%。按日历年 TQQQ 在 17 年里有 7 年跑赢 3 倍 QQQ：2013 年多 29.8 个点（TQQQ +139.7% 对 +109.9%），
+  2017 年 20.1，2019 年 17.0，2022 年 18.6（下跌趋势也回吐：QQQ −32.6%，TQQQ −79.1% 对 −97.7%），2023 年 33.5。
+- **2020 到 2026 年磨损变大主要是利率，不是震荡。** 两个时期差 8.3 个点：5.7 个点是费用和融资项（国库券从 0.56% 升到 2.85%，
+  基金借两个单位：2 × 升幅 = 4.6 个点；其余 1.1 是跟踪残差），2.7 个点是净复利项（衰减多了 9.4 个点，但趋势回吐也多了 6.7；
+  QQQ 波动率 17% 对 25%）。2023 年每月口径的差额 +9.3% 全部是成本项（13.9 = 2 × 5.04% 国库券 10.1 + 费用利差 1.9 +
+  跟踪 2.0），复利项是 −4.7%。
+- **对 1/3 对冲意味着什么。** 空头名义价值在重置时约为净值的 0.30，收到的费用加融资约为净值的 1.4% 到 1.6% / 年，
+  和同样资金买国库券（1.5%）差不多；而比较用的组合除了 87% 到 88% 的国库券还有 12% 到 13% 的 QQQ，后者贡献了它 3.7% 到
+  3.9% 年化里的 2.2 到 2.5 个点。所以没有资金费率时，全额对冲在手续费和爆仓之前就没有优势。
+- **VIX 不是开关。** 按月初 VIX 分组，空头相对 −3 倍的收益 VIX<15 时 +6.7% / 年，15 到 20 +6.6%，20 到 30 +4.2%
+  （复利项 −0.4，56% 的月份跑赢；t 值 0.95，和其他组分不开），≥30 +26.4%（13 个月，其中 2020 年 3 月一个月贡献 16.3%，
+  去掉是 +11.4%）。按季度 20 到 30 组 −6.6% / 年（12 个季度，两个季度决定，去掉两者 +1.4%；季度起点改为 2、5、8、11 月
+  则 +10.7%）。按期内平均 VIX 分组，20 到 30 反而是季度最好的组（+8.8%）。结论只有"月初 VIX 预测不了磨损"。
+- **盈亏平衡资金费率**（相对同波动率组合，2010 到 2026 年）：1/3 对冲 5 倍 9.0%，3 倍 6.5%，2 倍 6.4%；0.2 对冲 5 倍 5.9%，
+  3 倍 2.8%，2 倍 2.7%。分时期：2010 到 2019 年 7.3% / 5.2%（1/3 对冲 5 倍 / 3 倍），2020 到 2026 年 10.8% / 7.3%。
+  逐年从 −14.2%（2022 年，付资金费率也赢）和 −9.6%（2011）到 +23.5%（2020）和 +27.5%（2023），和当年 QQQ 涨幅的相关系数
+  +0.83 到 +0.84，和波动率 −0.08（但控制涨幅后 5 倍的偏相关 +0.34：波动通过爆仓抬高平衡点；2 到 3 倍约 0）。决定平衡点的
+  是趋势，这在 2 到 3 倍成立，5 倍还要加上爆仓。
+
+来源：`deep_dive/decay_regimes/`（`decay_decomposition.py`、`breakeven_funding.py`、`cuts.csv`），`deep_dive/code_audit/rederive.py`，
+`_verify/decay_regimes-*/`、`_verify/corrections-decay_regimes/`。
+
+## 5. 配方与代价
+
+| 配方 | 年化 | 波动率 | 最大回撤 | 最差月 | 夏普 | 爆仓 / 年 | 1 美元变成 | 平衡资金费率 2010-26 | 最近 3 年窗口 |
+|---|---|---|---|---|---|---|---|---|---|
+| A：对冲 0.20，2 倍，每月，+10% | 9.8% | 7.7% | −11.2% | −5.2% | 1.05 | 0.12 | 4.72 | 2.7% | 6.1%（到 2026-08）/ 6.8%（到 2026-10） |
+| B：对冲 0.25，2 倍，每月，+10% | 7.7% | 5.2% | −6.6% | | 1.17 | 0.12 | 3.46 | 3.1% | 6.5% / 7.3% |
+| C：对冲 1/3，3 倍，每月，+10% | 4.6% | 2.3% | −2.3% | −0.9% | 1.33 | 0.7 | | 6.5% | 10.3% / 11.3% |
+| 基准：对冲 1/3，5 倍，每月，+10% | 4.0% | 2.4% | −2.4% | −1.3% | 1.01 | 3.0 | 1.93 | 9.0% | 10.3% |
+| QQQ | 19.3% | 20.6% | −35.1% | −13.6% | 0.89 | | 18.89 | | |
+
+- **资金费率每多 1 个点，A 多 0.19 个点，B 多 0.23 个点**；相对同波动率组合：费率 0 时 A −0.5、B −0.7；+5% 时都 +0.4；
+  +14% 时 +2.2 / +2.6。2 倍杠杆下 TQQQ 要在一个月内涨 48.5%（1% 维持保证金；2.5% 时约 46%）才爆仓，16.7 年只有两个月
+  做到（2010 年 9 月、2026 年 4 月，后者是样本里最大的 +53%）；5 倍是 18.8%。
+- **A 的优势在每个起点都在**（2010 / 2015 / 2020 年起 +1.4 / +1.4 / +1.3），55 个滚动三年窗口 +10% 时 100% 领先（最差 +0.7），
+  +5% 时 94.5%，0 时 21.8%。但 55 个窗口只有约 5 段独立历史，配方是在同一段样本上选出来的，组合的 QQQ 份额是事后按同样
+  波动率配的。零费率的优势随国库券利率下降（和窗口平均利率的相关系数 −0.78）：窗口终点 2014 年约 0，2026 年 −1.15 个点；
+  A 的平衡点在 55 个窗口里最低 0，中位 1.6%，最高 6.5%（终点 2026-05 的窗口）。
+- **放弃的东西**：2010 年 2 月的 1 美元 A 变成 4.72，B 3.46，QQQ 18.89，每年少 9.5 到 11.5 个点，主要在上涨年（2023 年
+  QQQ +55%，A +21%，B +15%；15 个上涨年 A 平均落后 14.3 个点，2 个下跌年领先 13.9 个点）。
+- **和其他办法比**（A，+10%）：同波动率少拿现货（37% QQQ）+1.4；同最大回撤（31.5% QQQ）+2.5，但两者都由 2022 年一段决定
+  （2010 到 2019 年同回撤只多 +1.7）；200 日线开关 +2.1 到 +2.2（靠 2010 到 2019 年的反复止损；2020 年起 −0.1，费率 0 时
+  −2.1）；QQQ 加 IEF +1.2（2020 年起 +4.9，2010 到 2019 年 −1.5）。2010 到 2026 年没有 QQQ 加 IEF 组合的最大回撤小于约
+  −20.6%，QQQ 加 TLT 小于 −34.5%，但这是 2020 到 2023 年债券熊市造成的；2010 到 2019 年 QQQ 加 IEF 能做到 −5.3%，
+  并在同回撤下比 A 多 1.4 个点。60/40 的 QQQ/IEF（12.7% / 12.1% / −28.2%）对应对冲比例只有 0.12（13.0% / 12.1% / −19.9%，
+  +5% 时 12.4%），净贝塔约 0.57，优势在资金费率误差之内。
+- **只对纳斯达克 100 类现货有用。** XLK（贝塔 1.04，相关 0.97）A +0.7；SPY（0.77，0.93）基准 −0.4% / 年、最大回撤 −26.1%、
+  比组合少 7.4，A −1.3（按贝塔缩到 0.153 后 −0.7），384 个变体里费率 ≤10% 时没有一个跑赢组合（+15% 到 +20% 时 28 个，
+  最多 +0.9）；BTC（相关 0.23）1/3 对冲波动率 65.5% 到 56.9%，回撤 −83% 到 −79%，比组合少 13.7；单只股票 NVDA / MSFT /
+  AVGO / TSLA 在每种设置下都比同波动率的股票加国库券少 1.6 到 18.5 个点。
+- **建模约定**：资金费率记入逐仓保证金（抬高爆仓线）而不是现金，对 5 倍基准有利 0.31 个点；每月整仓平掉重开而不是只交易差额，
+  对基准不利 0.35（2 倍 0.32，0.2 对冲 0.23）；跳空过线时按开盘价重开 +0.12（10 倍 +1.09）。四项合计 5 倍 +0.14、2 倍 +0.34、
+  10 倍 +1.37、0.2 对冲 +0.08，只在 5 倍"互相抵消"。只交易差额会让配方 A 的平衡点低约 1 个点。
+
+来源：`deep_dive/portfolio-design/`（`recipes.py`、`robustness.py`、`alternatives.py`、`beta.py`、`run_spot.py`），
+`_verify/portfolio-design-*/`、`_verify/critic/single_stock_spot.csv`。
+
+## 6. 现实情形：交易所的维持保证金加观察到的资金费率
+
+每位专题研究者只改一个假设；这里用研究的模拟器把两者放在一起（每月重置，吃单费 0.06%，资金费率按日历日 +5%；
+`_verify/critic/realistic_case.py`）。每格：年化 / 相对同波动率组合 / 爆仓次数每年 / 最大回撤。
+
+| 对冲，杠杆 | 维持保证金 2.5% | 维持保证金 5% |
+|---|---|---|
+| **2010-02 到 2026-10（国库券年化 1.5%）** | | |
+| 1/3，2 倍 | 2.9% / −0.6 / 0.18 / −2.6% | 2.7% / −0.9 / 0.18 / −3.5% |
+| 1/3，3 倍 | 2.6% / −1.1 / 0.78 / −2.8% | 1.0% / −3.3 / 1.26 / −6.5% |
+| 0.2，2 倍 | 8.7% / +0.3 / 0.18 / −11.7% | 8.6% / +0.2 / 0.18 / −11.7% |
+| 0.2，3 倍 | 8.7% / +0.1 / 0.78 / −12.5% | 7.7% / −1.0 / 1.26 / −12.8% |
+| （对照）1/3，5 倍 | −0.7% / −5.1 / 4.5 / −17% | −6.5% / −12.4 / 5.8 / −67% |
+| **2023-10 到 2026-10（国库券年化 4.45%）** | | |
+| 1/3，2 倍 | 4.6% / −2.2 / 0.34 / −2.4% | 4.3% / −2.8 |
+| 1/3，3 倍 | 4.1% / −3.0 / 1.34 / −2.8% | 3.0% / −5.0 |
+| 0.2，2 倍 | 12.7% / −0.5 / 0.34 / −8.3% | 12.5% / −0.7 |
+| 0.2，3 倍 | 12.7% / −0.9 / 1.34 / −8.6% | 11.9% / −1.6 |
+
+资金费率 +10%、维持保证金 2.5% 时，2010 到 2026 年的优势是 1/3 对冲 +0.8 / +0.4（2 倍 / 3 倍），0.2 对冲 +1.3 / +1.1；
+最近三年只有 −0.7 / −1.5 和 +0.5 / +0.1。闲置保证金的成本已经在这些数字里（保证金不生息）：1/3 对冲 2 倍杠杆占净值的
+13.6%，按 2010 到 2026 年平均利率每年 0.2%，按现在的 4.3% 每年 0.6%；如果 5% 的现金储备也要以 USDT 放在交易所，再加约 0.2%。
+
+合起来读：按交易所实际显示的保证金和资金费率，1/3 对冲赚的大约是国库券，比少拿 QQQ 少 0.6 到 3.3 个点（最近三年少 2 到 5）；
+0.2 对冲加 2 倍杠杆打平（±0.5 之内），只有资金费率停在 10 月到 11 月的水平（10% 以上）才跑赢。机械修正的大小顺序：
+维持保证金分档（5 倍 −2.7 个点），资金费率水平（每个点 0.2 到 0.3），24 小时交易（−0.25），手续费（公开费率下 −0.06）。
+
+## 7. 1999 到 2010 年的压力测试
+
+用重建的 TQQQ（管理费 0.84%，融资国库券加 0.51% 利差），只按收盘价判断爆仓，1999-03 到 2010-02（QQQ 年化 −1.3%，最大回撤
+−83%）：基准 1/3 对冲 5 倍年化 4.9%，波动率 5.0%，最大回撤 −6.4%，比组合多 1.9，每年爆仓 5.4 次，爆仓规则成本 2.1 个点；
+3 倍 6.2%，1.7 次，+3.2；0.2 对冲 5 倍 3.5%，最大回撤 −41.6%；费率 0 时 1.9%（−1.1）。分段：1999 年涨势（QQQ +129.5%）
+基准 +9.8%，3 倍 +11.6%，0.2 对冲 +45.8%；互联网泡沫破裂（−83%）+10.0% / +17.9% / −41.6%；2002 到 2007 年复苏（+179%）
++26.6% / +30.4% / +71.9%；2008 年（−53%）+7.3% / +8.8% / −19.7%；2009 年反弹（+68%）+2.4% / +3.1% / +23.3%。
+README 原来的"1999 年涨势每年爆仓 5 次"是整段 11 年的平均；涨势本身（1999-03-11 到 2000-03-27）爆了 13 次，约每年 12 次
+（按日历年 1999 年 10 次，2000 年 9 次，2001 年 11 次，2002 年 8 次，2003 年 6 次，2008 年 1 次，2009 年 7 次）。
+
+## 8. 缺点
+
+- **资金费率是参数，不是观察。** +10% 高于所有交易所三个月的均值（4.6% 到 7.5%），只有最近 30 天达到；0.5% 的半个月是
+  12.2% 年化，且只出现过约三周。方向（崩盘时转负还是转正）没有定论（第 2 节）。
+- **监管内的替代品没有比较过。** 做空纳斯达克 100 期货（MNQ / NQ）给同样的贝塔对冲，没有保证金清零，隐含融资约为国库券加
+  0.3% 到 0.5%，美国 60/40 税收待遇；永续相对它的优势是资金费率减（国库券加利差）减爆仓成本，在 5% 费率、4.4% 利率下约为 0。
+  研究只和少拿现货、融券做空、SQQQ 比过。
+- **自动减仓和下架。** 崩盘时空头是最赚钱的仓位，保险基金不足时最先被自动减仓强平（KuCoin 和币安的合约都标注 `isDeleverage: true`），
+  也就是对冲恰好在起作用时可能被拿走；下架则按交易所的指数强制现金交割，时间由不得你。没有人建模或估算。Aster 93% 的结算为 0
+  说明小交易所盘口很薄。
+- **税务和会计。** 美国持有人：境外加密永续不是 §1256 合约，多 QQQ 空 TQQQ 永续很可能构成 §1092 跨式（亏损递延，持有期重置），
+  收到的资金费率是普通收入；中国居民：加密衍生品交易本身是问题。回测不变，但足以抹掉 0 到 1 个点的优势。
+- **基差。** Bitget 永续在美东 16:00 平均比纽交所收盘价高 0.32%（标准差 0.15%，最大 +0.76%，150 天），KuCoin 高 0.25%，
+  从未相差 1% 以上；周五收盘到周一开盘的永续变动（标准差 2.5%，−5% 到 +6.5%）和 TQQQ 自己的跳空一样大。
+- **仓位大小和流动性**（第 1 节）：分档随名义价值上升，持仓量和实际滑点没有人测。
+- **分红。** TQQQ 除息（收益率约 1%）和各交易所指数是否调整没有查；方向已知（指数不调整时空头赚除息跌幅），金额小。
+- **样本内选择。** 0.2 / 2 倍配方是在同一段 2010 到 2026 年样本上选出并"确认"的；55 个滚动窗口约 5 段独立；同波动率组合事后配置。
+- **原报告已有的**：合约在美股休市时交易（第 3 节已量化，样本无崩盘）；不重置时对冲比例漂移（涨时上升、跌后塌缩：
+  "从不重置"平均 0.31，2022 到 2023 年只有 0.17 到 0.19，它多出的 2.7 个点约 1.1 来自更低的平均对冲，其余来自跌后反弹
+  期间对冲不足、一半的手续费和一半的爆仓）；交易所对手方风险；对冲掉的部分等于不持有现货。
+
+## 9. 未通过核查的内容
+
+每条一行。前两条是被推翻的专题结论，其余是被纠正的说法（原说法 → 核查结果）。
+
+- "没有交易所提供研究假设的 1% 维持保证金" → Gate 的 TQQQX_USDT 第一档就是 1%（20 万 USDT 以内，50 倍）；MEXC 和 OKX 2%；
+  专题研究者只看了 8 家中的 3 家。KuCoin / Bitget 的分档和全部模拟数字成立。
+- "5 倍杠杆爆仓是每月的常态，约一半是收盘能撑过去的插针" → 静态线在 28% 的月份被越过；48% 是收在线上的比例，不是线下；
+  26 次收在线下的里 23 次重置前照样爆仓。
+- "这是上线以来最好的两周" → 币安最好的 15 天是 10 月 9 到 23 日的 0.685%，最近 15 天排第 14。
+- KuCoin 共同窗口 6.7%（和"上线以来 11.3%"）→ CSV 少了 105 次结算，补齐后 5.2%。
+- "所有交易所上限 ±2%，利率分量 0" → 上限：币安、KuCoin ±2%，OKX ±1%，Bitget ±1%，MEXC ±3%，Gate ±0.02%；利率 0 只在
+  币安、OKX、Gate、KuCoin（及一位核查者的 Aster）核实。Bybit "10 倍" → 公告 20 倍；Aster 上线 06-27 → API 06-29；
+  Hyperliquid "282 个 xyz 市场" → 142（结论"没有 TQQQ"成立）。
+- "2026 年股票永续跌后付空头更多、急涨时转负" → 靠 2026 年 4 月（上线月）和 8 月一周；去掉 4 月 QQQ 永续相关系数 −0.05；
+  到 6 月 10 日的下跌 KuCoin −26.6%。"BTC 永续表现出 README 的模式" → 7 个崩盘窗口只有 2 个为负。
+- "资金费率逐年减半则低于国库券" → 只有 5 倍（0.96%）低于 1.51%，3 倍（1.97%）高于；"BTC 资金费率随市场成熟衰减" → 周期性，
+  均值 11.6%。实际 2026 年窗口 +0.34% / +0.90% → 周末多算，正确是 +0.16% / +0.74%，且常数 10% 时也只有 +0.84%。
+- "形状最多移动 0.3 个点" → 约 0.5（ETH 形状 +0.46；崩盘为负路径未重新定中）。
+- "4.8 + 2.6 的拆分不可复现" → 从 leveraged.py 的成本模型可复现（4.82 + 2.53）；拆分依定义在 4.7 到 5.3 / 2.0 到 2.7 之间。
+- "复利项期望约为零或略负" → 样本 +2.03% / 年，t 值 1.7，和 0 分不开；"无爆仓的 1.88% 低于国库券" → 高于（国库券年化 1.51%）。
+- "磨损随持有期缩短" → 每周 +1.45 < 每月 +2.35，非单调；"只在指数波动小于一个标准差时跑赢 −3 倍" → 二阶近似，月度 98.5% 符合，
+  季度 91%。
+- "VIX 20 到 30 是反弹区间，按季亏 6.6%" → 只在月初 VIX 下成立，按期内平均 VIX 它是最好的季度组；t 值 −0.87；2020-04 的 VIX
+  是 53.5，不在该组。
+- "平衡点由趋势决定，和波动无关" → 5 倍控制涨幅后与波动偏相关 +0.34；2022 年平衡点 −14.2%（网格插值 −13.1%）。
+- "损失保证金 0.4% 到 6.4%"作为额外扣除（磨损专题结论 4）；"每年损失 5% 到 6% 净值"（README）→ 重复计数，爆仓规则成本 5 倍 1.0 个点。
+- 流量列"% of NAV" → 期初净值单位（基准资金费率 4.0% 实为当日净值的 3.0%；0.1 对冲"损失保证金 5.6%"实为 1.4%）；已改表。
+- README："半个月 0.5% 年化约 14%" → 12.2%；"费率低于约 +5% 就不如组合" → 1/3 对冲 5 倍的平衡点约 9%，+5% 时还少 1.3；
+  "0.2 对冲 2 到 3 倍每月重置是回撤 15% 以内里最好的" → 前两名是"从不重置"（12.3%、12.2%），每月 3 倍第三（12.0%）；
+  "夏普 3" → 只在 +20%（3.28），+10% 时 1.23；"1999 年涨势每年爆仓 5 次" → 13 次，约每年 12 次；"不重置时对冲比例从 1/3
+  降到很低" → 平均 0.31，涨时上升、跌后塌缩；2013 / 2023 年表里的 QQQ 和 TQQQ 是年内首收到末收（标准日历年是 +36.6% /
+  +139.7% 和 +54.9% / +198.0%）；`--spot BTC-USD` 原来跑不通（已修）。
+- "SPY 在每种设置下都输" → 费率 ≤10% 时成立，+15% 到 +20% 时 28 个变体最多 +0.9；"没有 QQQ 加 IEF 组合能达到对冲的回撤" →
+  只在 2010 到 2026 年（债券熊市）成立，2010 到 2019 年 QQQ 加 IEF 反超 1.4 到 1.5 个点；"同回撤下优势翻倍" → 对 200 日线
+  只是 ×1.3，且全靠 2022 年。
+- "最近窗口国库券 4.54%" → 4.41%（4.54% 是终点 2026-05 的窗口）；"平衡点从 0 到 0.4% 升到 6.1%" → 不单调，2020-02 窗口已
+  3.8%，最高是终点 2026-05 的 6.5%。
+- "24 小时低估 3.0 → 3.3 次" → 两次是 NQ 换月假象，3.2 次，相对组合约 0 而不是 −0.1；"2 倍 0.12 → 0.18 次 / 年" → 2 次变 3 次；
+  "盘外高于纽交所最高价 2% 以上的 25 天" → 21 到 22 天是跳空低开日；Bitget 对 TQQQ 夹 5% → 表上没有 TQQQUSDT（通用 3%）；
+  引用的 KuCoin 指数文章不含股票永续规则（正确的是 48142946141603）。
+- "研究设为零的成本" → 研究设了 0.05% 手续费；0.5% 强平费是公开费率（0.06%）的约八倍的压力假设，0.5% 滑点未测量。
+- "9 条 README 说法有错" → 硬错误 6 到 7 条；建模约定"互相抵消" → 只在 5 倍。
+
+**两位核查者意见不一致之处**（报告不选边）：Gate 的 1% 是否算"有交易所提供"（一位认为无实质问题，另一位据此推翻）；
+Aster 的上限和利率分量是否可读（±2%、0 对 未公开）；Bybit 是否"查到"（20 倍、06-24 的公告 对 未触及）；KuCoin 6.7%（一位接受，
+一位发现缺口）；4.8 + 2.6 是否可从脚本推出（一位按二阶定义复现 4.69 + 2.66，一位认为任何脚本都推不出，第三位从 leveraged.py
+推出 4.82 + 2.53）；"1999 年五次"是无依据还是反向错误；"趋势决定平衡点"在 5 倍是否成立；债券组合结论是否稳健；
+24 小时代理 3.3 次是否含换月假象；"一半是插针"是否成立。
+
+## 10. 仍然未知
+
+- 哪一个维持保证金对你适用：取决于交易所、名义价值分档，以及 Gate 的代币指数和 ±0.02% 费率上限是否可接受；Bybit 的分档没读到。
+- 崩盘时股票永续的资金费率：没有样本。标记价格在休市崩盘时怎么走：只有 Bitget 的规则文本（指数最多偏离 10%，夹取"通常 3%"，
+  TQQQ 未列出）。
+- 自动减仓和下架的概率与代价；10 万到 100 万美元空头的实际滑点和持仓量；尖峰中续杯的滑点（假设 0.5%，持有的小时 K 线没有用来测）。
+- 税务（美国跨式规则、资金费率的收入性质；中国居民的合规问题）和 USDT / 交易所托管风险（净值的 10% 到 20%）。
+- 分红与各交易所的指数调整。
+- 资金费率的长期水平：四个月到一年的新合约；BTC 的先例是周期性的，不能外推。
+- 样本外：配方在同一段样本上选出；一段 2010 到 2026 年的历史，主要是牛市；1999 到 2010 年只有重建基金和收盘价爆仓。
+
+---
+
+# English version
+
+## The answer in five lines
+
+1. **At the margin and funding the venues actually show** (2.5% maintenance, as at Binance and Bitget, and funding of about
+   +5% a year), the one-third hedge earns about what T-bills pay (2.6-2.9% a year over 2010-2026) and trails simply holding
+   less QQQ (the same-volatility QQQ/T-bill mix) by 0.6-1.1 points a year, and by 2-3 points over the last three years.
+   The study's base case (one-third, 5x) loses money there: -0.7% a year, 5.1 points below the mix, liquidated 4.5 times a year.
+2. **The one recipe that is not clearly worse than holding less QQQ**: hedge 0.20 of spot value in TQQQ notional, 2x isolated
+   margin, reset monthly. At 2.5% maintenance and +5% funding it is +0.3 points above the same-volatility mix over 2010-2026
+   and -0.5 below it over the last three years, a wash; it beats the mix by about 1.3 points only if funding stays near +10%,
+   which it has done only since mid-October 2026.
+3. **Every point of edge is funding.** The fund's "decay" (7.4% a year of TQQQ notional over a plain -3x, held in fixed units for
+   a month) is mostly the fund's own fee and financing (4.7-5.3 points), which on a one-third hedge collects about what T-bills
+   pay on the same capital; the rest (2.0-2.7 points) is a bet that the index chops, negative in 80 of 201 months. Liquidations
+   at 5x cost about 1 point a year, not the "5-6% of NAV" the first write-up said.
+4. **If you still want it**: hedge 0.20 (or 0.25) of spot value in TQQQ notional, 2x isolated margin, monthly reset, on a venue
+   whose maintenance is 2.5% or lower for your size (Binance, Bitget up to 100k USDT, MEXC 2%, OKX 2%, Gate 1%). TQQQ must rise
+   about 46-48% from the last reset price within a month to liquidate it (twice in 16.7 years) against 17-19% at 5x (three to
+   four times a year). Never 5x on KuCoin's tiers, where a $100k book is capped at 4x and lost 9.9% a year.
+5. **Expect T-bills plus whatever funding pays above about 3%** (the 0.20 / 2x break-even over 2010-2026; 6-7% at today's rates),
+   and accept that $1 in February 2010 became $4.72 against $18.89 in QQQ. The exchange, auto-deleveraging, delisting, tax and
+   custody questions are unsized by any backtest and can erase an edge of under a point.
+
+## 1. What the contract actually is
+
+TQQQ perpetuals trade on at least eight venues, all listed since October 2025, so funding history is at most a year and mostly
+four to seven months. All settle funding every 8 hours. Re-fetched from each venue's API on 2026-11-04 (tier 1; tiers change
+with notional):
+
+| Venue | Contract | Listed (UTC) | Maintenance / max leverage (tier 1) | Funding cap per 8 h | Taker fee | Note |
+|---|---|---|---|---|---|---|
+| Gate | TQQQX_USDT | 2025-10-25 | 1% / 50x up to a 200k USDT risk limit (1.5% to 250k, 2.3% to 300k, 3% to 400k, 4% to 500k) | ±0.02% (at most ~22% a year) | 0.075% | index is the xStocks token, not the NYSE price; the announcement said 20x, the API now says 50x |
+| Bitget | TQQQUSDT | 2026-03-30 | 2.5% / 20x up to 100k USDT; 4% / 15x to 500k | ±1% | 0.06% | liquidation fee 0.06%; interest component not exposed |
+| KuCoin | TQQQUSDTM | 2026-05-18 | 5% / 10x up to 5k USDT; 6.3% / 8x to 8k; 8.4% / 6x to 10k; 10% / 5x 10-30k; 12.5% / 4x 30-50k; 16.7% / 3x 50-250k | ±2% | 0.06% | interest 0 |
+| MEXC | TQQQ_USDT | 2026-06-16 | 2% flat to about $1.9M / 20x | ±3% | 0.02% | interest not exposed |
+| Bybit | TQQQUSDT | 2026-06-24 | 20x (tiers not readable from this environment) | 2.5% | n/a | API geo-blocked; announcement only |
+| Aster | TQQQUSDT | 2026-06-29 (zero funding records from 06-27) | n/a | ±2% per one verifier, not exposed per the other | n/a | 93% of settlements exactly zero: thin book |
+| Binance | TQQQUSDT | 2026-06-29 | 2.5% / 20x | ±2% | n/a | interest 0; liquidation fee 1.5%; index frozen at weekends |
+| OKX | TQQQ-USDT-SWAP | 2026-07-02 | 2% / 10x up to 700 contracts (~$44k) | ±1% | n/a | interest 0; 8 h, hourly when the cap is hit |
+| Hyperliquid | none | | | | | no TQQQ on any of its 11 perp dexes |
+
+**Funding mechanics.** Binance's formula is funding = premium index + clamp(interest - premium index, ±0.05%). For stock
+perpetuals the interest component is set to 0, so funding is exactly zero whenever the 8-hour average premium is within ±0.05%:
+68% of Binance's TQQQ settlements since listing were zero. The index is frozen at weekends; 84-85% of weekend settlements were
+zero and the weekend mean by settlement time is about zero (-0.4% annualised), but the non-zero weekend prints are as large as
+weekday ones. Interest 0 is verified on Binance, OKX, Gate and KuCoin (and Aster per one verifier); Bitget and MEXC do not expose
+it and Bybit was not reached.
+
+**Which maintenance level is "real" is unresolved**, and the headline depends on it: Gate offers 1% (but with funding capped at
+±0.02% and a token index), MEXC and OKX 2%, Binance and Bitget 2.5%, KuCoin 5-16.7%. This report therefore gives results by
+maintenance level rather than picking one "realistic" value.
+
+**Position size.** Bitget's tier 1 (2.5%) covers a book of about $300k at hedge 1/3 or $500k at 0.2; Gate's 1% tier about
+$600k / $1M; MEXC's 2% about $5M; KuCoin allows 5x only up to 5,000 USDT notional (a $15k book). Nobody checked open interest
+or whether a $100k-1M short is executable at the quoted fees.
+
+Sources: `deep_dive/funding/venues.csv`; Gate tiers `https://api.gateio.ws/api/v4/futures/usdt/risk_limit_tiers?contract=TQQQX_USDT`;
+KuCoin tiers `https://api-futures.kucoin.com/api/v1/contracts/risk-limit/TQQQUSDTM`; Bitget tiers
+`https://api.bitget.com/api/v2/mix/market/query-position-lever?symbol=TQQQUSDT&productType=USDT-FUTURES`; Binance
+`fapi/v1/exchangeInfo` and `fapi/v1/fundingInfo`; OKX `api/v5/public/instruments`; MEXC `contract/detail`; Bybit announcement on
+`announcements.bybit.com` (2026-06-24, up to 20x, every 8 h, cap 2.5%); Binance Square post 314524912786802 (interest 0%, ±2%,
+8 h fixed, weekend index frozen); Binance funding FAQ 360033525031 (the ±0.05% clamp). Bitget's mark-price article (12560603845668)
+confirms that in closed hours the index may drift at most 10% from the last external close; its 5% mark clamp is listed for 34
+pairs including QQQUSDT, TQQQUSDT is not on the page and the generic text says "typically 3%". KuCoin's stock-perp clamp formula is
+on `kucoin.com/support/48142946141603`.
+
+## 2. What funding has really paid
+
+- **Common window 2026-08-06 to 11-04 (three months)**, annualised mean (rate x 3 x 365, no compounding): Gate 4.6%, Binance 4.8%,
+  MEXC 4.8%, Bitget 5.9%, OKX 7.5%, KuCoin 5.2% (the specialist's 6.7% came from a CSV missing 105 settlements; gap-filled it is
+  5.2%). Binance since listing: 4.0%.
+- **By month (Binance)**: July 2.7%, August -0.09% (full month; -0.06% from 6 August), September +0.11%, October +0.82% (9.6%
+  annualised). Last 15 days: Binance 0.45%, MEXC 0.45%, Bitget 0.39%, OKX 0.82%; the first four days of November run at 30-40%
+  annualised. Last 30 days annualised: Binance 13.1%, MEXC 13.0%, OKX 16.2%, Bitget 9.5%.
+- **The chat's "0.5% in half a month"** annualises to 12.2% (0.5% x 24 = 12.0%, 12.7% compounded), not 14%. It matches the last
+  15 days, but it is not the best fortnight since listing: Binance's best 15 days paid 0.685% (9-23 October) and the last 15 days
+  rank 14th of 120 rolling windows. Fortnights of 0.5% or more have occurred only since mid-October, about three weeks, while the
+  four-month average pays 0.16-0.20% a fortnight.
+- **No established direction.** The README said funding turns negative in a crash. BTC perpetuals have done that: Binance BTC
+  funding was -21% annualised over the 8-20 March 2020 crash window (-6.3% for the whole month) and -7.9% over the FTX fortnight
+  (7-21 November 2022), but only those 2 of the specialist's 7 crash windows were negative, and BTC funding correlates +0.39 with
+  the 10-day return (highest in rallies). The 2026 stock perpetuals have so far done the opposite: Binance's TQQQ daily funding
+  correlates -0.29 with QQQ's 10-day return (83-88 trading days, 95% interval [-0.45, -0.09], about nine independent windows);
+  the ten days after a 3-7% QQQ fall paid shorts about 16% annualised, after a 3-7% rise about -2%; the two worst 10-day TQQQ
+  falls of 2026 (-22.4% to 29 July, -18.4% to 23 October) paid +5.9% and +16.5%. But "negative in sharp rallies" rests on
+  April 2026, the launch month of Binance's QQQ perpetual (mean -34%): without April the QQQ-perp correlation is -0.05, and the
+  -15.2% fall to 10 June (before Binance listed) had KuCoin at -26.6% annualised, the README's pattern. The sample is four to
+  seven months of new contracts; neither pattern is established.
+- **Only the level matters; the shape barely does.** Re-running the study's simulator with daily funding paths over 2010-2026
+  (constant case reproduced exactly): any path re-centred to a 10% mean (move-shaped, crash-negative, rally-negative, BTC/ETH-shaped)
+  moves the one-third hedge's CAGR by at most about 0.5 points. At the observed constants 3.8% and 5.9% the one-third hedge earns
+  1.9-3.4% a year (5x / 3x), all below the 3.6-3.7% same-volatility mix.
+- **The realised 2026 window** (2026-06-25 to 10-27, 87 trading days, QQQ -0.15%): with Binance's actual funding, calendar-day
+  correct, the one-third hedge returned +0.16% (5x) / +0.74% (3x) against +1.31% for T-bills. The specialist's +0.34% / +0.90%
+  forward-filled weekday funding over weekends and over-credited funding by about 70%. But at a constant 10% the same window
+  gives only +0.84% at 5x, because one liquidation cost 1.31% of NAV, so this window says nothing about the funding level.
+- **BTC's precedent does not support "funding decays as the market matures"**: Binance BTC funding by year was 17.2% (2020),
+  30.6% (2021), 4.2% (2022), 7.9% (2023), 11.9% (2024), 5.1% (2025), 3.1% (2026 to October): cyclical, with a 2020-2026 mean of 11.6%.
+
+Sources: `deep_dive/funding/` (`funding_stock_perps.csv`, `venue_stats.csv`, `scenarios.csv`, `analyze_funding.py`),
+`deep_dive/_verify/funding-*/`, `_verify/corrections-funding/`.
+
+## 3. What liquidation really costs (the honest measure)
+
+- **"Margin lost" is not an extra cost.** At a liquidation the simulator books the price loss to the liquidation level in
+  "short P&L", the 1% maintenance remnant in "fees", and then adds the whole wiped margin to "margin lost" again. The NAV identity
+  NAV change = spot gain + interest + funding + short P&L - fees holds without it (residual 1e-15). The README's "losing 5-6% of
+  NAV a year in margin, so the decay was spent on refills" and the year table's "margin lost" column (-17.0% in 2020) were double
+  counts. The tables now carry it as a memo column, "Margin wiped (memo)", not to be added.
+- **What the liquidation rule really costs**: with liquidations switched off (unlimited top-up, not a tradable position) the base
+  case goes from 4.01% to 5.02%: about 1.0 point a year at 5x, 0.2 at 3x, 0.1 at 2x, 3.7-3.8 at 10x, 0.6 for hedge 0.2 at 5x.
+  The cash cost is the 1% remnant (1.48% of starting NAV a year) plus two taker fees per liquidation (0.07% a year). The tradable
+  comparison is the 3x row of the tables: 4.6% against 4.0%, a 0.6-point penalty for 5x.
+- **How often** (hedge 1/3, monthly, +10%, maintenance 1%): 5x was liquidated 50 times in 16.7 years, in 47 distinct months, 3.0 a
+  year. TQQQ's intraday high crossed the static 18.8% line above the prior month-end close in 56 of 200 months (28% of months,
+  3.4 a year; the simulation shows fewer because funding received lifts the line to about 19.6%); 8 times in 2020 and 6 in 2023;
+  only 3 pairs within 10 trading days. At 3x the line is 32%, crossed in 12 months (0.7 a year); at 2x 48.5%, crossed twice in
+  16.7 years (2010-09-30, 2026-04-24). Name the convention each time: 3.4 is the static line, 3.0 the +10% simulation, 3.54 at
+  zero funding, 3.2-3.3 the 24/7 proxy, 4.1-4.5 at 2.5% maintenance.
+- **Not wicks: the month's cumulative rise.** Of the 50 liquidations the median move from the prior close to the liquidation
+  price was 2.8%; 52% (26) closed back below the line, 48% closed above it (the specialist had the direction reversed), and 8
+  (16%) were already past it at the open. But "half are wicks the position would have survived at the close" fails: 23 of those
+  26 would have been liquidated anyway before the monthly reset if merely marked at the close (19 on the very next day); only 3
+  of 50 would have reached the reset (2012-08-21, 2022-03-29, 2023-02-02). The month's cumulative rise, not the day's spike,
+  finishes the position.
+- **The maintenance tier is the largest mechanical correction.** Re-run with the study's own simulator: at Bitget's 2.5% the 5x
+  base case falls from 4.0% to 1.3% a year (3.1 points below the mix, 4.1 liquidations a year); 3x goes 4.6% to 4.2% (+0.5 vs mix);
+  2x 4.5% to 4.4%. On KuCoin's tiers a $100k book hedged 1/3 can only use 4x (12.5%): simulated with the tier falling as the book
+  shrinks, -9.9% a year and a -83% worst fall (at a fixed 12.5%, -26% a year and -99%); 5x loses money at every book size, 3x from
+  about a $30k book (a $10k book still earns +2.4% at 3x, 2.0 below the mix). On Gate's 1% tier a $100k book at 5x reproduces the
+  study's base case (3.7%, with Gate's 0.075% taker fee in the trigger, level with the mix); a $500k book 2.8% (-1.2). On MEXC's 2%:
+  5x 2.45% (-1.7), 3x 4.6% (+1.0).
+- **The 24/7 understatement is small.** With the Nasdaq-100 futures' ~23-hour high (NQ=F, beta 2.88 to TQQQ, correlation 0.977)
+  scaled 3x as a 24/7 proxy, 5x goes from 3.0 to 3.3 liquidations a year (3.2 after removing two quarterly-roll artefacts), CAGR
+  4.0% to 3.8%, vs mix +0.3 to about 0 / -0.1; 3x is unchanged (0.7); 2x goes from 2 events to 3. The real perpetuals' hourly
+  candles (Bitget 151 NYSE days from 2026-03-31, KuCoin 118 from 2026-05-18) show the off-hours high above the day's NYSE high on
+  53-55% of days, by more than 2% on only 25 days, of which 21-22 are NYSE gap-down days where the perp simply had not fallen yet;
+  the largest overnight move was +11.3% on 2026-04-08 (NYSE high +10.8%); weekend hourly ranges median 0.2-0.3%, max 2.95%
+  (Bitget) / 6.95% (KuCoin). There is no crash in the sample and the proxy is not a mark price.
+- **Fees and slippage matter at 5x only.** Bitget's documented 0.06% close-out fee moves the 5x base from 4.01% to 3.95% (+0.25
+  vs mix); 0.5% slippage on each refill (assumed, not measured) to 3.5% (-0.3); a stress close-out fee of 0.5% (about eight times
+  the documented rate) to 3.1%; both together 2.4% (-1.7 vs mix). At 3x the same stresses leave 4.4-4.5% (still +0.8 or more vs mix).
+- **"Wait for the next reset" looks better (5x: 5.4% vs 4.0%) only because it is unhedged 11% of trading days**: volatility 6.7% vs
+  2.4%, worst fall -12.8% vs -2.4%, and 2.0 points below its own same-volatility mix; the year-by-year refill-minus-wait difference
+  swings from +8.9 points (2021) to -10.7 (2026, ten months), the sign set by where TQQQ went after the liquidation.
+- **2020's 8 liquidations** wiped margin summing to 16.3% of the previous day's NAV, but that is gross (each balance contains the
+  short loss the spot leg offset); the hedged portfolio made +4.2% in 2020 and +3.5% in 2023.
+
+Sources: `deep_dive/code_audit/` (`rederive.py`, `test_perp_hedge_audit.py`, 19 tests passing), `deep_dive/liquidation_margin/`
+(`sensitivity.py`, `thresholds.py`, `clusters.py`, `gaps.py`, `perp_hours.py`), `_verify/liquidation_margin-*/`, `_verify/code_audit-*/`.
+
+## 4. What the "decay" really is
+
+- **The total reproduces.** A fixed-unit TQQQ short reset monthly earned 7.40% a year of notional more than a plain -3x over
+  2010-02 to 2026-10 (7.35% under the code audit's convention); 3.95-3.99% in 2010-2019, 12.28-12.34% in 2020-2026.
+- **The split depends on the definition.** The README's "4.8 points fee and financing + 2.6 compounding" comes from the repo's
+  rebuilt fund's cost model (`portfolio_lab/leveraged.py`: expense 0.84% + 2 x (T-bill 1.49% + fitted spread 0.51%) = 4.84% a year)
+  and reproduces (4.82 + 2.53). Measured day by day on the real fund against 3x QQQ it is 5.32 + 2.03; with the second-order
+  formula 3(sum r² - R²) it is 4.69 + 2.66; against a costless daily-reset 3x fund 5.02 + 2.33. So: cost 4.7-5.3 points,
+  compounding 2.0-2.7 points. The 0.84% expense is the repo's constant; ProShares now shows 0.94% gross / 0.78% net.
+- **The compounding term is not an income.** It is a 12.64% a year daily-reset decay minus a 10.29% a year trend give-back,
+  negative in 80 of 201 months (41%), monthly mean +0.17%, t = 1.7: a positive point estimate not distinguishable from zero. It
+  drops to +1.5% a year without March 2020 and to +0.8% without the three largest months. For a random walk with QQQ's drift its
+  expectation is about -0.9% a year. The worst month was April 2026 (QQQ +15.7%, TQQQ +52.4%, the short gave up 5.4% of notional).
+- **It shrinks with the holding period, but not monotonically**: +1.45% a year with weekly resets, +2.35% monthly, -0.44% quarterly
+  (+0.40% under the README's "gap minus model cost" convention), -6.20% over calendar years. By calendar year TQQQ beat three times
+  QQQ in 7 of 17 years: 2013 by 29.8 points (TQQQ +139.7% vs 3xQQQ +109.9%), 2017 by 20.1, 2019 by 17.0, 2022 by 18.6 (a down
+  trend gives back too: QQQ -32.6%, TQQQ -79.1% vs -97.7%), 2023 by 33.5.
+- **The bigger 2020-2026 decay is mostly interest rates, not choppier markets.** Of the 8.3-point difference between the eras,
+  5.7 points is the fee-and-financing term (T-bills went from 0.56% to 2.85% and the fund borrows two units: 2 x the rise = 4.6
+  points; the other 1.1 is tracking residual) and 2.7 points the net compounding term (the variance decay rose 9.4 points but the
+  trend give-back rose 6.7; QQQ volatility 17% vs 25%). In 2023 the monthly gap of +9.3% was entirely the cost term (13.9 = 2 x
+  the 5.04% T-bill 10.1 + fee and spread 1.9 + tracking 2.0) with a compounding term of -4.7%.
+- **What it means for a one-third hedge.** Short notional at a reset is about 0.30 of NAV, so the fee and financing collected are
+  about 1.4-1.6% of NAV a year, roughly what T-bills paid on the same capital (1.5%); and the comparison mix holds 12-13% QQQ
+  besides 87-88% T-bills, which contributed 2.2-2.5 of its 3.7-3.9% a year. Without funding the full hedge has no edge before fees
+  and liquidations.
+- **VIX is not a switch.** By VIX at the start of the month the short's gain over -3x was +6.7% a year (VIX < 15), +6.6% (15-20),
+  +4.2% (20-30; compounding term -0.4, short beat -3x in 56% of months; t = 0.95, indistinguishable from the other bands), +26.4%
+  (>= 30; 13 months, of which March 2020 alone contributed 16.3%, +11.4% without it). Held quarterly the 20-30 band lost 6.6% a
+  year (12 quarters, driven by two; +1.4% without them; +10.7% with quarters starting Feb/May/Aug/Nov). Sorted by the period's mean
+  VIX instead, 20-30 is the best quarterly band (+8.8%). The only robust statement is that VIX at the start of a period does not
+  predict the gain.
+- **Break-even funding** against the same-volatility mix, 2010-2026: one-third hedge at 5x 9.0%, 3x 6.5%, 2x 6.4%; hedge 0.2 at
+  5x 5.9%, 3x 2.8%, 2x 2.7%. By era 7.3% / 5.2% (2010-2019, one-third at 5x / 3x) and 10.8% / 7.3% (2020-2026). Year by year
+  from -14.2% (2022, the hedge wins even paying funding) and -9.6% (2011) to +23.5% (2020) and +27.5% (2023); correlation with the
+  year's QQQ return +0.83 to +0.84, with realised volatility -0.08 (but the partial correlation with volatility, controlling for the
+  return, is +0.34 at 5x, through liquidations; about 0 at 2-3x). The trend sets the break-even at 2-3x; at 5x liquidations add to it.
+
+Sources: `deep_dive/decay_regimes/` (`decay_decomposition.py`, `breakeven_funding.py`, `cuts.csv`), `deep_dive/code_audit/rederive.py`,
+`_verify/decay_regimes-*/`, `_verify/corrections-decay_regimes/`.
+
+## 5. The recipes and what they give up
+
+| Recipe | CAGR | Volatility | Worst fall | Worst month | Sharpe | Liquidations / yr | $1 became | Break-even funding 2010-26 | Latest 3-year window |
+|---|---|---|---|---|---|---|---|---|---|
+| A: hedge 0.20, 2x, monthly, +10% | 9.8% | 7.7% | -11.2% | -5.2% | 1.05 | 0.12 | 4.72 | 2.7% | 6.1% (to 2026-08) / 6.8% (to 2026-10) |
+| B: hedge 0.25, 2x, monthly, +10% | 7.7% | 5.2% | -6.6% | | 1.17 | 0.12 | 3.46 | 3.1% | 6.5% / 7.3% |
+| C: hedge 1/3, 3x, monthly, +10% | 4.6% | 2.3% | -2.3% | -0.9% | 1.33 | 0.7 | | 6.5% | 10.3% / 11.3% |
+| Base: hedge 1/3, 5x, monthly, +10% | 4.0% | 2.4% | -2.4% | -1.3% | 1.01 | 3.0 | 1.93 | 9.0% | 10.3% |
+| QQQ | 19.3% | 20.6% | -35.1% | -13.6% | 0.89 | | 18.89 | | |
+
+- **Each +1% of funding adds about +0.19 points to A and +0.23 to B**; against the same-volatility mix: at zero funding A -0.5,
+  B -0.7; at +5% both +0.4; at +14% +2.2 / +2.6. At 2x TQQQ must rise 48.5% within a month (1% maintenance; about 46% at 2.5%) to
+  wipe the margin, which it did in only two months in 16.7 years (September 2010 and April 2026, the latter the largest in the
+  sample at +53%); at 5x the line is 18.8%.
+- **A's edge holds from any start date** (+1.4 / +1.4 / +1.3 from 2010 / 2015 / 2020) and in 100% of the 55 rolling 3-year windows at
+  +10% (worst +0.7), 94.5% at +5%, 21.8% at 0. But the 55 windows hold about five independent periods, the recipe was chosen on
+  the same sample, and the mix's QQQ share is matched with hindsight. The zero-funding edge falls as T-bill rates rise (correlation
+  -0.78 with the window's mean rate): about 0 for windows ending 2014, -1.15 points for 2026. A's break-even across the 55 windows:
+  minimum 0, median 1.6%, maximum 6.5% (window ending 2026-05).
+- **What they give up**: $1 in February 2010 became 4.72 (A) or 3.46 (B) against 18.89 for QQQ, 9.5-11.5 points of return a year,
+  mostly in rallies (2023: QQQ +55%, A +21%, B +15%; in the 15 up years A trailed QQQ by 14.3 points on average, in the 2 down years
+  it led by 13.9).
+- **Against other ways to be smoother** (A at +10%): same-volatility less spot (37% QQQ) +1.4; same worst fall (31.5% QQQ) +2.5, but
+  both matches rest on the 2022 episode (in 2010-2019 the same-drawdown edge is only +1.7); the 200-day-line switch +2.1 to +2.2
+  (driven by the rule's 2010-2019 whipsaws; from 2020 -0.1, and -2.1 at zero funding); QQQ+IEF +1.2 (from 2020 +4.9, in 2010-2019
+  -1.5). Over 2010-2026 no QQQ+IEF mix had a worst fall shallower than about -20.6% and no QQQ+TLT mix shallower than -34.5%, but
+  that is the 2020-2023 bond bear market; in 2010-2019 QQQ+IEF mixes reached -5.3% and beat A by 1.4 points at the same drawdown.
+  60/40 QQQ/IEF (12.7% / 12.1% / -28.2%) is matched in volatility by a hedge ratio of only 0.12 (13.0% / 12.1% / -19.9%; 12.4% at
+  +5%), a book with net beta about 0.57, whose edge is inside the funding uncertainty.
+- **Nasdaq-100-like spot only.** XLK (beta 1.04, correlation 0.97): A +0.7. SPY (0.77, 0.93): the base hedge -0.4% a year with a
+  -26.1% worst fall, 7.4 below the mix; A -1.3 (-0.7 after scaling the hedge by beta to 0.153); no SPY variant beats the mix at
+  funding of 10% or less (28 of 384 do at +15% to +20%, by at most +0.9). BTC (correlation 0.23): the one-third hedge cuts
+  volatility only from 65.5% to 56.9% and the worst fall from -83% to -79%, 13.7 below the mix. Single stocks NVDA / MSFT / AVGO /
+  TSLA: below the same-volatility stock/T-bill mix at every setting, by 1.6 to 18.5 points.
+- **Modelling conventions**: crediting funding to the isolated margin (which lifts the liquidation line) rather than to cash favours
+  the 5x base by 0.31 points; closing and reopening the whole short at each monthly reset rather than trading the change costs it
+  0.35 (2x 0.32, hedge 0.2 0.23); reopening at the open on gap-through liquidations +0.12 (10x +1.09). All four together: +0.14 at
+  5x, +0.34 at 2x, +1.37 at 10x, +0.08 for hedge 0.2; they "cancel" at 5x only. Trading only the change would lower recipe A's
+  break-even by about 1 point.
+
+Sources: `deep_dive/portfolio-design/` (`recipes.py`, `robustness.py`, `alternatives.py`, `beta.py`, `run_spot.py`),
+`_verify/portfolio-design-*/`, `_verify/critic/single_stock_spot.csv`.
+
+## 6. The realistic case: venue maintenance and observed funding together
+
+Each specialist varied one assumption at a time; here both are set at once with the study's simulator (monthly reset, taker 0.06%,
+funding +5% on calendar days; `_verify/critic/realistic_case.py`). Each cell: CAGR / vs same-volatility mix / liquidations a year /
+worst fall.
+
+| Hedge, margin | Maintenance 2.5% | Maintenance 5% |
+|---|---|---|
+| **2010-02 to 2026-10 (T-bill CAGR 1.5%)** | | |
+| 1/3, 2x | 2.9% / -0.6 / 0.18 / -2.6% | 2.7% / -0.9 / 0.18 / -3.5% |
+| 1/3, 3x | 2.6% / -1.1 / 0.78 / -2.8% | 1.0% / -3.3 / 1.26 / -6.5% |
+| 0.2, 2x | 8.7% / +0.3 / 0.18 / -11.7% | 8.6% / +0.2 / 0.18 / -11.7% |
+| 0.2, 3x | 8.7% / +0.1 / 0.78 / -12.5% | 7.7% / -1.0 / 1.26 / -12.8% |
+| (reference) 1/3, 5x | -0.7% / -5.1 / 4.5 / -17% | -6.5% / -12.4 / 5.8 / -67% |
+| **2023-10 to 2026-10 (T-bill CAGR 4.45%)** | | |
+| 1/3, 2x | 4.6% / -2.2 / 0.34 / -2.4% | 4.3% / -2.8 |
+| 1/3, 3x | 4.1% / -3.0 / 1.34 / -2.8% | 3.0% / -5.0 |
+| 0.2, 2x | 12.7% / -0.5 / 0.34 / -8.3% | 12.5% / -0.7 |
+| 0.2, 3x | 12.7% / -0.9 / 1.34 / -8.6% | 11.9% / -1.6 |
+
+At funding +10% and 2.5% maintenance the edges over 2010-2026 are +0.8 / +0.4 (1/3 at 2x / 3x) and +1.3 / +1.1 (0.2 at 2x / 3x),
+but only -0.7 / -1.5 and +0.5 / +0.1 over the last three years. The cost of idle margin is already inside these figures (margin earns
+nothing): hedge 1/3 at 2x posts 13.6% of NAV, 0.2% a year at 2010-2026 rates and 0.6% at today's 4.3%; if the 5% cash reserve must
+also sit on the exchange in USDT, add about 0.2%.
+
+Read together: at the maintenance and funding the venues actually show, the one-third hedge earns about T-bills and trails holding
+less QQQ by 0.6-3.3 points (2-5 over the last three years); the 0.2 hedge at 2x is a wash (within ±0.5 of the mix) and beats it only
+if funding stays at the October-November run rate (10% or more). Order of the mechanical corrections: maintenance tier (5x: -2.7
+points), funding level (0.2-0.3 points per point), 24/7 trading (-0.25), fees (-0.06 at the documented rate).
+
+## 7. The 1999-2010 stress
+
+With the rebuilt TQQQ (expense 0.84%, financing at T-bills + 0.51%) and liquidations on the close only, 1999-03 to 2010-02
+(QQQ -1.3% a year, worst fall -83%): the base one-third hedge at 5x returned 4.9% a year at 5.0% volatility, worst fall -6.4%, +1.9
+vs mix, 5.4 liquidations a year, liquidation-rule cost 2.1 points; 3x 6.2%, 1.7 a year, +3.2; hedge 0.2 at 5x 3.5% with a -41.6%
+worst fall; at zero funding 1.9% (-1.1). Episodes: the 1999 rally (QQQ +129.5%) base +9.8%, 3x +11.6%, hedge 0.2 +45.8%; the
+dot-com crash (-83%) +10.0% / +17.9% / -41.6%; the 2002-2007 recovery (+179%) +26.6% / +30.4% / +71.9%; 2008 (-53%) +7.3% / +8.8% /
+-19.7%; the 2009 rebound (+68%) +2.4% / +3.1% / +23.3%. The README's "the 1999 rally liquidated it five times a year" was the
+11-year average; the rally itself (1999-03-11 to 2000-03-27) liquidated the 5x position 13 times, about 12 a year (by calendar year:
+1999 10, 2000 9, 2001 11, 2002 8, 2003 6, 2008 1, 2009 7).
+
+## 8. The drawbacks
+
+- **Funding is a parameter, not an observation.** +10% is above every venue's three-month mean (4.6-7.5%) and was reached only in the
+  last 30 days; 0.5% per half month is 12.2% a year and has occurred for about three weeks. Its direction in a crash is not
+  established either way (section 2).
+- **The regulated alternative was never compared.** Shorting Nasdaq-100 futures (MNQ / NQ) gives the same beta hedge with no margin
+  wipe, implied financing near T-bill + 0.3-0.5% and US 60/40 tax treatment; the perp's edge over it is funding minus (T-bill +
+  spread) minus liquidation costs, roughly zero at 5% funding and 4.4% rates. The study compared only holding less, a stock-loan
+  short and SQQQ.
+- **Auto-deleveraging and delisting.** In a crash the short is the most profitable position and the first to be force-closed by ADL
+  when the insurance fund runs short (KuCoin's and Binance's contracts carry `isDeleverage: true`): the hedge can be removed exactly
+  when it works. A delisting forces cash settlement at the venue's index, with no say on timing. Nobody modelled or sized either;
+  Aster's 93% zero settlements show how thin the smaller books are.
+- **Tax and accounting.** For a US holder, offshore crypto perpetuals are not §1256 contracts, long QQQ against a short TQQQ perp is
+  likely a §1092 straddle (losses deferred, holding period reset), and funding received is ordinary income; for a PRC-resident holder,
+  crypto-derivative trading itself is the question. None of it changes the backtest, but it can erase a 0-1 point edge.
+- **Basis.** At 16:00 ET the Bitget perp closed on average 0.32% above the NYSE close (sd 0.15%, max +0.76%, 150 days) and KuCoin
+  0.25%, never more than 1% apart; the Friday-close-to-Monday-open perp move (sd 2.5%, -5% to +6.5%) is the same as TQQQ's own gap.
+- **Size and liquidity** (section 1): tiers rise with notional; open interest and real slippage were not measured.
+- **Dividends.** TQQQ's ex-dividend drops (yield about 1%) and whether each venue's index adjusts for them were not examined; the
+  sign is known (the short gains the drop on an unadjusted index), the size is small.
+- **In-sample selection.** The 0.2 / 2x recipe was chosen on the same 2010-2026 sample it is "confirmed" on; the 55 rolling windows
+  hold about five independent periods; the same-volatility mix is set with hindsight.
+- **Already in the first write-up**: the contract trades when the stock market is closed (sized in section 3, no crash in the
+  sample); without resets the hedge ratio drifts (it rises in rallies and collapses after falls: "reset never" held 0.31 on average
+  but 0.17-0.19 through 2022-2023, and of its extra 2.7 points about 1.1 is the lower average hedge, the rest being under-hedged
+  through the 2023 rebound, half the fees and half the liquidations); exchange counterparty risk; the hedged part is spot you do not own.
+
+## 9. What did not survive checking
+
+One line each. The first two are refuted specialist findings; the rest are corrected statements (claim → what checking found).
+
+- "No venue offers the study's 1% maintenance" → Gate's TQQQX_USDT tier 1 is 1% (up to 200k USDT, 50x); MEXC and OKX 2%; the
+  specialist read 3 of 8 venues. The KuCoin / Bitget tiers and every simulated number hold.
+- "Liquidations at 5x are a monthly regularity, about half are wicks survivable at the close" → the static line is crossed in 28%
+  of months; 48% is the share closing above the line, not below; 23 of the 26 close-below events would have been liquidated anyway
+  before the reset.
+- "The last fortnight is the best since listing" → Binance's best 15 days paid 0.685% (9-23 October); the last 15 rank 14th.
+- KuCoin 6.7% over the common window (and "11.3% since listing") → the CSV lacked 105 settlements; gap-filled 5.2%.
+- "All venues cap at ±2% with interest 0" → caps: Binance and KuCoin ±2%, OKX ±1%, Bitget ±1%, MEXC ±3%, Gate ±0.02%; interest 0
+  verified only on Binance, OKX, Gate, KuCoin (and Aster per one verifier). Bybit "10x" → 20x per its announcement; Aster listed
+  06-27 → API onboard 06-29; Hyperliquid "282 xyz markets" → 142 (no TQQQ holds).
+- "2026 stock perps paid shorts more after falls and turned negative in rallies" → rests on April 2026 (a launch month) and one
+  August week; without April the QQQ-perp correlation is -0.05; the fall to 10 June had KuCoin at -26.6%. "BTC perps show the
+  README's pattern" → only 2 of 7 crash windows negative.
+- "If funding halves every year the hedge earns below T-bills" → only at 5x (0.96% vs 1.51%); 3x (1.97%) is above. "BTC funding fell
+  as the market matured" → cyclical, mean 11.6%. The realised 2026 window +0.34% / +0.90% → weekends over-credited; +0.16% / +0.74%,
+  and +0.84% even at a constant 10%.
+- "Shape moves the CAGR by at most 0.3 points" → about 0.5 (ETH-shaped +0.46; the crash-negative path was not re-centred).
+- "The 4.8 + 2.6 split is not reproducible" → it reproduces from leveraged.py's cost model (4.82 + 2.53); the split is
+  definition-dependent within 4.7-5.3 / 2.0-2.7.
+- "The compounding term has roughly zero or slightly negative expectation" → the sample says +2.03% a year, t = 1.7, not
+  distinguishable from zero. "1.88% with no liquidations is below T-bills" → it is above (T-bill CAGR 1.51%).
+- "The decay shrinks with the holding period" → weekly +1.45 < monthly +2.35, non-monotone. "Beats -3x only when the index moves
+  less than one sigma" → a second-order rule; 98.5% of months, 91% of quarters.
+- "VIX 20-30 is the rebound band, losing 6.6% a year quarterly" → ex-ante only; by mean VIX it is the best quarterly band; t = -0.87;
+  2020-04 (VIX 53.5) does not belong to the band.
+- "The break-even is set by the trend, not volatility" → at 5x the partial correlation with volatility is +0.34; 2022's break-even is
+  -14.2% (grid interpolation gave -13.1%).
+- "Margin lost 0.4-6.4%" as a deduction (decay_regimes-4) and "losing 5-6% of NAV a year" (README) → a double count; the liquidation
+  rule costs 1.0 point at 5x.
+- Flow columns labelled "% of NAV" → units of starting NAV (base funding 4.0% was 3.0% of the day's NAV; hedge 0.1 "margin lost
+  5.6%" was 1.4%); the tables are now in shares of the day's NAV.
+- README: "0.5% in half a month, about 14% a year" → 12.2%; "below the mix at anything under about +5%" → the one-third hedge at 5x
+  breaks even near 9% and is 1.3 below at +5%; "hedge 0.2 at 2-3x monthly is the best under a 15% worst fall" → the top two are
+  reset-never (12.3%, 12.2%), monthly 3x is third (12.0%); "Sharpe 3" → only at +20% (3.28), 1.23 at +10%; "the 1999 rally
+  liquidated it five times a year" → 13 times, about 12 a year; "the hedge ratio fell to a fraction without resets" → mean 0.31,
+  rising in rallies and collapsing after falls; the year table's 2013 / 2023 QQQ and TQQQ figures are first-close-to-last-close
+  (calendar-year returns are +36.6% / +139.7% and +54.9% / +198.0%); `--spot BTC-USD` did not run (fixed).
+- "SPY loses at every setting" → true at funding of 10% or less; at +15% to +20% 28 variants win by up to +0.9. "No QQQ+IEF mix
+  reaches the hedge's drawdown" → 2010-2026 only (bond bear); in 2010-2019 QQQ+IEF beats the hedge by 1.4-1.5. "At the same
+  worst fall the edge roughly doubles" → x1.3 against the 200-day rule, and all on 2022.
+- "T-bill 4.54% in the latest window" → 4.41% (4.54% is the window ending 2026-05); "the break-even rose from 0-0.4% to 6.1%" →
+  not monotone: 3.8% already in the window ending 2020-02, maximum 6.5% in the window ending 2026-05.
+- "24/7 raises liquidations from 3.0 to 3.3" → two of the extra five are NQ roll artefacts: 3.2, vs mix about 0 rather than -0.1;
+  "2x 0.12 → 0.18 a year" → 2 events to 3; "off-hours high above the NYSE high by more than 2% on 25 days" → 21-22 of them are
+  gap-down days; "Bitget clamps TQQQ's mark to 5%" → TQQQUSDT is not on the page (generic 3%); the cited KuCoin index article has
+  no stock-perp rule (48142946141603 does).
+- "Costs the study set to zero" → the study set fees at 0.05%; the 0.5% close-out fee is a stress about eight times the documented
+  0.06%, and the 0.5% slippage is an assumption.
+- "9 of 31 README claims are wrong" → 6-7 hard errors; "the modelling conventions cancel" → at 5x only.
+
+**Where the two verifiers disagreed** (the report takes no side): whether Gate's 1% tier counts as a venue offering the study's
+maintenance (one found "none material", the other refuted the finding on it); whether Aster exposes a cap and interest rate (±2%
+and 0 vs not exposed); whether Bybit was "reached" (20x, 2026-06-24 per its announcement vs never reached); KuCoin's 6.7% (accepted
+vs the 105-settlement gap); whether 4.8 + 2.6 can be derived from any script (reproduced under the quadratic definition as
+4.69 + 2.66 vs not derivable, with a third verifier deriving 4.82 + 2.53 from leveraged.py); whether "1999 five times a year" is
+unsupported or wrong in the other direction; whether "the trend sets the break-even" holds at 5x; whether the bond-mix result is
+robust; whether the 24/7 proxy's 3.3 includes roll artefacts; whether "half are wicks" holds.
+
+## 10. What is still unknown
+
+- Which maintenance level applies to you: it depends on the venue, the notional tier, and whether Gate's token index and ±0.02%
+  funding cap are acceptable; Bybit's tiers were not read.
+- Stock-perpetual funding in a crash: no sample. How the mark price behaves in a closed-hours crash: only Bitget's rule text (index
+  at most 10% from the last close, clamp "typically 3%", TQQQ not listed).
+- The probability and cost of auto-deleveraging and delisting; real slippage and open interest for a $100k-1M short; refill
+  slippage in a spike (0.5% assumed; the hourly candles the specialists held were not used to measure it).
+- Tax (US straddle rules, the character of funding income; compliance for PRC residents) and USDT / exchange custody risk on
+  10-20% of NAV.
+- Dividends and each venue's index adjustment.
+- The long-run funding level: four months to a year of new contracts; BTC's precedent is cyclical and does not extrapolate.
+- Out of sample: the recipes were chosen on the sample they are tested on; one 2010-2026 history, mostly a bull market; 1999-2010
+  only with a rebuilt fund and liquidations on the close.
