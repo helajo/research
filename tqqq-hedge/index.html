@@ -48,6 +48,7 @@
         <li><a href="#decay" data-i18n="nav_decay">Decay</a></li>
         <li><a href="#years" data-i18n="nav_years">Years</a></li>
         <li><a href="#recipes" data-i18n="nav_recipes">Recipes</a></li>
+        <li><a href="#futures" data-i18n="nav_futures">Futures</a></li>
         <li><a href="#caveats" data-i18n="nav_caveats">Caveats</a></li>
       </ol>
     </nav>
@@ -70,7 +71,7 @@
       <div class="hero__text">
         <p class="eyebrow"><span class="eyebrow__tag" data-i18n="hero_tag">The verified study</span><span data-i18n="hero_q"></span></p>
         <h1 id="hero-title" class="hero__title" data-i18n-html="hero_title">At the venues’ real terms it earns about what T-bills pay; <em>one recipe is a wash.</em></h1>
-        <h2 class="five__h" data-i18n="five_h">The answer in five lines</h2>
+        <h2 class="five__h" data-i18n="five_h">The answer in six lines</h2>
         <ol class="five" id="five"></ol>
         <p class="hero__fine" data-i18n="hero_fine"></p>
         <p class="hero__fine hero__lede" data-i18n="hero_lede"></p>
@@ -330,27 +331,92 @@
     </div>
   </section>
 
-  <!-- 08 CAVEATS -->
-  <section class="section" id="caveats" aria-labelledby="caveats-h">
+  <!-- 08 FUTURES -->
+  <section class="section" id="futures" aria-labelledby="futures-h">
     <div class="wrap">
       <header class="section__head">
         <p class="section__no">08</p>
+        <h2 id="futures-h" data-i18n="fx_h">The regulated alternative: Nasdaq-100 futures</h2>
+        <p class="lede" data-i18n-html="fx_lede_html"></p>
+        <p class="section__disc" id="fx-disc"></p>
+      </header>
+      <figure class="diagram diagram--fx" aria-labelledby="fx-dg-cap">
+        <div id="fx-diagram" role="img" data-i18n-aria="fx_dg_title"></div>
+        <figcaption id="fx-dg-cap" class="note"></figcaption>
+      </figure>
+      <h3 class="sub" data-i18n="fx_three_h">The answer in three lines</h3>
+      <ol class="points points--num" id="fx-three"></ol>
+      <h3 class="sub" data-i18n="fx_differs_h">How it differs from the perpetual</h3>
+      <ul class="points" id="fx-differs"></ul>
+      <details class="more more--block fold"><summary id="fx-differs-sum"></summary><ul class="points" id="fx-differs-more"></ul></details>
+
+      <h3 class="sub" data-i18n="fx_ex_h">Example: US$100,000 of QQQ</h3>
+      <p class="sub-lede" id="fx-ex-lede"></p>
+      <div class="fcards" id="fx-cards"></div>
+      <div class="note"><span id="fx-ex-note"></span> <details class="more"><summary data-i18n="fx_ex_src_sum"></summary><span id="fx-ex-src"></span></details></div>
+
+      <h3 class="sub" data-i18n="fx_be_h">Break-even funding: the perpetual beats futures only above it</h3>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="futures-h"><table class="score score--fbe score--stack" id="fx-be"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <details class="more more--block fold"><summary data-i18n="fx_be_sum"></summary>
+        <div class="table-wrap" tabindex="0" role="region" aria-labelledby="futures-h"><table class="score score--fbe" id="fx-be-more"><thead></thead><tbody></tbody></table></div>
+        <p class="swipe-hint" data-i18n="swipe"></p>
+        <p class="note" id="fx-be-note"></p>
+      </details>
+      <p class="sub-lede" id="fx-gap-lede"></p>
+      <div class="chart-block">
+        <h3 class="chart-title" data-i18n="fx_gap_title">Recipe A’s lead over futures with the same daily market exposure, points a year</h3>
+        <p class="chart-cap" id="fx-gap-cap"></p>
+        <div class="chart chart--fgap" id="fx-gap" role="group" aria-roledescription="chart" data-i18n-rd="rd_chart"></div>
+        <ul class="legend" id="fx-gap-leg"></ul>
+        <div class="tooltip" id="fx-gap-tip" hidden></div>
+        <div class="note"><span id="fx-gap-note"></span> <details class="more"><summary data-i18n="more_numbers"></summary><span data-i18n="fx_gap_more"></span></details></div>
+      </div>
+
+      <h3 class="sub" data-i18n="fx_bt_h">The backtest at matched volatility</h3>
+      <p class="sub-lede" data-i18n-html="fx_bt_lede_html"></p>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="futures-h"><table class="score score--rc score--fbt" id="fx-bt"><thead></thead><tbody></tbody></table></div>
+      <p class="swipe-hint" data-i18n="swipe"></p>
+      <details class="more more--block fold fx-bt-more"><summary id="fx-bt-sum"></summary>
+        <div class="table-wrap table-wrap--tight" tabindex="0" role="region" aria-labelledby="futures-h"><table class="score score--rc score--fbt" id="fx-bt-all"><thead></thead><tbody></tbody></table></div>
+        <p class="swipe-hint" data-i18n="swipe"></p>
+      </details>
+      <div class="note"><details class="more"><summary data-i18n="fx_bt_note_sum"></summary><span id="fx-bt-note"></span></details></div>
+
+      <h3 class="sub" data-i18n="fx_routes_h">The four routes side by side</h3>
+      <details class="more more--block fold"><summary data-i18n="fx_routes_sum"></summary>
+        <div class="table-wrap" tabindex="0" role="region" aria-labelledby="futures-h"><table class="score score--wrap score--routes" id="fx-routes"><thead></thead><tbody></tbody></table></div>
+        <p class="swipe-hint" data-i18n="swipe"></p>
+        <div class="rc-p2 fx-r4"><details class="more"><summary data-i18n="fx_r4_sum"></summary><span id="fx-route4"></span></details></div>
+      </details>
+
+      <h3 class="sub" data-i18n="fx_who_h">Who should use which</h3>
+      <ul class="points points--num fx-who" id="fx-who"></ul>
+      <ul class="points" id="fx-limits"></ul>
+
+      <h3 class="sub" id="fx-tax-h" data-i18n="fx_tax_h">Access and tax</h3>
+      <p class="sub-lede" data-i18n="fx_tax_lede"></p>
+      <div class="seg tabs" role="tablist" aria-labelledby="fx-tax-h" id="fx-tax-tabs"></div>
+      <div class="taxpanel" id="fx-tax-panel" role="tabpanel" tabindex="0"></div>
+      <details class="fineprint more"><summary data-i18n="sources_h"></summary><ul class="sources" id="fx-sources"></ul></details>
+    </div>
+  </section>
+
+  <!-- 09 CAVEATS -->
+  <section class="section section--tint" id="caveats" aria-labelledby="caveats-h">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="section__no">09</p>
         <h2 id="caveats-h" data-i18n="cv_h"></h2>
         <p class="lede" data-i18n="cv_lede"></p>
       </header>
       <h3 class="sub" data-i18n="dr_h"></h3>
       <ol class="points points--num points--fold" id="drawbacks"></ol>
-      <h3 class="sub" data-i18n="ns_h"></h3>
-      <details class="more more--block fold"><summary id="ns-sum"></summary>
-        <p class="sub-lede" id="ns-intro"></p>
-        <ul class="points points--x" id="ns-list"></ul>
-        <div class="disagree" id="ns-dis"></div>
-      </details>
       <h3 class="sub" data-i18n="un_h"></h3>
       <ul class="points points--q" id="unknowns"></ul>
       <h3 class="sub" data-i18n="pg_h"></h3>
       <details class="more more--block fold"><summary id="pg-sum"></summary>
-      <ul class="points" id="pg-list"><li data-i18n="pg_1"></li><li data-i18n="pg_2"></li><li data-i18n="pg_3"></li><li><span data-i18n="pg_4"></span> <details class="more"><summary data-i18n="pg_4_which"></summary><span data-i18n="pg_4_more"></span></details></li><li data-i18n="pg_5"></li><li data-i18n="pg_6"></li><li data-i18n="pg_7"></li><li data-i18n="pg_8"></li><li data-i18n="pg_9"></li></ul>
+      <ul class="points" id="pg-list"><li data-i18n="pg_1"></li><li data-i18n="pg_2"></li><li data-i18n="pg_3"></li><li><span data-i18n="pg_4"></span> <details class="more"><summary data-i18n="pg_4_which"></summary><span data-i18n="pg_4_more"></span></details></li><li data-i18n="pg_5"></li><li data-i18n="pg_6"></li><li data-i18n="pg_7"></li><li data-i18n="pg_8"></li><li data-i18n="pg_9"></li><li data-i18n="pg_10"></li></ul>
       </details>
     </div>
   </section>
