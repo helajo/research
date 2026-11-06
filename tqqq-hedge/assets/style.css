@@ -235,14 +235,8 @@ html[lang^="zh"] h3.sub { font-weight: 700; letter-spacing: 0; }
 .points--num { counter-reset: c; }
 .points--num li { counter-increment: c; position: relative; padding-left: 40px; }
 .points--num li::before { content: counter(c); position: absolute; left: 0; top: 12px; width: 26px; height: 26px; border: 1px solid var(--rule-strong); color: var(--ink-2); border-radius: 50%; display: grid; place-items: center; font: 500 .8rem/1 var(--f-mono); }
-.points--x li { padding-left: 32px; position: relative; }
-.points--x li::before { content: "✕"; position: absolute; left: 2px; top: 12px; font: 500 .9rem/1.6 var(--f-mono); color: var(--loss); }
 .points--q li { padding-left: 32px; position: relative; }
 .points--q li::before { content: "?"; position: absolute; left: 2px; top: 12px; font: 600 1rem/1.5 var(--f-mono); color: var(--muted); }
-.disagree { margin-top: 18px; padding: 14px 16px; background: var(--surface); border-left: 3px solid var(--rule-strong); color: var(--ink-2); font-size: .92rem; max-width: 86ch; }
-.disagree strong { color: var(--ink); }
-.disagree ul { margin: 8px 0 0; padding: 0 0 0 1.2em; }
-.disagree li { margin: 4px 0; }
 .prose ul.mech { margin: 0 0 12px; padding: 0 0 0 1.2em; }
 .prose ul.mech li { margin: 3px 0; }
 .deflist { margin: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 32px; max-width: 86ch; }

@@ -705,16 +705,8 @@ function renderFxTax() {
 function renderCaveats() {
   const m = S.d.meta, L = S.lang;
   document.getElementById('drawbacks').innerHTML = m.drawbacks[L].map((s, i) => `<li>${foldHtml(secLinks(md(s)), mdOf(esc(m.drawbacks.en[i])))}</li>`).join('');
-  document.getElementById('ns-intro').innerHTML = tx(m.did_not_survive['intro_' + L]);
-  document.getElementById('ns-list').innerHTML = m.did_not_survive[L].map((s) => `<li>${md(s)}</li>`).join('');
-  // the audit material is folded behind one-line summaries; the drawbacks stay open
-  document.getElementById('ns-sum').textContent = t('ns_sum', { n: m.did_not_survive[L].length });
+  // the page's own caveats are folded behind a one-line summary; the drawbacks stay open
   document.getElementById('pg-sum').textContent = t('pg_sum', { n: document.querySelectorAll('#pg-list > li').length });
-  // "Where the two verifiers disagreed (…): whether A; whether B; …" is a list in disguise: the lead, then one item per dispute
-  const dis = md(m.did_not_survive['disagreements_' + L]);
-  const cut = scanTop(dis, 0, (c, n) => c === '：' || (c === ':' && n === ' '));
-  document.getElementById('ns-dis').innerHTML = cut < 0 ? dis
-    : `<p style="margin:0">${dis.slice(0, cut)}</p><ul>${splitTop(dis.slice(cut), (c, n) => c === '；' || (c === ';' && n === ' ')).map((x) => `<li>${x.replace(/^[;；]\s*/, '').replace(/[;；]\s*$/, '')}</li>`).join('')}</ul>`;
   document.getElementById('unknowns').innerHTML = m.still_unknown[L].map((s) => `<li>${secLinks(md(s))}</li>`).join('');
 }
 /* ---------- sentence-aware text folding ----------
