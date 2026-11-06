@@ -1,7 +1,7 @@
 // Every user-visible string of the page, in English and Simplified Chinese.
 // Placeholders {name} are filled by app.js. Keys ending in _html may contain simple markup.
 // Sentences and numbers quoted from the study are taken from reports/tqqq_short_hedge/DEEP_DIVE.md (the source of truth);
-// the data lists (five lines, drawbacks, what did not survive, unknowns, venue table) come bilingual from data/*.json.
+// the data lists (five lines, drawbacks, unknowns, venue table) come bilingual from data/*.json.
 
 export const STR = {
   en: {
@@ -254,13 +254,11 @@ export const STR = {
     rc_p2: 'At funding +10% and 2.5% maintenance the edges over 2010–2026 are +0.8 / +0.4 (1/3 at 2x / 3x) and +1.3 / +1.1 (0.2 at 2x / 3x), but only −0.7 / −1.5 and +0.5 / +0.1 over the last three years. The cost of idle margin is already inside these figures (margin earns nothing): hedge 1/3 at 2x posts 13.6% of NAV, 0.2% a year at 2010–2026 rates and 0.6% at today’s 4.3%; if the 5% cash reserve must also sit on the exchange in USDT, add about 0.2%. Measured against Nasdaq-100 futures instead (§08), each of these “vs mix” figures is about 0.17–0.26 points lower (same daily beta, futures carry 0.25%; 0.07–0.10 at a carry of 0.10%): recipe A at +5% leads futures by about 0.2 points (same daily beta) over 2010–2026 and trails by about 0.6–0.7 over the last three years, so its “wash” is slightly negative today.',
     rc_p3_html: '<strong>Read together:</strong> at the maintenance and funding the venues actually show, the one-third hedge earns about T-bills and trails holding less QQQ by 0.6–3.3 points (2–5 over the last three years); the 0.2 hedge at 2x is a wash (within ±0.5 of the mix) and beats it only if funding stays at the October–November run rate (10% or more). Order of the mechanical corrections: maintenance tier (5x: −2.7 points), funding level (0.2–0.3 points per point), 24/7 trading (−0.25), fees (−0.06 at the documented rate). Measured against Nasdaq-100 futures (§08) instead of the mix, each of these “vs mix” gaps (not the corrections) is about 0.17–0.26 points lower (same daily beta, carry 0.25%; 0.07–0.10 at 0.10%), so recipe A’s wash is slightly negative today.',
 
-    cv_h: 'Drawbacks, what did not survive, what is unknown',
+    cv_h: 'Drawbacks and what is unknown',
     cv_lede: 'The parts of the study that should temper every number above.',
     dr_h: 'The drawbacks',
-    ns_h: 'What did not survive checking',
     un_h: 'What is still unknown',
     pg_h: 'Caveats on this page’s numbers',
-    ns_sum: '{n} points from the first write-up that the checks corrected, and where the verifiers disagreed',
     pg_sum: '{n} notes on how this page’s numbers were made: fees, sampling, rounding, links',
     pg_1: 'The explorer uses the study’s defaults (taker 0.05%, spot fee 0.05%, 5% reserve, refill, T-bills on cash); the cost of the liquidation rule is computed for every cell.',
     pg_2: 'The realistic case and the 2.5%-maintenance growth curves use a 0.06% taker fee, as study §6 does; at the study’s 0.05% the same cells read about 0.05–0.1 points higher (more at higher leverage).',
@@ -268,7 +266,7 @@ export const STR = {
     pg_4: 'The year table and the episodes are regenerated with the same code and data as the study’s tables; the underlying values match to machine precision and the figures shown are rounded to 0.1 point. Some columns and rows are additional runs of the same simulator rather than copies of the study’s tables.',
     pg_4_which: 'which ones',
     pg_4_more: 'In the episode table the “1/3, 2x, venue terms”, “A · maint. 2.5% · +10% · fee 0.06%” and “A · maint. 2.5% · +5% · fee 0.06%” columns; in the 1999–2010 tables the “1/3, 2x” and “Recipe A · maint. 1% · +10% · fee 0.05%” rows; in the realistic-case table the reference row of the 2023–2026 window and the +10% and 5%-maintenance liquidation and worst-fall cells (they are in the study’s data files, not in the deep dive’s text). The 1999–2010 summary table and the recipe table are copied from the deep dive’s text.',
-    pg_5: 'The venue table, the six-line answer, the drawbacks, what did not survive and what is unknown are copied verbatim from the deep dive; one oddity in its disagreements paragraph (“0 对 未公开”) is kept as written.',
+    pg_5: 'The venue table, the six-line answer, the drawbacks and what is unknown are copied verbatim from the deep dive.',
     pg_6: 'Funding is quoted as the venues publish it, annualised as rate × 3 × 365 without compounding; live funding is not shown on this page.',
     pg_7: 'One cell of the realistic-case table reads 12.6% (0.20 at 3x, 2023–2026, maintenance 2.5%, funding +5%) where the deep dive prints 12.7%: the data gives 0.12650, so 12.6% is the one-decimal rounding; the deep dive’s 12.7% rounds its own four-decimal print (0.1265) a second time.',
     pg_8: 'The “By holding period” table counts 200 monthly periods with a negative compounding term in 41% of them (the decay specialist’s table); the lede and the findings quote the deep dive’s “80 of 201 months (41%)”. The two counts come from different scripts of the study (80 of 201 is 39.8%; 41% of 200 is 82 months); the page shows each as its source prints it.',
@@ -624,13 +622,11 @@ export const STR = {
     rc_p2: '资金费率 +10%、维持保证金 2.5% 时，2010 到 2026 年的优势是 1/3 对冲 +0.8 / +0.4（2 倍 / 3 倍），0.2 对冲 +1.3 / +1.1；最近三年只有 −0.7 / −1.5 和 +0.5 / +0.1。闲置保证金的成本已经在这些数字里（保证金不生息）：1/3 对冲 2 倍杠杆占净值的 13.6%，按 2010 到 2026 年平均利率每年 0.2%，按现在的 4.3% 每年 0.6%；如果 5% 的现金储备也要以 USDT 放在交易所，再加约 0.2%。如果尺子换成纳斯达克 100 期货（§08），这些“相对组合”的数字每个都要再低约 0.17 到 0.26 个点（同样日度贝塔，期货利差 0.25%；利差 0.10% 时低 0.07 到 0.10）：配方 A 在 +5% 下 2010 到 2026 年比期货多约 0.2 个点（同样日度贝塔），最近三年少约 0.6 到 0.7 个点，所以它的“打平”按今天的情况略为负。',
     rc_p3_html: '<strong>合起来读：</strong>按交易所实际显示的保证金和资金费率，1/3 对冲赚的大约是国库券，比少拿 QQQ 少 0.6 到 3.3 个点（最近三年少 2 到 5）；0.2 对冲加 2 倍杠杆打平（±0.5 之内），只有资金费率停在 10 月到 11 月的水平（10% 以上）才跑赢。机械修正的大小顺序：维持保证金分档（5 倍 −2.7 个点），资金费率水平（每个点 0.2 到 0.3），24 小时交易（−0.25），手续费（公开费率下 −0.06）。如果尺子换成纳斯达克 100 期货（§08），这些“相对组合”的差距（不是上面的修正幅度）每个都要再低约 0.17 到 0.26 个点（同样日度贝塔、期货利差 0.25%；利差 0.10% 时 0.07 到 0.10），所以配方 A 的“打平”按今天的情况略为负。',
 
-    cv_h: '缺点、未通过核查的内容、仍然未知',
+    cv_h: '缺点和仍然未知的部分',
     cv_lede: '读上面每个数字时都该记着的部分。',
     dr_h: '缺点',
-    ns_h: '未通过核查的内容',
     un_h: '仍然未知',
     pg_h: '本页数字的注意事项',
-    ns_sum: '初稿中经核查更正的 {n} 处，以及核查者意见不一致之处',
     pg_sum: '本页数字的 {n} 条说明：手续费、取样、舍入、链接',
     pg_1: '探索器用研究的默认设定（吃单费 0.05%，现货手续费 0.05%，5% 储备，续杯，现金买国库券）；爆仓规则的成本对每一格都算了。',
     pg_2: '现实情形和维持保证金 2.5% 的增长曲线用 0.06% 吃单费，与研究第 6 节一致；按研究的 0.05%，同样的格子约高 0.05 到 0.1 个点（杠杆越高差得越多）。',
@@ -638,7 +634,7 @@ export const STR = {
     pg_4: '分年表和各时段用与研究表格相同的代码和数据重新生成；底层数值在机器精度内一致，页面显示的数字四舍五入到 0.1 个点。有些列和行是同一个模拟器的额外运行，不是研究表格的复制。',
     pg_4_which: '哪些',
     pg_4_more: '时段表里的“1/3，2 倍，交易所条件”“A · 维持保证金 2.5% · +10% · 手续费 0.06%”“A · 维持保证金 2.5% · +5% · 手续费 0.06%”三列；1999 到 2010 年各表里的“1/3，2 倍”和“配方 A · 维持保证金 1% · +10% · 手续费 0.05%”两行；现实情形表里 2023 到 2026 年窗口的对照行，以及 +10% 和维持保证金 5% 下的爆仓次数和最大回撤（它们在研究的数据文件里，不在深度报告的正文里）。1999 到 2010 年的汇总表和配方表从深度报告的正文复制。',
-    pg_5: '交易所表、六行结论、缺点、未通过核查的内容和仍然未知的部分从深度报告逐字复制；其“意见不一致”段落里的一处原文（“0 对 未公开”）照原样保留。',
+    pg_5: '交易所表、六行结论、缺点和仍然未知的部分从深度报告逐字复制。',
     pg_6: '资金费率按交易所公布的数据引用，年化 = 费率 × 3 × 365、不复利；本页不显示实时资金费率。',
     pg_7: '现实情形表里有一格是 12.6%（0.20，3 倍，2023 到 2026 年，维持保证金 2.5%，资金费率 +5%），深度报告印的是 12.7%：数据是 0.12650，12.6% 是保留一位小数的舍入；深度报告的 12.7% 是把它自己四位小数的 0.1265 再舍入了一次。',
     pg_8: '“按持有期”表统计 200 个月度期，其中复利为负的占 41%（磨损专题研究者的表格）；导语和逐条结论引用深度报告的“201 个月里 80 个月为负（41%）”。两个计数来自研究的不同脚本（80/201 是 39.8%，200 的 41% 是 82 个月）；本页按各自来源照印。',
