@@ -9,6 +9,7 @@ const S = {
   ex: { hedge: 0.2, leverage: 2, rebalance: 'M', funding: 0.05, maintenance: 0.025 },
   gr: { win: 'main', sel: { main: new Set(['qqq', 'third_2x_realistic', 'recipe_a', 'mix_a', 'base']), stress: new Set(['qqq', 'base', 'third_3x', 'a_5x', 'a_2x']) } },
   rc: { funding: 0.05 },
+  fx: { tax: 'sg' },
 };
 const MINUS = '−';
 const REPO = 'https://github.com/heyneww/GL-portfolio-exploration';
@@ -56,20 +57,21 @@ function typoPart(p) {
 /** Number ranges only (table labels such as 2010-2019 or VIX 15-20), in both languages. */
 function dashRange(s) { return typoPart(String(s).replace(/["']/g, '')); }
 function typo(s) { return zh() ? String(s) : String(s).split(/(`[^`]*`)/).map((p, i) => (i % 2 ? p : typoPart(p))).join(''); }
-/** The study's own section numbers become "study §N" / "研究第 N 节", so they never read as this page's §01–§08;
- *  the verification script paths in the visible notes become a plain phrase. */
+/** The study's own section numbers become "study §N" / "研究第 N 节", so they never read as this page's §01–§09;
+ *  the study's section 8a (the futures route) is this page's §08; the verification script paths in the visible notes
+ *  become a plain phrase. */
 function refs(s) {
   s = String(s);
-  if (zh()) return s.replace(/DEEP_DIVE(?:\.md)?\s*第\s*(\d+)\s*节/g, '研究第 $1 节').replace(/(?<!研究)第\s*(\d)\s*节/g, '研究第 $1 节')
+  if (zh()) return s.replace(/第\s*8a\s*节/g, '§08').replace(/DEEP_DIVE(?:\.md)?\s*第\s*(\d+)\s*节/g, '研究第 $1 节').replace(/(?<!研究)第\s*(\d)\s*节/g, '研究第 $1 节')
     .replace(/[；;]\s*deep_dive\/_verify\/[\w\/.-]+\.py。?/g, '（脚本在研究的核查文件里）。').replace(/deep_dive\/_verify\/[\w\/.-]+\.py/g, '研究的核查文件');
-  return s.replace(/DEEP_DIVE(?:\.md)? section (\d+)/g, 'study §$1').replace(/\b(?:in )?section (\d)\b/g, (m, n) => (m.startsWith('in ') ? 'in ' : '') + 'study §' + n)
+  return s.replace(/\bsection 8a\b/g, '§08').replace(/DEEP_DIVE(?:\.md)? section (\d+)/g, 'study §$1').replace(/\b(?:in )?section (\d)\b/g, (m, n) => (m.startsWith('in ') ? 'in ' : '') + 'study §' + n)
     .replace(/;\s*deep_dive\/_verify\/[\w\/.-]+\.py\.?/g, ' (script in the study’s verification files).').replace(/deep_dive\/_verify\/[\w\/.-]+\.py/g, 'the study’s verification files').replace(/^study §/, 'Study §');
 }
 /** A data string, escaped, with study references, typography and Chinese quotes fixed. */
 function tx(s) { return esc(typo(zq(refs(s)))); }
-/** This page's own sections (§01–§08) as links to their anchors (not inside an existing link). */
-const SEC_IDS = ['what', 'explore', 'growth', 'funding', 'decay', 'years', 'recipes', 'caveats'];
-function secLinks(html) { return String(html).replace(/§0([1-8])(?![^<]*<\/a>)/g, (m, n) => `<a class="secref" href="#${SEC_IDS[n - 1]}">${m}</a>`); }
+/** This page's own sections (§01–§09) as links to their anchors (not inside an existing link). */
+const SEC_IDS = ['what', 'explore', 'growth', 'funding', 'decay', 'years', 'recipes', 'futures', 'caveats'];
+function secLinks(html) { return String(html).replace(/§0([1-9])(?![^<]*<\/a>)/g, (m, n) => `<a class="secref" href="#${SEC_IDS[n - 1]}">${m}</a>`); }
 /** A dated phrase that must not break across lines. */
 function nw(s) { return `<span class="nw">${esc(s)}</span>`; }
 /** Minimal markdown: **bold** and `code` on an escaped string. */
@@ -129,7 +131,7 @@ const GLOSSED = { tile_sharpe: 'sharpe', tile_liqcost: 'topup', tile_vs: 'mix', 
 function label(key) { return GLOSSED[key] ? `<a class="term" href="#gl-${GLOSSED[key]}">${esc(t(key))}</a>` : esc(t(key)); }
 /** The glossary: the six terms the trade needs shown, the rest folded. */
 const GL_OPEN = ['hedge', 'isolated', 'maint', 'liq', 'funding', 'reset'];
-const GL_MORE = ['perp', 'notional', 'leverage', 'taker', 'topup', 'mix', 'tbills', 'nav', 'sharpe', 'pts', 'worst', 'cagr', 'gap', 'cost', 'comp', 'decay', 'giveback', 'beat', 'tstat', 'adl', 'basis', 'xstocks'];
+const GL_MORE = ['perp', 'notional', 'leverage', 'taker', 'topup', 'mix', 'tbills', 'nav', 'sharpe', 'pts', 'worst', 'cagr', 'gap', 'cost', 'comp', 'decay', 'giveback', 'beat', 'tstat', 'adl', 'basis', 'xstocks', 'nq', 'carry'];
 
 /* ---------- hero ---------- */
 function renderHero() {
@@ -150,7 +152,7 @@ function renderHero() {
   document.getElementById('hero-recipe-note').innerHTML = t('hero_recipe_note_html', { a1: money(a10.final_value), a25: money(S.d.curves.main.series.recipe_a.stats.final_value) });
   // five lines: a short lead each, the study's own sentence behind a disclosure (verbatim from DEEP_DIVE.md)
   document.getElementById('five').innerHTML = m.five_lines[S.lang].map((s, i) =>
-    `<li><span class="lead">${esc(t('five_lead_' + (i + 1)))}</span><details><summary>${esc(t('five_more'))}</summary><p>${md(s)}</p></details></li>`).join('');
+    `<li><span class="lead">${esc(t('five_lead_' + (i + 1)))}</span><details><summary>${esc(t('five_more'))}</summary><p>${secLinks(md(s))}</p></details></li>`).join('');
   // the modelling assumptions as a definition list (the same content as meta.assumptions, split by topic)
   const as = ['spot', 'short', 'liq', 'fees', 'reserve', 'margin', 'funding', 'data'];
   document.getElementById('assumptions').innerHTML = as.map((k) => `<div><dt>${esc(t('as_' + k))}</dt><dd>${esc(t('as_' + k + '_d', { start: dLong(m.data_start), end: dLong(m.data_end) }))}</dd></div>`).join('');
@@ -524,10 +526,185 @@ function renderRecipes() {
   updateSwipeHints();
 }
 
+/* ---------- futures: the regulated alternative (section 08, data/futures.json) ---------- */
+const FX_WIN = ['2010-02..2026-10', '2023-10..2026-10'];
+const FX_STRESS = '2000-09..2010-02 (stress)';
+const FX_URL = `${REPO}/blob/${STUDY_BRANCH}/reports/tqqq_short_hedge/futures_route/FUTURES_ROUTE.md`;
+const FX_LOCAL = 'FUTURES_ROUTE.txt'; // plain-text copy of FUTURES_ROUTE.md published with the page
+// one hue in two lightnesses for the two windows (the portfolio hues stay reserved), as in the funding charts
+const FX_COLORS = { [FX_WIN[0]]: ['var(--c-bar)', null], [FX_WIN[1]]: ['var(--c-fx-2)', 'dash'] };
+function usd(v) { return zh() ? `${int(v)} 美元` : '$' + int(v); }
+function usdRange(a, b) { return zh() ? `${int(a)} 到 ${int(b)} 美元` : `$${int(a)}–${int(b)}`; }
+function pctRange(a, b, d = 1) { return zh() ? `${num(a * 100, d)}% 到 ${num(b * 100, d)}%` : `${num(a * 100, d)}–${num(b * 100, d)}%`; }
+/** A period header: each YYYY-MM stays on one line; the last three years carry their T-bill average on a line of its own on phones. */
+function nwDates(s) { return esc(s).replace(/\d{4}-\d{2}/g, (m) => `<span class="nw">${m}</span>`); }
+function fxWinTh(w, tb) { return w === FX_WIN[0] ? nwDates(t('fx_th_w1')) : nwDates(t('fx_th_w2')) + `<span class="th-tb">${esc(paren(t('fx_th_tb', { tb })))}</span>`; }
+/** The stress period's header: its dates, then the word "stress" (on a line of its own on phones). */
+function fxStressTh() { const m = t('fx_th_stress').match(/^(.*\d{4}-\d{2})\s*(.*)$/); return m ? `${nwDates(m[1])} <span class="th-tb">${esc(m[2])}</span>` : nwDates(t('fx_th_stress')); }
+function paren(s) { return zh() ? `（${s}）` : ` (${s})`; }
+function renderFutures() {
+  const F = S.d.futures, L = S.lang, X = F[L], ex = F.example_100k;
+  // the diagram: three boxes joined by two arrows (stacked on phones, a row from 760 px of figure width)
+  const arrow = '<svg viewBox="0 0 44 16" aria-hidden="true"><path d="M2 8h36M32 3l6 5-6 5"/></svg>';
+  const per = ex.cases[0].margin.map((v) => v / ex.cases[0].contracts);
+  document.getElementById('fx-diagram').innerHTML = `<div class="fdg">
+    <div class="fdg-box fdg-box--spot"><b>${esc(t('fx_dg_spot'))}</b><span>${esc(t('fx_dg_spot_sub'))}</span></div>
+    <div class="fdg-link">${arrow}<div><b>${esc(t('fx_dg_sell'))}</b><span>${esc(t('fx_dg_sell_sub'))}</span></div></div>
+    <div class="fdg-box fdg-box--fut"><b>${esc(t('fx_dg_fut'))}</b><span>${esc(t('fx_dg_fut_sub'))}</span>
+      <div class="fdg-margin"><b>${esc(t('fx_dg_margin'))}</b><span>${esc(t('fx_dg_margin_sub', { r: usdRange(per[0], per[1]) }))}</span></div></div>
+    <div class="fdg-link">${arrow}<div><b>${esc(t('fx_dg_eq'))}</b><span>${esc(t('fx_dg_eq_sub'))}</span></div></div>
+    <div class="fdg-box fdg-box--res"><b>${esc(t('fx_dg_res'))}</b><span class="fdg-v">${esc(typo(t('fx_dg_res_v')))}</span><span>${esc(t('fx_dg_res_sub'))}</span></div>
+  </div>`;
+  document.getElementById('fx-dg-cap').textContent = t('fx_dg_cap', { mnq: usd(ex.mnq_notional), ndx: ex.ndx_close.toLocaleString('en-US', { minimumFractionDigits: 2 }), date: dLong(ex.ndx_date) });
+  // the three lines and how futures differ from the perpetual: bold lead and first sentence, the rest folded
+  const foldList = (id, list, ref) => { document.getElementById(id).innerHTML = list.map((s, i) => `<li>${foldHtml(secLinks(md(s)), mdOf(esc(ref[i])))}</li>`).join(''); };
+  foldList('fx-three', F.three_lines[L], F.three_lines.en);
+  foldList('fx-differs', X.differs.slice(0, 1), F.en.differs.slice(0, 1));
+  foldList('fx-differs-more', X.differs.slice(1), F.en.differs.slice(1));
+  document.getElementById('fx-differs-sum').textContent = t('fx_differs_sum', { n: X.differs.length - 1 });
+  // the US$100,000 example: one card per hedge, and the perpetual for comparison
+  document.getElementById('fx-ex-lede').textContent = t('fx_ex_lede', { mnq: usd(ex.mnq_notional) });
+  const W = ex.worst;
+  const card = (c) => {
+    const over = c.hedge > 1 ? (zh() ? '，' : ', ') + t('fx_over', { p: pct(c.hedge - 1, 0) }) : '';
+    const marginV = zh() ? `${usdRange(c.margin[0], c.margin[1])}（现货的 ${pctRange(c.margin_share[0], c.margin_share[1])}）`
+      : `${usdRange(c.margin[0], c.margin[1])} (${pctRange(c.margin_share[0], c.margin_share[1])} of spot)`;
+    const cash = (k, key, d) => [t(key, { m: pct(W[k].move, 1), d: dLong(d) }), t('fx_about', { v: usd(c.cash_rounded[k]) })];
+    const dl = [[t('fx_margin'), marginV], cash('day', 'fx_cash_day', W.day.date), cash('month', 'fx_cash_month', W.month.to), cash('quarter', 'fx_cash_quarter', W.quarter.to)];
+    return `<article class="fcard"><h4 class="fcard__h">${esc(t(c.id === 'a' ? 'fx_card_a' : 'fx_card_full'))}</h4>` +
+      `<p class="fcard__big">${esc(t('fx_contracts', { n: c.contracts }))}</p><p class="fcard__sub">${esc(t('fx_hedges', { h: c.hedge.toFixed(2), need: c.need.toFixed(2), target: c.target.toFixed(c.target === 1 ? 1 : 2) }) + over)}</p>` +
+      `<dl class="fcard__dl">${dl.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></article>`;
+  };
+  const perp = `<article class="fcard fcard--perp"><h4 class="fcard__h">${esc(t('fx_card_perp'))}</h4>` +
+    `<p class="fcard__big">${esc(usd(ex.perp_margin))}</p><p class="fcard__sub">${esc(t('fx_perp_big_sub', { p: pct(ex.perp_margin / ex.book, 0) }))}</p>` +
+    `<dl class="fcard__dl fcard__dl--text">${[['fx_perp_wipe', t('fx_perp_wipe_v', { x: pct(ex.perp_wipeout_tqqq_month, 0) })], ['fx_perp_custody', t('fx_perp_custody_v')], ['fx_perp_income', t('fx_perp_income_v')]]
+      .map(([k, v]) => `<div><dt>${esc(t(k))}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></article>`;
+  document.getElementById('fx-cards').innerHTML = ex.cases.map(card).join('') + perp;
+  const ms = Object.fromEntries(ex.margin_sources.map((m) => [m.source, m.per_contract]));
+  const LP = 'LP Futures overnight 2026-10-27', IB = 'IB overnight 2026-11-05 (emini-watch)', IBKR = 'IBKR maintenance 2026-10-30 (ProRealTime)';
+  const dOf = (src) => dLong(src.match(/\d{4}-\d{2}-\d{2}/)[0]); // the date is part of the source's name in derive_out.txt
+  document.getElementById('fx-ex-note').textContent = t('fx_ex_note');
+  document.getElementById('fx-ex-src').textContent = t('fx_ex_src', {
+    lp: usd(ms[LP]), ib: usd(ms[IB]), ibkr: usd(ms[IBKR]), d1: dOf(LP), d2: dOf(IB), d3: dOf(IBKR) });
+  renderFxChart();
+  // break-even funding table
+  const BE = F.breakeven, tb2 = pct(F.backtest.windows[FX_WIN[1]].tbill_cagr, 2);
+  const beCell = (r, w) => {
+    const v = r.values && r.values[w], rg = r.range && r.range[w];
+    if (v === undefined && rg === undefined) return t('dash');
+    if (v === undefined) return esc(pctRange(rg[0], rg[1]));
+    return esc(pct(v) + (rg ? paren(pctRange(rg[0], rg[1])) : ''));
+  };
+  const beHead = [t('fx_th_method'), fxWinTh(FX_WIN[0], tb2), fxWinTh(FX_WIN[1], tb2), fxStressTh()];
+  // each cell carries its column header as plain text: the one-row table becomes a stacked list on phones
+  const plain = (h) => { const e = document.createElement('div'); e.innerHTML = h; return e.textContent.replace(/\s+/g, ' ').trim(); };
+  const beLab = beHead.slice(1).map(plain);
+  const beRow = (r, i) => `<tr${i === 0 ? ' class="key-row"' : ''}><th scope="row">${esc(typo(t('fx_be_' + r.id)))}</th>${[...FX_WIN, FX_STRESS].map((w, k) => `<td data-label="${esc(beLab[k])}">${beCell(r, w)}</td>`).join('')}</tr>`;
+  tableFill('fx-be', beHead, BE.rows.slice(0, 1).map(beRow));
+  tableFill('fx-be-more', beHead, BE.rows.slice(1).map((r) => beRow(r, -1)));
+  const mv = BE.rows[0].values;
+  document.getElementById('fx-be-note').textContent = typo(t('fx_be_note', { mv2: pct(mv[FX_WIN[1]]), today: '4.04%', d: dLong(F.history_to) }));
+  // the matched-volatility backtest: the compact table, the rest folded
+  const B = F.backtest;
+  const evTxt = (r) => (r.margin_calls_per_year != null ? t('fx_ev_calls', { v: num(r.margin_calls_per_year, 1) }) : r.liquidations_per_year != null ? t('fx_ev_liq', { v: liqTxt(r.liquidations_per_year) }) : t('dash'));
+  const real = (id) => id === 'fut06_real';
+  const head2 = (units) => `<tr class="grp"><th scope="col" rowspan="2">${esc(t('fx_th_route'))}</th>${FX_WIN.map((w) => `<th scope="colgroup" colspan="${units.length}" class="sep">${fxWinTh(w, tb2)}</th>`).join('')}</tr>` +
+    `<tr>${FX_WIN.map(() => units.map((u, i) => `<th scope="col" class="unit${i === 0 ? ' sep' : ''}">${esc(u)}</th>`).join('')).join('')}</tr>`;
+  const compact = B.rows.slice(0, B.compact);
+  const bt = document.getElementById('fx-bt');
+  bt.querySelector('thead').innerHTML = head2([t('th_cagr'), t('th_vs_pts')]);
+  bt.querySelector('tbody').innerHTML = compact.map((r) => `<tr${r.id.startsWith('perp') ? ' class="perp-row"' : ''}><th scope="row">${esc(typo(t('fx_bt_' + r.id)))}</th>${FX_WIN.map((w) =>
+    `<td class="sep">${pct(r[w].cagr, 2)}</td><td class="${cls(Math.round(r[w].vs_mix * 1e4))}">${signedNum(r[w].vs_mix * 100, 2)}</td>`).join('')}</tr>`).join('');
+  const all = document.getElementById('fx-bt-all');
+  all.querySelector('thead').innerHTML = head2([t('th_cagr'), t('th_vol'), t('th_mdd'), t('th_vs_pts'), t('fx_th_events')]);
+  const full = (r) => `<tr><th scope="row">${esc(typo(t('fx_bt_' + r.id)))}</th>${FX_WIN.map((w) => {
+    const c = r[w];
+    if (real(r.id)) return `<td class="sep">${pct(c.cagr, 2)}</td><td>${t('dash')}</td><td>${t('dash')}</td><td>${t('dash')}</td><td>${t('dash')}</td>`;
+    return `<td class="sep">${pct(c.cagr, 2)}</td><td>${pct(c.vol, 2)}</td><td>${pct(c.max_dd)}</td><td class="${cls(Math.round(c.vs_mix * 1e4))}">${signedNum(c.vs_mix * 100, 2)}</td><td>${esc(evTxt(c))}</td>`;
+  }).join('')}</tr>`;
+  const mixRow = (key, src) => { const r = B.rows.find((x) => x.id === src); return `<tr class="ref"><th scope="row">${esc(t(key, { a: pct(r[FX_WIN[0]].mix_share), b: pct(r[FX_WIN[1]].mix_share) }))}</th>${FX_WIN.map((w) =>
+    `<td class="sep">${pct(r[w].mix_cagr, 2)}</td><td>${t('dash')}</td><td>${pct(r[w].mix_max_dd, r[w].mix_max_dd > -0.05 ? 2 : 1)}</td><td>${t('dash')}</td><td>${t('dash')}</td>`).join('')}</tr>`; };
+  const refRow = (key, k) => `<tr class="ref"><th scope="row">${esc(t(key))}</th>${FX_WIN.map((w) => `<td class="sep">${pct(B.windows[w][k], 2)}</td><td>${t('dash')}</td><td>${t('dash')}</td><td>${t('dash')}</td><td>${t('dash')}</td>`).join('')}</tr>`;
+  all.querySelector('tbody').innerHTML = B.rows.map(full).join('') + mixRow('fx_bt_mix_fut', 'fut06_s0') + mixRow('fx_bt_mix_a', 'perp_a_0') + mixRow('fx_bt_mix_t', 'perp_t_0') +
+    refRow('fx_bt_qqq', 'qqq_cagr') + refRow('fx_bt_tb', 'tbill_cagr');
+  document.getElementById('fx-bt-sum').textContent = t('fx_bt_sum', { n: B.rows.length + 5 });
+  document.getElementById('fx-bt-note').textContent = typo(t('fx_bt_note'));
+  // the four routes: a table, cards on phones (the venue-table pattern)
+  const rc = ['route', 'earns', 'risks', 'effort', 'suits'];
+  tableFill('fx-routes', rc.map((c) => esc(t('fx_rt_' + c))), X.routes.map((r) => `<tr>${rc.map((c, i) => (i
+    ? `<td class="rt-${c}" data-label="${esc(t('fx_rt_' + c))}">${md(r[c])}</td>` : `<th scope="row">${md(r[c])}</th>`)).join('')}</tr>`));
+  document.getElementById('fx-route4').innerHTML = md(X.route4_numbers);
+  // who should use which, then single stocks and custody
+  foldList('fx-who', X.who, F.en.who);
+  document.getElementById('fx-limits').innerHTML = [['single_stocks'], ['custody']].map(([k]) => `<li>${foldHtml(md(X[k]), mdOf(esc(F.en[k])))}</li>`).join('');
+  renderFxTax();
+  document.getElementById('fx-disc').textContent = F.disclaimer[L];
+  // sources: the write-up, then one line per group
+  document.getElementById('fx-sources').innerHTML = `<li>${t('fx_src_writeup_html', { gh: FX_URL, local: FX_LOCAL })}</li>` + F.sources.map((g) =>
+    `<li><strong>${esc(g.group[L])}</strong>: ${g.items.map((it) => (it.url ? `<a href="${esc(it.url)}" rel="noopener">${esc(it.label)}</a>` : esc(it.label))).join(zh() ? '；' : '; ')}</li>`).join('');
+}
+function renderFxChart() {
+  const F = S.d.futures, G = F.gap_chart, B = F.backtest;
+  const host = document.getElementById('fx-gap');
+  const wide = host.clientWidth >= 560; // room for the method next to each crossing; on phones the legend names it
+  const series = FX_WIN.map((w) => ({ label: t(w === FX_WIN[0] ? 'fx_leg_long' : 'fx_leg_short', { tb: pct(B.windows[w].tbill_cagr, 2) }), color: FX_COLORS[w][0], dash: FX_COLORS[w][1],
+    values: G.windows[w].gap_vs_futures.map((v) => v * 100) }));
+  const band = { from: G.venue_band[0] * 100, to: G.venue_band[1] * 100, label: t('fx_band', { lo: pct(G.venue_band[0]), hi: pct(G.venue_band[1]) }) };
+  C.dotLine(host, {
+    xs: G.fundings.map((f) => f * 100), series, band,
+    crossings: FX_WIN.map((w) => ({ x: G.windows[w].break_even_vs_futures * 100, label: pct(G.windows[w].break_even_vs_futures) + (wide ? paren(t('fx_cross_m')) : ''), color: FX_COLORS[w][0], textColor: 'var(--ink-2)', anchor: 'end' })),
+    xFmt: (v) => (Math.abs(v) < 1e-9 ? '0%' : signedNum(v, 0) + '%'), yFmt: (v) => (Math.abs(v) < 1e-9 ? '0' : signedNum(v, 1)), tipFmt: (v) => t('pts', { v: signedNum(v, 2) }),
+    tipEl: document.getElementById('fx-gap-tip'), yTitle: t('fx_gap_y'), xTitle: t('fx_gap_x'),
+  });
+  document.getElementById('fx-gap-leg').innerHTML = series.map((s) => `<li>${swatch(s.color, s.dash)}${esc(s.label)}</li>`).join('') +
+    `<li><span class="swatch swatch--box swatch--band" aria-hidden="true"></span>${esc(t('fx_leg_band', { lo: pct(G.venue_band[0]), hi: pct(G.venue_band[1]) }))}</li>` +
+    `<li><span class="swatch swatch--ring" aria-hidden="true"></span>${esc(t('fx_leg_cross'))}</li>`;
+  const W0 = G.windows[FX_WIN[0]], W1 = G.windows[FX_WIN[1]], mv = F.breakeven.rows[0].values;
+  document.getElementById('fx-gap-note').textContent = typo(t('fx_gap_note'));
+  document.getElementById('fx-gap-lede').textContent = t('fx_gap_lede', { slope: num(slopeOf(W0), 2) });
+  document.getElementById('fx-gap-cap').textContent = t('fx_gap_cap', { be1: pct(W0.break_even_vs_futures), be2: pct(W1.break_even_vs_futures), mv1: pct(mv[FX_WIN[0]]), mv2: pct(mv[FX_WIN[1]]) });
+}
+/** Points of return a year per point of funding: the least-squares slope over the three funding rates, as four_routes.py fits it. */
+function slopeOf(w) {
+  const xs = S.d.futures.gap_chart.fundings.map((f) => f * 100), ys = w.perp_cagr.map((v) => v * 100);
+  const mx = xs.reduce((a, b) => a + b) / xs.length, my = ys.reduce((a, b) => a + b) / ys.length;
+  return xs.reduce((a, x, i) => a + (x - mx) * (ys[i] - my), 0) / xs.reduce((a, x) => a + (x - mx) ** 2, 0);
+}
+const FX_TABS = ['sg', 'cn', 'us'];
+function renderFxTax() {
+  const X = S.d.futures[S.lang].tax;
+  const host = document.getElementById('fx-tax-tabs');
+  host.innerHTML = '';
+  host.style.setProperty('--seg-cols', 3);
+  for (const k of FX_TABS) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.id = 'fx-tab-' + k; b.setAttribute('role', 'tab'); b.textContent = t('fx_tab_' + k);
+    const on = S.fx.tax === k;
+    b.setAttribute('aria-selected', on ? 'true' : 'false'); b.setAttribute('aria-controls', 'fx-tax-panel'); b.tabIndex = on ? 0 : -1;
+    b.addEventListener('click', () => { S.fx.tax = k; renderFxTax(); document.getElementById('fx-tab-' + k).focus(); });
+    b.addEventListener('keydown', (ev) => {
+      const d = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      ev.preventDefault();
+      S.fx.tax = FX_TABS[(FX_TABS.indexOf(k) + d + FX_TABS.length) % FX_TABS.length];
+      renderFxTax();
+      document.getElementById('fx-tab-' + S.fx.tax).focus();
+    });
+    host.appendChild(b);
+  }
+  const panel = document.getElementById('fx-tax-panel');
+  panel.setAttribute('aria-labelledby', 'fx-tab-' + S.fx.tax);
+  const flag = `<p class="taxflag"><strong>${esc(t('fx_not_tax'))}</strong></p>`;
+  const k = S.fx.tax;
+  panel.innerHTML = flag + (k === 'us' ? `<ul class="points">${[1, 2, 3, 4].map((i) => `<li>${t('fx_us_' + i)}</li>`).join('')}</ul>` +
+      `<details class="more more--block"><summary>${esc(t('fx_us_more'))}</summary><p class="taxpanel__p">${md(X.us)}</p></details>`
+    : (k === 'cn' ? `<p class="taxpanel__sub">${tx(X.cn_head)}</p>` : '') + `<ul class="points">${X[k].map((s) => `<li>${md(s)}</li>`).join('')}</ul>`);
+}
+
 /* ---------- caveats ---------- */
 function renderCaveats() {
   const m = S.d.meta, L = S.lang;
-  document.getElementById('drawbacks').innerHTML = m.drawbacks[L].map((s, i) => `<li>${foldHtml(md(s), mdOf(esc(m.drawbacks.en[i])))}</li>`).join('');
+  document.getElementById('drawbacks').innerHTML = m.drawbacks[L].map((s, i) => `<li>${foldHtml(secLinks(md(s)), mdOf(esc(m.drawbacks.en[i])))}</li>`).join('');
   document.getElementById('ns-intro').innerHTML = tx(m.did_not_survive['intro_' + L]);
   document.getElementById('ns-list').innerHTML = m.did_not_survive[L].map((s) => `<li>${md(s)}</li>`).join('');
   // the audit material is folded behind one-line summaries; the drawbacks stay open
@@ -538,7 +715,7 @@ function renderCaveats() {
   const cut = scanTop(dis, 0, (c, n) => c === '：' || (c === ':' && n === ' '));
   document.getElementById('ns-dis').innerHTML = cut < 0 ? dis
     : `<p style="margin:0">${dis.slice(0, cut)}</p><ul>${splitTop(dis.slice(cut), (c, n) => c === '；' || (c === ';' && n === ' ')).map((x) => `<li>${x.replace(/^[;；]\s*/, '').replace(/[;；]\s*$/, '')}</li>`).join('')}</ul>`;
-  document.getElementById('unknowns').innerHTML = m.still_unknown[L].map((s) => `<li>${md(s)}</li>`).join('');
+  document.getElementById('unknowns').innerHTML = m.still_unknown[L].map((s) => `<li>${secLinks(md(s))}</li>`).join('');
 }
 /* ---------- sentence-aware text folding ----------
    scanTop walks an HTML string outside tags, parentheses and Chinese quotes and returns the index just after the first
@@ -625,7 +802,7 @@ function staticVars() {
   const m = S.d ? S.d.meta : null, g = S.d ? S.d.grid : null;
   return {
     start: m ? dLong(m.data_start) : '', end: m ? dLong(m.data_end) : '', days: m ? int(m.trading_days) : '', written: m ? dLong(m.written) : '',
-    deep_dive: DEEP_DIVE_URL, deep_dive_local: DEEP_DIVE_LOCAL, generated: m ? m.generated : '', tb: g ? pct(g.tbill_cagr) : '',
+    deep_dive: DEEP_DIVE_URL, deep_dive_local: DEEP_DIVE_LOCAL, futures_local: FX_LOCAL, generated: m ? m.generated : '', tb: g ? pct(g.tbill_cagr) : '',
   };
 }
 function applyStatic() {
@@ -651,7 +828,7 @@ function renderAll() {
   renderHero(); renderDiagram();
   renderExControls(); renderExplorer();
   renderGrControls(); renderGrowth();
-  renderFunding(); renderDecay(); renderYears(); renderRecipes(); renderCaveats();
+  renderFunding(); renderDecay(); renderYears(); renderRecipes(); renderFutures(); renderCaveats();
   foldPoints();
   updateSwipeHints();
 }
@@ -705,13 +882,21 @@ function wireGlobal() {
     updateThemeLabel();
   });
   let tmr = 0;
-  window.addEventListener('resize', () => { clearTimeout(tmr); tmr = setTimeout(() => { setMastHeight(); if (S.d) { renderDiagram(); renderExplorer(); renderGrowth(); renderFunding(); renderDecay(); updateSwipeHints(); } }, 160); });
+  // a table inside a fold has no width until it opens: re-check the swipe hints when a fold opens
+  document.addEventListener('toggle', (e) => { if (e.target.open && e.target.querySelector('.table-wrap')) updateSwipeHints(); }, true);
+  window.addEventListener('resize', () => { clearTimeout(tmr); tmr = setTimeout(() => { setMastHeight(); if (S.d) { renderDiagram(); renderExplorer(); renderGrowth(); renderFunding(); renderDecay(); renderFxChart(); updateSwipeHints(); } }, 160); });
   // the swipe hints depend on the web fonts' widths
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateSwipeHints);
   // scroll spy for the section nav
   const links = [...document.querySelectorAll('.sections a')];
   const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) links.forEach((a) => a.setAttribute('aria-current', a.getAttribute('href') === '#' + e.target.id ? 'true' : 'false'));
+    for (const e of entries) if (e.isIntersecting) links.forEach((a) => {
+      const on = a.getAttribute('href') === '#' + e.target.id;
+      a.setAttribute('aria-current', on ? 'true' : 'false');
+      // on a phone the nav scrolls sideways: keep the current section's link in view (the nav only, never the page)
+      const nav = a.closest('.sections');
+      if (on && nav && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
+    });
   }, { rootMargin: '-40% 0px -55% 0px' });
   document.querySelectorAll('main section[id]').forEach((s) => io.observe(s));
 }
@@ -721,7 +906,7 @@ async function boot() {
   wireGlobal();
   const loading = document.getElementById('loading');
   try {
-    const names = ['meta', 'grid', 'curves', 'yearly', 'episodes', 'funding', 'venues', 'decay'];
+    const names = ['meta', 'grid', 'curves', 'yearly', 'episodes', 'funding', 'venues', 'decay', 'futures'];
     const res = await Promise.all(names.map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })));
     S.d = Object.fromEntries(names.map((n, i) => [n, res[i]]));
   } catch (err) {

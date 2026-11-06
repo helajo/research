@@ -1,17 +1,19 @@
 # 用永续合约做空 TQQQ 对冲现货：核查后的深度报告 · Shorting TQQQ through a perpetual: the verified deep dive
 
-写于 2026-11-04 · Written 2026-11-04. 数据截至 2026-10-27 · Data to 2026-10-27.
+写于 2026-11-04，第 8a 节于 2026-11-06 加入 · Written 2026-11-04; section 8a added 2026-11-06. 数据截至 2026-10-27 · Data to 2026-10-27.
 
 五位专题研究者（资金费率、爆仓与保证金、磨损的市场状态、组合设计、代码审计）复查了 [README.md](README.md) 和
 [tables.md](tables.md) 的研究；两位独立核查者重算了每一个数字；一位评论者找出了遗漏和互相矛盾的地方；代码里被证实的
 缺陷已经修复，表格已经重新生成。脚本、数据和笔记在 `deep_dive/<专题>/` 和 `deep_dive/_verify/` 里。本文的每个数字都来自
-这些核查过的材料或重新生成的 tables.md。仅为描述，不构成投资建议。
+这些核查过的材料或重新生成的 tables.md；第 8a 节（纳斯达克 100 期货）的数字来自 `futures_route/` 里同样核查过的材料。仅为描述，
+不构成投资建议。
 
 Five specialists (funding, liquidation and margin, decay regimes, portfolio design, code audit) re-examined the study in
 [README.md](README.md) and [tables.md](tables.md); two independent verifiers re-ran every number; a critic looked for gaps
 and contradictions; the confirmed code defects were fixed and the tables regenerated. Their scripts, data and notes are in
 `deep_dive/<slug>/` and `deep_dive/_verify/`. Every number here comes from that verified material or from the regenerated
-tables.md. Descriptive only; not investment advice.
+tables.md; the numbers in section 8a (Nasdaq-100 futures) come from the equally verified material in `futures_route/`.
+Descriptive only; not investment advice.
 
 ---
 
@@ -32,9 +34,13 @@ tables.md. Descriptive only; not investment advice.
    的交易所（币安、Bitget 10 万 USDT 以内、MEXC 2%、OKX 2%、Gate 1%）。TQQQ 要在一个月内从上次重置价涨约 46% 到 48%
    才会爆仓（16.7 年里两次），5 倍杠杆是 17% 到 19%（每年三到四次）。不要在 KuCoin 的分档下做 5 倍：10 万美元的账户最多
    4 倍，年化 −9.9%。
-5. **预期收益是国库券加上资金费率超过约 3% 的部分**（0.20 对冲、2 倍杠杆在 2010 到 2026 年的盈亏平衡点；按现在的利率是
-   6% 到 7%），并接受 2010 年的 1 美元只变成 4.72 美元，而 QQQ 变成 18.89 美元。交易所、自动减仓、下架、税务和托管问题
-   没有任何回测能定量，足以抹掉不到一个点的优势。
+5. **预期收益是国库券加上资金费率超过约 3% 的部分**，并接受 2010 年的 1 美元只变成 4.72 美元，而 QQQ 变成 18.89 美元。
+   0.20 对冲、2 倍杠杆在 2010 到 2026 年的盈亏平衡点取决于拿什么比：按研究的 1% 维持保证金、对同样波动率的 QQQ 加国库券组合
+   是 2.7%；按交易所的 2.5% 维持保证金，对卖出 QQQ 到同样日度贝塔是 2.9%，对同样波动率的纳斯达克 100 期货是 3.4%。最近三年
+   这三个数分别是 6.1% 到 6.8%（截至 2026-08 和 2026-10 的窗口）、7.2% 和 7.9%（国库券平均 4.45%）；按同一种方法，期货把门槛
+   抬高 0.4 到 1 个点（第 8a 节）。交易所、自动减仓、下架、税务和托管问题没有任何回测能定量，足以抹掉不到一个点的优势。
+6. **监管内的替代路线（纳斯达克 100 期货）给出同样的对冲，而且没有固定的爆仓线；它是永续合约要打败的基准。** 做空 MNQ / NQ
+   几乎等于少拿 QQQ：扣 QQQ 0.18% 管理费后，被对冲部分每年赚国库券加约 0 到 0.3 个点（第 8a 节）。
 
 ## 1. 合约到底是什么
 
@@ -208,7 +214,8 @@ KuCoin 分档 `https://api-futures.kucoin.com/api/v1/contracts/risk-limit/TQQQUS
 - **只对纳斯达克 100 类现货有用。** XLK（贝塔 1.04，相关 0.97）A +0.7；SPY（0.77，0.93）基准 −0.4% / 年、最大回撤 −26.1%、
   比组合少 7.4，A −1.3（按贝塔缩到 0.153 后 −0.7），384 个变体里费率 ≤10% 时没有一个跑赢组合（+15% 到 +20% 时 28 个，
   最多 +0.9）；BTC（相关 0.23）1/3 对冲波动率 65.5% 到 56.9%，回撤 −83% 到 −79%，比组合少 13.7；单只股票 NVDA / MSFT /
-  AVGO / TSLA 在每种设置下都比同波动率的股票加国库券少 1.6 到 18.5 个点。
+  AVGO / TSLA 在每种设置下都比同波动率的股票加国库券少 1.6 到 18.5 个点。指数期货对冲同样解决不了：它只能去掉单只股票
+  18% 到 42% 的日波动（第 8a 节）。
 - **建模约定**：资金费率记入逐仓保证金（抬高爆仓线）而不是现金，对 5 倍基准有利 0.31 个点；每月整仓平掉重开而不是只交易差额，
   对基准不利 0.35（2 倍 0.32，0.2 对冲 0.23）；跳空过线时按开盘价重开 +0.12（10 倍 +1.09）。四项合计 5 倍 +0.14、2 倍 +0.34、
   10 倍 +1.37、0.2 对冲 +0.08，只在 5 倍"互相抵消"。只交易差额会让配方 A 的平衡点低约 1 个点。
@@ -238,6 +245,9 @@ KuCoin 分档 `https://api-futures.kucoin.com/api/v1/contracts/risk-limit/TQQQUS
 资金费率 +10%、维持保证金 2.5% 时，2010 到 2026 年的优势是 1/3 对冲 +0.8 / +0.4（2 倍 / 3 倍），0.2 对冲 +1.3 / +1.1；
 最近三年只有 −0.7 / −1.5 和 +0.5 / +0.1。闲置保证金的成本已经在这些数字里（保证金不生息）：1/3 对冲 2 倍杠杆占净值的
 13.6%，按 2010 到 2026 年平均利率每年 0.2%，按现在的 4.3% 每年 0.6%；如果 5% 的现金储备也要以 USDT 放在交易所，再加约 0.2%。
+如果尺子换成纳斯达克 100 期货（第 8a 节），这些"相对组合"的数字每个都要再低约 0.17 到 0.26 个点（同样日度贝塔，期货利差 0.25%；
+利差 0.10% 时低 0.07 到 0.10）：配方 A 在 +5% 下 2010 到 2026 年比期货多约 0.2 个点（同样日度贝塔），最近三年少约 0.6 到 0.7 个点，所以它的
+"打平"按今天的情况略为负。
 
 合起来读：按交易所实际显示的保证金和资金费率，1/3 对冲赚的大约是国库券，比少拿 QQQ 少 0.6 到 3.3 个点（最近三年少 2 到 5）；
 0.2 对冲加 2 倍杠杆打平（±0.5 之内），只有资金费率停在 10 月到 11 月的水平（10% 以上）才跑赢。机械修正的大小顺序：
@@ -257,14 +267,20 @@ README 原来的"1999 年涨势每年爆仓 5 次"是整段 11 年的平均；�
 
 - **资金费率是参数，不是观察。** +10% 高于所有交易所三个月的均值（4.6% 到 7.5%），只有最近 30 天达到；0.5% 的半个月是
   12.2% 年化，且只出现过约三周。方向（崩盘时转负还是转正）没有定论（第 2 节）。
-- **监管内的替代品没有比较过。** 做空纳斯达克 100 期货（MNQ / NQ）给同样的贝塔对冲，没有保证金清零，隐含融资约为国库券加
-  0.3% 到 0.5%，美国 60/40 税收待遇；永续相对它的优势是资金费率减（国库券加利差）减爆仓成本，在 5% 费率、4.4% 利率下约为 0。
-  研究只和少拿现货、融券做空、SQQQ 比过。
+- **监管内的替代品，现在已经比较过（第 8a 节）。** 做空纳斯达克 100 期货（MNQ / NQ）给同样的贝塔对冲，没有固定的爆仓线，
+  几乎等于少拿 QQQ：扣 QQQ 0.18% 管理费后，被对冲部分每年赚国库券加约 0 到 0.3 个点（2023 到 2025 年约 0.4 到 0.5）。和它比，
+  配方 A 在 +5% 资金费率下 2010 到 2026 年每年多约 0.2 个点（同样日度贝塔），最近三年少约 0.6 到 0.7 个点；要在同样波动率下跑赢期货，资金费率
+  在 2010 到 2026 年要高于约 3.4%，按最近三年国库券平均 4.45% 要高于约 7.9%。这取代了原来的算式（"在 5% 费率、4.4% 利率下
+  约为 0"）和"美国 60/40 税收待遇"的说法：60/40 只适用于美国持有人，而对他们来说跨式和推定出售的问题都还没有答案。
 - **自动减仓和下架。** 崩盘时空头是最赚钱的仓位，保险基金不足时最先被自动减仓强平（KuCoin 和币安的合约都标注 `isDeleverage: true`），
   也就是对冲恰好在起作用时可能被拿走；下架则按交易所的指数强制现金交割，时间由不得你。没有人建模或估算。Aster 93% 的结算为 0
   说明小交易所盘口很薄。
 - **税务和会计。** 美国持有人：境外加密永续不是 §1256 合约，多 QQQ 空 TQQQ 永续很可能构成 §1092 跨式（亏损递延，持有期重置），
-  收到的资金费率是普通收入；中国居民：加密衍生品交易本身是问题。回测不变，但足以抹掉 0 到 1 个点的优势。
+  收到的资金费率很可能按普通收入征税（未核实）；中国居民：加密衍生品交易本身是问题。新加坡居民：股票和金融工具的买卖收益一般不征税（IRAS），
+  除非被认定为以交易为业（交易标志只有二手资料）；QQQ 股息被美国预扣 30%（没有税收协定）；境外加密衍生品平台在金管局的监管之外（金管局 2020 年国会答复），
+  永续路线没有新加坡的保护。中国大陆居民：境外投资收益按全年已实现盈亏的净额征税（财新；20% 的税率没有从原始来源确认）；
+  银发〔2026〕42 号（2026-02-06）重申虚拟货币相关业务属于非法金融活动，USDT 保证金的股票永续是否在其范围内没有确认。
+  回测不变，但足以抹掉 0 到 1 个点的优势。以上不构成税务建议（第 8a 节）。
 - **基差。** Bitget 永续在美东 16:00 平均比纽交所收盘价高 0.32%（标准差 0.15%，最大 +0.76%，150 天），KuCoin 高 0.25%，
   从未相差 1% 以上；周五收盘到周一开盘的永续变动（标准差 2.5%，−5% 到 +6.5%）和 TQQQ 自己的跳空一样大。
 - **仓位大小和流动性**（第 1 节）：分档随名义价值上升，持仓量和实际滑点没有人测。
@@ -273,6 +289,78 @@ README 原来的"1999 年涨势每年爆仓 5 次"是整段 11 年的平均；�
 - **原报告已有的**：合约在美股休市时交易（第 3 节已量化，样本无崩盘）；不重置时对冲比例漂移（涨时上升、跌后塌缩：
   "从不重置"平均 0.31，2022 到 2023 年只有 0.17 到 0.19，它多出的 2.7 个点约 1.1 来自更低的平均对冲，其余来自跌后反弹
   期间对冲不足、一半的手续费和一半的爆仓）；交易所对手方风险；对冲掉的部分等于不持有现货。
+
+## 8a. 监管内的替代路线：纳斯达克 100 期货
+
+本节于 2026-11-06 加入，概括 [futures_route/FUTURES_ROUTE.md](futures_route/FUTURES_ROUTE.md)：四个工作组研究了这条路线，四位核查者
+逐项重算或重读来源，只用被确认的结论（已按更正修改），无法核查的标为未知。它不是第四种策略，而是永续合约要打败的监管内基准。
+做法：现货 QQQ 不动，在期货账户里卖出纳斯达克 100 指数期货（NQ 每点 20 美元，微型合约 MNQ 每点 2 美元；现金交割；每季度展期）。
+
+1. **做空 MNQ / NQ 对冲 QQQ，几乎等于"少拿一点 QQQ，其余放国库券"。** 扣除 QQQ 的 0.18% 管理费后，被对冲的部分每年赚
+   国库券加大约 0 到 0.3 个点（2023 到 2025 年高利率时约 0.4 到 0.5），没有资金费率收入，没有固定的爆仓线，交易成本每年约为
+   名义价值的 0.01%。
+2. **它抬高了永续合约要过的门槛。** 配方 A 要在同样波动率下跑赢期货路线，资金费率在 2010 到 2026 年要高于约 3.4%，按最近三年的
+   利率（国库券平均 4.45%）要高于约 7.9%；各交易所三个月的平均资金费率是 4.6% 到 7.5%，所以按最近三年的利率和最近的资金费率，
+   期货路线略胜（按今天 4.04% 的国库券计算的门槛没有算）。
+3. **它的代价是操作上的。** 要有能交易芝商所（CME）期货的美元保证金账户，合约粗（一张 MNQ 约 5.7 万美元），纳指上涨时每天
+   要付现金，税务取决于居住地。2010 年以来最差的一个月，每 100 万美元现货、0.6 的对冲要付约 14.4 万美元；规模小时只能粗调。
+   它不能对冲个股，也消除不了放在加密交易所的现货本身的托管风险。
+
+**例子：10 万美元的 QQQ**（按 2026-11-04 纳斯达克 100 收盘 28,437.17 点，一张 MNQ 是 56,874 美元）。
+
+| | 相当于配方 A 的对冲（现货的 0.60） | 全部对冲（1.0） |
+|---|---|---|
+| 需要的 MNQ | 1 张，实际对冲 0.57 | 2 张，实际对冲 1.14 |
+| 要存的保证金 | 3,522 到 6,285 美元（现货的 3.5% 到 6.3%） | 7,044 到 12,570 美元（7.0% 到 12.6%） |
+| 最差一天要付的现金（QQQ +12.0%，2025-04-09） | 约 6,800 美元 | 约 13,700 美元 |
+| 最差一个月（+24.0%，到 2020-04-15） | 约 13,600 美元 | 约 27,300 美元 |
+| 最差一个季度（+45.0%，到 2020-06-22） | 约 25,600 美元 | 约 51,200 美元 |
+
+对比：永续配方 A 在同样的 10 万美元上要存 10,000 美元。每一笔期货亏损都伴随现货的上涨（对冲 0.57 时现货涨得比期货亏得多，对冲 1.14 时略少），但现金要在期货账户里付出；追加保证金
+不到位，券商一般会不事先通知地平仓。保证金随时可以上调，芝商所自己的保证金水平没有读到。
+
+**盈亏平衡的资金费率（永续要高于它才跑赢期货）：**
+
+| 比较方法 | 2010-02 到 2026-10 | 2023-10 到 2026-10（国库券平均 4.45%） | 2000-09 到 2010-02 压力期 |
+|---|---|---|---|
+| 配方 A 对期货 k=0.60，同样波动率，利差 +0.25%（利差 0 到 0.5% 时的范围） | 3.4%（2.7% 到 4.2%） | 7.9%（7.1% 到 8.6%） | 1.6% |
+| 配方 A，同样日度贝塔，对卖出 QQQ | 2.9% | 7.2% | |
+| 配方 A，同样日度贝塔，对期货（利差 0.10% 到 0.25%） | 3.3% 到 3.8% | 7.6% 到 8.1% | |
+| 配方 A 对期货 k=0.60，只比年化收益 | 1.5% | 6.2% | 3.2% |
+
+按同一种方法，期货比"卖出 QQQ"把门槛抬高 0.4 到 1 个点（取决于利差）。7.9% 是按最近三年的平均利率，不是按今天的利率。其中一部分
+来自一个假设：永续的保证金不生息，而期货的保证金赚国库券。
+
+**同样波动率的回测（简表；k 是期货空头占现货的比例，k=0.60 和配方 A 的市场暴露相当）：**
+
+| 路线 | 2010-02 到 2026-10：年化 / 相对组合 | 2023-10 到 2026-10：年化 / 相对组合 |
+|---|---|---|
+| 期货 k=0.60，利差 0 | 7.87% / −0.12 | 12.81% / −0.09 |
+| 期货 k=0.60，利差 +0.25% | 8.02% / +0.02 | 12.96% / +0.06 |
+| 期货 k=1.0，利差 +0.25% | 1.66%（国库券 1.51%） | 4.69%（国库券 4.45%） |
+| 永续配方 A，资金费率 0 / 5% / 10% | 7.73% / 8.68% / 9.63%；−0.62 / +0.32 / +1.28 | 11.73% / 12.72% / 13.71%；−1.50 / −0.51 / +0.49 |
+
++0.02 在模型误差之内（独立重算是 +0.08），而且完全取决于假设的 +0.25% 利差。配方 A 相对期货：资金费率 +5% 时 2010 到 2026 年
+多约 0.2 个点（0.17 到 0.23），最近三年少约 0.6 到 0.7 个点；+10% 时多约 1.2 和 0.4。配方 A 是在同一段样本上选出的。完整的表、
+压力期和期货的实际负担见 FUTURES_ROUTE.md 第 3 节。
+
+**四条路线：**
+
+| 路线 | 被对冲部分赚什么 | 主要风险 | 适合谁 |
+|---|---|---|---|
+| 1. 卖出部分 QQQ | 现金的国库券利息 | 卖出时的税（新加坡一般没有） | 能卖的人 |
+| 2. 做空 NQ / MNQ | 国库券加约 0 到 0.3 个点（扣 QQQ 管理费后） | 上涨时每天付现金，追加不到位被强平；每季度展期；合约规模粗 | 不能卖或不想卖的人；可以随时加减的临时对冲；分散的、像纳指的组合 |
+| 3. 做空 TQQQ 永续 | 约国库券加资金费率，减爆仓和交易所成本 | 交易所 / USDT 托管、自动减仓、下架、固定爆仓线、资金费率可能转负 | 只适合相信资金费率会稳定高于门槛（按最近三年利率约 8%）并接受交易所风险的人 |
+| 4. 买 SQQQ 或认沽期权 | 要付钱 | SQQQ 有磨损；期权有时间价值损耗 | 想要亏损有上限、没有追加保证金的人 |
+
+**个股和托管。** 用 QQQ 或 NQ 对冲单只大型科技股，样本外只能降低 18% 到 42% 的日波动；8 只大型股的等权组合则去掉约 69% 的波动，
+最大回撤从 −46% 减半到 −22%。换成期货只把对冲腿的自动减仓、下架、爆仓线和托管风险拿走；如果现货放在加密交易所，它的托管还在原处，
+上涨时还要把现金及时送到券商那里。
+
+**准入和税务（不构成税务建议）。** 新加坡居民：期货属于"指定投资产品"，开通前要做客户账户审核（来自券商常见问题页面，SGX 原页面没有读到）；股票和金融工具的买卖收益一般不征税
+（IRAS），除非被认定为以交易为业（交易标志只有二手资料）；QQQ 股息被美国预扣 30%，被对冲部分每年约少 0.13 个点。中国大陆居民：IBKR 自 2025 年起收紧开户；QQQ 股息预扣 10%，
+每年约少 0.045 个点；期货收益如何归类没有确认。美国人：NQ / MNQ 是第 1256 条合约（60% 按长期、40% 按短期），但持有 QQQ 同时做空
+指数期货"很可能"构成第 1092 条的混合跨式（工作组自己的判断，没有来源直接这样说），第 1259 条（推定出售）是否适用没有答案。详见 FUTURES_ROUTE.md 第 6 节；请咨询税务顾问。
 
 ## 9. 未通过核查的内容
 
@@ -333,6 +421,10 @@ Aster 的上限和利率分量是否可读（±2%、0 对 未公开）；Bybit �
 - 分红与各交易所的指数调整。
 - 资金费率的长期水平：四个月到一年的新合约；BTC 的先例是周期性的，不能外推。
 - 样本外：配方在同一段样本上选出；一段 2010 到 2026 年的历史，主要是牛市；1999 到 2010 年只有重建基金和收盘价爆仓。
+- 纳斯达克 100 期货的利差：扣 QQQ 管理费后被对冲部分比国库券多赚 0 到 0.3 个点，是几个估计的范围，单个年份可以为负；按今天
+  4.04% 的国库券计算的盈亏平衡资金费率没有算（第 8a 节）。
+- 芝商所自己的保证金页面（返回 503）和 IBKR 自己的佣金页面（返回 403）都没有读到；券商在追加期货保证金时能否自动以 QQQ 为抵押借钱。
+- 期货路线的税务：中国大陆对期货收益如何归类、20% 税率的原始来源；美国持有人用指数期货对冲 QQQ 是否触发推定出售规则（第 1259 条）。
 
 ---
 
@@ -356,9 +448,16 @@ Aster 的上限和利率分量是否可读（±2%、0 对 未公开）；Bybit �
    whose maintenance is 2.5% or lower for your size (Binance, Bitget up to 100k USDT, MEXC 2%, OKX 2%, Gate 1%). TQQQ must rise
    about 46-48% from the last reset price within a month to liquidate it (twice in 16.7 years) against 17-19% at 5x (three to
    four times a year). Never 5x on KuCoin's tiers, where a $100k book is capped at 4x and lost 9.9% a year.
-5. **Expect T-bills plus whatever funding pays above about 3%** (the 0.20 / 2x break-even over 2010-2026; 6-7% at today's rates),
-   and accept that $1 in February 2010 became $4.72 against $18.89 in QQQ. The exchange, auto-deleveraging, delisting, tax and
-   custody questions are unsized by any backtest and can erase an edge of under a point.
+5. **Expect T-bills plus whatever funding pays above about 3%**, and accept that $1 in February 2010 became $4.72 against
+   $18.89 in QQQ. The 0.20 / 2x break-even over 2010-2026 depends on the yardstick: 2.7% against the same-volatility QQQ/T-bill
+   mix at the study's 1% maintenance; at the venues' 2.5% maintenance, 2.9% against selling QQQ to the same daily beta and 3.4%
+   against Nasdaq-100 futures at the same volatility. Over the last three years the same three are 6.1-6.8% (windows to 2026-08
+   and 2026-10), 7.2% and 7.9% (T-bills averaging 4.45%); within one method, futures raise the hurdle by 0.4-1 point
+   (section 8a). The exchange, auto-deleveraging, delisting, tax and custody questions are unsized by any backtest and can erase
+   an edge of under a point.
+6. **The regulated alternative, Nasdaq-100 futures, gives the same hedge with no fixed wipe-out level; it is the benchmark the
+   perpetual has to beat.** Shorting MNQ / NQ is almost exactly holding less QQQ: after QQQ's 0.18% fee the hedged part earns
+   T-bills plus roughly 0-0.3 points a year (section 8a).
 
 ## 1. What the contract actually is
 
@@ -562,7 +661,8 @@ Sources: `deep_dive/decay_regimes/` (`decay_decomposition.py`, `breakeven_fundin
   -26.1% worst fall, 7.4 below the mix; A -1.3 (-0.7 after scaling the hedge by beta to 0.153); no SPY variant beats the mix at
   funding of 10% or less (28 of 384 do at +15% to +20%, by at most +0.9). BTC (correlation 0.23): the one-third hedge cuts
   volatility only from 65.5% to 56.9% and the worst fall from -83% to -79%, 13.7 below the mix. Single stocks NVDA / MSFT / AVGO /
-  TSLA: below the same-volatility stock/T-bill mix at every setting, by 1.6 to 18.5 points.
+  TSLA: below the same-volatility stock/T-bill mix at every setting, by 1.6 to 18.5 points. An index futures hedge would not fix
+  this either: it removes only 18-42% of a single stock's daily volatility (section 8a).
 - **Modelling conventions**: crediting funding to the isolated margin (which lifts the liquidation line) rather than to cash favours
   the 5x base by 0.31 points; closing and reopening the whole short at each monthly reset rather than trading the change costs it
   0.35 (2x 0.32, hedge 0.2 0.23); reopening at the open on gap-through liquidations +0.12 (10x +1.09). All four together: +0.14 at
@@ -595,7 +695,10 @@ worst fall.
 At funding +10% and 2.5% maintenance the edges over 2010-2026 are +0.8 / +0.4 (1/3 at 2x / 3x) and +1.3 / +1.1 (0.2 at 2x / 3x),
 but only -0.7 / -1.5 and +0.5 / +0.1 over the last three years. The cost of idle margin is already inside these figures (margin earns
 nothing): hedge 1/3 at 2x posts 13.6% of NAV, 0.2% a year at 2010-2026 rates and 0.6% at today's 4.3%; if the 5% cash reserve must
-also sit on the exchange in USDT, add about 0.2%.
+also sit on the exchange in USDT, add about 0.2%. Measured against Nasdaq-100 futures instead (section 8a), each of these "vs mix"
+figures is about 0.17-0.26 points lower (same daily beta, futures carry 0.25%; 0.07-0.10 at a carry of 0.10%): recipe A at +5%
+leads futures by about 0.2 points (same daily beta) over 2010-2026 and trails by about 0.6-0.7 over the last three years, so its "wash" is slightly
+negative today.
 
 Read together: at the maintenance and funding the venues actually show, the one-third hedge earns about T-bills and trails holding
 less QQQ by 0.6-3.3 points (2-5 over the last three years); the 0.2 hedge at 2x is a wash (within ±0.5 of the mix) and beats it only
@@ -618,17 +721,26 @@ dot-com crash (-83%) +10.0% / +17.9% / -41.6%; the 2002-2007 recovery (+179%) +2
 - **Funding is a parameter, not an observation.** +10% is above every venue's three-month mean (4.6-7.5%) and was reached only in the
   last 30 days; 0.5% per half month is 12.2% a year and has occurred for about three weeks. Its direction in a crash is not
   established either way (section 2).
-- **The regulated alternative was never compared.** Shorting Nasdaq-100 futures (MNQ / NQ) gives the same beta hedge with no margin
-  wipe, implied financing near T-bill + 0.3-0.5% and US 60/40 tax treatment; the perp's edge over it is funding minus (T-bill +
-  spread) minus liquidation costs, roughly zero at 5% funding and 4.4% rates. The study compared only holding less, a stock-loan
-  short and SQQQ.
+- **The regulated alternative, now compared (section 8a).** Shorting Nasdaq-100 futures (MNQ / NQ) gives the same beta hedge with
+  no fixed wipe-out level and is almost exactly holding less QQQ: after QQQ's 0.18% fee the hedged part earns T-bills plus roughly
+  0-0.3 points a year (about 0.4-0.5 in 2023-2025). Against it, recipe A at +5% funding leads by about 0.2 points a year (same daily
+  beta) over 2010-2026 and trails by about 0.6-0.7 over the last three years; to beat futures at the same volatility it needs funding above
+  about 3.4% over 2010-2026, or about 7.9% at the last three years' T-bill average of 4.45%. This replaces the earlier formula
+  ("roughly zero at 5% funding and 4.4% rates") and the earlier "US 60/40 tax treatment": 60/40 applies only to US holders, and for
+  them the straddle and constructive-sale questions are open.
 - **Auto-deleveraging and delisting.** In a crash the short is the most profitable position and the first to be force-closed by ADL
   when the insurance fund runs short (KuCoin's and Binance's contracts carry `isDeleverage: true`): the hedge can be removed exactly
   when it works. A delisting forces cash settlement at the venue's index, with no say on timing. Nobody modelled or sized either;
   Aster's 93% zero settlements show how thin the smaller books are.
 - **Tax and accounting.** For a US holder, offshore crypto perpetuals are not §1256 contracts, long QQQ against a short TQQQ perp is
-  likely a §1092 straddle (losses deferred, holding period reset), and funding received is ordinary income; for a PRC-resident holder,
-  crypto-derivative trading itself is the question. None of it changes the backtest, but it can erase a 0-1 point edge.
+  likely a §1092 straddle (losses deferred, holding period reset), and funding received is likely ordinary income (unverified); for a PRC-resident holder,
+  crypto-derivative trading itself is the question. For a Singapore resident, gains on shares and financial instruments are
+  generally not taxable (IRAS) unless the activity is judged a trade (badges of trade: secondary sources only), QQQ dividends lose 30% to US withholding (no treaty), and
+  offshore crypto-derivative platforms are outside MAS oversight (MAS parliamentary reply, 2020), so the perpetual route has no
+  Singapore protection. For a mainland resident, overseas investment gains are taxed on the year's net realised gains (Caixin; the
+  20% rate is not confirmed from a primary source), and notice 银发〔2026〕42号 (2026-02-06) restates that virtual-currency business
+  is illegal financial activity; whether it covers a USDT-margined stock perpetual was not confirmed. None of it changes the
+  backtest, but it can erase a 0-1 point edge. Not tax advice (section 8a).
 - **Basis.** At 16:00 ET the Bitget perp closed on average 0.32% above the NYSE close (sd 0.15%, max +0.76%, 150 days) and KuCoin
   0.25%, never more than 1% apart; the Friday-close-to-Monday-open perp move (sd 2.5%, -5% to +6.5%) is the same as TQQQ's own gap.
 - **Size and liquidity** (section 1): tiers rise with notional; open interest and real slippage were not measured.
@@ -640,6 +752,90 @@ dot-com crash (-83%) +10.0% / +17.9% / -41.6%; the 2002-2007 recovery (+179%) +2
   sample); without resets the hedge ratio drifts (it rises in rallies and collapses after falls: "reset never" held 0.31 on average
   but 0.17-0.19 through 2022-2023, and of its extra 2.7 points about 1.1 is the lower average hedge, the rest being under-hedged
   through the 2023 rebound, half the fees and half the liquidations); exchange counterparty risk; the hedged part is spot you do not own.
+
+## 8a. The regulated alternative: Nasdaq-100 futures
+
+Added on 2026-11-06, this section summarises [futures_route/FUTURES_ROUTE.md](futures_route/FUTURES_ROUTE.md): four workstreams
+studied the route and four verifiers re-ran each number or re-read each source; only confirmed claims are used (with the
+corrections applied), and what could not be checked is marked as unknown. It is not a fourth strategy but the regulated yardstick
+the perpetual has to beat. The route: keep the QQQ, and in a futures account sell Nasdaq-100 index futures (NQ pays $20 per index
+point, the micro MNQ $2; cash settled; rolled quarterly).
+
+1. **Shorting MNQ / NQ against QQQ is almost exactly "hold less QQQ and keep the rest in T-bills".** After QQQ's 0.18% fee
+   the hedged part earns the T-bill rate plus roughly 0 to 0.3 points a year (about 0.4-0.5 in the high-rate years
+   2023-2025), with no funding income, no fixed wipe-out level, and trading costs of about 0.01% of notional a year.
+2. **It raises the bar the perpetual has to clear.** For recipe A to beat the futures route at the same volatility, funding must
+   exceed about 3.4% a year over 2010-2026 and about 7.9% at the last three years' rates (T-bills averaging 4.45%). The venues'
+   three-month average funding was 4.6-7.5%, so at recent rates and recent funding the futures route edges ahead (the hurdle at
+   today's 4.04% T-bill was not computed).
+3. **Its costs are practical.** A USD margin account with access to CME futures, coarse contracts (about $57k per MNQ), cash
+   paid out daily when the Nasdaq rises, and tax rules that depend on where you live. In the worst month since 2010 a 0.6
+   hedge paid out about $144k per $1M of spot, and small books can only size coarsely. It does not hedge single stocks, and it
+   does not remove the custody risk of spot held on a crypto exchange.
+
+**Example: US$100,000 of QQQ** (at the Nasdaq-100 close of 28,437.17 on 2026-11-04, one MNQ is $56,874).
+
+| | Same exposure as recipe A (0.60 of spot) | Full hedge (1.0) |
+|---|---|---|
+| MNQ needed | 1 contract, giving 0.57 | 2 contracts, giving 1.14 |
+| Margin posted | $3,522-6,285 (3.5-6.3% of spot) | $7,044-12,570 (7.0-12.6%) |
+| Cash paid on the worst day (QQQ +12.0%, 2025-04-09) | about $6,800 | about $13,700 |
+| Worst month (+24.0%, to 2020-04-15) | about $13,600 | about $27,300 |
+| Worst quarter (+45.0%, to 2020-06-22) | about $25,600 | about $51,200 |
+
+For comparison, perpetual recipe A posts $10,000 on the same $100k book. Every futures loss comes with a gain on the spot (larger than the
+loss at a 0.57 hedge, slightly smaller at 1.14), but the cash has to be paid into the futures account; if a margin call is not met, the broker generally closes the position
+without prior notice. Margins can be raised at any time; CME's own level was not read.
+
+**Break-even funding (the perpetual beats futures only above it):**
+
+| Method | 2010-02 to 2026-10 | 2023-10 to 2026-10 (T-bills averaging 4.45%) | 2000-09 to 2010-02 stress |
+|---|---|---|---|
+| Recipe A against futures k=0.60, same volatility, spread +0.25% (range for spread 0 to 0.5%) | 3.4% (2.7-4.2%) | 7.9% (7.1-8.6%) | 1.6% |
+| Recipe A, same daily beta, against selling QQQ | 2.9% | 7.2% | |
+| Recipe A, same daily beta, against futures (spread 0.10-0.25%) | 3.3-3.8% | 7.6-8.1% | |
+| Recipe A against futures k=0.60, plain CAGR | 1.5% | 6.2% | 3.2% |
+
+Within one method, futures raise the hurdle over "sell QQQ" by 0.4-1 point, depending on the spread. The 7.9% is at the last three
+years' average rate, not today's. Part of it comes from an assumption: the perpetual's margin earns nothing while the futures
+margin earns T-bills.
+
+**The backtest at matched volatility, compact** (k is the futures short as a share of spot; k = 0.60 has recipe A's market exposure):
+
+| Route | 2010-02 to 2026-10: CAGR / vs mix | 2023-10 to 2026-10: CAGR / vs mix |
+|---|---|---|
+| Futures k=0.60, spread 0 | 7.87% / -0.12 | 12.81% / -0.09 |
+| Futures k=0.60, spread +0.25% | 8.02% / +0.02 | 12.96% / +0.06 |
+| Futures k=1.0, spread +0.25% | 1.66% (T-bills 1.51%) | 4.69% (T-bills 4.45%) |
+| Perp recipe A, funding 0 / 5% / 10% | 7.73% / 8.68% / 9.63%; -0.62 / +0.32 / +1.28 | 11.73% / 12.72% / 13.71%; -1.50 / -0.51 / +0.49 |
+
+The +0.02 is within model noise (an independent rebuild gives +0.08) and rests entirely on the assumed +0.25% spread. Recipe A
+against futures: at +5% funding about 0.2 points ahead over 2010-2026 (0.17-0.23) and 0.6-0.7 behind over the last three years; at
++10%, about 1.2 and 0.4 ahead. Recipe A was chosen on the same sample. The full table, the stress period and the futures' practical
+burdens are in FUTURES_ROUTE.md section 3.
+
+**The four routes:**
+
+| Route | What the hedged part earns | Main risks | Suits |
+|---|---|---|---|
+| 1. Sell some QQQ | T-bills on the cash | tax on the sale (generally none in Singapore) | anyone who can sell |
+| 2. Short NQ / MNQ | T-bills plus roughly 0-0.3 points (after QQQ's fee) | daily cash in rallies, broker close-out if a call is not met; quarterly rolls; coarse contract size | those who cannot or will not sell; hedges put on and taken off; diversified Nasdaq-like books |
+| 3. Short the TQQQ perpetual | about T-bills plus funding, minus liquidation and venue costs | exchange / USDT custody, auto-deleveraging, delisting, a fixed wipe-out level, funding that can turn negative | only those who expect funding to stay above the hurdle (about 8% at the last three years' rates) and accept venue risk |
+| 4. Buy SQQQ or puts | you pay to hold it | SQQQ's decay; puts' time decay | those who want a capped loss with no margin calls |
+
+**Single stocks and custody.** Hedging one big tech stock with QQQ or NQ cut its daily volatility, out of sample, by only 18-42%; an
+equal-weight basket of eight megacaps lost about 69% of its volatility and saw its worst fall halve, from -46% to -22%. Moving the
+hedge to futures takes auto-deleveraging, delisting, the wipe-out level and custody off the hedge leg only; if the spot sits on a
+crypto exchange its custody stays where it is, and in a rally cash still has to reach the broker in time.
+
+**Access and tax (not tax advice).** Singapore residents: futures are Specified Investment Products, so the broker runs a Customer
+Account Review first (per broker FAQs; the SGX page was not read); gains on shares and financial instruments are generally not
+taxable (IRAS) unless the activity is judged a trade (badges of trade: secondary sources only); QQQ dividends lose 30% to US
+withholding, about 0.13 points a year on the hedged amount. Mainland residents: IBKR has tightened account opening since 2025; QQQ
+dividends lose 10%, about 0.045 points a year; how futures gains are classified was not confirmed. US persons: NQ / MNQ are Section
+1256 contracts (60% long-term, 40% short-term), but long QQQ against short index futures is "very likely" a Section 1092 mixed
+straddle (the workstream's own judgment; no source says so directly), and whether Section 1259 (constructive sale) applies is
+unresolved. See FUTURES_ROUTE.md section 6; ask a tax adviser.
 
 ## 9. What did not survive checking
 
@@ -717,3 +913,9 @@ robust; whether the 24/7 proxy's 3.3 includes roll artefacts; whether "half are 
 - The long-run funding level: four months to a year of new contracts; BTC's precedent is cyclical and does not extrapolate.
 - Out of sample: the recipes were chosen on the sample they are tested on; one 2010-2026 history, mostly a bull market; 1999-2010
   only with a rebuilt fund and liquidations on the close.
+- The Nasdaq-100 futures carry: 0 to 0.3 points above T-bills after QQQ's fee is the range of several estimates, and single years
+  can be negative; the break-even funding at today's 4.04% T-bill was not computed (section 8a).
+- CME's own margin page (it returned 503) and IBKR's own fee page (403) could not be read; whether a broker will lend against QQQ
+  automatically to meet a futures margin call.
+- Tax on the futures route: how mainland China classifies futures gains and the primary source for the 20% rate; for US holders,
+  whether an index futures hedge of QQQ triggers the constructive-sale rule (Section 1259).
