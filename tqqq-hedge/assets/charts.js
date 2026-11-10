@@ -329,7 +329,9 @@ export function stackedBars(host, { groups, fmt, tipEl, totalName }) {
 }
 
 /**
- * Lines over a small numeric x axis with markers. o={xs, series:[{label,color,dash,values}], xFmt, yFmt, highlight (x value)}
+ * Lines over a small numeric x axis with markers. o={xs, series:[{label,color,dash,values}], xFmt, yFmt, highlight (x value),
+ * tipFmt? (tooltip values; yFmt otherwise), band? {from, to, label} (a shaded x range drawn under the lines),
+ * crossings? [{x, label, color, anchor?}] (markers on the zero line, labelled above it; anchor 'end' puts the label to the left)}
  */
 export function dotLine(host, o) {
   host.innerHTML = '';
@@ -352,6 +354,11 @@ export function dotLine(host, o) {
     el('text', { x: m.l - 8, y: y(t) + 4, 'text-anchor': 'end', text: o.yFmt(t) }, g);
   }
   for (const xv of o.xs) el('text', { x: x(xv), y: H - m.b + 18, 'text-anchor': 'middle', text: o.xFmt(xv) }, g);
+  if (o.band) {
+    const bx0 = x(o.band.from), bx1 = x(o.band.to);
+    el('rect', { class: 'band', x: bx0, y: m.t, width: Math.max(1, bx1 - bx0), height: Math.max(0, H - m.t - m.b) }, svg);
+    if (o.band.label) el('text', { class: 'band-label', x: (bx0 + bx1) / 2, y: m.t + 13, 'text-anchor': 'middle', text: o.band.label }, svg);
+  }
   if (o.highlight != null) el('line', { class: 'crosshair', x1: x(o.highlight), x2: x(o.highlight), y1: m.t, y2: H - m.b }, svg);
   for (const s of o.series) {
     const d = o.xs.map((xv, i) => (i ? 'L' : 'M') + x(xv).toFixed(1) + ' ' + y(s.values[i]).toFixed(1)).join('');
@@ -362,9 +369,17 @@ export function dotLine(host, o) {
       el('circle', { class: 'mark', cx: x(xv), cy: y(s.values[i]), r: hl ? 5.5 : 3.5, fill: s.color }, svg);
     });
   }
+  // where a series crosses zero (a break-even): a ring on the zero line and its x value above it
+  for (const c of o.crossings || []) {
+    if (!(lo <= 0 && hi >= 0)) break;
+    el('circle', { class: 'crossing', cx: x(c.x), cy: y(0), r: 4.5, stroke: c.color }, svg);
+    // anchor 'end' sets the label above-left of the ring, clear of a line that rises through it
+    el('text', { class: 'crossing-label', x: x(c.x) + (c.anchor === 'end' ? -7 : 0), y: y(0) + (c.below ? 17 : -9), 'text-anchor': c.anchor || 'middle', fill: c.textColor || c.color, text: c.label }, svg);
+  }
   // one hit target per x: the tooltip lists every series at that funding rate
+  const tf = o.tipFmt || o.yFmt;
   o.xs.forEach((xv, i) => {
-    const rows = o.series.map((s) => `<tr><th>${s.label}</th><td>${o.yFmt(s.values[i])}</td></tr>`).join('');
+    const rows = o.series.map((s) => `<tr><th>${s.label}</th><td>${tf(s.values[i])}</td></tr>`).join('');
     el('circle', { class: 'mark-hit', cx: x(xv), cy: y(o.series[0].values[i]), r: 14,
       'data-tip': `<p class="tooltip__date">${o.xFmt(xv)}</p><table>${rows}</table>` }, svg);
     for (let k = 1; k < o.series.length; k++) el('circle', { class: 'mark-hit', cx: x(xv), cy: y(o.series[k].values[i]), r: 14,
