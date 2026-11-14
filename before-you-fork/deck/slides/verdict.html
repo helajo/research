@@ -1,0 +1,19 @@
+<section id="verdict">
+<div class="head">
+<p class="eyebrow">The worked example</p>
+<h2>LobeHub: safe to clone, careful to install</h2>
+</div>
+<table class="vt" style="font-size: 26px;">
+<tr><th style="width: 34%;">Question</th><th style="width: 16%;">Rating</th><th style="width: 50%;">What we found</th></tr>
+<tr><td>1 · Real project</td><td style="color: #1F4E73;">Low</td><td>Genuine; licence fields disagree; our fork is one release behind</td></tr>
+<tr><td>2 · Security process</td><td style="color: #1F4E73;">Low</td><td>Private reporting; 15 advisories, all fixed in 2.3.2</td></tr>
+<tr><td>3 · Install scripts</td><td style="color: #7A4708;">Medium</td><td>6 packages run scripts; no lockfile</td></tr>
+<tr><td>4 · Download-and-run</td><td style="color: #7A4708;">Medium</td><td>bash &lt;(curl …) through an unpinned short link</td></tr>
+<tr><td>5 · Secrets in code</td><td style="color: #8E1F18;">High</td><td>Real login key and admin / pswd123; one shared database password</td></tr>
+<tr><td>6 · Exposed when running</td><td style="color: #8E1F18;">High</td><td>Database and Redis open to the network; open sign-up</td></tr>
+<tr><td>7 · Power on your machine</td><td style="color: #7A4708;">Medium</td><td>Commands ask, folder edits don’t; auto-run; fork sync</td></tr>
+</table>
+<p>Both High findings sit in the self-hosting Docker files. For the team: <b class="hl">use the hosted app or the official desktop release</b>; don’t build it from source on a work laptop.</p>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>Put together, LobeHub is a genuine, actively maintained project with a working security process. Both High findings are in its self-hosting Docker files: built-in secrets and passwords that must be replaced, and database ports open to every network. So: reading or forking it is fine; for using it, the hosted version or the official desktop app avoids most of this list, because we never run its install scripts or its database ourselves. These findings are as of v2.3.2; v2.3.3 came out on 12 November, so check the latest release first.</aside>
+</section>

@@ -1,0 +1,1029 @@
+{
+  "meta": {
+    "prepared": "2026-11-14",
+    "repo_checked": "/home/user/lobehub (shallow clone, canary, v2.3.2, commit f6f0de5d, origin https://github.com/helajo/lobehub)",
+    "method": "Read-only file inspection; nothing installed, built or run. Advisories from the lobehub/lobehub advisory pages and the OSV API. No key material reproduced."
+  },
+  "lobehub": [
+    {
+      "question": 1,
+      "topic": "Is it the real project? (owner, version, licence, latest commit)",
+      "finding": "Version 2.3.2 and package name @lobehub/lobehub confirmed; package.json points at https://github.com/lobehub/lobehub. LICENSE is the 'LobeHub Community License' (Apache 2.0 plus conditions: a commercial licence is needed to develop and distribute a derivative work; the producer may change the licence; contributions may be used commercially). Latest commit f6f0de5d7dee51c495602b731e90e2ece47354bf, 2026-11-11 15:32:53 +0800 (07:32 UTC), '✨ feat(cli): add --visibility and --json to lh agent create (#22801)'. CORRECTIONS: (a) package.json's own \"license\" field says \"MIT\", which contradicts LICENSE; (b) the local clone's git remote is a fork, https://github.com/helajo/lobehub, not lobehub/lobehub (the commit id does resolve on github.com/lobehub/lobehub, but GitHub shows fork-network commits under the parent URL, so branch membership upstream was not verified); (c) 2.3.2 is no longer the latest: GitHub marks v2.3.3 (12 Nov 2026) as Latest.",
+      "severity": "Low",
+      "severity_reason": "Genuine upstream project and commit, but the metadata disagree (MIT vs Community License) and the clone came from a fork and is already one release behind: exactly what a 'before you fork' check should catch.",
+      "evidence": [
+        {
+          "file": "package.json",
+          "line": 2,
+          "what": "\"name\": \"@lobehub/lobehub\""
+        },
+        {
+          "file": "package.json",
+          "line": 3,
+          "what": "\"version\": \"2.3.2\""
+        },
+        {
+          "file": "package.json",
+          "line": "21-24",
+          "what": "repository url https://github.com/lobehub/lobehub.git"
+        },
+        {
+          "file": "package.json",
+          "line": 25,
+          "what": "\"license\": \"MIT\" (contradicts LICENSE)"
+        },
+        {
+          "file": "LICENSE",
+          "line": 1,
+          "what": "LobeHub Community License"
+        },
+        {
+          "file": "LICENSE",
+          "line": "7-22",
+          "what": "based on Apache 2.0 with additional conditions (commercial licence for derivative works; producer may change the licence; contributed code may be used commercially)"
+        },
+        {
+          "file": "LICENSE",
+          "line": 24,
+          "what": "all other rights follow Apache License 2.0"
+        },
+        {
+          "file": "git log -1 / git remote -v",
+          "line": null,
+          "what": "HEAD f6f0de5d, 2026-11-11 15:32:53 +0800; origin = https://github.com/helajo/lobehub (a fork)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Commit f6f0de5 on lobehub/lobehub",
+          "url": "https://github.com/lobehub/lobehub/commit/f6f0de5d7dee51c495602b731e90e2ece47354bf",
+          "publisher": "GitHub",
+          "date": "2026-11-11"
+        },
+        {
+          "title": "lobehub/lobehub releases (v2.3.3 marked Latest, 12 Nov 2026)",
+          "url": "https://github.com/lobehub/lobehub/releases",
+          "publisher": "GitHub",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "question": 2,
+      "topic": "Security process (SECURITY.md and published advisories)",
+      "finding": "SECURITY.md: only the latest 2.x release gets security fixes; 1.x and 0.x are end-of-life. Report privately through GitHub's 'Report a Vulnerability' (Security Advisory) form, not public issues; urgent issues via Discord user 'arvinxu'. Targets: acknowledge within 7 days, fix within 30 days. Coordinated disclosure; reporters credited. Explicitly out of scope: EOL versions, /f/:id capability URLs, user enumeration on login, client-side API key storage in self-hosted client mode, admin-only issues, theoretical attacks. The repository shows 15 published advisories (10 on page 1, 5 on page 2) covering 2024-01 to 2026-10, including three XSS-to-RCE chains and four SSRF issues. Every one has a patched version at or below 2.3.2, so 2.3.2 is not affected by any published advisory (by version comparison; fixes were not re-tested in code).",
+      "severity": "Low",
+      "severity_reason": "Clear private reporting channel and a track record of publishing and fixing advisories; the residual risk is that only the latest release is patched and the project has a history of serious (critical XSS-to-RCE, unauthenticated SSRF) bugs, so self-hosters must keep updating.",
+      "evidence": [
+        {
+          "file": "SECURITY.md",
+          "line": "5-11",
+          "what": "Supported versions table: 2.x latest only; 1.x and 0.x not supported"
+        },
+        {
+          "file": "SECURITY.md",
+          "line": "17-19",
+          "what": "Report via GitHub Security Advisory form; not through public issues"
+        },
+        {
+          "file": "SECURITY.md",
+          "line": "23-25",
+          "what": "Acknowledge within 7 days; fix within 30 days; urgent via Discord 'arvinxu'"
+        },
+        {
+          "file": "SECURITY.md",
+          "line": "44-70",
+          "what": "Out-of-scope list"
+        },
+        {
+          "file": "SECURITY.md",
+          "line": "74-81",
+          "what": "Coordinated disclosure; contacts"
+        }
+      ],
+      "sources": [
+        {
+          "title": "lobehub/lobehub security advisories",
+          "url": "https://github.com/lobehub/lobehub/security/advisories",
+          "publisher": "GitHub",
+          "date": "accessed 2026-11-14"
+        },
+        {
+          "title": "lobehub/lobehub security advisories, page 2",
+          "url": "https://github.com/lobehub/lobehub/security/advisories?page=2",
+          "publisher": "GitHub",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "question": 3,
+      "topic": "Install-time code",
+      "finding": "pnpm 12.4.1 (packageManager). pnpm-workspace.yaml sets `lockfile: false` (no pnpm-lock.yaml in the repo; with `resolutionMode: highest` each install resolves the newest versions allowed by the ranges, so two installs can get different code). `allowBuilds` lets 6 packages run install/build scripts: @google/genai, @lobehub/editor, @sentry/cli, @vercel/speed-insights, ffmpeg-static, workerd; 7 are explicitly blocked (core-js, electron-sparkle-updater, es5-ext, esbuild, protobufjs, sharp, unrs-resolver). Per pnpm docs, packages not listed are disallowed by default and strictDepBuilds defaults to true. `enablePrePostScripts: true` (root pre/post scripts run). No minimumReleaseAge is set, so pnpm's default of 1440 minutes (1 day) applies, but `@lobehub/*` and a few others are exempted via minimumReleaseAgeExclude. The desktop app has its own workspace file with `lockfile: true` and allowBuilds for @sentry/cli, electron, electron-builder, node-mac-permissions. Root `prepare` script runs `git config core.hooksPath .githooks`, so after install every `git commit` runs .githooks/pre-commit (lint-staged and `bun run .agents/scripts/check/size-gate.ts --staged`). Root package.json: 311 dependencies + 110 devDependencies = 421 direct dependencies (workspace packages add more).",
+      "severity": "Medium",
+      "severity_reason": "Install scripts are allow-listed (good), but there is no lockfile for a 421-direct-dependency tree, so a freshly compromised package version within range can be pulled in on install (the 1-day release-age default only partly mitigates this), and the prepare script quietly wires repo-controlled git hooks.",
+      "evidence": [
+        {
+          "file": "pnpm-workspace.yaml",
+          "line": 1,
+          "what": "lockfile: false"
+        },
+        {
+          "file": "pnpm-workspace.yaml",
+          "line": 2,
+          "what": "resolutionMode: highest"
+        },
+        {
+          "file": "pnpm-workspace.yaml",
+          "line": 5,
+          "what": "enablePrePostScripts: true"
+        },
+        {
+          "file": "pnpm-workspace.yaml",
+          "line": "30-41",
+          "what": "minimumReleaseAgeExclude (incl. '@lobehub/*')"
+        },
+        {
+          "file": "pnpm-workspace.yaml",
+          "line": "50-63",
+          "what": "allowBuilds: 6 true, 7 false"
+        },
+        {
+          "file": "apps/desktop/pnpm-workspace.yaml",
+          "line": "33, 51-60",
+          "what": "desktop: lockfile: true; allowBuilds incl. electron, electron-builder, node-mac-permissions, @sentry/cli"
+        },
+        {
+          "file": "package.json",
+          "line": 114,
+          "what": "\"prepare\": \"git rev-parse --git-dir > /dev/null 2>&1 && git config core.hooksPath .githooks || true\""
+        },
+        {
+          "file": ".githooks/pre-commit",
+          "line": "13-16",
+          "what": "runs lint-staged and a bun script on every commit"
+        },
+        {
+          "file": "package.json",
+          "line": 621,
+          "what": "packageManager pnpm@12.4.1"
+        },
+        {
+          "file": "package.json",
+          "line": null,
+          "what": "dependencies: 311, devDependencies: 110 (counted with a JSON parser)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "pnpm settings: Build (allowBuilds, strictDepBuilds)",
+          "url": "https://pnpm.io/settings/build",
+          "publisher": "pnpm",
+          "date": "accessed 2026-11-14"
+        },
+        {
+          "title": "pnpm settings: Dependency resolution (minimumReleaseAge default 1440)",
+          "url": "https://pnpm.io/settings/dependency-resolution",
+          "publisher": "pnpm",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "question": 4,
+      "topic": "Download-and-run instructions",
+      "finding": "README recommends `bash <(curl -fsSL https://lobe.li/setup.sh) -l en` (Chinese README: `-l zh_CN`); the same line is in the Docker Compose docs. No `curl ... | bash` form was found. lobe.li/setup.sh answers HTTP 302 to https://raw.githubusercontent.com/lobehub/lobehub/HEAD/docker-compose/setup.sh, i.e. whatever is on the default branch at that moment (unpinned, no checksum). The script then downloads docker-compose.yml, .env, bucket.config.json etc. from https://raw.githubusercontent.com/lobehub/lobehub/main (also unpinned).",
+      "severity": "Medium",
+      "severity_reason": "Runs an unpinned, unreviewed shell script through a third-party short link; the script itself is readable in the repo (docker-compose/setup.sh, 862 lines) and does not need root, but what runs is whatever the link points to on the day.",
+      "evidence": [
+        {
+          "file": "README.md",
+          "line": 289,
+          "what": "bash <(curl -fsSL https://lobe.li/setup.sh) -l en"
+        },
+        {
+          "file": "README.zh-CN.md",
+          "line": 284,
+          "what": "bash <(curl -fsSL https://lobe.li/setup.sh) -l zh_CN"
+        },
+        {
+          "file": "docs/self-hosting/platform/docker-compose.mdx",
+          "line": 50,
+          "what": "same command in the docs"
+        },
+        {
+          "file": "docker-compose/setup.sh",
+          "line": 28,
+          "what": "SOURCE_URL=https://raw.githubusercontent.com/lobehub/lobehub/main"
+        },
+        {
+          "file": "docker-compose/setup.sh",
+          "line": "557-567",
+          "what": "downloads compose file, settings, bucket policy and .env template"
+        },
+        {
+          "file": "(network check)",
+          "line": null,
+          "what": "HEAD request: lobe.li/setup.sh -> 302 -> raw.githubusercontent.com/lobehub/lobehub/HEAD/docker-compose/setup.sh (2026-11-14)"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "question": 5,
+      "topic": "Secrets committed to the repository",
+      "finding": "docker-compose/production/grafana/init_data.json is a Casdoor (identity provider) seed file mounted by that stack's compose file. It contains a full RSA private key for the built-in JWT signing certificate (line 592, cert-built-in, RS256 4096-bit), two OAuth application clientSecret values (lines 343 and 552), users 'admin' (isAdmin true) and 'user' both with password 'pswd123' (lines 1522/1529 and 1365/1372), and a sample LDAP password '123' (line 632). docker-compose/deploy/.env.example ships a fixed POSTGRES_PASSWORD (line 40), and setup.sh never regenerates it (it only regenerates RUSTFS_SECRET_KEY, KEY_VAULTS_SECRET, AUTH_SECRET when the user answers 'y', plus the gateway token and JWKS key), so every default install shares the same database password. RUSTFS_ACCESS_KEY is 'admin' (line 44) and RUSTFS_SECRET_KEY stays the placeholder 'YOUR_RUSTFS_PASSWORD' if regeneration is declined; when regenerated it is only 8 hex characters (setup.sh line 710 with generate_key at 695-700). The rustfs-init container prints the S3 access and secret key to its log (deploy/docker-compose.yml line 160). KEY_VAULTS_SECRET, AUTH_SECRET, GATEWAY_SERVICE_TOKEN and JWKS keys in .env.example are placeholders, not real values. Key material deliberately not reproduced here.",
+      "severity": "High",
+      "severity_reason": "A published private signing key and admin/pswd123 in a ready-to-run stack, plus a database password identical on every default install, mean anyone who copies the files without changing them is open to token forgery or login with known credentials.",
+      "evidence": [
+        {
+          "file": "docker-compose/production/grafana/init_data.json",
+          "line": 592,
+          "what": "privateKey: RSA private key of Casdoor cert-built-in (JWT, RS256) - not copied"
+        },
+        {
+          "file": "docker-compose/production/grafana/init_data.json",
+          "line": "343, 552",
+          "what": "OAuth application clientSecret values - not copied"
+        },
+        {
+          "file": "docker-compose/production/grafana/init_data.json",
+          "line": "1522, 1529, 1563",
+          "what": "user 'admin', password 'pswd123', isAdmin true"
+        },
+        {
+          "file": "docker-compose/production/grafana/init_data.json",
+          "line": "1365, 1372",
+          "what": "user 'user', password 'pswd123'"
+        },
+        {
+          "file": "docker-compose/production/grafana/init_data.json",
+          "line": 632,
+          "what": "sample LDAP password '123'"
+        },
+        {
+          "file": "docker-compose/production/grafana/docker-compose.yml",
+          "line": "67-68, 82",
+          "what": "casdoor v2.13.0 service mounts ./init_data.json"
+        },
+        {
+          "file": "docker-compose/deploy/.env.example",
+          "line": 40,
+          "what": "POSTGRES_PASSWORD fixed value (same for every install)"
+        },
+        {
+          "file": "docker-compose/deploy/.env.example",
+          "line": "44-45",
+          "what": "RUSTFS_ACCESS_KEY=admin; RUSTFS_SECRET_KEY placeholder"
+        },
+        {
+          "file": "docker-compose/setup.sh",
+          "line": "676-740, 745-748",
+          "what": "section_regenerate_secrets (asked y/n, default y) regenerates RustFS, KEY_VAULTS and AUTH secrets only; no POSTGRES_PASSWORD"
+        },
+        {
+          "file": "docker-compose/setup.sh",
+          "line": "695-700, 710",
+          "what": "RustFS secret generated as 8 hex characters"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": 160,
+          "what": "rustfs-init echoes S3 access and secret keys to the container log"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "question": 6,
+      "topic": "Network exposure and sign-up defaults (docker-compose/deploy)",
+      "finding": "Published host ports: LobeHub ${LOBE_PORT}:3210 (3210), gateway ${AGENT_GATEWAY_PORT:-8787}:8787 and ${DEVICE_GATEWAY_PORT:-8788}:8788, PostgreSQL '5432:5432', Redis '6379:6379', RustFS ${RUSTFS_PORT}:9000 and ${RUSTFS_ADMIN_PORT}:9001 (console enabled). No host IP is given, so Docker binds them on all interfaces. Redis runs `redis-server --save 60 1000 --appendonly yes` with no requirepass/ACL and REDIS_URL has no password. Postgres is reachable from outside with the fixed password from .env.example. The compose comments call the Postgres/Redis mappings 'Optional' and say to remove them if not needed, but they are on by default. The bucket policy grants anonymous s3:GetObject on lobe/* and the CORS rule allows origin '*'. Elasticsearch is correctly NOT published. Sign-up: AUTH_ALLOWED_EMAILS is commented out ('Leave empty to allow all users to register'); in code an empty list allows every email, and AUTH_DISABLE_EMAIL_PASSWORD defaults to false, so anyone who can reach port 3210 can create an account.",
+      "severity": "High",
+      "severity_reason": "Database and an unauthenticated Redis published on all interfaces with a publicly known DB password, and open self-registration, on a server that can hold API keys and run agents.",
+      "evidence": [
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "6-7",
+          "what": "'${LOBE_PORT}:3210'"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "61-63",
+          "what": "gateway 8787 (agent) and 8788 (device) published"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "79-80",
+          "what": "postgresql '5432:5432'"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "109-111",
+          "what": "redis '6379:6379'; command has no --requirepass"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": 34,
+          "what": "REDIS_URL=redis://redis:6379 (no password)"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "126-128, 135",
+          "what": "rustfs 9000 and 9001 published; RUSTFS_CONSOLE_ENABLE=true"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "207-208",
+          "what": "Elasticsearch intentionally has no ports ('Never publish 9200')"
+        },
+        {
+          "file": "docker-compose/deploy/bucket.config.json",
+          "line": "1-18",
+          "what": "anonymous (Principal AWS '*') s3:GetObject on lobe/*"
+        },
+        {
+          "file": "docker-compose/deploy/.env.example",
+          "line": "5-12",
+          "what": "AUTH_ALLOWED_EMAILS and AUTH_DISABLE_EMAIL_PASSWORD commented out; 'Leave empty to allow all users to register'"
+        },
+        {
+          "file": "docker-compose/deploy/.env.example",
+          "line": "18-20, 57-58",
+          "what": "LOBE_PORT=3210, RUSTFS_PORT=9000, RUSTFS_ADMIN_PORT=9001, gateway ports 8787/8788"
+        },
+        {
+          "file": "src/libs/better-auth/plugins/email-whitelist.ts",
+          "line": 23,
+          "what": "if (allowedList.length === 0) return true"
+        },
+        {
+          "file": "packages/env/src/auth.ts",
+          "line": "124, 216",
+          "what": "AUTH_DISABLE_EMAIL_PASSWORD default false"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "question": 7,
+      "topic": "Power on the user's machine and repository automation",
+      "finding": "Desktop 'Local System' built-in tool ('Access and manage local files, run shell commands on your desktop'): runCommand has humanIntervention 'required'; readFile, moveFiles, writeFile, editFile, grepContent, globFiles use a dynamic 'pathScopeAudit' (default 'never', i.e. no prompt, escalating to 'required' only for paths outside the working directory or /tmp, /var/tmp). User approval modes include 'auto-run' ('Automatically approve all tools without user consent'), 'allow-list', 'manual' (default) and server-only 'headless'. MCP: stdio transport spawns a local command with arguments (src/libs/mcp/client.ts; desktop McpCtr.ts); a lobehub:// deep link ('plugin' install handler) can propose an MCP install, which the UI shows in a confirmation modal. The deploy stack's device gateway (8788) 'routes tool calls to devices joined with lh connect'. GitHub: 32 workflow files (31 .yml + 1 .yaml). sync.yml 'Upstream Sync' runs on a schedule every 6 hours (cron '0 */6 * * *') only in forks (if: github.event.repository.fork), with contents/issues/actions write, and uses aormsby/Fork-Sync-With-Upstream-action@v3.4 to pull lobehub/lobehub main into the fork's main. Also: all 242 `uses:` references are tag-pinned (none by commit SHA), and 3 workflows use pull_request_target.",
+      "severity": "Medium",
+      "severity_reason": "Shell commands require approval by default, but file reads/writes inside the working folder do not, an 'auto-run' mode removes all prompts, MCP stdio servers are arbitrary local programs, and a fork that enables Actions silently pulls upstream changes every 6 hours.",
+      "evidence": [
+        {
+          "file": "packages/builtin-tool-local-system/src/manifest.ts",
+          "line": 242,
+          "what": "runCommand: humanIntervention: 'required'"
+        },
+        {
+          "file": "packages/builtin-tool-local-system/src/manifest.ts",
+          "line": "21-27, 137-143, 175-181, 205-211, 321-327, 394-400",
+          "what": "readFile/moveFiles/writeFile/editFile/grepContent/globFiles: dynamic pathScopeAudit, default 'never', policy 'required'"
+        },
+        {
+          "file": "packages/builtin-tool-local-system/src/manifest.ts",
+          "line": "425-433",
+          "what": "meta: 'Access and manage local files, run shell commands on your desktop'"
+        },
+        {
+          "file": "packages/builtin-tool-local-system/src/interventionAudit.ts",
+          "line": "4-31",
+          "what": "safe prefixes /tmp, /var/tmp; paths inside the working directory pass without approval"
+        },
+        {
+          "file": "packages/types/src/tool/intervention.ts",
+          "line": "136-144",
+          "what": "approvalMode 'auto-run' | 'allow-list' | 'manual' | 'headless'"
+        },
+        {
+          "file": "apps/server/src/services/aiAgent/foregroundIntervention.ts",
+          "line": 22,
+          "what": "default approvalMode 'manual'"
+        },
+        {
+          "file": "src/libs/mcp/client.ts",
+          "line": "16, 66, 262-267",
+          "what": "StdioClientTransport / spawn(command, args)"
+        },
+        {
+          "file": "apps/desktop/src/main/controllers/McpCtr.ts",
+          "line": "73, 140-144",
+          "what": "desktop MCP: stdio or local-network HTTP servers"
+        },
+        {
+          "file": "apps/desktop/src/main/controllers/McpInstallCtr.ts",
+          "line": "68-142",
+          "what": "protocol handler 'install' broadcasts mcpInstallRequest to the UI"
+        },
+        {
+          "file": "src/features/ProtocolUrlHandler/index.tsx",
+          "line": "8, 25-27",
+          "what": "PluginInstallConfirmModal shown for install requests"
+        },
+        {
+          "file": "docker-compose/deploy/docker-compose.yml",
+          "line": "52-56",
+          "what": "device gateway routes tool calls to joined devices"
+        },
+        {
+          "file": ".github/workflows/sync.yml",
+          "line": "1-30",
+          "what": "Upstream Sync: cron every 6h, fork-only, write permissions, third-party fork-sync action @v3.4"
+        },
+        {
+          "file": ".github/workflows/",
+          "line": null,
+          "what": "32 workflow files; pull_request_target in auto-tag-release.yml:7, desktop-release-request.yml:4, pr-admission-check.yml:8"
+        }
+      ],
+      "sources": []
+    }
+  ],
+  "advisories": [
+    {
+      "id": "GHSA-2g9j-v25c-4j97",
+      "cve": "none",
+      "title": "Path Traversal in File Name Leads to Arbitrary File Write and Remote Code Execution",
+      "description": "A logged-in user could use a crafted file name in document parsing to write files anywhere on the server.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "not in OSV/GitHub Advisory Database at time of check",
+      "published": "2026-10-17",
+      "affected": "@lobehub/chat < 2.1.49",
+      "fixed_in": "2.1.49",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-2g9j-v25c-4j97",
+      "note": "No CVE ('No known CVE').",
+      "sources": [
+        {
+          "title": "GHSA-2g9j-v25c-4j97: Path Traversal in File Name Leads to Arbitrary File Write and Remote Code Execution",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-2g9j-v25c-4j97",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-10-17"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-xmwj-c75x-6346",
+      "cve": "CVE-2026-54157",
+      "title": "Unauthenticated SSRF in /webapi/proxy",
+      "description": "The /webapi/proxy endpoint fetched any URL for anyone without login (same proxy code as CVE-2024-32964), letting attackers send requests from the server and inject cookies.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Critical",
+      "published": "2026-06-03",
+      "affected": "<= 2.1.56",
+      "fixed_in": "2.1.57",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xmwj-c75x-6346",
+      "note": "Repo page date 3 Jun 2026; GitHub-reviewed 16 Jun 2026.",
+      "sources": [
+        {
+          "title": "GHSA-xmwj-c75x-6346: Unauthenticated SSRF in /webapi/proxy",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xmwj-c75x-6346",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-06-03"
+        },
+        {
+          "title": "NVD CVE-2026-54157",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-54157",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-xmwj-c75x-6346",
+          "url": "https://osv.dev/vulnerability/GHSA-xmwj-c75x-6346",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-5mwj-v5jw-5c97",
+      "cve": "CVE-2026-39411",
+      "title": "Authentication bypass on webapi routes via forgeable X-lobe-chat-auth header",
+      "description": "The auth header was only XOR-obfuscated with a key hardcoded in the repo, so anyone could forge it and call protected chat/model routes without logging in.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2026-04-08",
+      "affected": "< 2.1.48",
+      "fixed_in": "2.1.48",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-5mwj-v5jw-5c97",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-5mwj-v5jw-5c97: Authentication bypass on webapi routes via forgeable X-lobe-chat-auth header",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-5mwj-v5jw-5c97",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-04-08"
+        },
+        {
+          "title": "NVD CVE-2026-39411",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-39411",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-5mwj-v5jw-5c97",
+          "url": "https://osv.dev/vulnerability/GHSA-5mwj-v5jw-5c97",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-xq4x-622m-q8fq",
+      "cve": "CVE-2026-42045",
+      "title": "Cross-Site Scripting (XSS) escalates to Remote Code Execution (RCE)",
+      "description": "Malicious content in a chat (e.g. from a hostile model endpoint) could run script in the app and, via an unfiltered desktop IPC runCommand handler, run system commands on the user's computer.",
+      "severity_repo_advisory": "Moderate (CVSS 6.2)",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2026-04-27",
+      "affected": "<= 2.1.47",
+      "fixed_in": "2.1.48",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xq4x-622m-q8fq",
+      "note": "OSV lists last_affected 2.1.26 and no fixed version; the repository advisory states patched 2.1.48.",
+      "sources": [
+        {
+          "title": "GHSA-xq4x-622m-q8fq: Cross-Site Scripting (XSS) escalates to Remote Code Execution (RCE)",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xq4x-622m-q8fq",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-04-27"
+        },
+        {
+          "title": "NVD CVE-2026-42045",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42045",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-xq4x-622m-q8fq",
+          "url": "https://osv.dev/vulnerability/GHSA-xq4x-622m-q8fq",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-wrrr-8jcv-wjf5",
+      "cve": "CVE-2026-23835",
+      "title": "Improper Authorization in Presigned Upload",
+      "description": "Users could alter upload requests to write files to unintended storage paths and misreport file size to bypass quota.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2026-01-30",
+      "affected": "< 1.143.3",
+      "fixed_in": "1.143.3",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-wrrr-8jcv-wjf5",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-wrrr-8jcv-wjf5: Improper Authorization in Presigned Upload",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-wrrr-8jcv-wjf5",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-01-30"
+        },
+        {
+          "title": "NVD CVE-2026-23835",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-23835",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-wrrr-8jcv-wjf5",
+          "url": "https://osv.dev/vulnerability/GHSA-wrrr-8jcv-wjf5",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-j7xp-4mg9-x28r",
+      "cve": "CVE-2026-23522",
+      "title": "IDOR in Knowledge Base File Removal allows cross-user file deletion",
+      "description": "A logged-in user could delete files from other users' knowledge bases because the ownership check was commented out.",
+      "severity_repo_advisory": "Low (CVSS 3.7)",
+      "severity_github_advisory_database": "Low",
+      "published": "2026-01-19",
+      "affected": "<= v2.0.0-next.192",
+      "fixed_in": "v2.0.0-next.193",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-j7xp-4mg9-x28r",
+      "note": "OSV lists @lobehub/chat last_affected 1.143.2.",
+      "sources": [
+        {
+          "title": "GHSA-j7xp-4mg9-x28r: IDOR in Knowledge Base File Removal allows cross-user file deletion",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-j7xp-4mg9-x28r",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-01-19"
+        },
+        {
+          "title": "NVD CVE-2026-23522",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-23522",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-j7xp-4mg9-x28r",
+          "url": "https://osv.dev/vulnerability/GHSA-j7xp-4mg9-x28r",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-4gpc-rhpj-9443",
+      "cve": "CVE-2026-23733",
+      "title": "Cross-Site Scripting (XSS) escalates to Remote Code Execution (RCE)",
+      "description": "Unsanitised Mermaid diagram content in chat artifacts could run attacker script, escalating to code execution on the desktop app.",
+      "severity_repo_advisory": "Critical (CVSS 9.6)",
+      "severity_github_advisory_database": "Critical",
+      "published": "2026-01-17",
+      "affected": "<= v2.0.0-next.179",
+      "fixed_in": "v2.0.0-next.180",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-4gpc-rhpj-9443",
+      "note": "OSV lists @lobehub/chat last_affected 1.143.2.",
+      "sources": [
+        {
+          "title": "GHSA-4gpc-rhpj-9443: Cross-Site Scripting (XSS) escalates to Remote Code Execution (RCE)",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-4gpc-rhpj-9443",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2026-01-17"
+        },
+        {
+          "title": "NVD CVE-2026-23733",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-23733",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-4gpc-rhpj-9443",
+          "url": "https://osv.dev/vulnerability/GHSA-4gpc-rhpj-9443",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-fgx4-p8xf-qhp9",
+      "cve": "CVE-2025-62505",
+      "title": "SSRF with native web fetch module",
+      "description": "The crawlPages tool endpoint fetched client-supplied URLs, including internal addresses and cloud metadata endpoints.",
+      "severity_repo_advisory": "Low",
+      "severity_github_advisory_database": "Low",
+      "published": "2025-10-17",
+      "affected": "< 1.136.2",
+      "fixed_in": "1.136.2",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-fgx4-p8xf-qhp9",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-fgx4-p8xf-qhp9: SSRF with native web fetch module",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-fgx4-p8xf-qhp9",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2025-10-17"
+        },
+        {
+          "title": "NVD CVE-2025-62505",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-62505",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-fgx4-p8xf-qhp9",
+          "url": "https://osv.dev/vulnerability/GHSA-fgx4-p8xf-qhp9",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-xph5-278p-26qx",
+      "cve": "CVE-2025-59426",
+      "title": "Open Redirect",
+      "description": "OIDC redirect handling trusted X-Forwarded-Host/Host headers, so behind some proxies users could be redirected to an attacker's site.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2025-09-24",
+      "affected": "< 1.130.1",
+      "fixed_in": "1.130.1",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xph5-278p-26qx",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-xph5-278p-26qx: Open Redirect",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-xph5-278p-26qx",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2025-09-24"
+        },
+        {
+          "title": "NVD CVE-2025-59426",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-59426",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-xph5-278p-26qx",
+          "url": "https://osv.dev/vulnerability/GHSA-xph5-278p-26qx",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-m79r-r765-5f9j",
+      "cve": "CVE-2025-59417",
+      "title": "Remote Code Execution via XSS in Chat Messages in Lobe Chat Desktop",
+      "description": "Content injected into chat messages (e.g. via prompt injection or a compromised MCP server) could run script and escalate to code execution on the user's machine.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2025-09-18",
+      "affected": "< 1.129.4",
+      "fixed_in": "1.129.4",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-m79r-r765-5f9j",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-m79r-r765-5f9j: Remote Code Execution via XSS in Chat Messages in Lobe Chat Desktop",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-m79r-r765-5f9j",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2025-09-18"
+        },
+        {
+          "title": "NVD CVE-2025-59417",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-59417",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-m79r-r765-5f9j",
+          "url": "https://osv.dev/vulnerability/GHSA-m79r-r765-5f9j",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-2xcc-vm3f-m8rw",
+      "cve": "CVE-2024-32965",
+      "title": "SSRF vulnerability in lobe-chat",
+      "description": "Without logging in, an attacker could set a proxy address and make the server request internal services, leaking information.",
+      "severity_repo_advisory": "High",
+      "severity_github_advisory_database": "High",
+      "published": "2024-11-26",
+      "affected": "< 1.19.13",
+      "fixed_in": "1.19.13",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-2xcc-vm3f-m8rw",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-2xcc-vm3f-m8rw: SSRF vulnerability in lobe-chat",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-2xcc-vm3f-m8rw",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2024-11-26"
+        },
+        {
+          "title": "NVD CVE-2024-32965",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-32965",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-2xcc-vm3f-m8rw",
+          "url": "https://osv.dev/vulnerability/GHSA-2xcc-vm3f-m8rw",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-3fc8-2r3f-8wrg",
+      "cve": "CVE-2024-47066",
+      "title": "Insufficient fix for GHSA-mxhq-xw3g-rphc (CVE-2024-32964)",
+      "description": "The SSRF protection on /api/proxy did not follow redirects, so an external URL redirecting to an internal address bypassed it.",
+      "severity_repo_advisory": "Critical",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2024-09-21",
+      "affected": "< 1.19.13",
+      "fixed_in": "1.19.13",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-3fc8-2r3f-8wrg",
+      "note": "Repo page 21 Sep 2024; database 23 Sep 2024.",
+      "sources": [
+        {
+          "title": "GHSA-3fc8-2r3f-8wrg: Insufficient fix for GHSA-mxhq-xw3g-rphc (CVE-2024-32964)",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-3fc8-2r3f-8wrg",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2024-09-21"
+        },
+        {
+          "title": "NVD CVE-2024-47066",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-47066",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-3fc8-2r3f-8wrg",
+          "url": "https://osv.dev/vulnerability/GHSA-3fc8-2r3f-8wrg",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-p36r-qxgx-jq2v",
+      "cve": "CVE-2024-37895",
+      "title": "Unexpected API Key Leak",
+      "description": "A user who passed SSO/access-code login could change the base URL to their own server and capture the operator's real model API key.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2024-06-17",
+      "affected": "< 0.162.25",
+      "fixed_in": "0.162.25",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-p36r-qxgx-jq2v",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-p36r-qxgx-jq2v: Unexpected API Key Leak",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-p36r-qxgx-jq2v",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2024-06-17"
+        },
+        {
+          "title": "NVD CVE-2024-37895",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-37895",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-p36r-qxgx-jq2v",
+          "url": "https://osv.dev/vulnerability/GHSA-p36r-qxgx-jq2v",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-mxhq-xw3g-rphc",
+      "cve": "CVE-2024-32964",
+      "title": "/api/proxy endpoint SSRF vulnerability",
+      "description": "Anyone, without login, could use /api/proxy to reach internal services and read the responses.",
+      "severity_repo_advisory": "Critical",
+      "severity_github_advisory_database": "Critical",
+      "published": "2024-05-10",
+      "affected": "< 0.150.6",
+      "fixed_in": "0.150.6",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-mxhq-xw3g-rphc",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-mxhq-xw3g-rphc: /api/proxy endpoint SSRF vulnerability",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-mxhq-xw3g-rphc",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2024-05-10"
+        },
+        {
+          "title": "NVD CVE-2024-32964",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-32964",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-mxhq-xw3g-rphc",
+          "url": "https://osv.dev/vulnerability/GHSA-mxhq-xw3g-rphc",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-pf55-fj96-xf37",
+      "cve": "CVE-2024-24566",
+      "title": "Unauthorized access to chat plugins",
+      "description": "On password-protected (ACCESS_CODE) deployments, plugins could be used without the password.",
+      "severity_repo_advisory": "Moderate",
+      "severity_github_advisory_database": "Moderate",
+      "published": "2024-01-31",
+      "affected": "< 0.122.4",
+      "fixed_in": "0.122.4",
+      "fixed_in_2_3_2": true,
+      "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-pf55-fj96-xf37",
+      "note": null,
+      "sources": [
+        {
+          "title": "GHSA-pf55-fj96-xf37: Unauthorized access to chat plugins",
+          "url": "https://github.com/lobehub/lobehub/security/advisories/GHSA-pf55-fj96-xf37",
+          "publisher": "GitHub (lobehub/lobehub security advisories)",
+          "date": "2024-01-31"
+        },
+        {
+          "title": "NVD CVE-2024-24566",
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-24566",
+          "publisher": "NIST NVD",
+          "date": "accessed 2026-11-14 (not individually fetched)"
+        },
+        {
+          "title": "OSV entry GHSA-pf55-fj96-xf37",
+          "url": "https://osv.dev/vulnerability/GHSA-pf55-fj96-xf37",
+          "publisher": "OSV (Google) / GitHub Advisory Database",
+          "date": "accessed 2026-11-14"
+        }
+      ]
+    }
+  ],
+  "incidents": [
+    {
+      "name": "xz-utils backdoor (CVE-2024-3094)",
+      "date": "2024-03-29 (public disclosure and CISA alert)",
+      "what_happened": "Malicious code was hidden in the release tarballs of the XZ Utils compression library, versions 5.6.0 and 5.6.1, by a contributor who had gained maintainer trust; on some Linux systems it hooked into the SSH server (via liblzma) and could allow unauthorised access. Microsoft engineer Andres Freund noticed it while testing Debian unstable (sid): SSH logins used a lot of CPU and were slower (a failed login took ~0.8s instead of ~0.3s; about 0.5s vs 0.01s running sshd directly) and valgrind reported errors; he posted to the oss-security list on 29 March 2024. CISA advised downgrading to an uncompromised version such as 5.4.6 Stable.",
+      "lesson": "A trusted, widely used project can be compromised from the inside, and the shipped download can differ from the visible source; pin versions, prefer distribution-vetted packages, and treat odd behaviour as a signal.",
+      "sources": [
+        {
+          "title": "Reported Supply Chain Compromise Affecting XZ Utils Data Compression Library, CVE-2024-3094",
+          "url": "https://www.cisa.gov/news-events/alerts/2024/03/29/reported-supply-chain-compromise-affecting-xz-utils-data-compression-library-cve-2024-3094",
+          "publisher": "CISA",
+          "date": "2024-03-29"
+        },
+        {
+          "title": "backdoor in upstream xz/liblzma leading to ssh server compromise",
+          "url": "https://www.openwall.com/lists/oss-security/2024/03/29/4",
+          "publisher": "oss-security mailing list (Andres Freund)",
+          "date": "2024-03-29"
+        }
+      ],
+      "unverified": "Freund's employer (Microsoft) is widely reported but was not stated on the two pages fetched."
+    },
+    {
+      "name": "npm compromise of chalk, debug and related packages",
+      "date": "2025-09-08 (Aikido first alerted 13:16 UTC)",
+      "what_happened": "A maintainer of popular npm packages was phished by an email from support@npmjs.help, a look-alike domain registered on 5 September 2025, and attackers published malicious versions of 18 packages including chalk and debug, which together have more than 2 billion weekly downloads (Aikido; Semgrep cites a combined 2.6 billion). The injected code ran in website visitors' browsers and silently intercepted crypto/web3 activity, rewriting wallet addresses so payments and approvals went to the attackers. Semgrep reports many malicious versions were removed in under an hour (some duckdb packages stayed 7-9 hours).",
+      "lesson": "One phished maintainer account can push malware into billions of installs within minutes; use lockfiles, delay brand-new versions, and enable phishing-resistant MFA on developer accounts.",
+      "sources": [
+        {
+          "title": "npm debug and chalk packages compromised",
+          "url": "https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised",
+          "publisher": "Aikido Security",
+          "date": "2025-09-08"
+        },
+        {
+          "title": "Security Alert: chalk, debug and color on npm compromised in new supply chain attack",
+          "url": "https://semgrep.dev/blog/2025/chalk-debug-and-color-on-npm-compromised-in-new-supply-chain-attack/",
+          "publisher": "Semgrep",
+          "date": "2025-09-08 (updated 2025-09-09)"
+        }
+      ],
+      "unverified": "Package count differs by source (18 per Aikido; Semgrep lists more versions in later updates; Endor Labs reportedly 25). Maintainer's name not taken from the fetched pages."
+    },
+    {
+      "name": "Shai-Hulud self-replicating npm worm",
+      "date": "malicious versions published from 2025-09-15 (Wiz); CISA alert 2025-09-23",
+      "what_happened": "A self-replicating worm spread through npm: once installed (via a post-install script) it searched the machine for secrets, including with the legitimate TruffleHog scanner, focusing on npm tokens, GitHub personal access tokens and AWS/GCP/Azure keys, sent them to the attacker and published them to a public GitHub repository named 'Shai-Hulud'. It then used stolen npm tokens to inject itself into other packages the victim maintained and republish them. CISA reported over 500 packages compromised; Wiz also saw private repositories forcibly made public with a '-migration' suffix.",
+      "lesson": "Install scripts run with your credentials; a single install on a developer laptop or CI runner can leak every token on it. Block unreviewed install scripts, rotate secrets, keep tokens short-lived.",
+      "sources": [
+        {
+          "title": "Widespread Supply Chain Compromise Impacting npm Ecosystem",
+          "url": "https://www.cisa.gov/news-events/alerts/2025/09/23/widespread-supply-chain-compromise-impacting-npm-ecosystem",
+          "publisher": "CISA",
+          "date": "2025-09-23"
+        },
+        {
+          "title": "Shai-Hulud npm supply chain attack",
+          "url": "https://www.wiz.io/blog/shai-hulud-npm-supply-chain-attack",
+          "publisher": "Wiz",
+          "date": "2025-09-16"
+        }
+      ],
+      "unverified": "CISA's page does not name TruffleHog; that detail is from Wiz. Exact first-detection date and first package not verified (Wiz: published to npm on 15 Sep 2025)."
+    },
+    {
+      "name": "Shai-Hulud 2.0 ('The Second Coming')",
+      "date": "2025-11-21 to 2025-11-23 (Check Point timeline); Unit 42 says early November 2025",
+      "what_happened": "A second, more aggressive wave ran its payload in the npm preinstall step (before installation finishes, even if it fails), disguised as a Bun installer, and stole environment variables, SSH keys, GitHub and npm tokens, CI/CD variables and AWS/Azure/GCP credentials, publishing them to public repos described 'Sha1-Hulud: The Second Coming'. Check Point counted 621 infected npm packages, 25,000 compromised GitHub repositories and 14,206 leaked secrets (2,485 still valid); Unit 42 reported over 25,000 malicious repositories across about 350 users. If it could not steal credentials it tried to wipe the user's home directory, and it registered machines as self-hosted GitHub Actions runners for persistence.",
+      "lesson": "Supply-chain worms return and get worse; the same controls (no unreviewed install scripts, lockfiles, release-age delay, credential hygiene) are needed continuously, not once.",
+      "sources": [
+        {
+          "title": "Shai-Hulud 2.0: Inside The Second Coming, the Most Aggressive NPM Supply Chain Attack of 2025",
+          "url": "https://blog.checkpoint.com/research/shai-hulud-2-0-inside-the-second-coming-the-most-aggressive-npm-supply-chain-attack-of-2025/",
+          "publisher": "Check Point Research",
+          "date": "2025-11-25"
+        },
+        {
+          "title": "'Shai-Hulud' Worm Compromises npm Ecosystem in Supply Chain Attack (updated)",
+          "url": "https://unit42.paloaltonetworks.com/npm-supply-chain-attack/",
+          "publisher": "Palo Alto Networks Unit 42",
+          "date": "2025-11-25 (updated to 2025-12-03)"
+        }
+      ],
+      "unverified": "Start date differs between sources (Check Point 21-23 Nov; Unit 42 'early November'). Other vendors give different package counts (e.g. 640+, or Wiz's early '27,000 packages' as reported second-hand); not verified."
+    }
+  ]
+}

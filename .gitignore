@@ -1,5 +1,6 @@
 # QA screenshots are working files, never published
 tqqq-hedge/_qa/
+before-you-fork/source/_qa/
 
 # Python caches
 __pycache__/

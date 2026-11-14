@@ -1,0 +1,14 @@
+<section id="api-keys" class="alt">
+<div class="head">
+<p class="eyebrow">Connecting safely</p>
+<h2>Treat API keys like credit cards: one per shop, each with a limit</h2>
+</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+<div class="card rise" style="--i: 0; padding: 28px 36px;"><h3>One key per tool</h3><p class="txt">A separate key for each app, script and teammate. If one leaks, revoke only that one.</p></div>
+<div class="card rise" style="--i: 1; padding: 28px 36px;"><h3>Set a hard spending limit</h3><p class="txt">An alert only notifies you; a hard limit stops requests. Give each app its own Claude workspace with a spend limit.</p></div>
+<div class="card rise" style="--i: 2; padding: 28px 36px;"><h3>Grant the least access</h3><p class="txt">Give keys an expiry date. When an app asks to connect Drive, GitHub or email, read the permissions first.</p></div>
+<div class="card rise" style="--i: 3; padding: 28px 36px;"><h3>Never in chat or code</h3><p class="txt">No keys in chats, screenshots or code. If one slips out, revoke it first: deleting the message doesn’t help.</p></div>
+</div>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>Tools like LobeHub only work by connecting to other services, and each connection is a key or a permission. An API key is like a credit card number: whoever has it can spend on your account. In OpenAI, turn on “Enforce a hard limit” (spending can still run slightly over before it takes effect). In the Claude Console, the Default Workspace can’t take a spend limit, so give each app its own workspace. GitHub scans public repositories for Claude and OpenAI keys and tells the provider, and Anthropic switches off an exposed key automatically, but don’t rely on that. Turning a tool off inside LobeHub doesn’t revoke its access to your Google or GitHub account; revoke it there too.</aside>
+</section>

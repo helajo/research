@@ -1,0 +1,614 @@
+{
+  "_meta": {
+    "team": "Team 2 - connecting safely",
+    "checked": "2026-11-14",
+    "notes": [
+      "All facts were read from the cited page on the 'checked' date unless a 'status' field says otherwise.",
+      "Items with status 'unconfirmed' could not be fetched directly; re-check before printing.",
+      "LobeHub docs were read from the local clone (/home/user/lobehub/docs/usage, read-only, nothing run); English and zh-CN files both exist for each page.",
+      "UI labels change often; tell participants 'look for' the label rather than promising an exact position."
+    ]
+  },
+  "api_keys": {
+    "facts": [
+      {
+        "claim": "OpenAI offers two spend controls: spend alerts (notify only, 'Spend alerts do not enforce a cap', traffic continues) and hard spend limits (requests are refused with HTTP 429 once tracked spend reaches the amount).",
+        "source_url": "https://developers.openai.com/api/docs/guides/spend-limits",
+        "source_title": "OpenAI API docs: Spend limits",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OpenAI hard limits exist at organization level (all projects) and project level (only traffic billed to that project); both can apply. Errors: organization_spend_limit_exceeded / project_spend_limit_exceeded.",
+        "source_url": "https://developers.openai.com/api/docs/guides/spend-limits",
+        "source_title": "OpenAI API docs: Spend limits",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OpenAI enforcement is not instantaneous: 'recorded spend can slightly exceed the configured amount' while limit state propagates. Limits reset with the monthly cycle.",
+        "source_url": "https://developers.openai.com/api/docs/guides/spend-limits",
+        "source_title": "OpenAI API docs: Spend limits",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OpenAI recommends separate projects for staging and production, custom rate and spend limits per project, an expiration date on every project API key, regular rotation (create replacement, switch apps, confirm, then revoke old key), and keys exposed to apps via environment variables or a secret manager, kept out of code and public repos.",
+        "source_url": "https://developers.openai.com/api/docs/guides/production-best-practices",
+        "source_title": "OpenAI API docs: Production best practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OpenAI admins can restrict which key types may be created (service-account only, user-owned project keys only, or no new keys) under 'API Key Governance' in Platform settings; applies to new keys only.",
+        "source_url": "https://developers.openai.com/api/docs/guides/production-best-practices",
+        "source_title": "OpenAI API docs: Production best practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OpenAI key permissions: 'All' (default, full access), 'Restricted' (choose None/Read/Write per resource or endpoint) and 'Read Only' (read across all endpoints); set when creating a user-owned key or by editing it.",
+        "source_url": "https://help.openai.com/en/articles/8867743-assign-api-key-permissions",
+        "source_title": "OpenAI Help: Assign API Key Permissions",
+        "checked": "2026-11-14",
+        "status": "unconfirmed: page blocked direct fetch (HTTP 403); claim taken from search-result snippets of the official page"
+      },
+      {
+        "claim": "Anthropic (Claude Console) workspaces hold their own API keys, members and limits. API keys can be scoped to a single workspace and then 'can only access resources within that workspace'. Max 100 workspaces per org by default.",
+        "source_url": "https://platform.claude.com/docs/en/manage-claude/workspaces",
+        "source_title": "Claude Platform docs: Workspaces",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic workspace spend limits: Console > Workspaces page (platform.claude.com/settings/workspaces) > select workspace > 'Spend limits' to cap monthly spending and configure alerts at thresholds. Rate limits: platform.claude.com/usage/limits > Workspace dropdown > Edit next to a model.",
+        "source_url": "https://platform.claude.com/docs/en/manage-claude/workspaces",
+        "source_title": "Claude Platform docs: Workspaces",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic: workspace limits can be lower but not higher than the organization's; you cannot set spend limits on the Default Workspace; organization-wide limits always apply.",
+        "source_url": "https://platform.claude.com/docs/en/manage-claude/workspaces",
+        "source_title": "Claude Platform docs: Workspaces",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic: archiving a workspace archives every API key created for it within seconds, and cannot be undone.",
+        "source_url": "https://platform.claude.com/docs/en/manage-claude/workspaces",
+        "source_title": "Claude Platform docs: Workspaces",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic key advice: never share your key ('even between you and Anthropic'); don't put it in code or config files; use separate keys for development, testing and production; rotate on a schedule such as every 90 days; add .env files to .gitignore; enable secret scanning; review Logs (platform.claude.com/logs) and Usage (platform.claude.com/usage); 'If you don't trust their reputation, don't trust them with your API key.'",
+        "source_url": "https://support.claude.com/en/articles/9767949-api-key-best-practices-keeping-your-keys-safe-and-secure",
+        "source_title": "Claude Help Center: API Key Best Practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic is a GitHub secret scanning partner: GitHub scans public repositories for exposed Claude API keys, notifies Anthropic, and 'Anthropic automatically deactivates the exposed API key'; the user gets an email.",
+        "source_url": "https://support.claude.com/en/articles/9767949-api-key-best-practices-keeping-your-keys-safe-and-secure",
+        "source_title": "Claude Help Center: API Key Best Practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "If a leak is suspected, Anthropic recommends 'revoking the key immediately': Console API keys page (platform.claude.com/settings/keys) > three-dot menu next to the key > 'Delete API key'.",
+        "source_url": "https://support.claude.com/en/articles/9767949-api-key-best-practices-keeping-your-keys-safe-and-secure",
+        "source_title": "Claude Help Center: API Key Best Practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub's supported-patterns table lists 'Anthropic API Key' and 'OpenAI API Key' with partner notification, user alert, push protection and validity check all supported.",
+        "source_url": "https://docs.github.com/en/code-security/reference/secret-security/supported-secret-scanning-patterns",
+        "source_title": "GitHub Docs: Supported secret scanning patterns",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Secret scanning 'runs automatically for free' on public repositories; partner-detected secrets go to the provider 'so they can take action, such as revoking the credential'. Organization-owned private repos need GitHub Secret Protection (Team / Enterprise Cloud).",
+        "source_url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-secret-scanning",
+        "source_title": "GitHub Docs: About secret scanning",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Push protection for users 'Is enabled by default', 'Stops you from pushing secrets to public repositories on GitHub', applies to your personal account, and can be bypassed with a reason (e.g. 'It's a false positive'); a bypass creates no alert unless the repo also has push protection.",
+        "source_url": "https://docs.github.com/en/code-security/secret-scanning/introduction/about-push-protection",
+        "source_title": "GitHub Docs: About push protection",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "When a secret was committed, GitHub says 'as a first step you need to revoke and/or rotate that secret'. Rewriting history is not enough: copies remain in others' clones and forks, cached views by commit SHA and PRs.",
+        "source_url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository",
+        "source_title": "GitHub Docs: Removing sensitive data from a repository",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub recommends fine-grained personal access tokens over classic, 'highly recommend adding an expiration', and 'Treat your access tokens like passwords'. Unused tokens are removed automatically after a year.",
+        "source_url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens",
+        "source_title": "GitHub Docs: Managing your personal access tokens",
+        "checked": "2026-11-14"
+      }
+    ],
+    "steps": [
+      {
+        "action": "Set an OpenAI organization hard spend limit",
+        "where": "platform.openai.com/settings/organization/limits > Spend > Edit spend limit > Monthly spend limit > turn on 'Enforce a hard limit' > Save",
+        "why": "Without 'Enforce a hard limit' it is only an alert; a leaked key could keep spending."
+      },
+      {
+        "action": "Set a smaller OpenAI project hard limit for each app/experiment",
+        "where": "Project settings > Limits > Spend > Edit spend limit > Enforce a hard limit > Save",
+        "why": "Caps the damage from one project's key."
+      },
+      {
+        "action": "Create OpenAI keys per project with an expiry and, if possible, Restricted or Read Only permissions",
+        "where": "API keys page: platform.openai.com/settings/organization/api-keys (permission option names per OpenAI Help article 8867743, unconfirmed by direct fetch)",
+        "why": "Smallest blast radius; expired keys stop working on their own."
+      },
+      {
+        "action": "Create a separate Anthropic workspace per app and set its spend limit and alerts",
+        "where": "platform.claude.com/settings/workspaces > Create workspace; then select the workspace > Spend limits",
+        "why": "Workspace-scoped keys can only reach that workspace; Default Workspace cannot take a spend limit, so don't put app keys there."
+      },
+      {
+        "action": "Delete (revoke) a Claude API key you suspect leaked",
+        "where": "platform.claude.com/settings/keys > three-dot menu next to key > Delete API key",
+        "why": "Revoking is the only fix; deleting the file or commit does not stop a copied key."
+      },
+      {
+        "action": "One key per app and per environment; never paste a key into code, chat, email, screenshots, tickets or an AI prompt; keep it in an environment variable or secret manager and list .env in .gitignore",
+        "where": "Your machine / app settings; LobeHub: Connector authentication settings, not chat",
+        "why": "Anthropic and OpenAI docs both say so; LobeHub docs say 'Provide passwords and API keys through secure credential controls, not ordinary chat.'"
+      },
+      {
+        "action": "Check GitHub push protection for yourself is on",
+        "where": "Profile picture > Settings > Security section > Code security > 'Push protection for yourself'",
+        "why": "Blocks a push to a public repo that contains a recognised secret (on by default; confirm nobody turned it off)."
+      },
+      {
+        "action": "If a key reaches GitHub: rotate/revoke first, then clean history",
+        "where": "Provider console (see above); then GitHub doc 'Removing sensitive data from a repository'",
+        "why": "Forks, clones and cached views keep the old commit; only revocation makes the key useless."
+      },
+      {
+        "action": "Prefer fine-grained GitHub tokens with an expiry; delete ones you no longer use",
+        "where": "Profile picture > Settings > Developer settings > Personal access tokens > Fine-grained tokens",
+        "why": "Classic tokens reach every repo you can; tokens are as powerful as passwords."
+      },
+      {
+        "action": "Review usage dashboards weekly for spikes",
+        "where": "Anthropic: platform.claude.com/usage and /logs; OpenAI: usage page in platform settings (exact path not confirmed)",
+        "why": "Early sign of a leaked key or runaway script."
+      }
+    ]
+  },
+  "oauth": {
+    "facts": [
+      {
+        "claim": "GitHub OAuth apps: Profile picture > Settings > Integrations > Applications > 'Authorized OAuth Apps' tab; three-dot icon > Revoke, or 'Revoke all'.",
+        "source_url": "https://docs.github.com/en/apps/oauth-apps/using-oauth-apps/reviewing-your-authorized-oauth-apps",
+        "source_title": "GitHub Docs: Reviewing your authorized OAuth apps",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub Apps you authorized: Settings > Applications > 'Authorized GitHub Apps' tab > Revoke. Only the person who authorized an app can revoke it; 'Organization owners cannot revoke GitHub App authorizations for their members.'",
+        "source_url": "https://docs.github.com/en/apps/using-github-apps/reviewing-and-revoking-authorization-of-github-apps",
+        "source_title": "GitHub Docs: Reviewing and revoking authorization of GitHub Apps",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Installed GitHub Apps: Settings > Applications > 'Installed GitHub Apps' > Configure: review 'Permissions', change 'Repository access' to 'Only select repositories', Suspend or Uninstall. Uninstalling does not revoke the app's ability to act on your behalf; also de-authorize it under 'Authorized GitHub Apps'.",
+        "source_url": "https://docs.github.com/en/apps/using-github-apps/reviewing-and-modifying-installed-github-apps",
+        "source_title": "GitHub Docs: Reviewing and modifying installed GitHub Apps",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub security log: Settings > Archives > Security log; 'lists all actions performed within the last 90 days', including actions by others involving your account.",
+        "source_url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/reviewing-your-security-log",
+        "source_title": "GitHub Docs: Reviewing your security log",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Google Account third-party access: https://myaccount.google.com/linkedapps > 'Access to your Google Account' > select app > See details > Remove access. Google warns removing 'may make some features unavailable'. The page does not say whether the app's stored copy of your data is deleted.",
+        "source_url": "https://support.google.com/accounts/answer/13533235",
+        "source_title": "Google Account Help: Manage connections between your Google Account and third parties",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub: 'Installation, authorization, and activation for a particular agent are separate steps.' 'Disabling a tool for an agent is separate from revoking the service authorization.' 'Unpinning is not uninstalling, and disabling does not revoke account authorization.'",
+        "source_url": "/home/user/lobehub/docs/usage/agent/connectors.mdx",
+        "source_title": "LobeHub docs: Connectors (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "MCP spec 'Scope Minimization': broad scopes granted up front (files:*, admin:*) widen the blast radius of a stolen token; use least-privilege scopes and elevate only when needed.",
+        "source_url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices",
+        "source_title": "Model Context Protocol: Security Best Practices",
+        "checked": "2026-11-14"
+      }
+    ],
+    "steps": [
+      {
+        "action": "Review and revoke GitHub OAuth apps you don't recognise or no longer use",
+        "where": "https://github.com/settings/applications > Authorized OAuth Apps (URL is GitHub's standard settings URL; menu path confirmed in docs)",
+        "why": "Each grant is a standing key into your account."
+      },
+      {
+        "action": "Review Authorized GitHub Apps and Installed GitHub Apps; limit installed apps to 'Only select repositories'",
+        "where": "Settings > Applications > Authorized GitHub Apps / Installed GitHub Apps > Configure",
+        "why": "Uninstall and de-authorize are separate; do both for apps you drop."
+      },
+      {
+        "action": "Scan your GitHub security log after connecting a new tool",
+        "where": "Settings > Archives > Security log",
+        "why": "Shows token creation, OAuth grants and logins for 90 days."
+      },
+      {
+        "action": "Review and remove Google third-party access",
+        "where": "https://myaccount.google.com/linkedapps > app > See details > Remove access",
+        "why": "Finance staff often sign into tools with Google; Gmail/Drive scopes reach sensitive mail and files."
+      },
+      {
+        "action": "Before clicking 'Authorize', read the scope list; refuse tools that ask for write/admin when they only need read",
+        "where": "Consent screen of GitHub/Google/connector",
+        "why": "Least privilege; MCP spec and LobeHub docs both advise starting read-only."
+      },
+      {
+        "action": "When you stop using an AI tool, revoke at the account (GitHub/Google) and not only inside the tool",
+        "where": "Pages above",
+        "why": "LobeHub docs: disabling in the tool does not revoke the account grant."
+      }
+    ]
+  },
+  "ai_agents": {
+    "facts": [
+      {
+        "claim": "LobeHub has two separate three-way controls. (1) Skill usage mode per agent: Pinned (load by default), Auto (activated when needed), Disabled. zh: 固定/自动/禁用. (2) MCP tool permission: Allow ('The tool can run directly'), Ask ('LobeHub asks before each run'), Deny ('The tool does not run'). The brief's 'Allow/Ask/Disabled' should read Allow/Ask/Deny.",
+        "source_url": "/home/user/lobehub/docs/usage/community/mcp-market.mdx",
+        "source_title": "LobeHub docs: MCP Marketplace + Connectors (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub warns: 'not every write operation is guaranteed to prompt for approval.' Individual tools 'can run automatically, require approval, or be disabled'.",
+        "source_url": "/home/user/lobehub/docs/usage/agent/connectors.mdx",
+        "source_title": "LobeHub docs: Connectors (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub: 'Installing a skill does not automatically grant access to external accounts or local files'; skills may include scripts, so 'Review their source, dependencies, and permissions before installation'; 'Importing does not automatically install dependencies or grant scripts unrestricted execution access.'",
+        "source_url": "/home/user/lobehub/docs/usage/agent/connectors.mdx",
+        "source_title": "LobeHub docs: Connectors (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub execution locations: This device (desktop app), Cloud sandbox (server-side), Remote device (via `lh connect`), plus browser pairing. 'The working directory ... is not an access-control boundary.'",
+        "source_url": "/home/user/lobehub/docs/usage/agent/execution-devices.mdx",
+        "source_title": "LobeHub docs: Execution Devices (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub: 'Operations within the cloud sandbox use sandbox files. Separate device tools and local execution can change or delete real files on your computer.' Cloud sandbox storage is temporary; local changes persist after chat ends.",
+        "source_url": "/home/user/lobehub/docs/usage/agent/sandbox.mdx",
+        "source_title": "LobeHub docs: Cloud Sandbox (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub: 'LobeHub tool permissions determine whether a connector runs directly, asks for approval, or stays off. A connected coding agent also has its own CLI permissions. These layers are separate.' Server-run agents scan the bound directory for .agents/skills, .claude/skills, AGENTS.md and CLAUDE.md (project instructions).",
+        "source_url": "/home/user/lobehub/docs/usage/agent/execution-devices.mdx",
+        "source_title": "LobeHub docs: Execution Devices (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub Terminal: 'A terminal is not a cloud sandbox'; 'Manual commands have real effects'; 'Remove passwords, tokens, and other sensitive information before sharing logs.'",
+        "source_url": "/home/user/lobehub/docs/usage/agent/terminal.mdx",
+        "source_title": "LobeHub docs: Terminal (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "LobeHub MCP tips: start with read-only access; keep API keys/tokens in Connector authentication settings; open launch commands to see dependencies; try with test data first. STDIO servers run as local processes (desktop only).",
+        "source_url": "/home/user/lobehub/docs/usage/community/mcp-market.mdx",
+        "source_title": "LobeHub docs: MCP Marketplace (local clone)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "MCP spec 'Local MCP Server Compromise': local servers are downloaded binaries/commands that can run 'any command with MCP client privileges'; example startup commands exfiltrate ~/.ssh/id_rsa. Clients MUST show the exact command and require explicit approval for one-click local server setup; SHOULD sandbox with minimal privileges.",
+        "source_url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices",
+        "source_title": "Model Context Protocol: Security Best Practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OWASP MCP Top 10 (status: Phase 3 beta) lists MCP01 Token Mismanagement & Secret Exposure, MCP02 Privilege Escalation via Scope Creep, MCP03 Tool Poisoning, MCP04 Software Supply Chain Attacks, MCP05 Command Injection & Execution, MCP06 Prompt Injection via Contextual Payloads, MCP07 Insufficient AuthN/AuthZ, MCP08 Lack of Audit and Telemetry, MCP09 Shadow MCP Servers, MCP10 Context Injection & Over-Sharing.",
+        "source_url": "https://owasp.org/www-project-mcp-top-10/",
+        "source_title": "OWASP MCP Top 10 project page",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code Manual mode (`default`) starts read-only and asks before edits, Bash commands (except a fixed read-only set like ls, cat, git status), web fetch and web search. Other modes: acceptEdits, plan, auto (a classifier reviews actions instead of you), dontAsk, bypassPermissions.",
+        "source_url": "https://code.claude.com/docs/en/permissions",
+        "source_title": "Claude Code docs: Configure permissions",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code docs: 'Auto mode is the built-in starting permission mode for interactive terminal and VS Code sessions' (see 'Which mode a session starts in' for exceptions). So do not assume a fresh install will prompt for every command.",
+        "source_url": "https://code.claude.com/docs/en/security",
+        "source_title": "Claude Code docs: Security",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code permission rules: allow / ask / deny, evaluated 'deny, then ask, then allow'; manage with `/permissions`. 'Permission rules are enforced by Claude Code, not by the model.' Read deny rules such as Read(./.env) block file tools from secrets but not arbitrary scripts; for OS-level blocking enable the sandbox.",
+        "source_url": "https://code.claude.com/docs/en/permissions",
+        "source_title": "Claude Code docs: Configure permissions",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code warning: bypassPermissions skips prompts; 'Only use this mode in isolated environments like containers or VMs where Claude Code can't cause damage.' Admins can disable it via permissions.disableBypassPermissionsMode.",
+        "source_url": "https://code.claude.com/docs/en/permissions",
+        "source_title": "Claude Code docs: Configure permissions",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code shows a workspace trust dialog in folders you haven't trusted, and project .mcp.json servers have their own approval prompt; a `-p` (non-interactive) session shows neither. Anthropic 'does not security-audit or manage any MCP server'.",
+        "source_url": "https://code.claude.com/docs/en/security",
+        "source_title": "Claude Code docs: Security",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code best practices for untrusted content: review suggested commands before approval; avoid piping untrusted content to Claude; verify changes to critical files; use VMs for scripts/tools with external services; 'You're responsible for reviewing proposed code and commands for safety before approval.'",
+        "source_url": "https://code.claude.com/docs/en/security",
+        "source_title": "Claude Code docs: Security",
+        "checked": "2026-11-14"
+      }
+    ],
+    "steps": [
+      {
+        "action": "Before connecting an MCP server or skill, open its detail page: who publishes it, source repo, install command/arguments, environment variables, tools listed",
+        "where": "LobeHub: Community > MCP > server card > Installation / Capabilities / Source Information",
+        "why": "Tool poisoning and supply-chain attacks hide in commands and descriptions, not in the marketing text."
+      },
+      {
+        "action": "Set every new MCP tool to Ask (not Allow); Deny tools you don't need",
+        "where": "LobeHub: Agent Settings > Connectors > select server > tool permissions (Allow / Ask / Deny) > Save",
+        "why": "Ask forces a human check before each run; LobeHub notes not every write prompts automatically."
+      },
+      {
+        "action": "Prefer the cloud sandbox for experiments; check the Execution Device selector before any file task and ask the agent to state location, working directory and input paths",
+        "where": "LobeHub chat input: Execution Device selector; Agent profile > tool settings",
+        "why": "Local execution changes real files; the working directory is not a security boundary."
+      },
+      {
+        "action": "Try a new connector with test data and read-only access first",
+        "where": "LobeHub MCP Marketplace tips",
+        "why": "Limits damage while you learn what it does."
+      },
+      {
+        "action": "In Claude Code, stay in Manual mode for unfamiliar repos; check the mode at start; read each prompt; add deny rules for secrets (e.g. Read(./.env)) and for curl/wget if not needed",
+        "where": "`/permissions` in Claude Code; .claude/settings.json or ~/.claude/settings.json",
+        "why": "Rules are enforced by the tool, not by asking the model nicely."
+      },
+      {
+        "action": "Never use bypassPermissions ('skip permissions') on your own laptop",
+        "where": "Claude Code permission modes",
+        "why": "Docs: only in isolated containers/VMs."
+      },
+      {
+        "action": "Read the CLAUDE.md / AGENTS.md / .mcp.json of any cloned repo before opening an agent in it, and decline the trust dialog if unsure",
+        "where": "Repository root files; Claude Code trust dialog",
+        "why": "These files become instructions or start servers; a malicious repo can plant them."
+      },
+      {
+        "action": "Review the diff and command output before accepting; don't let an agent push or merge without you",
+        "where": "Your editor / git diff",
+        "why": "LobeHub and Claude Code docs both place final review on the user."
+      }
+    ]
+  },
+  "ip_identity": {
+    "facts": [
+      {
+        "claim": "EFF: connecting to a website or server usually exposes your IP address; it does not directly reveal identity but 'can be combined with other pieces of information to identify you' and can reveal 'your rough location or the name of your Internet Service Provider (ISP)'.",
+        "source_url": "https://ssd.eff.org/glossary/ip-address",
+        "source_title": "EFF Surveillance Self-Defense: Glossary - IP address",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "EFF (last reviewed 28 Jul 2026): a VPN makes sites see the VPN server's location and hides traffic from your ISP and local network owner (cafe/hotel), but 'while a VPN hides your browsing data from the ISP, it's all visible to the VPN provider.'",
+        "source_url": "https://ssd.eff.org/module/choosing-vpn-thats-right-you",
+        "source_title": "EFF SSD: Choosing the VPN That's Right for You",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "EFF: 'A VPN is not a tool for anonymity'; cookies, tracking pixels and fingerprinting still identify you; a VPN doesn't protect against malware and is not a substitute for strong passwords, 2FA, updates; providers can be compelled to hand over data; 'Do not use a VPN that you do not trust.' Since most web traffic is HTTPS, a VPN isn't needed for most public Wi-Fi risks; for anonymity 'Tor is a better solution than a VPN'.",
+        "source_url": "https://ssd.eff.org/module/choosing-vpn-thats-right-you",
+        "source_title": "EFF SSD: Choosing the VPN That's Right for You",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "EFF on choosing a VPN: check independent audits, business model (free services may monetise your data), reputation, logging policy ('a claim is not a guarantee'), protocols (prefer WireGuard/OpenVPN, avoid PPTP), jurisdiction.",
+        "source_url": "https://ssd.eff.org/module/choosing-vpn-thats-right-you",
+        "source_title": "EFF SSD: Choosing the VPN That's Right for You",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Australian Cyber Security Centre: 'Public Wi-Fi hotspots cannot always be trusted'; hotspot names can be copied by criminals posing as a legitimate hotspot; reconsider sensitive tasks such as online banking and wait for a home, office or mobile connection.",
+        "source_url": "https://www.cyber.gov.au/acsc/view-all-content/advice/wi-fi-private-and-public",
+        "source_title": "ACSC: Wi-Fi - private and public",
+        "checked": "2026-11-14",
+        "status": "unconfirmed: page returned HTTP 503; wording from search-result snippet"
+      },
+      {
+        "claim": "CISA Internet Exposure Reduction Guidance (revised 21 Aug 2026): threat actors use internet search platforms to 'identify publicly accessible systems with misconfigurations, default credentials, and outdated software'; it names Shodan, Censys, Thingful and Shadowserver as discovery tools (no endorsement) and advises closing ports without a documented need and putting remote access behind a VPN/gateway with phishing-resistant MFA.",
+        "source_url": "https://www.cisa.gov/resources-tools/resources/stuff-search",
+        "source_title": "CISA: Internet Exposure Reduction Guidance",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "MCP spec: locally run servers SHOULD use stdio, or if using HTTP require an authorization token / restricted IPC, to stop other processes reaching them; DNS rebinding can reach an insecure server left running on localhost.",
+        "source_url": "https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices",
+        "source_title": "Model Context Protocol: Security Best Practices",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub: Settings > Access > Emails > 'Keep my email addresses private' makes web-based Git operations use a noreply address; 'Block command line pushes that expose my email' makes GitHub block a push whose latest commit uses your private email.",
+        "source_url": "https://docs.github.com/en/account-and-profile/how-tos/email-preferences/blocking-command-line-pushes-that-expose-your-personal-email-address",
+        "source_title": "GitHub Docs: Blocking command line pushes that expose your personal email address",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "GitHub noreply format: accounts created after 18 Jul 2017 get ID+USERNAME@users.noreply.github.com (older: USERNAME@users.noreply.github.com); reselecting 'Keep my email address private' gives the ID-based one.",
+        "source_url": "https://docs.github.com/en/account-and-profile/reference/email-addresses-reference",
+        "source_title": "GitHub Docs: Email addresses reference",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Set commit email with `git config --global user.email \"ID+USERNAME@users.noreply.github.com\"` (or without --global inside one repo). 'Any commits you made prior to changing your commit email address are still associated with your previous email address.'",
+        "source_url": "https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address",
+        "source_title": "GitHub Docs: Setting your commit email address",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "EFF: metadata is 'everything except the content' (who, when, where, subject lines, location) and can reveal a great deal about a person.",
+        "source_url": "https://ssd.eff.org/module/why-metadata-matters",
+        "source_title": "EFF SSD: Why Metadata Matters (last reviewed 22 Jul 2024)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "OWASP Logging Cheat Sheet: logs should usually not record access tokens, authentication passwords, database connection strings, encryption keys, session IDs, bank account or payment card data, sensitive PII, or commercially-sensitive information.",
+        "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+        "source_title": "OWASP Logging Cheat Sheet",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Apple: when sharing photos from iPhone, tap Options in the share sheet and switch off Location before sending ('Location Not Included'); per-share setting.",
+        "source_url": "https://support.apple.com/guide/personal-safety/ips0d7a5df82",
+        "source_title": "Apple Personal Safety User Guide: Manage location metadata in Photos",
+        "checked": "2026-11-14",
+        "status": "partly unconfirmed: steps from search-result summary of the Apple page, not fetched directly"
+      }
+    ],
+    "steps": [
+      {
+        "action": "Turn on 'Keep my email addresses private' and 'Block command line pushes that expose my email'",
+        "where": "github.com: Profile picture > Settings > Access > Emails",
+        "why": "Every commit permanently carries the author email; strangers can harvest it from public repos."
+      },
+      {
+        "action": "Set git to use the noreply address on every computer",
+        "where": "Terminal: git config --global user.email \"ID+USERNAME@users.noreply.github.com\" (copy exact address from the Emails page)",
+        "why": "Past commits keep the old address, so do this before the first commit."
+      },
+      {
+        "action": "Use a VPN only from a provider you trust and understand what it hides (your IP from sites, traffic from cafe/ISP) and what it doesn't (VPN provider sees traffic; cookies/logins still identify you)",
+        "where": "Provider app",
+        "why": "EFF: not an anonymity tool; free VPNs may sell data."
+      },
+      {
+        "action": "On public Wi-Fi: confirm the exact network name, prefer your phone's hotspot for sensitive work, keep HTTPS-only browsing; postpone banking/finance-system logins",
+        "where": "Device Wi-Fi settings",
+        "why": "Fake hotspots copy names; most risk is avoided with HTTPS and a trusted connection (EFF, ACSC)."
+      },
+      {
+        "action": "Don't expose local tools (dev servers, local MCP HTTP servers, router remote admin) to the internet; close ports you don't need",
+        "where": "Router admin page / tool config (no single menu; vendor-specific)",
+        "why": "Internet-wide scanners such as Shodan index open ports within hours (CISA guidance names them as attacker tools)."
+      },
+      {
+        "action": "Before sharing a screenshot or log: crop out IPs, hostnames, file paths with your username, account numbers, email addresses, tokens; strip photo location",
+        "where": "Screenshot editor; iPhone share sheet > Options > Location off (unconfirmed path)",
+        "why": "Metadata and log lines reveal identity and infrastructure (EFF, OWASP)."
+      }
+    ]
+  },
+  "sentinel": {
+    "facts": [
+      {
+        "claim": "Consumer Claude (Free, Pro, Max, Ultra): Anthropic trains new models on your data 'when this setting is on' (including Claude Code used from these accounts). Retention: 5 years if you allow model improvement, 30 days if you don't. Privacy settings: claude.ai/settings/data-privacy-controls.",
+        "source_url": "https://code.claude.com/docs/en/data-usage",
+        "source_title": "Claude Code docs: Data usage",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Commercial (Team, Enterprise, API, 3rd-party platforms): Anthropic does not train generative models on code or prompts sent under commercial terms unless the customer opts in; standard retention 30 days; Zero Data Retention available to qualified Enterprise accounts by arrangement.",
+        "source_url": "https://code.claude.com/docs/en/data-usage",
+        "source_title": "Claude Code docs: Data usage",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code sends 'all user prompts and model outputs' to the model over TLS 1.2+, and stores session transcripts locally in plaintext under ~/.claude/projects/ for 30 days by default (cleanupPeriodDays). /feedback, /bug and /share send the conversation including code and are retained 5 years.",
+        "source_url": "https://code.claude.com/docs/en/data-usage",
+        "source_title": "Claude Code docs: Data usage",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Privacy Center (last updated 1 Jul 2026, consumer): with model improvement on, data may be kept de-identified up to 5 years; deleted chats leave back-end storage within 30 days; inputs/outputs flagged for policy violations kept up to 2 years (classifier scores up to 7 years); feedback (thumbs up/down) kept 5 years.",
+        "source_url": "https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data",
+        "source_title": "Anthropic Privacy Center: How long do you store my data?",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Privacy Center (last updated 16 Mar 2026): consumer chats are used for training if you allow it, if flagged for safety review, or if you opt in another way; 'Your Incognito chats are not used to improve Claude' even with Model Improvement on; feedback is de-linked from your user ID.",
+        "source_url": "https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training",
+        "source_title": "Anthropic Privacy Center: Is my data used for model training? (consumer)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Privacy Center (dated 18 Aug 2026): 'By default, we will not use your inputs or outputs from our commercial products' (Claude for Work, API) to train models, unless you send feedback or otherwise allow it.",
+        "source_url": "https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training",
+        "source_title": "Anthropic Privacy Center: Is my data used for model training? (commercial)",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Setting to turn off training (page dated 3 Aug 2026): name menu > Settings > Privacy > 'Help Improve our AI models' toggle (desktop and mobile). Turning off stops use of new chats for future training; data in training runs already started is not removed; safety-flagged chats may still be used for trust and safety. Note: some secondary sources call it 'Help Improve Claude'; tell participants to look for the training toggle under Privacy.",
+        "source_url": "https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings",
+        "source_title": "Anthropic Privacy Center: How do I change my model improvement privacy settings?",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Anthropic consumer help: recommends 'being thoughtful about sharing highly sensitive personal details', listing financial information (SSN, card numbers, bank details), health records, passwords or login credentials, confidential business or personal documents.",
+        "source_url": "https://support.claude.com/en/articles/8325621-i-would-like-to-input-sensitive-data",
+        "source_title": "Claude Help Center: I would like to input sensitive data",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "UK NCSC (14 Mar 2023) advises 'not to include sensitive information in queries to public LLMs'; stored queries could be hacked or leaked.",
+        "source_url": "https://www.ncsc.gov.uk/blog-post/chatgpt-and-large-language-models-whats-the-risk",
+        "source_title": "NCSC blog: ChatGPT and large language models: what's the risk?",
+        "checked": "2026-11-14"
+      },
+      {
+        "claim": "Claude Code: in Manual mode it asks before edits, shell commands and network fetches; you can approve once or 'don't ask again'; allowlists can be set per user, per codebase or per organization; audit with `/permissions`. Commands like curl and wget are not auto-approved by default.",
+        "source_url": "https://code.claude.com/docs/en/security",
+        "source_title": "Claude Code docs: Security",
+        "checked": "2026-11-14"
+      }
+    ],
+    "steps": [
+      {
+        "action": "Use Claude as a sentinel by describing the thing, not pasting the secret: e.g. 'Here is a request to connect app X with these scopes [paste scope list]; is that more than it needs?' or 'Here is a repo's install script with keys replaced by <REDACTED>; what does it do?'",
+        "where": "Any Claude chat",
+        "why": "Claude can review permissions, scripts and messages without ever seeing the real key."
+      },
+      {
+        "action": "Redact before pasting: replace API keys, tokens, passwords, account/IBAN/card numbers, client names, internal hostnames/IPs and email addresses with placeholders like <API_KEY>, <CLIENT_A>",
+        "where": "Your text editor before pasting",
+        "why": "Anthropic and NCSC both advise against putting sensitive data into chats; retention can be 30 days to 5 years."
+      },
+      {
+        "action": "If a key was pasted into a chat by mistake, treat it as leaked: revoke and rotate it",
+        "where": "Provider key page (Anthropic: platform.claude.com/settings/keys)",
+        "why": "Deleting the chat does not undo exposure; deleted chats remain in back-end storage up to 30 days."
+      },
+      {
+        "action": "Decide your training setting deliberately; for one-off sensitive checks use an Incognito chat",
+        "where": "claude.ai: name menu > Settings > Privacy > 'Help Improve our AI models'; claude.ai/settings/data-privacy-controls",
+        "why": "Incognito chats aren't used for training; with the setting on, retention is up to 5 years."
+      },
+      {
+        "action": "Work data belongs in a company (commercial) plan, not a personal Free/Pro account",
+        "where": "Ask IT which Claude plan is approved",
+        "why": "Commercial terms: no training by default, 30-day standard retention."
+      },
+      {
+        "action": "In Claude Code, deny reads of secret files and keep Manual mode",
+        "where": "`/permissions` or .claude/settings.json: deny Read(./.env), Read(./secrets/**)",
+        "why": "Stops the agent reading keys into the conversation (best-effort for file tools; use sandbox for OS-level)."
+      },
+      {
+        "action": "Don't use /feedback or 'share transcript' on sessions that touched sensitive data",
+        "where": "Claude Code",
+        "why": "Feedback sends the conversation incl. code and is kept 5 years."
+      }
+    ]
+  }
+}

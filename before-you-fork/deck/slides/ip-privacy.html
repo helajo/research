@@ -1,0 +1,16 @@
+<section id="ip-privacy">
+<div class="head">
+<p class="eyebrow">Connecting safely</p>
+<h2>What gives you away, and how to hide it</h2>
+</div>
+<table class="vt" style="font-size: 26px;">
+<tr><th style="width: 24%;">Where</th><th style="width: 34%;">What strangers can see</th><th style="width: 42%;">What to do</th></tr>
+<tr><td>Every site and API you connect to</td><td>Your IP address: rough location and internet provider</td><td>A trusted VPN hides your IP from sites, but the VPN company sees your traffic. It is not an anonymity tool.</td></tr>
+<tr><td>Public Wi-Fi</td><td>The network owner sees your traffic; HTTPS protects most content</td><td>Check the network name. Use your phone’s hotspot for sensitive work.</td></tr>
+<tr><td>A server running on your laptop</td><td>Open ports, found by search tools such as Shodan</td><td>Don’t open ports to the internet. Bind to 127.0.0.1, or use the hosted version.</td></tr>
+<tr><td>Your GitHub commits</td><td>The email address in every commit</td><td>Settings → Access → Emails → Keep my email addresses private.</td></tr>
+<tr><td>Screenshots, logs, photos</td><td>Keys, tokens, internal names, photo location</td><td>Crop or blur, remove location, and ask Claude to check first.</td></tr>
+</table>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>Our boss asked about hiding your IP from strangers. Your IP address is like a return address on every letter you send: every website and API sees it, and it reveals roughly where you are and who your provider is. A VPN replaces it with the VPN’s address, but you are trusting the VPN company instead, cookies and logins still identify you, and free VPNs may make money from your data. On public Wi-Fi, most sites already use HTTPS, so the simpler habit is your phone’s hotspot for anything sensitive. The bigger leaks are usually elsewhere: a laptop server open to the network, the email address in every GitHub commit (set git to your noreply address before your first commit; past commits keep the old one), and screenshots or logs that show keys and internal details.</aside>
+</section>
