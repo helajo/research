@@ -1,0 +1,22 @@
+<section id="q6-exposed">
+<div class="head">
+<p class="eyebrow">Question 6 of 7</p>
+<h2>What’s exposed when it runs?</h2>
+</div>
+<div class="find">
+<div class="case">
+<p class="tag">IN LOBEHUB</p>
+<p class="pill p-high">High</p>
+<p class="txt">The Docker setup opens the <span class="em">database (5432), Redis (6379) and file storage to every network</span> the computer joins.</p>
+<p class="txt">Redis has no password; the database password is printed in the repo.</p>
+<p class="txt">Anyone can sign up, and the storage bucket is publicly readable.</p>
+</div>
+<div class="explain">
+<div class="block"><p class="lab">Check</p><p class="txt">Which ports it opens and to whom, default passwords, public storage, and who can sign up.</p></div>
+<div class="block"><p class="lab">Why it matters</p><p class="txt">Attackers use search tools such as Shodan to find open ports and default passwords. Devices on the same Wi-Fi may reach them too.</p></div>
+<div class="block"><p class="lab">Stay safe</p><p class="txt">Bind ports to 127.0.0.1 (this computer only), set your own passwords, and limit sign-up to your team.</p></div>
+</div>
+</div>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>A port is a door into your computer. Open on every network means other devices can try that door; 127.0.0.1 means only this computer. CISA names Shodan and Censys as tools attackers use to find exposed systems with default passwords and old software. In LobeHub’s default Docker setup, a database with a password printed on GitHub and a Redis with no password are both open, on a server that can hold API keys and run agents. One good sign: its search database is deliberately kept private. The fixes are a few lines (127.0.0.1, your own passwords, AUTH_ALLOWED_EMAILS), but you only make them if you know to look.</aside>
+</section>

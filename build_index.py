@@ -45,6 +45,7 @@ CATEGORIES = {
 # listed under a category. Add a line here when you add one.
 FOLDER_PAGES = {
     "tqqq-hedge": "deep-dives",
+    "before-you-fork": "deep-dives",
 }
 
 

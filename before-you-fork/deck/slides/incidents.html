@@ -1,0 +1,14 @@
+<section id="incidents" class="alt">
+<div class="head">
+<p class="eyebrow">Real cases</p>
+<h2>This happens to big, trusted projects</h2>
+</div>
+<div class="row">
+<div class="card rise" style="--i: 0;"><p class="tag">Mar 2024 · xz-utils</p><h3>A patient insider</h3><p class="txt">Someone who had won the maintainers’ trust hid a backdoor in releases of a Linux compression tool that remote logins rely on. It was found by chance, when an engineer noticed logins running half a second slow.</p></div>
+<div class="card rise" style="--i: 1;"><p class="tag">Sep 2025 · chalk, debug</p><h3>One fake support email</h3><p class="txt">A maintainer of popular JavaScript packages was phished. Attackers published versions of 18 packages, with over 2 billion downloads a week, that swapped crypto wallet addresses.</p></div>
+<div class="card rise" style="--i: 2;"><p class="tag">Sep 2025 · Shai-Hulud</p><h3>A worm that spreads</h3><p class="txt">Install scripts stole developers’ tokens, then used them to publish infected copies of more packages: over 500, CISA reported. A second wave hit in Nov 2025.</p></div>
+</div>
+<p class="lead">No victim did anything unusual. <b class="hl">Installing was enough.</b></p>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>Three real cases, all public. xz-utils (CVE-2024-3094, reported 29 March 2024) shows a trusted insider can be the attacker; a failed login took about 0.8 seconds instead of 0.3, which is how Andres Freund noticed. The chalk and debug compromise (8 September 2025) started with a phishing email from a look-alike domain, npmjs.help. Shai-Hulud spread by itself through install scripts; its second wave in November 2025 hit 621 packages by Check Point’s count and tried to wipe the home folder when it could not steal anything. The point: “it’s a famous project with lots of stars” is not a security check.</aside>
+</section>

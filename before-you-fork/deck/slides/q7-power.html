@@ -1,0 +1,22 @@
+<section id="q7-power">
+<div class="head">
+<p class="eyebrow">Question 7 of 7</p>
+<h2>What can it do on my machine?</h2>
+</div>
+<div class="find">
+<div class="case">
+<p class="tag">IN LOBEHUB</p>
+<p class="pill p-med">Medium</p>
+<p class="txt">The desktop app can <span class="em">read, write and move files and run commands</span>. Commands ask first; file changes in the working folder don’t, and auto-run approves everything.</p>
+<p class="txt">Plugin (MCP) tools can be set to Allow, Ask or Deny.</p>
+<p class="txt">32 GitHub workflows; one syncs a fork every 6 hours if Actions are on.</p>
+</div>
+<div class="explain">
+<div class="block"><p class="lab">Check</p><p class="txt">Can it write files, run commands or add plugins without asking? Which approval mode is the default?</p></div>
+<div class="block"><p class="lab">Why it matters</p><p class="txt">An AI agent that writes code to your computer acts as you. One bad plugin or hidden instruction, and so does an attacker.</p></div>
+<div class="block"><p class="lab">Stay safe</p><p class="txt">Keep approvals on (Manual, and Ask for plugins). Give it one folder. Leave Actions off on the fork.</p></div>
+</div>
+</div>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>This is the new risk that comes with AI tools, and the one our boss flagged: these apps don’t just chat, they write files and run commands on your laptop. LobeHub’s own docs warn that not every write operation is guaranteed to ask, and that the working folder is not a security boundary. A local plugin (MCP server) is a program running with your permissions. Past bugs let a malicious chat message or diagram run commands; all are fixed. The same goes for Claude Code: its default auto mode does not ask before every command, so switch to Manual mode for unfamiliar projects. Never switch any agent to approve everything on your own laptop.</aside>
+</section>

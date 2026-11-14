@@ -1,0 +1,20 @@
+{
+  "v": 5,
+  "createdOnFiles": {"v": 1, "at": "2026-11-13T02:10:00Z"},
+  "lists": "css",
+  "format": {"v": 1, "shared": ["project/deck.css"]},
+  "title": "Before You Fork",
+  "cover": "cover",
+  "order": ["cover", "why", "incidents", "questions", "q1-real", "q2-process", "q3-install", "q4-scripts", "q5-secrets", "q6-exposed", "q7-power", "api-keys", "ip-privacy", "sentinel", "verdict", "checklist", "exercise", "glossary", "close"],
+  "sections": {
+    "s1": {"description": "Why a security check comes before any download", "start": "cover"},
+    "s2": {"description": "Seven questions to ask, each shown on LobeHub", "start": "questions"},
+    "s3": {"description": "Connecting safely: API keys, your IP and identity, Claude as sentinel, LobeHub’s verdict", "start": "api-keys"},
+    "s4": {"description": "Hands-on practice and words to look up", "start": "exercise"}
+  },
+  "faces": {
+    "ibm-plex-sans": {"family": "IBM Plex Sans", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": []
+}

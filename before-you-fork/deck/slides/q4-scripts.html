@@ -1,0 +1,22 @@
+<section id="q4-scripts">
+<div class="head">
+<p class="eyebrow">Question 4 of 7</p>
+<h2>Does it run downloaded scripts?</h2>
+</div>
+<div class="find">
+<div class="case">
+<p class="tag">IN LOBEHUB</p>
+<p class="pill p-med">Medium</p>
+<p class="txt">The README’s one-line setup:</p>
+<p class="code">bash &lt;(curl -fsSL<br>https://lobe.li/setup.sh)</p>
+<p class="txt">The short link runs <span class="em">whatever is on the default branch that day</span>: no fixed version, no checksum.</p>
+</div>
+<div class="explain">
+<div class="block"><p class="lab">Check</p><p class="txt">Any setup line that pipes a download straight into bash, sh or PowerShell.</p></div>
+<div class="block"><p class="lab">Why it matters</p><p class="txt">You can’t read the script before it runs, and a short link can be pointed somewhere else at any time.</p></div>
+<div class="block"><p class="lab">Stay safe</p><p class="txt">Download the script, read it or ask Claude to, then run your own saved copy.</p></div>
+</div>
+</div>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>“curl into bash” is everywhere because it’s convenient. We rate it Medium: the script itself can be read in the repository (docker-compose/setup.sh) and doesn’t need administrator rights, but what actually runs is whatever a third-party short link points to on the day, and the script then downloads more files from the main branch, also unpinned. The same one-liner on an unknown project, or in a YouTube tutorial, is exactly how many laptops get infected. Save it, read it, then run it.</aside>
+</section>

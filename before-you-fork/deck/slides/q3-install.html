@@ -1,0 +1,21 @@
+<section id="q3-install">
+<div class="head">
+<p class="eyebrow">Question 3 of 7</p>
+<h2>What runs when I install it?</h2>
+</div>
+<div class="find">
+<div class="case">
+<p class="tag">IN LOBEHUB</p>
+<p class="pill p-med">Medium</p>
+<p class="txt">Install scripts are allow-listed: <span class="em">6 outside packages may run their own scripts</span>, 7 are blocked.</p>
+<p class="txt"><span class="em">No lockfile</span> for the main app: every install takes the newest versions of 421 direct dependencies.</p>
+</div>
+<div class="explain">
+<div class="block"><p class="lab">Check</p><p class="txt">Look for install scripts in package.json files, and for a lockfile that pins exact versions.</p></div>
+<div class="block"><p class="lab">Why it matters</p><p class="txt">This is the supply-chain attack’s favourite door: one hijacked library, and its script runs as you.</p></div>
+<div class="block"><p class="lab">Stay safe</p><p class="txt">Use the hosted app or the official desktop release. If you must build, use a separate virtual machine.</p></div>
+</div>
+</div>
+<div class="footer"><p>Before you fork</p><p class="pg"></p></div>
+<aside>This is how Shai-Hulud spread. When you type “install”, the package manager downloads hundreds of libraries and some of them run their own setup code with your permissions. LobeHub does one thing well here: only six named packages may run install scripts. But a lockfile records exact versions so every install gets the same files; without one, you get whatever is newest that day, including a version an attacker published yesterday. Also note: the project’s prepare script quietly switches on its own git hooks, which then run on every commit.</aside>
+</section>
